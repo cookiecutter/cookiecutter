@@ -16,7 +16,6 @@ if sys.argv[-1] == 'publish':
 
 readme = open('README.rst', 'rt').read()
 history = open('HISTORY.rst', 'rt').read()
-license = open('LICENSE', 'rt').read()
 
 setup(
     name='cookiecutter',
@@ -25,7 +24,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
-    url='https://github.com/audreyr/border',
+    url='https://github.com/audreyr/cookiecutter',
     packages=[
         'cookiecutter',
     ],
@@ -38,7 +37,7 @@ setup(
     install_requires=[
         'Jinja2',
     ],
-    license=license,
+    license='BSD',
     zip_safe=False,
     classifiers=(
         'Development Status :: 2 - Pre-Alpha',
@@ -53,5 +52,5 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
     ),
-    keywords='cookiecutter Jinja2 templates project',
+    keywords='cookiecutter, Python, projects, project templates, Jinja2, project directory, setup.py, package, packaging',
 )
