@@ -53,4 +53,5 @@ setup(
         'Programming Language :: Python :: 3.3',
     ),
     keywords='cookiecutter, Python, projects, project templates, Jinja2, project directory, setup.py, package, packaging',
+    test_suite='tests',
 )

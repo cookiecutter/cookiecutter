@@ -1,0 +1,3 @@
+Hi!
+My name is {{ stuff.full_name }}.
+It is {{ stuff.year }}.
