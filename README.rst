@@ -2,6 +2,9 @@
 Cookiecutter
 =============
 
+WARNING: This is pre-alpha. Do not use (yet).
+---------------------------------------------
+
 A command-line utility that creates projects from project templates. Renders a
 directory of Jinja2 templates to files.
 
