@@ -1,0 +1,1 @@
+The color is {{ stuff.color }} and the letter is {{ stuff.letter }}.

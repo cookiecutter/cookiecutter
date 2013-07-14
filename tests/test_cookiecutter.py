@@ -52,6 +52,9 @@ My name is Audrey Greenfeld.
 It is 2014."""
         something2 = open('tests/output2/something.txt').read()
         self.assertEqual(something, something2)
+        in_folder = "The color is green and the letter is D."
+        in_folder2 = open('tests/output2/folder/in_folder.txt')
+        self.assertEqual(in_folder, in_folder2)
 
     def tearDown(self):
         if os.path.exists('tests/output'):

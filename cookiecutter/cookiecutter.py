@@ -71,6 +71,7 @@ def generate_files(context=None, input_dir='input/', output_dir='output/'):
         full_path = '{0}/{1}'.format(input_dir, f)
         print full_path
         if os.path.isdir(full_path):
+            print "Found dir" + full_path
             make_sure_path_exists(full_path)
         elif os.path.isfile(full_path):   # If f is a file, render it
             tmpl = env.get_template(f)
