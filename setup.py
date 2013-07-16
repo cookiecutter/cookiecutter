@@ -14,8 +14,8 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
-readme = open('README.rst', 'rt').read()
-history = open('HISTORY.rst', 'rt').read()
+readme = open('README.rst').read()
+history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='cookiecutter',
@@ -40,7 +40,7 @@ setup(
     ],
     license='BSD',
     zip_safe=False,
-    classifiers=(
+    classifiers=[
         'Development Status :: 3 - Alpha',
         "Environment :: Console",
         'Intended Audience :: Developers',
@@ -52,7 +52,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
-    ),
+    ],
     keywords='cookiecutter, Python, projects, project templates, Jinja2, project directory, setup.py, package, packaging',
     test_suite='tests',
 )
