@@ -2,9 +2,6 @@
 Cookiecutter
 =============
 
-WARNING: This is pre-alpha. Do not use (yet).
----------------------------------------------
-
 A command-line utility that creates projects from project templates. Renders a
 directory of Jinja2 templates to files.
 
@@ -13,7 +10,15 @@ directory of Jinja2 templates to files.
 * Free software: BSD license
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 
-Similar projects:
+Features
+--------
+
+* Works with any type of text file.
+* Directory names and filenames can be templated.
+
+
+Similar projects
+----------------
 
 * Diecutter: an API service that will give you back a configuration file from
   a template and variables. https://github.com/novagile/diecutter
@@ -21,10 +26,7 @@ Similar projects:
   The similarity in name/functionality is a total coincidence that happened
   independently (subconsciously!). They presented a fantastic poster at 
   EuroPython 2013 :)
-  
-  Cookiecutter appears to be mostly compatible with Diecutter; I plan to look
-  into this more and see if I can make them work together.
-  
+    
 * Paste has a create option that creates a skeleton project: 
   http://pythonpaste.org/script/#paster-create
   
