@@ -47,14 +47,19 @@ class TestCookiecutter(unittest.TestCase):
             input_dir='tests/input2',
             output_dir='tests/output2'
         )
+        
         something = """Hi!
 My name is Audrey Greenfeld.
 It is 2014."""
         something2 = open('tests/output2/something.txt').read()
         self.assertEqual(something, something2)
+        
         in_folder = "The color is green and the letter is D."
-        in_folder2 = open('tests/output2/folder/in_folder.txt')
+        in_folder2 = open('tests/output2/folder/in_folder.txt').read()
         self.assertEqual(in_folder, in_folder2)
+        
+        self.assertTrue(os.path.isdir('tests/output2/im_a.dir'))
+        self.assertTrue(os.path.isfile('tests/output2/im_a.dir/im_a.file.py'))
 
     def tearDown(self):
         if os.path.exists('tests/output'):
