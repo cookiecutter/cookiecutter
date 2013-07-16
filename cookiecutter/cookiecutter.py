@@ -6,8 +6,10 @@ import json
 import os
 import sys
 
-from jinja2 import FileSystemLoader
+from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
+
+from IPython import embed
 
 
 PY3 = sys.version > '3'
@@ -75,13 +77,21 @@ def generate_files(context=None, input_dir='input', output_dir='output'):
     env = Environment()
     env.loader = FileSystemLoader('.')
 
-    make_sure_path_exists(output_dir)
+    # Render dirname before writing
+    name_tmpl = Template(output_dir)
+    rendered_dirname = name_tmpl.render(**context)
+    make_sure_path_exists(rendered_dirname)
     
     for root, dirs, files in os.walk(input_dir):
         for d in dirs:
             indir = os.path.join(root, d)
             outdir = indir.replace(input_dir, output_dir, 1)
-            make_sure_path_exists(outdir)
+            
+            # Render dirname before writing
+            name_tmpl = Template(outdir)
+            rendered_dirname = name_tmpl.render(**context)
+            
+            make_sure_path_exists(rendered_dirname)
             
         for f in files:
             # Render the file
@@ -91,7 +101,15 @@ def generate_files(context=None, input_dir='input', output_dir='output'):
         
             # Write it to the corresponding place in output_dir
             outfile = infile.replace(input_dir, output_dir, 1)
-            with unicode_open(outfile, 'w') as fh:
+            
+            # Render the output filename before writing
+            name_tmpl = Template(outfile)
+            rendered_name = name_tmpl.render(**context)
+            print("Writing {0}".format(rendered_name))
+            
+            # embed()
+            
+            with unicode_open(rendered_name, 'w') as fh:
                 fh.write(rendered_file)
 
 
@@ -99,7 +117,11 @@ def command_line_runner():
     """ Entry point for the package, as defined in setup.py. """
 
     context = generate_context()
-    generate_files(context=context, input_dir='repo_name')
+    generate_files(
+        context=context,
+        input_dir='{{project.repo_name}}',
+        output_dir='{{project.repo_name}}'
+    )
 
 
 if __name__ == '__main__':
