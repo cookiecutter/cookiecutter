@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import codecs
 import errno
 import json
 import os
+import sys
 
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
+
+PY3 = sys.version > '3'
 
 def make_sure_path_exists(path):
     try:
@@ -16,6 +20,14 @@ def make_sure_path_exists(path):
             return False
     return True
 
+
+def unicode_open(filename, *args, **kwargs):
+
+    if PY3:
+        return open(filename, *args, **kwargs)
+    kwargs['encoding'] = "utf-8"
+    return codecs.open(filename, *args, **kwargs)
+    
 
 def generate_context(json_dir='json/'):
     """
@@ -79,7 +91,7 @@ def generate_files(context=None, input_dir='input', output_dir='output'):
         
             # Write it to the corresponding place in output_dir
             outfile = infile.replace(input_dir, output_dir, 1)
-            with open(outfile, 'w') as fh:
+            with unicode_open(outfile, 'w') as fh:
                 fh.write(rendered_file)
 
 
@@ -87,7 +99,7 @@ def command_line_runner():
     """ Entry point for the package, as defined in setup.py. """
 
     context = generate_context()
-    generate_files(context=context, input_dir='package')
+    generate_files(context=context, input_dir='repo_name')
 
 
 if __name__ == '__main__':
