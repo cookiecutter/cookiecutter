@@ -9,8 +9,6 @@ import sys
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
 
-from IPython import embed
-
 
 PY3 = sys.version > '3'
 
@@ -106,8 +104,6 @@ def generate_files(context=None, input_dir='input', output_dir='output'):
             name_tmpl = Template(outfile)
             rendered_name = name_tmpl.render(**context)
             print("Writing {0}".format(rendered_name))
-            
-            # embed()
             
             with unicode_open(rendered_name, 'w') as fh:
                 fh.write(rendered_file)
