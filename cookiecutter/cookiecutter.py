@@ -56,28 +56,30 @@ def generate_context(json_dir='json/'):
     return context
 
 
-def generate_files(context=None, input_dir='input/', output_dir='output/'):
+def generate_files(context=None, input_dir='input', output_dir='output'):
     """ Renders the templates and saves them to files. """
 
     context = context or {}
     env = Environment()
-    env.loader = FileSystemLoader(input_dir)
+    env.loader = FileSystemLoader('.')
 
     make_sure_path_exists(output_dir)
-
-    for f in os.listdir(input_dir):
-        # If f is a directory, create it
-        print f
-        full_path = '{0}/{1}'.format(input_dir, f)
-        print full_path
-        if os.path.isdir(full_path):
-            print "Found dir" + full_path
-            make_sure_path_exists(full_path)
-        elif os.path.isfile(full_path):   # If f is a file, render it
-            tmpl = env.get_template(f)
+    
+    for root, dirs, files in os.walk(input_dir):
+        for d in dirs:
+            indir = os.path.join(root, d)
+            outdir = indir.replace(input_dir, output_dir, 1)
+            make_sure_path_exists(outdir)
+            
+        for f in files:
+            # Render the file
+            infile = os.path.join(root, f)
+            tmpl = env.get_template(infile)
             rendered_file = tmpl.render(**context)
-
-            with open('{0}/{1}'.format(output_dir, f), 'w') as fh:
+        
+            # Write it to the corresponding place in output_dir
+            outfile = infile.replace(input_dir, output_dir, 1)
+            with open(outfile, 'w') as fh:
                 fh.write(rendered_file)
 
 
