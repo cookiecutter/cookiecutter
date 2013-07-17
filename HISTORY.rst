@@ -3,6 +3,11 @@
 History
 -------
 
+0.3 (2013-07-17)
+++++++++++++++++
+
+* Takes in command line args for the input and output directories.
+
 0.2.1 (2013-07-17)
 ++++++++++++++++++
 
