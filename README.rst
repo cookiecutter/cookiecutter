@@ -2,8 +2,8 @@
 Cookiecutter
 =============
 
-A command-line utility that creates projects from project templates. Renders a
-directory of Jinja2 templates to files.
+A command-line utility that creates projects from project templates, e.g.
+creating a Python package project from a Python package project template.
 
 * Documentation: http://cookiecutter.rtfd.org
 * GitHub: https://github.com/audreyr/cookiecutter
@@ -28,11 +28,13 @@ Features
     	"project_name": "A Lot of Effort",
     	"repo_name": "alotofeffort",
     	"project_short_description": "Deploy static HTML sites to S3 with the simple 'alotofeffort' command.",
-    	"travis_ci_username": "audreyr",
     	"release_date": "2013-07-10",
     	"year": "2013",
     	"version": "0.1.1"
     }
+
+* All templating is done with Jinja2. Cookiecutter simply renders a directory
+  of Jinja2 templates to files, including rendering the dir names and filenames.
 
 Cookiecutter Project Templates
 ------------------------------
