@@ -31,7 +31,7 @@ setup(
     package_dir={'cookiecutter': 'cookiecutter'},
     entry_points={
         'console_scripts': [
-            'cookiecutter = cookiecutter.cookiecutter:command_line_runner',
+            'cookiecutter = cookiecutter.cookiecutter:main',
         ]
     },
     include_package_data=True,

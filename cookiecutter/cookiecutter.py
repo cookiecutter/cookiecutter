@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
 import codecs
 import errno
 import json
@@ -68,7 +69,7 @@ def generate_context(json_dir='json/'):
     return context
 
 
-def generate_files(context=None, input_dir='input', output_dir='output'):
+def generate_files(input_dir, output_dir, context=None):
     """ Renders the templates and saves them to files. """
 
     context = context or {}
@@ -109,16 +110,31 @@ def generate_files(context=None, input_dir='input', output_dir='output'):
                 fh.write(rendered_file)
 
 
-def command_line_runner():
+def main():
     """ Entry point for the package, as defined in setup.py. """
+    
+    # Get command line input/output arguments
+    parser = argparse.ArgumentParser(
+        description='Create a project from a Cookiecutter project template.'
+    )
+    parser.add_argument(
+        'input_dir', 
+        help='Cookiecutter project template dir, e.g. {{project.repo_name}}/'
+    )
+    parser.add_argument(
+        'output_dir',
+        help='Name of desired output dir, e.g. alotofeffort/ or {{project.repo_name}}/. \
+            (This can be templated.)'
+    )
+    args = parser.parse_args()
 
     context = generate_context()
     generate_files(
-        context=context,
-        input_dir='{{project.repo_name}}',
-        output_dir='{{project.repo_name}}'
+        input_dir=args.input_dir,
+        output_dir=args.output_dir,
+        context=context
     )
 
 
 if __name__ == '__main__':
-    command_line_runner()
+    main()
