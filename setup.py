@@ -20,7 +20,9 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 setup(
     name='cookiecutter',
     version=cookiecutter.__version__,
-    description='Utility to render a directory of Jinja2 templates to files.',
+    description='A command-line utility that creates projects from project \
+        templates, e.g. creating a Python package project from a Python \
+        package project template.',
     long_description=readme + '\n\n' + history,
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
@@ -53,6 +55,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
     ],
-    keywords='cookiecutter, Python, projects, project templates, Jinja2, project directory, setup.py, package, packaging',
+    keywords='cookiecutter, Python, projects, project templates, Jinja2, \
+        project directory, setup.py, package, packaging',
     test_suite='tests',
 )
