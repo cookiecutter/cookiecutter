@@ -13,6 +13,7 @@ directory of Jinja2 templates to files.
 Features
 --------
 
+* Simple command line usage.
 * Works with any type of text file.
 * Directory names and filenames can be templated. For example::
 
