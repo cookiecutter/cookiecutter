@@ -36,3 +36,6 @@ nosetests.xml
 
 # Sphinx
 docs/_build
+
+# TextMate
+.tm_properties
