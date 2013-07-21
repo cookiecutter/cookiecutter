@@ -25,8 +25,9 @@ Generate your project
 
 Then generate your project from the project template::
 
-    $ cookiecutter {{project.repo_name}}/ {{project.repo_name}}/
+    $ cookiecutter {{project.repo_name}}/
 
-The first argument is the input dir, the second is the output dir.
+The only argument is the input directory. (The output directory is generated
+by rendering that, and it can't be the same as the input directory.)
 
 Try it out!
