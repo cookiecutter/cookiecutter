@@ -17,15 +17,6 @@ from cookiecutter import cookiecutter
 
 class TestCookiecutter(unittest.TestCase):
 
-    def test_make_sure_path_exists(self):
-        self.assertTrue(cookiecutter.make_sure_path_exists('/usr/'))
-        self.assertTrue(cookiecutter.make_sure_path_exists('tests/output/'))
-        self.assertFalse(
-            cookiecutter.make_sure_path_exists(
-                '/this-dir-does-not-exist-and-cant-be-created/'
-            )
-        )
-
     def test_generate_files(self):
         cookiecutter.generate_files(
             context={'food': 'pizza'},
