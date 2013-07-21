@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 
 """
-test_cookiecutter
------------------
+test_main
+---------
 
-Tests for `cookiecutter` module.
+Tests for `cookiecutter.main` module.
 """
 
 import os
 import shutil
 import unittest
 
-from cookiecutter import cookiecutter
+from cookiecutter import main
 
 
 class TestCookiecutter(unittest.TestCase):
