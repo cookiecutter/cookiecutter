@@ -6,6 +6,7 @@ import os
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
 
+from .exceptions import NonTemplatedInputDirException
 from .utils import make_sure_path_exists, unicode_open
 
 
@@ -48,7 +49,7 @@ def generate_context(json_dir='json/'):
     return context
 
 
-def generate_files(input_dir, output_dir, context=None):
+def generate_files(input_dir, context=None):
     """ Renders the templates and saves them to files. """
 
     context = context or {}
@@ -56,9 +57,12 @@ def generate_files(input_dir, output_dir, context=None):
     env.loader = FileSystemLoader('.')
 
     # Render dirname before writing
-    name_tmpl = Template(output_dir)
-    rendered_dirname = name_tmpl.render(**context)
-    make_sure_path_exists(rendered_dirname)
+    name_tmpl = Template(input_dir)
+    output_dir = name_tmpl.render(**context)
+    if output_dir == input_dir:
+        raise NonTemplatedInputDirException
+        
+    make_sure_path_exists(output_dir)
 
     for root, dirs, files in os.walk(input_dir):
         for d in dirs:
