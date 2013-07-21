@@ -5,7 +5,7 @@
 test_utils
 ------------
 
-Tests for `complexity.utils` module.
+Tests for `cookiecutter.utils` module.
 """
 
 import shutil
