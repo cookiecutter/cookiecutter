@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import json
 import os
-import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -60,31 +59,31 @@ def generate_files(input_dir, output_dir, context=None):
     name_tmpl = Template(output_dir)
     rendered_dirname = name_tmpl.render(**context)
     make_sure_path_exists(rendered_dirname)
-    
+
     for root, dirs, files in os.walk(input_dir):
         for d in dirs:
             indir = os.path.join(root, d)
             outdir = indir.replace(input_dir, output_dir, 1)
-            
+
             # Render dirname before writing
             name_tmpl = Template(outdir)
             rendered_dirname = name_tmpl.render(**context)
-            
+
             make_sure_path_exists(rendered_dirname)
-            
+
         for f in files:
             # Render the file
             infile = os.path.join(root, f)
             tmpl = env.get_template(infile)
             rendered_file = tmpl.render(**context)
-        
+
             # Write it to the corresponding place in output_dir
             outfile = infile.replace(input_dir, output_dir, 1)
-            
+
             # Render the output filename before writing
             name_tmpl = Template(outfile)
             rendered_name = name_tmpl.render(**context)
             print("Writing {0}".format(rendered_name))
-            
+
             with unicode_open(rendered_name, 'w') as fh:
                 fh.write(rendered_file)
