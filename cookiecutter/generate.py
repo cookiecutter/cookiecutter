@@ -12,14 +12,15 @@ from .utils import make_sure_path_exists, unicode_open
 
 def generate_context(json_dir='json/'):
     """
-    Generates the context for all complexity pages.
+    Generates the context for a Cookiecutter project template.
+    :param json_dir: Directory containing .json file(s).
+    :paramtype json_dir: directory
 
     Description:
 
-        Iterates through the contents of the input_dir and finds all JSON
-        files.
-        Loads the JSON file as a Python object with the key being the JSON
-        filename.
+        Iterates through the contents of json_dir and finds all JSON
+        files. Loads the JSON file as a Python object with the key being the
+        JSON file name..
 
     Example:
 
@@ -50,7 +51,11 @@ def generate_context(json_dir='json/'):
 
 
 def generate_files(input_dir, context=None):
-    """ Renders the templates and saves them to files. """
+    """
+    Renders the templates and saves them to files.
+    :param input_dir: Project template input directory.
+    :paramtype input_dir: directory
+    """
 
     context = context or {}
     env = Environment()
