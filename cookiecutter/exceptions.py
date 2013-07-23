@@ -18,7 +18,7 @@ class CookiecutterException(Exception):
 
 class NonTemplatedInputDirException(CookiecutterException):
     """
-    Raised when a project's input dir is not templated. 
+    Raised when a project's input dir is not templated.
     The name of the input directory should always contain a string that is
     rendered to something else, so that input_dir != output_dir.
     """

@@ -74,7 +74,7 @@ def generate_files(input_dir, context=None):
     output_dir = name_tmpl.render(**context)
     if output_dir == input_dir:
         raise NonTemplatedInputDirException
-        
+
     make_sure_path_exists(output_dir)
 
     for root, dirs, files in os.walk(input_dir):
