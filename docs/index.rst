@@ -18,6 +18,14 @@ Basics
    installation
    usage
    
+API Reference
+-------------
+
+.. toctree::
+   :maxdepth: 2
+   
+   cookiecutter
+
 Project Info
 ------------
 
@@ -27,7 +35,6 @@ Project Info
    contributing
    authors
    history
-
 
 Index
 -----
