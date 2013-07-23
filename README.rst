@@ -41,19 +41,29 @@ Cookiecutter Project Templates
 
 Here is a list of the Cookiecutter project templates that exist as of now:
 
-* **cookiecutter-pypackage**: @audreyr's ultimate Python package project 
-  template. https://github.com/audreyr/cookiecutter-pypackage
+* `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project 
+  template.
 
 Make your own, then submit a pull request adding yours to this list!
+
+.. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`@audreyr`: https://github.com/audreyr/
 
 Similar projects
 ----------------
     
-* Paste has a create option that creates a skeleton project: 
-  http://pythonpaste.org/script/#paster-create
+* `Paste`_ has a create option that creates a skeleton project.
 
-* Diecutter: an API service that will give you back a configuration file from
-  a template and variables. https://github.com/novagile/diecutter
+* `Diecutter`_: an API service that will give you back a configuration file from
+  a template and variables. 
   
-* Django's `startproject` and `startapp` commands can take in a `--template`
-  option: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
+* `Django`_'s `startproject` and `startapp` commands can take in a `--template`
+  option.
+
+* `python-packager`_: Creates Python packages from its own template, with
+  configurable options.
+
+.. _`Paste`: http://pythonpaste.org/script/#paster-create
+.. _`Diecutter`: https://github.com/novagile/diecutter
+.. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
+.. _`python-packager`: https://github.com/fcurella/python-packager
