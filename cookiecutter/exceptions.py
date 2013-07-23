@@ -3,9 +3,9 @@
 
 """
 cookiecutter.exceptions
----------------------
+-----------------------
 
-Cookiecutter-specific exceptions.
+All exceptions used in the Cookiecutter code base are defined here.
 """
 
 

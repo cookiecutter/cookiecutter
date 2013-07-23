@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+cookiecutter.utils
+------------------
+
+Helper functions used throughout Cookiecutter.
+"""
+
 import errno
 import os
 import sys

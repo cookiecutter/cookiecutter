@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+cookiecutter.generate
+---------------------
+
+Functions for generating a project from a project template.
+"""
+
 import json
 import os
 
