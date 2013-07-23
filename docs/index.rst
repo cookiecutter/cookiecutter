@@ -3,10 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to cookiecutter's documentation!
-==================================
+Cookiecutter: Better Project Templates
+======================================
 
-Contents:
+Cookiecutter creates projects from project templates, e.g. Python package projects.
+
+Basics
+------
 
 .. toctree::
    :maxdepth: 2
@@ -14,15 +17,20 @@ Contents:
    readme
    installation
    usage
+   
+Project Info
+------------
+
+.. toctree::
+   :maxdepth: 2
+
    contributing
    authors
    history
 
 
-Indices and tables
-==================
+Index
+-----
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
-
