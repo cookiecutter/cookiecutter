@@ -15,7 +15,7 @@ import unittest
 from cookiecutter import find
 
 
-class TestUtils(unittest.TestCase):
+class TestFind(unittest.TestCase):
 
     def test_find_template(self):
         os.system('git clone https://github.com/audreyr/cookiecutter-pypackage.git')
