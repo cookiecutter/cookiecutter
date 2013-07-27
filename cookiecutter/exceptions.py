@@ -22,3 +22,9 @@ class NonTemplatedInputDirException(CookiecutterException):
     The name of the input directory should always contain a string that is
     rendered to something else, so that input_dir != output_dir.
     """
+
+class UnknownTemplateDirException(CookiecutterException):
+    """
+    Raised when Cookiecutter cannot determine which directory is the project
+    template, e.g. more than one dir appears to be a template dir.
+    """

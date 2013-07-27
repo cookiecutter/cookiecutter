@@ -13,7 +13,9 @@ library rather than a script.
 
 import argparse
 
+from .find import find_template
 from .generate import generate_context, generate_files
+from .vcs import git_clone
 
 
 def main():
@@ -28,10 +30,18 @@ def main():
         help='Cookiecutter project template dir, e.g. {{project.repo_name}}/'
     )
     args = parser.parse_args()
+    
+    # If it's a git repo, clone and prompt
+    if args.input_dir.endswith('.git'):
+        repo_dir = git_clone(args.input_dir)
+        project_template = find_template(repo_dir)
+    else:
+        project_template = args.input_dir
 
+    # Create project from local context and project template.
     context = generate_context()
     generate_files(
-        input_dir=args.input_dir,
+        input_dir=project_template,
         context=context
     )
 
