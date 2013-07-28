@@ -25,13 +25,13 @@ class TestGenerate(unittest.TestCase):
             exceptions.NonTemplatedInputDirException,
             generate.generate_files,
             context={'food': 'pizza'}, 
-            input_dir='tests/input'
+            template_dir='tests/input'
         )
 
     def test_generate_files(self):
         generate.generate_files(
             context={'food': 'pizza'},
-            input_dir='tests/input{{food}}'
+            template_dir='tests/input{{food}}'
         )
         self.assertTrue(os.path.isfile('tests/inputpizza/simple.txt'))
         simple_text = open('tests/inputpizza/simple.txt', 'rt').read()
@@ -45,7 +45,7 @@ class TestGenerate(unittest.TestCase):
         context = generate.generate_context(json_dir='tests/json2')
         generate.generate_files(
             context=context,
-            input_dir='tests/input{{stuff.color}}'
+            template_dir='tests/input{{stuff.color}}'
         )
         
         something = """Hi!

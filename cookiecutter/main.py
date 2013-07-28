@@ -35,21 +35,19 @@ def cookiecutter(input_dir):
         got_repo_arg = True
         repo_dir = git_clone(input_dir)
         project_template = find_template(repo_dir)
-        os.chdir(repo_dir)
     else:
         got_repo_arg = False
         project_template = input_dir
 
-    # Create project from local context and project template.
-
-
     json_dir = os.path.join(os.path.dirname(project_template), 'json/')
     logging.info('json_dir is {0}'.format(json_dir))
+
+    # Create project from local context and project template.
     context = generate_context(
         json_dir=json_dir
     )
     generate_files(
-        input_dir=project_template,
+        template_dir=project_template,
         context=context
     )
 

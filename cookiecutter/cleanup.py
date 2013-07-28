@@ -28,9 +28,15 @@ def remove_repo(repo_dir, generated_project):
     """
 
     logging.info('Moving {0} out of {1} and removing {1}'.format(generated_project, repo_dir))
+    
+    parent_dir = os.path.dirname(os.path.abspath(repo_dir))
+    logging.info('parent_dir is {0}'.format(parent_dir))
+
     project_dir = os.path.join(repo_dir, generated_project)
+    logging.info('project_dir is {0}'.format(project_dir))
+    
     if os.path.exists(project_dir):
-        shutil.move(project_dir, os.path.dirname(repo_dir))
-        os.rmdir(repo_dir)
+        shutil.move(project_dir, parent_dir)
+        shutil.rmtree(repo_dir)
         return True
     return False

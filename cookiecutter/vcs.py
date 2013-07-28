@@ -8,6 +8,7 @@ cookiecutter.vcs
 Helper functions for working with version control systems.
 """
 
+import logging
 import os
 
 
@@ -23,4 +24,5 @@ def git_clone(repo):
     # Return repo dir
     tail = os.path.split(repo)[1]
     repo_dir = tail.rsplit('.git')[0]
+    logging.info('repo_dir is {0}'.format(repo_dir))
     return repo_dir

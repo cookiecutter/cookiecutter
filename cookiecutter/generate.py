@@ -60,31 +60,31 @@ def generate_context(json_dir='json/'):
     return context
 
 
-def generate_files(input_dir, context=None):
+def generate_files(template_dir, context=None):
     """
     Renders the templates and saves them to files.
     :param input_dir: Project template input directory.
     :paramtype input_dir: directory
     """
     
-    logging.info('Generating project from {0}...'.format(input_dir))
+    logging.info('Generating project from {0}...'.format(template_dir))
 
     context = context or {}
     env = Environment()
     env.loader = FileSystemLoader('.')
 
     # Render dirname before writing
-    name_tmpl = Template(input_dir)
+    name_tmpl = Template(template_dir)
     output_dir = name_tmpl.render(**context)
-    if output_dir == input_dir:
+    if output_dir == template_dir:
         raise NonTemplatedInputDirException
 
     make_sure_path_exists(output_dir)
 
-    for root, dirs, files in os.walk(input_dir):
+    for root, dirs, files in os.walk(template_dir):
         for d in dirs:
             indir = os.path.join(root, d)
-            outdir = indir.replace(input_dir, output_dir, 1)
+            outdir = indir.replace(template_dir, output_dir, 1)
 
             # Render dirname before writing
             name_tmpl = Template(outdir)
@@ -99,7 +99,7 @@ def generate_files(input_dir, context=None):
             rendered_file = tmpl.render(**context)
 
             # Write it to the corresponding place in output_dir
-            outfile = infile.replace(input_dir, output_dir, 1)
+            outfile = infile.replace(template_dir, output_dir, 1)
 
             # Render the output filename before writing
             name_tmpl = Template(outfile)
