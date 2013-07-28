@@ -21,9 +21,13 @@ from .generate import generate_context, generate_files
 from .vcs import git_clone
 
 
+logger = logging.getLogger(__name__)
+
 def cookiecutter(input_dir):
     """
     API equivalent to using Cookiecutter at the command line.
+    
+    :param input_dir: A project template directory or URL to git repo.
     """
 
     # If it's a git repo, clone and prompt
@@ -33,11 +37,16 @@ def cookiecutter(input_dir):
         project_template = find_template(repo_dir)
         os.chdir(repo_dir)
     else:
+        got_repo_arg = False
         project_template = input_dir
 
     # Create project from local context and project template.
+
+
+    json_dir = os.path.join(os.path.dirname(project_template), 'json/')
+    logging.info('json_dir is {0}'.format(json_dir))
     context = generate_context(
-        json_dir='json/'
+        json_dir=json_dir
     )
     generate_files(
         input_dir=project_template,
