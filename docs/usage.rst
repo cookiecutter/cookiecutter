@@ -52,6 +52,8 @@ You can use Cookiecutter from Python::
 
     # Create project from the cookiecutter-pypackage.git repo template
     cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+    
+See the :ref:`API Reference` for more details.
 
 If you use it in an interesting way, I'd love to hear about it: file an issue,
 please!

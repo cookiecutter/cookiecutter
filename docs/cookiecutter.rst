@@ -9,10 +9,26 @@ cookiecutter Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`cleanup` Module
+---------------------
+
+.. automodule:: cookiecutter.cleanup
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`exceptions` Module
 ------------------------
 
 .. automodule:: cookiecutter.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`find` Module
+------------------
+
+.. automodule:: cookiecutter.find
     :members:
     :undoc-members:
     :show-inheritance:
@@ -37,6 +53,14 @@ cookiecutter Package
 -------------------
 
 .. automodule:: cookiecutter.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`vcs` Module
+-----------------
+
+.. automodule:: cookiecutter.vcs
     :members:
     :undoc-members:
     :show-inheritance:
