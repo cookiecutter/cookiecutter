@@ -3,6 +3,29 @@
 History
 -------
 
+0.5 (2013-07-28)
+++++++++++++++++
+
+* Friendlier, more simplified command line usage::
+
+    # Create project from the cookiecutter-pypackage/ template
+    $ cookiecutter cookiecutter-pypackage/
+    
+    # Create project from the cookiecutter-pypackage.git repo template
+    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+
+* Can now use Cookiecutter from Python as a package::
+
+    from cookiecutter.main import cookiecutter
+    
+    # Create project from the cookiecutter-pypackage/ template
+    cookiecutter('cookiecutter-pypackage/')
+
+    # Create project from the cookiecutter-pypackage.git repo template
+    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+
+* Internal refactor to remove any code that changes the working directory.
+
 0.4 (2013-07-22)
 ++++++++++++++++
 
