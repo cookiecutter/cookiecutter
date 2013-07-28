@@ -47,7 +47,9 @@ def main():
         project_template = args.input_dir
 
     # Create project from local context and project template.
-    context = generate_context()
+    context = generate_context(
+        json_dir='json/'
+    )
     generate_files(
         input_dir=project_template,
         context=context

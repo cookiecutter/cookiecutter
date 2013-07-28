@@ -29,4 +29,5 @@ def find_template(repo_dir):
     if len(contents_set) == 1:
         project_template = contents_set.pop()
         logging.info('The project template appears to be {0}'.format(project_template))
+        return project_template
     return False

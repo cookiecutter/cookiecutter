@@ -56,6 +56,7 @@ def generate_context(json_dir='json/'):
         # Add the Python object to the context dictionary
         context[file_name[:-5]] = obj
 
+    logging.info('Context generated is {0}'.format(context))
     return context
 
 
@@ -65,6 +66,8 @@ def generate_files(input_dir, context=None):
     :param input_dir: Project template input directory.
     :paramtype input_dir: directory
     """
+    
+    logging.info('Generating project from {0}...'.format(input_dir))
 
     context = context or {}
     env = Environment()
