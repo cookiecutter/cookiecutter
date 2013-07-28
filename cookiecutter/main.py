@@ -14,6 +14,7 @@ library rather than a script.
 import argparse
 import os
 
+from .cleanup import remove_repo
 from .find import find_template
 from .generate import generate_context, generate_files
 from .vcs import git_clone
@@ -34,6 +35,7 @@ def main():
     
     # If it's a git repo, clone and prompt
     if args.input_dir.endswith('.git'):
+        got_repo_arg = True
         repo_dir = git_clone(args.input_dir)
         project_template = find_template(repo_dir)
         os.chdir(repo_dir)
@@ -47,6 +49,11 @@ def main():
         context=context
     )
 
+    # Remove repo if Cookiecutter cloned it in the first place.
+    # Here the user just wants a project, not a project template.
+    if got_repo_arg:
+        generated_project = context['project']['repo_name']
+        remove_repo(repo_dir, generated_project)
 
 if __name__ == '__main__':
     main()
