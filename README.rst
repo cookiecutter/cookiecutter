@@ -22,7 +22,24 @@ creating a Python package project from a Python package project template.
 Features
 --------
 
-* Simple command line usage.
+* Simple command line usage::
+
+    # Create project from the cookiecutter-pypackage/ template
+    $ cookiecutter cookiecutter-pypackage/
+    
+    # Create project from the cookiecutter-pypackage.git repo template
+    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+
+* Or use it from Python::
+
+    from cookiecutter.main import cookiecutter
+    
+    # Create project from the cookiecutter-pypackage/ template
+    cookiecutter('cookiecutter-pypackage/')
+
+    # Create project from the cookiecutter-pypackage.git repo template
+    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+
 * Works with any type of text file.
 * Directory names and filenames can be templated. For example::
 
