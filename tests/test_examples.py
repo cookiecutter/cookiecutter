@@ -28,7 +28,7 @@ class TestExamples(unittest.TestCase):
         """
 
         os.system('git clone https://github.com/audreyr/cookiecutter-pypackage.git')
-        os.system('cookiecutter cookiecutter-pypackage/{{project.repo_name}}')
+        os.system('cookiecutter cookiecutter-pypackage/')
         self.assertTrue(os.path.isfile('cookiecutter-pypackage/alotofeffort/README.rst'))
 
     def tearDown(self):

@@ -27,7 +27,8 @@ def cookiecutter(input_dir):
     """
     API equivalent to using Cookiecutter at the command line.
     
-    :param input_dir: A project template directory or URL to git repo.
+    :param input_dir: A directory containing a project template dir, 
+        or a URL to git repo.
     """
 
     # If it's a git repo, clone and prompt
@@ -37,7 +38,7 @@ def cookiecutter(input_dir):
         project_template = find_template(repo_dir)
     else:
         got_repo_arg = False
-        project_template = input_dir
+        project_template = find_template(input_dir)
 
     json_dir = os.path.join(os.path.dirname(project_template), 'json/')
     logging.info('json_dir is {0}'.format(json_dir))

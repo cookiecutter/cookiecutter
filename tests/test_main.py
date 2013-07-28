@@ -23,11 +23,19 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 class TestCookiecutter(unittest.TestCase):
 
     def test_cookiecutter(self):
-        main.cookiecutter('tests/fake-repo-pre/{{project.repo_name}}')
+        main.cookiecutter('tests/fake-repo-pre/')
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{project.repo_name}}'))
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
         self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
 
+    def test_cookiecutter_no_slash(self):
+        main.cookiecutter('tests/fake-repo-pre')
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{project.repo_name}}'))
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
+        self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
+        
     def tearDown(self):
         if os.path.isdir('tests/fake-repo-pre/fake-project'):
             shutil.rmtree('tests/fake-repo-pre/fake-project')
