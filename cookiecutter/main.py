@@ -21,6 +21,36 @@ from .generate import generate_context, generate_files
 from .vcs import git_clone
 
 
+def cookiecutter(input_dir):
+    """
+    API equivalent to using Cookiecutter at the command line.
+    """
+
+    # If it's a git repo, clone and prompt
+    if input_dir.endswith('.git'):
+        got_repo_arg = True
+        repo_dir = git_clone(input_dir)
+        project_template = find_template(repo_dir)
+        os.chdir(repo_dir)
+    else:
+        project_template = input_dir
+
+    # Create project from local context and project template.
+    context = generate_context(
+        json_dir='json/'
+    )
+    generate_files(
+        input_dir=project_template,
+        context=context
+    )
+
+    # Remove repo if Cookiecutter cloned it in the first place.
+    # Here the user just wants a project, not a project template.
+    if got_repo_arg:
+        generated_project = context['project']['repo_name']
+        remove_repo(repo_dir, generated_project)
+    
+
 def main():
     """ Entry point for the package, as defined in setup.py. """
 
@@ -37,29 +67,7 @@ def main():
     )
     args = parser.parse_args()
     
-    # If it's a git repo, clone and prompt
-    if args.input_dir.endswith('.git'):
-        got_repo_arg = True
-        repo_dir = git_clone(args.input_dir)
-        project_template = find_template(repo_dir)
-        os.chdir(repo_dir)
-    else:
-        project_template = args.input_dir
-
-    # Create project from local context and project template.
-    context = generate_context(
-        json_dir='json/'
-    )
-    generate_files(
-        input_dir=project_template,
-        context=context
-    )
-
-    # Remove repo if Cookiecutter cloned it in the first place.
-    # Here the user just wants a project, not a project template.
-    if got_repo_arg:
-        generated_project = context['project']['repo_name']
-        remove_repo(repo_dir, generated_project)
+    cookiecutter(args.input_dir)
 
 if __name__ == '__main__':
     main()
