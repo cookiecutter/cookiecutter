@@ -23,7 +23,9 @@ class TestFind(unittest.TestCase):
         self.assertEqual(template, '{{project.repo_name}}')
         self.assertNotEqual(template, '{{project.repo_name }}')
         self.assertNotEqual(template, '{{ project.repo_name }}')
-        shutil.rmtree('cookiecutter-pypackage')
+
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
 
 if __name__ == '__main__':
     unittest.main()

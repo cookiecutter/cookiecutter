@@ -38,7 +38,8 @@ class TestExamples(unittest.TestCase):
         self.assertTrue(os.path.isfile('cookiecutter-pypackage/alotofeffort/README.rst'))
 
     def tearDown(self):
-        shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
         
 if __name__ == '__main__':
     unittest.main()
