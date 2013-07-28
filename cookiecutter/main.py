@@ -12,6 +12,7 @@ library rather than a script.
 """
 
 import argparse
+import os
 
 from .find import find_template
 from .generate import generate_context, generate_files
@@ -35,6 +36,7 @@ def main():
     if args.input_dir.endswith('.git'):
         repo_dir = git_clone(args.input_dir)
         project_template = find_template(repo_dir)
+        os.chdir(repo_dir)
     else:
         project_template = args.input_dir
 
