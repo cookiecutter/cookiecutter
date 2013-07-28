@@ -8,7 +8,6 @@ Grab a Cookiecutter template
 First, clone a Cookiecutter project template::
 
     $ git clone git@github.com:audreyr/cookiecutter-pypackage.git
-    $ cd cookiecutter-pypackage
 
 Make your changes
 -----------------
@@ -25,9 +24,34 @@ Generate your project
 
 Then generate your project from the project template::
 
-    $ cookiecutter {{project.repo_name}}/
+    $ cookiecutter cookiecutter-pypackage/
 
 The only argument is the input directory. (The output directory is generated
 by rendering that, and it can't be the same as the input directory.)
 
 Try it out!
+
+Works directly with git repos too
+---------------------------------
+
+To create a project from the cookiecutter-pypackage.git repo template::
+
+    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+
+This generates your project and outputs it in your current directory.
+
+Or hook directly into the Cookiecutter API
+------------------------------------------
+
+You can use Cookiecutter from Python::
+
+    from cookiecutter.main import cookiecutter
+    
+    # Create project from the cookiecutter-pypackage/ template
+    cookiecutter('cookiecutter-pypackage/')
+
+    # Create project from the cookiecutter-pypackage.git repo template
+    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+
+If you use it in an interesting way, I'd love to hear about it: file an issue,
+please!
