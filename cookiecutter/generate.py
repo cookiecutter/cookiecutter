@@ -9,6 +9,7 @@ Functions for generating a project from a project template.
 """
 
 import json
+import logging
 import os
 
 from jinja2 import FileSystemLoader, Template
@@ -100,7 +101,7 @@ def generate_files(input_dir, context=None):
             # Render the output filename before writing
             name_tmpl = Template(outfile)
             rendered_name = name_tmpl.render(**context)
-            print("Writing {0}".format(rendered_name))
+            logging.info("Writing {0}".format(rendered_name))
 
             with unicode_open(rendered_name, 'w') as fh:
                 fh.write(rendered_file)

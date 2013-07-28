@@ -8,6 +8,7 @@ cookiecutter.cleanup
 Functions for cleaning up after Cookiecutter project generation occurs.
 """
 
+import logging
 import os
 import shutil
 
@@ -26,6 +27,7 @@ def remove_repo(repo_dir, generated_project):
     :returns: True if successful, else False.
     """
 
+    logging.info('Moving {0} out of {1} and removing {1}'.format(generated_project, repo_dir))
     project_dir = os.path.join(repo_dir, generated_project)
     if os.path.exists(project_dir):
         shutil.move(project_dir, os.path.dirname(repo_dir))

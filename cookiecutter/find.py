@@ -8,6 +8,7 @@ cookiecutter.find
 Functions for finding Cookiecutter templates and other components.
 """
 
+import logging
 import os
 
 
@@ -18,6 +19,7 @@ def find_template(repo_dir):
     :param repo_dir: Local directory of newly cloned repo.
     """
 
+    logging.info('Searching {0} for the project template.'.format(repo_dir))
     contents_set = set(os.listdir(repo_dir))
     exclude_set = set(['.DS_Store', '.git', '.gitignore', 'README.rst', 'json'])
     
@@ -25,5 +27,6 @@ def find_template(repo_dir):
     contents_set -= exclude_set
 
     if len(contents_set) == 1:
-        return contents_set.pop()
+        project_template = contents_set.pop()
+        logging.info('The project template appears to be {0}'.format(project_template))
     return False

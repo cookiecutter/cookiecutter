@@ -12,6 +12,7 @@ library rather than a script.
 """
 
 import argparse
+import logging
 import os
 
 from .cleanup import remove_repo
@@ -22,6 +23,9 @@ from .vcs import git_clone
 
 def main():
     """ Entry point for the package, as defined in setup.py. """
+
+    # Log info and above to console
+    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 
     # Get command line input/output arguments
     parser = argparse.ArgumentParser(
