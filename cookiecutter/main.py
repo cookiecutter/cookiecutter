@@ -40,12 +40,12 @@ def cookiecutter(input_dir):
         got_repo_arg = False
         project_template = find_template(input_dir)
 
-    json_dir = os.path.join(os.path.dirname(project_template), 'json/')
-    logging.info('json_dir is {0}'.format(json_dir))
+    config_file = os.path.join(os.path.dirname(project_template), 'cookiecutter.json')
+    logging.info('config_file is {0}'.format(config_file))
 
     # Create project from local context and project template.
     context = generate_context(
-        json_dir=json_dir
+        config_file=config_file
     )
     generate_files(
         template_dir=project_template,
@@ -55,7 +55,7 @@ def cookiecutter(input_dir):
     # Remove repo if Cookiecutter cloned it in the first place.
     # Here the user just wants a project, not a project template.
     if got_repo_arg:
-        generated_project = context['project']['repo_name']
+        generated_project = context['cookiecutter']['repo_name']
         remove_repo(repo_dir, generated_project)
     
 

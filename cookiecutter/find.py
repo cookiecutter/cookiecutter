@@ -22,7 +22,7 @@ def find_template(repo_dir):
 
     logging.info('Searching {0} for the project template.'.format(repo_dir))
     contents_set = set(os.listdir(repo_dir))
-    exclude_set = set(['.DS_Store', '.git', '.gitignore', 'README.rst', 'json'])
+    exclude_set = set(['.DS_Store', '.git', '.gitignore', 'README.rst', 'cookiecutter.json'])
     
     # Subtract set of excludes from contents.
     contents_set -= exclude_set

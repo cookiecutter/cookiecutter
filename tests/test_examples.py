@@ -20,7 +20,7 @@ else:
 
 
 @unittest.skip(reason='Works locally with tox but fails on Travis.')
-class TestExamples(unittest.TestCase):
+class TestPyPackage(unittest.TestCase):
 
     def test_cookiecutter_pypackage(self):
         """
@@ -34,7 +34,23 @@ class TestExamples(unittest.TestCase):
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
-            
+
+@unittest.skip(reason='Works locally with tox but fails on Travis.')
+class TestJQuery(unittest.TestCase):
+
+    def test_cookiecutter_jquery(self):
+        """
+        Tests that https://github.com/audreyr/cookiecutter-jquery.git works.
+        """
+
+        os.system('git clone https://github.com/audreyr/cookiecutter-jquery.git')
+        os.system('cookiecutter cookiecutter-jquery/')
+        self.assertTrue(os.path.isfile('cookiecutter-jquery/boilerplate/README.md'))
+
+    def tearDown(self):
+        if os.path.isdir('cookiecutter-jquery'):
+            shutil.rmtree('cookiecutter-jquery')
+
 @unittest.skip(reason='Works locally with tox but fails on Travis.')
 class TestExamplesRepoArg(unittest.TestCase):
     
