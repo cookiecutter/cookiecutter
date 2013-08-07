@@ -11,11 +11,16 @@ Tests for `cookiecutter.main` module.
 import logging
 import os
 import shutil
+import sys
 import unittest
 
 from cookiecutter import main
 
-
+if sys.version_info[:2] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
+    
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
@@ -40,6 +45,7 @@ class TestCookiecutter(unittest.TestCase):
         if os.path.isdir('tests/fake-repo-pre/fake-project'):
             shutil.rmtree('tests/fake-repo-pre/fake-project')
 
+@unittest.skip(reason='Need to mock input with pexpect or something.')
 class TestCookiecutterRepoArg(unittest.TestCase):
 
     def test_cookiecutter_git(self):
@@ -51,6 +57,8 @@ class TestCookiecutterRepoArg(unittest.TestCase):
         self.assertTrue(os.path.exists('alotofeffort/setup.py'))
     
     def tearDown(self):
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('alotofeffort'):
             shutil.rmtree('alotofeffort')
 

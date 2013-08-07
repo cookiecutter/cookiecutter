@@ -17,6 +17,7 @@ import os
 
 from .cleanup import remove_repo
 from .find import find_template
+from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import git_clone
 
@@ -43,10 +44,17 @@ def cookiecutter(input_dir):
     config_file = os.path.join(os.path.dirname(project_template), 'cookiecutter.json')
     logging.info('config_file is {0}'.format(config_file))
 
-    # Create project from local context and project template.
     context = generate_context(
         config_file=config_file
     )
+
+    # If the context came from a repo, prompt the user to manually configure
+    # at the command line.
+    if got_repo_arg:
+        cookiecutter_dict = prompt_for_config(context)
+        context['cookiecutter'] = cookiecutter_dict
+
+    # Create project from local context and project template.
     generate_files(
         template_dir=project_template,
         context=context
