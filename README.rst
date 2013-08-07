@@ -43,10 +43,10 @@ Features
 * Works with any type of text file.
 * Directory names and filenames can be templated. For example::
 
-    {{project.repo_name}}/{{project.repo_name}}/{{project.repo_name}}.py
+    {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
 
 * Supports unlimited levels of directory nesting.
-* Simply define your template variables in a JSON file. For example::
+* Simply define your template variables in a cookiecutter.json file. For example::
 
     {
     	"full_name": "Audrey Roy",

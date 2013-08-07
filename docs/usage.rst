@@ -12,7 +12,7 @@ First, clone a Cookiecutter project template::
 Make your changes
 -----------------
 
-Modify the variables defined in `json`.
+Modify the variables defined in `cookiecutter.json`.
 
 Open up the skeleton project. If you need to change it around a bit, do so.
 
