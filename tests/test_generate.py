@@ -8,6 +8,7 @@ test_generate
 Tests for `cookiecutter.generate` module.
 """
 
+import logging
 import os
 import shutil
 import unittest
@@ -17,6 +18,8 @@ from jinja2.environment import Environment
 
 from cookiecutter import generate
 from cookiecutter import exceptions
+
+logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 class TestGenerate(unittest.TestCase):
 
@@ -38,11 +41,12 @@ class TestGenerate(unittest.TestCase):
         self.assertEqual(simple_text, 'I eat pizza')
 
     def test_generate_context(self):
-        context = generate.generate_context(json_dir='tests/json')
+        context = generate.generate_context(config_file='tests/json/test.json')
         self.assertEqual(context, {"test": {"1": 2}})
 
     def test_output_folder(self):
-        context = generate.generate_context(json_dir='tests/json2')
+        context = generate.generate_context(config_file='tests/json2/stuff.json')
+        logging.debug('Context is {0}'.format(context))
         generate.generate_files(
             context=context,
             template_dir='tests/input{{stuff.color}}'

@@ -19,42 +19,24 @@ from .exceptions import NonTemplatedInputDirException
 from .utils import make_sure_path_exists, unicode_open
 
 
-def generate_context(json_dir='json/'):
+def generate_context(config_file='cookiecutter.json'):
     """
     Generates the context for a Cookiecutter project template.
-    :param json_dir: Directory containing .json file(s).
-    :paramtype json_dir: directory
+    Loads the JSON file as a Python object, with key being the JSON filename.
 
-    Description:
-
-        Iterates through the contents of json_dir and finds all JSON
-        files. Loads the JSON file as a Python object with the key being the
-        JSON file name..
-
-    Example:
-
-        Assume the following files exist:
-
-            json/names.json
-            json/numbers.json
-
-        Depending on their content, might generate a context as follows:
-
-        contexts = {"names":
-                        ['Audrey', 'Danny']
-                    "numbers":
-                        [1, 2, 3, 4]
-                    }
+    :param config_file: JSON file containing project config values.
+    :paramtype config_file: filename
     """
+
     context = {}
 
-    for file_name in os.listdir(json_dir):
-        file_to_open = "{0}/{1}".format(json_dir, file_name)
-        file_handle = open(file_to_open)
-        obj = json.load(file_handle)
+    file_handle = open(config_file)
+    obj = json.load(file_handle)
 
-        # Add the Python object to the context dictionary
-        context[file_name[:-5]] = obj
+    # Add the Python object to the context dictionary
+    file_name = os.path.split(config_file)[1]
+    file_stem = file_name.split('.')[0]
+    context[file_stem] = obj
 
     logging.info('Context generated is {0}'.format(context))
     return context
