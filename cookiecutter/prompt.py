@@ -33,6 +33,6 @@ def prompt_for_config(context):
             new_val = input(prompt)
             new_val = new_val.strip()
         
-        cookiecutter_dict['key'] = new_val
+        cookiecutter_dict[key] = new_val
     
     return cookiecutter_dict
