@@ -10,7 +10,7 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
  - pip install -r requirements.txt
- - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install unittest2; fi
+ - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install unittest2 simplejson ordereddict; fi
 
 # command to run tests, e.g. python setup.py test
 script: python setup.py test

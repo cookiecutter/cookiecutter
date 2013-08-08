@@ -8,9 +8,9 @@ cookiecutter.generate
 Functions for generating a project from a project template.
 """
 
-import json
 import logging
 import os
+import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -18,6 +18,13 @@ from jinja2.environment import Environment
 from .exceptions import NonTemplatedInputDirException
 from .utils import make_sure_path_exists, unicode_open
 
+
+if sys.version_info[:2] < (2, 7):
+    import simplejson as json
+    from ordereddict import OrderedDict
+else:
+    import json
+    from collections import OrderedDict
 
 def generate_context(config_file='cookiecutter.json'):
     """
@@ -31,7 +38,7 @@ def generate_context(config_file='cookiecutter.json'):
     context = {}
 
     file_handle = open(config_file)
-    obj = json.load(file_handle)
+    obj = json.load(file_handle, object_pairs_hook=OrderedDict)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(config_file)[1]
