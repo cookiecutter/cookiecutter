@@ -3,6 +3,13 @@
 History
 -------
 
+0.6.0 (2013-08-08)
+++++++++++++++++++
+
+* Config is now in a single `cookiecutter.json` instead of in `json/`.
+* When you create a project from a git repo template, Cookiecutter prompts
+  you to enter custom values for the fields defined in `cookiecutter.json`.
+
 0.5 (2013-07-28)
 ++++++++++++++++
 
