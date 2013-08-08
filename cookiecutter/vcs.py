@@ -13,7 +13,7 @@ import os
 import shutil
 import sys
 
-from prompt import query_yes_no
+from .prompt import query_yes_no
 
 
 def git_clone(repo):
