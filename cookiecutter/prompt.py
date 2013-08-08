@@ -24,14 +24,12 @@ def prompt_for_config(context):
     cookiecutter_dict = {}
     
     for key, val in context['cookiecutter'].iteritems():
-        prompt = "{0} (e.g. \"{1}\")? ".format(key, val)
+        prompt = "{0} (default is \"{1}\")? ".format(key, val)
         new_val = input(prompt)
         new_val = new_val.strip()
 
-        while new_val == '':
-            prompt = "Please enter a value for {0}: ".format(key)
-            new_val = input(prompt)
-            new_val = new_val.strip()
+        if new_val == '':
+            new_val = val
         
         cookiecutter_dict[key] = new_val
     
