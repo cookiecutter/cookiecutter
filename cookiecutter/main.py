@@ -42,7 +42,7 @@ def cookiecutter(input_dir):
         project_template = find_template(input_dir)
 
     config_file = os.path.join(os.path.dirname(project_template), 'cookiecutter.json')
-    logging.info('config_file is {0}'.format(config_file))
+    logging.debug('config_file is {0}'.format(config_file))
 
     context = generate_context(
         config_file=config_file

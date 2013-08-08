@@ -27,13 +27,13 @@ def remove_repo(repo_dir, generated_project):
     :returns: True if successful, else False.
     """
 
-    logging.info('Moving {0} out of {1} and removing {1}'.format(generated_project, repo_dir))
+    logging.debug('Moving {0} out of {1} and removing {1}'.format(generated_project, repo_dir))
     
     parent_dir = os.path.dirname(os.path.abspath(repo_dir))
-    logging.info('parent_dir is {0}'.format(parent_dir))
+    logging.debug('parent_dir is {0}'.format(parent_dir))
 
     project_dir = os.path.join(repo_dir, generated_project)
-    logging.info('project_dir is {0}'.format(project_dir))
+    logging.debug('project_dir is {0}'.format(project_dir))
     
     if os.path.exists(project_dir):
         shutil.move(project_dir, parent_dir)

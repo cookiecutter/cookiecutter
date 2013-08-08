@@ -38,7 +38,7 @@ def generate_context(config_file='cookiecutter.json'):
     file_stem = file_name.split('.')[0]
     context[file_stem] = obj
 
-    logging.info('Context generated is {0}'.format(context))
+    logging.debug('Context generated is {0}'.format(context))
     return context
 
 
@@ -49,7 +49,7 @@ def generate_files(template_dir, context=None):
     :paramtype input_dir: directory
     """
     
-    logging.info('Generating project from {0}...'.format(template_dir))
+    logging.debug('Generating project from {0}...'.format(template_dir))
 
     context = context or {}
     env = Environment()
@@ -86,7 +86,7 @@ def generate_files(template_dir, context=None):
             # Render the output filename before writing
             name_tmpl = Template(outfile)
             rendered_name = name_tmpl.render(**context)
-            logging.info("Writing {0}".format(rendered_name))
+            logging.debug("Writing {0}".format(rendered_name))
 
             with unicode_open(rendered_name, 'w') as fh:
                 fh.write(rendered_file)
