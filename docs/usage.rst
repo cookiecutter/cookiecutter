@@ -38,7 +38,11 @@ To create a project from the cookiecutter-pypackage.git repo template::
 
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
 
-This generates your project and outputs it in your current directory.
+You will be prompted to enter a bunch of project config values. (These are
+defined in the project's `cookiecutter.json`.
+
+Then, Cookiecutter will generate a project from the template, using the values
+that you entered. It will be placed in your current directory.
 
 Or hook directly into the Cookiecutter API
 ------------------------------------------

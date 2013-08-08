@@ -23,12 +23,16 @@ Features
 --------
 
 * Simple command line usage::
-
-    # Create project from the cookiecutter-pypackage/ template
-    $ cookiecutter cookiecutter-pypackage/
     
     # Create project from the cookiecutter-pypackage.git repo template
+    # You'll be prompted to enter values.
+    # Then it'll create your Python package based on those values.
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+
+* Can also use it at the command line with a local template::
+
+    # Create project from the local cookiecutter-pypackage/ template
+    $ cookiecutter cookiecutter-pypackage/
 
 * Or use it from Python::
 
@@ -40,12 +44,15 @@ Features
     # Create project from the cookiecutter-pypackage.git repo template
     cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
-* Works with any type of text file.
+* If generating a project from a repo template, you are prompted for input.
+  The prompts are defined in `cookiecutter.json`.
+
 * Directory names and filenames can be templated. For example::
 
     {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
 
 * Supports unlimited levels of directory nesting.
+
 * Simply define your template variables in a cookiecutter.json file. For example::
 
     {
@@ -69,15 +76,18 @@ Here is a list of the Cookiecutter project templates that exist as of now:
 
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project 
   template.
+* `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
+  Boilerplate.
 
 Make your own, then submit a pull request adding yours to this list!
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@audreyr`: https://github.com/audreyr/
+.. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 
 Similar projects
 ----------------
-    
+
 * `Paste`_ has a create option that creates a skeleton project.
 
 * `Diecutter`_: an API service that will give you back a configuration file from
@@ -89,7 +99,11 @@ Similar projects
 * `python-packager`_: Creates Python packages from its own template, with
   configurable options.
 
+* `Yeoman`_ has a Rails-inspired generator system that provides scaffolding
+  for apps.
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
 .. _`python-packager`: https://github.com/fcurella/python-packager
+.. _`Yeoman`: https://github.com/yeoman/generator
