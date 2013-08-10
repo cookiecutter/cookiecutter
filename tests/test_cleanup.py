@@ -12,7 +12,7 @@ import os
 import shutil
 import unittest
 
-from cookiecutter import cleanup
+from cookiecutter import cleanup, exceptions
 
 
 class TestCleanup(unittest.TestCase):
@@ -26,6 +26,14 @@ class TestCleanup(unittest.TestCase):
         self.assertTrue(os.path.isdir('tests/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-project/README.rst'))
         self.assertFalse(os.path.exists('tests/fake-repo'))
+
+    def test_remove_repo_bad(self):
+        self.assertRaises(
+            exceptions.MissingProjectDir,
+            cleanup.remove_repo,
+            repo_dir='tests/fake-repo-bad',
+            generated_project='fake-project'
+        )
 
     def tearDown(self):
         if not os.path.exists('tests/fake-repo'):
