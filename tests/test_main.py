@@ -45,6 +45,12 @@ class TestCookiecutter(unittest.TestCase):
         if os.path.isdir('tests/fake-repo-pre/fake-project'):
             shutil.rmtree('tests/fake-repo-pre/fake-project')
 
+class TestArgParsing(unittest.TestCase):
+    
+    def test_parse_cookiecutter_args(self):
+        args = main.parse_cookiecutter_args(['project/'])
+        self.assertEqual(args.input_dir, 'project/')
+
 @unittest.skip(reason='Need to mock input with pexpect or something.')
 class TestCookiecutterRepoArg(unittest.TestCase):
 

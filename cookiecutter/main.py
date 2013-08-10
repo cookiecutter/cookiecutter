@@ -65,15 +65,10 @@ def cookiecutter(input_dir):
     if got_repo_arg:
         generated_project = context['cookiecutter']['repo_name']
         remove_repo(repo_dir, generated_project)
-    
 
-def main():
-    """ Entry point for the package, as defined in setup.py. """
+def parse_cookiecutter_args(args):
+    """ Parse the command-line arguments to Cookiecutter. """
 
-    # Log info and above to console
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
-
-    # Get command line input/output arguments
     parser = argparse.ArgumentParser(
         description='Create a project from a Cookiecutter project template.'
     )
@@ -81,7 +76,15 @@ def main():
         'input_dir',
         help='Cookiecutter project template dir, e.g. {{project.repo_name}}/'
     )
-    args = parser.parse_args()
+    return parser.parse_args(args)
+    
+def main():
+    """ Entry point for the package, as defined in setup.py. """
+
+    # Log info and above to console
+    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
+
+    args = parse_cookiecutter_args(sys.argv)
     
     cookiecutter(args.input_dir)
 
