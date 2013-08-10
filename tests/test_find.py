@@ -15,31 +15,21 @@ import unittest
 from cookiecutter import find
 
 
-class TestFind(unittest.TestCase):
-
+class TestFindTemplate(unittest.TestCase):
+    
     def test_find_template(self):
-        os.system('git clone https://github.com/audreyr/cookiecutter-pypackage.git')
-        template = find.find_template(repo_dir='cookiecutter-pypackage')
-        self.assertEqual(template, 'cookiecutter-pypackage/{{cookiecutter.repo_name}}')
-        self.assertNotEqual(template, 'cookiecutter-pypackage/{{cookiecutter.repo_name }}')
-        self.assertNotEqual(template, 'cookiecutter-pypackage/{{ cookiecutter.repo_name }}')
+        template = find.find_template(repo_dir='tests/fake-repo-pre')
+        self.assertEqual(template, 'tests/fake-repo-pre/{{cookiecutter.repo_name}}')
+        self.assertNotEqual(template, 'tests/fake-repo-pre/{{cookiecutter.repo_name }}')
+        self.assertNotEqual(template, 'tests/fake-repo-pre/{{ cookiecutter.repo_name }}')
 
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-
-class TestFind2(unittest.TestCase):
-
-    def test_find_template2(self):
-        os.system('git clone https://github.com/audreyr/cookiecutter-jquery.git')
-        template = find.find_template(repo_dir='cookiecutter-jquery')
-        self.assertEqual(template, 'cookiecutter-jquery/{{cookiecutter.repo_name}}')
-        self.assertNotEqual(template, 'cookiecutter-jquery/{{cookiecutter.repo_name }}')
-        self.assertNotEqual(template, 'cookiecutter-jquery/{{ cookiecutter.repo_name }}')
-
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-jquery'):
-            shutil.rmtree('cookiecutter-jquery')
+class TestFindTemplate2(unittest.TestCase):
+    
+    def test_find_template(self):
+        template = find.find_template(repo_dir='tests/fake-repo-pre2')
+        self.assertEqual(template, 'tests/fake-repo-pre2/{{cookiecutter.repo_name}}')
+        self.assertNotEqual(template, 'tests/fake-repo-pre2/{{cookiecutter.repo_name }}')
+        self.assertNotEqual(template, 'tests/fake-repo-pre2/{{ cookiecutter.repo_name }}')
 
 
 if __name__ == '__main__':
