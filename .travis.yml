@@ -10,7 +10,11 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
  - pip install -r requirements.txt
+ - pip install coveralls
  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install unittest2 simplejson ordereddict; fi
 
 # command to run tests, e.g. python setup.py test
-script: python setup.py test
+script: coverage run --source cookiecutter setup.py test
+
+after_success:
+    coveralls
