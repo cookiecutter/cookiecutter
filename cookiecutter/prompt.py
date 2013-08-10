@@ -12,9 +12,10 @@ import sys
 
 PY3 = sys.version > '3'
 if PY3:
-    pass
+    iteritems = lambda d: iter(d.items())
 else:
     input = raw_input
+    iteritems = lambda d: d.iteritems()
 
 def prompt_for_config(context):
     """
@@ -23,7 +24,7 @@ def prompt_for_config(context):
     """
     cookiecutter_dict = {}
     
-    for key, val in context['cookiecutter'].iteritems():
+    for key, val in iteritems(context['cookiecutter']):
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
         new_val = input(prompt)
         new_val = new_val.strip()

@@ -23,16 +23,19 @@ else:
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
+    from ordereddict import OrderedDict
 else:
     import unittest
+    from collections import OrderedDict
 
-# class TestPrompt(unittest.TestCase):
-#     def test_prompt_for_config(self):
-#         context = {"cookiecutter": {"full_name": "Your Name",
-#                                     "email": "you@example.com"}}
-
-        # TODO: figure out how to mock input with pexpect or something
-        # prompt.prompt_for_config(context)
+@unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
+class TestPrompt(unittest.TestCase):
+    
+    @patch(input_str, lambda x: 'Audrey Roy')
+    def test_prompt_for_config_simple(self):
+        context = {"cookiecutter": {"full_name": "Your Name"}}
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"full_name": "Audrey Roy"})
 
 @unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
 class TestQueryAnswers(unittest.TestCase):
