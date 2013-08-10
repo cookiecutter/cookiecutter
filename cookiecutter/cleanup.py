@@ -43,6 +43,6 @@ def remove_repo(repo_dir, generated_project):
         return True
     else:
         raise MissingProjectDir(
-            'The project did not get generated. Please file an issue in \
-            Cookiecutter with as much detail as possible about what happened.'
+            'The project did not get generated. Please file an issue in '
+            'Cookiecutter with as much detail as possible about what happened.'
         )
