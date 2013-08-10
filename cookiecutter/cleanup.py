@@ -12,6 +12,8 @@ import logging
 import os
 import shutil
 
+from .exceptions import MissingProjectDir
+
 
 def remove_repo(repo_dir, generated_project):
     """
@@ -39,4 +41,8 @@ def remove_repo(repo_dir, generated_project):
         shutil.move(project_dir, parent_dir)
         shutil.rmtree(repo_dir)
         return True
-    return False
+    else:
+        raise MissingProjectDir(
+            'The project did not get generated. Please file an issue in \
+            Cookiecutter with as much detail as possible about what happened.'
+        )
