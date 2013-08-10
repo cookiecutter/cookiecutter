@@ -11,6 +11,10 @@ Cookiecutter
 .. image:: https://pypip.in/d/cookiecutter/badge.png
         :target: https://crate.io/packages/cookiecutter?version=latest
 
+.. image:: https://coveralls.io/repos/audreyr/cookiecutter/badge.png?branch=master
+        :target: https://coveralls.io/r/audreyr/cookiecutter?branch=master
+
+
 A command-line utility that creates projects from project templates, e.g.
 creating a Python package project from a Python package project template.
 
