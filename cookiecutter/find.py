@@ -21,15 +21,18 @@ def find_template(repo_dir):
     """
 
     logging.debug('Searching {0} for the project template.'.format(repo_dir))
-    contents_set = set(os.listdir(repo_dir))
-    exclude_set = set(['.DS_Store', '.git', '.gitignore', 'README.rst', 'cookiecutter.json'])
     
-    # Subtract set of excludes from contents.
-    contents_set -= exclude_set
+    repo_dir_contents = os.listdir(repo_dir)
 
-    if len(contents_set) == 1:
-        project_template = contents_set.pop()
+    for item in repo_dir_contents:
+        if 'cookiecutter' in item and \
+            '{{' in item and \
+            '}}' in item:
+            project_template = item
+            break
+
+    if project_template:
         project_template = os.path.join(repo_dir, project_template)
-        logging.debug('The project template appears to be {0}'.format(project_template))
-        return project_template
-    return False
+
+    logging.debug('The project template appears to be {0}'.format(project_template))
+    return project_template
