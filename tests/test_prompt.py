@@ -19,14 +19,12 @@ if PY3:
     input_str = 'builtins.input'
 else:
     from mock import patch
-    input_str = '__builtin__.input'
+    input_str = '__builtin__.raw_input'
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
-    from ordereddict import OrderedDict
 else:
     import unittest
-    from collections import OrderedDict
 
 @unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
 class TestPrompt(unittest.TestCase):
