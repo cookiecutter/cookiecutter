@@ -14,6 +14,7 @@ library rather than a script.
 import argparse
 import logging
 import os
+import sys
 
 from .cleanup import remove_repo
 from .find import find_template
@@ -74,7 +75,7 @@ def parse_cookiecutter_args(args):
     )
     parser.add_argument(
         'input_dir',
-        help='Cookiecutter project template dir, e.g. {{project.repo_name}}/'
+        help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
     return parser.parse_args(args)
     
@@ -84,7 +85,7 @@ def main():
     # Log info and above to console
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 
-    args = parse_cookiecutter_args(sys.argv)
+    args = parse_cookiecutter_args(sys.argv[1:])
     
     cookiecutter(args.input_dir)
 
