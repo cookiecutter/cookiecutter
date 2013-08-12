@@ -3,6 +3,14 @@
 History
 -------
 
+0.6.1 (2013-08-12)
+++++++++++++++++++
+
+* Improved project template finding. Now looks for the occurrence of `{{`,
+  `cookiecutter`, and `}}` in a directory name.
+* Fix help message for input_dir arg at command prompt.
+* Minor edge cases found and corrected, as a result of improved test coverage.
+
 0.6.0 (2013-08-08)
 ++++++++++++++++++
 
