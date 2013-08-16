@@ -4,7 +4,7 @@ Cookiecutter
 
 .. image:: https://badge.fury.io/py/cookiecutter.png
     :target: http://badge.fury.io/py/cookiecutter
-    
+
 .. image:: https://travis-ci.org/audreyr/cookiecutter.png?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
 
@@ -32,7 +32,7 @@ a stick at!
 * Works with Python 2.6, 2.7, 3.3, and PyPy.
 
 * Simple command line usage::
-    
+
     # Create project from the cookiecutter-pypackage.git repo template
     # You'll be prompted to enter values.
     # Then it'll create your Python package based on those values.
@@ -46,7 +46,7 @@ a stick at!
 * Or use it from Python::
 
     from cookiecutter.main import cookiecutter
-    
+
     # Create project from the cookiecutter-pypackage/ template
     cookiecutter('cookiecutter-pypackage/')
 
@@ -62,7 +62,7 @@ a stick at!
 * All templating is done with Jinja2.
 
 * Project templates can be in any programming language or markup format:
-  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name 
+  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name
   it. You can use multiple languages in the same project template.
 
 * Simply define your template variables in a `cookiecutter.json` file. For example::
@@ -89,16 +89,18 @@ Available Templates
 
 Here is a list of the working Cookiecutter project templates that exist:
 
-* `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project 
+* `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
   Boilerplate.
+* `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 
 Make your own, then submit a pull request adding yours to this list!
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@audreyr`: https://github.com/audreyr/
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
+.. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 
 Similar projects
 ----------------
@@ -106,8 +108,8 @@ Similar projects
 * `Paste`_ has a create option that creates a skeleton project.
 
 * `Diecutter`_: an API service that will give you back a configuration file from
-  a template and variables. 
-  
+  a template and variables.
+
 * `Django`_'s `startproject` and `startapp` commands can take in a `--template`
   option.
 
