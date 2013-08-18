@@ -1,0 +1,8 @@
+{
+	# foo
+	"foo": "bar",
+	"baz": {
+		# dummy
+		"stuff": "thing"
+	}
+}
