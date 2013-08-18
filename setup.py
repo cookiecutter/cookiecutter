@@ -61,4 +61,5 @@ setup(
     keywords='cookiecutter, Python, projects, project templates, Jinja2, \
         project directory, setup.py, package, packaging',
     test_suite='tests',
+    tests_require=["mock", ]
 )
