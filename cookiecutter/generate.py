@@ -7,7 +7,7 @@ cookiecutter.generate
 
 Functions for generating a project from a project template.
 """
-
+from __future__ import unicode_literals
 import logging
 import os
 import shutil
@@ -41,12 +41,12 @@ def generate_context(config_file='cookiecutter.json'):
     context = {}
 
     file_handle = open(config_file)
-    obj = json.load(file_handle, object_pairs_hook=OrderedDict)
+    obj = json.load(file_handle, object_pairs_hook=OrderedDict, ensure_ascii=False)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(config_file)[1]
-    file_stem = file_name.split('.')[0]
-    context[file_stem] = obj
+    file_stem = file_name.split('.')[0].encode('utf-8')
+    context[file_stem] = obj.encode('utf-8')
 
     logging.debug('Context generated is {0}'.format(context))
     return context
@@ -58,8 +58,13 @@ def generate_files(template_dir, context=None):
     :param input_dir: Project template input directory.
     :paramtype input_dir: directory
     """
+    
+    # Always use utf-8
+    template_dir = template_dir.encode('utf-8')
 
-    logging.debug('Generating project from {0}...'.format(template_dir))
+    #logging.debug('Generating project from {0}...'.format(template_dir))
+    print(type(template_dir))
+    logging.debug('Generating project from ' + template_dir)
 
     context = context or {}
     env = Environment()
