@@ -21,7 +21,23 @@ else:
 
 from .utils import unicode_open
 
+# TODO: test on windows...
+GLOB_SETTINGS_PATH = os.path.expanduser('~/.cookiecutter')
 
+DEFAULT_SETTINGS = \
+"""{{
+	# foo
+	"template_dirs": [
+		{template_dirs}
+	],
+	"default_context": {{
+		"full_name": {full_name}
+		"email": {email}
+		"github_username": {github_username}
+	}}
+}}"""
+
+# JSON helpers
 
 def _json_parse(json_string, comment_char='#', *args, **kwargs):
 	"""
@@ -43,3 +59,20 @@ def _json_open(json_path, *args, **kwargs):
 	with unicode_open(json_path) as fh:
 		obj = _json_parse(fh.read(), *args, **kwargs)
 	return obj
+
+
+def get_config(config_path=GLOB_SETTINGS_PATH):
+	"""
+	Retrieve the global settings and return them.
+	"""
+	with unicode_open(config_path) as file_handle:
+		global_config = _json_parse(file_handle.read(), object_pairs_hook=OrderedDict)
+
+	return global_config
+
+def create_config(params, path=GLOB_SETTINGS_PATH):
+	"""
+	"""
+	params['template_dirs'] = ',\n'.join(params['template_dirs'])
+	with unicode_open(path, 'w') as file_handle:
+		file_handle.write(DEFAULT_SETTINGS.format(**params))
