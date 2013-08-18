@@ -33,12 +33,12 @@ class TestGenerate(unittest.TestCase):
 
     def test_generate_files(self):
         generate.generate_files(
-            context={'fooöd': 'pizza'},
-            template_dir='tests/input{{fooöd}}'
+            context={'food': 'pizzä'},
+            template_dir='tests/input{{food}}'
         )
-        self.assertTrue(os.path.isfile('tests/inputpizza/simple.txt'))
-        simple_text = open('tests/inputpizza/simple.txt', 'rt').read()
-        self.assertEqual(simple_text, 'I eat pizza')
+        self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
+        simple_text = open('tests/inputpizzä/simple.txt', 'rt').read()
+        self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
 
     def test_generate_files_binaries(self):
         generate.generate_files(
@@ -79,8 +79,8 @@ It is 2014."""
         self.assertTrue(os.path.isfile('tests/inputgreen/im_a.dir/im_a.file.py'))
 
     def tearDown(self):
-        if os.path.exists('tests/inputpizza'):
-            shutil.rmtree('tests/inputpizza')
+        if os.path.exists('tests/inputpizzä'):
+            shutil.rmtree('tests/inputpizzä')
         if os.path.exists('tests/inputgreen'):
             shutil.rmtree('tests/inputgreen')
         if os.path.exists('tests/inputbinary_files'):
