@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import logging
 import os
 import shutil
+import sys
 import unittest
 
 from jinja2 import FileSystemLoader
@@ -18,6 +19,9 @@ from jinja2.environment import Environment
 
 from cookiecutter import generate
 from cookiecutter import exceptions
+
+
+PY3 = sys.version > '3'
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
@@ -38,7 +42,10 @@ class TestGenerate(unittest.TestCase):
         )
         self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
         simple_text = open('tests/inputpizzä/simple.txt', 'rt').read()
-        self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
+        if PY3:
+            self.assertEqual(simple_text, 'I eat pizzä')
+        else:
+            self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
 
     def test_generate_files_binaries(self):
         generate.generate_files(
