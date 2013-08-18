@@ -42,9 +42,9 @@ test_config_obj = {
 
 class TestJsonHelpers(unittest.TestCase):
 
-	
-	with open(test_config_file) as f:
-		json_str = f.read()
+	def setUp(self):
+		with open(test_config_file) as f:
+			self.json_str = f.read()
 
 	def test_parse_commented_json(self):
 		""" Ignore comments in a json string """
