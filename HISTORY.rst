@@ -3,6 +3,16 @@
 History
 -------
 
+0.6.2 (2013-08-19)
+++++++++++++++++++
+
+* Depend on Jinja2>=2.4 instead of Jinja2==2.7.
+* Fix errors on attempt to render binary files. Copy them over from the project
+  template without rendering.
+* Fix Python 2.6/2.7 `UnicodeDecodeError` when values containing Unicode chars
+  are entered.
+* Set encoding in Python 3 `unicode_open()` to always be utf-8.
+
 0.6.1 (2013-08-12)
 ++++++++++++++++++
 
