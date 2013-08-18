@@ -40,27 +40,6 @@ test_config_obj = {
 	}
 }
 
-class TestJsonHelpers(unittest.TestCase):
-
-	def setUp(self):
-		with open(test_config_file) as f:
-			self.json_str = f.read()
-
-	def test_parse_commented_json(self):
-		""" Ignore comments in a json string """
-		self.assertEqual(
-			config._json_parse(self.json_str),
-			test_config_obj
-		)
-
-	def test_open_commented_json(self):
-		""" Open and parse a json file containing comments """
-		self.assertEqual(
-			config._json_open(test_config_file),
-			test_config_obj
-		)
-
-
 class TestConfig(unittest.TestCase):
 
 	def test_create_config(self):
