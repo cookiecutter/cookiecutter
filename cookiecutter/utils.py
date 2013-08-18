@@ -37,7 +37,7 @@ def unicode_open(filename, *args, **kwargs):
     Opens a file as usual on Python 3, and with UTF-8 encoding on Python 2.
     :param filename: Name of file to open.
     """
+    kwargs['encoding'] = "utf-8"
     if PY3:
         return open(filename, *args, **kwargs)
-    kwargs['encoding'] = "utf-8"
     return codecs.open(filename, *args, **kwargs)
