@@ -17,7 +17,7 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = ['jinja2>=2.4']
+requirements = ['binaryornot>=0.1.1', 'jinja2>=2.4']
 
 if sys.version_info[:2] < (2, 7):
     requirements.append('argparse')

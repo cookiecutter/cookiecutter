@@ -10,10 +10,12 @@ Functions for generating a project from a project template.
 
 import logging
 import os
+import shutil
 import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
+from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
 from .utils import make_sure_path_exists, unicode_open
@@ -25,6 +27,7 @@ if sys.version_info[:2] < (2, 7):
 else:
     import json
     from collections import OrderedDict
+
 
 def generate_context(config_file='cookiecutter.json'):
     """
@@ -55,7 +58,7 @@ def generate_files(template_dir, context=None):
     :param input_dir: Project template input directory.
     :paramtype input_dir: directory
     """
-    
+
     logging.debug('Generating project from {0}...'.format(template_dir))
 
     context = context or {}
@@ -68,6 +71,7 @@ def generate_files(template_dir, context=None):
     if output_dir == template_dir:
         raise NonTemplatedInputDirException
 
+    logging.debug("output_dir is {0}".format(output_dir))
     make_sure_path_exists(output_dir)
 
     for root, dirs, files in os.walk(template_dir):
@@ -82,18 +86,31 @@ def generate_files(template_dir, context=None):
             make_sure_path_exists(rendered_dirname)
 
         for f in files:
-            # Render the file
+            logging.debug("f is {0}".format(f))
             infile = os.path.join(root, f)
-            tmpl = env.get_template(infile)
-            rendered_file = tmpl.render(**context)
+            logging.debug("infile is {0}".format(infile))
 
             # Write it to the corresponding place in output_dir
             outfile = infile.replace(template_dir, output_dir, 1)
+            logging.debug("outfile is {0}".format(outfile))
 
-            # Render the output filename before writing
-            name_tmpl = Template(outfile)
-            rendered_name = name_tmpl.render(**context)
-            logging.debug("Writing {0}".format(rendered_name))
+            # Just copy over binary files. Don't render.
+            logging.debug("Check {0} to see if it's a binary".format(infile))
+            if is_binary(infile):
+                logging.debug("Copying binary {0} to {1} without rendering"
+                              .format(infile, outfile))
+                shutil.copyfile(infile, outfile)
 
-            with unicode_open(rendered_name, 'w') as fh:
-                fh.write(rendered_file)
+            else:
+
+                # Render the file
+                tmpl = env.get_template(infile)
+                rendered_file = tmpl.render(**context)
+
+                # Render the output filename before writing
+                name_tmpl = Template(outfile)
+                rendered_name = name_tmpl.render(**context)
+                logging.debug("Writing {0}".format(rendered_name))
+
+                with unicode_open(rendered_name, 'w') as fh:
+                    fh.write(rendered_file)

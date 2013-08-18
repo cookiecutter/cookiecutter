@@ -40,12 +40,25 @@ class TestGenerate(unittest.TestCase):
         simple_text = open('tests/inputpizza/simple.txt', 'rt').read()
         self.assertEqual(simple_text, 'I eat pizza')
 
+    def test_generate_files_binaries(self):
+        generate.generate_files(
+            context={'binary_test': 'binary_files'},
+            template_dir='tests/input{{binary_test}}'
+        )
+        self.assertTrue(os.path.isfile('tests/inputbinary_files/logo.png'))
+        self.assertTrue(os.path.isfile('tests/inputbinary_files/readme.txt'))
+        self.assertTrue(
+            os.path.isfile('tests/inputbinary_files/some_font.otf')
+        )
+
     def test_generate_context(self):
         context = generate.generate_context(config_file='tests/json/test.json')
         self.assertEqual(context, {"test": {"1": 2}})
 
     def test_output_folder(self):
-        context = generate.generate_context(config_file='tests/json2/stuff.json')
+        context = generate.generate_context(
+            config_file='tests/json2/stuff.json'
+        )
         logging.debug('Context is {0}'.format(context))
         generate.generate_files(
             context=context,
@@ -70,6 +83,8 @@ It is 2014."""
             shutil.rmtree('tests/inputpizza')
         if os.path.exists('tests/inputgreen'):
             shutil.rmtree('tests/inputgreen')
+        if os.path.exists('tests/inputbinary_files'):
+            shutil.rmtree('tests/inputbinary_files')
 
 if __name__ == '__main__':
     unittest.main()
