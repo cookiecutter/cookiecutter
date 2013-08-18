@@ -8,6 +8,7 @@ test_config
 Tests for `cookiecutter.config` module.
 """
 
+import os
 import sys
 import unittest
 
@@ -26,37 +27,77 @@ if sys.version_info[:2] < (2, 7):
 else:
     import unittest
 
+
+test_config_file = 'tests/config/test-config.json'
+test_config_obj = {
+	'template_dirs': [
+		'/home/raphi/dev'
+	],
+	'default_context': {
+		"full_name": "Raphi Gaziano",
+		"email": "r.gaziano@gmail.com",
+		"github_username": "raphigaziano"
+	}
+}
+
 class TestJsonHelpers(unittest.TestCase):
 
-	test_file = 'tests/config/test-config.json'
-	with open(test_file) as f:
+	
+	with open(test_config_file) as f:
 		json_str = f.read()
-
-	json_obj = {
-		'foo': 'bar',
-		'baz': {
-			'stuff': 'thing'
-		}
-	}
 
 	def test_parse_commented_json(self):
 		""" Ignore comments in a json string """
 		self.assertEqual(
 			config._json_parse(self.json_str),
-			self.json_obj
+			test_config_obj
 		)
 
 	def test_open_commented_json(self):
 		""" Open and parse a json file containing comments """
 		self.assertEqual(
-			config._json_open(self.test_file),
-			self.json_obj
+			config._json_open(test_config_file),
+			test_config_obj
 		)
 
 
 class TestConfig(unittest.TestCase):
 
-	def test_foo(self): self.fail('TODO')
+	def test_create_config(self):
+		""" Create a new config file with passed values """
+		fname = "tests/config/dynamic-config.json"
+		config.create_config({
+			'template_dirs': [
+				'foo',
+				'bar'
+			],
+			'full_name': 'bob',
+			'email': 'bob@bob.com',
+			'github_username': 'bobo'
+		}, path=fname)
+
+		with open(fname) as f:
+			content = f.read()
+			self.assertTrue('foo' in content)
+			self.assertTrue('bar' in content)
+			self.assertTrue('bob' in content)
+			self.assertTrue('bob@bob.com' in content)
+			self.assertTrue('bobo' in content)
+
+		os.remove(fname)
+
+	def test_get_config(self):
+		""" Opening and reading config file """
+		conf = config.get_config(test_config_file)
+		self.assertEqual(conf, test_config_obj)
+
+	def test_auto_gen_config_if_does_not_exist(self):
+		""" Auto generation of a default config file if none can be found """
+		fname = "tests/config/autogen.json"
+		config.get_config(fname)
+		self.assertTrue(os.path.exists(fname))
+		if os.path.exists(fname):
+			os.remove(fname)
 
 
 if __name__ == '__main__':

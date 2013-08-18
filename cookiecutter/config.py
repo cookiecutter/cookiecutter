@@ -65,6 +65,13 @@ def get_config(config_path=GLOB_SETTINGS_PATH):
 	"""
 	Retrieve the global settings and return them.
 	"""
+	if not os.path.exists(config_path):
+		return create_config({
+			'template_dirs': [],
+			'full_name': '',
+			'email': '',
+			'github_username': ''	
+		}, config_path)	# TODO: figure out some sane default values
 	with unicode_open(config_path) as file_handle:
 		global_config = _json_parse(file_handle.read(), object_pairs_hook=OrderedDict)
 
@@ -72,6 +79,8 @@ def get_config(config_path=GLOB_SETTINGS_PATH):
 
 def create_config(params, path=GLOB_SETTINGS_PATH):
 	"""
+	Create a new config file at `path` with the default values defined in
+	`params`.
 	"""
 	params['template_dirs'] = ',\n'.join(params['template_dirs'])
 	with unicode_open(path, 'w') as file_handle:
