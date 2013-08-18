@@ -66,7 +66,7 @@ class TestConfig(unittest.TestCase):
 	def test_create_config(self):
 		""" Create a new config file with passed values """
 		fname = "tests/config/dynamic-config.json"
-		config.create_config({
+		conf = config.create_config({
 			'template_dirs': [
 				'foo',
 				'bar'
@@ -76,13 +76,10 @@ class TestConfig(unittest.TestCase):
 			'github_username': 'bobo'
 		}, path=fname)
 
-		with open(fname) as f:
-			content = f.read()
-			self.assertTrue('foo' in content)
-			self.assertTrue('bar' in content)
-			self.assertTrue('bob' in content)
-			self.assertTrue('bob@bob.com' in content)
-			self.assertTrue('bobo' in content)
+		self.assertEqual(conf['template_dirs'], ['foo', 'bar'])
+		self.assertEqual(conf['default_context']['full_name'], 'bob')
+		self.assertEqual(conf['default_context']['email'], 'bob@bob.com')
+		self.assertEqual(conf['default_context']['github_username'], 'bobo')
 
 		os.remove(fname)
 

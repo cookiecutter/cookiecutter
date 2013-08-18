@@ -82,6 +82,7 @@ def create_config(params, path=GLOB_SETTINGS_PATH):
 	Create a new config file at `path` with the default values defined in
 	`params`.
 	"""
-	params['template_dirs'] = ',\n'.join(params['template_dirs'])
+	params['template_dirs'] = ',\n'.join(['"%s"' % p for p in params['template_dirs']])
 	with unicode_open(path, 'w') as file_handle:
 		file_handle.write(DEFAULT_SETTINGS.format(**params))
+	return get_config(path)
