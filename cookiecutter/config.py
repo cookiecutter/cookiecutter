@@ -31,9 +31,9 @@ DEFAULT_SETTINGS = \
 		{template_dirs}
 	],
 	"default_context": {{
-		"full_name": {full_name}
-		"email": {email}
-		"github_username": {github_username}
+		"full_name": "{full_name}"
+		"email": "{email}"
+		"github_username": "{github_username}"
 	}}
 }}"""
 
@@ -73,7 +73,8 @@ def get_config(config_path=GLOB_SETTINGS_PATH):
 			'github_username': ''	
 		}, config_path)	# TODO: figure out some sane default values
 	with unicode_open(config_path) as file_handle:
-		global_config = _json_parse(file_handle.read(), object_pairs_hook=OrderedDict)
+		#global_config = _json_parse(file_handle.read(), object_pairs_hook=OrderedDict)
+		global_config = json.load(file_handle, object_pairs_hook=OrderedDict)
 
 	return global_config
 
