@@ -26,13 +26,12 @@ GLOB_SETTINGS_PATH = os.path.expanduser('~/.cookiecutter')
 
 DEFAULT_SETTINGS = \
 """{{
-	# foo
 	"template_dirs": [
 		{template_dirs}
 	],
 	"default_context": {{
-		"full_name": "{full_name}"
-		"email": "{email}"
+		"full_name": "{full_name}",
+		"email": "{email}",
 		"github_username": "{github_username}"
 	}}
 }}"""
