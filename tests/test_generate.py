@@ -7,7 +7,7 @@ test_generate
 
 Tests for `cookiecutter.generate` module.
 """
-
+from __future__ import unicode_literals
 import logging
 import os
 import shutil
@@ -33,8 +33,8 @@ class TestGenerate(unittest.TestCase):
 
     def test_generate_files(self):
         generate.generate_files(
-            context={'food': 'pizza'},
-            template_dir='tests/input{{food}}'
+            context={'fooöd': 'pizza'},
+            template_dir='tests/input{{fooöd}}'
         )
         self.assertTrue(os.path.isfile('tests/inputpizza/simple.txt'))
         simple_text = open('tests/inputpizza/simple.txt', 'rt').read()
