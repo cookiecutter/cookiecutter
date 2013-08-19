@@ -10,7 +10,7 @@ History
 * Fix errors on attempt to render binary files. Copy them over from the project
   template without rendering.
 * Fix Python 2.6/2.7 `UnicodeDecodeError` when values containing Unicode chars
-  are entered.
+  are in `cookiecutter.json`.
 * Set encoding in Python 3 `unicode_open()` to always be utf-8.
 
 0.6.1 (2013-08-12)
