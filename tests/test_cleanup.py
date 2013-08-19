@@ -21,11 +21,11 @@ class TestCleanup(unittest.TestCase):
     def test_remove_repo(self):
         success = cleanup.remove_repo(
             repo_dir='tests/fake-repö',
-            generated_project='fake-project'
+            generated_project='fake-pröject'
         )
         self.assertTrue(success)
-        self.assertTrue(os.path.isdir('tests/fake-project'))
-        self.assertTrue(os.path.isfile('tests/fake-project/README.rst'))
+        self.assertTrue(os.path.isdir('tests/fake-pröject'))
+        self.assertTrue(os.path.isfile('tests/fake-pröject/README.rst'))
         self.assertFalse(os.path.exists('tests/fake-repö'))
 
     def test_remove_repo_bad(self):
@@ -39,7 +39,7 @@ class TestCleanup(unittest.TestCase):
     def tearDown(self):
         if not os.path.exists('tests/fake-repö'):
             os.mkdir('tests/fake-repö')
-            shutil.move('tests/fake-project', 'tests/fake-repö/fake-project')
+            shutil.move('tests/fake-pröject', 'tests/fake-repö/fake-pröject')
 
 if __name__ == '__main__':
     unittest.main()
