@@ -33,27 +33,33 @@ a stick at!
 
 * Works with Python 2.6, 2.7, 3.3, and PyPy.
 
-* Simple command line usage::
+* Simple command line usage:
 
-    # Create project from the cookiecutter-pypackage.git repo template
-    # You'll be prompted to enter values.
-    # Then it'll create your Python package based on those values.
-    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+    .. code-block:: bash
 
-* Can also use it at the command line with a local template::
+        # Create project from the cookiecutter-pypackage.git repo template
+        # You'll be prompted to enter values.
+        # Then it'll create your Python package based on those values.
+        $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
 
-    # Create project from the local cookiecutter-pypackage/ template
-    $ cookiecutter cookiecutter-pypackage/
+* Can also use it at the command line with a local template:
 
-* Or use it from Python::
+    .. code-block:: bash
 
-    from cookiecutter.main import cookiecutter
+        # Create project from the local cookiecutter-pypackage/ template
+        $ cookiecutter cookiecutter-pypackage/
 
-    # Create project from the cookiecutter-pypackage/ template
-    cookiecutter('cookiecutter-pypackage/')
+* Or use it from Python:
 
-    # Create project from the cookiecutter-pypackage.git repo template
-    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+    .. code-block:: python
+
+        from cookiecutter.main import cookiecutter
+    
+        # Create project from the cookiecutter-pypackage/ template
+        cookiecutter('cookiecutter-pypackage/')
+    
+        # Create project from the cookiecutter-pypackage.git repo template
+        cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
 * Directory names and filenames can be templated. For example::
 
@@ -67,18 +73,20 @@ a stick at!
   Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name
   it. You can use multiple languages in the same project template.
 
-* Simply define your template variables in a `cookiecutter.json` file. For example::
+* Simply define your template variables in a `cookiecutter.json` file. For example:
 
-    {
-    	"full_name": "Audrey Roy",
-    	"email": "audreyr@gmail.com",
-    	"project_name": "A Lot of Effort",
-    	"repo_name": "alotofeffort",
-    	"project_short_description": "Deploy static HTML sites to S3 with the simple 'alotofeffort' command.",
-    	"release_date": "2013-07-10",
-    	"year": "2013",
-    	"version": "0.1.1"
-    }
+    .. code-block:: json
+
+        {
+        	"full_name": "Audrey Roy",
+        	"email": "audreyr@gmail.com",
+        	"project_name": "A Lot of Effort",
+        	"repo_name": "alotofeffort",
+        	"project_short_description": "Deploy static HTML sites to S3 with the simple 'alotofeffort' command.",
+        	"release_date": "2013-07-10",
+        	"year": "2013",
+        	"version": "0.1.1"
+        }
 
 * If generating a project from a git repo template, you are prompted for input:
 
