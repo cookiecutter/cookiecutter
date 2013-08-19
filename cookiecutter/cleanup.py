@@ -8,6 +8,7 @@ cookiecutter.cleanup
 Functions for cleaning up after Cookiecutter project generation occurs.
 """
 
+from __future__ import unicode_literals
 import logging
 import os
 import shutil
