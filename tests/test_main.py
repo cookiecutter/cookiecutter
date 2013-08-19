@@ -20,6 +20,17 @@ if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
 else:
     import unittest
+
+PY3 = sys.version > '3'
+if PY3:
+    from unittest.mock import patch
+    input_str = 'builtins.input'
+else:
+    import __builtin__
+    from mock import patch
+    input_str = '__builtin__.raw_input'
+    from cStringIO import StringIO
+
     
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
@@ -45,28 +56,32 @@ class TestCookiecutter(unittest.TestCase):
         if os.path.isdir('tests/fake-repo-pre/fake-project'):
             shutil.rmtree('tests/fake-repo-pre/fake-project')
 
+
 class TestArgParsing(unittest.TestCase):
     
     def test_parse_cookiecutter_args(self):
         args = main.parse_cookiecutter_args(['project/'])
         self.assertEqual(args.input_dir, 'project/')
 
-@unittest.skip(reason='Need to mock input with pexpect or something.')
+
 class TestCookiecutterRepoArg(unittest.TestCase):
 
+    @patch(input_str, lambda x: '')
     def test_cookiecutter_git(self):
+        if not PY3:
+            sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         self.assertFalse(os.path.exists('cookiecutter-pypackage'))
-        self.assertTrue(os.path.isdir('alotofeffort'))
-        self.assertTrue(os.path.isfile('alotofeffort/README.rst'))
-        self.assertTrue(os.path.exists('alotofeffort/setup.py'))
+        self.assertTrue(os.path.isdir('boilerplate'))
+        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
+        self.assertTrue(os.path.exists('boilerplate/setup.py'))
     
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('alotofeffort'):
-            shutil.rmtree('alotofeffort')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
 
 if __name__ == '__main__':
     unittest.main()
