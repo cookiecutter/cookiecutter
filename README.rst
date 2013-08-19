@@ -80,9 +80,9 @@ a stick at!
         {
         	"full_name": "Audrey Roy",
         	"email": "audreyr@gmail.com",
-        	"project_name": "A Lot of Effort",
-        	"repo_name": "alotofeffort",
-        	"project_short_description": "Deploy static HTML sites to S3 with the simple 'alotofeffort' command.",
+        	"project_name": "Complexity",
+        	"repo_name": "complexity",
+        	"project_short_description": "A refreshingly simple HTML-based static site generator.",
         	"release_date": "2013-07-10",
         	"year": "2013",
         	"version": "0.1.1"
