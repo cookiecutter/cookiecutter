@@ -32,8 +32,10 @@ def prompt_for_config(context):
         if new_val == '':
             new_val = val
         
-        cookiecutter_dict[key] = new_val
-    
+        if PY3:
+            cookiecutter_dict[key] = new_val
+        else:
+            cookiecutter_dict[key] = new_val.decode('utf-8')
     return cookiecutter_dict
 
 

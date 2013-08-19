@@ -35,6 +35,15 @@ class TestPrompt(unittest.TestCase):
         cookiecutter_dict = prompt.prompt_for_config(context)
         self.assertEqual(cookiecutter_dict, {"full_name": "Audrey Roy"})
 
+    @patch(input_str, lambda x: 'Pizzä ïs Gööd')
+    def test_prompt_for_config_unicode(self):
+        context = {"cookiecutter": {"full_name": "Your Name"}}
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        if PY3:
+            self.assertEqual(cookiecutter_dict, {"full_name": "Pizzä ïs Gööd"})
+        else:
+            self.assertEqual(cookiecutter_dict, {"full_name": "Pizzä ïs Gööd"})
+
 @unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
 class TestQueryAnswers(unittest.TestCase):
 
