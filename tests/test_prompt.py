@@ -8,6 +8,7 @@ test_prompt
 Tests for `cookiecutter.prompt` module.
 """
 
+from cStringIO import StringIO
 import sys
 import unittest
 
@@ -18,6 +19,7 @@ if PY3:
     from unittest.mock import patch
     input_str = 'builtins.input'
 else:
+    import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'
 
@@ -26,23 +28,32 @@ if sys.version_info[:2] < (2, 7):
 else:
     import unittest
 
-@unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
+
 class TestPrompt(unittest.TestCase):
     
     @patch(input_str, lambda x: 'Audrey Roy')
     def test_prompt_for_config_simple(self):
         context = {"cookiecutter": {"full_name": "Your Name"}}
+
+        if not PY3:
+            sys.stdin = StringIO("Audrey Roy")
+
         cookiecutter_dict = prompt.prompt_for_config(context)
         self.assertEqual(cookiecutter_dict, {"full_name": "Audrey Roy"})
 
     @patch(input_str, lambda x: 'Pizzä ïs Gööd')
     def test_prompt_for_config_unicode(self):
         context = {"cookiecutter": {"full_name": "Your Name"}}
+
+        if not PY3:
+            sys.stdin = StringIO("Pizzä ïs Gööd")
+
         cookiecutter_dict = prompt.prompt_for_config(context)
+
         if PY3:
             self.assertEqual(cookiecutter_dict, {"full_name": "Pizzä ïs Gööd"})
         else:
-            self.assertEqual(cookiecutter_dict, {"full_name": "Pizzä ïs Gööd"})
+            self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
 
 @unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
 class TestQueryAnswers(unittest.TestCase):
