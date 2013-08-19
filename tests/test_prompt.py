@@ -55,57 +55,70 @@ class TestPrompt(unittest.TestCase):
         else:
             self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
 
-@unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
+
 class TestQueryAnswers(unittest.TestCase):
 
     @patch(input_str, lambda: 'y')
     def test_query_y(self):
+        if not PY3:
+            sys.stdin = StringIO('y')
         answer = prompt.query_yes_no("Blah?")
         self.assertTrue(answer)
 
     @patch(input_str, lambda: 'ye')
     def test_query_ye(self):
+        if not PY3:
+            sys.stdin = StringIO('ye')
         answer = prompt.query_yes_no("Blah?")
         self.assertTrue(answer)
 
     @patch(input_str, lambda: 'yes')
     def test_query_yes(self):
+        if not PY3:
+            sys.stdin = StringIO('yes')
         answer = prompt.query_yes_no("Blah?")
         self.assertTrue(answer)
 
     @patch(input_str, lambda: 'n')
     def test_query_n(self):
+        if not PY3:
+            sys.stdin = StringIO('n')
         answer = prompt.query_yes_no("Blah?")
         self.assertFalse(answer)
 
     @patch(input_str, lambda: 'no')
     def test_query_n(self):
+        if not PY3:
+            sys.stdin = StringIO('no')
         answer = prompt.query_yes_no("Blah?")
         self.assertFalse(answer)
 
-    # @patch('builtins.input', lambda: 'junk')
-    # def test_query_junk(self):
-    #     answer = prompt.query_yes_no("Blah?")
-    #     self.assertTrue(answer)
 
-@unittest.skipUnless(condition=PY3, reason='Only works on PY3 as of now.')
 class TestQueryDefaults(unittest.TestCase):
 
     @patch(input_str, lambda: 'y')
     def test_query_y_none_default(self):
+        if not PY3:
+            sys.stdin = StringIO('y')
         answer = prompt.query_yes_no("Blah?", default=None)
         self.assertTrue(answer)
 
     @patch(input_str, lambda: 'n')
     def test_query_n_none_default(self):
+        if not PY3:
+            sys.stdin = StringIO('n')
         answer = prompt.query_yes_no("Blah?", default=None)
         self.assertFalse(answer)
 
     @patch(input_str, lambda: '')
     def test_query_no_default(self):
+        if not PY3:
+            sys.stdin = StringIO('\n')
         answer = prompt.query_yes_no("Blah?", default='no')
         self.assertFalse(answer)
 
     @patch(input_str, lambda: 'junk')
     def test_query_bad_default(self):
+        if not PY3:
+            sys.stdin = StringIO('junk')
         self.assertRaises(ValueError, prompt.query_yes_no, "Blah?", default='yn')
