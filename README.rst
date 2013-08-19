@@ -23,7 +23,7 @@ creating a Python package project from a Python package project template.
 * Free software: BSD license
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 
-.. image:: cookiecutter_medium.png
+.. image:: https://raw.github.com/audreyr/cookiecutter/aa309b73bdc974788ba265d843a65bb94c2e608e/cookiecutter_medium.png
 
 Features
 --------
