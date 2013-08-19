@@ -22,6 +22,7 @@ test_requirements = []
 
 if sys.version_info[:2] < (2, 7):
     requirements.append('argparse')
+    requirements.append('ordereddict')
 
 if sys.version > '3':
     test_requirements.append('mock')
