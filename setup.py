@@ -18,9 +18,13 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = ['binaryornot>=0.1.1', 'jinja2>=2.4']
+test_requirements = []
 
 if sys.version_info[:2] < (2, 7):
     requirements.append('argparse')
+
+if sys.version > '3':
+    test_requirements.append('mock')
 
 setup(
     name='cookiecutter',
@@ -61,5 +65,5 @@ setup(
     keywords='cookiecutter, Python, projects, project templates, Jinja2, \
         project directory, setup.py, package, packaging',
     test_suite='tests',
-    tests_require=["mock", ]
+    tests_require=test_requirements
 )

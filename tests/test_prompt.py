@@ -8,7 +8,6 @@ test_prompt
 Tests for `cookiecutter.prompt` module.
 """
 
-from cStringIO import StringIO
 import sys
 import unittest
 
@@ -22,6 +21,7 @@ else:
     import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'
+    from cStringIO import StringIO
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
