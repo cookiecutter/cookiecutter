@@ -53,6 +53,7 @@ class TestGenerate(unittest.TestCase):
             template_dir='tests/input{{binary_test}}'
         )
         self.assertTrue(os.path.isfile('tests/inputbinary_files/logo.png'))
+        self.assertTrue(os.path.isfile('tests/inputbinary_files/.DS_Store'))
         self.assertTrue(os.path.isfile('tests/inputbinary_files/readme.txt'))
         self.assertTrue(
             os.path.isfile('tests/inputbinary_files/some_font.otf')
