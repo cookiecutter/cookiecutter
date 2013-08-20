@@ -109,8 +109,12 @@ def generate_files(template_dir, context=None):
                 shutil.copyfile(infile, outfile)
 
             else:
+                # Force fwd slashes on Windows for get_template
+                # This is a by-design Jinja issue
+                infile_fwd_slashes = infile.replace(os.path.sep, '/')
+
                 # Render the file
-                tmpl = env.get_template(infile)
+                tmpl = env.get_template(infile_fwd_slashes)
                 rendered_file = tmpl.render(**context)
 
                 # Render the output filename before writing
