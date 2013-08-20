@@ -3,6 +3,13 @@
 History
 -------
 
+0.6.3 (2013-08-20)
+++++++++++++++++++
+
+* Fix copying of binary files in nested paths (#41), thanks to `@sloria`_.
+
+.. _`@sloria`: https://github.com/sloria/
+
 0.6.2 (2013-08-19)
 ++++++++++++++++++
 
