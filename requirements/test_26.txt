@@ -1,0 +1,7 @@
+# Requirements for testing Cookiecutter on Python 2.6.
+
+-r base_test.txt
+mock
+unittest2
+ordereddict
+simplejson
