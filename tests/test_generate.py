@@ -31,7 +31,7 @@ class TestGenerate(unittest.TestCase):
         self.assertRaises(
             exceptions.NonTemplatedInputDirException,
             generate.generate_files,
-            context={'food': 'pizza'}, 
+            context={'food': 'pizza'},
             template_dir='tests/input'
         )
 
@@ -59,6 +59,17 @@ class TestGenerate(unittest.TestCase):
             os.path.isfile('tests/inputbinary_files/some_font.otf')
         )
 
+    def test_generate_binary_files_in_nested_jinja_path(self):
+        generate.generate_files(
+            context={'binary_test': 'binary_files'},
+            template_dir='tests/input{{binary_test}}'
+        )
+        expected = ['tests/inputbinary_files/binary_files/logo.png',
+                    "tests/inputbinary_files/binary_files/.DS_Store",
+                    "tests/inputbinary_files/binary_files/readme.txt"]
+        for each in expected:
+            self.assertTrue(os.path.isfile(each))
+
     def test_generate_context(self):
         context = generate.generate_context(config_file='tests/json/test.json')
         self.assertEqual(context, {"test": {"1": 2}})
@@ -72,17 +83,17 @@ class TestGenerate(unittest.TestCase):
             context=context,
             template_dir='tests/input{{stuff.color}}'
         )
-        
+
         something = """Hi!
 My name is Audrey Greenfeld.
 It is 2014."""
         something2 = open('tests/inputgreen/something.txt').read()
         self.assertEqual(something, something2)
-        
+
         in_folder = "The color is green and the letter is D."
         in_folder2 = open('tests/inputgreen/folder/in_folder.txt').read()
         self.assertEqual(in_folder, in_folder2)
-        
+
         self.assertTrue(os.path.isdir('tests/inputgreen/im_a.dir'))
         self.assertTrue(os.path.isfile('tests/inputgreen/im_a.dir/im_a.file.py'))
 

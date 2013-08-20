@@ -58,7 +58,7 @@ def generate_files(template_dir, context=None):
     :param input_dir: Project template input directory.
     :paramtype input_dir: directory
     """
-    
+
     # Always use utf-8
     template_dir = template_dir
 
@@ -93,8 +93,12 @@ def generate_files(template_dir, context=None):
             infile = os.path.join(root, f)
             logging.debug("infile is {0}".format(infile))
 
+            # Render the path to the output file (but don't include the filename)
+            outdir_tmpl = Template(os.path.dirname(os.path.abspath(infile)))
+            outdir = outdir_tmpl.render(**context)
+            fname = os.path.basename(os.path.abspath(infile))  # input/output filename
             # Write it to the corresponding place in output_dir
-            outfile = infile.replace(template_dir, output_dir, 1)
+            outfile = os.path.join(outdir, fname)
             logging.debug("outfile is {0}".format(outfile))
 
             # Just copy over binary files. Don't render.
@@ -105,7 +109,6 @@ def generate_files(template_dir, context=None):
                 shutil.copyfile(infile, outfile)
 
             else:
-
                 # Render the file
                 tmpl = env.get_template(infile)
                 rendered_file = tmpl.render(**context)
