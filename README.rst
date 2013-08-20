@@ -106,6 +106,7 @@ Here is a list of the working Cookiecutter project templates that exist:
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-django`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
+* `bootstrap.c`_: A template for simple projects written in C with autotools.
 
 
 Make your own, then submit a pull request adding yours to this list!
@@ -116,6 +117,7 @@ Make your own, then submit a pull request adding yours to this list!
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
+.. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
 
 
 Similar projects
