@@ -104,8 +104,8 @@ Here is a list of the working Cookiecutter project templates that exist:
 * `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
   Boilerplate.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
-* `cookiecutter-dj-project`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
-* `cookiecutter-dj-package`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
+* `cookiecutter-django`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
+* `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 
 
 Make your own, then submit a pull request adding yours to this list!
@@ -114,8 +114,8 @@ Make your own, then submit a pull request adding yours to this list!
 .. _`@audreyr`: https://github.com/audreyr/
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
-.. _`cookiecutter-dj-project`: https://github.com/pydanny/cookiecutter-dj-project
-.. _`cookiecutter-dj-package`: https://github.com/pydanny/cookiecutter-dj-package
+.. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
+.. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 
 
 Similar projects
