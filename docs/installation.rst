@@ -2,11 +2,14 @@
 Installation
 ============
 
-At the command line::
+At the command line:
+
+.. code-block:: bash
 
     $ easy_install cookiecutter
 
-Or, if you have virtualenvwrapper installed::
+Or, if you have pip (the Python package installer tool):
 
-    $ mkvirtualenv cookiecutter
-    $ pip install cookiecutter
+.. code-block:: bash
+
+    $ [sudo] pip install cookiecutter
