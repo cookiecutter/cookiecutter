@@ -31,6 +31,8 @@ Features
 Did someone say features? Cookiecutter's got more features than you can shake
 a stick at!
 
+* Cross-platform: Windows, Mac, and Linux are officially supported.
+
 * Works with Python 2.6, 2.7, 3.3, and PyPy.
 
 * Simple command line usage:
@@ -67,7 +69,7 @@ a stick at!
 
 * Supports unlimited levels of directory nesting.
 
-* All templating is done with Jinja2.
+* 100% of templating is done with Jinja2. This includes file and directory names.
 
 * Project templates can be in any programming language or markup format:
   Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name
@@ -78,14 +80,14 @@ a stick at!
     .. code-block:: json
 
         {
-        	"full_name": "Audrey Roy",
-        	"email": "audreyr@gmail.com",
-        	"project_name": "Complexity",
-        	"repo_name": "complexity",
-        	"project_short_description": "A refreshingly simple HTML-based static site generator.",
-        	"release_date": "2013-07-10",
-        	"year": "2013",
-        	"version": "0.1.1"
+            "full_name": "Audrey Roy",
+            "email": "audreyr@gmail.com",
+            "project_name": "Complexity",
+            "repo_name": "complexity",
+            "project_short_description": "A refreshingly simple static site generator.",
+            "release_date": "2013-07-10",
+            "year": "2013",
+            "version": "0.1.1"
         }
 
 * If generating a project from a git repo template, you are prompted for input:
@@ -107,6 +109,7 @@ Here is a list of the working Cookiecutter project templates that exist:
 * `cookiecutter-django`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
+* `cookiecutter-openstack`_: A template for an OpenStack project.
 
 
 Make your own, then submit a pull request adding yours to this list!
@@ -118,6 +121,7 @@ Make your own, then submit a pull request adding yours to this list!
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
+.. _`cookiecutter-openstack`: https://github.com/emonty/cookiecutter-openstack
 
 
 Similar projects
