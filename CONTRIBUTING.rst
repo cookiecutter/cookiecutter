@@ -96,7 +96,13 @@ Now you can make your changes locally.
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+7. Check that the test coverage hasn't dropped::
+
+    coverage run --source cookiecutter setup.py test
+    coverage report -m
+    coverage html
+
+8. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
