@@ -52,6 +52,47 @@ def generate_context(config_file='cookiecutter.json'):
     return context
 
 
+def generate_file(infile, context, env):
+    """
+    1. Render the contents of infile.
+    2. Render the filename of infile as the name of outfile.
+    3. Write the rendered infile to outfile.
+    :param infile: Input file to generate the file from.
+    """
+    logging.debug("Generating file {0}".format(infile))
+
+    # Render the path to the output file (but don't include the filename)
+    outdir_tmpl = Template(os.path.dirname(os.path.abspath(infile)))
+    outdir = outdir_tmpl.render(**context)
+    fname = os.path.basename(os.path.abspath(infile))  # input/output filename
+    # Write it to the corresponding place in output_dir
+    outfile = os.path.join(outdir, fname)
+    logging.debug("outfile is {0}".format(outfile))
+
+    # Just copy over binary files. Don't render.
+    logging.debug("Check {0} to see if it's a binary".format(infile))
+    if is_binary(infile):
+        logging.debug("Copying binary {0} to {1} without rendering"
+                      .format(infile, outfile))
+        shutil.copyfile(infile, outfile)
+
+    else:
+        # Force fwd slashes on Windows for get_template
+        # This is a by-design Jinja issue
+        infile_fwd_slashes = infile.replace(os.path.sep, '/')
+
+        # Render the file
+        tmpl = env.get_template(infile_fwd_slashes)
+        rendered_file = tmpl.render(**context)
+
+        # Render the output filename before writing
+        name_tmpl = Template(outfile)
+        rendered_name = name_tmpl.render(**context)
+        logging.debug("Writing {0}".format(rendered_name))
+
+        with unicode_open(rendered_name, 'w') as fh:
+            fh.write(rendered_file)
+
 def generate_files(template_dir, context=None):
     """
     Renders the templates and saves them to files.
@@ -91,36 +132,4 @@ def generate_files(template_dir, context=None):
         for f in files:
             logging.debug("f is {0}".format(f))
             infile = os.path.join(root, f)
-            logging.debug("infile is {0}".format(infile))
-
-            # Render the path to the output file (but don't include the filename)
-            outdir_tmpl = Template(os.path.dirname(os.path.abspath(infile)))
-            outdir = outdir_tmpl.render(**context)
-            fname = os.path.basename(os.path.abspath(infile))  # input/output filename
-            # Write it to the corresponding place in output_dir
-            outfile = os.path.join(outdir, fname)
-            logging.debug("outfile is {0}".format(outfile))
-
-            # Just copy over binary files. Don't render.
-            logging.debug("Check {0} to see if it's a binary".format(infile))
-            if is_binary(infile):
-                logging.debug("Copying binary {0} to {1} without rendering"
-                              .format(infile, outfile))
-                shutil.copyfile(infile, outfile)
-
-            else:
-                # Force fwd slashes on Windows for get_template
-                # This is a by-design Jinja issue
-                infile_fwd_slashes = infile.replace(os.path.sep, '/')
-
-                # Render the file
-                tmpl = env.get_template(infile_fwd_slashes)
-                rendered_file = tmpl.render(**context)
-
-                # Render the output filename before writing
-                name_tmpl = Template(outfile)
-                rendered_name = name_tmpl.render(**context)
-                logging.debug("Writing {0}".format(rendered_name))
-
-                with unicode_open(rendered_name, 'w') as fh:
-                    fh.write(rendered_file)
+            generate_file(infile, context, env)

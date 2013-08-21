@@ -27,6 +27,20 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 class TestGenerate(unittest.TestCase):
 
+    def test_generate_file(self):
+        env = Environment()
+        env.loader = FileSystemLoader('.')
+        infile = 'tests/files/{{generate_file}}.txt'
+        generate.generate_file(
+            infile=infile,
+            context={'generate_file': 'cheese'},
+            env=env
+        )
+        self.assertTrue(os.path.isfile('tests/files/cheese.txt'))
+        with open('tests/files/cheese.txt', 'rt') as f:
+             generated_text = f.read()
+             self.assertEqual(generated_text, 'Testing cheese')
+    
     def test_generate_files_bad(self):
         self.assertRaises(
             exceptions.NonTemplatedInputDirException,
@@ -104,6 +118,9 @@ It is 2014."""
             shutil.rmtree('tests/inputgreen')
         if os.path.exists('tests/inputbinary_files'):
             shutil.rmtree('tests/inputbinary_files')
+        if os.path.exists('tests/files/cheese.txt'):
+            os.remove('tests/files/cheese.txt')
+
 
 if __name__ == '__main__':
     unittest.main()
