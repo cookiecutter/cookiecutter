@@ -28,12 +28,16 @@ creating a Python package project from a Python package project template.
 Features
 --------
 
-Did someone say features? Cookiecutter's got more features than you can shake
-a stick at!
+Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.6, 2.7, 3.3, and PyPy.
+* Works with Python 2.6, 2.7, 3.3, and PyPy. *(But you don't have to know/write Python
+  code to use Cookiecutter.)*
+
+* Project templates can be in any programming language or markup format:
+  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name
+  it. You can use multiple languages in the same project template.
 
 * Simple command line usage:
 
@@ -71,10 +75,6 @@ a stick at!
 
 * 100% of templating is done with Jinja2. This includes file and directory names.
 
-* Project templates can be in any programming language or markup format:
-  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name
-  it. You can use multiple languages in the same project template.
-
 * Simply define your template variables in a `cookiecutter.json` file. For example:
 
     .. code-block:: json
@@ -84,7 +84,7 @@ a stick at!
             "email": "audreyr@gmail.com",
             "project_name": "Complexity",
             "repo_name": "complexity",
-            "project_short_description": "A refreshingly simple static site generator.",
+            "project_short_description": "Refreshingly simple static site generator.",
             "release_date": "2013-07-10",
             "year": "2013",
             "version": "0.1.1"
@@ -94,12 +94,12 @@ a stick at!
 
   - Prompts are the keys in `cookiecutter.json`.
   - Default responses are the values in `cookiecutter.json`.
-  - Prompts are shown in order (thanks to those handy OrderedDicts!)
+  - Prompts are shown in order.
 
 Available Templates
 -------------------
 
-Here is a list of the working Cookiecutter project templates that exist:
+Here is a list of working Cookiecutter project templates for you to use or fork:
 
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
