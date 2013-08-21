@@ -110,6 +110,7 @@ Here is a list of the working Cookiecutter project templates that exist:
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
+* `cookiecutter-component`_: A template for a Component JS package.
 
 
 Make your own, then submit a pull request adding yours to this list!
@@ -122,6 +123,7 @@ Make your own, then submit a pull request adding yours to this list!
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
 .. _`cookiecutter-openstack`: https://github.com/emonty/cookiecutter-openstack
+.. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 
 
 Similar projects
