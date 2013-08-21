@@ -3,6 +3,12 @@
 History
 -------
 
+0.6.4 (2013-08-21)
+++++++++++++++++++
+
+* Windows support officially added.
+* Fix TemplateNotFound Exception on Windows (#37).
+
 0.6.3 (2013-08-20)
 ++++++++++++++++++
 
