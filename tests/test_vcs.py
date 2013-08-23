@@ -8,6 +8,7 @@ test_vcs
 Tests for `cookiecutter.vcs` module.
 """
 
+import locale
 import logging
 import os
 import shutil
@@ -30,6 +31,7 @@ from cookiecutter import vcs
 
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+encoding = locale.getdefaultlocale()[1]
 
 
 class TestVCS(unittest.TestCase):
@@ -55,7 +57,7 @@ class TestVCS(unittest.TestCase):
             ['git', 'symbolic-ref', 'HEAD'],
             cwd=git_dir,
             stdout=subprocess.PIPE).communicate()[0]
-        branch = symbolic_ref.strip().split('/')[-1]
+        branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
         self.assertEqual('develop', branch)
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
