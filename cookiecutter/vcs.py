@@ -19,14 +19,14 @@ from .prompt import query_yes_no
 def git_clone(repo):
     """
     Clone a git repo to the current directory.
-    
+
     :param repo: Git repo URL ending with .git.
     """
 
-    
     # Return repo dir
     tail = os.path.split(repo)[1]
-    repo_dir = tail.rsplit('.git')[0]
+    repo_dir = tail.replace('.git', '')  # allow the user to either specify or not '.git'
+
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
