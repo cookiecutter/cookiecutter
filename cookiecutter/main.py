@@ -31,6 +31,7 @@ def cookiecutter(input_dir, checkout=None):
 
     :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
+    :param checkout: The branch, tag or commit ID to checkout after clone
     """
 
     # If it's a git repo, clone and prompt

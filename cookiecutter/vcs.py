@@ -22,6 +22,7 @@ def git_clone(repo, checkout=None):
     Clone a git repo to the current directory.
 
     :param repo: Git repo URL ending with .git.
+    :param checkout: The branch, tag or commit ID to checkout after clone
     """
 
     # Return repo dir
