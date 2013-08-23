@@ -11,19 +11,19 @@ Helper functions for working with version control systems.
 import logging
 import os
 import shutil
+import subprocess
 import sys
 
 from .prompt import query_yes_no
 
 
-def git_clone(repo):
+def git_clone(repo, checkout=None):
     """
     Clone a git repo to the current directory.
-    
+
     :param repo: Git repo URL ending with .git.
     """
 
-    
     # Return repo dir
     tail = os.path.split(repo)[1]
     repo_dir = tail.rsplit('.git')[0]
@@ -37,5 +37,8 @@ def git_clone(repo):
             sys.exit()
 
     os.system('git clone {0}'.format(repo))
+
+    if checkout is not None:
+        subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)
 
     return repo_dir
