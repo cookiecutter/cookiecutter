@@ -145,9 +145,13 @@ Similar projects
 
 * `Pyramid`_'s `pcreate` command for creating Pyramid projects from scaffold templates.
 
+* `mr.bob`_ is a filesystem template renderer, meant to deprecate tools such as
+  paster and templer.
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
 .. _`python-packager`: https://github.com/fcurella/python-packager
 .. _`Yeoman`: https://github.com/yeoman/generator
 .. _`Pyramid`: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/scaffolding.html
+.. _`mr.bob`: https://github.com/iElectric/mr.bob
