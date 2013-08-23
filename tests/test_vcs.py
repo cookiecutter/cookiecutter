@@ -51,7 +51,10 @@ class TestVCS(unittest.TestCase):
         git_dir = 'dye'
         self.assertEqual(repo_dir, git_dir)
         self.assertTrue(os.path.isfile(os.path.join('dye', 'README.md')))
-        symbolic_ref = subprocess.check_output(['git', 'symbolic-ref', 'HEAD'], cwd=git_dir)
+        symbolic_ref = subprocess.Popen(
+            ['git', 'symbolic-ref', 'HEAD'],
+            cwd=git_dir,
+            stdout=subprocess.PIPE).communicate()[0]
         branch = symbolic_ref.strip().split('/')[-1]
         self.assertEqual('develop', branch)
         if os.path.isdir(git_dir):
