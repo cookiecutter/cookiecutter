@@ -25,7 +25,7 @@ from .vcs import git_clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir, checkout):
+def cookiecutter(input_dir, checkout=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
