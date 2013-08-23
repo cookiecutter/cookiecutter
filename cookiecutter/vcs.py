@@ -20,7 +20,7 @@ def git_clone(repo):
     """
     Clone a git repo to the current directory.
 
-    :param repo: Git repo URL ending with .git.
+    :param repo: Git repo. URL can end with or without .git.
     """
 
     # Return repo dir
