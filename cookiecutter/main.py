@@ -25,18 +25,18 @@ from .vcs import git_clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir):
+def cookiecutter(input_dir, checkout):
     """
     API equivalent to using Cookiecutter at the command line.
-    
-    :param input_dir: A directory containing a project template dir, 
+
+    :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     """
 
     # If it's a git repo, clone and prompt
     if input_dir.endswith('.git'):
         got_repo_arg = True
-        repo_dir = git_clone(input_dir)
+        repo_dir = git_clone(input_dir, checkout)
         project_template = find_template(repo_dir)
     else:
         got_repo_arg = False
