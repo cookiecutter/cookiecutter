@@ -77,8 +77,12 @@ def parse_cookiecutter_args(args):
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
+    parser.add_argument(
+        '-c', '--checkout',
+        help='branch, tag or commit to checkout after git clone'
+    )
     return parser.parse_args(args)
-    
+
 def main():
     """ Entry point for the package, as defined in setup.py. """
 
@@ -86,8 +90,8 @@ def main():
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 
     args = parse_cookiecutter_args(sys.argv[1:])
-    
-    cookiecutter(args.input_dir)
+
+    cookiecutter(args.input_dir, args.checkout)
 
 if __name__ == '__main__':
     main()
