@@ -5,3 +5,4 @@ mock
 unittest2
 ordereddict
 simplejson
+subprocess32

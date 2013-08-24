@@ -25,6 +25,7 @@ if sys.version_info[:2] < (2, 7):
     requirements.append('argparse')
     requirements.append('ordereddict')
     requirements.append('simplejson')
+    test_requirements.append('subprocess32')
     test_requirements.append('unittest2')
 
 # Add Python 2.6 and 2.7-specific dependencies

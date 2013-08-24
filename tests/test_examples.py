@@ -11,7 +11,6 @@ Tests for the Cookiecutter example repos.
 import errno
 import os
 import shutil
-import subprocess
 import sys
 
 PY3 = sys.version > '3'
@@ -27,7 +26,9 @@ else:
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
+    import subprocess32 as subprocess
 else:
+    import subprocess
     import unittest
 
 try:
