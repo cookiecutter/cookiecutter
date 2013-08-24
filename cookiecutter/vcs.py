@@ -31,7 +31,10 @@ def git_clone(repo, checkout=None):
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        ok_to_delete = query_yes_no("You've cloned {0} before. Is it okay to delete and re-clone it?".format(repo_dir))
+        ok_to_delete = query_yes_no(
+            "You've cloned {0} before. Is it okay to delete and re-clone it?".format(repo_dir),
+            default="yes"
+        )
         if ok_to_delete:
             shutil.rmtree(repo_dir)
         else:
