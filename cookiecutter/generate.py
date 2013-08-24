@@ -19,6 +19,7 @@ from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
 from .utils import make_sure_path_exists, unicode_open
+from .config import get_config
 
 
 if sys.version_info[:2] < (2, 7):
@@ -39,14 +40,18 @@ def generate_context(config_file='cookiecutter.json'):
     """
 
     context = {}
+    settings = get_config()
 
     file_handle = open(config_file)
     obj = json.load(file_handle, encoding='utf-8', object_pairs_hook=OrderedDict)
 
+    # Merge local template settings with the global ones
+    settings['default_context'].update(obj)
+
     # Add the Python object to the context dictionary
     file_name = os.path.split(config_file)[1]
     file_stem = file_name.split('.')[0]
-    context[file_stem] = obj
+    context[file_stem] = settings['default_context']
 
     logging.debug('Context generated is {0}'.format(context))
     return context
