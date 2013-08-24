@@ -96,6 +96,8 @@ Did someone say features?
   - Default responses are the values in `cookiecutter.json`.
   - Prompts are shown in order.
 
+* Need a secret_key? Just add ``{{ cookiecutter.secret_key() }}` to your template. Each time it's called it generates a new randomized string.
+
 Available Templates
 -------------------
 

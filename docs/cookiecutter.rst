@@ -9,6 +9,14 @@ cookiecutter Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`crypto` Module
+---------------------------
+
+.. automodule:: cookiecutter.crypto
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`cleanup` Module
 ---------------------
 
