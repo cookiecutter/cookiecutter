@@ -12,8 +12,8 @@ import os
 import subprocess
 
 _HOOKS = [
-    'pre_gen_project': None,
-    'post_gen_project': None,
+    'pre_gen_project',
+    'post_gen_project',
     # TODO: other hooks should be listed here
 ]
 
