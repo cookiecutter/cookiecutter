@@ -23,9 +23,13 @@ except NotImplementedError:
                   " instead.")
 
 
-def get_secret_key(system_random=system_random):
+def get_secret_key(length=50, system_random=system_random):
     """
-    Returns a 50 character securely generated random string.
+    :param length: The length of the returned character string. Defaults to 50.
+    :paramtype length: int
+    :param system_random: The randomizer used to generate secret_keys.
+    :paramtype system_random: random.SystemRandom|None
+    :returns: Randomized string, or if None system_random passed then "CHANGEME!!!"
     """
     if system_random is None:
         # This return CHANGEME, and when combined with the warning during
@@ -33,4 +37,4 @@ def get_secret_key(system_random=system_random):
         # own random keys
         return 'CHANGEME!!!'
 
-    return ''.join([random.choice(CHARS) for i in range(50)])
+    return ''.join([system_random.choice(CHARS) for i in range(length)])
