@@ -30,6 +30,11 @@ if sys.version_info[:2] < (2, 7):
 else:
     import unittest
 
+try:
+    travis = os.environ[u'TRAVIS']
+except KeyError:
+    travis = False
+
 
 @unittest.skip(reason='Works locally with tox but fails on Travis.')
 class TestPyPackage(unittest.TestCase):
@@ -74,6 +79,7 @@ class TestExamplesRepoArg(unittest.TestCase):
         if os.path.isdir('alotofeffort'):
             shutil.rmtree('alotofeffort')
 
+@unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestGitBranch(unittest.TestCase):
 
     def setUp(self):
