@@ -25,18 +25,19 @@ from .vcs import git_clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir):
+def cookiecutter(input_dir, checkout=None):
     """
     API equivalent to using Cookiecutter at the command line.
-    
-    :param input_dir: A directory containing a project template dir, 
+
+    :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
+    :param checkout: The branch, tag or commit ID to checkout after clone
     """
 
     # If it's a git repo, clone and prompt
     if input_dir.endswith('.git'):
         got_repo_arg = True
-        repo_dir = git_clone(input_dir)
+        repo_dir = git_clone(input_dir, checkout)
         project_template = find_template(repo_dir)
     else:
         got_repo_arg = False
@@ -77,8 +78,12 @@ def parse_cookiecutter_args(args):
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
+    parser.add_argument(
+        '-c', '--checkout',
+        help='branch, tag or commit to checkout after git clone'
+    )
     return parser.parse_args(args)
-    
+
 def main():
     """ Entry point for the package, as defined in setup.py. """
 
@@ -86,8 +91,8 @@ def main():
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 
     args = parse_cookiecutter_args(sys.argv[1:])
-    
-    cookiecutter(args.input_dir)
+
+    cookiecutter(args.input_dir, args.checkout)
 
 if __name__ == '__main__':
     main()
