@@ -47,18 +47,18 @@ class TestVCS(unittest.TestCase):
 
     def test_git_clone_checkout(self):
         repo_dir = vcs.git_clone(
-            'https://github.com/aptivate/dye.git',
-            'develop'
+            'https://github.com/audreyr/cookiecutter-pypackage.git',
+            'console-script'
         )
-        git_dir = 'dye'
+        git_dir = 'cookiecutter-pypackage'
         self.assertEqual(repo_dir, git_dir)
-        self.assertTrue(os.path.isfile(os.path.join('dye', 'README.md')))
+        self.assertTrue(os.path.isfile(os.path.join('cookiecutter-pypackage', 'README.rst')))
         symbolic_ref = subprocess.Popen(
             ['git', 'symbolic-ref', 'HEAD'],
             cwd=git_dir,
             stdout=subprocess.PIPE).communicate()[0]
         branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
-        self.assertEqual('develop', branch)
+        self.assertEqual('console-script', branch)
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
 
