@@ -42,6 +42,3 @@ htmlcov/
 
 # TextMate
 .tm_properties
-
-# Temporarily ignore while I work on this
-Makefile
