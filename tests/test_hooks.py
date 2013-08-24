@@ -19,7 +19,7 @@ class TestFindHooks(unittest.TestCase):
 
     def test_find_hooks(self):
         '''Getting the list of all defined hooks'''
-        repo_path = 'tests/fake-repo-hooks'
+        repo_path = 'tests/input{{hooks}}'
         self.assertEqual({
             'pre_gen_project': os.path.abspath(
                 os.path.join(repo_path, 'hooks', 'pre_gen_project.py')),
@@ -34,7 +34,7 @@ class TestFindHooks(unittest.TestCase):
 
 class TestExternalHooks(unittest.TestCase):
 
-    repo_path  = os.path.abspath('tests/fake-repo-hooks')
+    repo_path  = os.path.abspath('tests/input{{hooks}}')
     hooks_path = os.path.join(repo_path, 'hooks')
 
     def tearDown(self):
