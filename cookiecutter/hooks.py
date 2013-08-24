@@ -34,6 +34,10 @@ def _run_hook(script_path, cwd='.'):
     ''' '''
     subprocess.call(script_path, cwd=cwd)
 
-def run_hook(hook_name, input_dir output_dir):
+
+def run_hook(hook_name, input_dir, output_dir):
     ''' '''
-    pass
+    script = find_hooks(input_dir).get(hook_name)
+    if script is None: 
+        return
+    return _run_hook(script, output_dir)

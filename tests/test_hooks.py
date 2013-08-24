@@ -42,6 +42,8 @@ class TestExternalHooks(unittest.TestCase):
             os.remove('foo.txt')
         if os.path.exists('tests/foo.txt'):
             os.remove('tests/foo.txt')
+        if os.path.exists('tests/bar.txt'):
+            os.remove('tests/bar.txt')
 
     def test_run_hook(self):
         '''execute a hook script, independently of project generation'''
@@ -55,4 +57,10 @@ class TestExternalHooks(unittest.TestCase):
         self.assertTrue(os.path.isfile('tests/foo.txt'))
         self.assertFalse('tests' in os.getcwd())
         
-    #
+    def test_public_run_hook(self):
+        '''Execute hook from specified template in specified output directory'''
+        hooks.run_hook('pre_gen_project', self.repo_path, 'tests')
+        self.assertTrue(os.path.isfile('tests/bar.txt'))
+
+        hooks.run_hook('post_gen_project', self.repo_path, 'tests')
+        self.assertTrue(os.path.isfile('tests/foo.txt'))
