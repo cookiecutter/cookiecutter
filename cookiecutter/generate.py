@@ -19,6 +19,7 @@ from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
 from .utils import make_sure_path_exists, unicode_open
+from .hooks import run_hook
 
 
 if sys.version_info[:2] < (2, 7):
@@ -118,8 +119,13 @@ def generate_files(template_dir, context=None):
     logging.debug("output_dir is {0}".format(output_dir))
     make_sure_path_exists(output_dir)
 
+    # run pre-gen hook
+    run_hook('pre_gen_project', template_dir, output_dir)
+
     for root, dirs, files in os.walk(template_dir):
         for d in dirs:
+            if d == 'hooks':
+                continue
             indir = os.path.join(root, d)
             outdir = indir.replace(template_dir, output_dir, 1)
 
@@ -132,4 +138,10 @@ def generate_files(template_dir, context=None):
         for f in files:
             logging.debug("f is {0}".format(f))
             infile = os.path.join(root, f)
+            if infile.endswith('hooks%s%s' % (os.path.sep, f)):
+                logging.debug("skipping: {0}".format(infile))
+                continue
             generate_file(infile, context, env)
+
+    # run post-gen hook
+    run_hook('post_gen_project', template_dir, output_dir)
