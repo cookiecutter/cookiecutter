@@ -64,3 +64,7 @@ class TestExternalHooks(unittest.TestCase):
 
         hooks.run_hook('post_gen_project', self.repo_path, 'tests')
         self.assertTrue(os.path.isfile('tests/foo.txt'))
+
+
+if __name__ == '__main__':
+    unittest.main()
