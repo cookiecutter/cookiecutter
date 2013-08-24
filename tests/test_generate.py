@@ -111,6 +111,22 @@ It is 2014."""
         self.assertTrue(os.path.isdir('tests/inputgreen/im_a.dir'))
         self.assertTrue(os.path.isfile('tests/inputgreen/im_a.dir/im_a.file.py'))
 
+    def test_ignore_hooks_dirs(self):
+        generate.generate_files(
+            context={'hooks': 'hooks'},
+            template_dir='tests/input{{hooks}}'
+        )
+        self.assertFalse(os.path.exists('tests/inputhooks/hooks'))
+
+    def test_run_hooks(self):
+        generate.generate_files(
+            context={'hooks': 'hooks'},
+            template_dir='tests/input{{hooks}}'
+        )
+        self.assertTrue(os.path.exists('tests/inputhooks/foo.txt'))
+        self.assertTrue(os.path.exists('tests/inputhooks/bar.txt'))
+
+
     def tearDown(self):
         if os.path.exists('tests/inputpizzä'):
             shutil.rmtree('tests/inputpizzä')
@@ -120,7 +136,8 @@ It is 2014."""
             shutil.rmtree('tests/inputbinary_files')
         if os.path.exists('tests/files/cheese.txt'):
             os.remove('tests/files/cheese.txt')
-
+        if os.path.exists('tests/inputhooks'):
+            shutil.rmtree('tests/inputhooks')
 
 if __name__ == '__main__':
     unittest.main()
