@@ -9,6 +9,7 @@ Functions for discovering and executing various cookiecutter hooks.
 """
 
 import os
+import subprocess
 
 _HOOKS = {
     'pre_gen_project': None,
@@ -29,6 +30,10 @@ def find_hooks(template_root):
     return r
 
 
-def run_hook(hook):
-    pass
+def _run_hook(script_path, cwd='.'):
+    ''' '''
+    subprocess.call(script_path, cwd=cwd)
 
+def run_hook(hook_name, input_dir output_dir):
+    ''' '''
+    pass
