@@ -17,6 +17,7 @@ import os
 import sys
 
 from .cleanup import remove_repo
+from .crypto import get_secret_key
 from .find import find_template
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
@@ -25,11 +26,12 @@ from .vcs import git_clone
 
 logger = logging.getLogger(__name__)
 
+
 def cookiecutter(input_dir):
     """
     API equivalent to using Cookiecutter at the command line.
-    
-    :param input_dir: A directory containing a project template dir, 
+
+    :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     """
 
@@ -55,6 +57,9 @@ def cookiecutter(input_dir):
         cookiecutter_dict = prompt_for_config(context)
         context['cookiecutter'] = cookiecutter_dict
 
+    # Add the get_secret_key function to the context
+    context['cookiecutter']['secret_key'] = get_secret_key
+
     # Create project from local context and project template.
     generate_files(
         template_dir=project_template,
@@ -67,6 +72,7 @@ def cookiecutter(input_dir):
         generated_project = context['cookiecutter']['repo_name']
         remove_repo(repo_dir, generated_project)
 
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
 
@@ -78,7 +84,8 @@ def parse_cookiecutter_args(args):
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
     return parser.parse_args(args)
-    
+
+
 def main():
     """ Entry point for the package, as defined in setup.py. """
 
@@ -86,7 +93,7 @@ def main():
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 
     args = parse_cookiecutter_args(sys.argv[1:])
-    
+
     cookiecutter(args.input_dir)
 
 if __name__ == '__main__':

@@ -51,7 +51,7 @@ class TestCookiecutter(unittest.TestCase):
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
         self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
-        
+
     def tearDown(self):
         if os.path.isdir('tests/fake-repo-pre/fake-project'):
             shutil.rmtree('tests/fake-repo-pre/fake-project')
@@ -82,6 +82,44 @@ class TestCookiecutterRepoArg(unittest.TestCase):
             shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
+
+
+class TestCookiecutterSecretKeyInjection(unittest.TestCase):
+
+    def test_secret_key_injection(self):
+        """
+        test that a secret key is injected into a template
+        """
+        main.cookiecutter('tests/fake-repo-crypto-pre')
+        self.assertTrue(os.path.isdir('tests/fake-repo-crypto-pre/fake-project'))
+        with open('tests/fake-repo-crypto-pre/fake-project/README.rst', 'rt') as f:
+            text = f.readlines()
+        for line in text:
+            if line.startswith("secret_key_1"):
+                self.assertNotEqual(
+                    "secret_key_1: {{ cookiecutter.secret_key() }}",
+                    line
+                )
+                break
+
+    def test_secret_key_uniqueness(self):
+        """
+        test that each time a secret key is called, a new value is set
+        """
+        main.cookiecutter('tests/fake-repo-crypto-pre')
+        self.assertTrue(os.path.isdir('tests/fake-repo-crypto-pre/fake-project'))
+        with open('tests/fake-repo-crypto-pre/fake-project/README.rst', 'rt') as f:
+            text = f.readlines()
+        for line in text:
+            if line.startswith("secret_key_1"):
+                key1 = line.replace("secret_key_1: ", "")
+            if line.startswith("secret_key_2"):
+                key2 = line.replace("secret_key_2: ", "")
+        self.assertNotEqual(key1, key2)
+
+    def tearDown(self):
+        if os.path.isdir('tests/fake-repo-crypto-pre/fake-project'):
+            shutil.rmtree('tests/fake-repo-crypto-pre/fake-project')
 
 if __name__ == '__main__':
     unittest.main()
