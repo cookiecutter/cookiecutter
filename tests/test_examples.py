@@ -65,7 +65,7 @@ class TestJQuery(unittest.TestCase):
 
 @unittest.skip(reason='Works locally with tox but fails on Travis.')
 class TestExamplesRepoArg(unittest.TestCase):
-    
+
     def test_cookiecutter_pypackage_git(self):
         os.system('cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git')
         self.assertTrue(os.path.isfile('alotofeffort/README.rst'))
@@ -80,22 +80,16 @@ class TestGitBranch(unittest.TestCase):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
 
-    # @patch(input_str, lambda x: '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
     def test_branch(self):
-        # sim_input = StringIO('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
-        # sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
         p = subprocess.Popen(
-            ['cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git'],
-            # ['cookiecutter', '-c', 'console-script', 'https://github.com/audreyr/cookiecutter-pypackage.git'],
+            'cookiecutter -c console-script https://github.com/audreyr/cookiecutter-pypackage.git',
+            stdin=subprocess.PIPE,
             shell=True
         )
-    
 
+        # Just skip all the prompts
+        p.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
 
-        p.communicate(input='\n\n\n\n\n\n\n\n\n\n\n\n')
-
-        # if not PY3:
-        #     sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n\n\n\n')
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.isfile('boilerplate/boilerplate/main.py'))
 
