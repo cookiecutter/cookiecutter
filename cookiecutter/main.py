@@ -77,15 +77,24 @@ def parse_cookiecutter_args(args):
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
+    parser.add_argument(
+        '-v', '--verbose',
+        help='Print debug information',
+        action='store_true', default=False
+    )
     return parser.parse_args(args)
     
 def main():
     """ Entry point for the package, as defined in setup.py. """
 
-    # Log info and above to console
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
-
     args = parse_cookiecutter_args(sys.argv[1:])
+
+    if args.verbose:
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+    else:
+        # Log info and above to console
+        logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
+
     
     cookiecutter(args.input_dir)
 

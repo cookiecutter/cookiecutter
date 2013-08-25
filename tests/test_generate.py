@@ -32,6 +32,7 @@ class TestGenerate(unittest.TestCase):
         env.loader = FileSystemLoader('.')
         infile = 'tests/files/{{generate_file}}.txt'
         generate.generate_file(
+            project_dir=".",
             infile=infile,
             context={'generate_file': 'cheese'},
             env=env
@@ -83,6 +84,13 @@ class TestGenerate(unittest.TestCase):
                     "tests/inputbinary_files/binary_files/readme.txt"]
         for each in expected:
             self.assertTrue(os.path.isfile(each))
+
+    def test_generate_files_absolute_path(self):
+        generate.generate_files(
+            context={'food': 'pizzä'},
+            template_dir=os.path.abspath('tests/input{{food}}')
+        )
+        self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
 
     def test_generate_context(self):
         context = generate.generate_context(config_file='tests/json/test.json')

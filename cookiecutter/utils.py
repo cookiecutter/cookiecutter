@@ -11,6 +11,8 @@ Helper functions used throughout Cookiecutter.
 import errno
 import os
 import sys
+import contextlib
+
 
 PY3 = sys.version > '3'
 if PY3:
@@ -41,3 +43,14 @@ def unicode_open(filename, *args, **kwargs):
     if PY3:
         return open(filename, *args, **kwargs)
     return codecs.open(filename, *args, **kwargs)
+
+
+@contextlib.contextmanager
+def chdir(dirname=None):
+  curdir = os.getcwd()
+  try:
+    if dirname is not None:
+      os.chdir(dirname)
+    yield
+  finally:
+    os.chdir(curdir)
