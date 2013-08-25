@@ -84,6 +84,13 @@ class TestGenerate(unittest.TestCase):
         for each in expected:
             self.assertTrue(os.path.isfile(each))
 
+    def test_generate_files_absolute_path(self):
+        generate.generate_files(
+            context={'food': 'pizzä'},
+            template_dir=os.path.abspath('tests/input{{food}}')
+        )
+        self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
+
     def test_generate_context(self):
         context = generate.generate_context(config_file='tests/json/test.json')
         self.assertEqual(context, {"test": {"1": 2}})
