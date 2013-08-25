@@ -32,6 +32,7 @@ class TestGenerate(unittest.TestCase):
         env.loader = FileSystemLoader('.')
         infile = 'tests/files/{{generate_file}}.txt'
         generate.generate_file(
+            project_dir=".",
             infile=infile,
             context={'generate_file': 'cheese'},
             env=env

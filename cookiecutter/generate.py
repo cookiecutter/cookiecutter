@@ -18,7 +18,7 @@ from jinja2.environment import Environment
 from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
-from .utils import make_sure_path_exists, unicode_open
+from .utils import make_sure_path_exists, unicode_open, chdir
 
 
 if sys.version_info[:2] < (2, 7):
@@ -52,7 +52,7 @@ def generate_context(config_file='cookiecutter.json'):
     return context
 
 
-def generate_file(infile, context, env):
+def generate_file(project_dir, infile, context, env):
     """
     1. Render the contents of infile.
     2. Render the filename of infile as the name of outfile.
@@ -61,12 +61,14 @@ def generate_file(infile, context, env):
     """
     logging.debug("Generating file {0}".format(infile))
 
-    # Render the path to the output file (but don't include the filename)
-    outdir_tmpl = Template(os.path.dirname(os.path.abspath(infile)))
+    # Render the intermediary path to the output file (not including the root
+    # project dir nor the filename itself)
+    outdir_tmpl = Template(os.path.dirname(infile))
     outdir = outdir_tmpl.render(**context)
-    fname = os.path.basename(os.path.abspath(infile))  # input/output filename
-    # Write it to the corresponding place in output_dir
-    outfile = os.path.join(outdir, fname)
+
+    # Write the file to the corresponding place
+    fname = os.path.basename(infile)  # input/output filename
+    outfile = os.path.join(project_dir, outdir, fname)
     logging.debug("outfile is {0}".format(outfile))
 
     # Just copy over binary files. Don't render.
@@ -106,30 +108,39 @@ def generate_files(template_dir, context=None):
     logging.debug('Generating project from {0}...'.format(template_dir))
 
     context = context or {}
-    env = Environment()
-    env.loader = FileSystemLoader('.')
 
     # Render dirname before writing
     name_tmpl = Template(template_dir)
-    output_dir = name_tmpl.render(**context)
-    if output_dir == template_dir:
+    project_dir = name_tmpl.render(**context)
+
+    if project_dir == template_dir:
         raise NonTemplatedInputDirException
 
-    logging.debug("output_dir is {0}".format(output_dir))
-    make_sure_path_exists(output_dir)
+    # We want the Jinja path and the OS paths to match. Consequently, we'll:
+    #   + CD to the template folder
+    #   + Set Jinja's path to "."
+    #
+    #  In order to build our files to the correct folder(s), we'll use an
+    # absolute path for the target folder (project)
 
-    for root, dirs, files in os.walk(template_dir):
-        for d in dirs:
-            indir = os.path.join(root, d)
-            outdir = indir.replace(template_dir, output_dir, 1)
+    project_dir = os.path.abspath(project_dir)
 
-            # Render dirname before writing
-            name_tmpl = Template(outdir)
-            rendered_dirname = name_tmpl.render(**context)
+    logging.debug("project_dir is {0}".format(project_dir))
+    make_sure_path_exists(project_dir)
 
-            make_sure_path_exists(rendered_dirname)
+    with chdir(template_dir):
+        env = Environment()
+        env.loader = FileSystemLoader(".")
 
-        for f in files:
-            logging.debug("f is {0}".format(f))
-            infile = os.path.join(root, f)
-            generate_file(infile, context, env)
+        for root, dirs, files in os.walk("."):
+
+            for d in dirs:
+                indir = os.path.join(root, d)
+                name_tmpl = Template(indir)
+                rendered_dirname = name_tmpl.render(**context)
+                make_sure_path_exists(os.path.join(project_dir, rendered_dirname))
+
+            for f in files:
+                infile = os.path.join(root, f)
+                logging.debug("f is {0}".format(f))
+                generate_file(project_dir, infile, context, env)
