@@ -20,7 +20,7 @@ from .cleanup import remove_repo
 from .find import find_template
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
-from .vcs import git_clone
+from .vcs import git_clone, hg_clone
 
 
 logger = logging.getLogger(__name__)
@@ -28,8 +28,8 @@ logger = logging.getLogger(__name__)
 def cookiecutter(input_dir):
     """
     API equivalent to using Cookiecutter at the command line.
-    
-    :param input_dir: A directory containing a project template dir, 
+
+    :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     """
 
@@ -37,6 +37,10 @@ def cookiecutter(input_dir):
     if input_dir.endswith('.git'):
         got_repo_arg = True
         repo_dir = git_clone(input_dir)
+        project_template = find_template(repo_dir)
+    elif input_dir.endswith('.hg'):
+        got_repo_arg = True
+        repo_dir = hg_clone(input_dir)
         project_template = find_template(repo_dir)
     else:
         got_repo_arg = False
@@ -78,7 +82,7 @@ def parse_cookiecutter_args(args):
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
     return parser.parse_args(args)
-    
+
 def main():
     """ Entry point for the package, as defined in setup.py. """
 
@@ -86,7 +90,7 @@ def main():
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 
     args = parse_cookiecutter_args(sys.argv[1:])
-    
+
     cookiecutter(args.input_dir)
 
 if __name__ == '__main__':

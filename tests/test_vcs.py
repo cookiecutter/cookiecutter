@@ -42,6 +42,15 @@ class TestVCS(unittest.TestCase):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
 
+    def test_hg_clone(self):
+        repo_dir = vcs.hg_clone(
+            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
+        )
+        self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
+        self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
+        if os.path.isdir('cookiecutter-trytonmodule'):
+            shutil.rmtree('cookiecutter-trytonmodule')
+
 
 class TestVCSPrompt(unittest.TestCase):
 
@@ -49,6 +58,9 @@ class TestVCSPrompt(unittest.TestCase):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
         os.mkdir('cookiecutter-pypackage/')
+        if os.path.isdir('cookiecutter-trytonmodule'):
+            shutil.rmtree('cookiecutter-trytonmodule')
+        os.mkdir('cookiecutter-trytonmodule/')
 
     @patch(input_str, lambda: 'y')
     def test_git_clone_overwrite(self):
@@ -70,9 +82,31 @@ class TestVCSPrompt(unittest.TestCase):
             'https://github.com/audreyr/cookiecutter-pypackage.git'
         )
 
+    @patch(input_str, lambda: 'y')
+    def test_hg_clone_overwrite(self):
+        if not PY3:
+            sys.stdin = StringIO('y\n\n')
+        repo_dir = vcs.hg_clone(
+            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
+        )
+        self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
+        self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
+
+    @patch(input_str, lambda: 'n')
+    def test_hg_clone_cancel(self):
+        if not PY3:
+            sys.stdin = StringIO('n\n\n')
+        self.assertRaises(
+            SystemExit,
+            vcs.hg_clone,
+            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
+        )
+
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('cookiecutter-trytonmodule'):
+            shutil.rmtree('cookiecutter-trytonmodule')
 
 
 if __name__ == '__main__':
