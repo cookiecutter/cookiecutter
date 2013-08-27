@@ -31,7 +31,7 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
-    
+
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
@@ -51,14 +51,14 @@ class TestCookiecutter(unittest.TestCase):
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
         self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
-        
+
     def tearDown(self):
         if os.path.isdir('tests/fake-repo-pre/fake-project'):
             shutil.rmtree('tests/fake-repo-pre/fake-project')
 
 
 class TestArgParsing(unittest.TestCase):
-    
+
     def test_parse_cookiecutter_args(self):
         args = main.parse_cookiecutter_args(['project/'])
         self.assertEqual(args.input_dir, 'project/')
@@ -76,12 +76,27 @@ class TestCookiecutterRepoArg(unittest.TestCase):
         self.assertTrue(os.path.isdir('boilerplate'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
-    
+
+    @patch(input_str, lambda x: '')
+    def test_cookiecutter_mercurial(self):
+        if not PY3:
+            sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
+        main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg')
+        logging.debug('Current dir is {0}'.format(os.getcwd()))
+        self.assertFalse(os.path.exists('cookiecutter-trytonmodule'))
+        self.assertTrue(os.path.isdir('module_name'))
+        self.assertTrue(os.path.isfile('module_name/README'))
+        self.assertTrue(os.path.exists('module_name/setup.py'))
+
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('cookiecutter-trytonmodule'):
+            shutil.rmtree('cookiecutter-trytonmodule')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
+        if os.path.isdir('module_name'):
+            shutil.rmtree('module_name')
 
 if __name__ == '__main__':
     unittest.main()
