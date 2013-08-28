@@ -51,15 +51,22 @@ class TestGenerate(unittest.TestCase):
         )
 
     def test_generate_files_verbose_template_syntax_error(self):
-        self.assertRaisesRegexp(
-            TemplateSyntaxError,
-            r'^Missing end of comment tag\n'
-            '\s*File "\./tests/input{{syntax_error}}/simple\.txt", line 1\n'
-            '\s*I eat {{ syntax_error }} {# this comment is not closed}$',
-            generate.generate_files,
-            context={'syntax_error': 'syntax_error'},
-            template_dir='tests/input{{syntax_error}}'
-        )
+        try:
+            generate.generate_files(
+                context={'syntax_error': 'syntax_error'},
+                template_dir='tests/input{{syntax_error}}'
+            )
+        except TemplateSyntaxError as exception:
+            self.assertEquals(
+                str(exception),
+                'Missing end of comment tag\n'
+                '  File "./tests/input{{syntax_error}}/simple.txt", line 1\n'
+                '    I eat {{ syntax_error }} {# this comment is not closed}'
+            )
+        except exception:
+            self.fail('Unexpected exception thrown:', exception)
+        else:
+            self.fail('TemplateSyntaxError not thrown')
 
     def test_generate_files(self):
         generate.generate_files(
