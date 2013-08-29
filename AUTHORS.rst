@@ -10,4 +10,13 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Daniel Greenfeld (`@pydanny`_)
+* Steven Loria (`@sloria`_)
+* Goran Peretin (`@gperetin`_)
+* Hamish Downer (`@foobacca`_)
+
+.. _`@audreyr`: https://github.com/audreyr
+.. _`@pydanny`: https://github.com/pydanny
+.. _`@sloria`: https://github.com/sloria
+.. _`@gperetin`: https://github.com/gperetin
+.. _`@foobacca`: https://github.com/foobacca
