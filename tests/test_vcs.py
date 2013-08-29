@@ -26,6 +26,11 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
+if sys.version_info[:2] < (2, 7):
+    import subprocess32 as subprocess
+else:
+    import subprocess
+
 from cookiecutter import vcs
 
 
@@ -53,12 +58,16 @@ class TestVCS(unittest.TestCase):
         git_dir = 'cookiecutter-pypackage'
         self.assertEqual(repo_dir, git_dir)
         self.assertTrue(os.path.isfile(os.path.join('cookiecutter-pypackage', 'README.rst')))
-        symbolic_ref = subprocess.Popen(
+
+        with subprocess.Popen(
             ['git', 'symbolic-ref', 'HEAD'],
             cwd=git_dir,
-            stdout=subprocess.PIPE).communicate()[0]
-        branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
-        self.assertEqual('console-script', branch)
+            stdout=subprocess.PIPE
+        ) as proc:
+            symbolic_ref = proc.communicate()[0]
+            branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
+            self.assertEqual('console-script', branch)
+
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
 
