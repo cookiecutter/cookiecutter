@@ -15,6 +15,7 @@ import argparse
 import logging
 import os
 import sys
+import shutil
 
 from .cleanup import remove_repo
 from .find import find_template
@@ -25,11 +26,12 @@ from .vcs import git_clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir):
+
+def cookiecutter(input_dir, local_is_ref=False):
     """
     API equivalent to using Cookiecutter at the command line.
-    
-    :param input_dir: A directory containing a project template dir, 
+
+    :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     """
 
@@ -39,10 +41,17 @@ def cookiecutter(input_dir):
         repo_dir = git_clone(input_dir)
         project_template = find_template(repo_dir)
     else:
-        got_repo_arg = False
-        project_template = find_template(input_dir)
+        if local_is_ref:
+            got_repo_arg = True
+            repo_dir = './__cookiecutter_tmpdir'
+            shutil.copytree(input_dir, repo_dir)
+            project_template = find_template(repo_dir)
+        else:
+            got_repo_arg = False
+            project_template = find_template(input_dir)
 
-    config_file = os.path.join(os.path.dirname(project_template), 'cookiecutter.json')
+    config_file = os.path.join(os.path.dirname(project_template),
+                               'cookiecutter.json')
     logging.debug('config_file is {0}'.format(config_file))
 
     context = generate_context(
@@ -67,6 +76,7 @@ def cookiecutter(input_dir):
         generated_project = context['cookiecutter']['repo_name']
         remove_repo(repo_dir, generated_project)
 
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
 
@@ -74,20 +84,27 @@ def parse_cookiecutter_args(args):
         description='Create a project from a Cookiecutter project template.'
     )
     parser.add_argument(
+        '--local-is-reference',
+        action="store_true",
+        help='consider local repository like a remote (git) directory:'
+             'clone into a new one and asks for parameters')
+    parser.add_argument(
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
     return parser.parse_args(args)
-    
+
+
 def main():
     """ Entry point for the package, as defined in setup.py. """
 
     # Log info and above to console
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(levelname)s: %(message)s',
+                        level=logging.INFO)
 
     args = parse_cookiecutter_args(sys.argv[1:])
-    
-    cookiecutter(args.input_dir)
+
+    cookiecutter(args.input_dir, args.local_is_reference)
 
 if __name__ == '__main__':
     main()
