@@ -28,6 +28,8 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
+from cookiecutter import vcs
+
 
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
