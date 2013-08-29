@@ -49,6 +49,14 @@ cookiecutter Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`prompt` Module
+--------------------
+
+.. automodule:: cookiecutter.prompt
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`utils` Module
 -------------------
 

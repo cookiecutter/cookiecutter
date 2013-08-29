@@ -44,6 +44,10 @@ defined in the project's `cookiecutter.json`.
 Then, Cookiecutter will generate a project from the template, using the values
 that you entered. It will be placed in your current directory.
 
+And if you want to specify a branch you can do that with::
+
+    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git --checkout develop
+
 Or hook directly into the Cookiecutter API
 ------------------------------------------
 

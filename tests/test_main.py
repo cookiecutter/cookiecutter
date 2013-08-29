@@ -31,7 +31,7 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
-    
+
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
@@ -51,17 +51,23 @@ class TestCookiecutter(unittest.TestCase):
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
         self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
-        
+
     def tearDown(self):
         if os.path.isdir('tests/fake-repo-pre/fake-project'):
             shutil.rmtree('tests/fake-repo-pre/fake-project')
 
 
 class TestArgParsing(unittest.TestCase):
-    
+
     def test_parse_cookiecutter_args(self):
         args = main.parse_cookiecutter_args(['project/'])
         self.assertEqual(args.input_dir, 'project/')
+        self.assertEqual(args.checkout, None)
+
+    def test_parse_cookiecutter_args_with_branch(self):
+        args = main.parse_cookiecutter_args(['project/', '--checkout', 'develop'])
+        self.assertEqual(args.input_dir, 'project/')
+        self.assertEqual(args.checkout, 'develop')
 
 
 class TestCookiecutterRepoArg(unittest.TestCase):
@@ -76,7 +82,7 @@ class TestCookiecutterRepoArg(unittest.TestCase):
         self.assertTrue(os.path.isdir('boilerplate'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
-    
+
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')

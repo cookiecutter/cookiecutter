@@ -24,6 +24,7 @@ def find_template(repo_dir):
     
     repo_dir_contents = os.listdir(repo_dir)
 
+    project_template = None
     for item in repo_dir_contents:
         if 'cookiecutter' in item and \
             '{{' in item and \
