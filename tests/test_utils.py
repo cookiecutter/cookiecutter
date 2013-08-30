@@ -8,6 +8,7 @@ test_utils
 Tests for `cookiecutter.utils` module.
 """
 
+import os
 import shutil
 import unittest
 
@@ -38,6 +39,25 @@ Musical Notes: ♬ ♫ ♯"""
         with utils.unicode_open('tests/files/unicode.txt') as f:
             opened_text = f.read()
             self.assertEqual(unicode_text, opened_text)
+
+    def test_workin(self):
+        cwd = os.getcwd()
+        ch_to = 'tests/files'
+
+        class TestException(Exception):
+            pass
+        
+        def test_work_in():
+            with utils.work_in(ch_to):
+                self.assertEqual(os.path.join(cwd, ch_to), os.getcwd())
+                raise TestException()
+
+        # Make sure we return to the correct folder
+        self.assertEqual(cwd, os.getcwd())
+
+        # Make sure that exceptions are still bubled up
+        self.assertRaises(TestException, test_work_in)
+
 
 if __name__ == '__main__':
     unittest.main()

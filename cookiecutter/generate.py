@@ -18,7 +18,7 @@ from jinja2.environment import Environment
 from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
-from .utils import make_sure_path_exists, unicode_open, chdir
+from .utils import make_sure_path_exists, unicode_open, work_in
 
 
 if sys.version_info[:2] < (2, 7):
@@ -128,7 +128,7 @@ def generate_files(template_dir, context=None):
     logging.debug("project_dir is {0}".format(project_dir))
     make_sure_path_exists(project_dir)
 
-    with chdir(template_dir):
+    with work_in(template_dir):
         env = Environment()
         env.loader = FileSystemLoader(".")
 
