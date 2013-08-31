@@ -69,6 +69,7 @@ class TestGenerateFile(unittest.TestCase):
         if os.path.exists('tests/files/cheese.txt'):
             os.remove('tests/files/cheese.txt')
 
+
 class TestGenerateFiles(unittest.TestCase):
 
     def test_generate_files_bad(self):
@@ -136,6 +137,7 @@ class TestGenerateContext(unittest.TestCase):
         context = generate.generate_context(config_file='tests/json/test.json')
         self.assertEqual(context, {"test": {"1": 2}})
 
+
 class TestOutputFolder(unittest.TestCase):
 
     def test_output_folder(self):
@@ -164,6 +166,28 @@ It is 2014."""
     def tearDown(self):
         if os.path.exists('tests/inputgreen'):
             shutil.rmtree('tests/inputgreen')
+
+
+class TestHooks(unittest.TestCase):
+
+    def test_ignore_hooks_dirs(self):
+        generate.generate_files(
+            context={'hooks': 'hooks'},
+            template_dir='tests/input{{hooks}}'
+        )
+        self.assertFalse(os.path.exists('tests/inputhooks/hooks'))
+
+    def test_run_hooks(self):
+        generate.generate_files(
+            context={'hooks': 'hooks'},
+            template_dir='tests/input{{hooks}}'
+        )
+        self.assertTrue(os.path.exists('tests/inputhooks/foo.txt'))
+        self.assertTrue(os.path.exists('tests/inputhooks/bar.txt'))
+
+    def tearDown(self):
+        if os.path.exists('tests/inputhooks'):
+            shutil.rmtree('tests/inputhooks')
 
 
 if __name__ == '__main__':
