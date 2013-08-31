@@ -23,15 +23,15 @@ def prompt_for_config(context):
     field names and sample values.
     """
     cookiecutter_dict = {}
-    
+
     for key, val in iteritems(context['cookiecutter']):
-        prompt = "{0} (default is \"{1}\")? ".format(key, val)
-        new_val = input(prompt)
+        prompt = u"{0} (default is \"{1}\")? ".format(key, val)
+        new_val = input(prompt.encode('utf-8'))
         new_val = new_val.strip()
 
         if new_val == '':
             new_val = val
-        
+
         if PY3:
             cookiecutter_dict[key] = new_val
         else:
