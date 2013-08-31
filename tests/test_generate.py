@@ -26,7 +26,7 @@ PY3 = sys.version > '3'
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
-class TestGenerate(unittest.TestCase):
+class TestGenerateFile(unittest.TestCase):
 
     def test_generate_file(self):
         env = Environment()
@@ -42,7 +42,35 @@ class TestGenerate(unittest.TestCase):
         with open('tests/files/cheese.txt', 'rt') as f:
              generated_text = f.read()
              self.assertEqual(generated_text, 'Testing cheese')
-    
+
+    def test_generate_file_verbose_template_syntax_error(self):
+        env = Environment()
+        env.loader = FileSystemLoader('.')
+        try:
+            generate.generate_file(
+                project_dir=".",
+                infile='tests/files/syntax_error.txt',
+                context={'syntax_error': 'syntax_error'},
+                env=env
+            )
+        except TemplateSyntaxError as exception:
+            self.assertEquals(
+                str(exception),
+                'Missing end of comment tag\n'
+                '  File "./tests/files/syntax_error.txt", line 1\n'
+                '    I eat {{ syntax_error }} {# this comment is not closed}'
+            )
+        except exception:
+            self.fail('Unexpected exception thrown:', exception)
+        else:
+            self.fail('TemplateSyntaxError not thrown')
+
+    def tearDown(self):
+        if os.path.exists('tests/files/cheese.txt'):
+            os.remove('tests/files/cheese.txt')
+
+class TestGenerateFiles(unittest.TestCase):
+
     def test_generate_files_bad(self):
         self.assertRaises(
             exceptions.NonTemplatedInputDirException,
@@ -50,24 +78,6 @@ class TestGenerate(unittest.TestCase):
             context={'food': 'pizza'},
             template_dir='tests/input'
         )
-
-    def test_generate_files_verbose_template_syntax_error(self):
-        try:
-            generate.generate_files(
-                context={'syntax_error': 'syntax_error'},
-                template_dir='tests/input{{syntax_error}}'
-            )
-        except TemplateSyntaxError as exception:
-            self.assertEquals(
-                str(exception),
-                'Missing end of comment tag\n'
-                '  File "./tests/input{{syntax_error}}/simple.txt", line 1\n'
-                '    I eat {{ syntax_error }} {# this comment is not closed}'
-            )
-        except exception:
-            self.fail('Unexpected exception thrown:', exception)
-        else:
-            self.fail('TemplateSyntaxError not thrown')
 
     def test_generate_files(self):
         generate.generate_files(
@@ -111,9 +121,22 @@ class TestGenerate(unittest.TestCase):
         )
         self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
 
+    def tearDown(self):
+        if os.path.exists('tests/inputpizzä'):
+            shutil.rmtree('tests/inputpizzä')
+        if os.path.exists('tests/inputgreen'):
+            shutil.rmtree('tests/inputgreen')
+        if os.path.exists('tests/inputbinary_files'):
+            shutil.rmtree('tests/inputbinary_files')
+
+
+class TestGenerateContext(unittest.TestCase):
+
     def test_generate_context(self):
         context = generate.generate_context(config_file='tests/json/test.json')
         self.assertEqual(context, {"test": {"1": 2}})
+
+class TestOutputFolder(unittest.TestCase):
 
     def test_output_folder(self):
         context = generate.generate_context(
@@ -139,14 +162,8 @@ It is 2014."""
         self.assertTrue(os.path.isfile('tests/inputgreen/im_a.dir/im_a.file.py'))
 
     def tearDown(self):
-        if os.path.exists('tests/inputpizzä'):
-            shutil.rmtree('tests/inputpizzä')
         if os.path.exists('tests/inputgreen'):
             shutil.rmtree('tests/inputgreen')
-        if os.path.exists('tests/inputbinary_files'):
-            shutil.rmtree('tests/inputbinary_files')
-        if os.path.exists('tests/files/cheese.txt'):
-            os.remove('tests/files/cheese.txt')
 
 
 if __name__ == '__main__':
