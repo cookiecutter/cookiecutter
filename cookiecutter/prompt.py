@@ -8,6 +8,7 @@ cookiecutter.prompt
 Functions for prompting the user for project info.
 """
 
+from __future__ import unicode_literals
 import sys
 
 PY3 = sys.version > '3'
@@ -25,7 +26,7 @@ def prompt_for_config(context):
     cookiecutter_dict = {}
 
     for key, val in iteritems(context['cookiecutter']):
-        prompt = u"{0} (default is \"{1}\")? ".format(key, val)
+        prompt = "{0} (default is \"{1}\")? ".format(key, val)
         new_val = input(prompt.encode('utf-8'))
         new_val = new_val.strip()
 
