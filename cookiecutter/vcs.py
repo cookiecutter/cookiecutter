@@ -18,8 +18,16 @@ from .prompt import query_yes_no
 
 
 def delete_repo(repo_dir):
+    """
+    Asks the user whether it's okay to delete the previously-cloned repo.
+    If yes, deletes it. Otherwise, Cookiecutter exits.
+    :param repo_dir: Directory of previously-cloned repo.
+    """
+
     ok_to_delete = query_yes_no("You've cloned {0} before. "
-        "Is it okay to delete and re-clone it?".format(repo_dir))
+        "Is it okay to delete and re-clone it?".format(repo_dir),
+        default="yes"
+    )
     if ok_to_delete:
         shutil.rmtree(repo_dir)
     else:
