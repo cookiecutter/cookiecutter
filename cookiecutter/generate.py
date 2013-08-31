@@ -15,6 +15,7 @@ import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
+from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
@@ -84,7 +85,13 @@ def generate_file(project_dir, infile, context, env):
         infile_fwd_slashes = infile.replace(os.path.sep, '/')
 
         # Render the file
-        tmpl = env.get_template(infile_fwd_slashes)
+        try:
+            tmpl = env.get_template(infile_fwd_slashes)
+        except TemplateSyntaxError as exception:
+            # Disable translated so that printed exception contains verbose
+            # information about syntax error location
+            exception.translated = False
+            raise
         rendered_file = tmpl.render(**context)
 
         # Render the output filename before writing
