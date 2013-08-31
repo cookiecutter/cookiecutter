@@ -16,6 +16,7 @@ import unittest
 
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
+from jinja2.exceptions import TemplateSyntaxError
 
 from cookiecutter import generate
 from cookiecutter import exceptions
@@ -49,6 +50,24 @@ class TestGenerate(unittest.TestCase):
             context={'food': 'pizza'},
             template_dir='tests/input'
         )
+
+    def test_generate_files_verbose_template_syntax_error(self):
+        try:
+            generate.generate_files(
+                context={'syntax_error': 'syntax_error'},
+                template_dir='tests/input{{syntax_error}}'
+            )
+        except TemplateSyntaxError as exception:
+            self.assertEquals(
+                str(exception),
+                'Missing end of comment tag\n'
+                '  File "./tests/input{{syntax_error}}/simple.txt", line 1\n'
+                '    I eat {{ syntax_error }} {# this comment is not closed}'
+            )
+        except exception:
+            self.fail('Unexpected exception thrown:', exception)
+        else:
+            self.fail('TemplateSyntaxError not thrown')
 
     def test_generate_files(self):
         generate.generate_files(
