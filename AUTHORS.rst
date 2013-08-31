@@ -16,6 +16,7 @@ Contributors
 * Hamish Downer (`@foobacca`_)
 * Thomas Orozco (`@krallin`_)
 * Jindrich Smitka (`@s-m-i-t-a`_)
+* Benjamin Schwarze (`@benjixx`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -24,3 +25,4 @@ Contributors
 .. _`@foobacca`: https://github.com/foobacca
 .. _`@krallin`: https://github.com/krallin
 .. _`@s-m-i-t-a`: https://github.com/s-m-i-t-a
+.. _`@benjixx`: https://github.com/benjixx
