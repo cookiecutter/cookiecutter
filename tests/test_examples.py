@@ -12,7 +12,6 @@ import errno
 import os
 import shutil
 import sys
-import unittest
 
 PY3 = sys.version > '3'
 if PY3:
@@ -27,12 +26,10 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
-#if sys.version_info[:3] < (2, 7, 5):
-    #import unittest2 as unittest
-    #import subprocess32 as subprocess
-#else:
-    #import subprocess
-    #import unittest
+if sys.version_info[:3] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
 
 try:
     travis = os.environ[u'TRAVIS']
