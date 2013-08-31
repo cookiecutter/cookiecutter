@@ -20,7 +20,7 @@ from .cleanup import remove_repo
 from .find import find_template
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
-from .vcs import git_clone
+from .vcs import git_clone, hg_clone
 
 
 logger = logging.getLogger(__name__)
@@ -38,6 +38,10 @@ def cookiecutter(input_dir, checkout=None):
     if input_dir.endswith('.git'):
         got_repo_arg = True
         repo_dir = git_clone(input_dir, checkout)
+        project_template = find_template(repo_dir)
+    elif input_dir.endswith('.hg'):
+        got_repo_arg = True
+        repo_dir = hg_clone(input_dir)
         project_template = find_template(repo_dir)
     else:
         got_repo_arg = False
