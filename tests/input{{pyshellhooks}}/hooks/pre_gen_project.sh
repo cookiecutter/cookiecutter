@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo 'post generation hook';
-touch 'foo.txt'
+touch 'shell_pre.txt'

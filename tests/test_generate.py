@@ -172,22 +172,32 @@ class TestHooks(unittest.TestCase):
 
     def test_ignore_hooks_dirs(self):
         generate.generate_files(
-            context={'hooks': 'hooks'},
-            template_dir='tests/input{{hooks}}'
+            context={'pyhooks': 'pyhooks'},
+            template_dir='tests/input{{pyhooks}}'
         )
-        self.assertFalse(os.path.exists('tests/inputhooks/hooks'))
+        self.assertFalse(os.path.exists('tests/inputpyhooks/hooks'))
 
-    def test_run_hooks(self):
+    def test_run_python_hooks(self):
         generate.generate_files(
-            context={'hooks': 'hooks'},
-            template_dir='tests/input{{hooks}}'
+            context={'pyhooks': 'pyhooks'},
+            template_dir='tests/input{{pyhooks}}'
         )
-        self.assertTrue(os.path.exists('tests/inputhooks/bar.txt'))
-        self.assertTrue(os.path.exists('tests/inputhooks/foo.txt'))
+        self.assertTrue(os.path.exists('tests/inputpyhooks/python_pre.txt'))
+        self.assertTrue(os.path.exists('tests/inputpyhooks/python_post.txt'))
+
+    def test_run_shell_hooks(self):
+        generate.generate_files(
+            context={'shellhooks': 'shellhooks'},
+            template_dir='tests/input{{shellhooks}}'
+        )
+        self.assertTrue(os.path.exists('tests/inputshellhooks/shell_pre.txt'))
+        self.assertTrue(os.path.exists('tests/inputshellhooks/shell_post.txt'))
 
     def tearDown(self):
-        if os.path.exists('tests/inputhooks'):
-            shutil.rmtree('tests/inputhooks')
+        if os.path.exists('tests/inputpyhooks'):
+            shutil.rmtree('tests/inputpyhooks')
+        if os.path.exists('tests/inputshellhooks'):
+            shutil.rmtree('tests/inputshellhooks')
 
 
 if __name__ == '__main__':

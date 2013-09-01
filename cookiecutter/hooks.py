@@ -8,6 +8,7 @@ cookiecutter.hooks
 Functions for discovering and executing various cookiecutter hooks.
 """
 
+import logging
 import os
 import sys
 
@@ -57,6 +58,7 @@ def run_hook(hook_name, input_dir, output_dir):
     and execute it with the current working directory.
     '''
     script = find_hooks(input_dir).get(hook_name)
-    if script is None: 
+    if script is None:
+        logging.debug("No hooks found")
         return
     return _run_hook(script, output_dir)

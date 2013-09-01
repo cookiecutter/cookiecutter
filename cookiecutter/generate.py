@@ -103,55 +103,65 @@ def generate_file(project_dir, infile, context, env):
         with unicode_open(rendered_name, 'w') as fh:
             fh.write(rendered_file)
 
-def generate_files(template_dir, context=None, output_dir='.'):
+
+def render_and_create_dir(dirname, context):
+    """
+    Renders the name of a directory, creates the directory, and returns its path.
+    """
+
+    name_tmpl = Template(dirname)
+    dir_to_create = name_tmpl.render(**context)
+    make_sure_path_exists(dir_to_create)
+    return dir_to_create
+
+
+def ensure_dir_is_templated(dirname):
+    """
+    Ensures that dirname is a templated directory name.
+    """
+    if '{{' in dirname and \
+        '}}' in dirname:
+        return True
+    else:
+        raise NonTemplatedInputDirException
+
+
+def generate_files(template_dir, context=None):
     """
     Renders the templates and saves them to files.
     :param input_dir: Project template input directory.
     :paramtype input_dir: directory
     """
 
-    # Always use utf-8
-    template_dir = template_dir
-
     logging.debug('Generating project from {0}...'.format(template_dir))
-
     context = context or {}
 
-    # Render dirname before writing
-    name_tmpl = Template(template_dir)
-    project_dir = name_tmpl.render(**context)
-
-    if project_dir == template_dir:
-        raise NonTemplatedInputDirException
+    ensure_dir_is_templated(template_dir)
+    output_dir = render_and_create_dir(template_dir, context)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
     #   + Set Jinja's path to "."
     #
     #  In order to build our files to the correct folder(s), we'll use an
-    # absolute path for the target folder (project)
+    # absolute path for the target folder (output_dir)
 
-    project_dir = os.path.abspath(project_dir)
-
-    logging.debug("project_dir is {0}".format(project_dir))
-    make_sure_path_exists(project_dir)
+    output_dir = os.path.abspath(output_dir)
+    logging.debug("output_dir is {0}".format(output_dir))
 
     with work_in(template_dir):
         env = Environment()
-        env.loader = FileSystemLoader(output_dir)
+        env.loader = FileSystemLoader(".")
 
         # run pre-gen hook
         run_hook('pre_gen_project', template_dir, output_dir)
 
         for root, dirs, files in os.walk("."):
-
             for d in dirs:
                 if d == 'hooks':
                     continue
-                indir = os.path.join(root, d)
-                name_tmpl = Template(indir)
-                rendered_dirname = name_tmpl.render(**context)
-                make_sure_path_exists(os.path.join(project_dir, rendered_dirname))
+                unrendered_dir = os.path.join(output_dir, os.path.join(root, d))
+                render_and_create_dir(unrendered_dir, context)
 
             for f in files:
                 infile = os.path.join(root, f)
@@ -160,7 +170,7 @@ def generate_files(template_dir, context=None, output_dir='.'):
                 if infile.endswith('hooks%s%s' % (os.path.sep, f)):
                     logging.debug("skipping: {0}".format(infile))
                     continue
-                generate_file(project_dir, infile, context, env)
+                generate_file(output_dir, infile, context, env)
 
         # run post-gen hook
         run_hook('post_gen_project', template_dir, output_dir)
