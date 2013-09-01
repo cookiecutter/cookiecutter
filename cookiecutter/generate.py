@@ -103,7 +103,7 @@ def generate_file(project_dir, infile, context, env):
         with unicode_open(rendered_name, 'w') as fh:
             fh.write(rendered_file)
 
-def generate_files(template_dir, context=None):
+def generate_files(template_dir, context=None, output_dir='.'):
     """
     Renders the templates and saves them to files.
     :param input_dir: Project template input directory.
@@ -138,10 +138,10 @@ def generate_files(template_dir, context=None):
 
     with work_in(template_dir):
         env = Environment()
-        env.loader = FileSystemLoader(".")
+        env.loader = FileSystemLoader(output_dir)
 
         # run pre-gen hook
-        run_hook('pre_gen_project', template_dir)
+        run_hook('pre_gen_project', template_dir, output_dir)
 
         for root, dirs, files in os.walk("."):
 
@@ -163,4 +163,4 @@ def generate_files(template_dir, context=None):
                 generate_file(project_dir, infile, context, env)
 
         # run post-gen hook
-        run_hook('post_gen_project', template_dir)
+        run_hook('post_gen_project', template_dir, output_dir)

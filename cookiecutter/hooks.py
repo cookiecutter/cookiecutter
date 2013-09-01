@@ -36,7 +36,7 @@ def find_hooks(template_root):
     return r
 
 
-def _run_hook(script_path):
+def _run_hook(script_path, cwd='.'):
     '''
     Run a sigle external script located at `script_path` (path should be 
     absolute).
@@ -45,7 +45,7 @@ def _run_hook(script_path):
     subprocess.call(script_path)
 
 
-def run_hook(hook_name, input_dir):
+def run_hook(hook_name, input_dir, output_dir):
     '''
     Try and find a script mapped to `hook_name` in `input_dir`,
     and execute it with the current working directory.
@@ -53,4 +53,4 @@ def run_hook(hook_name, input_dir):
     script = find_hooks(input_dir).get(hook_name)
     if script is None: 
         return
-    return _run_hook(script)
+    return _run_hook(script, output_dir)
