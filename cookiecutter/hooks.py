@@ -9,7 +9,13 @@ Functions for discovering and executing various cookiecutter hooks.
 """
 
 import os
-import subprocess
+import sys
+
+PY3 = sys.version > '3'
+if PY3:
+    import subprocess
+else:
+    import subprocess32 as subprocess
 
 _HOOKS = [
     'pre_gen_project',
