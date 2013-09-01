@@ -182,8 +182,8 @@ class TestHooks(unittest.TestCase):
             context={'hooks': 'hooks'},
             template_dir='tests/input{{hooks}}'
         )
-        self.assertTrue(os.path.exists('tests/inputhooks/foo.txt'))
         self.assertTrue(os.path.exists('tests/inputhooks/bar.txt'))
+        self.assertTrue(os.path.exists('tests/inputhooks/foo.txt'))
 
     def tearDown(self):
         if os.path.exists('tests/inputhooks'):
