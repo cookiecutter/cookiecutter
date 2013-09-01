@@ -12,7 +12,7 @@ import sys
 import os
 import unittest
 
-from cookiecutter import hooks
+from cookiecutter import hooks, utils
 
 
 class TestFindHooks(unittest.TestCase):
@@ -20,16 +20,16 @@ class TestFindHooks(unittest.TestCase):
     def test_find_hooks(self):
         '''Getting the list of all defined hooks'''
         repo_path = 'tests/input{{hooks}}'
-        self.assertEqual({
-            'pre_gen_project': os.path.abspath(
-                os.path.join(repo_path, 'hooks', 'pre_gen_project.py')),
-            'post_gen_project': os.path.abspath(
-                os.path.join(repo_path, 'hooks', 'post_gen_project.sh')),
-        }, hooks.find_hooks(repo_path))
+        with utils.work_in(repo_path):
+            self.assertEqual({
+                'pre_gen_project': os.path.abspath('hooks/pre_gen_project.py'),
+                'post_gen_project': os.path.abspath('hooks/post_gen_project.sh'),
+            }, hooks.find_hooks())
 
     def test_no_hooks(self):
         '''find_hooks should return an empty dict if no hooks folder could be found. '''
-        self.assertEqual({}, hooks.find_hooks('tests/fake-repo'))
+        with utils.work_in('tests/fake-repo'):
+            self.assertEqual({}, hooks.find_hooks())
 
 
 class TestExternalHooks(unittest.TestCase):
@@ -61,11 +61,13 @@ class TestExternalHooks(unittest.TestCase):
         
     def test_public_run_hook(self):
         '''Execute hook from specified template in specified output directory'''
-        hooks.run_hook('pre_gen_project', self.repo_path, 'tests')
-        self.assertTrue(os.path.isfile('tests/python_pre.txt'))
+        tests_dir = os.getcwd()
+        with utils.work_in(self.repo_path):
+            hooks.run_hook('pre_gen_project', tests_dir)
+            self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'python_pre.txt')))
 
-        hooks.run_hook('post_gen_project', self.repo_path, 'tests')
-        self.assertTrue(os.path.isfile('tests/shell_post.txt'))
+            hooks.run_hook('post_gen_project', tests_dir)
+            self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
 
 
 if __name__ == '__main__':

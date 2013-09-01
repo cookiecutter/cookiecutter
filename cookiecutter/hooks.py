@@ -57,7 +57,7 @@ def _run_hook(script_path, cwd='.'):
 def run_hook(hook_name, output_dir):
     '''
     Try and find a script mapped to `hook_name` in `input_dir`,
-    and execute it with the current working directory.
+    and execute it from `output_dir`.
     '''
     script = find_hooks().get(hook_name)
     if script is None:
