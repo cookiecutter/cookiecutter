@@ -154,7 +154,7 @@ def generate_files(template_dir, context=None):
         env.loader = FileSystemLoader(".")
 
         # run pre-gen hook
-        run_hook('pre_gen_project', template_dir, output_dir)
+        run_hook('pre_gen_project', output_dir)
 
         for root, dirs, files in os.walk("."):
             for d in dirs:
@@ -173,4 +173,4 @@ def generate_files(template_dir, context=None):
                 generate_file(output_dir, infile, context, env)
 
         # run post-gen hook
-        run_hook('post_gen_project', template_dir, output_dir)
+        run_hook('post_gen_project', output_dir)
