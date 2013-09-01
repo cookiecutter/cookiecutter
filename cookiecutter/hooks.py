@@ -42,7 +42,7 @@ def _run_hook(script_path, cwd='.'):
     absolute).
     If `cwd` is provided, the script will be run from that directory.
     '''
-    subprocess.call(script_path)
+    subprocess.call(script_path, cwd=cwd)
 
 
 def run_hook(hook_name, input_dir, output_dir):
