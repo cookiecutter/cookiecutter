@@ -173,31 +173,31 @@ class TestHooks(unittest.TestCase):
     def test_ignore_hooks_dirs(self):
         generate.generate_files(
             context={'pyhooks': 'pyhooks'},
-            template_dir='tests/input{{pyhooks}}'
+            template_dir='tests/test-pyhooks/input{{pyhooks}}'
         )
-        self.assertFalse(os.path.exists('tests/inputpyhooks/hooks'))
+        self.assertFalse(os.path.exists('tests/test-pyhooks/inputpyhooks/hooks'))
 
     def test_run_python_hooks(self):
         generate.generate_files(
             context={'pyhooks': 'pyhooks'},
-            template_dir='tests/input{{pyhooks}}'
+            template_dir='tests/test-pyhooks/input{{pyhooks}}'
         )
-        self.assertTrue(os.path.exists('tests/inputpyhooks/python_pre.txt'))
-        self.assertTrue(os.path.exists('tests/inputpyhooks/python_post.txt'))
+        self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt'))
+        self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt'))
 
     def test_run_shell_hooks(self):
         generate.generate_files(
             context={'shellhooks': 'shellhooks'},
-            template_dir='tests/input{{shellhooks}}'
+            template_dir='tests/test-shellhooks/input{{shellhooks}}'
         )
-        self.assertTrue(os.path.exists('tests/inputshellhooks/shell_pre.txt'))
-        self.assertTrue(os.path.exists('tests/inputshellhooks/shell_post.txt'))
+        self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_pre.txt'))
+        self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_post.txt'))
 
     def tearDown(self):
-        if os.path.exists('tests/inputpyhooks'):
-            shutil.rmtree('tests/inputpyhooks')
-        if os.path.exists('tests/inputshellhooks'):
-            shutil.rmtree('tests/inputshellhooks')
+        if os.path.exists('tests/test-pyhooks/inputpyhooks'):
+            shutil.rmtree('tests/test-pyhooks/inputpyhooks')
+        if os.path.exists('tests/test-shellhooks/inputshellhooks'):
+            shutil.rmtree('tests/test-shellhooks/inputshellhooks')
 
 
 if __name__ == '__main__':
