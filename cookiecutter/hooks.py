@@ -18,6 +18,8 @@ if PY3:
 else:
     import subprocess32 as subprocess
 
+from .utils import make_sure_path_exists, unicode_open, work_in
+
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
@@ -59,8 +61,9 @@ def run_hook(hook_name, output_dir):
     Try and find a script mapped to `hook_name` in `input_dir`,
     and execute it from `output_dir`.
     '''
-    script = find_hooks().get(hook_name)
-    if script is None:
-        logging.debug("No hooks found")
-        return
-    return _run_hook(script, output_dir)
+    with work_in(os.path.dirname(output_dir)):
+        script = find_hooks().get(hook_name)
+        if script is None:
+            logging.debug("No hooks found")
+            return
+        return _run_hook(script, output_dir)

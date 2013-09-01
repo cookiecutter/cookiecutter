@@ -19,7 +19,7 @@ class TestFindHooks(unittest.TestCase):
 
     def test_find_hooks(self):
         '''Getting the list of all defined hooks'''
-        repo_path = 'tests/test-hooks/input{{hooks}}'
+        repo_path = 'tests/test-hooks/'
         with utils.work_in(repo_path):
             self.assertEqual({
                 'pre_gen_project': os.path.abspath('hooks/pre_gen_project.py'),
@@ -34,7 +34,7 @@ class TestFindHooks(unittest.TestCase):
 
 class TestExternalHooks(unittest.TestCase):
 
-    repo_path  = os.path.abspath('tests/test-hooks/input{{hooks}}')
+    repo_path  = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
     def tearDown(self):
@@ -42,10 +42,12 @@ class TestExternalHooks(unittest.TestCase):
             os.remove('python_pre.txt')
         if os.path.exists('shell_post.txt'):
             os.remove('shell_post.txt')
-        if os.path.exists('tests/test-hooks/python_pre.txt'):
-            os.remove('tests/test-hooks/python_pre.txt')
-        if os.path.exists('tests/test-hooks/shell_post.txt'):
-            os.remove('tests/test-hooks/shell_post.txt')
+        if os.path.exists('tests/shell_post.txt'):
+            os.remove('tests/shell_post.txt')
+        if os.path.exists('tests/test-hooks/input{{hooks}}/python_pre.txt'):
+            os.remove('tests/test-hooks/input{{hooks}}/python_pre.txt')
+        if os.path.exists('tests/test-hooks/input{{hooks}}/shell_post.txt'):
+            os.remove('tests/test-hooks/input{{hooks}}/shell_post.txt')
 
     def test_run_hook(self):
         '''execute a hook script, independently of project generation'''
@@ -61,7 +63,7 @@ class TestExternalHooks(unittest.TestCase):
         
     def test_public_run_hook(self):
         '''Execute hook from specified template in specified output directory'''
-        tests_dir = os.getcwd()
+        tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
             hooks.run_hook('pre_gen_project', tests_dir)
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'python_pre.txt')))

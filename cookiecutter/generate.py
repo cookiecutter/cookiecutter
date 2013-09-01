@@ -149,28 +149,22 @@ def generate_files(template_dir, context=None):
     output_dir = os.path.abspath(output_dir)
     logging.debug("output_dir is {0}".format(output_dir))
 
+    # run pre-gen hook
+    run_hook('pre_gen_project', output_dir)
+
     with work_in(template_dir):
         env = Environment()
         env.loader = FileSystemLoader(".")
 
-        # run pre-gen hook
-        run_hook('pre_gen_project', output_dir)
-
         for root, dirs, files in os.walk("."):
             for d in dirs:
-                if d == 'hooks':
-                    continue
                 unrendered_dir = os.path.join(output_dir, os.path.join(root, d))
                 render_and_create_dir(unrendered_dir, context)
 
             for f in files:
                 infile = os.path.join(root, f)
                 logging.debug("f is {0}".format(f))
-
-                if infile.endswith('hooks%s%s' % (os.path.sep, f)):
-                    logging.debug("skipping: {0}".format(infile))
-                    continue
                 generate_file(output_dir, infile, context, env)
 
-        # run post-gen hook
-        run_hook('post_gen_project', output_dir)
+    # run post-gen hook
+    run_hook('post_gen_project', output_dir)
