@@ -41,6 +41,14 @@ cookiecutter Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`hooks` Module
+-------------------
+
+.. automodule:: cookiecutter.hooks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`main` Module
 ------------------
 
