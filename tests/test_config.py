@@ -59,18 +59,18 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(conf['default_context']['email'], 'bob@bob.com')
         self.assertEqual(conf['default_context']['github_username'], 'bobo')
 
-        #os.remove(fname)
+        os.remove(fname)
 
-	def test_get_config(self):
-		""" Opening and reading config file """
-		conf = config.get_config(test_config_file)
-		self.assertEqual(conf, test_config_obj)
+    def test_get_config(self):
+        """ Opening and reading config file """
+        conf = config.get_config(test_config_file)
+        self.assertEqual(conf, test_config_obj)
 
-	def test_auto_gen_config_if_does_not_exist(self):
-		""" Auto generation of a default config file if none can be found """
-		fname = "tests/config/autogen.yaml"
-		config.get_config(fname)
-		self.assertTrue(os.path.exists(fname))
+    def test_auto_gen_config_if_does_not_exist(self):
+        """ Auto generation of a default config file if none can be found """
+        fname = "tests/config/autogen.yaml"
+        config.get_config(fname)
+        self.assertTrue(os.path.exists(fname))
         os.remove(fname)
 
 
