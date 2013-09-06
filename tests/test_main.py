@@ -39,14 +39,14 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 class TestCookiecutter(unittest.TestCase):
 
     def test_cookiecutter(self):
-        main.cookiecutter('tests/fake-repo-pre/')
+        main.cookiecutter('tests/fake-repo-pre/', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
         self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
 
     def test_cookiecutter_no_slash(self):
-        main.cookiecutter('tests/fake-repo-pre')
+        main.cookiecutter('tests/fake-repo-pre', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))

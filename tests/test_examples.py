@@ -53,7 +53,7 @@ class TestPyPackage(unittest.TestCase):
             proc.wait()
 
         with subprocess.Popen(
-            'cookiecutter cookiecutter-pypackage/',
+            'cookiecutter --no-input cookiecutter-pypackage/',
             stdin=subprocess.PIPE,
             shell=True
         ) as proc:
@@ -81,7 +81,7 @@ class TestJQuery(unittest.TestCase):
             proc.wait()
 
         with subprocess.Popen(
-            'cookiecutter cookiecutter-jquery/',
+            'cookiecutter --no-input cookiecutter-jquery/',
             stdin=subprocess.PIPE,
             shell=True
         ) as proc:
