@@ -99,7 +99,7 @@ class TestGenerateFiles(unittest.TestCase):
     def test_generate_files_binaries(self):
         generate.generate_files(
             context={
-                'cookiecutter' : {'binary_test': 'binary_files'}
+                'cookiecutter': {'binary_test': 'binary_files'}
             },
             repo_dir='tests/test-generate-binaries'
         )
@@ -124,16 +124,20 @@ class TestGenerateFiles(unittest.TestCase):
 
     def test_generate_files_absolute_path(self):
         generate.generate_files(
-            context={'food': 'pizzä'},
-            template_dir=os.path.abspath('tests/input{{food}}')
+            context={
+                'cookiecutter': {'food': 'pizzä'}
+            },
+            repo_dir=os.path.abspath('tests/test-generate-files')
         )
         self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
 
     def test_generate_files_output_dir(self):
         os.mkdir('tests/custom_output_dir')
         generate.generate_files(
-            context={'food': 'pizzä'},
-            template_dir=os.path.abspath('tests/input{{food}}'),
+            context={
+                'cookiecutter': {'food': 'pizzä'}
+            },
+            repo_dir=os.path.abspath('tests/test-generate-files'),
             output_dir='tests/custom_output_dir'
         )
         self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
