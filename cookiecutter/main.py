@@ -35,11 +35,12 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     :param checkout: The branch, tag or commit ID to checkout after clone
     """
 
-    # If it's a git repo, clone and if local repo, copy
+    # If it's a git repo, clone
     if input_dir.endswith('.git'):
         got_repo_arg = True
         repo_dir = git_clone(input_dir, checkout)
     else:
+        # If it's a local repo, set flag so it doesn't get deleted later
         got_repo_arg = False
         repo_dir = input_dir
 
