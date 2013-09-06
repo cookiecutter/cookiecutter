@@ -85,8 +85,8 @@ class TestGenerateFiles(unittest.TestCase):
             context={'food': 'pizzä'},
             template_dir='tests/input{{food}}'
         )
-        self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
-        simple_text = open('tests/inputpizzä/simple.txt', 'rt').read()
+        self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
+        simple_text = open('inputpizzä/simple.txt', 'rt').read()
         if PY3:
             self.assertEqual(simple_text, 'I eat pizzä')
         else:
@@ -97,11 +97,11 @@ class TestGenerateFiles(unittest.TestCase):
             context={'binary_test': 'binary_files'},
             template_dir='tests/input{{binary_test}}'
         )
-        self.assertTrue(os.path.isfile('tests/inputbinary_files/logo.png'))
-        self.assertTrue(os.path.isfile('tests/inputbinary_files/.DS_Store'))
-        self.assertTrue(os.path.isfile('tests/inputbinary_files/readme.txt'))
+        self.assertTrue(os.path.isfile('inputbinary_files/logo.png'))
+        self.assertTrue(os.path.isfile('inputbinary_files/.DS_Store'))
+        self.assertTrue(os.path.isfile('inputbinary_files/readme.txt'))
         self.assertTrue(
-            os.path.isfile('tests/inputbinary_files/some_font.otf')
+            os.path.isfile('inputbinary_files/some_font.otf')
         )
 
     def test_generate_binary_files_in_nested_jinja_path(self):
@@ -109,9 +109,9 @@ class TestGenerateFiles(unittest.TestCase):
             context={'binary_test': 'binary_files'},
             template_dir='tests/input{{binary_test}}'
         )
-        expected = ['tests/inputbinary_files/binary_files/logo.png',
-                    "tests/inputbinary_files/binary_files/.DS_Store",
-                    "tests/inputbinary_files/binary_files/readme.txt"]
+        expected = ['inputbinary_files/binary_files/logo.png',
+                    "inputbinary_files/binary_files/.DS_Store",
+                    "inputbinary_files/binary_files/readme.txt"]
         for each in expected:
             self.assertTrue(os.path.isfile(each))
 
@@ -120,7 +120,7 @@ class TestGenerateFiles(unittest.TestCase):
             context={'food': 'pizzä'},
             template_dir=os.path.abspath('tests/input{{food}}')
         )
-        self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
+        self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
 
     def test_generate_files_output_dir(self):
         os.mkdir('tests/custom_output_dir')
@@ -132,12 +132,12 @@ class TestGenerateFiles(unittest.TestCase):
         self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
 
     def tearDown(self):
-        if os.path.exists('tests/inputpizzä'):
-            shutil.rmtree('tests/inputpizzä')
-        if os.path.exists('tests/inputgreen'):
-            shutil.rmtree('tests/inputgreen')
-        if os.path.exists('tests/inputbinary_files'):
-            shutil.rmtree('tests/inputbinary_files')
+        if os.path.exists('inputpizzä'):
+            shutil.rmtree('inputpizzä')
+        if os.path.exists('inputgreen'):
+            shutil.rmtree('inputgreen')
+        if os.path.exists('inputbinary_files'):
+            shutil.rmtree('inputbinary_files')
         if os.path.exists('tests/custom_output_dir'):
             shutil.rmtree('tests/custom_output_dir')
 
@@ -183,23 +183,42 @@ class TestHooks(unittest.TestCase):
 
     def test_ignore_hooks_dirs(self):
         generate.generate_files(
-            context={'pyhooks': 'pyhooks'},
-            template_dir='tests/test-pyhooks/input{{pyhooks}}'
+            context={
+                'cookiecutter' : {'pyhooks': 'pyhooks'}
+            },
+            repo_dir='tests/test-pyhooks/',
+            output_dir='tests/test-pyhooks/'
         )
         self.assertFalse(os.path.exists('tests/test-pyhooks/inputpyhooks/hooks'))
 
     def test_run_python_hooks(self):
         generate.generate_files(
-            context={'pyhooks': 'pyhooks'},
-            template_dir='tests/test-pyhooks/input{{pyhooks}}'
+            context={
+                'cookiecutter' : {'pyhooks': 'pyhooks'}
+            },
+            repo_dir='tests/test-pyhooks/',
+            output_dir='tests/test-pyhooks/'
         )
         self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt'))
         self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt'))
 
+    def test_run_python_hooks_cwd(self):
+        generate.generate_files(
+            context={
+                'cookiecutter' : {'pyhooks': 'pyhooks'}
+            },
+            repo_dir='tests/test-pyhooks/'
+        )
+        self.assertTrue(os.path.exists('inputpyhooks/python_pre.txt'))
+        self.assertTrue(os.path.exists('inputpyhooks/python_post.txt'))
+
     def test_run_shell_hooks(self):
         generate.generate_files(
-            context={'shellhooks': 'shellhooks'},
-            template_dir='tests/test-shellhooks/input{{shellhooks}}'
+            context={
+                'cookiecutter' : {'shellhooks': 'shellhooks'}
+            },
+            repo_dir='tests/test-shellhooks/',
+            output_dir='tests/test-shellhooks/'
         )
         self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_pre.txt'))
         self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_post.txt'))
@@ -207,6 +226,8 @@ class TestHooks(unittest.TestCase):
     def tearDown(self):
         if os.path.exists('tests/test-pyhooks/inputpyhooks'):
             shutil.rmtree('tests/test-pyhooks/inputpyhooks')
+        if os.path.exists('inputpyhooks'):
+            shutil.rmtree('inputpyhooks')
         if os.path.exists('tests/test-shellhooks/inputshellhooks'):
             shutil.rmtree('tests/test-shellhooks/inputshellhooks')
 

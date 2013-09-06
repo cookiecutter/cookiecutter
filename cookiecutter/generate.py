@@ -19,6 +19,7 @@ from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
+from .find import find_template
 from .utils import make_sure_path_exists, unicode_open, work_in
 from .hooks import run_hook
 
@@ -109,7 +110,6 @@ def render_and_create_dir(dirname, context, output_dir):
     Renders the name of a directory, creates the directory, and returns its path.
     """
 
-    dirname = os.path.split(dirname)[1]
     name_tmpl = Template(dirname)
     rendered_dirname = name_tmpl.render(**context)
     logging.debug('Rendered dir {0} must exist in output_dir {1}'.format(
@@ -134,7 +134,7 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def generate_files(template_dir, context=None, output_dir="."):
+def generate_files(repo_dir, context=None, output_dir="."):
     """
     Renders the templates and saves them to files.
     :param input_dir: Project template input directory.
@@ -142,11 +142,13 @@ def generate_files(template_dir, context=None, output_dir="."):
     :param output_dir: Where to output the generated project dir into.
     """
 
+    template_dir = find_template(repo_dir)
     logging.debug('Generating project from {0}...'.format(template_dir))
     context = context or {}
 
-    ensure_dir_is_templated(template_dir)
-    project_dir = render_and_create_dir(template_dir, context, output_dir)
+    unrendered_dir = os.path.split(template_dir)[1]
+    ensure_dir_is_templated(unrendered_dir)
+    project_dir = render_and_create_dir(unrendered_dir, context, output_dir)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
@@ -158,8 +160,9 @@ def generate_files(template_dir, context=None, output_dir="."):
     project_dir = os.path.abspath(project_dir)
     logging.debug("project_dir is {0}".format(project_dir))
 
-    # run pre-gen hook
-    run_hook('pre_gen_project', project_dir)
+    # run pre-gen hook from repo_dir
+    with work_in(repo_dir):
+        run_hook('pre_gen_project', project_dir)
 
     with work_in(template_dir):
         env = Environment()
@@ -175,5 +178,6 @@ def generate_files(template_dir, context=None, output_dir="."):
                 logging.debug("f is {0}".format(f))
                 generate_file(project_dir, infile, context, env)
 
-    # run post-gen hook
-    run_hook('post_gen_project', project_dir)
+    # run post-gen hook from repo_dir
+    with work_in(repo_dir):
+        run_hook('post_gen_project', project_dir)

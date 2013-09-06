@@ -56,14 +56,14 @@ def _run_hook(script_path, cwd='.'):
     subprocess.call(script_path, cwd=cwd)
 
 
-def run_hook(hook_name, output_dir):
+def run_hook(hook_name, project_dir):
     '''
-    Try and find a script mapped to `hook_name` in `input_dir`,
-    and execute it from `output_dir`.
+    Try and find a script mapped to `hook_name` in the current working directory,
+    and execute it from `project_dir`.
     '''
-    with work_in(os.path.dirname(output_dir)):
-        script = find_hooks().get(hook_name)
-        if script is None:
-            logging.debug("No hooks found")
-            return
-        return _run_hook(script, output_dir)
+    # with work_in(os.path.dirname(project_dir)):
+    script = find_hooks().get(hook_name)
+    if script is None:
+        logging.debug("No hooks found")
+        return
+    return _run_hook(script, project_dir)

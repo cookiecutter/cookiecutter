@@ -18,7 +18,7 @@ import sys
 import shutil
 
 from .cleanup import remove_repo
-from .find import find_template
+# from .find import find_template
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import git_clone
@@ -44,7 +44,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         got_repo_arg = False
         repo_dir = input_dir
 
-    project_template = find_template(repo_dir)
+    # project_template = find_template(repo_dir)
     config_file = os.path.join(os.path.dirname(project_template),
                                'cookiecutter.json')
     logging.debug('config_file is {0}'.format(config_file))
@@ -61,7 +61,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     # Create project from local context and project template.
     generate_files(
-        template_dir=project_template,
+        repo_dir=repo_dir,
+        # template_dir=project_template,
         context=context
     )
 
