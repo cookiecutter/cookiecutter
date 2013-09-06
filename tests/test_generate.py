@@ -72,18 +72,22 @@ class TestGenerateFile(unittest.TestCase):
 
 class TestGenerateFiles(unittest.TestCase):
 
-    def test_generate_files_bad(self):
+    def test_generate_files_nontemplated_exception(self):
         self.assertRaises(
             exceptions.NonTemplatedInputDirException,
             generate.generate_files,
-            context={'food': 'pizza'},
-            template_dir='tests/input'
+            context={
+                'cookiecutter': {'food': 'pizza'}
+            },
+            repo_dir='tests/test-generate-files-nontemplated'
         )
 
     def test_generate_files(self):
         generate.generate_files(
-            context={'food': 'pizzä'},
-            template_dir='tests/input{{food}}'
+            context={
+                'cookiecutter': {'food': 'pizzä'}
+            },
+            repo_dir='tests/test-generate-files'
         )
         self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
         simple_text = open('inputpizzä/simple.txt', 'rt').read()
