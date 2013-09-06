@@ -16,6 +16,8 @@ import yaml
 
 from .utils import unicode_open
 
+_CONFIG = {}
+
 # TODO: test on windows...
 GLOB_SETTINGS_PATH = os.path.expanduser('~/.cookiecutter')
 
@@ -30,15 +32,18 @@ DEFAULT_SETTINGS = {
 }
 
 def get_config(config_path=GLOB_SETTINGS_PATH):
-	"""
-	Retrieve the global settings and return them.
-	"""
-	if not os.path.exists(config_path):
-		create_config({}, config_path)	
-	with unicode_open(config_path) as file_handle:
-		global_config = yaml.load(file_handle)
+    """
+    Retrieve the global settings and return them.
+    """
+    global _CONFIG
+    if _CONFIG:
+        return _CONFIG
+    if not os.path.exists(config_path):
+        create_config({}, config_path)	
+    with unicode_open(config_path) as file_handle:
+        global_config = yaml.load(file_handle)
 
-	return global_config
+    return global_config
 
 def create_config(params, path=GLOB_SETTINGS_PATH):
 	"""
