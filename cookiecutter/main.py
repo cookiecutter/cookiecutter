@@ -44,13 +44,11 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         got_repo_arg = False
         repo_dir = input_dir
 
-    # project_template = find_template(repo_dir)
-    config_file = os.path.join(os.path.dirname(project_template),
-                               'cookiecutter.json')
-    logging.debug('config_file is {0}'.format(config_file))
+    context_file = os.path.join(repo_dir, 'cookiecutter.json')
+    logging.debug('context_file is {0}'.format(context_file))
 
     context = generate_context(
-        config_file=config_file
+        config_file=context_file
     )
 
     # prompt the user to manually configure at the command line.
@@ -62,7 +60,6 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     # Create project from local context and project template.
     generate_files(
         repo_dir=repo_dir,
-        # template_dir=project_template,
         context=context
     )
 

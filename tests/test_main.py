@@ -41,20 +41,22 @@ class TestCookiecutterLocalNoInput(unittest.TestCase):
     def test_cookiecutter(self):
         main.cookiecutter('tests/fake-repo-pre/', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
-        self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-project/json/'))
 
     def test_cookiecutter_no_slash(self):
         main.cookiecutter('tests/fake-repo-pre', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
-        self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-project/json/'))
 
     def tearDown(self):
-        if os.path.isdir('tests/fake-repo-pre/fake-project'):
-            shutil.rmtree('tests/fake-repo-pre/fake-project')
+        if os.path.isdir('fake-project'):
+            shutil.rmtree('fake-project')
 
 
 class TestCookiecutterLocalWithInput(unittest.TestCase):
@@ -66,13 +68,14 @@ class TestCookiecutterLocalWithInput(unittest.TestCase):
 
         main.cookiecutter('tests/fake-repo-pre/', no_input=False)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
-        self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-project/json/'))
 
     def tearDown(self):
-        if os.path.isdir('tests/fake-repo-pre/fake-project'):
-            shutil.rmtree('tests/fake-repo-pre/fake-project')
+        if os.path.isdir('fake-project'):
+            shutil.rmtree('fake-project')
 
 
 class TestArgParsing(unittest.TestCase):
