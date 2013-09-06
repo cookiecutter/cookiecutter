@@ -39,10 +39,9 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     if input_dir.endswith('.git'):
         got_repo_arg = True
         repo_dir = git_clone(input_dir, checkout)
-        project_template = find_template(repo_dir)
     else:
-        repo_dir = './__cookiecutter_tmpdir'
-        shutil.copytree(input_dir, repo_dir)
+        got_repo_arg = False
+        repo_dir = input_dir
 
     project_template = find_template(repo_dir)
     config_file = os.path.join(os.path.dirname(project_template),
@@ -67,8 +66,9 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     # Remove repo if Cookiecutter cloned it in the first place.
     # Here the user just wants a project, not a project template.
-    generated_project = context['cookiecutter']['repo_name']
-    remove_repo(repo_dir, generated_project)
+    if got_repo_arg:
+        generated_project = context['cookiecutter']['repo_name']
+        remove_repo(repo_dir, generated_project)
 
 
 
