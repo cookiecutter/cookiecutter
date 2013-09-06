@@ -109,17 +109,18 @@ class TestGenerateFiles(unittest.TestCase):
         self.assertTrue(
             os.path.isfile('inputbinary_files/some_font.otf')
         )
-
-    def test_generate_binary_files_in_nested_jinja_path(self):
-        generate.generate_files(
-            context={'binary_test': 'binary_files'},
-            template_dir='tests/input{{binary_test}}'
+        self.assertTrue(
+            os.path.isfile('inputbinary_files/binary_files/logo.png')
         )
-        expected = ['inputbinary_files/binary_files/logo.png',
-                    "inputbinary_files/binary_files/.DS_Store",
-                    "inputbinary_files/binary_files/readme.txt"]
-        for each in expected:
-            self.assertTrue(os.path.isfile(each))
+        self.assertTrue(
+            os.path.isfile('inputbinary_files/binary_files/.DS_Store')
+        )
+        self.assertTrue(
+            os.path.isfile('inputbinary_files/binary_files/readme.txt')
+        )
+        self.assertTrue(
+            os.path.isfile('inputbinary_files/binary_files/some_font.otf')
+        )
 
     def test_generate_files_absolute_path(self):
         generate.generate_files(
