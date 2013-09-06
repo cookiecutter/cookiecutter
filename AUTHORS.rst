@@ -18,6 +18,7 @@ Contributors
 * Jindrich Smitka (`@s-m-i-t-a`_)
 * Benjamin Schwarze (`@benjixx`_)
 * Raphi (`@raphigaziano`_)
+* Thomas Chiroux (`@ThomasChiroux`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -28,3 +29,4 @@ Contributors
 .. _`@s-m-i-t-a`: https://github.com/s-m-i-t-a
 .. _`@benjixx`: https://github.com/benjixx
 .. _`@raphigaziano`: https://github.com/raphigaziano
+.. _`@ThomasChiroux`: https://github.com/ThomasChiroux
