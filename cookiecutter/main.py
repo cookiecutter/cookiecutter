@@ -37,11 +37,9 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     # If it's a git repo, clone
     if input_dir.endswith('.git'):
-        got_repo_arg = True
         repo_dir = git_clone(input_dir, checkout)
     else:
         # If it's a local repo, set flag so it doesn't get deleted later
-        got_repo_arg = False
         repo_dir = input_dir
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
@@ -62,13 +60,6 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         repo_dir=repo_dir,
         context=context
     )
-
-    # Remove repo if Cookiecutter cloned it in the first place.
-    # Here the user just wants a project, not a project template.
-    if got_repo_arg:
-        generated_project = context['cookiecutter']['repo_name']
-        remove_repo(repo_dir, generated_project)
-
 
 
 def parse_cookiecutter_args(args):
