@@ -40,7 +40,7 @@ def git_clone(repo, checkout=None):
         else:
             sys.exit()
 
-    os.system('git clone {0}'.format(repo))
+    subprocess.check_call(['git', 'clone', repo], cwd='.')
 
     if checkout is not None:
         subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)
