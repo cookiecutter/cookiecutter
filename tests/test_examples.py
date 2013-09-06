@@ -59,11 +59,14 @@ class TestPyPackage(unittest.TestCase):
         ) as proc:
             proc.wait()
 
-        self.assertTrue(os.path.isfile('cookiecutter-pypackage/boilerplate/README.rst'))
+        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestJQuery(unittest.TestCase):
@@ -87,11 +90,14 @@ class TestJQuery(unittest.TestCase):
         ) as proc:
             proc.wait()
 
-        self.assertTrue(os.path.isfile('cookiecutter-jquery/boilerplate/README.md'))
+        self.assertTrue(os.path.isfile('boilerplate/README.md'))
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-jquery'):
             shutil.rmtree('cookiecutter-jquery')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestExamplesRepoArg(unittest.TestCase):
@@ -109,8 +115,11 @@ class TestExamplesRepoArg(unittest.TestCase):
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
     def tearDown(self):
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
+
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestGitBranch(unittest.TestCase):
