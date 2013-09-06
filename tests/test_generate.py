@@ -122,6 +122,15 @@ class TestGenerateFiles(unittest.TestCase):
         )
         self.assertTrue(os.path.isfile('tests/inputpizzä/simple.txt'))
 
+    def test_generate_files_output_dir(self):
+        os.mkdir('tests/custom_output_dir')
+        generate.generate_files(
+            context={'food': 'pizzä'},
+            template_dir=os.path.abspath('tests/input{{food}}'),
+            output_dir='tests/custom_output_dir'
+        )
+        self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
+
     def tearDown(self):
         if os.path.exists('tests/inputpizzä'):
             shutil.rmtree('tests/inputpizzä')
@@ -129,6 +138,8 @@ class TestGenerateFiles(unittest.TestCase):
             shutil.rmtree('tests/inputgreen')
         if os.path.exists('tests/inputbinary_files'):
             shutil.rmtree('tests/inputbinary_files')
+        if os.path.exists('tests/custom_output_dir'):
+            shutil.rmtree('tests/custom_output_dir')
 
 
 class TestGenerateContext(unittest.TestCase):
