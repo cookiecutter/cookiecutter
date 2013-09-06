@@ -94,8 +94,10 @@ class TestGenerateFiles(unittest.TestCase):
 
     def test_generate_files_binaries(self):
         generate.generate_files(
-            context={'binary_test': 'binary_files'},
-            template_dir='tests/input{{binary_test}}'
+            context={
+                'cookiecutter' : {'binary_test': 'binary_files'}
+            },
+            repo_dir='tests/test-generate-binaries'
         )
         self.assertTrue(os.path.isfile('inputbinary_files/logo.png'))
         self.assertTrue(os.path.isfile('inputbinary_files/.DS_Store'))
