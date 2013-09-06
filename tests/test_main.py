@@ -36,7 +36,7 @@ else:
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
-class TestCookiecutter(unittest.TestCase):
+class TestCookiecutterLocalNoInput(unittest.TestCase):
 
     def test_cookiecutter(self):
         main.cookiecutter('tests/fake-repo-pre/', no_input=True)
@@ -47,6 +47,24 @@ class TestCookiecutter(unittest.TestCase):
 
     def test_cookiecutter_no_slash(self):
         main.cookiecutter('tests/fake-repo-pre', no_input=True)
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
+        self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
+
+    def tearDown(self):
+        if os.path.isdir('tests/fake-repo-pre/fake-project'):
+            shutil.rmtree('tests/fake-repo-pre/fake-project')
+
+
+class TestCookiecutterLocalWithInput(unittest.TestCase):
+
+    @patch(input_str, lambda x: '\n')
+    def test_cookiecutter_local_with_input(self):
+        if not PY3:
+            sys.stdin = StringIO("\n\n\n\n\n\n\n\n\n\n\n\n")
+
+        main.cookiecutter('tests/fake-repo-pre/', no_input=False)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
