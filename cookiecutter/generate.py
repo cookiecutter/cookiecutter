@@ -18,7 +18,6 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
-from .config import get_user_config
 from .exceptions import NonTemplatedInputDirException
 from .find import find_template
 from .utils import make_sure_path_exists, unicode_open, work_in
