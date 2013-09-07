@@ -47,3 +47,22 @@ that you entered. It will be placed in your current directory.
 And if you want to specify a branch you can do that with::
 
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git --checkout develop
+
+Keeping your cookiecutters organized
+------------------------------------
+
+As of the upcoming Cookiecutter 0.7.0 release:
+
+* Whenever you generate a project with a cookiecutter, the resulting project
+  is output to your current directory.
+
+* Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
+  directory (or Windows equivalent). The location is configurable: see
+  :doc:`advanced_usage` for details.
+
+Pre-0.7.0, this is how it worked:
+
+* Whenever you generate a project with a cookiecutter, the resulting project
+  is output to your current directory.
+
+* Cloned cookiecutters were not saved locally.
