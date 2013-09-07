@@ -15,11 +15,12 @@ import shutil
 import subprocess
 import sys
 
+from .exceptions import UnknownRepoType
 from .prompt import query_yes_no
 from .utils import make_sure_path_exists
 
 
-def delete_repo(repo_dir):
+def prompt_and_delete_repo(repo_dir):
     """
     Asks the user whether it's okay to delete the previously-cloned repo.
     If yes, deletes it. Otherwise, Cookiecutter exits.
@@ -48,7 +49,7 @@ def identify_repo(repo_url):
     elif "bitbucket" in repo_url:
         return "hg"
     else:
-        return None
+        raise UnknownRepoType
 
 
 def clone(repo_url, checkout=None, clone_to_dir="."):
@@ -62,19 +63,26 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     # Ensure that clone_to_dir exists
     clone_to_dir = os.path.expanduser(clone_to_dir)
     make_sure_path_exists(clone_to_dir)
-
-    # Return repo dir
-    tail = os.path.split(repo)[1]
-    repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
+    
+    repo_type = identify_repo(repo_url)
+    
+    tail = os.path.split(repo_url)[1]
+    if repo_type == "git":
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
+    elif repo_type == "hg":
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.hg')[0]))
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        delete_repo(repo_dir)
+        prompt_and_delete_repo(repo_dir)
 
-    subprocess.check_call(['git', 'clone', repo], cwd=clone_to_dir)
-
-    if checkout is not None:
-        subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)
+    if repo_type == "git":
+        subprocess.check_call(['git', 'clone', repo_url], cwd=clone_to_dir)
+        if checkout is not None:
+            subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)
+    elif repo_type == "hg":
+        subprocess.check_call(['hg', 'clone', repo_url[0:-3]], cwd=clone_to_dir)
+        # TODO: implement checkout
 
     return repo_dir
 
@@ -120,7 +128,6 @@ def hg_clone(repo, clone_to_dir="."):
 
     # Return repo dir
     tail = os.path.split(repo)[1]
-    repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.hg')[0]))
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):

@@ -46,3 +46,8 @@ class InvalidConfiguration(CookiecutterException):
     Raised if the global configuration file is not valid YAML or is
     badly contructed.
     """
+
+class UnknownRepoType(CookiecutterException):
+    """
+    Raised if a repo's type cannot be determined.
+    """

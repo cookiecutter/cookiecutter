@@ -57,6 +57,15 @@ class TestIdentifyRepo(unittest.TestCase):
 
 class TestVCS(unittest.TestCase):
 
+    def test_clone(self):
+        repo_dir = vcs.clone(
+            'https://github.com/audreyr/cookiecutter-pypackage.git'
+        )
+        self.assertEqual(repo_dir, 'cookiecutter-pypackage')
+        self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
+
     def test_git_clone(self):
         repo_dir = vcs.git_clone(
             'https://github.com/audreyr/cookiecutter-pypackage.git'
