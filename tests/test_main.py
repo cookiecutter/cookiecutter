@@ -14,7 +14,7 @@ import shutil
 import sys
 
 from cookiecutter import config, main
-from tests import CookiecutterTestCase
+from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
@@ -91,14 +91,14 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.checkout, 'develop')
 
 
-class TestCookiecutterRepoArg(CookiecutterTestCase):
+class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
-        super(TestCookiecutterRepoArg, self).tearDown()
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
+        super(TestCookiecutterRepoArg, self).tearDown()
 
     @patch(input_str, lambda x: '')
     def test_cookiecutter_git(self):
