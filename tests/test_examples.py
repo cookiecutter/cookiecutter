@@ -8,6 +8,7 @@ test_examples
 Tests for the Cookiecutter example repos.
 """
 
+from __future__ import unicode_literals
 import errno
 import os
 import shutil
@@ -15,20 +16,20 @@ import sys
 
 PY3 = sys.version > '3'
 if PY3:
+    import subprocess
     from unittest.mock import patch
     input_str = 'builtins.input'
     from io import StringIO
 else:
+    import subprocess32 as subprocess
     import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
-if sys.version_info[:2] < (2, 7):
+if sys.version_info[:3] < (2, 7):
     import unittest2 as unittest
-    import subprocess32 as subprocess
 else:
-    import subprocess
     import unittest
 
 try:
@@ -36,9 +37,19 @@ try:
 except KeyError:
     travis = False
 
+from cookiecutter import config, utils
+from tests import CookiecutterCleanSystemTestCase
+
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestPyPackage(unittest.TestCase):
+class TestPyPackage(CookiecutterCleanSystemTestCase):
+
+    def tearDown(self):
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+        super(TestPyPackage, self).tearDown()
 
     def test_cookiecutter_pypackage(self):
         """
@@ -53,20 +64,26 @@ class TestPyPackage(unittest.TestCase):
             proc.wait()
 
         with subprocess.Popen(
-            'cookiecutter cookiecutter-pypackage/',
+            'cookiecutter --no-input cookiecutter-pypackage/',
             stdin=subprocess.PIPE,
             shell=True
         ) as proc:
             proc.wait()
 
-        self.assertTrue(os.path.isfile('cookiecutter-pypackage/boilerplate/README.rst'))
+        self.assertTrue(os.path.isdir('cookiecutter-pypackage'))
+        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestJQuery(unittest.TestCase):
+class TestJQuery(CookiecutterCleanSystemTestCase):
+
+
+    def tearDown(self):
+        if os.path.isdir('cookiecutter-jquery'):
+            shutil.rmtree('cookiecutter-jquery')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+        super(TestJQuery, self).tearDown()
 
     def test_cookiecutter_jquery(self):
         """
@@ -81,20 +98,26 @@ class TestJQuery(unittest.TestCase):
             proc.wait()
 
         with subprocess.Popen(
-            'cookiecutter cookiecutter-jquery/',
+            'cookiecutter --no-input cookiecutter-jquery/',
             stdin=subprocess.PIPE,
             shell=True
         ) as proc:
             proc.wait()
 
-        self.assertTrue(os.path.isfile('cookiecutter-jquery/boilerplate/README.md'))
+        self.assertTrue(os.path.isdir('cookiecutter-jquery'))
+        self.assertTrue(os.path.isfile('boilerplate/README.md'))
 
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-jquery'):
-            shutil.rmtree('cookiecutter-jquery')
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestExamplesRepoArg(unittest.TestCase):
+class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
+
+    def tearDown(self):
+        with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
+            if os.path.isdir('cookiecutter-pypackage'):
+                shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+        super(TestExamplesRepoArg, self).tearDown()
 
     def test_cookiecutter_pypackage_git(self):
         with subprocess.Popen(
@@ -105,19 +128,21 @@ class TestExamplesRepoArg(unittest.TestCase):
 
             # Just skip all the prompts
             proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-
+        
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
-    def tearDown(self):
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
+
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestGitBranch(unittest.TestCase):
+class TestGitBranch(CookiecutterCleanSystemTestCase):
 
-    def setUp(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+    def tearDown(self):
+        with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
+            if os.path.isdir('cookiecutter-pypackage'):
+                shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+        super(TestGitBranch, self).tearDown()
 
     def test_branch(self):
         with subprocess.Popen(
@@ -131,12 +156,6 @@ class TestGitBranch(unittest.TestCase):
 
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.isfile('boilerplate/boilerplate/main.py'))
-
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
 
 
 if __name__ == '__main__':

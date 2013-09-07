@@ -1,0 +1,5 @@
+default_context
+    full_name:
+    email: "firstname.lastname@gmail.com"
+    github_username: "example"
+cookiecutters_dir: "/home/example/some-path-to-templates"

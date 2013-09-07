@@ -17,6 +17,7 @@ Basics
    readme
    installation
    usage
+   advanced_usage
    
 API Reference
 -------------

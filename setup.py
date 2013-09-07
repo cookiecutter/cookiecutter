@@ -17,7 +17,7 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = ['binaryornot>=0.1.1', 'jinja2>=2.4']
+requirements = ['binaryornot>=0.1.1', 'jinja2>=2.4', 'PyYAML>=3.10']
 test_requirements = []
 
 # Add Python 2.6-specific dependencies
@@ -30,7 +30,7 @@ if sys.version_info[:2] < (2, 7):
 # Add Python 2.6 and 2.7-specific dependencies
 if sys.version < '3':
     test_requirements.append('mock')
-    test_requirements.append('subprocess32')
+    requirements.append('subprocess32')
 
 # There are no Python 3-specific dependencies to add
     

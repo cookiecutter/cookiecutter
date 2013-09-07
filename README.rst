@@ -60,10 +60,10 @@ Did someone say features?
     .. code-block:: python
 
         from cookiecutter.main import cookiecutter
-    
+
         # Create project from the cookiecutter-pypackage/ template
         cookiecutter('cookiecutter-pypackage/')
-    
+
         # Create project from the cookiecutter-pypackage.git repo template
         cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
@@ -111,6 +111,7 @@ Here is a list of working Cookiecutter project templates for you to use or fork:
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-component`_: A template for a Component JS package.
+* `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
 
 
 Make your own, then submit a pull request adding yours to this list!
@@ -124,6 +125,8 @@ Make your own, then submit a pull request adding yours to this list!
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
 .. _`cookiecutter-openstack`: https://github.com/emonty/cookiecutter-openstack
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
+.. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
+.. _`docopt`: http://docopt.org/
 
 
 Similar projects

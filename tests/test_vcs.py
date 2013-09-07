@@ -28,7 +28,7 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
-from cookiecutter import vcs
+from cookiecutter import utils, vcs
 
 
 # Log debug and above to console
@@ -68,6 +68,7 @@ class TestVCS(unittest.TestCase):
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
 
+<<<<<<< HEAD
     def test_hg_clone(self):
         repo_dir = vcs.hg_clone(
             'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
@@ -76,6 +77,22 @@ class TestVCS(unittest.TestCase):
         self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
         if os.path.isdir('cookiecutter-trytonmodule'):
             shutil.rmtree('cookiecutter-trytonmodule')
+=======
+    def test_git_clone_custom_dir(self):
+        os.makedirs("tests/custom_dir1/custom_dir2/")
+        repo_dir = vcs.git_clone(
+            repo='https://github.com/audreyr/cookiecutter-pypackage.git',
+            checkout=None,
+            clone_to_dir="tests/custom_dir1/custom_dir2/"
+        )
+        with utils.work_in("tests/custom_dir1/custom_dir2/"):
+            self.assertEqual(repo_dir, 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage')
+            self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
+            if os.path.isdir('cookiecutter-pypackage'):
+                shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('tests/custom_dir1'):
+            shutil.rmtree('tests/custom_dir1')
+>>>>>>> master
 
 
 class TestVCSPrompt(unittest.TestCase):

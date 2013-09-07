@@ -12,9 +12,9 @@ import logging
 import os
 import shutil
 import sys
-import unittest
 
-from cookiecutter import main
+from cookiecutter import config, main
+from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
@@ -36,25 +36,46 @@ else:
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
-class TestCookiecutter(unittest.TestCase):
+class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
     def test_cookiecutter(self):
-        main.cookiecutter('tests/fake-repo-pre/')
+        main.cookiecutter('tests/fake-repo-pre/', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
-        self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-project/json/'))
 
     def test_cookiecutter_no_slash(self):
-        main.cookiecutter('tests/fake-repo-pre')
+        main.cookiecutter('tests/fake-repo-pre', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isfile('tests/fake-repo-pre/fake-project/README.rst'))
-        self.assertFalse(os.path.exists('tests/fake-repo-pre/fake-project/json/'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-project/json/'))
 
     def tearDown(self):
-        if os.path.isdir('tests/fake-repo-pre/fake-project'):
-            shutil.rmtree('tests/fake-repo-pre/fake-project')
+        if os.path.isdir('fake-project'):
+            shutil.rmtree('fake-project')
+
+
+class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
+
+    @patch(input_str, lambda x: '\n')
+    def test_cookiecutter_local_with_input(self):
+        if not PY3:
+            sys.stdin = StringIO("\n\n\n\n\n\n\n\n\n\n\n\n")
+
+        main.cookiecutter('tests/fake-repo-pre/', no_input=False)
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-project/json/'))
+
+    def tearDown(self):
+        if os.path.isdir('fake-project'):
+            shutil.rmtree('fake-project')
 
 
 class TestArgParsing(unittest.TestCase):
@@ -70,7 +91,14 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.checkout, 'develop')
 
 
-class TestCookiecutterRepoArg(unittest.TestCase):
+class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
+
+    def tearDown(self):
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+        super(TestCookiecutterRepoArg, self).tearDown()
 
     @patch(input_str, lambda x: '')
     def test_cookiecutter_git(self):
@@ -78,11 +106,13 @@ class TestCookiecutterRepoArg(unittest.TestCase):
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
-        self.assertFalse(os.path.exists('cookiecutter-pypackage'))
+        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
+        self.assertTrue(os.path.exists(clone_dir))
         self.assertTrue(os.path.isdir('boilerplate'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
 
+<<<<<<< HEAD
     @patch(input_str, lambda x: '')
     def test_cookiecutter_mercurial(self):
         if not PY3:
@@ -103,6 +133,8 @@ class TestCookiecutterRepoArg(unittest.TestCase):
             shutil.rmtree('boilerplate')
         if os.path.isdir('module_name'):
             shutil.rmtree('module_name')
+=======
+>>>>>>> master
 
 if __name__ == '__main__':
     unittest.main()

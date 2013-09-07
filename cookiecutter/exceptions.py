@@ -34,3 +34,15 @@ class MissingProjectDir(CookiecutterException):
     Raised during cleanup when remove_repo() can't find a generated project
     directory inside of a repo.
     """
+
+class ConfigDoesNotExistException(CookiecutterException):
+    """
+    Raised when get_config() is passed a path to a config file, but no file
+    is found at that path.
+    """
+
+class InvalidConfiguration(CookiecutterException):
+    """
+    Raised if the global configuration file is not valid YAML or is
+    badly contructed.
+    """

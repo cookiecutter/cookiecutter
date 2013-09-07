@@ -11,6 +11,8 @@ Functions for finding Cookiecutter templates and other components.
 import logging
 import os
 
+from .exceptions import NonTemplatedInputDirException
+
 
 def find_template(repo_dir):
     """
@@ -34,6 +36,7 @@ def find_template(repo_dir):
 
     if project_template:
         project_template = os.path.join(repo_dir, project_template)
-
-    logging.debug('The project template appears to be {0}'.format(project_template))
-    return project_template
+        logging.debug('The project template appears to be {0}'.format(project_template))
+        return project_template
+    else:
+        raise NonTemplatedInputDirException

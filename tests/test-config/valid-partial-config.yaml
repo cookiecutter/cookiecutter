@@ -1,0 +1,4 @@
+default_context:
+    full_name: "Firstname Lastname"
+    email: "firstname.lastname@gmail.com"
+    github_username: "example"

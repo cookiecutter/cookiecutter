@@ -4,5 +4,6 @@
     "color": "green",
     "letter": "D",
     "folder_name": "im_a.dir",
-    "filename": "im_a.file"
+    "filename": "im_a.file",
+    "test_name": "output_folder"
 }

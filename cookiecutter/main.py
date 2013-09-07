@@ -11,13 +11,14 @@ The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
 
+from __future__ import unicode_literals
 import argparse
 import logging
 import os
 import sys
+import shutil
 
-from .cleanup import remove_repo
-from .find import find_template
+from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import git_clone, hg_clone
@@ -25,7 +26,7 @@ from .vcs import git_clone, hg_clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir, checkout=None):
+def cookiecutter(input_dir, checkout=None, no_input=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -34,43 +35,42 @@ def cookiecutter(input_dir, checkout=None):
     :param checkout: The branch, tag or commit ID to checkout after clone
     """
 
-    # If it's a git repo, clone and prompt
-    if input_dir.endswith('.git'):
-        got_repo_arg = True
-        repo_dir = git_clone(input_dir, checkout)
-        project_template = find_template(repo_dir)
-    elif input_dir.endswith('.hg'):
-        got_repo_arg = True
-        repo_dir = hg_clone(input_dir)
-        project_template = find_template(repo_dir)
-    else:
-        got_repo_arg = False
-        project_template = find_template(input_dir)
+    # Get user config from ~/.cookiecutterrc or equivalent
+    # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
+    config_dict = get_user_config()
 
-    config_file = os.path.join(os.path.dirname(project_template), 'cookiecutter.json')
-    logging.debug('config_file is {0}'.format(config_file))
+    # If it's a git repo, clone
+    if input_dir.endswith('.git'):
+        repo_dir = git_clone(
+            repo=input_dir,
+            checkout=checkout,
+            clone_to_dir=config_dict['cookiecutters_dir']
+        )
+    elif input_dir.endswith('.hg'):
+        repo_dir = hg_clone(input_dir)
+    else:
+        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
+        repo_dir = input_dir
+
+    context_file = os.path.join(repo_dir, 'cookiecutter.json')
+    logging.debug('context_file is {0}'.format(context_file))
 
     context = generate_context(
-        config_file=config_file
+        context_file=context_file,
+        default_context=config_dict['default_context']
     )
 
-    # If the context came from a repo, prompt the user to manually configure
-    # at the command line.
-    if got_repo_arg:
+    # prompt the user to manually configure at the command line.
+    # except when 'no-input' flag is set
+    if not no_input:
         cookiecutter_dict = prompt_for_config(context)
         context['cookiecutter'] = cookiecutter_dict
 
     # Create project from local context and project template.
     generate_files(
-        template_dir=project_template,
+        repo_dir=repo_dir,
         context=context
     )
-
-    # Remove repo if Cookiecutter cloned it in the first place.
-    # Here the user just wants a project, not a project template.
-    if got_repo_arg:
-        generated_project = context['cookiecutter']['repo_name']
-        remove_repo(repo_dir, generated_project)
 
 
 def parse_cookiecutter_args(args):
@@ -79,6 +79,11 @@ def parse_cookiecutter_args(args):
     parser = argparse.ArgumentParser(
         description='Create a project from a Cookiecutter project template.'
     )
+    parser.add_argument(
+        '--no-input',
+        action="store_true",
+        help='Do not prompt for parameters and only use cookiecutter.json '
+             'file content')
     parser.add_argument(
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
@@ -104,9 +109,12 @@ def main():
         logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
     else:
         # Log info and above to console
-        logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
+        logging.basicConfig(
+            format='%(levelname)s: %(message)s',
+            level=logging.INFO
+        )
     
-    cookiecutter(args.input_dir, args.checkout)
+    cookiecutter(args.input_dir, args.checkout, args.no_input)
 
 
 if __name__ == '__main__':

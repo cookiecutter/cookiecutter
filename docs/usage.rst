@@ -48,20 +48,21 @@ And if you want to specify a branch you can do that with::
 
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git --checkout develop
 
-Or hook directly into the Cookiecutter API
-------------------------------------------
+Keeping your cookiecutters organized
+------------------------------------
 
-You can use Cookiecutter from Python::
+As of the upcoming Cookiecutter 0.7.0 release:
 
-    from cookiecutter.main import cookiecutter
-    
-    # Create project from the cookiecutter-pypackage/ template
-    cookiecutter('cookiecutter-pypackage/')
+* Whenever you generate a project with a cookiecutter, the resulting project
+  is output to your current directory.
 
-    # Create project from the cookiecutter-pypackage.git repo template
-    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
-    
-See the :ref:`API Reference` for more details.
+* Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
+  directory (or Windows equivalent). The location is configurable: see
+  :doc:`advanced_usage` for details.
 
-If you use it in an interesting way, I'd love to hear about it: file an issue,
-please!
+Pre-0.7.0, this is how it worked:
+
+* Whenever you generate a project with a cookiecutter, the resulting project
+  is output to your current directory.
+
+* Cloned cookiecutters were not saved locally.
