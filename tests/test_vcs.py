@@ -57,7 +57,7 @@ class TestIdentifyRepo(unittest.TestCase):
 
 class TestVCS(unittest.TestCase):
 
-    def test_clone(self):
+    def test_git_clone(self):
         repo_dir = vcs.clone(
             'https://github.com/audreyr/cookiecutter-pypackage.git'
         )
@@ -66,17 +66,8 @@ class TestVCS(unittest.TestCase):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
 
-    def test_git_clone(self):
-        repo_dir = vcs.git_clone(
-            'https://github.com/audreyr/cookiecutter-pypackage.git'
-        )
-        self.assertEqual(repo_dir, 'cookiecutter-pypackage')
-        self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-
     def test_git_clone_checkout(self):
-        repo_dir = vcs.git_clone(
+        repo_dir = vcs.clone(
             'https://github.com/audreyr/cookiecutter-pypackage.git',
             'console-script'
         )
@@ -96,19 +87,10 @@ class TestVCS(unittest.TestCase):
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
 
-    def test_hg_clone(self):
-        repo_dir = vcs.hg_clone(
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
-        )
-        self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
-        self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
-        if os.path.isdir('cookiecutter-trytonmodule'):
-            shutil.rmtree('cookiecutter-trytonmodule')
-
     def test_git_clone_custom_dir(self):
         os.makedirs("tests/custom_dir1/custom_dir2/")
-        repo_dir = vcs.git_clone(
-            repo='https://github.com/audreyr/cookiecutter-pypackage.git',
+        repo_dir = vcs.clone(
+            repo_url='https://github.com/audreyr/cookiecutter-pypackage.git',
             checkout=None,
             clone_to_dir="tests/custom_dir1/custom_dir2/"
         )
@@ -119,6 +101,15 @@ class TestVCS(unittest.TestCase):
                 shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('tests/custom_dir1'):
             shutil.rmtree('tests/custom_dir1')
+
+    def test_hg_clone(self):
+        repo_dir = vcs.clone(
+            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
+        )
+        self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
+        self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
+        if os.path.isdir('cookiecutter-trytonmodule'):
+            shutil.rmtree('cookiecutter-trytonmodule')
 
 
 class TestVCSPrompt(unittest.TestCase):
