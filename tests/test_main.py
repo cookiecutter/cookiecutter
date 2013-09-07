@@ -106,10 +106,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
-        clone_dir = os.path.join(
-            config.DEFAULT_CONFIG['cookiecutters_dir'],
-            'cookiecutter-pypackage'
-        )
+        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
         self.assertTrue(os.path.exists(clone_dir))
         self.assertTrue(os.path.isdir('boilerplate'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
