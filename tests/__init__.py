@@ -56,11 +56,14 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
         self.cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
         if os.path.isdir(self.cookiecutters_dir):
             self.cookiecutters_dir_found = True
+
+            # Remove existing backups before backing up. If they exist, they're stale.
+            if os.path.isdir(self.cookiecutters_dir_backup):
+                shutil.rmtree(self.cookiecutters_dir_backup)
+
             shutil.copytree(self.cookiecutters_dir, self.cookiecutters_dir_backup)
         else:
             self.cookiecutters_dir_found = False
-        if os.path.isdir(self.cookiecutters_dir_backup):
-            shutil.rmtree(self.cookiecutters_dir)
 
     def tearDown(self):
         # If it existed, restore ~/.cookiecutterrc

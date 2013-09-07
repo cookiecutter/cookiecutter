@@ -36,7 +36,7 @@ else:
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
-class TestCookiecutterLocalNoInput(unittest.TestCase):
+class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
     def test_cookiecutter(self):
         main.cookiecutter('tests/fake-repo-pre/', no_input=True)
@@ -59,7 +59,7 @@ class TestCookiecutterLocalNoInput(unittest.TestCase):
             shutil.rmtree('fake-project')
 
 
-class TestCookiecutterLocalWithInput(unittest.TestCase):
+class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 
     @patch(input_str, lambda x: '\n')
     def test_cookiecutter_local_with_input(self):
