@@ -32,6 +32,31 @@ Shell scripts work similarly::
 It shouldn't be too hard to extend Cookiecutter to work with other types of
 scripts too. Pull requests are welcome.
 
+User Config (0.7.0+)
+----------------------
+
+.. warning:: This feature is available only in the master branch on GitHub
+   and is not on PyPI yet. It's part of the upcoming 0.7.0 release.
+
+If you use Cookiecutter a lot, you'll find it useful to have a
+`.cookiecutterrc` file in your home directory like this:
+
+.. code-block:: yaml
+
+    default_context:
+        full_name: "Audrey Roy"
+        email: "audreyr@gmail.com"
+        github_username: "audreyr"
+    cookiecutters_dir: "/home/audreyr/my-custom-cookiecutters-dir/"
+
+Possible settings are:
+
+* default_context: A list of key/value pairs that you want injected as context
+  whenever you generate a project with Cookiecutter. These values are treated
+  like the defaults in `cookiecutter.json`, upon generation of any project.
+* cookiecutters_dir: Directory where your cookiecutters are cloned to when you
+  use Cookiecutter with a repo argument.
+
 Calling Cookiecutter Functions From Python
 ------------------------------------------
 
