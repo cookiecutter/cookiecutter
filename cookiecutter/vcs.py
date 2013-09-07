@@ -17,7 +17,7 @@ import sys
 from .prompt import query_yes_no
 
 
-def git_clone(repo, checkout=None):
+def git_clone(repo, checkout=None, clone_to_dir="."):
     """
     Clone a git repo to the current directory.
 
@@ -40,7 +40,7 @@ def git_clone(repo, checkout=None):
         else:
             sys.exit()
 
-    subprocess.check_call(['git', 'clone', repo], cwd='.')
+    subprocess.check_call(['git', 'clone', repo], cwd=clone_to_dir)
 
     if checkout is not None:
         subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)

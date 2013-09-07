@@ -40,9 +40,13 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     # If it's a git repo, clone
     if input_dir.endswith('.git'):
-        repo_dir = git_clone(input_dir, checkout)
+        repo_dir = git_clone(
+            repo=input_dir,
+            checkout=checkout,
+            clone_to_dir=config_dict['cookiecutters_dir']
+        )
     else:
-        # If it's a local repo, set flag so it doesn't get deleted later
+        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
         repo_dir = input_dir
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
