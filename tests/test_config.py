@@ -9,6 +9,7 @@ Tests for `cookiecutter.config` module.
 """
 
 import os
+import shutil
 import sys
 import unittest
 
@@ -23,7 +24,7 @@ else:
     import unittest
 
 
-class TestConfig(unittest.TestCase):
+class TestGetConfig(unittest.TestCase):
 
     def test_get_config(self):
         """ Opening and reading config file """
@@ -57,6 +58,34 @@ class TestConfig(unittest.TestCase):
         """
         self.assertRaises(InvalidConfiguration, config.get_config,
                           "tests/test-config/invalid-config.yaml")
+
+
+class TestGetUserConfig(unittest.TestCase):
+
+    def test_get_user_config_valid(self):
+        """ Get config from a valid ~/.cookiecutterrc file """
+        pass
+
+    def test_get_user_config_invalid(self):
+        """ Get config from an invalid ~/.cookiecutterrc file """
+        pass
+
+    def test_get_user_config_nonexistent(self):
+        """ Get config from a nonexistent ~/.cookiecutterrc file """
+        
+        USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+        
+        # If pre-existing, move ~/.cookiecutterrc to a temp location
+        if os.path.exists(USER_CONFIG_PATH):
+            shutil.copy(USER_CONFIG_PATH, '.cookiecutterrc.backup')
+            os.remove(USER_CONFIG_PATH)
+        
+        self.assertEqual(config.get_user_config(), None)
+        
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists('.cookiecutterrc.backup'):
+            shutil.copy('.cookiecutterrc.backup', USER_CONFIG_PATH)
+            os.remove('.cookiecutterrc.backup')
 
 
 if __name__ == '__main__':
