@@ -38,32 +38,18 @@ except KeyError:
     travis = False
 
 from cookiecutter import config, utils
+from tests import CookiecutterCleanSystemTestCase
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestPyPackage(unittest.TestCase):
-
-    def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-        self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
-        )
-        
-        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-        if os.path.exists(self.user_config_path):
-            shutil.copy(self.user_config_path, self.user_config_path_backup)
-            os.remove(self.user_config_path)
+class TestPyPackage(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
-
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
+        super(TestPyPackage, self).tearDown()
 
     def test_cookiecutter_pypackage(self):
         """
@@ -89,30 +75,15 @@ class TestPyPackage(unittest.TestCase):
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestJQuery(unittest.TestCase):
+class TestJQuery(CookiecutterCleanSystemTestCase):
 
-    def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-        self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
-        )
-        
-        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-        if os.path.exists(self.user_config_path):
-            shutil.copy(self.user_config_path, self.user_config_path_backup)
-            os.remove(self.user_config_path)
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-jquery'):
             shutil.rmtree('cookiecutter-jquery')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
-
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
-
+        super(TestJQuery, self).tearDown()
 
     def test_cookiecutter_jquery(self):
         """
@@ -138,18 +109,7 @@ class TestJQuery(unittest.TestCase):
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestExamplesRepoArg(unittest.TestCase):
-
-    def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-        self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
-        )
-        
-        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-        if os.path.exists(self.user_config_path):
-            shutil.copy(self.user_config_path, self.user_config_path_backup)
-            os.remove(self.user_config_path)
+class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
@@ -157,11 +117,7 @@ class TestExamplesRepoArg(unittest.TestCase):
                 shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
-
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
+        super(TestExamplesRepoArg, self).tearDown()
 
     def test_cookiecutter_pypackage_git(self):
         with subprocess.Popen(
@@ -178,18 +134,7 @@ class TestExamplesRepoArg(unittest.TestCase):
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-class TestGitBranch(unittest.TestCase):
-
-    def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-        self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
-        )
-        
-        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-        if os.path.exists(self.user_config_path):
-            shutil.copy(self.user_config_path, self.user_config_path_backup)
-            os.remove(self.user_config_path)
+class TestGitBranch(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
@@ -197,11 +142,7 @@ class TestGitBranch(unittest.TestCase):
                 shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
-
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
+        super(TestGitBranch, self).tearDown()
 
     def test_branch(self):
         with subprocess.Popen(
