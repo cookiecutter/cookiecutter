@@ -1,0 +1,6 @@
+default_context:
+    full_name: "Raphi Gaziano"
+    email: "r.gaziano@gmail.com"
+    github_username: "raphigaziano"
+template_dirs:
+    - "/home/raphi/dev"
