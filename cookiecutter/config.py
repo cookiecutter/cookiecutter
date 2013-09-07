@@ -14,33 +14,26 @@ import sys
 
 import yaml
 
+from .exceptions import ConfigDoesNotExistException
 from .utils import unicode_open
 from .exceptions import InvalidConfiguration
 
-_CONFIG = {}
 
-# TODO: test on windows...
-GLOB_SETTINGS_PATH = os.path.expanduser('~/.cookiecutter')
-
-# TODO: figure out some sane default values
+# TODO: figure out some sane default values, or if this is needed
 DEFAULT_SETTINGS = {
 	'template_dirs': [],
-	'default_context': {
-  		'full_name': '{full_name}',
-  		'email': '{email}',
-  		'github_username': '{github_username}',
-  	}
+	'default_context': {}
 }
 
-def get_config(config_path=GLOB_SETTINGS_PATH):
+
+def get_config(config_path):
     """
-    Retrieve the global settings and return them.
+    Retrieve the config from the specified path, and return it as a config dict.
     """
-    global _CONFIG
-    if _CONFIG:
-        return _CONFIG
+
     if not os.path.exists(config_path):
-        create_config({}, config_path)	
+        raise ConfigDoesNotExistException
+
     with unicode_open(config_path) as file_handle:
         try:
             global_config = yaml.load(file_handle)
@@ -50,13 +43,14 @@ def get_config(config_path=GLOB_SETTINGS_PATH):
 
     return global_config
 
-def create_config(params, path=GLOB_SETTINGS_PATH):
-	"""
-	Create a new config file at `path` with the default values defined in
-	`params`.
-	"""
-	settings = DEFAULT_SETTINGS
-	settings['template_dirs'] = params.pop('template_dirs', [])
-	settings['default_context'].update(params)
-	with unicode_open(path, 'w') as file_handle:
-		file_handle.write(yaml.dump(settings, default_flow_style=False))
+
+def get_user_config():
+    """
+    Retrieve settings from the user's ~/.cookiecutterrc or equivalent home dir
+    config file.
+    """
+    
+    # TODO: test on windows...
+    USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutter')
+    
+    return get_config(USER_CONFIG_PATH)
