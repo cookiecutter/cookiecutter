@@ -17,7 +17,6 @@ import os
 import sys
 import shutil
 
-from .cleanup import remove_repo
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
