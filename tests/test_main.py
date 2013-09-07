@@ -91,7 +91,7 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.checkout, 'develop')
 
 
-class TestCookiecutterRepoArg(unittest.TestCase):
+class CookiecutterTestCase(unittest.TestCase):
     def setUp(self):
         # If ~/.cookiecutterrc is pre-existing, move it to a temp location
         self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
@@ -127,6 +127,11 @@ class TestCookiecutterRepoArg(unittest.TestCase):
         if os.path.isdir(self.cookiecutters_dir):
             shutil.rmtree(self.cookiecutters_dir_backup)
 
+
+class TestCookiecutterRepoArg(CookiecutterTestCase):
+
+    def tearDown(self):
+        super(TestCookiecutterRepoArg, self).tearDown()
         if os.path.isdir('cookiecutter-pypackage'):
             shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
