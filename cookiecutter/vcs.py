@@ -27,6 +27,7 @@ def git_clone(repo, checkout=None, clone_to_dir="."):
     """
     
     # Ensure that clone_to_dir exists
+    clone_to_dir = os.path.expanduser(clone_to_dir)
     make_sure_path_exists(clone_to_dir)
 
     # Return repo dir
