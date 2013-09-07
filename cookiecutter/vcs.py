@@ -25,10 +25,14 @@ def git_clone(repo, checkout=None, clone_to_dir="."):
     :param repo: Git repo URL ending with .git.
     :param checkout: The branch, tag or commit ID to checkout after clone
     """
+    
+    # Ensure that clone_to_dir exists
+    if not os.path.isdir(clone_to_dir):
+        os.makedirs(clone_to_dir)
 
     # Return repo dir
     tail = os.path.split(repo)[1]
-    repo_dir = os.path.join(clone_to_dir, tail.rsplit('.git')[0])
+    repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
