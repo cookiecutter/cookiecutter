@@ -36,12 +36,12 @@ def get_config(config_path):
 
     with unicode_open(config_path) as file_handle:
         try:
-            global_config = yaml.load(file_handle)
+            config_dict = yaml.load(file_handle)
         except yaml.scanner.ScannerError:
             raise InvalidConfiguration(
                 "%s is no a valid YAML file" % config_path)
 
-    return global_config
+    return config_dict
 
 
 def get_user_config():
