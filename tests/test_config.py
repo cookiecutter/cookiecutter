@@ -30,9 +30,7 @@ class TestGetConfig(unittest.TestCase):
         """ Opening and reading config file """
         conf = config.get_config('tests/test-config/valid-config.yaml')
         expected_conf = {
-        	'template_dirs': [
-        		'/home/example/some-path-to-templates'
-        	],
+        	'cookiecutters_dir': '/home/example/some-path-to-templates',
         	'default_context': {
         		"full_name": "Firstname Lastname",
         		"email": "firstname.lastname@gmail.com",
@@ -60,6 +58,24 @@ class TestGetConfig(unittest.TestCase):
                           "tests/test-config/invalid-config.yaml")
 
 
+class TestGetConfigWithDefaults(unittest.TestCase):
+
+    def test_get_config_with_defaults(self):
+        """ A config file that overrides 1 of 2 defaults """
+        
+        conf = config.get_config('tests/test-config/valid-partial-config.yaml')
+        default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
+        expected_conf = {
+        	'cookiecutters_dir': default_cookiecutters_dir,
+        	'default_context': {
+        		"full_name": "Firstname Lastname",
+        		"email": "firstname.lastname@gmail.com",
+        		"github_username": "example"
+        	}
+        }
+        self.assertEqual(conf, expected_conf)
+
+
 class TestGetUserConfig(unittest.TestCase):
 
     def setUp(self):
@@ -85,9 +101,7 @@ class TestGetUserConfig(unittest.TestCase):
         shutil.copy('tests/test-config/valid-config.yaml', self.user_config_path)
         conf = config.get_user_config()
         expected_conf = {
-        	'template_dirs': [
-        		'/home/example/some-path-to-templates'
-        	],
+        	'cookiecutters_dir': '/home/example/some-path-to-templates',
         	'default_context': {
         		"full_name": "Firstname Lastname",
         		"email": "firstname.lastname@gmail.com",

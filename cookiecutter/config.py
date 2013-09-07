@@ -8,6 +8,7 @@ cookiecutter.config
 Global configuration handling
 """
 
+import copy
 import logging
 import os
 import sys
@@ -19,9 +20,8 @@ from .utils import unicode_open
 from .exceptions import InvalidConfiguration
 
 
-# TODO: figure out some sane default values, or if this is needed
-DEFAULT_SETTINGS = {
-	'template_dirs': [],
+DEFAULT_CONFIG = {
+	'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
 	'default_context': {}
 }
 
@@ -34,12 +34,16 @@ def get_config(config_path):
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException
 
+    print("config_path is {0}".format(config_path))
     with unicode_open(config_path) as file_handle:
         try:
-            config_dict = yaml.load(file_handle)
+            yaml_dict = yaml.safe_load(file_handle)
         except yaml.scanner.ScannerError:
             raise InvalidConfiguration(
                 "%s is no a valid YAML file" % config_path)
+
+    config_dict = copy.copy(DEFAULT_CONFIG)
+    config_dict.update(yaml_dict)
 
     return config_dict
 
@@ -56,3 +60,4 @@ def get_user_config():
     if os.path.exists(USER_CONFIG_PATH):
         return get_config(USER_CONFIG_PATH)
     return None
+

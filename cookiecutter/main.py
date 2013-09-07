@@ -47,6 +47,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
 
+    # Get default context key/value pairs, if they exist
     default_context = None
     if config_dict:
         default_context = config_dict['default_context']

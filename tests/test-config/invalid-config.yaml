@@ -2,5 +2,4 @@ default_context
     full_name:
     email: "firstname.lastname@gmail.com"
     github_username: "example"
-template_dirs:
-    - "/home/example/some-path-to-templates"
+cookiecutters_dir: "/home/example/some-path-to-templates"
