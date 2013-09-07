@@ -59,5 +59,5 @@ def get_user_config():
 
     if os.path.exists(USER_CONFIG_PATH):
         return get_config(USER_CONFIG_PATH)
-    return None
+    return copy.copy(DEFAULT_CONFIG)
 

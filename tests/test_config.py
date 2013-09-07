@@ -117,7 +117,7 @@ class TestGetUserConfig(unittest.TestCase):
 
     def test_get_user_config_nonexistent(self):
         """ Get config from a nonexistent ~/.cookiecutterrc file """
-        self.assertEqual(config.get_user_config(), None)
+        self.assertEqual(config.get_user_config(), config.DEFAULT_CONFIG)
         
 
 

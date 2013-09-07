@@ -35,6 +35,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
+    # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
 
     # If it's a git repo, clone
@@ -47,14 +48,9 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
 
-    # Get default context key/value pairs, if they exist
-    default_context = None
-    if config_dict:
-        default_context = config_dict['default_context']
-
     context = generate_context(
         context_file=context_file,
-        default_context=default_context
+        default_context=config_dict['default_context']
     )
 
     # prompt the user to manually configure at the command line.
