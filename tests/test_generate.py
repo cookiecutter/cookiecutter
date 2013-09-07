@@ -20,6 +20,7 @@ from jinja2.exceptions import TemplateSyntaxError
 
 from cookiecutter import generate
 from cookiecutter import exceptions
+from tests import CookiecutterCleanSystemTestCase
 
 
 PY3 = sys.version > '3'
@@ -70,24 +71,18 @@ class TestGenerateFile(unittest.TestCase):
             os.remove('tests/files/cheese.txt')
 
 
-class TestGenerateFiles(unittest.TestCase):
-
-    def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-        self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
-        )
-
-        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-        if os.path.exists(self.user_config_path):
-            shutil.copy(self.user_config_path, self.user_config_path_backup)
-            os.remove(self.user_config_path)
+class TestGenerateFiles(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
+        if os.path.exists('inputpizzä'):
+            shutil.rmtree('inputpizzä')
+        if os.path.exists('inputgreen'):
+            shutil.rmtree('inputgreen')
+        if os.path.exists('inputbinary_files'):
+            shutil.rmtree('inputbinary_files')
+        if os.path.exists('tests/custom_output_dir'):
+            shutil.rmtree('tests/custom_output_dir')
+        super(TestGenerateFiles, self).tearDown()
 
     def test_generate_files_nontemplated_exception(self):
         self.assertRaises(
@@ -159,35 +154,8 @@ class TestGenerateFiles(unittest.TestCase):
         )
         self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
 
-    def tearDown(self):
-        if os.path.exists('inputpizzä'):
-            shutil.rmtree('inputpizzä')
-        if os.path.exists('inputgreen'):
-            shutil.rmtree('inputgreen')
-        if os.path.exists('inputbinary_files'):
-            shutil.rmtree('inputbinary_files')
-        if os.path.exists('tests/custom_output_dir'):
-            shutil.rmtree('tests/custom_output_dir')
 
-
-class TestGenerateContext(unittest.TestCase):
-
-    def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-        self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
-        )
-        
-        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-        if os.path.exists(self.user_config_path):
-            shutil.copy(self.user_config_path, self.user_config_path_backup)
-            os.remove(self.user_config_path)
-
-    def tearDown(self):
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
+class TestGenerateContext(CookiecutterCleanSystemTestCase):
 
     def test_generate_context(self):
         context = generate.generate_context(
@@ -202,24 +170,12 @@ class TestGenerateContext(unittest.TestCase):
         )
         self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
 
-class TestOutputFolder(unittest.TestCase):
-
-    def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-        self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
-        )
-
-        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-        if os.path.exists(self.user_config_path):
-            shutil.copy(self.user_config_path, self.user_config_path_backup)
-            os.remove(self.user_config_path)
+class TestOutputFolder(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
+        if os.path.exists('output_folder'):
+            shutil.rmtree('output_folder')
+        super(TestOutputFolder, self).tearDown()
 
     def test_output_folder(self):
         context = generate.generate_context(
@@ -243,10 +199,6 @@ It is 2014."""
 
         self.assertTrue(os.path.isdir('output_folder/im_a.dir'))
         self.assertTrue(os.path.isfile('output_folder/im_a.dir/im_a.file.py'))
-
-    def tearDown(self):
-        if os.path.exists('output_folder'):
-            shutil.rmtree('output_folder')
 
 
 class TestHooks(unittest.TestCase):
