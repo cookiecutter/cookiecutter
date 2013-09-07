@@ -16,7 +16,27 @@ if sys.version_info[:2] < (2, 7):
 else:
     import unittest
 
-class CookiecutterTestCase(unittest.TestCase):
+
+class CookiecutterCleanSystemTestCase(unittest.TestCase):
+    """
+    Test case that simulates a clean system with no config/cloned cookiecutters.
+    
+    During setUp:
+
+    * Back up the `~/.cookiecutterrc` config file to `~/.cookiecutterrc.backup`
+    * Back up the `~/.cookiecutters/` dir to `~/.cookiecutters.backup/`
+    * Starts off a test case with no pre-existing `~/.cookiecutterrc` or 
+      `~/.cookiecutters/`
+
+    During tearDown:
+
+    * Delete `~/.cookiecutters/` only if a backup is present at
+      `~/.cookiecutters.backup/`
+    * Restore the `~/.cookiecutterrc` config file from `~/.cookiecutterrc.backup`
+    * Restore the `~/.cookiecutters/` dir from `~/.cookiecutters.backup/`
+
+    """
+
     def setUp(self):
         # If ~/.cookiecutterrc is pre-existing, move it to a temp location
         self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
