@@ -68,7 +68,6 @@ class TestVCS(unittest.TestCase):
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
 
-<<<<<<< HEAD
     def test_hg_clone(self):
         repo_dir = vcs.hg_clone(
             'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
@@ -77,7 +76,7 @@ class TestVCS(unittest.TestCase):
         self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
         if os.path.isdir('cookiecutter-trytonmodule'):
             shutil.rmtree('cookiecutter-trytonmodule')
-=======
+
     def test_git_clone_custom_dir(self):
         os.makedirs("tests/custom_dir1/custom_dir2/")
         repo_dir = vcs.git_clone(
@@ -92,7 +91,6 @@ class TestVCS(unittest.TestCase):
                 shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('tests/custom_dir1'):
             shutil.rmtree('tests/custom_dir1')
->>>>>>> master
 
 
 class TestVCSPrompt(unittest.TestCase):

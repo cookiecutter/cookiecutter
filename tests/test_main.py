@@ -98,6 +98,10 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             shutil.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             shutil.rmtree('boilerplate')
+        if os.path.isdir('cookiecutter-trytonmodule'):
+            shutil.rmtree('cookiecutter-trytonmodule')
+        if os.path.isdir('module_name'):
+            shutil.rmtree('module_name')
         super(TestCookiecutterRepoArg, self).tearDown()
 
     @patch(input_str, lambda x: '')
@@ -112,7 +116,6 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
 
-<<<<<<< HEAD
     @patch(input_str, lambda x: '')
     def test_cookiecutter_mercurial(self):
         if not PY3:
@@ -124,17 +127,6 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('module_name/README'))
         self.assertTrue(os.path.exists('module_name/setup.py'))
 
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('cookiecutter-trytonmodule'):
-            shutil.rmtree('cookiecutter-trytonmodule')
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
-        if os.path.isdir('module_name'):
-            shutil.rmtree('module_name')
-=======
->>>>>>> master
 
 if __name__ == '__main__':
     unittest.main()
