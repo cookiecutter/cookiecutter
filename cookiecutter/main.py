@@ -47,9 +47,13 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
 
+    default_context = None
+    if config_dict:
+        default_context = config_dict['default_context']
+
     context = generate_context(
         context_file=context_file,
-        config_dict=config_dict
+        default_context=default_context
     )
 
     # prompt the user to manually configure at the command line.
