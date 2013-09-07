@@ -17,7 +17,7 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = ['binaryornot>=0.1.1', 'jinja2>=2.4']
+requirements = ['binaryornot>=0.1.1', 'jinja2>=2.4', 'PyYAML>=3.10']
 test_requirements = []
 
 # Add Python 2.6-specific dependencies
