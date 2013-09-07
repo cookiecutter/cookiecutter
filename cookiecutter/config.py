@@ -46,11 +46,13 @@ def get_config(config_path):
 
 def get_user_config():
     """
-    Retrieve settings from the user's ~/.cookiecutterrc or equivalent home dir
-    config file.
+    Retrieve config from the user's ~/.cookiecutterrc, if it exists.
+    Otherwise, return None.
     """
     
     # TODO: test on windows...
     USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutter')
-    
-    return get_config(USER_CONFIG_PATH)
+
+    if os.path.exists(USER_CONFIG_PATH):
+        return get_config(USER_CONFIG_PATH)
+    return None
