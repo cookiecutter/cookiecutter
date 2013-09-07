@@ -190,9 +190,17 @@ class TestGenerateContext(unittest.TestCase):
             os.remove(self.user_config_path_backup)
 
     def test_generate_context(self):
-        context = generate.generate_context(context_file='tests/json/test.json')
-        self.assertEqual(context, {"test": {"1": 2}})
+        context = generate.generate_context(
+            context_file='tests/test-generate-context/test.json'
+        )
+        self.assertEqual(context, {"test": {"1": 2, "some_key": "some_val"}})
 
+    def test_generate_context_with_default(self):
+        context = generate.generate_context(
+            context_file='tests/test-generate-context/test.json',
+            default_context={"1": 3}
+        )
+        self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
 
 class TestOutputFolder(unittest.TestCase):
 
