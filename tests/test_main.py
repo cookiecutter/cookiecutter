@@ -122,7 +122,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
-        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
+        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.exists(clone_dir))
         self.assertTrue(os.path.isdir('module_name'))
         self.assertTrue(os.path.isfile('module_name/README'))

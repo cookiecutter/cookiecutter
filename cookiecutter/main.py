@@ -47,7 +47,10 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
             clone_to_dir=config_dict['cookiecutters_dir']
         )
     elif input_dir.endswith('.hg'):
-        repo_dir = hg_clone(input_dir)
+        repo_dir = hg_clone(
+            repo=input_dir,
+            clone_to_dir=config_dict['cookiecutters_dir']
+        )
     else:
         # If it's a local repo, no need to clone or copy to your cookiecutters_dir
         repo_dir = input_dir
