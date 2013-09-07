@@ -72,6 +72,23 @@ class TestGenerateFile(unittest.TestCase):
 
 class TestGenerateFiles(unittest.TestCase):
 
+    def setUp(self):
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path_backup = os.path.expanduser(
+            '~/.cookiecutterrc.backup'
+        )
+
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, self.user_config_path_backup)
+            os.remove(self.user_config_path)
+
+    def tearDown(self):
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists(self.user_config_path_backup):
+            shutil.copy(self.user_config_path_backup, self.user_config_path)
+            os.remove(self.user_config_path_backup)
+
     def test_generate_files_nontemplated_exception(self):
         self.assertRaises(
             exceptions.NonTemplatedInputDirException,
