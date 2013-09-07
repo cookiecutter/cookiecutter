@@ -36,6 +36,49 @@ def delete_repo(repo_dir):
         sys.exit()
 
 
+def identify_repo(repo_url):
+    """
+    Determines if `repo_url` should be treated as a URL to a git or hg repo.
+    :param repo_url: Repo URL of unknown type.
+    :returns: "git", "hg", or None.
+    """
+    
+    if "git" in repo_url:
+        return "git"
+    elif "bitbucket" in repo_url:
+        return "hg"
+    else:
+        return None
+
+
+def clone(repo_url, checkout=None, clone_to_dir="."):
+    """
+    Clone a repo to the current directory.
+
+    :param repo_url: Repo URL of unknown type.
+    :param checkout: The branch, tag or commit ID to checkout after clone
+    """
+
+    # Ensure that clone_to_dir exists
+    clone_to_dir = os.path.expanduser(clone_to_dir)
+    make_sure_path_exists(clone_to_dir)
+
+    # Return repo dir
+    tail = os.path.split(repo)[1]
+    repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
+    logging.debug('repo_dir is {0}'.format(repo_dir))
+
+    if os.path.isdir(repo_dir):
+        delete_repo(repo_dir)
+
+    subprocess.check_call(['git', 'clone', repo], cwd=clone_to_dir)
+
+    if checkout is not None:
+        subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)
+
+    return repo_dir
+
+
 def git_clone(repo, checkout=None, clone_to_dir="."):
     """
     Clone a git repo to the current directory.

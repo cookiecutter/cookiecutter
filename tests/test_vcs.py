@@ -36,6 +36,25 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 encoding = locale.getdefaultlocale()[1]
 
 
+class TestIdentifyRepo(unittest.TestCase):
+
+    def test_identify_git_github(self):
+        repo_url = "https://github.com/audreyr/cookiecutter-pypackage.git"
+        self.assertEqual(vcs.identify_repo(repo_url), "git")
+
+    def test_identify_git_github_no_extension(self):
+        repo_url = "https://github.com/audreyr/cookiecutter-pypackage"
+        self.assertEqual(vcs.identify_repo(repo_url), "git")
+
+    def test_identify_git_gitorious(self):
+        repo_url = "git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
+        self.assertEqual(vcs.identify_repo(repo_url), "git")
+
+    def test_identify_hg_mercurial(self):
+        repo_url = "https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket"
+        self.assertEqual(vcs.identify_repo(repo_url), "hg")
+
+
 class TestVCS(unittest.TestCase):
 
     def test_git_clone(self):
