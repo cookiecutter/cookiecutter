@@ -15,6 +15,7 @@ import unittest
 import yaml
 
 from cookiecutter import config
+from cookiecutter.exceptions import InvalidConfiguration
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
@@ -72,6 +73,11 @@ class TestConfig(unittest.TestCase):
         config.get_config(fname)
         self.assertTrue(os.path.exists(fname))
         os.remove(fname)
+
+    def test_invalid_config(self):
+        """ An invalid config file should raise a cookiecutter InvalidConfiguration exception """
+        self.assertRaises(InvalidConfiguration, config.get_config,
+                          "tests/config/invalid-config.yaml")
 
 
 if __name__ == '__main__':

@@ -15,6 +15,7 @@ import sys
 import yaml
 
 from .utils import unicode_open
+from .exceptions import InvalidConfiguration
 
 _CONFIG = {}
 
@@ -41,7 +42,11 @@ def get_config(config_path=GLOB_SETTINGS_PATH):
     if not os.path.exists(config_path):
         create_config({}, config_path)	
     with unicode_open(config_path) as file_handle:
-        global_config = yaml.load(file_handle)
+        try:
+            global_config = yaml.load(file_handle)
+        except yaml.scanner.ScannerError:
+            raise InvalidConfiguration(
+                "%s is no a valid YAML file" % config_path)
 
     return global_config
 
