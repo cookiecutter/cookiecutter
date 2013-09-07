@@ -28,7 +28,7 @@ class TestGetConfig(unittest.TestCase):
 
     def test_get_config(self):
         """ Opening and reading config file """
-        conf = config.get_config('tests/test-config/test-config.yaml')
+        conf = config.get_config('tests/test-config/valid-config.yaml')
         expected_conf = {
         	'template_dirs': [
         		'/home/raphi/dev'
@@ -61,31 +61,47 @@ class TestGetConfig(unittest.TestCase):
 
 
 class TestGetUserConfig(unittest.TestCase):
+    
+    def setUp(self):
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, '.cookiecutterrc.backup')
+            os.remove(self.user_config_path)
+
+    def tearDown(self):
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists('.cookiecutterrc.backup'):
+            shutil.copy('.cookiecutterrc.backup', self.user_config_path)
+            os.remove('.cookiecutterrc.backup')
 
     def test_get_user_config_valid(self):
         """ Get config from a valid ~/.cookiecutterrc file """
-        pass
+        shutil.copy('tests/test-config/valid-config.yaml', self.user_config_path)
+        conf = config.get_user_config()
+        expected_conf = {
+        	'template_dirs': [
+        		'/home/raphi/dev'
+        	],
+        	'default_context': {
+        		"full_name": "Raphi Gaziano",
+        		"email": "r.gaziano@gmail.com",
+        		"github_username": "raphigaziano"
+        	}
+        }
+        self.assertEqual(conf, expected_conf)
 
     def test_get_user_config_invalid(self):
         """ Get config from an invalid ~/.cookiecutterrc file """
-        pass
+        shutil.copy('tests/test-config/invalid-config.yaml', self.user_config_path)
+        self.assertRaises(InvalidConfiguration, config.get_user_config)
 
     def test_get_user_config_nonexistent(self):
         """ Get config from a nonexistent ~/.cookiecutterrc file """
-        
-        USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
-        
-        # If pre-existing, move ~/.cookiecutterrc to a temp location
-        if os.path.exists(USER_CONFIG_PATH):
-            shutil.copy(USER_CONFIG_PATH, '.cookiecutterrc.backup')
-            os.remove(USER_CONFIG_PATH)
-        
         self.assertEqual(config.get_user_config(), None)
         
-        # If it existed, restore ~/.cookiecutterrc
-        if os.path.exists('.cookiecutterrc.backup'):
-            shutil.copy('.cookiecutterrc.backup', USER_CONFIG_PATH)
-            os.remove('.cookiecutterrc.backup')
+
 
 
 if __name__ == '__main__':
