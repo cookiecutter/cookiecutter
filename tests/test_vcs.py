@@ -104,7 +104,7 @@ class TestVCS(unittest.TestCase):
 
     def test_hg_clone(self):
         repo_dir = vcs.clone(
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
+            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
         )
         self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
@@ -147,7 +147,7 @@ class TestVCSPrompt(unittest.TestCase):
         if not PY3:
             sys.stdin = StringIO('y\n\n')
         repo_dir = vcs.clone(
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
+            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
         )
         self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
@@ -159,7 +159,7 @@ class TestVCSPrompt(unittest.TestCase):
         self.assertRaises(
             SystemExit,
             vcs.clone,
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
+            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
         )
 
     def tearDown(self):

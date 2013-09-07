@@ -120,7 +120,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
     def test_cookiecutter_mercurial(self):
         if not PY3:
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
-        main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg')
+        main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.exists(clone_dir))

@@ -39,8 +39,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
 
-    # If it's a git repo, clone
-    if input_dir.endswith('.git') or input_dir.endswith('.hg'):
+    # TODO: find a better way to tell if it's a repo URL
+    if "git@" in input_dir or "https://" in input_dir:
         repo_dir = clone(
             repo_url=input_dir,
             checkout=checkout,

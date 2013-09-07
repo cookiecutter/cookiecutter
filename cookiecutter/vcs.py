@@ -70,7 +70,7 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     if repo_type == "git":
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
     elif repo_type == "hg":
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.hg')[0]))
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail))
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
@@ -81,7 +81,7 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
         if checkout is not None:
             subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)
     elif repo_type == "hg":
-        subprocess.check_call(['hg', 'clone', repo_url[0:-3]], cwd=clone_to_dir)
+        subprocess.check_call(['hg', 'clone', repo_url], cwd=clone_to_dir)
         # TODO: implement checkout
 
     return repo_dir
