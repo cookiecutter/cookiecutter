@@ -14,7 +14,7 @@ import shutil
 import sys
 import unittest
 
-from cookiecutter import main
+from cookiecutter import config, main
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
@@ -92,6 +92,45 @@ class TestArgParsing(unittest.TestCase):
 
 
 class TestCookiecutterRepoArg(unittest.TestCase):
+    def setUp(self):
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path_backup = os.path.expanduser(
+            '~/.cookiecutterrc.backup'
+        )
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, self.user_config_path_backup)
+            os.remove(self.user_config_path)
+
+        # If the default cookiecutters_dir is pre-existing, move it to a
+        # temp location
+        self.cookiecutters_dir = config.DEFAULT_CONFIG['cookiecutters_dir']
+        self.cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
+        if os.path.isdir(self.cookiecutters_dir):
+            shutil.copytree(self.cookiecutters_dir, self.cookiecutters_dir_backup)
+        if os.path.isdir(self.cookiecutters_dir_backup):
+            shutil.rmtree(self.cookiecutters_dir)
+
+    def tearDown(self):
+        # Delete the created ~/.cookiecutters dir as long as a backup exists
+        if os.path.isdir(self.cookiecutters_dir) and os.path.isdir(self.cookiecutters_dir_backup):
+            shutil.rmtree(self.cookiecutters_dir)
+    
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists(self.user_config_path_backup):
+            shutil.copy(self.user_config_path_backup, self.user_config_path)
+            os.remove(self.user_config_path_backup)
+        
+        # Restore the user's default cookiecutters_dir contents
+        if os.path.isdir(self.cookiecutters_dir_backup):
+            shutil.copytree(self.cookiecutters_dir_backup, self.cookiecutters_dir)
+        if os.path.isdir(self.cookiecutters_dir):
+            shutil.rmtree(self.cookiecutters_dir_backup)
+
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
 
     @patch(input_str, lambda x: '')
     def test_cookiecutter_git(self):
@@ -99,16 +138,15 @@ class TestCookiecutterRepoArg(unittest.TestCase):
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
-        self.assertTrue(os.path.exists('cookiecutter-pypackage'))
+        clone_dir = os.path.join(
+            config.DEFAULT_CONFIG['cookiecutters_dir'],
+            'cookiecutter-pypackage'
+        )
+        self.assertTrue(os.path.exists(clone_dir))
         self.assertTrue(os.path.isdir('boilerplate'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
 
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
 
 if __name__ == '__main__':
     unittest.main()

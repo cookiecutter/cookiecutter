@@ -16,7 +16,7 @@ import subprocess
 import sys
 
 from .prompt import query_yes_no
-
+from .utils import make_sure_path_exists
 
 def git_clone(repo, checkout=None, clone_to_dir="."):
     """
@@ -27,8 +27,7 @@ def git_clone(repo, checkout=None, clone_to_dir="."):
     """
     
     # Ensure that clone_to_dir exists
-    if not os.path.isdir(clone_to_dir):
-        os.makedirs(clone_to_dir)
+    make_sure_path_exists(clone_to_dir)
 
     # Return repo dir
     tail = os.path.split(repo)[1]
