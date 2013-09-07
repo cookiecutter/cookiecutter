@@ -65,7 +65,7 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
     def tearDown(self):
         # If it existed, restore ~/.cookiecutterrc
         # We never write to ~/.cookiecutterrc, so this logic is simpler.
-        if os.path.exists(self.user_config_path_backup):
+        if self.user_config_found and os.path.exists(self.user_config_path_backup):
             shutil.copy(self.user_config_path_backup, self.user_config_path)
             os.remove(self.user_config_path_backup)
 
