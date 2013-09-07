@@ -21,7 +21,7 @@ import shutil
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
-from .vcs import git_clone, hg_clone
+from .vcs import clone
 
 
 logger = logging.getLogger(__name__)
@@ -40,15 +40,10 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     config_dict = get_user_config()
 
     # If it's a git repo, clone
-    if input_dir.endswith('.git'):
-        repo_dir = git_clone(
-            repo=input_dir,
+    if input_dir.endswith('.git') or input_dir.endswith('.hg'):
+        repo_dir = clone(
+            repo_url=input_dir,
             checkout=checkout,
-            clone_to_dir=config_dict['cookiecutters_dir']
-        )
-    elif input_dir.endswith('.hg'):
-        repo_dir = hg_clone(
-            repo=input_dir,
             clone_to_dir=config_dict['cookiecutters_dir']
         )
     else:

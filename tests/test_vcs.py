@@ -126,7 +126,7 @@ class TestVCSPrompt(unittest.TestCase):
     def test_git_clone_overwrite(self):
         if not PY3:
             sys.stdin = StringIO('y\n\n')
-        repo_dir = vcs.git_clone(
+        repo_dir = vcs.clone(
             'https://github.com/audreyr/cookiecutter-pypackage.git'
         )
         self.assertEqual(repo_dir, 'cookiecutter-pypackage')
@@ -138,7 +138,7 @@ class TestVCSPrompt(unittest.TestCase):
             sys.stdin = StringIO('n\n\n')
         self.assertRaises(
             SystemExit,
-            vcs.git_clone,
+            vcs.clone,
             'https://github.com/audreyr/cookiecutter-pypackage.git'
         )
 
@@ -146,7 +146,7 @@ class TestVCSPrompt(unittest.TestCase):
     def test_hg_clone_overwrite(self):
         if not PY3:
             sys.stdin = StringIO('y\n\n')
-        repo_dir = vcs.hg_clone(
+        repo_dir = vcs.clone(
             'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
         )
         self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
@@ -158,7 +158,7 @@ class TestVCSPrompt(unittest.TestCase):
             sys.stdin = StringIO('n\n\n')
         self.assertRaises(
             SystemExit,
-            vcs.hg_clone,
+            vcs.clone,
             'https://bitbucket.org/pokoli/cookiecutter-trytonmodule.hg'
         )
 
