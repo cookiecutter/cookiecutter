@@ -35,6 +35,9 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     :param checkout: The branch, tag or commit ID to checkout after clone
     """
 
+    # Get user config from ~/.cookiecutterrc or equivalent
+    config_dict = get_user_config()
+
     # If it's a git repo, clone
     if input_dir.endswith('.git'):
         repo_dir = git_clone(input_dir, checkout)
@@ -46,7 +49,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     logging.debug('context_file is {0}'.format(context_file))
 
     context = generate_context(
-        context_file=context_file
+        context_file=context_file,
+        config_dict=config_dict
     )
 
     # prompt the user to manually configure at the command line.

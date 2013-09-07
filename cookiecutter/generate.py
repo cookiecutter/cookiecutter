@@ -33,13 +33,13 @@ else:
     from collections import OrderedDict
 
 
-def generate_context(context_file='cookiecutter.json'):
+def generate_context(context_file='cookiecutter.json', config_dict=None):
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
 
-    :param config_file: JSON file containing project config values.
-    :paramtype config_file: filename
+    :param context_file: JSON file containing project config values.
+    :param config_dict: Dict containing any config to take into account.
     """
 
     context = {}
@@ -54,9 +54,8 @@ def generate_context(context_file='cookiecutter.json'):
 
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
-    conf = get_user_config()
-    if conf:
-        obj.update(conf['default_context'])
+    if config_dict:
+        obj.update(config_dict['default_context'])
 
     logging.debug('Context generated is {0}'.format(context))
     return context
