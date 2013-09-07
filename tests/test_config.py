@@ -31,12 +31,12 @@ class TestGetConfig(unittest.TestCase):
         conf = config.get_config('tests/test-config/valid-config.yaml')
         expected_conf = {
         	'template_dirs': [
-        		'/home/raphi/dev'
+        		'/home/example/some-path-to-templates'
         	],
         	'default_context': {
-        		"full_name": "Raphi Gaziano",
-        		"email": "r.gaziano@gmail.com",
-        		"github_username": "raphigaziano"
+        		"full_name": "Firstname Lastname",
+        		"email": "firstname.lastname@gmail.com",
+        		"github_username": "example"
         	}
         }
         self.assertEqual(conf, expected_conf)
@@ -86,12 +86,12 @@ class TestGetUserConfig(unittest.TestCase):
         conf = config.get_user_config()
         expected_conf = {
         	'template_dirs': [
-        		'/home/raphi/dev'
+        		'/home/example/some-path-to-templates'
         	],
         	'default_context': {
-        		"full_name": "Raphi Gaziano",
-        		"email": "r.gaziano@gmail.com",
-        		"github_username": "raphigaziano"
+        		"full_name": "Firstname Lastname",
+        		"email": "firstname.lastname@gmail.com",
+        		"github_username": "example"
         	}
         }
         self.assertEqual(conf, expected_conf)

@@ -1,6 +1,6 @@
 default_context
     full_name:
-    email: "r.gaziano@gmail.com"
-    github_username: "raphigaziano"
+    email: "firstname.lastname@gmail.com"
+    github_username: "example"
 template_dirs:
-    "/home/raphi/dev"
+    - "/home/example/some-path-to-templates"
