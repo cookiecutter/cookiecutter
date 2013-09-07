@@ -170,6 +170,7 @@ class TestGenerateContext(CookiecutterCleanSystemTestCase):
         )
         self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
 
+
 class TestOutputFolder(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
@@ -201,7 +202,16 @@ It is 2014."""
         self.assertTrue(os.path.isfile('output_folder/im_a.dir/im_a.file.py'))
 
 
-class TestHooks(unittest.TestCase):
+class TestHooks(CookiecutterCleanSystemTestCase):
+
+    def tearDown(self):
+        if os.path.exists('tests/test-pyhooks/inputpyhooks'):
+            shutil.rmtree('tests/test-pyhooks/inputpyhooks')
+        if os.path.exists('inputpyhooks'):
+            shutil.rmtree('inputpyhooks')
+        if os.path.exists('tests/test-shellhooks/inputshellhooks'):
+            shutil.rmtree('tests/test-shellhooks/inputshellhooks')
+        super(TestHooks, self).tearDown()
 
     def test_ignore_hooks_dirs(self):
         generate.generate_files(
@@ -244,14 +254,6 @@ class TestHooks(unittest.TestCase):
         )
         self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_pre.txt'))
         self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_post.txt'))
-
-    def tearDown(self):
-        if os.path.exists('tests/test-pyhooks/inputpyhooks'):
-            shutil.rmtree('tests/test-pyhooks/inputpyhooks')
-        if os.path.exists('inputpyhooks'):
-            shutil.rmtree('inputpyhooks')
-        if os.path.exists('tests/test-shellhooks/inputshellhooks'):
-            shutil.rmtree('tests/test-shellhooks/inputshellhooks')
 
 
 if __name__ == '__main__':
