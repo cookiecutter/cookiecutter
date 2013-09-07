@@ -18,6 +18,7 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
+from .config import get_user_config
 from .exceptions import NonTemplatedInputDirException
 from .find import find_template
 from .utils import make_sure_path_exists, unicode_open, work_in
@@ -50,6 +51,12 @@ def generate_context(context_file='cookiecutter.json'):
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
     context[file_stem] = obj
+
+    # Overwrite context variable defaults with the default context from the
+    # user's global config, if available
+    conf = get_user_config()
+    if conf:
+        obj.update(conf['default_context'])
 
     logging.debug('Context generated is {0}'.format(context))
     return context
