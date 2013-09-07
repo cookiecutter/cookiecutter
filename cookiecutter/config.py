@@ -8,6 +8,7 @@ cookiecutter.config
 Global configuration handling
 """
 
+from __future__ import unicode_literals
 import copy
 import logging
 import os

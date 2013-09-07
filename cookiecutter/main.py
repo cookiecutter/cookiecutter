@@ -11,6 +11,7 @@ The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
 
+from __future__ import unicode_literals
 import argparse
 import logging
 import os

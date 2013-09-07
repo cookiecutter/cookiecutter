@@ -8,6 +8,7 @@ cookiecutter.vcs
 Helper functions for working with version control systems.
 """
 
+from __future__ import unicode_literals
 import logging
 import os
 import shutil
@@ -27,7 +28,7 @@ def git_clone(repo, checkout=None, clone_to_dir="."):
 
     # Return repo dir
     tail = os.path.split(repo)[1]
-    repo_dir = tail.rsplit('.git')[0]
+    repo_dir = os.path.join(clone_to_dir, tail.rsplit('.git')[0])
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):

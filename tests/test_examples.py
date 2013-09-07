@@ -8,6 +8,7 @@ test_examples
 Tests for the Cookiecutter example repos.
 """
 
+from __future__ import unicode_literals
 import errno
 import os
 import shutil
@@ -36,9 +37,33 @@ try:
 except KeyError:
     travis = False
 
+from cookiecutter import config, utils
+
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestPyPackage(unittest.TestCase):
+
+    def setUp(self):
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path_backup = os.path.expanduser(
+            '~/.cookiecutterrc.backup'
+        )
+        
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, self.user_config_path_backup)
+            os.remove(self.user_config_path)
+
+    def tearDown(self):
+        if os.path.isdir('cookiecutter-pypackage'):
+            shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists(self.user_config_path_backup):
+            shutil.copy(self.user_config_path_backup, self.user_config_path)
+            os.remove(self.user_config_path_backup)
 
     def test_cookiecutter_pypackage(self):
         """
@@ -59,17 +84,35 @@ class TestPyPackage(unittest.TestCase):
         ) as proc:
             proc.wait()
 
+        self.assertTrue(os.path.isdir('cookiecutter-pypackage'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
-
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestJQuery(unittest.TestCase):
+
+    def setUp(self):
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path_backup = os.path.expanduser(
+            '~/.cookiecutterrc.backup'
+        )
+        
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, self.user_config_path_backup)
+            os.remove(self.user_config_path)
+
+    def tearDown(self):
+        if os.path.isdir('cookiecutter-jquery'):
+            shutil.rmtree('cookiecutter-jquery')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists(self.user_config_path_backup):
+            shutil.copy(self.user_config_path_backup, self.user_config_path)
+            os.remove(self.user_config_path_backup)
+
 
     def test_cookiecutter_jquery(self):
         """
@@ -90,17 +133,35 @@ class TestJQuery(unittest.TestCase):
         ) as proc:
             proc.wait()
 
+        self.assertTrue(os.path.isdir('cookiecutter-jquery'))
         self.assertTrue(os.path.isfile('boilerplate/README.md'))
-
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-jquery'):
-            shutil.rmtree('cookiecutter-jquery')
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestExamplesRepoArg(unittest.TestCase):
+
+    def setUp(self):
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path_backup = os.path.expanduser(
+            '~/.cookiecutterrc.backup'
+        )
+        
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, self.user_config_path_backup)
+            os.remove(self.user_config_path)
+
+    def tearDown(self):
+        with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
+            if os.path.isdir('cookiecutter-pypackage'):
+                shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists(self.user_config_path_backup):
+            shutil.copy(self.user_config_path_backup, self.user_config_path)
+            os.remove(self.user_config_path_backup)
 
     def test_cookiecutter_pypackage_git(self):
         with subprocess.Popen(
@@ -111,22 +172,36 @@ class TestExamplesRepoArg(unittest.TestCase):
 
             # Just skip all the prompts
             proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-
+        
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestGitBranch(unittest.TestCase):
 
     def setUp(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path_backup = os.path.expanduser(
+            '~/.cookiecutterrc.backup'
+        )
+        
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, self.user_config_path_backup)
+            os.remove(self.user_config_path)
+
+    def tearDown(self):
+        with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
+            if os.path.isdir('cookiecutter-pypackage'):
+                shutil.rmtree('cookiecutter-pypackage')
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists(self.user_config_path_backup):
+            shutil.copy(self.user_config_path_backup, self.user_config_path)
+            os.remove(self.user_config_path_backup)
 
     def test_branch(self):
         with subprocess.Popen(
@@ -140,12 +215,6 @@ class TestGitBranch(unittest.TestCase):
 
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.isfile('boilerplate/boilerplate/main.py'))
-
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
 
 
 if __name__ == '__main__':
