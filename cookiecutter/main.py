@@ -46,7 +46,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     logging.debug('context_file is {0}'.format(context_file))
 
     context = generate_context(
-        config_file=context_file
+        context_file=context_file
     )
 
     # prompt the user to manually configure at the command line.

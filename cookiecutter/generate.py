@@ -32,7 +32,7 @@ else:
     from collections import OrderedDict
 
 
-def generate_context(config_file='cookiecutter.json'):
+def generate_context(context_file='cookiecutter.json'):
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
@@ -43,11 +43,11 @@ def generate_context(config_file='cookiecutter.json'):
 
     context = {}
 
-    file_handle = open(config_file)
+    file_handle = open(context_file)
     obj = json.load(file_handle, encoding='utf-8', object_pairs_hook=OrderedDict)
 
     # Add the Python object to the context dictionary
-    file_name = os.path.split(config_file)[1]
+    file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
     context[file_stem] = obj
 
