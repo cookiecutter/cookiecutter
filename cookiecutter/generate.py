@@ -69,14 +69,9 @@ def generate_file(project_dir, infile, context, env):
     """
     logging.debug("Generating file {0}".format(infile))
 
-    # Render the intermediary path to the output file (not including the root
-    # project dir nor the filename itself)
-    outdir_tmpl = Template(os.path.dirname(infile))
-    outdir = outdir_tmpl.render(**context)
-
-    # Write the file to the corresponding place
-    fname = os.path.basename(infile)  # input/output filename
-    outfile = os.path.join(project_dir, outdir, fname)
+    # Render the path to the output file (not including the root project dir)
+    outfile_tmpl = Template(infile)
+    outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
     logging.debug("outfile is {0}".format(outfile))
 
     # Just copy over binary files. Don't render.
@@ -85,7 +80,6 @@ def generate_file(project_dir, infile, context, env):
         logging.debug("Copying binary {0} to {1} without rendering"
                       .format(infile, outfile))
         shutil.copyfile(infile, outfile)
-
     else:
         # Force fwd slashes on Windows for get_template
         # This is a by-design Jinja issue
@@ -101,13 +95,13 @@ def generate_file(project_dir, infile, context, env):
             raise
         rendered_file = tmpl.render(**context)
 
-        # Render the output filename before writing
-        name_tmpl = Template(outfile)
-        rendered_name = name_tmpl.render(**context)
-        logging.debug("Writing {0}".format(rendered_name))
+        logging.debug("Writing {0}".format(outfile))
 
-        with unicode_open(rendered_name, 'w') as fh:
+        with unicode_open(outfile, 'w') as fh:
             fh.write(rendered_file)
+
+    # Apply file permissions to output file
+    shutil.copymode(infile, outfile)
 
 
 def render_and_create_dir(dirname, context, output_dir):
