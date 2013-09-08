@@ -96,6 +96,35 @@ Did someone say features?
   - Default responses are the values in `cookiecutter.json`.
   - Prompts are shown in order.
 
+Additional Features in 0.7.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+0.7.0 is not out yet, but these features are in the master branch:
+
+* Cross-platform support for `~/.cookiecutterrc` files:
+
+    default_context:
+        full_name: "Audrey Roy"
+        email: "audreyr@gmail.com"
+        github_username: "audreyr"
+    cookiecutters_dir: "~/.cookiecutters/"
+
+* Cookiecutters (cloned Cookiecutter project templates) are put into
+  `~/.cookiecutters/` by default, or cookiecutters_dir if specified.
+
+* In addition to git repos, you can also use cookiecutters directly from
+  Mercurial repos on Bitbucket.
+
+* Default context: specify key/value pairs that you want used as defaults
+  whenever you generate a project
+
+* Pre- and post-generate hooks: Python or shell scripts to run before or after
+  generating a project.
+
+* Paths to local projects can be specified as absolute or relative.
+
+* Projects are always generated to your current directory.
+
 Available Cookiecutters
 -----------------------
 
@@ -183,3 +212,25 @@ Similar projects
 .. _`Yeoman`: https://github.com/yeoman/generator
 .. _`Pyramid`: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/scaffolding.html
 .. _`mr.bob`: https://github.com/iElectric/mr.bob
+
+Community
+---------
+
+If you have questions, don't hesitate to ask by `filing an issue`_ with your
+question. (Questions are often a good indicator of places where the docs can be
+improved :)
+
+Development on Cookiecutter is community-driven. Huge thanks to all the
+`contributors`_ who have pitched in to help make Cookiecutter an even better
+tool.
+
+Everyone is invited to contribute. Read the `contributing instructions`_, then
+get started.
+
+All members of the Cookiecutter community (end users, project template
+maintainers, contributors, etc.) are invited to join the `Cookiecutter Gittip community`_.
+
+.. _`contributors`: https://github.com/audreyr/cookiecutter/blob/master/AUTHORS.rst
+.. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
+.. _`filing an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
+.. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
