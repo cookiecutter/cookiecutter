@@ -15,8 +15,8 @@ Cookiecutter
         :target: https://coveralls.io/r/audreyr/cookiecutter?branch=master
 
 
-A command-line utility that creates projects from project templates, e.g.
-creating a Python package project from a Python package project template.
+A command-line utility that creates projects from **cookiecutters** (project
+templates), e.g. creating a Python package project from a Python package project template.
 
 * Documentation: http://cookiecutter.rtfd.org
 * GitHub: https://github.com/audreyr/cookiecutter
@@ -96,25 +96,47 @@ Did someone say features?
   - Default responses are the values in `cookiecutter.json`.
   - Prompts are shown in order.
 
-Available Templates
--------------------
+Available Cookiecutters
+-----------------------
 
-Here is a list of working Cookiecutter project templates for you to use or fork:
+Here is a list of **cookiecutters** (aka Cookiecutter project templates) for you to use or fork.
+
+Make your own, then submit a pull request adding yours to this list!
+
+Python
+~~~~~~
 
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
-* `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
-  Boilerplate.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-django`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
-* `bootstrap.c`_: A template for simple projects written in C with autotools.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
-* `cookiecutter-component`_: A template for a Component JS package.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
 
+C
+~~
 
-Make your own, then submit a pull request adding yours to this list!
+* `bootstrap.c`_: A template for simple projects written in C with autotools.
+
+JS
+~~
+
+* `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
+  Boilerplate.
+* `cookiecutter-jswidget`_: A project template for creating a generic front-end,
+  non-jQuery JS widget packaged for multiple JS packaging systems.
+* `cookiecutter-component`_: A template for a Component JS package.
+
+LaTeX/XeTeX
+~~~~~~~~~~~
+
+* `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
+
+HTML
+~~~~
+
+* `cookiecutter-complexity`_: A cookiecutter for a Complexity static site with Bootstrap 3.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@audreyr`: https://github.com/audreyr/
@@ -127,6 +149,9 @@ Make your own, then submit a pull request adding yours to this list!
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
 .. _`docopt`: http://docopt.org/
+.. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
+.. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
+.. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 
 
 Similar projects
