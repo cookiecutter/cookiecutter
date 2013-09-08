@@ -76,12 +76,9 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     if os.path.isdir(repo_dir):
         prompt_and_delete_repo(repo_dir)
 
-    if repo_type == "git":
-        subprocess.check_call(['git', 'clone', repo_url], cwd=clone_to_dir)
+    if repo_type in ["git", "hg"]:
+        subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
         if checkout is not None:
-            subprocess.check_call(['git', 'checkout', checkout], cwd=repo_dir)
-    elif repo_type == "hg":
-        subprocess.check_call(['hg', 'clone', repo_url], cwd=clone_to_dir)
-        # TODO: implement checkout
+            subprocess.check_call([repo_type, 'checkout', checkout], cwd=repo_dir)
 
     return repo_dir
