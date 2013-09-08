@@ -19,7 +19,7 @@ Contributors
 * Benjamin Schwarze (`@benjixx`_)
 * Raphi (`@raphigaziano`_)
 * Thomas Chiroux (`@ThomasChiroux`_)
-* Sergi Almacellas Abellana (`@pokoli`)
+* Sergi Almacellas Abellana (`@pokoli`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
