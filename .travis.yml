@@ -8,6 +8,8 @@ python:
   - "2.6"
   - "pypy"
 
+before_install: umask 0022
+
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install -r requirements/test_26.txt; fi
