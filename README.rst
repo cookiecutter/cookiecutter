@@ -138,9 +138,10 @@ Python
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
+* `cookiecutter-flask-env`_: A lucuma-flavored flask app template.
 * `cookiecutter-django`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
-* `cookiecutter-openstack`_: A template for an OpenStack project.
+* `cookiecutter-django-crud-app`_: A Django app template that sets up initial Create, List, Detail, and Update generic views, forms, urls, templates, and tests.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
 
 C
@@ -167,12 +168,26 @@ HTML
 
 * `cookiecutter-complexity`_: A cookiecutter for a Complexity static site with Bootstrap 3.
 
+Ruby
+~~~~
+
+* `cookiecutter-jekyll`_: A Jekyll (github pages) boilerplate for use with cookiecutter.
+
+OpenStack
+~~~~~~~~~~~
+
+* `cookiecutter-openstack`_: A Cookiecutter Template for OpenStack. 
+* `openstack/cookiecutter`_: A cookiecutter Template for new OpenStack projects.
+
+
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@audreyr`: https://github.com/audreyr/
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
+.. _`cookiecutter-flask-env`: https://github.com/lucuma/cookiecutter-flask-env
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
+.. _`cookiecutter-django-crud-app`: https://github.com/smajda/cookiecutter-django-crud-app
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
 .. _`cookiecutter-openstack`: https://github.com/emonty/cookiecutter-openstack
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
@@ -181,6 +196,9 @@ HTML
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
+.. _`cookiecutter-openstack`: https://github.com/emonty/cookiecutter-openstack
+.. _`openstack/cookiecutter`: https://github.com/openstack-dev/cookiecutter
+.. _`cookiecutter-jekyll`: https://github.com/natronics/cookiecutter-jekyll
 
 
 Similar projects
