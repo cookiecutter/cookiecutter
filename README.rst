@@ -139,7 +139,8 @@ Python
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-flask-env`_: A lucuma-flavored flask app template.
-* `cookiecutter-django`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
+* `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
+* `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-crud-app`_: A Django app template that sets up initial Create, List, Detail, and Update generic views, forms, urls, templates, and tests.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
@@ -185,6 +186,7 @@ OpenStack
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-flask-env`: https://github.com/lucuma/cookiecutter-flask-env
+.. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-crud-app`: https://github.com/smajda/cookiecutter-django-crud-app
