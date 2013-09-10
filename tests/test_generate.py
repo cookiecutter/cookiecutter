@@ -41,8 +41,8 @@ class TestGenerateFile(unittest.TestCase):
         )
         self.assertTrue(os.path.isfile('tests/files/cheese.txt'))
         with open('tests/files/cheese.txt', 'rt') as f:
-             generated_text = f.read()
-             self.assertEqual(generated_text, 'Testing cheese')
+            generated_text = f.read()
+            self.assertEqual(generated_text, 'Testing cheese')
 
     def test_generate_file_verbose_template_syntax_error(self):
         env = Environment()

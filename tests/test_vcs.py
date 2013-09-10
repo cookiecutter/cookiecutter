@@ -95,7 +95,8 @@ class TestVCS(unittest.TestCase):
             clone_to_dir="tests/custom_dir1/custom_dir2/"
         )
         with utils.work_in("tests/custom_dir1/custom_dir2/"):
-            self.assertEqual(repo_dir, 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage')
+            test_dir = 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage'.replace("/", os.sep)
+            self.assertEqual(repo_dir, test_dir)
             self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
             if os.path.isdir('cookiecutter-pypackage'):
                 shutil.rmtree('cookiecutter-pypackage')

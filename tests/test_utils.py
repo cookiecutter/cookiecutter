@@ -23,7 +23,7 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(utils.make_sure_path_exists('tests/trailingslash/'))
         self.assertFalse(
             utils.make_sure_path_exists(
-                '/this-dir-does-not-exist-and-cant-be-created/'
+                '/this-dir-does-not-exist-and-cant-be-created/'.replace("/", os.sep)
             )
         )
         shutil.rmtree('tests/blah/')
@@ -46,16 +46,17 @@ Musical Notes: ♬ ♫ ♯"""
 
         class TestException(Exception):
             pass
-        
+
         def test_work_in():
             with utils.work_in(ch_to):
-                self.assertEqual(os.path.join(cwd, ch_to), os.getcwd())
+                test_dir = os.path.join(cwd, ch_to).replace("/", os.sep)
+                self.assertEqual(test_dir, os.getcwd())
                 raise TestException()
 
         # Make sure we return to the correct folder
         self.assertEqual(cwd, os.getcwd())
 
-        # Make sure that exceptions are still bubled up
+        # Make sure that exceptions are still bubbled up
         self.assertRaises(TestException, test_work_in)
 
 
