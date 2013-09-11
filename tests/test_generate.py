@@ -164,9 +164,15 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             repo_dir='tests/test-generate-files-permissions'
         )
         self.assertTrue(os.path.isfile('inputpermissions/simple.txt'))
-        self.assertEquals(0o644, os.stat('inputpermissions/simple.txt').st_mode & 0o777)
+        self.assertEquals(
+            os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/simple.txt').st_mode & 0o777,
+            os.stat('inputpermissions/simple.txt').st_mode & 0o777
+        )
         self.assertTrue(os.path.isfile('inputpermissions/script.sh'))
-        self.assertEquals(0o755, os.stat('inputpermissions/script.sh').st_mode & 0o777)
+        self.assertEquals(
+            os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/script.sh').st_mode & 0o777,
+            os.stat('inputpermissions/script.sh').st_mode & 0o777
+        )
 
 
 class TestGenerateContext(CookiecutterCleanSystemTestCase):
