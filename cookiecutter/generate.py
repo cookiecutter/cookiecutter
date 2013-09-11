@@ -37,7 +37,8 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
 
-    :param context_file: JSON file containing project config values.
+    :param context_file: JSON file containing key/value pairs for populating
+        the cookiecutter's variables.
     :param config_dict: Dict containing any config to take into account.
     """
 
@@ -62,11 +63,26 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
 
 def generate_file(project_dir, infile, context, env):
     """
-    1. Render the contents of infile.
-    2. Render the filename of infile as the name of outfile.
-    3. Write the rendered infile to outfile.
-    :param infile: Input file to generate the file from.
+    1. Render the filename of infile as the name of outfile.
+    2. Deal with infile appropriately:
+
+        a. If infile is a binary file, copy it over without rendering.
+        b. If infile is a text file, render its contents and write the 
+           rendered infile to outfile.
+
+    .. precondition::
+    
+        When calling `generate_file()`, the root template dir must be the
+        current working directory. Using `utils.work_in()` is the recommended
+        way to perform this directory change.
+
+    :param project_dir: Absolute path to the resulting generated project.
+    :param infile: Input file to generate the file from. Relative to the root
+        template dir.
+    :param context: Dict for populating the cookiecutter's variables.
+    :param env: Jinja2 template execution environment.
     """
+
     logging.debug("Generating file {0}".format(infile))
 
     # Render the path to the output file (not including the root project dir)
@@ -136,8 +152,9 @@ def ensure_dir_is_templated(dirname):
 def generate_files(repo_dir, context=None, output_dir="."):
     """
     Renders the templates and saves them to files.
-    :param input_dir: Project template input directory.
-    :paramtype input_dir: directory
+
+    :param repo_dir: Project template input directory.
+    :param context: Dict for populating the template's variables.
     :param output_dir: Where to output the generated project dir into.
     """
 
