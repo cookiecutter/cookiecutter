@@ -135,6 +135,9 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
         self.assertTrue(
             os.path.isfile('inputbinary_files/binary_files/some_font.otf')
         )
+        self.assertTrue(
+            os.path.isfile('inputbinary_files/binary_files/binary_files/logo.png')
+        )
 
     def test_generate_files_absolute_path(self):
         generate.generate_files(
