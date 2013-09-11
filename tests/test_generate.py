@@ -82,6 +82,8 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             shutil.rmtree('inputbinary_files')
         if os.path.exists('tests/custom_output_dir'):
             shutil.rmtree('tests/custom_output_dir')
+        if os.path.exists('inputpermissions'):
+            shutil.rmtree('inputpermissions')
         super(TestGenerateFiles, self).tearDown()
 
     def test_generate_files_nontemplated_exception(self):
@@ -153,6 +155,24 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             output_dir='tests/custom_output_dir'
         )
         self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
+
+    def test_generate_files_permissions(self):
+        generate.generate_files(
+            context={
+                'cookiecutter': {'permissions': 'permissions'}
+            },
+            repo_dir='tests/test-generate-files-permissions'
+        )
+        self.assertTrue(os.path.isfile('inputpermissions/simple.txt'))
+        self.assertEquals(
+            os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/simple.txt').st_mode & 0o777,
+            os.stat('inputpermissions/simple.txt').st_mode & 0o777
+        )
+        self.assertTrue(os.path.isfile('inputpermissions/script.sh'))
+        self.assertEquals(
+            os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/script.sh').st_mode & 0o777,
+            os.stat('inputpermissions/script.sh').st_mode & 0o777
+        )
 
 
 class TestGenerateContext(CookiecutterCleanSystemTestCase):
