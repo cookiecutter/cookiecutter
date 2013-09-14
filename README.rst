@@ -142,8 +142,12 @@ Python
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
+* `cookiecutter-django-crud-app`_: A Django app template that sets up initial Create, List, Detail, and Update generic views, forms, urls, templates, and tests.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
+* `cookiecutter-pypkg`_: python package layout for cookiecutter
+* `cookiecutter-sphinx`_: Template for sphinx documentation.
+
 
 C
 ~~
@@ -163,11 +167,14 @@ LaTeX/XeTeX
 ~~~~~~~~~~~
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
+* `cookiecutter-latex-journal`_: Templates for creating Journal Articles with LaTeX and Cookiecutter
 
-HTML
-~~~~
+Static Site Generation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * `cookiecutter-complexity`_: A cookiecutter for a Complexity static site with Bootstrap 3.
+* `cookiecutter-jekyll`_: A Jekyll (github pages) boilerplate for use with cookiecutter.
+
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@audreyr`: https://github.com/audreyr/
@@ -185,6 +192,10 @@ HTML
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
+.. _`cookiecutter-django-crud-app`: https://github.com/smajda/cookiecutter-django-crud-app
+.. _`cookiecutter-jekyll`: https://github.com/natronics/cookiecutter-jekyll
+.. _`cookiecutter-pypkg`: https://github.com/markgemmill/cookiecutter-pypkg
+.. _`cookiecutter-latex-journal`: https://github.com/NigelCleland/cookiecutter-latex-journal
 
 
 Similar projects
