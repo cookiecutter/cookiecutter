@@ -73,14 +73,14 @@ class TestVCS(unittest.TestCase):
         self.assertEqual(repo_dir, git_dir)
         self.assertTrue(os.path.isfile(os.path.join('cookiecutter-pypackage', 'README.rst')))
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             ['git', 'symbolic-ref', 'HEAD'],
             cwd=git_dir,
             stdout=subprocess.PIPE
-        ) as proc:
-            symbolic_ref = proc.communicate()[0]
-            branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
-            self.assertEqual('console-script', branch)
+        )
+        symbolic_ref = proc.communicate()[0]
+        branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
+        self.assertEqual('console-script', branch)
 
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
