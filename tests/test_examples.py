@@ -12,16 +12,15 @@ from __future__ import unicode_literals
 import errno
 import os
 import shutil
+import subprocess
 import sys
 
 PY3 = sys.version > '3'
 if PY3:
-    import subprocess
     from unittest.mock import patch
     input_str = 'builtins.input'
     from io import StringIO
 else:
-    import subprocess32 as subprocess
     import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'

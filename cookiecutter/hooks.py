@@ -10,13 +10,8 @@ Functions for discovering and executing various cookiecutter hooks.
 
 import logging
 import os
+import subprocess
 import sys
-
-PY3 = sys.version > '3'
-if PY3:
-    import subprocess
-else:
-    import subprocess32 as subprocess
 
 from .utils import make_sure_path_exists, unicode_open, work_in
 
@@ -49,7 +44,7 @@ def find_hooks():
 
 def _run_hook(script_path, cwd='.'):
     '''
-    Run a sigle external script located at `script_path` (path should be 
+    Run a sigle external script located at `script_path` (path should be
     absolute).
     If `cwd` is provided, the script will be run from that directory.
     '''
