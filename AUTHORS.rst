@@ -20,6 +20,7 @@ Contributors
 * Raphi (`@raphigaziano`_)
 * Thomas Chiroux (`@ThomasChiroux`_)
 * Sergi Almacellas Abellana (`@pokoli`_)
+* Alex Gaynor (`@alex`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -32,3 +33,4 @@ Contributors
 .. _`@raphigaziano`: https://github.com/raphigaziano
 .. _`@ThomasChiroux`: https://github.com/ThomasChiroux
 .. _`@pokoli`: https://github.com/pokoli
+.. _`@alex`: https://github.com/alex

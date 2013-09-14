@@ -138,7 +138,9 @@ Python
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
-* `cookiecutter-django`_: A Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
+* `cookiecutter-flask-env`_: A lucuma-flavored flask app template.
+* `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
+* `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
@@ -171,10 +173,12 @@ HTML
 .. _`@audreyr`: https://github.com/audreyr/
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
+.. _`cookiecutter-flask-env`: https://github.com/lucuma/cookiecutter-flask-env
+.. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
-.. _`cookiecutter-openstack`: https://github.com/emonty/cookiecutter-openstack
+.. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
 .. _`docopt`: http://docopt.org/
