@@ -26,7 +26,7 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir, checkout=None, no_input=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -57,6 +57,9 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         context_file=context_file,
         default_context=config_dict['default_context']
     )
+
+    if extra_context is not None:
+        context['cookiecutter'].update(extra_context)
 
     # prompt the user to manually configure at the command line.
     # except when 'no-input' flag is set
