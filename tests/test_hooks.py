@@ -48,6 +48,9 @@ class TestExternalHooks(unittest.TestCase):
             os.remove('tests/test-hooks/input{{hooks}}/python_pre.txt')
         if os.path.exists('tests/test-hooks/input{{hooks}}/shell_post.txt'):
             os.remove('tests/test-hooks/input{{hooks}}/shell_post.txt')
+        if os.path.exists('tests/test-hooks/input{{hooks}}/config_file.txt'):
+            os.remove('tests/test-hooks/input{{hooks}}/config_file.txt')
+
 
     def test_run_hook(self):
         '''execute a hook script, independently of project generation'''
@@ -56,11 +59,11 @@ class TestExternalHooks(unittest.TestCase):
 
     def test_run_hook_cwd(self):
         '''Change directory before running hook'''
-        hooks._run_hook(os.path.join(self.hooks_path, 'post_gen_project.sh'), 
+        hooks._run_hook(os.path.join(self.hooks_path, 'post_gen_project.sh'),
                         'tests')
         self.assertTrue(os.path.isfile('tests/shell_post.txt'))
         self.assertFalse('tests' in os.getcwd())
-        
+
     def test_public_run_hook(self):
         '''Execute hook from specified template in specified output directory'''
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
@@ -68,8 +71,9 @@ class TestExternalHooks(unittest.TestCase):
             hooks.run_hook('pre_gen_project', tests_dir)
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'python_pre.txt')))
 
-            hooks.run_hook('post_gen_project', tests_dir)
+            hooks.run_hook('post_gen_project', tests_dir, "The dragon's balls ablaze")
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
+            self.assertIn("The dragon's balls ablaze", file(os.path.join(tests_dir, 'config_file.txt')).read())
 
 
 if __name__ == '__main__':

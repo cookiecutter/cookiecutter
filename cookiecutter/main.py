@@ -95,6 +95,11 @@ def parse_cookiecutter_args(args):
         help='Print debug information',
         action='store_true', default=False
     )
+    parser.add_argument(
+        '-e', '--evaluate',
+        help='Evaluate expression based on the context found in context file \
+        COOKIECUTTER_CONTEXT_FILE'
+    )
     return parser.parse_args(args)
 
 
@@ -111,8 +116,11 @@ def main():
             format='%(levelname)s: %(message)s',
             level=logging.INFO
         )
-    
-    cookiecutter(args.input_dir, args.checkout, args.no_input)
+
+    if args.evaluate:
+        print resolve_context(args.evaluate)
+    else:
+        cookiecutter(args.input_dir, args.checkout, args.no_input)
 
 
 if __name__ == '__main__':
