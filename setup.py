@@ -33,7 +33,7 @@ if sys.version < '3':
     requirements.append('subprocess32')
 
 # There are no Python 3-specific dependencies to add
-    
+
 setup(
     name='cookiecutter',
     version=cookiecutter.__version__,
@@ -51,6 +51,7 @@ setup(
     entry_points={
         'console_scripts': [
             'cookiecutter = cookiecutter.main:main',
+            'cookiecuttereval = cookiecutter.cookiecuttereval:main',
         ]
     },
     include_package_data=True,

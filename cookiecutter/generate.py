@@ -217,7 +217,7 @@ def default_context_file(context=None):
         context_file = os.environ["COOKIECUTTER_CONTEXT_FILE"]
 
         # This will raise a convenient error.
-        with open(context_file): pass
+        with open(context_file) as f: pass
 
         return context_file
 
@@ -240,7 +240,7 @@ def remove_context(context_file=None):
     '''
 
     if context_file is None:
-        context_file = default_context_file(context)
+        context_file = default_context_file()
 
     os.remove(context_file)
 
