@@ -212,14 +212,16 @@ def default_context_file(context=None):
     '''
 
     if context is not None:
-        return "%s-cookiecutter.json" % context["repo_name"]
+        context_file = "%s-cookiecutter.json" % context["cookiecutter"]["repo_name"]
+        context_file = os.path.abspath(context_file)
     else:
         context_file = os.environ["COOKIECUTTER_CONTEXT_FILE"]
+        context_file = os.path.abspath(context_file)
 
         # This will raise a convenient error.
         with open(context_file) as f: pass
 
-        return context_file
+    return context_file
 
 def save_context(context, context_file=None):
     '''
@@ -230,7 +232,7 @@ def save_context(context, context_file=None):
         context_file = default_context_file(context)
 
     with open(context_file, 'w') as f:
-        f.write(json.dump(context))
+        f.write(json.dumps(context))
 
     return context_file
 
@@ -257,4 +259,5 @@ def resolve_context(exp, context_file=None):
     context = json.load(file(context_file))
 
     expr = Environment().compile_expression(exp)
-    return expr(**context)
+
+    return str(expr(**context))
