@@ -11,7 +11,6 @@ Tests the evaluation based on a given config.
 
 import sys
 import os
-import unittest
 
 from cookiecutter.generate import resolve_context
 

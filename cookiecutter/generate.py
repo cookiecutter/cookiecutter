@@ -256,7 +256,7 @@ def resolve_context(exp, context_file=None):
     if context_file is None:
         context_file = default_context_file()
 
-    context = json.load(file(context_file))
+    context = json.load(open(context_file))
 
     expr = Environment().compile_expression(exp)
 

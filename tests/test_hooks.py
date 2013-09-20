@@ -10,7 +10,11 @@ Tests for `cookiecutter.hooks` module.
 
 import sys
 import os
-import unittest
+
+try:
+    import unittest2 as unittest
+except ImportError:
+    import unittest
 
 from cookiecutter import hooks, utils
 
@@ -77,8 +81,8 @@ class TestExternalHooks(unittest.TestCase):
             hooks.run_hook('post_gen_project', tests_dir, config_file)
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
             self.assertTrue(os.path.isfile(config_file))
-            self.assertIn("cookiecutter.json", file(os.path.join(tests_dir, 'config_file.txt')).read())
-            self.assertIn("fat", file(os.path.join(tests_dir, 'yo_mama_file.txt')).read())
+            self.assertIn("cookiecutter.json", open(os.path.join(tests_dir, 'config_file.txt')).read())
+            self.assertIn("fat", open(os.path.join(tests_dir, 'yo_mama_file.txt')).read())
 
 
 if __name__ == '__main__':
