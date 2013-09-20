@@ -57,6 +57,10 @@ def _run_hook(script_path, cwd='.', environ=None):
     if environ is None:
         environ = os.environ.copy()
 
+    # Make sure everything is available even when running from a
+    # non-active virtualenv or doing some other weirdness.
+    environ["PATH"] = "%s:%s" % (environ["PATH"], os.path.dirname(sys.executable))
+
     subprocess.call(script_path, cwd=cwd, env=environ)
 
 

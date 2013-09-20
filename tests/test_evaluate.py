@@ -22,7 +22,7 @@ else:
 class TestPrompt(unittest.TestCase):
 
     def setUp(self):
-        os.environ["COOKIECUTTER_CONTEXT_FILE"] = "tests/test-evaluate/cookiecutter.json"
+        os.environ["COOKIECUTTER_CONTEXT_FILE"] = os.path.abspath("tests/test-evaluate/cookiecutter.json")
 
     def test_evaluation(self):
-        self.assertEquals(resolve_context("yo_mama"), "fat")
+        self.assertEqual(resolve_context("yo_mama"), "fat")
