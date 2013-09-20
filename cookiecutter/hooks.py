@@ -47,16 +47,24 @@ def find_hooks():
     return r
 
 
-def _run_hook(script_path, cwd='.'):
+def _run_hook(script_path, cwd='.', environ=None):
     '''
-    Run a sigle external script located at `script_path` (path should be 
+    Run a sigle external script located at `script_path` (path should be
     absolute).
     If `cwd` is provided, the script will be run from that directory.
     '''
-    subprocess.call(script_path, cwd=cwd)
+
+    if environ is None:
+        environ = os.environ.copy()
+
+    # Make sure everything is available even when running from a
+    # non-active virtualenv or doing some other weirdness.
+    environ["PATH"] = "%s:%s" % (environ["PATH"], os.path.dirname(sys.executable))
+
+    subprocess.call(script_path, cwd=cwd, env=environ)
 
 
-def run_hook(hook_name, project_dir):
+def run_hook(hook_name, project_dir, context_file=""):
     '''
     Try and find a script mapped to `hook_name` in the current working directory,
     and execute it from `project_dir`.
@@ -66,4 +74,7 @@ def run_hook(hook_name, project_dir):
     if script is None:
         logging.debug("No hooks found")
         return
-    return _run_hook(script, project_dir)
+
+    environ = os.environ.copy()
+    environ["COOKIECUTTER_CONTEXT_FILE"] = context_file
+    return _run_hook(script, project_dir, environ)

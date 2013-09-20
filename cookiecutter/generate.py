@@ -12,6 +12,7 @@ import logging
 import os
 import shutil
 import sys
+import time
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -67,11 +68,11 @@ def generate_file(project_dir, infile, context, env):
     2. Deal with infile appropriately:
 
         a. If infile is a binary file, copy it over without rendering.
-        b. If infile is a text file, render its contents and write the 
+        b. If infile is a text file, render its contents and write the
            rendered infile to outfile.
 
     .. precondition::
-    
+
         When calling `generate_file()`, the root template dir must be the
         current working directory. Using `utils.work_in()` is the recommended
         way to perform this directory change.
@@ -176,9 +177,12 @@ def generate_files(repo_dir, context=None, output_dir="."):
     project_dir = os.path.abspath(project_dir)
     logging.debug("project_dir is {0}".format(project_dir))
 
+    # Save context.
+    context_file = save_context(context)
+
     # run pre-gen hook from repo_dir
     with work_in(repo_dir):
-        run_hook('pre_gen_project', project_dir)
+        run_hook('pre_gen_project', project_dir, context_file)
 
     with work_in(template_dir):
         env = Environment()
@@ -196,4 +200,64 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
     # run post-gen hook from repo_dir
     with work_in(repo_dir):
-        run_hook('post_gen_project', project_dir)
+        run_hook('post_gen_project', project_dir, context_file)
+
+    # Remove saved context
+    remove_context(context_file)
+
+def default_context_file(context=None):
+    '''
+    Generate the path to the deault context file. If context is None,
+    look at the env variable COOKIECUTTER_CONTEXT_FILE.
+    '''
+
+    if context is not None:
+        context_file = ".tmp-cookiecutter.json"
+        context_file = os.path.abspath(context_file)
+    else:
+        context_file = os.environ["COOKIECUTTER_CONTEXT_FILE"]
+        context_file = os.path.abspath(context_file)
+
+        # This will raise a convenient error.
+        with open(context_file) as f: pass
+
+    return context_file
+
+def save_context(context, context_file=None):
+    '''
+    Save the context so it can be querried from the hook files.
+    '''
+
+    if context_file is None:
+        context_file = default_context_file(context)
+
+    with open(context_file, 'w') as f:
+        f.write(json.dumps(context))
+
+    return context_file
+
+def remove_context(context_file=None):
+    '''
+    Removes the given context file or any context file it can find.
+    '''
+
+    if context_file is None:
+        context_file = default_context_file()
+
+    os.remove(context_file)
+
+def resolve_context(exp, context_file=None):
+    '''
+    Resolve a variable name. This calls jinja's
+    environment.compile_expression with the context retrieved from
+    context_file.
+    '''
+
+    if context_file is None:
+        context_file = default_context_file()
+
+    context = json.load(open(context_file))
+
+    expr = Environment().compile_expression(exp)
+
+    return str(expr(**context))

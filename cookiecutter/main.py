@@ -20,7 +20,7 @@ import shutil
 
 from .config import get_user_config
 from .prompt import prompt_for_config
-from .generate import generate_context, generate_files
+from .generate import generate_context, generate_files, resolve_context
 from .vcs import clone
 
 
@@ -111,7 +111,7 @@ def main():
             format='%(levelname)s: %(message)s',
             level=logging.INFO
         )
-    
+
     cookiecutter(args.input_dir, args.checkout, args.no_input)
 
 
