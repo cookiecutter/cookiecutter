@@ -212,7 +212,7 @@ def default_context_file(context=None):
     '''
 
     if context is not None:
-        context_file = "%s-cookiecutter.json" % context["cookiecutter"]["repo_name"]
+        context_file = ".tmp-cookiecutter.json"
         context_file = os.path.abspath(context_file)
     else:
         context_file = os.environ["COOKIECUTTER_CONTEXT_FILE"]
