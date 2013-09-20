@@ -115,6 +115,7 @@ def generate_file(project_dir, infile, context, env):
 
         with unicode_open(outfile, 'w') as fh:
             fh.write(rendered_file)
+            fh.write('\n')
 
     # Apply file permissions to output file
     shutil.copymode(infile, outfile)
