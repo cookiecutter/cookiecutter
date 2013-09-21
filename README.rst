@@ -209,6 +209,13 @@ Similar projects
 * `mr.bob`_ is a filesystem template renderer, meant to deprecate tools such as
   paster and templer.
 
+* `grunt-init`_ used to be built into Grunt and is now a standalone scaffolding tool
+  to automate project creation.
+
+* `scaffolt`_ consumes JSON generators with Handlebars support.
+
+* `init-skeleton`_ clones or copies a repository, executes npm install and bower install and removes the .git directory.
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
@@ -216,25 +223,69 @@ Similar projects
 .. _`Yeoman`: https://github.com/yeoman/generator
 .. _`Pyramid`: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/scaffolding.html
 .. _`mr.bob`: https://github.com/iElectric/mr.bob
+.. _`grunt-init`: https://github.com/gruntjs/grunt-init
+.. _`scaffolt`: https://github.com/paulmillr/scaffolt
+.. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
 
 Community
 ---------
 
-If you have questions, don't hesitate to ask by `filing an issue`_ with your
-question. (Questions are often a good indicator of places where the docs can be
-improved :)
+Stuck? Try one of the following:
 
-Development on Cookiecutter is community-driven. Huge thanks to all the
-`contributors`_ who have pitched in to help make Cookiecutter an even better
-tool.
+* See the `Troubleshooting`_ page.
+* You are strongly encouraged to `file an issue`_ about the problem, even if
+  it's just "I can't get it to work on this cookiecutter" with a link to your
+  cookiecutter. Don't worry about naming/pinpointing the issue properly.
+* Ask for help on `Stack Overflow`_.
+* Ask for help in #cookiecutter if you must (but please try one of the other
+  options first, so that others can benefit from the discussion)
 
-Everyone is invited to contribute. Read the `contributing instructions`_, then
-get started.
+Development on Cookiecutter is community-driven:
 
-All members of the Cookiecutter community (end users, project template
-maintainers, contributors, etc.) are invited to join the `Cookiecutter Gittip community`_.
+* Huge thanks to all the `contributors`_ who have pitched in to help make
+  Cookiecutter an even better tool.
+* Everyone is invited to contribute. Read the `contributing instructions`_,
+  then get started.
 
+Connect with other Cookiecutter contributors and users in IRC:
+
+* #cookiecutter on irc.freenode.net (note: due to work and commitments,
+  `@audreyr`_ might not always be available)
+
+Encouragement is unbelievably motivating. If you want more work done on
+Cookiecutter, show support:
+
+* Star `Cookiecutter on GitHub`_.
+* Please, please join the `Cookiecutter Gittip community`_.
+
+Got criticism or complaints?
+
+* `File an issue`_ so that Cookiecutter can be improved. Be friendly
+  and constructive about what could be better. Make detailed suggestions.
+* **Keep us in the loop so that we can help.** For example, if you are
+  discussing problems with Cookiecutter on a mailing list, `file an issue`_
+  where you link to the discussion thread and/or cc `audreyr@gmail.com` on
+  the email.
+* Be encouraging. A comment like "This function ought to be rewritten like
+  this" is much more likely to result in action than a comment like "Eww, look
+  how bad this function is."
+
+Waiting for a response to an issue/question?
+
+* Be patient and persistent. All issues are on `audreyr`_'s radar and will be
+  considered thoughtfully, but due to the growing to-do list/free time ratio,
+  it may take time for a response. If urgent, it's fine to ping `audreyr`_
+  in the issue with a reminder.
+* Ask others to comment, discuss, review, etc.
+* Search the Cookiecutter repo for issues related to yours.
+* Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
+  available hourly for consultation or custom development.
+
+.. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
+.. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
 .. _`contributors`: https://github.com/audreyr/cookiecutter/blob/master/AUTHORS.rst
 .. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
-.. _`filing an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
+.. _`Stack Overflow`: http://stackoverflow.com/
+.. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
 .. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
+.. _`audreyr`: https://github.com/audreyr

@@ -18,6 +18,7 @@ Basics
    installation
    usage
    advanced_usage
+   troubleshooting
    
 API Reference
 -------------

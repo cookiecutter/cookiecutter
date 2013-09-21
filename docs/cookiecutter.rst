@@ -17,6 +17,14 @@ cookiecutter Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`config` Module
+--------------------
+
+.. automodule:: cookiecutter.config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`exceptions` Module
 ------------------------
 

@@ -27,7 +27,10 @@ If you are reporting a bug, please include:
 
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in troubleshooting.
-* Detailed steps to reproduce the bug.
+* If you can, provide detailed steps to reproduce the bug.
+* If you don't have steps to reproduce the bug, just note your observations in
+  as much detail as you can. Questions to start a discussion about the issue
+  are welcome.
 
 Fix Bugs
 ~~~~~~~~
