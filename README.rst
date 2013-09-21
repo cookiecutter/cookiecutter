@@ -209,6 +209,13 @@ Similar projects
 * `mr.bob`_ is a filesystem template renderer, meant to deprecate tools such as
   paster and templer.
 
+* `grunt-init`_ used to be built into Grunt and is now a standalone scaffolding tool
+  to automate project creation.
+
+* `scaffolt`_ consumes JSON generators with Handlebars support.
+
+* `init-skeleton`_ clones or copies a repository, executes npm install and bower install and removes the .git directory.
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
@@ -216,13 +223,16 @@ Similar projects
 .. _`Yeoman`: https://github.com/yeoman/generator
 .. _`Pyramid`: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/scaffolding.html
 .. _`mr.bob`: https://github.com/iElectric/mr.bob
+.. _`grunt-init`: https://github.com/gruntjs/grunt-init
+.. _`scaffolt`: https://github.com/paulmillr/scaffolt
+.. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
 
 Community
 ---------
 
 Stuck? Try one of the following:
 
-* See the :doc:`troubleshooting` guide.
+* See the `Troubleshooting`_ page.
 * You are strongly encouraged to `file an issue`_ about the problem, even if
   it's just "I can't get it to work on this cookiecutter" with a link to your
   cookiecutter. Don't worry about naming/pinpointing the issue properly.
@@ -242,9 +252,11 @@ Connect with other Cookiecutter contributors and users in IRC:
 * #cookiecutter on irc.freenode.net (note: due to work and commitments,
   `@audreyr`_ might not always be available)
 
-Show support:
+Encouragement is unbelievably motivating. If you want more work done on
+Cookiecutter, show support:
 
-* Please, please join the `Cookiecutter Gittip community`_. We need more members.
+* Star `Cookiecutter on GitHub`_.
+* Please, please join the `Cookiecutter Gittip community`_.
 
 Got criticism or complaints?
 
@@ -269,6 +281,8 @@ Waiting for a response to an issue/question?
 * Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
   available hourly for consultation or custom development.
 
+.. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
+.. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
 .. _`contributors`: https://github.com/audreyr/cookiecutter/blob/master/AUTHORS.rst
 .. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
 .. _`Stack Overflow`: http://stackoverflow.com/
