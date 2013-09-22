@@ -262,8 +262,8 @@ class TestHooks(CookiecutterCleanSystemTestCase):
             context={
                 'cookiecutter' : {'pyhooks': 'pyhooks'}
             },
-            repo_dir='tests/test-pyhooks/',
-            output_dir='tests/test-pyhooks/'
+            repo_dir='tests/test-pyhooks/'.replace("/", os.sep),
+            output_dir='tests/test-pyhooks/'.replace("/", os.sep)
         )
         self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt'))
         self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt'))
