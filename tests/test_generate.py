@@ -55,12 +55,13 @@ class TestGenerateFile(unittest.TestCase):
                 env=env
             )
         except TemplateSyntaxError as exception:
-            self.assertEquals(
-                str(exception),
+            expected = (
                 'Missing end of comment tag\n'
                 '  File "./tests/files/syntax_error.txt", line 1\n'
                 '    I eat {{ syntax_error }} {# this comment is not closed}'
             )
+            expected = expected.replace("/", os.sep)
+            self.assertEquals(str(exception), expected)
         except exception:
             self.fail('Unexpected exception thrown:', exception)
         else:
