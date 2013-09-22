@@ -74,12 +74,6 @@ class TestPyPackage(CookiecutterCleanSystemTestCase):
         )
         proc.wait()
 
-        cwd = os.getcwd()
-        logging.debug("cwd is {}".format(cwd))
-
-        ls = os.listdir(cwd)
-        logging.debug("ls is {}".format(ls))
-
         self.assertTrue(os.path.isdir('cookiecutter-pypackage'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
