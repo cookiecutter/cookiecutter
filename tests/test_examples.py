@@ -55,19 +55,19 @@ class TestPyPackage(CookiecutterCleanSystemTestCase):
         Tests that https://github.com/audreyr/cookiecutter-pypackage.git works.
         """
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'git clone https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter --no-input cookiecutter-pypackage/',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
         self.assertTrue(os.path.isdir('cookiecutter-pypackage'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
@@ -89,19 +89,19 @@ class TestJQuery(CookiecutterCleanSystemTestCase):
         Tests that https://github.com/audreyr/cookiecutter-jquery.git works.
         """
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'git clone https://github.com/audreyr/cookiecutter-jquery.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter --no-input cookiecutter-jquery/',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
         self.assertTrue(os.path.isdir('cookiecutter-jquery'))
         self.assertTrue(os.path.isfile('boilerplate/README.md'))
@@ -119,14 +119,14 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
         super(TestExamplesRepoArg, self).tearDown()
 
     def test_cookiecutter_pypackage_git(self):
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
+        )
 
-            # Just skip all the prompts
-            proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
+        # Just skip all the prompts
+        proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
         
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
@@ -144,14 +144,14 @@ class TestGitBranch(CookiecutterCleanSystemTestCase):
         super(TestGitBranch, self).tearDown()
 
     def test_branch(self):
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter -c console-script https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
+        )
 
-            # Just skip all the prompts
-            proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
+        # Just skip all the prompts
+        proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
 
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.isfile('boilerplate/boilerplate/main.py'))
