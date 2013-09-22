@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = ['binaryornot>=0.1.1', 'jinja2>=2.4', 'PyYAML>=3.10']
+requirements = ['binaryornot>=0.2.0', 'jinja2>=2.4', 'PyYAML>=3.10']
 test_requirements = []
 
 # Add Python 2.6-specific dependencies
@@ -68,7 +68,7 @@ setup(
         'Programming Language :: Python :: 3.3',
     ],
     keywords='cookiecutter, Python, projects, project templates, Jinja2, \
-        project directory, setup.py, package, packaging',
+        skeleton, scaffolding, project directory, setup.py, package, packaging',
     test_suite='tests',
     tests_require=test_requirements
 )
