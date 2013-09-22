@@ -10,6 +10,7 @@ Tests for `cookiecutter.utils` module.
 
 import os
 import shutil
+import sys
 import unittest
 
 from cookiecutter import utils
@@ -38,6 +39,8 @@ Musical Notes: ♬ ♫ ♯"""
 
         with utils.unicode_open('tests/files/unicode.txt') as f:
             opened_text = f.read()
+            if sys.platform.startswith('win'):
+                unicode_text = os.linesep.join([s for s in unicode_text.splitlines() if not s.isspace()])
             self.assertEqual(unicode_text, opened_text)
 
     def test_workin(self):
