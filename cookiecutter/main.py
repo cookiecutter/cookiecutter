@@ -24,6 +24,7 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
+
 builtin_abbreviations = {
     'gh': 'https://github.com/{0}.git',
     'bb': 'https://bitbucket.org/{0}',
@@ -54,7 +55,7 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(template, checkout=None, no_input=False, extra_context=None, output_dir='.'):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -64,6 +65,8 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param output_dir: If specified output the project to specified directory.
+        Defaults to current directory.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -101,7 +104,8 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     # Create project from local context and project template.
     generate_files(
         repo_dir=repo_dir,
-        context=context
+        context=context,
+        output_dir=output_dir
     )
 
 

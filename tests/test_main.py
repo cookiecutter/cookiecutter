@@ -12,6 +12,7 @@ import logging
 import os
 import shutil
 import sys
+import tempfile
 
 from cookiecutter import config, main
 from tests import CookiecutterCleanSystemTestCase
@@ -53,6 +54,16 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isdir('fake-project'))
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
+
+    def test_cookiecutter_with_output_dir(self):
+        """Make sure stuff happens in `output_dir` if specified."""
+        temp_dir = tempfile.mkdtemp()
+        main.cookiecutter('tests/fake-repo-pre', no_input=True,
+                          output_dir=temp_dir)
+        # Don't create it here:
+        self.assertFalse(os.path.isdir('fake-project'))
+        # Create it here:
+        self.assertTrue(os.path.join(temp_dir, 'fake-project'))
 
     def tearDown(self):
         if os.path.isdir('fake-project'):
