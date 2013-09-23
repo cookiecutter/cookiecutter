@@ -10,9 +10,7 @@ Global configuration handling
 
 from __future__ import unicode_literals
 import copy
-import logging
 import os
-import sys
 
 import yaml
 
@@ -22,14 +20,14 @@ from .exceptions import InvalidConfiguration
 
 
 DEFAULT_CONFIG = {
-	'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
-	'default_context': {}
+    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
+    'default_context': {}
 }
 
 
 def get_config(config_path):
     """
-    Retrieve the config from the specified path, and return it as a config dict.
+    Retrieve the config from the specified path, returning it as a config dict.
     """
 
     if not os.path.exists(config_path):
@@ -54,11 +52,10 @@ def get_user_config():
     Retrieve config from the user's ~/.cookiecutterrc, if it exists.
     Otherwise, return None.
     """
-    
+
     # TODO: test on windows...
     USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
 
     if os.path.exists(USER_CONFIG_PATH):
         return get_config(USER_CONFIG_PATH)
     return copy.copy(DEFAULT_CONFIG)
-
