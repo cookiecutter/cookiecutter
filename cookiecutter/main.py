@@ -16,15 +16,15 @@ import argparse
 import logging
 import os
 import sys
-import shutil
 
+from cookiecutter import __version__
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
 
-
 logger = logging.getLogger(__name__)
+
 
 def cookiecutter(input_dir, checkout=None, no_input=False):
     """
@@ -77,6 +77,10 @@ def parse_cookiecutter_args(args):
     parser = argparse.ArgumentParser(
         description='Create a project from a Cookiecutter project template.'
     )
+    
+    parser.add_argument('--version', '-V', action='version',
+                        version=__version__)
+
     parser.add_argument(
         '--no-input',
         action="store_true",
@@ -111,7 +115,7 @@ def main():
             format='%(levelname)s: %(message)s',
             level=logging.INFO
         )
-    
+
     cookiecutter(args.input_dir, args.checkout, args.no_input)
 
 
