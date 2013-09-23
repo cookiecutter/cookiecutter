@@ -12,8 +12,10 @@ library rather than a script.
 """
 
 from __future__ import unicode_literals
+import argparse
 import logging
 import os
+import sys
 
 from .config import get_user_config
 from .prompt import prompt_for_config
@@ -101,3 +103,51 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
         repo_dir=repo_dir,
         context=context
     )
+
+
+def parse_cookiecutter_args(args):
+    """ Parse the command-line arguments to Cookiecutter. """
+
+    parser = argparse.ArgumentParser(
+        description='Create a project from a Cookiecutter project template.'
+    )
+    parser.add_argument(
+        '--no-input',
+        action="store_true",
+        help='Do not prompt for parameters and only use cookiecutter.json '
+             'file content')
+    parser.add_argument(
+        'input_dir',
+        help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
+    )
+    parser.add_argument(
+        '-c', '--checkout',
+        help='branch, tag or commit to checkout after git clone'
+    )
+    parser.add_argument(
+        '-v', '--verbose',
+        help='Print debug information',
+        action='store_true', default=False
+    )
+    return parser.parse_args(args)
+
+
+def main():
+    """ Entry point for the package, as defined in setup.py. """
+
+    args = parse_cookiecutter_args(sys.argv[1:])
+
+    if args.verbose:
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+    else:
+        # Log info and above to console
+        logging.basicConfig(
+            format='%(levelname)s: %(message)s',
+            level=logging.INFO
+        )
+
+    cookiecutter(args.input_dir, args.checkout, args.no_input)
+
+
+if __name__ == '__main__':
+    main()
