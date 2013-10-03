@@ -21,6 +21,8 @@ Contributors
 * Thomas Chiroux (`@ThomasChiroux`_)
 * Sergi Almacellas Abellana (`@pokoli`_)
 * Alex Gaynor (`@alex`_)
+* Rolo (`@rolo`_)
+* Pablo (`@oubiga`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -34,3 +36,5 @@ Contributors
 .. _`@ThomasChiroux`: https://github.com/ThomasChiroux
 .. _`@pokoli`: https://github.com/pokoli
 .. _`@alex`: https://github.com/alex
+.. _`@rolo`: https://github.com/rolo
+.. _`@oubiga`: https://github.com/oubiga
