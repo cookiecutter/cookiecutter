@@ -101,7 +101,7 @@ Additional Features in 0.7.0
 
 0.7.0 is not out yet, but these features are in the master branch:
 
-* Cross-platform support for `~/.cookiecutterrc` files:
+* Cross-platform support for `~/.cookiecutterrc` files::
 
     default_context:
         full_name: "Audrey Roy"
