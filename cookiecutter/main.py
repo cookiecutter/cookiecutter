@@ -16,7 +16,6 @@ import argparse
 import logging
 import os
 import sys
-import copy
 import shutil
 
 from .config import get_user_config
