@@ -20,7 +20,7 @@ import copy
 import shutil
 
 from .config import get_user_config
-from .config import DEFAULT_CONFIG
+from .config import get_default_config
 
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
@@ -42,7 +42,7 @@ def cookiecutter(input_dir, checkout=None, config_dict=None, no_input=False):
     :param no_input: A boolean to determine weather to prompt the user
         for manual configuration at the command line.
     """
-    config_dict = config_dict or copy.copy(DEFAULT_CONFIG)
+    config_dict = config_dict or get_default_config()
 
     # TODO: find a better way to tell if it's a repo URL
     if "git@" in input_dir or "https://" in input_dir:
