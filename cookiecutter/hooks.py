@@ -48,6 +48,11 @@ def _run_hook(script_path, cwd='.'):
     absolute).
     If `cwd` is provided, the script will be run from that directory.
     '''
+
+    extension = os.path.splitext(script_path)[1]
+    if '.py' in extension:
+        script_path = [sys.executable, script_path]
+
     run_thru_shell = sys.platform.startswith('win')
     proc = subprocess.Popen(
         script_path,
