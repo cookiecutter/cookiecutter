@@ -10,8 +10,12 @@ Functions for discovering and executing various cookiecutter hooks.
 
 import logging
 import os
+import stat
 import subprocess
 import sys
+import tempfile
+
+from jinja2 import Template
 
 from .utils import make_sure_path_exists, unicode_open, work_in
 
@@ -42,12 +46,29 @@ def find_hooks():
     return r
 
 
-def _run_hook(script_path, cwd='.'):
+def _run_hook(script_path, cwd='.', context={}):
     '''
     Run a sigle external script located at `script_path` (path should be
     absolute).
     If `cwd` is provided, the script will be run from that directory.
     '''
+    
+
+    with open(script_path, 'r') as f:
+        content = f.read()
+    outfile_tmpl = Template(content)
+    output = outfile_tmpl.render(**context)
+        
+    fd, temp_script_path = tempfile.mkstemp()
+    os.write(fd, output)
+    
+    st = os.stat(temp_script_path)
+    os.chmod(temp_script_path, st.st_mode | stat.S_IEXEC)
+
+    extension = os.path.splitext(script_path)[1]
+    if '.py' in extension:
+        script_path = [sys.executable, temp_script_path]
+    
     run_thru_shell = sys.platform.startswith('win')
     proc = subprocess.Popen(
         script_path,
@@ -55,8 +76,9 @@ def _run_hook(script_path, cwd='.'):
         cwd=cwd
     )
     proc.wait()
+    os.close(fd)
 
-def run_hook(hook_name, project_dir):
+def run_hook(hook_name, project_dir, context={}):
     '''
     Try and find a script mapped to `hook_name` in the current working directory,
     and execute it from `project_dir`.
@@ -65,4 +87,4 @@ def run_hook(hook_name, project_dir):
     if script is None:
         logging.debug("No hooks found")
         return
-    return _run_hook(script, project_dir)
+    return _run_hook(script, project_dir, context)

@@ -175,10 +175,9 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
     project_dir = os.path.abspath(project_dir)
     logging.debug("project_dir is {0}".format(project_dir))
-
     # run pre-gen hook from repo_dir
     with work_in(repo_dir):
-        run_hook('pre_gen_project', project_dir)
+        run_hook('pre_gen_project', project_dir, context)
 
     with work_in(template_dir):
         env = Environment()
@@ -196,4 +195,4 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
     # run post-gen hook from repo_dir
     with work_in(repo_dir):
-        run_hook('post_gen_project', project_dir)
+        run_hook('post_gen_project', project_dir, context)
