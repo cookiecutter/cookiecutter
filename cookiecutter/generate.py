@@ -22,6 +22,7 @@ from .exceptions import NonTemplatedInputDirException
 from .find import find_template
 from .utils import make_sure_path_exists, unicode_open, work_in
 from .hooks import run_hook
+from .plugins import load_jinja_plugins
 
 
 if sys.version_info[:2] < (2, 7):
@@ -67,11 +68,11 @@ def generate_file(project_dir, infile, context, env):
     2. Deal with infile appropriately:
 
         a. If infile is a binary file, copy it over without rendering.
-        b. If infile is a text file, render its contents and write the 
+        b. If infile is a text file, render its contents and write the
            rendered infile to outfile.
 
     .. precondition::
-    
+
         When calling `generate_file()`, the root template dir must be the
         current working directory. Using `utils.work_in()` is the recommended
         way to perform this directory change.
@@ -181,7 +182,7 @@ def generate_files(repo_dir, context=None, output_dir="."):
         run_hook('pre_gen_project', project_dir)
 
     with work_in(template_dir):
-        env = Environment()
+        env = Environment(extensions=load_jinja_plugins())
         env.loader = FileSystemLoader(".")
 
         for root, dirs, files in os.walk("."):
