@@ -7,10 +7,12 @@ logger = logging.getLogger(__name__)
 
 
 class JinjaSimpleTag(Extension):
+    def __init__(self, environment):
+        super(JinjaSimpleTag, self).__init__(environment)
+
     def parse(self, parser):
 
         lineno = parser.stream.next().lineno
-        args = [parser.parse_expression()]
 
         # Why return a CallBlock when we have no body?
         #
@@ -18,10 +20,10 @@ class JinjaSimpleTag(Extension):
         # The reason is that parse() is expected to return a statement node,
         # such as CallBlock or Assign. call_method() returns an expression
         # node, which you must wrap in CallBlock to have a statement.
-        return nodes.CallBlock(self.call_method('tag_action', args),
+        return nodes.CallBlock(self.call_method('tag_action', None),
                                [], [], []).set_lineno(lineno)
 
-    def tag_action(self, data, caller):
+    def tag_action(self, caller):
         '''
         Override point for users
         '''
@@ -35,4 +37,14 @@ def plugins_for_namespace(namespace):
 
 def load_jinja_plugins():
     entry_points = plugins_for_namespace('cookiecutter.plugins.jinja')
-    return [x.load() for x in entry_points]
+    results = []
+
+    for x in entry_points:
+        try:
+            results.append(x.load())
+            logger.debug('Loaded Jinja plugin %s.%s', x.module_name, x.attrs[0])
+        except ImportError:
+            logger.error('Failed to load Jinja plugin %s.%s', x.module_name, x.attrs[0])
+            pass
+
+    return results
