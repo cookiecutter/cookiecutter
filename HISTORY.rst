@@ -89,8 +89,58 @@ Bumped to "Development Status :: 3 - Alpha".
 * Works with any type of text file.
 * Directory names and filenames can be templated.
 
-
 0.1.0 (2013-07-11)
 ++++++++++++++++++
 
 * First release on PyPI.
+
+Roadmap
+-------
+
+If something is not listed here, check the `issues under each milestone`_.
+
+This is subject to change depending on the needs and contributions of the
+community. Feedback on pull requests/issues affects the priority of items on
+the roadmap.
+
+Also, please be patient and keep in mind that this is a volunteer effort, and
+that the review process takes time.
+
+.. _`issues under each milestone`: https://github.com/audreyr/cookiecutter/issues/milestones
+
+0.7.0 (2013-11-06)
+++++++++++++++++++
+
+* Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
+  directory (or Windows equivalent). The location is configurable. (This is a
+  major change from the pre-0.7.0 behavior, where cloned cookiecutters were
+  deleted at the end of project generation.)
+* Support for --checkout argument.
+* Support for pre-generate and post-generate hooks, which are Python or shell
+  scripts that run before and/or after your project is generated.
+
+0.7.1
++++++
+
+This is a patch release to fix minor bugs and any potential problems with 0.7.0.
+
+* Various README enhancements.
+* TODO
+
+0.8.0
++++++
+
+This release will include a number of features and bug fixes proposed and
+implemented by the community in pull requests.
+
+* TODO
+
+0.9.0
++++++
+
+This release is for new features proposed through issues. Note: some issues
+tagged 0.9.0 might be moved to 0.8.0 if anyone implements them and submits a
+pull request.
+
+* Support for alternate config location as per XDG Base Directory Spec
+* TODO
