@@ -108,16 +108,66 @@ that the review process takes time.
 
 .. _`issues under each milestone`: https://github.com/audreyr/cookiecutter/issues/milestones
 
-0.7.0 (2013-11-06)
+0.7.0 (2013-11-07)
 ++++++++++++++++++
 
+New features:
+
+* Support for --checkout argument, thanks to `@foobacca`_.
+* Support for pre-generate and post-generate hooks, thanks to `@raphigaziano`_.
+  Hooks are Python or shell scripts that run before and/or after your project
+  is generated.
+* Support for absolute paths to cookiecutters, thanks to `@krallin`_.
+* Support for Mercurial version control system, thanks to `@pokoli`_.
+* When a cookiecutter contains invalid Jinja2 syntax, you get a better message
+  that shows the location of the TemplateSyntaxError. Thanks to `@benjixx`_.
+* Can now prompt the user to enter values during generation from a local
+  cookiecutter, thanks to `@ThomaxChiroux`_. This is now always the default
+  behavior. Prompts can also be supressed with `--no-input`.
 * Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
   directory (or Windows equivalent). The location is configurable. (This is a
   major change from the pre-0.7.0 behavior, where cloned cookiecutters were
-  deleted at the end of project generation.)
-* Support for --checkout argument.
-* Support for pre-generate and post-generate hooks, which are Python or shell
-  scripts that run before and/or after your project is generated.
+  deleted at the end of project generation.) Thanks `@raphigaziano`.
+* User config in a `~/.cookiecutterrc` file, thanks to `@raphigaziano`.
+  Configurable settings are `cookiecutters_dir` and `default_context`.
+* File permissions are now preserved during project generation, thanks to
+  `@benjixx`_.
+
+Bug fixes:
+
+* Unicode issues with prompts and answers are fixed, thanks to `@s-m-i-t-a`_.
+* The test suite now runs on Windows, which was a major effort. Thanks to 
+  `@pydanny`_, who collaborated on this with me.
+
+Other changes:
+
+* Quite a bit of refactoring and API changes.
+* Lots of documentation improvements. Thanks `@sloria`_, `@alex`_, `@pydanny`_,
+  `@freakboy3742`_, `@es128`_, `@rolo`_.
+* Better naming and organization of test suite.
+* A `CookiecutterCleanSystemTestCase` to use for unit tests affected by the
+  user's config and cookiecutters directory.
+* Improvements to the project's Makefile.
+* Improvements to tests. Thanks `@gperetin`_, `@s-m-i-t-a`_.
+* Removal of `subprocess32` dependency. Now using non-context manager version
+  of `subprocess.Popen` for Python 2 compatibility.
+* Removal of cookiecutter's `cleanup` module.
+* A bit of `setup.py` cleanup, thanks to `@oubiga`_.
+
+.. _`@foobacca`: https://github.com/foobacca/
+.. _`@raphigaziano`: https://github.com/raphigaziano/
+.. _`@gperetin`: https://github.com/gperetin/
+.. _`@krallin`: https://github.com/krallin/
+.. _`@benjixx`: https://github.com/benjixx/
+.. _`@ThomaxChiroux`: https://github.com/ThomaxChiroux/
+.. _`@s-m-i-t-a`: https://github.com/s-m-i-t-a/
+.. _`@sloria`: https://github.com/sloria/
+.. _`@alex`: https://github.com/alex/
+.. _`@pydanny`: https://github.com/pydanny/
+.. _`@freakboy3742`: https://github.com/freakboy3742/
+.. _`@es128`: https://github.com/es128/
+.. _`@rolo`: https://github.com/rolo/
+.. _`@oubiga`: https://github.com/oubiga/
 
 0.7.1
 +++++
