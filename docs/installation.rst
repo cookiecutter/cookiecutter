@@ -6,7 +6,7 @@ At the command line:
 
 .. code-block:: bash
 
-    $ easy_install cookiecutter
+    $ [sudo] easy_install cookiecutter
 
 Or, if you have pip (the Python package installer tool):
 
@@ -24,9 +24,16 @@ changes. The big ones are:
 * Cloned repos are saved into `~/.cookiecutters/`. 
 * You can optionally create a `~/.cookiecutterrc` config file.
 
-Upgrade Cookiecutter with one of the following:
+Upgrade Cookiecutter either with easy_install:
 
-    $ easy_install --upgrade cookiecutter
+.. code-block:: bash
+
+    $ [sudo] easy_install --upgrade cookiecutter
+
+Or with easy_install:
+
+.. code-block:: bash
+
     $ [sudo] pip install -U cookiecutter
 
 Then you should be good to go.

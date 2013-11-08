@@ -51,6 +51,7 @@ Other changes:
   of `subprocess.Popen` for Python 2 compatibility.
 * Removal of cookiecutter's `cleanup` module.
 * A bit of `setup.py` cleanup, thanks to `@oubiga`_.
+* Now depends on binaryornot 0.2.0.
 
 .. _`@foobacca`: https://github.com/foobacca/
 .. _`@raphigaziano`: https://github.com/raphigaziano/
