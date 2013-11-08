@@ -20,7 +20,7 @@ New features:
 * When a cookiecutter contains invalid Jinja2 syntax, you get a better message
   that shows the location of the TemplateSyntaxError. Thanks to `@benjixx`_.
 * Can now prompt the user to enter values during generation from a local
-  cookiecutter, thanks to `@ThomaxChiroux`_. This is now always the default
+  cookiecutter, thanks to `@ThomasChiroux`_. This is now always the default
   behavior. Prompts can also be supressed with `--no-input`.
 * Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
   directory (or Windows equivalent). The location is configurable. (This is a
@@ -59,7 +59,7 @@ Other changes:
 .. _`@krallin`: https://github.com/krallin/
 .. _`@pokoli`: https://github.com/pokoli/
 .. _`@benjixx`: https://github.com/benjixx/
-.. _`@ThomaxChiroux`: https://github.com/ThomaxChiroux/
+.. _`@ThomasChiroux`: https://github.com/ThomasChiroux/
 .. _`@s-m-i-t-a`: https://github.com/s-m-i-t-a/
 .. _`@sloria`: https://github.com/sloria/
 .. _`@alex`: https://github.com/alex/
