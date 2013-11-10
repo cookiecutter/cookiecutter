@@ -5,14 +5,8 @@ Troubleshooting
 I created a cookiecutter, but it doesn't work, and I can't figure out why
 -------------------------------------------------------------------------
 
-* Try the latest development version of Cookiecutter, which prints better error
+* Try upgrading to Cookiecutter 0.7.0, which prints better error
   messages and has fixes for several common bugs.
-  
-  .. note:: This is a temporary solution; the upcoming 0.7.0 release will be
-     out shortly. Please be patient, as I'm rushing to get this ready during my
-     limited free time. -- `@audreyr`_
-
-.. _`@audreyr`: https://github.com/audreyr
 
 I'm having trouble generating Jinja templates from Jinja templates
 ------------------------------------------------------------------

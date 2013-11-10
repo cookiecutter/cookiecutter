@@ -3,7 +3,7 @@
 History
 -------
 
-0.7.0 (2013-11-07)
+0.7.0 (2013-11-09)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is a release with significant improvements and changes. Please read

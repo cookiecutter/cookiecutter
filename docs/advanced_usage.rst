@@ -5,9 +5,6 @@ Advanced Usage
 Using Pre/Post-Generate Hooks (0.7.0+)
 --------------------------------------
 
-.. warning:: This feature is available only in the master branch on GitHub
-   and is not on PyPI yet. It's part of the upcoming 0.7.0 release.
-
 You can have Python or Shell scripts that run before and/or after your project
 is generated. 
 
@@ -34,9 +31,6 @@ scripts too. Pull requests are welcome.
 
 User Config (0.7.0+)
 ----------------------
-
-.. warning:: This feature is available only in the master branch on GitHub
-   and is not on PyPI yet. It's part of the upcoming 0.7.0 release.
 
 If you use Cookiecutter a lot, you'll find it useful to have a
 `.cookiecutterrc` file in your home directory like this:

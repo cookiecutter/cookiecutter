@@ -96,11 +96,6 @@ Did someone say features?
   - Default responses are the values in `cookiecutter.json`.
   - Prompts are shown in order.
 
-Additional Features in 0.7.0
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-As of 0.7.0, Cookiecutter also has these features:
-
 * Cross-platform support for `~/.cookiecutterrc` files:
 
     .. code-block:: guess
