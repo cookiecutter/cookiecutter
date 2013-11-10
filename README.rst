@@ -168,6 +168,13 @@ LaTeX/XeTeX
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
 
+
+Berkshelf-Vagrant
+~~~~~~~~~~~~~~~~~
+
+* `slim-berkshelf-vagrant`_: A simple cookiecutter template with sane cookbook defaults for common vagrant/berkshelf cookbooks.
+
+
 HTML
 ~~~~
 
@@ -192,6 +199,7 @@ HTML
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
+.. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
 
 
 Similar projects
