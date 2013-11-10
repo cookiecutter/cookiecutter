@@ -4,7 +4,7 @@ History
 -------
 
 0.7.0 (2013-11-07)
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is a release with significant improvements and changes. Please read
 through this list before you upgrade.
@@ -175,7 +175,7 @@ that the review process takes time.
 .. _`issues under each milestone`: https://github.com/audreyr/cookiecutter/issues/milestones
 
 0.7.1
-+++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is a patch release to fix minor bugs and any potential problems with 0.7.0.
 
@@ -183,7 +183,7 @@ This is a patch release to fix minor bugs and any potential problems with 0.7.0.
 * TODO
 
 0.8.0
-+++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This release will include a number of features and bug fixes proposed and
 implemented by the community in pull requests.
@@ -191,7 +191,7 @@ implemented by the community in pull requests.
 * TODO
 
 0.9.0
-+++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This release is for new features proposed through issues. Note: some issues
 tagged 0.9.0 might be moved to 0.8.0 if anyone implements them and submits a
