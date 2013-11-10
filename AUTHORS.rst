@@ -23,6 +23,8 @@ Contributors
 * Alex Gaynor (`@alex`_)
 * Rolo (`@rolo`_)
 * Pablo (`@oubiga`_)
+* Russell Keith-Magee (`@freakboy3742`_)
+* Elan Shanker (`@es128`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -38,3 +40,5 @@ Contributors
 .. _`@alex`: https://github.com/alex
 .. _`@rolo`: https://github.com/rolo
 .. _`@oubiga`: https://github.com/oubiga
+.. _`@freakboy3742`: https://github.com/freakboy3742
+.. _`@es128`: https://github.com/es128
