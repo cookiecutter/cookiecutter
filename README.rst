@@ -90,7 +90,7 @@ Did someone say features?
             "version": "0.1.1"
         }
 
-* If generating a project from a git repo template, you are prompted for input:
+* Unless you suppress it with `--no-input`, you are prompted for input:
 
   - Prompts are the keys in `cookiecutter.json`.
   - Default responses are the values in `cookiecutter.json`.
@@ -109,8 +109,8 @@ Did someone say features?
 * Cookiecutters (cloned Cookiecutter project templates) are put into
   `~/.cookiecutters/` by default, or cookiecutters_dir if specified.
 
-* In addition to git repos, you can also use cookiecutters directly from
-  Mercurial repos on Bitbucket.
+* You can use local cookiecutters, or remote cookiecutters directly from Git
+  repos or from Mercurial repos on Bitbucket.
 
 * Default context: specify key/value pairs that you want used as defaults
   whenever you generate a project
@@ -232,10 +232,10 @@ Community
 Stuck? Try one of the following:
 
 * See the `Troubleshooting`_ page.
+* Ask for help on `Stack Overflow`_.
 * You are strongly encouraged to `file an issue`_ about the problem, even if
   it's just "I can't get it to work on this cookiecutter" with a link to your
   cookiecutter. Don't worry about naming/pinpointing the issue properly.
-* Ask for help on `Stack Overflow`_.
 * Ask for help in #cookiecutter if you must (but please try one of the other
   options first, so that others can benefit from the discussion)
 
