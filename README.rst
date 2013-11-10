@@ -149,6 +149,11 @@ C
 
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
 
+Common Lisp
+~~~~~~~~~~~
+
+* `cookiecutter-cl-project`_: A template for Common Lisp project with bootstrap script and Slime integration.
+
 JS
 ~~
 
@@ -186,6 +191,7 @@ HTML
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
+.. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 
 
 Similar projects
