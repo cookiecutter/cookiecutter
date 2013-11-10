@@ -90,7 +90,7 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and flake8::
 
     $ flake8 cookiecutter tests
-	$ python setup.py test
+    $ python setup.py test
     $ tox
 
 6. Commit your changes and push your branch to GitHub::
@@ -124,9 +124,9 @@ Tips
 ----
 
 To run a particular test::
-	
-	$ python -m unittest tests.test_find.TestFind.test_find_template
-	
+
+    $ python -m unittest tests.test_find.TestFind.test_find_template
+
 To run a subset of tests::
 
-	$ python -m unittest tests.test_find
+    $ python -m unittest tests.test_find
