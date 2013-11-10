@@ -99,15 +99,17 @@ Did someone say features?
 Additional Features in 0.7.0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-0.7.0 is not out yet, but these features are in the master branch:
+As of 0.7.0, Cookiecutter also has these features:
 
 * Cross-platform support for `~/.cookiecutterrc` files:
 
-    default_context:
-        full_name: "Audrey Roy"
-        email: "audreyr@gmail.com"
-        github_username: "audreyr"
-    cookiecutters_dir: "~/.cookiecutters/"
+    .. code-block:: guess
+
+        default_context:
+            full_name: "Audrey Roy"
+            email: "audreyr@gmail.com"
+            github_username: "audreyr"
+        cookiecutters_dir: "~/.cookiecutters/"
 
 * Cookiecutters (cloned Cookiecutter project templates) are put into
   `~/.cookiecutters/` by default, or cookiecutters_dir if specified.
