@@ -45,14 +45,16 @@ Did someone say features?
 
         # Create project from the cookiecutter-pypackage.git repo template
         # You'll be prompted to enter values.
-        # Then it'll create your Python package based on those values.
+        # Then it'll create your Python package in the current working directory,
+        # based on those values.
         $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
 
 * Can also use it at the command line with a local template:
 
     .. code-block:: bash
 
-        # Create project from the local cookiecutter-pypackage/ template
+        # Create project in the current working directory, from the local
+        # cookiecutter-pypackage/ template
         $ cookiecutter cookiecutter-pypackage/
 
 * Or use it from Python:
