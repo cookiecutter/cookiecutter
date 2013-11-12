@@ -30,7 +30,7 @@ Upgrade Cookiecutter either with easy_install:
 
     $ [sudo] easy_install --upgrade cookiecutter
 
-Or with easy_install:
+Or with pip:
 
 .. code-block:: bash
 
