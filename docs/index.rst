@@ -18,6 +18,7 @@ Basics
    overview
    installation
    usage
+   tutorial1
    advanced_usage
    troubleshooting
    
