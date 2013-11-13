@@ -15,6 +15,7 @@ Basics
    :maxdepth: 2
 
    readme
+   overview
    installation
    usage
    advanced_usage
