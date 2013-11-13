@@ -42,7 +42,7 @@ class TestGenerateFile(unittest.TestCase):
         self.assertTrue(os.path.isfile('tests/files/cheese.txt'))
         with open('tests/files/cheese.txt', 'rt') as f:
              generated_text = f.read()
-             self.assertEqual(generated_text, 'Testing cheese')
+             self.assertEqual(generated_text, 'Testing cheese\n')
 
     def test_generate_file_verbose_template_syntax_error(self):
         env = Environment()
@@ -106,9 +106,9 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
         simple_text = open('inputpizzä/simple.txt', 'rt').read()
         if PY3:
-            self.assertEqual(simple_text, 'I eat pizzä')
+            self.assertEqual(simple_text, 'I eat pizzä\n')
         else:
-            self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
+            self.assertEqual(simple_text, 'I eat pizzä\n'.encode('utf-8'))
 
     def test_generate_files_binaries(self):
         generate.generate_files(
@@ -223,7 +223,8 @@ class TestOutputFolder(CookiecutterCleanSystemTestCase):
 
         something = """Hi!
 My name is Audrey Greenfeld.
-It is 2014."""
+It is 2014.
+"""
         something2 = open('output_folder/something.txt').read()
         self.assertEqual(something, something2)
 
