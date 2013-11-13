@@ -89,5 +89,13 @@ class TestExternalHooks(unittest.TestCase):
             run_thru_shell = sys.platform.startswith('win')
             obj.assert_called_with(script_path, cwd='.', shell=run_thru_shell)
 
+    def test_run_hook_shell_executable(self):
+        with patch('subprocess.Popen') as obj:
+            hook_path = os.path.join(self.hooks_path, 'pre_gen_project.sh')
+            hooks._run_hook(hook_path)
+            script_path = hook_path
+            run_thru_shell = sys.platform.startswith('win')
+            obj.assert_called_with(script_path, cwd='.', shell=run_thru_shell)
+
 if __name__ == '__main__':
     unittest.main()
