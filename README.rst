@@ -45,14 +45,16 @@ Did someone say features?
 
         # Create project from the cookiecutter-pypackage.git repo template
         # You'll be prompted to enter values.
-        # Then it'll create your Python package based on those values.
+        # Then it'll create your Python package in the current working directory,
+        # based on those values.
         $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
 
 * Can also use it at the command line with a local template:
 
     .. code-block:: bash
 
-        # Create project from the local cookiecutter-pypackage/ template
+        # Create project in the current working directory, from the local
+        # cookiecutter-pypackage/ template
         $ cookiecutter cookiecutter-pypackage/
 
 * Or use it from Python:
@@ -142,11 +144,17 @@ Python
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
 * `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
+* `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
 
 C
 ~~
 
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
+
+Common Lisp
+~~~~~~~~~~~
+
+* `cookiecutter-cl-project`_: A template for Common Lisp project with bootstrap script and Slime integration.
 
 JS
 ~~
@@ -162,6 +170,13 @@ LaTeX/XeTeX
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
 
+
+Berkshelf-Vagrant
+~~~~~~~~~~~~~~~~~
+
+* `slim-berkshelf-vagrant`_: A simple cookiecutter template with sane cookbook defaults for common vagrant/berkshelf cookbooks.
+
+
 HTML
 ~~~~
 
@@ -176,6 +191,7 @@ HTML
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-crud`: https://github.com/wildfish/cookiecutter-django-crud
+.. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
@@ -184,6 +200,8 @@ HTML
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
+.. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
+.. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
 
 
 Similar projects
