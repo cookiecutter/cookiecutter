@@ -58,7 +58,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
         default_context=config_dict['default_context']
     )
 
-    if extra_context is not None:
+    if extra_context:
         context['cookiecutter'].update(extra_context)
 
     # prompt the user to manually configure at the command line.
