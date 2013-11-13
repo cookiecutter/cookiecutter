@@ -8,6 +8,7 @@ test_main
 Tests for `cookiecutter.main` module.
 """
 
+import json
 import logging
 import os
 import shutil
@@ -61,6 +62,8 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isdir('fake-project'))
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
+        data = json.load('fake-project/json/')
+        self.assertEqual(data['year'], '2014')
 
     def tearDown(self):
         if os.path.isdir('fake-project'):
