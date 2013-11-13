@@ -62,7 +62,8 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isdir('fake-project'))
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
-        data = json.load('fake-project/json/')
+        with open('fake-project/json/') as fp:
+            data = json.load(fp)
         self.assertEqual(data['year'], '2014')
 
     def tearDown(self):
