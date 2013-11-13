@@ -14,6 +14,16 @@ import unittest
 
 from cookiecutter import hooks, utils
 
+PY3 = sys.version > '3'
+if PY3:
+    from unittest.mock import patch
+    input_str = 'builtins.input'
+else:
+    import __builtin__
+    from mock import patch
+    input_str = '__builtin__.raw_input'
+    from cStringIO import StringIO
+
 
 class TestFindHooks(unittest.TestCase):
 
@@ -71,6 +81,13 @@ class TestExternalHooks(unittest.TestCase):
             hooks.run_hook('post_gen_project', tests_dir)
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
 
+    def test_run_hook_python_executable(self):
+        with patch('subprocess.Popen') as obj:
+            hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
+            hooks._run_hook(hook_path)
+            script_path = [sys.executable, hook_path]
+            run_thru_shell = sys.platform.startswith('win')
+            obj.assert_called_with(script_path, cwd='.', shell=run_thru_shell)
 
 if __name__ == '__main__':
     unittest.main()
