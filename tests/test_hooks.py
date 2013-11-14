@@ -82,20 +82,20 @@ class TestExternalHooks(unittest.TestCase):
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
 
     def test_run_hook_python_executable(self):
-        with patch('subprocess.Popen') as obj:
+        with patch('subprocess.Popen') as subprocess:
             hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
             hooks._run_hook(hook_path)
             script_path = [sys.executable, hook_path]
             run_thru_shell = sys.platform.startswith('win')
-            obj.assert_called_with(script_path, cwd='.', shell=run_thru_shell)
+            subprocess.assert_called_with(script_path, cwd='.', shell=run_thru_shell)
 
     def test_run_hook_shell_executable(self):
-        with patch('subprocess.Popen') as obj:
+        with patch('subprocess.Popen') as subprocess:
             hook_path = os.path.join(self.hooks_path, 'pre_gen_project.sh')
             hooks._run_hook(hook_path)
             script_path = hook_path
             run_thru_shell = sys.platform.startswith('win')
-            obj.assert_called_with(script_path, cwd='.', shell=run_thru_shell)
+            subprocess.assert_called_with(script_path, cwd='.', shell=run_thru_shell)
 
 if __name__ == '__main__':
     unittest.main()
