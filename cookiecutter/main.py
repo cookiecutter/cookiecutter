@@ -26,7 +26,7 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir, checkout=None, no_input=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, context_file=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -50,7 +50,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         # If it's a local repo, no need to clone or copy to your cookiecutters_dir
         repo_dir = input_dir
 
-    context_file = os.path.join(repo_dir, 'cookiecutter.json')
+    if not context_file:
+        context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
 
     context = generate_context(
@@ -83,6 +84,9 @@ def parse_cookiecutter_args(args):
         help='Do not prompt for parameters and only use cookiecutter.json '
              'file content')
     parser.add_argument(
+        '--context-file'
+        help='Location of JSON context file to use for prompt values.')
+    parser.add_argument(
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
     )
@@ -112,7 +116,8 @@ def main():
             level=logging.INFO
         )
     
-    cookiecutter(args.input_dir, args.checkout, args.no_input)
+    cookiecutter(
+        args.input_dir, args.checkout, args.no_input, args.context_file)
 
 
 if __name__ == '__main__':

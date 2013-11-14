@@ -51,6 +51,16 @@ Possible settings are:
 * cookiecutters_dir: Directory where your cookiecutters are cloned to when you
   use Cookiecutter with a repo argument.
 
+Overriding Prompts with a Context File
+--------------------------------------
+
+If you would like to generate a new project without being prompted for
+values, but you do not want to use the default values in the cookiecutter's
+`cookiecutter.json` file, you can provide your own json file with the input
+values filed in using the `--context-file` option. The format of the file is
+exactly like the format of the `cookiecutter.json` file. To get unattended
+creation, you'll still need to supply `--no-input`.
+
 Calling Cookiecutter Functions From Python
 ------------------------------------------
 
