@@ -55,6 +55,9 @@ sdist: clean
 	python setup.py sdist
 	ls -l dist
 
+wheel: clean
+	python setup.py bdist_wheel
+	ls -l dist
 contributing:
 	rm CONTRIBUTING.rst
 	touch CONTRIBUTING.rst
