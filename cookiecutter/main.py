@@ -26,6 +26,9 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
+url_keywords = ["git@", "https://", "ssh://"]
+
+
 def cookiecutter(input_dir, checkout=None, no_input=False):
     """
     API equivalent to using Cookiecutter at the command line.
@@ -40,7 +43,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     config_dict = get_user_config()
 
     # TODO: find a better way to tell if it's a repo URL
-    if "git@" in input_dir or "https://" in input_dir:
+    if any(keyword in input_dir for keyword in url_keywords):
         repo_dir = clone(
             repo_url=input_dir,
             checkout=checkout,
