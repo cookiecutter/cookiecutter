@@ -12,22 +12,22 @@ library rather than a script.
 """
 
 from __future__ import unicode_literals
+
 import argparse
 import logging
 import os
-import sys
 import shutil
+import sys
 
 from .config import get_user_config
-from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
+from .prompt import prompt_for_config
 from .vcs import clone
-
+from .exceptions import UnsupportedRepoLocationException
 
 logger = logging.getLogger(__name__)
 
 url_keywords = ["git@", "https://", "ssh://"]
-
 
 def cookiecutter(input_dir, checkout=None, no_input=False):
     """
@@ -42,16 +42,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
 
-    # TODO: find a better way to tell if it's a repo URL
-    if any(keyword in input_dir for keyword in url_keywords):
-        repo_dir = clone(
-            repo_url=input_dir,
-            checkout=checkout,
-            clone_to_dir=config_dict['cookiecutters_dir']
-        )
-    else:
-        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
-        repo_dir = input_dir
+    repo_dir = _resolve_repo_location(input_dir, checkout, config_dict)
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
@@ -72,6 +63,34 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         repo_dir=repo_dir,
         context=context
     )
+    
+def _resolve_repo_location(input_location, checkout, config_dict):
+    """
+    Resolves the repository location from the given input
+    by checking if the repo can be found on the local file system
+    or on a remote system described by an URL
+    
+    :param input_location: the location to use to resolve the repo
+    :param checkout: The branch, tag or commit ID to checkout after clone
+    :param config_dict: the dictionary with the user config
+    
+    :return: the directory path to the local repo
+    :raises: UnsupportedRepoLocationException
+    """
+    if(os.path.exists(input_location)):
+        repo_dir = input_location
+    else:
+        if any(keyword in input_location for keyword in url_keywords):
+            repo_dir = clone(
+                repo_url=input_location,
+                checkout=checkout,
+                clone_to_dir=config_dict['cookiecutters_dir']
+            )
+        else:
+            raise UnsupportedRepoLocationException()
+    
+    return repo_dir
+
 
 
 def parse_cookiecutter_args(args):

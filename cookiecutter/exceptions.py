@@ -51,3 +51,7 @@ class UnknownRepoType(CookiecutterException):
     """
     Raised if a repo's type cannot be determined.
     """
+class UnsupportedRepoLocationException(CookiecutterException):
+    """
+    Raised if a repository location is not supported 
+    """
