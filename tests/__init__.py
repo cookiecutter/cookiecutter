@@ -10,11 +10,27 @@ Contains testing helpers.
 
 import os
 import shutil
+import stat
 import sys
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
 else:
     import unittest
+
+
+def force_delete(func, path, exc_info):
+    """
+    Error handler for `shutil.rmtree()` equivalent to `rm -rf`
+    Usage: `shutil.rmtree(path, onerror=force_delete)`
+    From stackoverflow.com/questions/2656322
+    """
+
+    if not os.access(path, os.W_OK):
+        # Is the error an access error?
+        os.chmod(path, stat.S_IWUSR)
+        func(path)
+    else:
+        raise
 
 
 class CookiecutterCleanSystemTestCase(unittest.TestCase):

@@ -15,9 +15,13 @@ Basics
    :maxdepth: 2
 
    readme
+   overview
    installation
    usage
+   tutorial1
+   tutorial2
    advanced_usage
+   troubleshooting
    
 API Reference
 -------------

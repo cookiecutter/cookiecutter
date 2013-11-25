@@ -18,11 +18,9 @@ import unittest
 
 PY3 = sys.version > '3'
 if PY3:
-    import subprocess
     from unittest.mock import patch
     input_str = 'builtins.input'
 else:
-    import subprocess32 as subprocess
     import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'
@@ -75,14 +73,14 @@ class TestVCS(unittest.TestCase):
         self.assertEqual(repo_dir, git_dir)
         self.assertTrue(os.path.isfile(os.path.join('cookiecutter-pypackage', 'README.rst')))
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             ['git', 'symbolic-ref', 'HEAD'],
             cwd=git_dir,
             stdout=subprocess.PIPE
-        ) as proc:
-            symbolic_ref = proc.communicate()[0]
-            branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
-            self.assertEqual('console-script', branch)
+        )
+        symbolic_ref = proc.communicate()[0]
+        branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
+        self.assertEqual('console-script', branch)
 
         if os.path.isdir(git_dir):
             shutil.rmtree(git_dir)
@@ -95,7 +93,8 @@ class TestVCS(unittest.TestCase):
             clone_to_dir="tests/custom_dir1/custom_dir2/"
         )
         with utils.work_in("tests/custom_dir1/custom_dir2/"):
-            self.assertEqual(repo_dir, 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage')
+            test_dir = 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage'.replace("/", os.sep)
+            self.assertEqual(repo_dir, test_dir)
             self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
             if os.path.isdir('cookiecutter-pypackage'):
                 shutil.rmtree('cookiecutter-pypackage')

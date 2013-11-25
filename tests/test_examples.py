@@ -10,18 +10,18 @@ Tests for the Cookiecutter example repos.
 
 from __future__ import unicode_literals
 import errno
+import logging
 import os
 import shutil
+import subprocess
 import sys
 
 PY3 = sys.version > '3'
 if PY3:
-    import subprocess
     from unittest.mock import patch
     input_str = 'builtins.input'
     from io import StringIO
 else:
-    import subprocess32 as subprocess
     import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'
@@ -38,17 +38,21 @@ except KeyError:
     travis = False
 
 from cookiecutter import config, utils
-from tests import CookiecutterCleanSystemTestCase
+from tests import force_delete, CookiecutterCleanSystemTestCase
+
+
+logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 class TestPyPackage(CookiecutterCleanSystemTestCase):
 
+
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+            shutil.rmtree('cookiecutter-pypackage', onerror=force_delete)
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
+            shutil.rmtree('boilerplate', onerror=force_delete)
         super(TestPyPackage, self).tearDown()
 
     def test_cookiecutter_pypackage(self):
@@ -56,19 +60,19 @@ class TestPyPackage(CookiecutterCleanSystemTestCase):
         Tests that https://github.com/audreyr/cookiecutter-pypackage.git works.
         """
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'git clone https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter --no-input cookiecutter-pypackage/',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
         self.assertTrue(os.path.isdir('cookiecutter-pypackage'))
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
@@ -80,9 +84,9 @@ class TestJQuery(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-jquery'):
-            shutil.rmtree('cookiecutter-jquery')
+            shutil.rmtree('cookiecutter-jquery', onerror=force_delete)
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
+            shutil.rmtree('boilerplate', onerror=force_delete)
         super(TestJQuery, self).tearDown()
 
     def test_cookiecutter_jquery(self):
@@ -90,19 +94,19 @@ class TestJQuery(CookiecutterCleanSystemTestCase):
         Tests that https://github.com/audreyr/cookiecutter-jquery.git works.
         """
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'git clone https://github.com/audreyr/cookiecutter-jquery.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter --no-input cookiecutter-jquery/',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
-            proc.wait()
+        )
+        proc.wait()
 
         self.assertTrue(os.path.isdir('cookiecutter-jquery'))
         self.assertTrue(os.path.isfile('boilerplate/README.md'))
@@ -114,20 +118,20 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
     def tearDown(self):
         with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
             if os.path.isdir('cookiecutter-pypackage'):
-                shutil.rmtree('cookiecutter-pypackage')
+                shutil.rmtree('cookiecutter-pypackage', onerror=force_delete)
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
+            shutil.rmtree('boilerplate', onerror=force_delete)
         super(TestExamplesRepoArg, self).tearDown()
 
     def test_cookiecutter_pypackage_git(self):
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
+        )
 
-            # Just skip all the prompts
-            proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
+        # Just skip all the prompts
+        proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
         
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
@@ -139,20 +143,20 @@ class TestGitBranch(CookiecutterCleanSystemTestCase):
     def tearDown(self):
         with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
             if os.path.isdir('cookiecutter-pypackage'):
-                shutil.rmtree('cookiecutter-pypackage')
+                shutil.rmtree('cookiecutter-pypackage', onerror=force_delete)
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
+            shutil.rmtree('boilerplate', onerror=force_delete)
         super(TestGitBranch, self).tearDown()
 
     def test_branch(self):
-        with subprocess.Popen(
+        proc = subprocess.Popen(
             'cookiecutter -c console-script https://github.com/audreyr/cookiecutter-pypackage.git',
             stdin=subprocess.PIPE,
             shell=True
-        ) as proc:
+        )
 
-            # Just skip all the prompts
-            proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
+        # Just skip all the prompts
+        proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
 
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.isfile('boilerplate/boilerplate/main.py'))

@@ -9,7 +9,12 @@ python:
   - "pypy"
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+# Note: we only use coveralls with Travis, not tox. pip install coveralls doesn't work on Windows.
+# This setup makes it possible for:
+# 1. the tests to be run with tox on Windows
+# 2. Windows users to use the requirements files without running into installation problems.
 install:
+ - pip install coveralls
  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install -r requirements/test_26.txt; fi
  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pip install -r requirements/test_27.txt; fi
  - if [[ $TRAVIS_PYTHON_VERSION == 'pypy' ]]; then pip install -r requirements/test_27.txt; fi

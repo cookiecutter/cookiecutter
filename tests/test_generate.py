@@ -41,8 +41,8 @@ class TestGenerateFile(unittest.TestCase):
         )
         self.assertTrue(os.path.isfile('tests/files/cheese.txt'))
         with open('tests/files/cheese.txt', 'rt') as f:
-             generated_text = f.read()
-             self.assertEqual(generated_text, 'Testing cheese')
+            generated_text = f.read()
+            self.assertEqual(generated_text, 'Testing cheese')
 
     def test_generate_file_verbose_template_syntax_error(self):
         env = Environment()
@@ -55,12 +55,13 @@ class TestGenerateFile(unittest.TestCase):
                 env=env
             )
         except TemplateSyntaxError as exception:
-            self.assertEquals(
-                str(exception),
+            expected = (
                 'Missing end of comment tag\n'
                 '  File "./tests/files/syntax_error.txt", line 1\n'
                 '    I eat {{ syntax_error }} {# this comment is not closed}'
             )
+            expected = expected.replace("/", os.sep)
+            self.assertEquals(str(exception), expected)
         except exception:
             self.fail('Unexpected exception thrown:', exception)
         else:
@@ -261,8 +262,8 @@ class TestHooks(CookiecutterCleanSystemTestCase):
             context={
                 'cookiecutter' : {'pyhooks': 'pyhooks'}
             },
-            repo_dir='tests/test-pyhooks/',
-            output_dir='tests/test-pyhooks/'
+            repo_dir='tests/test-pyhooks/'.replace("/", os.sep),
+            output_dir='tests/test-pyhooks/'.replace("/", os.sep)
         )
         self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt'))
         self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt'))

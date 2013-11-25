@@ -20,6 +20,14 @@ Contributors
 * Raphi (`@raphigaziano`_)
 * Thomas Chiroux (`@ThomasChiroux`_)
 * Sergi Almacellas Abellana (`@pokoli`_)
+* Alex Gaynor (`@alex`_)
+* Rolo (`@rolo`_)
+* Pablo (`@oubiga`_)
+* Michael Joseph (`@michaeljoseph`_)
+* Bruno Rocha (`@rochacbruno`_)
+* Alexander Artemenko (`@svetlyak40wt`_)
+* Mahmoud Abdelkader (`@mahmoudimus`_)
+* Leonardo Borges Avelino (`@lborgav`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -32,3 +40,11 @@ Contributors
 .. _`@raphigaziano`: https://github.com/raphigaziano
 .. _`@ThomasChiroux`: https://github.com/ThomasChiroux
 .. _`@pokoli`: https://github.com/pokoli
+.. _`@alex`: https://github.com/alex
+.. _`@rolo`: https://github.com/rolo
+.. _`@oubiga`: https://github.com/oubiga
+.. _`@michaeljoseph`: https://github.com/michaeljoseph
+.. _`@rochacbruno`: https://github.com/rochacbruno
+.. _`@svetlyak40wt`: https://github.com/svetlyak40wt
+.. _`@mahmoudimus`: https://github.com/mahmoudimus
+.. _`@lborgav`: https://github.com/lborgav
