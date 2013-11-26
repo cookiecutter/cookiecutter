@@ -36,8 +36,7 @@ def cookiecutter(input_dir, checkout=None, config_dict=None, no_input=False):
     :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     :param checkout: The branch, tag or commit ID to checkout after clone
-    :param config_dict: A dict containing configuration defaults,
-        or a URL to git repo.
+    :param config_dict: A dict containing configuration defaults
     :param no_input: A boolean to determine weather to prompt the user
         for manual configuration at the command line.
     """

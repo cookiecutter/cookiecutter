@@ -12,6 +12,8 @@ import logging
 import os
 import shutil
 import sys
+import tempfile
+import json
 
 from cookiecutter import config, main
 from tests import CookiecutterCleanSystemTestCase
@@ -78,6 +80,51 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
             shutil.rmtree('fake-project')
 
 
+class TestCookiecutterWithCustomConfig(unittest.TestCase):
+
+    def util_create_base(self, **kwargs):
+        location = tempfile.mkdtemp()
+
+        with open(os.path.join(location, 'cookiecutter.json'), 'w') as f:
+            f.write(json.dumps(kwargs))
+
+        return location
+
+    def util_finalize(self, location):
+        shutil.rmtree(location)
+
+    def test_cookiecutter_with_custom_config(self):
+
+        patch_clone = patch('cookiecutter.main.clone', return_value='./')
+        patch_generate_files = patch('cookiecutter.main.generate_files')
+
+        clone = patch_clone.start()
+        generate_files = patch_generate_files.start()
+
+        cookiecutters_dir = os.path.join(os.getcwd(), 'tests', 'test-config')
+
+        config_dict = {
+        'default_context': {'foo': 1, 'bar': 2},
+        'cookiecutters_dir': cookiecutters_dir}
+
+        # build some fake goodness
+        location = self.util_create_base(
+            full_name='Audrey Roy',
+            email='audreyr@gmail.com')
+
+        main.cookiecutter(location, config_dict=config_dict, no_input=True)
+
+        # cleanup the fake goodness
+        self.util_finalize(location)
+
+        call_kwargs = generate_files.call_args[1]
+
+        self.assertTrue(call_kwargs['repo_dir'] == location)
+        self.assertTrue('cookiecutter' in call_kwargs['context'])
+        self.assertTrue(call_kwargs['context']['cookiecutter']['foo'] == 1)
+        self.assertTrue(call_kwargs['context']['cookiecutter']['bar'] == 2)
+
+
 class TestArgParsing(unittest.TestCase):
 
     def test_parse_cookiecutter_args(self):
@@ -119,8 +166,8 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             # HACK: There are only 9 prompts in cookiecutter-pypackage's
             # cookiecutter.json (http://git.io/b-1MVA) but 10 \n chars here.
             # There was an "EOFError: EOF when reading a line" test fail here
-            # out of the blue, which an extra \n fixed. 
-            # Not sure why. There shouldn't be an extra prompt to delete 
+            # out of the blue, which an extra \n fixed.
+            # Not sure why. There shouldn't be an extra prompt to delete
             # the repo, since CookiecutterCleanSystemTestCase ensured that it
             # wasn't present.
             # It's possibly an edge case in CookiecutterCleanSystemTestCase.
