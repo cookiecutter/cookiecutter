@@ -25,6 +25,10 @@ DEFAULT_CONFIG = {
 }
 
 
+def get_default_config():
+    return copy.copy(DEFAULT_CONFIG)
+
+
 def get_config(config_path):
     """
     Retrieve the config from the specified path, returning it as a config dict.
@@ -41,7 +45,7 @@ def get_config(config_path):
             raise InvalidConfiguration(
                 "%s is no a valid YAML file" % config_path)
 
-    config_dict = copy.copy(DEFAULT_CONFIG)
+    config_dict = get_default_config()
     config_dict.update(yaml_dict)
 
     return config_dict
@@ -58,4 +62,4 @@ def get_user_config():
 
     if os.path.exists(USER_CONFIG_PATH):
         return get_config(USER_CONFIG_PATH)
-    return copy.copy(DEFAULT_CONFIG)
+    return get_default_config()
