@@ -141,7 +141,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         if not PY3:
             sys.stdin = StringIO('\n' * 11)
             
-        main.cookiecutter('ssh://git@github.com/audreyr/cookiecutter-pypackage.git')
+        main.cookiecutter('ssh://git@github.com/BrainGrylls/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
         self.assertTrue(os.path.exists(clone_dir))
