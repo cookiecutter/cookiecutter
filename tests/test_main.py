@@ -14,6 +14,8 @@ import shutil
 import sys
 
 from cookiecutter import config, main
+from cookiecutter import exceptions
+
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
@@ -30,6 +32,12 @@ else:
     from mock import patch
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
+
+try:
+    travis = os.environ[u'TRAVIS']
+except KeyError:
+    travis = False
+
 
 
 # Log debug and above to console
@@ -134,6 +142,20 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
 
+    @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
+    @patch(input_str, lambda x: '')
+    def test_cookiecutter_git_ssh(self):
+        if not PY3:
+            sys.stdin = StringIO('\n' * 11)
+            
+        main.cookiecutter('ssh://git@github.com/BrainGrylls/cookiecutter-pypackage.git')
+        logging.debug('Current dir is {0}'.format(os.getcwd()))
+        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
+        self.assertTrue(os.path.exists(clone_dir))
+        self.assertTrue(os.path.isdir('boilerplate'))
+        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
+        self.assertTrue(os.path.exists('boilerplate/setup.py'))
+
     @patch(input_str, lambda x: '')
     def test_cookiecutter_mercurial(self):
         if not PY3:
@@ -146,6 +168,13 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('module_name/README'))
         self.assertTrue(os.path.exists('module_name/setup.py'))
 
+    @patch(input_str, lambda x: '')
+    def test_cookiecutter_unsupported_location(self):
+        self.assertRaises(
+            exceptions.UnsupportedRepoLocationException,
+            main.cookiecutter,
+            input_dir = 'abc://github.com/audreyr/cookiecutter-pypackage.git'
+        )
 
 if __name__ == '__main__':
     unittest.main()
