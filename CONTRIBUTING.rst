@@ -13,7 +13,8 @@ Types of Contributions
 Create Cookiecutter Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some other Cookiecutter templates to list in the :doc:`README` would be great.
+Some other Cookiecutter templates to list in the :ref:`README <readme>` would
+be great.
 
 If you create a Cookiecutter template, submit a pull request adding it to
 README.rst.
