@@ -157,6 +157,11 @@ Common Lisp
 
 * `cookiecutter-cl-project`_: A template for Common Lisp project with bootstrap script and Slime integration.
 
+Emacs Lisp
+~~~~~~~~~~
+
+* `cookiecutter-el`_: A simple template for one file emacs lisp packages
+
 JS
 ~~
 
@@ -204,7 +209,7 @@ HTML
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 .. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
-
+.. _`cookiecutter-el`: https://github.com/theanalyst/cookiecutter-el
 
 Similar projects
 ----------------
