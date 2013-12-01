@@ -188,6 +188,32 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             os.stat('inputpermissions/script.sh').st_mode & 0o777
         )
 
+    def test_generate_ignore_file_extensions(self):
+        generate.generate_files(
+            context={
+                'cookiecutter': {
+                    "repo_name": "test_ignore",
+                    "do_not_ignore": "Do not ignore!",
+                    "_ignore_files": ["*.txt"]}
+            },
+            repo_dir='tests/test-generate-ignore'
+        )
+
+        with open("test_ignore/README.txt") as f:
+            self.assertIn("{{cookiecutter.do_not_ignore}}", f.read())
+
+        with open("test_ignore/README.rst") as f:
+            self.assertIn("Do not ignore!", f.read())
+
+        with open("test_ignore/test_ignore-sub/README.txt") as f:
+            self.assertIn("{{cookiecutter.do_not_ignore}}", f.read())
+
+        with open("test_ignore/test_ignore-sub/README.rst") as f:
+            self.assertIn("Do not ignore!", f.read())
+
+        if os.path.exists('test_ignore'):
+            shutil.rmtree('test_ignore')
+
 
 class TestGenerateContext(CookiecutterCleanSystemTestCase):
 
