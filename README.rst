@@ -152,6 +152,11 @@ C
 
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
 
+C++
+~~~
+
+* `BoilerplatePP`_: A simple cmake template with unit testing for projects written in C++.
+
 Common Lisp
 ~~~~~~~~~~~
 
@@ -195,6 +200,7 @@ HTML
 .. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
+.. _`BoilerplatePP`: https://github.com/Paspartout/BoilerplatePP
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
