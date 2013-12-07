@@ -52,6 +52,17 @@ And if you want to specify a branch you can do that with::
 
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git --checkout develop
 
+Trailing newlines in files
+--------------------------
+
+By default trailing newlines are stripped from templates. To keep the newlines::
+
+    $ cookiecutter --keep-trailing-newline https://github.com/audreyr/cookiecutter-pypackage.git
+
+or::
+
+    $ cookiecutter -n https://github.com/audreyr/cookiecutter-pypackage.git
+
 Keeping your cookiecutters organized
 ------------------------------------
 

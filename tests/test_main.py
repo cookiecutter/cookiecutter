@@ -95,6 +95,16 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.input_dir, 'project/')
         self.assertEqual(args.checkout, 'develop')
 
+    def test_parse_cookiecutter_args_keep_trailing_newline(self):
+        args1 = main.parse_cookiecutter_args(['project/', '-n'])
+        args2 = main.parse_cookiecutter_args(['project/', '--keep-trailing-newline'])
+        self.assertTrue(args1.keep_trailing_newline)
+        self.assertTrue(args2.keep_trailing_newline)
+
+    def test_parse_cookiecutter_args_keep_trailing_newline_false(self):
+        args = main.parse_cookiecutter_args(['project/'])
+        self.assertFalse(args.keep_trailing_newline)
+
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):

@@ -149,13 +149,14 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def generate_files(repo_dir, context=None, output_dir="."):
+def generate_files(repo_dir, context=None, output_dir=".", jinja_options=None):
     """
     Renders the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
     :param context: Dict for populating the template's variables.
     :param output_dir: Where to output the generated project dir into.
+    :param jinja_options: Dict of options for the jinja2 environment.
     """
 
     template_dir = find_template(repo_dir)
@@ -181,7 +182,8 @@ def generate_files(repo_dir, context=None, output_dir="."):
         run_hook('pre_gen_project', project_dir)
 
     with work_in(template_dir):
-        env = Environment()
+        jinja_options = jinja_options or {}
+        env = Environment(**jinja_options)
         env.loader = FileSystemLoader(".")
 
         for root, dirs, files in os.walk("."):
