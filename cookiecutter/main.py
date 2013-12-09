@@ -26,14 +26,15 @@ from .vcs import clone
 logger = logging.getLogger(__name__)
 
 
-def cookiecutter(input_dir, checkout=None, no_input=False, trailing_newline=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, strip_trailing_newline=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
     :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     :param checkout: The branch, tag or commit ID to checkout after clone
-    :param trailing_newline: Set to True to keep trailing newlines
+    :param strip_trailing_newline: Set to True to strip a single newline, if
+        present, from the end of the templates
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -69,7 +70,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, trailing_newline=Fals
     generate_files(
         repo_dir=repo_dir,
         context=context,
-        jinja_options={'keep_trailing_newline': trailing_newline},
+        jinja_options={'keep_trailing_newline': not strip_trailing_newline},
     )
 
 
@@ -102,8 +103,8 @@ def _get_parser():
         )
     )
     parser.add_argument(
-        '-n', '--keep-trailing-newline',
-        help='Preserve the trailing newline from the templates',
+        '-n', '--strip-trailing-newline',
+        help='Strip a single newline, if present, from the end of the templates',
         action='store_true', default=False
     )
     parser.add_argument(
@@ -134,7 +135,7 @@ def main():
             level=logging.INFO
         )
 
-    cookiecutter(args.input_dir, args.checkout, args.no_input, args.keep_trailing_newline)
+    cookiecutter(args.input_dir, args.checkout, args.no_input, args.strip_trailing_newline)
 
 
 if __name__ == '__main__':

@@ -55,9 +55,9 @@ And if you want to specify a branch you can do that with::
 Trailing newlines in files
 --------------------------
 
-By default trailing newlines are stripped from templates. To keep the newlines::
+By default trailing newlines in templates are preserved. To strip a single trailing newline from the templates::
 
-    $ cookiecutter --keep-trailing-newline https://github.com/audreyr/cookiecutter-pypackage.git
+    $ cookiecutter --strip-trailing-newline https://github.com/audreyr/cookiecutter-pypackage.git
 
 or::
 
