@@ -51,13 +51,13 @@ class TestExternalHooks(unittest.TestCase):
 
     def test_run_hook(self):
         '''execute a hook script, independently of project generation'''
-        hooks._run_hook(os.path.join(self.hooks_path, 'post_gen_project.sh'))
+        hooks._run_hook(os.path.join(self.hooks_path, 'post_gen_project.sh'), {})
         self.assertTrue(os.path.isfile('shell_post.txt'))
 
     def test_run_hook_cwd(self):
         '''Change directory before running hook'''
         hooks._run_hook(os.path.join(self.hooks_path, 'post_gen_project.sh'), 
-                        'tests')
+                        {}, 'tests')
         self.assertTrue(os.path.isfile('tests/shell_post.txt'))
         self.assertFalse('tests' in os.getcwd())
         
@@ -65,11 +65,19 @@ class TestExternalHooks(unittest.TestCase):
         '''Execute hook from specified template in specified output directory'''
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
-            hooks.run_hook('pre_gen_project', tests_dir)
+            hooks.run_hook('pre_gen_project', 
+                           {'cookiecutter': {'test': 'test'}}, 
+                           tests_dir)
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'python_pre.txt')))
+            f = open(os.path.join(tests_dir, 'python_pre.txt'))
+            self.assertEqual(f.readline(), 'test')
 
-            hooks.run_hook('post_gen_project', tests_dir)
+            hooks.run_hook('post_gen_project', 
+                           {'cookiecutter': {'test': 'test'}},
+                           tests_dir)
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
+            f = open(os.path.join(tests_dir, 'shell_post.txt'))
+            self.assertEqual(f.readline(), 'test\n')
 
 
 if __name__ == '__main__':
