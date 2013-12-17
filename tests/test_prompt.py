@@ -55,6 +55,16 @@ class TestPrompt(unittest.TestCase):
         else:
             self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
 
+    @patch(input_str, lambda x: '["2.7", "3.3"]')
+    def test_prompt_for_config_json(self):
+        context = {"cookiecutter": {"py_versions": ['2.6']}}
+
+        if not PY3:
+            sys.stdin = StringIO('["2.7", "3.3"]')
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"py_versions": ['2.7', '3.3']})
+
     @patch(input_str, lambda x: 'Pizzä ïs Gööd')
     def test_unicode_prompt_for_config_unicode(self):
         context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
