@@ -165,6 +165,7 @@ JS
 * `cookiecutter-jswidget`_: A project template for creating a generic front-end,
   non-jQuery JS widget packaged for multiple JS packaging systems.
 * `cookiecutter-component`_: A template for a Component JS package.
+* `cookiecutter-melonjs`_: A template for MelonJS games.
 
 LaTeX/XeTeX
 ~~~~~~~~~~~
@@ -200,6 +201,7 @@ HTML
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
 .. _`docopt`: http://docopt.org/
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
+.. _`cookiecutter-melonjs`: https://github.com/bttfgames/cookiecutter-melonjs
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
