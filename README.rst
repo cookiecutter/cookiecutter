@@ -137,6 +137,7 @@ Python
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
+* `cookiecutter-flask-foundation`_ : A port of cookiecutter-flask (above) to Foundation 5. Also compiles Foundation and user .scss files via flask-assets.
 * `cookiecutter-flask-env`_: A lucuma-flavored flask app template.
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
