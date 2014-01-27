@@ -67,6 +67,33 @@ class TestGenerateFile(unittest.TestCase):
         else:
             self.fail('TemplateSyntaxError not thrown')
 
+    def test_generate_conditional_file(self):
+        env = Environment()
+        env.loader = FileSystemLoader('.')
+        infile = 'tests/files/{% if cheese %}{{generate_file}}.txt{% endif %}'
+        generate.generate_file(
+            project_dir=".",
+            infile=infile,
+            context={'cheese': True, 'generate_file': 'cheese'},
+            env=env
+        )
+        self.assertTrue(os.path.isfile('tests/files/cheese.txt'))
+        with open('tests/files/cheese.txt', 'rt') as f:
+            generated_text = f.read()
+            self.assertEqual(generated_text, 'Testing cheese')
+
+    def test_generate_conditional_file_no_create(self):
+        env = Environment()
+        env.loader = FileSystemLoader('.')
+        infile = 'tests/files/{% if cheese %}{{generate_file}}.txt{% endif %}'
+        generate.generate_file(
+            project_dir=".",
+            infile=infile,
+            context={'cheese': False, 'generate_file': 'cheese'},
+            env=env
+        )
+        self.assertFalse(os.path.isfile('tests/files/cheese.txt'))
+
     def tearDown(self):
         if os.path.exists('tests/files/cheese.txt'):
             os.remove('tests/files/cheese.txt')
