@@ -151,6 +151,7 @@ C
 ~~
 
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
+* `cookiecutter-avr`_: A template for avr development.
 
 Common Lisp
 ~~~~~~~~~~~
@@ -204,6 +205,7 @@ HTML
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 .. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
+.. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
 
 
 Similar projects
