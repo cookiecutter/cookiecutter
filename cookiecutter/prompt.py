@@ -29,16 +29,20 @@ def prompt_for_config(context):
     for key, val in iteritems(context['cookiecutter']):
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
-        if PY3:
-            new_val = input(prompt.encode('utf-8'))
+        if isinstance(val, bool):
+            default = 'yes' if val else 'no'
+            new_val = query_yes_no("{0} (default is \"{1}\")? ".format(key, default),
+                                   default=default)
         else:
-            new_val = input(prompt.encode('utf-8')).decode('utf-8')
+            if PY3:
+                new_val = input(prompt.encode('utf-8'))
+            else:
+                new_val = input(prompt.encode('utf-8')).decode('utf-8')
 
-        new_val = new_val.strip()
+            new_val = new_val.strip()
 
         if new_val == '':
             new_val = val
-
         cookiecutter_dict[key] = new_val
     return cookiecutter_dict
 
