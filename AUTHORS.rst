@@ -30,6 +30,7 @@ Contributors
 * Leonardo Borges Avelino (`@lborgav`_)
 * Chris Trotman (`@solarnz`_)
 * Rolf (`@relekang`_)
+* Noah Kantrowitz (`@coderanger`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -52,3 +53,4 @@ Contributors
 .. _`@lborgav`: https://github.com/lborgav
 .. _`@solarnz`: https://github.com/solarnz
 .. _`@relekang`: https://github.com/relekang
+.. _`@coderanger`: https://github.com/coderanger

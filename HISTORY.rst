@@ -3,6 +3,25 @@
 History
 -------
 
+In Development (Master Branch)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bug fixes:
+
+* Use the current Python interpreter to run Python hooks, thanks to
+  `@coderanger`_.
+
+Other changes:
+
+* Add `cookiecutter-avr`_ by `@solarnz`_ and `cookiecutter-tumblr-theme`_ by
+  `@relekang`_ to list of Cookiecutters.
+
+.. _`@coderanger`: https://github.com/coderanger
+.. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
+.. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
+.. _`@solarnz`: https://github.com/solarnz
+.. _`@relekang`: https://github.com/relekang
+
 0.7.0 (2013-11-09)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
