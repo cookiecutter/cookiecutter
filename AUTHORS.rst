@@ -28,6 +28,8 @@ Contributors
 * Alexander Artemenko (`@svetlyak40wt`_)
 * Mahmoud Abdelkader (`@mahmoudimus`_)
 * Leonardo Borges Avelino (`@lborgav`_)
+* Chris Trotman (`@solarnz`_)
+* Rolf (`@relekang`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -48,3 +50,5 @@ Contributors
 .. _`@svetlyak40wt`: https://github.com/svetlyak40wt
 .. _`@mahmoudimus`: https://github.com/mahmoudimus
 .. _`@lborgav`: https://github.com/lborgav
+.. _`@solarnz`: https://github.com/solarnz
+.. _`@relekang`: https://github.com/relekang
