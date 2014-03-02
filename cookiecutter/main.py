@@ -16,7 +16,6 @@ import argparse
 import logging
 import os
 import sys
-import shutil
 
 from .config import get_user_config
 from .prompt import prompt_for_config
@@ -26,18 +25,26 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
-def cookiecutter(input_dir, checkout=None, no_input=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, input_context={}):
     """
     API equivalent to using Cookiecutter at the command line.
 
     :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     :param checkout: The branch, tag or commit ID to checkout after clone
+    :param no_input: Whether the user will be promptet for input on the CLI
+    :param input_context: Additional input dictionary that will override
+        any other values from cookiecutter.json or the user config.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
+    
+    # Get default context by updating config_dict with input_context. I.e.
+    # input_context will allways overide possibly existing values from
+    # config_dict
+    default_context = dict(config_dict['default_context'], **input_context)
 
     # TODO: find a better way to tell if it's a repo URL
     if "git@" in input_dir or "https://" in input_dir:
@@ -55,7 +62,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     context = generate_context(
         context_file=context_file,
-        default_context=config_dict['default_context']
+        default_context=default_context
     )
 
     # prompt the user to manually configure at the command line.

@@ -58,6 +58,27 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         if os.path.isdir('fake-project'):
             shutil.rmtree('fake-project')
 
+class TestCookiecutterLocalNoInputWithInputContext(CookiecutterCleanSystemTestCase):
+
+    def test_cookiecutter(self):
+        main.cookiecutter('tests/fake-repo-pre/', no_input=True, input_context={'repo_name':'fake-with-input-context-project'})
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-with-input-context-project'))
+        self.assertTrue(os.path.isdir('fake-with-input-context-project'))
+        self.assertTrue(os.path.isfile('fake-with-input-context-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-with-input-context-project/json/'))
+
+    def test_cookiecutter_no_slash(self):
+        main.cookiecutter('tests/fake-repo-pre', no_input=True, input_context={'repo_name':'fake-with-input-context-project'})
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-with-input-context-project'))
+        self.assertTrue(os.path.isdir('fake-with-input-context-project'))
+        self.assertTrue(os.path.isfile('fake-with-input-context-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-with-input-context-project/json/'))
+
+    def tearDown(self):
+        if os.path.isdir('fake-with-input-context-project'):
+            shutil.rmtree('fake-with-input-context-project')
 
 class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 
@@ -76,6 +97,25 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
     def tearDown(self):
         if os.path.isdir('fake-project'):
             shutil.rmtree('fake-project')
+
+
+class TestCookiecutterLocalWithInputWithInputContext(CookiecutterCleanSystemTestCase):
+
+    @patch(input_str, lambda x: '\n')
+    def test_cookiecutter_local_with_input(self):
+        if not PY3:
+            sys.stdin = StringIO("\n\n\n\n\n\n\n\n\n\n\n\n")
+
+        main.cookiecutter('tests/fake-repo-pre/', no_input=False, input_context={'repo_name':'fake-with-input-context-project'})
+        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
+        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-with-input-context-project'))
+        self.assertTrue(os.path.isdir('fake-with-input-context-project'))
+        self.assertTrue(os.path.isfile('fake-with-input-context-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-with-input-context-project/json/'))
+
+    def tearDown(self):
+        if os.path.isdir('fake-with-input-context-project'):
+            shutil.rmtree('fake-with-input-context-project')
 
 
 class TestArgParsing(unittest.TestCase):
