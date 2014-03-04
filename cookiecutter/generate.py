@@ -45,7 +45,8 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
     context = {}
 
     file_handle = open(context_file)
-    obj = json.load(file_handle, encoding='utf-8', object_pairs_hook=OrderedDict)
+    obj = json.load(file_handle, encoding='utf-8',
+                    object_pairs_hook=OrderedDict)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
@@ -67,11 +68,11 @@ def generate_file(project_dir, infile, context, env):
     2. Deal with infile appropriately:
 
         a. If infile is a binary file, copy it over without rendering.
-        b. If infile is a text file, render its contents and write the 
-           rendered infile to outfile.
+        b. If infile is a text file, render its contents and write the
+        rendered infile to outfile.
 
     .. precondition::
-    
+
         When calling `generate_file()`, the root template dir must be the
         current working directory. Using `utils.work_in()` is the recommended
         way to perform this directory change.
@@ -122,7 +123,8 @@ def generate_file(project_dir, infile, context, env):
 
 def render_and_create_dir(dirname, context, output_dir):
     """
-    Renders the name of a directory, creates the directory, and returns its path.
+    Renders the name of a directory, creates the directory, and
+    returns its path.
     """
 
     name_tmpl = Template(dirname)
@@ -143,7 +145,7 @@ def ensure_dir_is_templated(dirname):
     Ensures that dirname is a templated directory name.
     """
     if '{{' in dirname and \
-        '}}' in dirname:
+            '}}' in dirname:
         return True
     else:
         raise NonTemplatedInputDirException
@@ -186,7 +188,8 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
         for root, dirs, files in os.walk("."):
             for d in dirs:
-                unrendered_dir = os.path.join(project_dir, os.path.join(root, d))
+                unrendered_dir = os.path.join(project_dir,
+                                              os.path.join(root, d))
                 render_and_create_dir(unrendered_dir, context, output_dir)
 
             for f in files:
