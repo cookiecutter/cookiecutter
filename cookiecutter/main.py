@@ -51,7 +51,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
             no_input=no_input
         )
     else:
-        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
+        # If it's a local repo, no need to clone or copy to your
+        # cookiecutters_dir
         repo_dir = input_dir
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
@@ -93,7 +94,9 @@ def _get_parser():
         '-c', '--checkout',
         help='branch, tag or commit to checkout after git clone'
     )
-    cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cookiecutter_pkg_dir = os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    )
     parser.add_argument(
         '-V', '--version',
         help="Show version information and exit.",
@@ -112,6 +115,7 @@ def _get_parser():
 
     return parser
 
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
     parser = _get_parser()
@@ -124,7 +128,8 @@ def main():
     args = parse_cookiecutter_args(sys.argv[1:])
 
     if args.verbose:
-        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s',
+                            level=logging.DEBUG)
     else:
         # Log info and above to console
         logging.basicConfig(

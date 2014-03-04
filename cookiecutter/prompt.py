@@ -14,6 +14,7 @@ import sys
 PY3 = sys.version > '3'
 if PY3:
     iteritems = lambda d: iter(d.items())
+
     def read_response(prompt=''):
         """
         Prompt the user for a response.
