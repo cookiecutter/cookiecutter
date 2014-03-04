@@ -31,6 +31,7 @@ Contributors
 * Chris Trotman (`@solarnz`_)
 * Rolf (`@relekang`_)
 * Noah Kantrowitz (`@coderanger`_)
+* Rémy Hubscher (`@Natim`_)
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -54,3 +55,4 @@ Contributors
 .. _`@solarnz`: https://github.com/solarnz
 .. _`@relekang`: https://github.com/relekang
 .. _`@coderanger`: https://github.com/coderanger
+.. _`@Natim`: https://github.com/Natim

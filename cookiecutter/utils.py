@@ -28,7 +28,7 @@ def make_sure_path_exists(path):
     Ensures that a directory exists.
     :param path: A directory path.
     """
-    
+
     logging.debug("Making sure path exists: {0}".format(path))
     try:
         os.makedirs(path)
