@@ -67,6 +67,6 @@ def run_hook(hook_name, project_dir):
     '''
     script = find_hooks().get(hook_name)
     if script is None:
-        logging.debug("No hooks found")
+        logging.debug("No {0} hook found".format(hook_name))
         return
     return _run_hook(script, project_dir)
