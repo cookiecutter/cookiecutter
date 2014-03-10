@@ -68,4 +68,20 @@ This is useful if, for example, you're writing a web framework and need to
 provide developers with a tool similar to `django-admin.py startproject` or
 `npm init`.
 
+It is also possible, to add an dictionary of additional input configurations 
+that will override any other values from cookiecutter.json or the user config
+`.cookiecutterrc`::
+   
+    cookiecutter('cookiecutter-pypackage/', 
+                 input_context={'project_name': 'TheGreatest'})
+
+If you combine that with the no_input parameter, you can programmatically 
+create the project, with a set list of context parameters and without any 
+command line prompts for the users.::
+   
+    cookiecutter('cookiecutter-pypackage/', 
+                 no_input=True,
+                 input_context={'project_name': 'TheGreatest'})
+
+
 See the :ref:`API Reference` for more details.
