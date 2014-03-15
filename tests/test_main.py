@@ -119,8 +119,8 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             # HACK: There are only 9 prompts in cookiecutter-pypackage's
             # cookiecutter.json (http://git.io/b-1MVA) but 10 \n chars here.
             # There was an "EOFError: EOF when reading a line" test fail here
-            # out of the blue, which an extra \n fixed. 
-            # Not sure why. There shouldn't be an extra prompt to delete 
+            # out of the blue, which an extra \n fixed.
+            # Not sure why. There shouldn't be an extra prompt to delete
             # the repo, since CookiecutterCleanSystemTestCase ensured that it
             # wasn't present.
             # It's possibly an edge case in CookiecutterCleanSystemTestCase.
@@ -146,6 +146,26 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('module_name/README'))
         self.assertTrue(os.path.exists('module_name/setup.py'))
 
+class TestCookiecutterRepoNoInput(CookiecutterCleanSystemTestCase):
+
+    def test_cookiecutter(self):
+        main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git', no_input=True)
+        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
+        self.assertTrue(os.path.exists(clone_dir))
+
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
+
+        main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git', no_input=True)
+
+        self.assertTrue(os.path.exists(clone_dir))
+        self.assertTrue(os.path.isdir('boilerplate'))
+        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
+        self.assertTrue(os.path.exists('boilerplate/setup.py'))
+
+    def tearDown(self):
+        if os.path.isdir('boilerplate'):
+            shutil.rmtree('boilerplate')
 
 if __name__ == '__main__':
     unittest.main()

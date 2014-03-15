@@ -44,6 +44,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         repo_dir = clone(
             repo_url=input_dir,
             checkout=checkout,
+            no_input=no_input,
             clone_to_dir=config_dict['cookiecutters_dir']
         )
     else:
@@ -111,7 +112,7 @@ def main():
             format='%(levelname)s: %(message)s',
             level=logging.INFO
         )
-    
+
     cookiecutter(args.input_dir, args.checkout, args.no_input)
 
 

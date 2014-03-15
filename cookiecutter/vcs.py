@@ -43,7 +43,7 @@ def identify_repo(repo_url):
     :param repo_url: Repo URL of unknown type.
     :returns: "git", "hg", or None.
     """
-    
+
     if "git" in repo_url:
         return "git"
     elif "bitbucket" in repo_url:
@@ -52,7 +52,7 @@ def identify_repo(repo_url):
         raise UnknownRepoType
 
 
-def clone(repo_url, checkout=None, clone_to_dir="."):
+def clone(repo_url, checkout=None, no_input=None, clone_to_dir="."):
     """
     Clone a repo to the current directory.
 
@@ -63,9 +63,9 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     # Ensure that clone_to_dir exists
     clone_to_dir = os.path.expanduser(clone_to_dir)
     make_sure_path_exists(clone_to_dir)
-    
+
     repo_type = identify_repo(repo_url)
-    
+
     tail = os.path.split(repo_url)[1]
     if repo_type == "git":
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
@@ -74,7 +74,11 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        prompt_and_delete_repo(repo_dir)
+        # If no input is enable don't clone and take local
+        if no_input:
+            return repo_dir
+        else:
+            prompt_and_delete_repo(repo_dir)
 
     if repo_type in ["git", "hg"]:
         subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
