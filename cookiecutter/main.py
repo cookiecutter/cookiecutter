@@ -16,7 +16,6 @@ import argparse
 import logging
 import os
 import sys
-import shutil
 
 from .config import get_user_config
 from .prompt import prompt_for_config
@@ -26,6 +25,7 @@ from . import __version__
 
 
 logger = logging.getLogger(__name__)
+
 
 def cookiecutter(input_dir, checkout=None, no_input=False):
     """
@@ -48,7 +48,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
             clone_to_dir=config_dict['cookiecutters_dir']
         )
     else:
-        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
+        # If it's a local repo, no need to clone or copy to your
+        # cookiecutters_dir
         repo_dir = input_dir
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
@@ -99,7 +100,6 @@ def parse_cookiecutter_args(args):
     )
     parser.add_argument(
         '--version',
-        #help='Print version information and quit',
         action='version',
         version='%(prog)s ' + __version__
     )
@@ -112,7 +112,8 @@ def main():
     args = parse_cookiecutter_args(sys.argv[1:])
 
     if args.verbose:
-        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s',
+                            level=logging.DEBUG)
     else:
         # Log info and above to console
         logging.basicConfig(
