@@ -22,6 +22,7 @@ from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
+from . import __version__
 
 
 logger = logging.getLogger(__name__)
@@ -75,7 +76,8 @@ def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
 
     parser = argparse.ArgumentParser(
-        description='Create a project from a Cookiecutter project template.'
+        description='Create a project from a Cookiecutter project template.',
+        prog='cookiecutter'
     )
     parser.add_argument(
         '--no-input',
@@ -95,6 +97,12 @@ def parse_cookiecutter_args(args):
         help='Print debug information',
         action='store_true', default=False
     )
+    parser.add_argument(
+        '--version',
+        #help='Print version information and quit',
+        action='version',
+        version='%(prog)s ' + __version__
+    )
     return parser.parse_args(args)
 
 
@@ -111,7 +119,7 @@ def main():
             format='%(levelname)s: %(message)s',
             level=logging.INFO
         )
-    
+
     cookiecutter(args.input_dir, args.checkout, args.no_input)
 
 
