@@ -147,6 +147,7 @@ Python
 * `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
 * `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4.
+* `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 
 C
 ~~
@@ -198,6 +199,7 @@ HTML
 .. _`cookiecutter-django-crud`: https://github.com/wildfish/cookiecutter-django-crud
 .. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
+.. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
