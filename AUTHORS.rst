@@ -33,6 +33,7 @@ Contributors
 * Noah Kantrowitz (`@coderanger`_)
 * Vincent Bernat (`@vincentbernat`_)
 * Germán Moya (`@pbacterio`_)
+* Ned Batchelder (`@nedbat`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -58,3 +59,4 @@ Contributors
 .. _`@relekang`: https://github.com/relekang
 .. _`@coderanger`: https://github.com/coderanger
 .. _`@pbacterio`: https://github.com/pbacterio
+.. _`@nedbat`: https://github.com/nedbat

@@ -12,6 +12,8 @@ Bug fixes:
   `@coderanger`_.
 * Include tests and documentation in source distribution, thanks to
   `@vincentbernat`_.
+* Fix various warnings and missing things in the docs (#129, #130),
+  thanks to `@nedbat`_.
 
 Other changes:
 
@@ -23,6 +25,7 @@ Other changes:
 
 .. _`@coderanger`: https://github.com/coderanger
 .. _`@vincentbernat`: https://github.com/vincentbernat
+.. _`@nedbat`: https://github.com/nedbat
 .. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
 .. _`@solarnz`: https://github.com/solarnz
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
