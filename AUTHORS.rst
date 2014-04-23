@@ -31,7 +31,9 @@ Contributors
 * Chris Trotman (`@solarnz`_)
 * Rolf (`@relekang`_)
 * Noah Kantrowitz (`@coderanger`_)
+* Vincent Bernat (`@vincentbernat`_)
 
+.. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@sloria`: https://github.com/sloria

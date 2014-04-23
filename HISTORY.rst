@@ -10,6 +10,8 @@ Bug fixes:
 
 * Use the current Python interpreter to run Python hooks, thanks to
   `@coderanger`_.
+* Include tests and documentation in source distribution, thanks to
+  `@vincentbernat`_.
 
 Other changes:
 
@@ -17,6 +19,7 @@ Other changes:
   `@relekang`_ to list of Cookiecutters.
 
 .. _`@coderanger`: https://github.com/coderanger
+.. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`@solarnz`: https://github.com/solarnz
