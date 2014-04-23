@@ -68,4 +68,4 @@ This is useful if, for example, you're writing a web framework and need to
 provide developers with a tool similar to `django-admin.py startproject` or
 `npm init`.
 
-See the :ref:`API Reference` for more details.
+See the :ref:`API Reference <apiref>` for more details.

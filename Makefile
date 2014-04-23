@@ -40,8 +40,8 @@ coverage:
 
 docs:
 	rm -f docs/cookiecutter.rst
-	rm -f docs/modules.rst
 	sphinx-apidoc -o docs/ cookiecutter
+	rm -f docs/modules.rst
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	open docs/_build/html/index.html

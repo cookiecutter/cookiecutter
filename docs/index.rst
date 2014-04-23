@@ -23,6 +23,8 @@ Basics
    advanced_usage
    troubleshooting
    
+.. _apiref:
+
 API Reference
 -------------
 

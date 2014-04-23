@@ -13,7 +13,8 @@ Types of Contributions
 Create Cookiecutter Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some other Cookiecutter templates to list in the :doc:`README` would be great.
+Some other Cookiecutter templates to list in the :ref:`README <readme>` would
+be great.
 
 If you create a Cookiecutter template, submit a pull request adding it to
 README.rst.
@@ -117,7 +118,7 @@ Before you submit a pull request, check that it meets these guidelines:
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
 3. The pull request should work for Python 2.6, 2.7, 3.3, and PyPy. Check
-   https://travis-ci.org/audreyr/complexity/pull_requests and make sure that
+   https://travis-ci.org/audreyr/cookiecutter/pull_requests and make sure that
    the tests pass for all supported Python versions.
 
 Tips
