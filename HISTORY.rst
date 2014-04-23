@@ -15,15 +15,20 @@ Bug fixes:
 
 Other changes:
 
-* Add `cookiecutter-avr`_ by `@solarnz`_ and `cookiecutter-tumblr-theme`_ by
-  `@relekang`_ to list of Cookiecutters.
+* Add more Cookiecutters to the list:
+
+  * `cookiecutter-avr`_ by `@solarnz`_
+  * `cookiecutter-tumblr-theme`_ by `@relekang`_
+  * `cookiecutter-django-paas`_ by `@pbacterio`_
 
 .. _`@coderanger`: https://github.com/coderanger
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
-.. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`@solarnz`: https://github.com/solarnz
+.. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`@relekang`: https://github.com/relekang
+.. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
+.. _`@pbacterio`: https://github.com/pbacterio
 
 0.7.0 (2013-11-09)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

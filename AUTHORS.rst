@@ -32,6 +32,7 @@ Contributors
 * Rolf (`@relekang`_)
 * Noah Kantrowitz (`@coderanger`_)
 * Vincent Bernat (`@vincentbernat`_)
+* Germán Moya (`@pbacterio`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -56,3 +57,4 @@ Contributors
 .. _`@solarnz`: https://github.com/solarnz
 .. _`@relekang`: https://github.com/relekang
 .. _`@coderanger`: https://github.com/coderanger
+.. _`@pbacterio`: https://github.com/pbacterio
