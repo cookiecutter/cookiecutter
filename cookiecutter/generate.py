@@ -34,6 +34,10 @@ else:
 
 
 def ignore_file(infile, context):
+    """ignore_file(infile, context) -> bool
+    
+    Returns True if `infile` filename match some pattern on `_ignore_files` context setting.
+    """
     try:
         for ignore in context["cookiecutter"]["_ignore_files"]:
             if fnmatch.fnmatch(infile, ignore):
