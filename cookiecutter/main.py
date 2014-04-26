@@ -78,9 +78,12 @@ def parse_cookiecutter_args(args):
         description='Create a project from a Cookiecutter project template.'
     )
     
-    parser.add_argument('--version', '-V', action='version',
-                        version=__version__)
-
+    parser.add_argument(
+        '-V', '--version',
+        help="Show version number and exit.",
+        action='version',
+        version=__version__
+    )
     parser.add_argument(
         '--no-input',
         action="store_true",
