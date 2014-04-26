@@ -77,12 +77,16 @@ def parse_cookiecutter_args(args):
     parser = argparse.ArgumentParser(
         description='Create a project from a Cookiecutter project template.'
     )
-    
+    cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     parser.add_argument(
         '-V', '--version',
         help="Show version number and exit.",
         action='version',
-        version=__version__
+        version='Cookiecutter %s from %s (Python %s)' % (
+            __version__,
+            cookiecutter_pkg_dir,
+            sys.version[:3]
+        )
     )
     parser.add_argument(
         '--no-input',
