@@ -6,6 +6,11 @@ History
 In Development (Master Branch)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Nothing yet.
+
+0.7.1 (2014-04-26)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Bug fixes:
 
 * Use the current Python interpreter to run Python hooks, thanks to
@@ -14,7 +19,7 @@ Bug fixes:
   `@vincentbernat`_.
 * Fix various warnings and missing things in the docs (#129, #130),
   thanks to `@nedbat`_.
-* Add commandline option to get verison (#89), thanks to `@davedash`_
+* Add command line option to get version (#89), thanks to `@davedash`_
   and `@cyberj`_.
 
 Other changes:
