@@ -80,7 +80,7 @@ def parse_cookiecutter_args(args):
     cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     parser.add_argument(
         '-V', '--version',
-        help="Show version number and exit.",
+        help="Show version information and exit.",
         action='version',
         version='Cookiecutter %s from %s (Python %s)' % (
             __version__,
