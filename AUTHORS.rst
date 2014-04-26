@@ -34,6 +34,8 @@ Contributors
 * Vincent Bernat (`@vincentbernat`_)
 * Germán Moya (`@pbacterio`_)
 * Ned Batchelder (`@nedbat`_)
+* Dave Dash (`@davedash`_)
+* Johan Charpentier (`@cyberj`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -60,3 +62,5 @@ Contributors
 .. _`@coderanger`: https://github.com/coderanger
 .. _`@pbacterio`: https://github.com/pbacterio
 .. _`@nedbat`: https://github.com/nedbat
+.. _`@davedash`: https://github.com/davedash
+.. _`@cyberj`: https://github.com/cyberj
