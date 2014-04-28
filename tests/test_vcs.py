@@ -26,6 +26,11 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
+if sys.version_info[:3] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
+
 from cookiecutter import utils, vcs
 
 try:
