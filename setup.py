@@ -34,9 +34,9 @@ if sys.version < '3':
 setup(
     name='cookiecutter',
     version='0.7.1',
-    description='A command-line utility that creates projects from project \
-        templates, e.g. creating a Python package project from a Python \
-        package project template.',
+    description=('A command-line utility that creates projects from project '
+                 'templates, e.g. creating a Python package project from a Python '
+                 'package project template.'),
     long_description=readme + '\n\n' + history,
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
