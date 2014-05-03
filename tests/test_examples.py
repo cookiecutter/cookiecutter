@@ -140,7 +140,7 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
         # Just skip all the prompts
         proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-        
+
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
 

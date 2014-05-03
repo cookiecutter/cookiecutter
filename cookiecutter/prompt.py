@@ -19,6 +19,11 @@ else:
     iteritems = lambda d: d.iteritems()
 
 
+def _parse_bool(value):
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False, '0': False}
+    return valid.get(value.lower(), bool(value))
+
 def prompt_for_config(context):
     """
     Prompts the user to enter new config, using context as a source for the
@@ -27,7 +32,13 @@ def prompt_for_config(context):
     cookiecutter_dict = {}
 
     for key, val in iteritems(context['cookiecutter']):
-        prompt = "{0} (default is \"{1}\")? ".format(key, val)
+        default = val
+        prompt = key
+        if isinstance(val, dict):
+            default = val.get('default', key)
+            prompt = val.get('prompt', key)
+
+        prompt = "{0} (default is \"{1}\")? ".format(prompt, default)
 
         if PY3:
             new_val = input(prompt.encode('utf-8'))
@@ -37,7 +48,10 @@ def prompt_for_config(context):
         new_val = new_val.strip()
 
         if new_val == '':
-            new_val = val
+            new_val = default
+
+        if isinstance(val, dict) and 'type' in val:
+            new_val = {"int": int, "bool": _parse_bool}.get(val["type"])(new_val)
 
         cookiecutter_dict[key] = new_val
     return cookiecutter_dict

@@ -83,6 +83,55 @@ class TestPrompt(unittest.TestCase):
         else:
             self.assertEqual(cookiecutter_dict, {"full_name": u"Řekni či napiš své jméno"})
 
+    @patch(input_str, lambda x: '200\n')
+    def test_extended_prompt_type_int(self):
+        context = {"cookiecutter": {"value": {"type": "int"}}}
+
+        if not PY3:
+            sys.stdin = StringIO("200\n")
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"value": 200})
+
+    @patch(input_str, lambda x: '0\n')
+    def test_extended_prompt_type_bool_0(self):
+        context = {"cookiecutter": {"logic": {"type": "bool"}}}
+
+        if not PY3:
+            sys.stdin = StringIO("0\n")
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": False})
+
+    @patch(input_str, lambda x: 'n\n')
+    def test_extended_prompt_type_bool_n(self):
+        context = {"cookiecutter": {"logic": {"type": "bool"}}}
+
+        if not PY3:
+            sys.stdin = StringIO("n\n")
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": False})
+
+    @patch(input_str, lambda x: 'y\n')
+    def test_extended_prompt_type_bool_y(self):
+        context = {"cookiecutter": {"logic": {"type": "bool"}}}
+
+        if not PY3:
+            sys.stdin = StringIO("y\n")
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": True})
+
+    @patch(input_str, lambda x: '\n')
+    def test_extended_prompt_type_bool_default(self):
+        context = {"cookiecutter": {"logic": {"type": "bool", "default":  "Y"}}}
+
+        if not PY3:
+            sys.stdin = StringIO("\n")
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": True})
 
 class TestQueryAnswers(unittest.TestCase):
 
