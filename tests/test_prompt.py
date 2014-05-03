@@ -13,14 +13,21 @@ import unittest
 
 from cookiecutter import prompt
 
+if sys.version_info[:2] < (2, 7):
+    from ordereddict import OrderedDict
+else:
+    from collections import OrderedDict
+
 PY3 = sys.version > '3'
 if PY3:
     from unittest.mock import patch
+
     input_str = 'builtins.input'
 else:
     import __builtin__
     from mock import patch
-    input_str = '__builtin__.raw_input'
+    # input_str = '__builtin__.raw_input'
+    input_str = 'cookiecutter.prompt.get_input'
     from cStringIO import StringIO
 
 if sys.version_info[:2] < (2, 7):
@@ -30,13 +37,9 @@ else:
 
 
 class TestPrompt(unittest.TestCase):
-
     @patch(input_str, lambda x: 'Audrey Roy')
     def test_prompt_for_config_simple(self):
         context = {"cookiecutter": {"full_name": "Your Name"}}
-
-        if not PY3:
-            sys.stdin = StringIO("Audrey Roy")
 
         cookiecutter_dict = prompt.prompt_for_config(context)
         self.assertEqual(cookiecutter_dict, {"full_name": "Audrey Roy"})
@@ -44,9 +47,6 @@ class TestPrompt(unittest.TestCase):
     @patch(input_str, lambda x: 'Pizzä ïs Gööd')
     def test_prompt_for_config_unicode(self):
         context = {"cookiecutter": {"full_name": "Your Name"}}
-
-        if not PY3:
-            sys.stdin = StringIO("Pizzä ïs Gööd")
 
         cookiecutter_dict = prompt.prompt_for_config(context)
 
@@ -59,9 +59,6 @@ class TestPrompt(unittest.TestCase):
     def test_unicode_prompt_for_config_unicode(self):
         context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
 
-        if not PY3:
-            sys.stdin = StringIO("Pizzä ïs Gööd")
-
         cookiecutter_dict = prompt.prompt_for_config(context)
 
         if PY3:
@@ -73,9 +70,6 @@ class TestPrompt(unittest.TestCase):
     def test_unicode_prompt_for_default_config_unicode(self):
         context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
 
-        if not PY3:
-            sys.stdin = StringIO("\n")
-
         cookiecutter_dict = prompt.prompt_for_config(context)
 
         if PY3:
@@ -83,9 +77,78 @@ class TestPrompt(unittest.TestCase):
         else:
             self.assertEqual(cookiecutter_dict, {"full_name": u"Řekni či napiš své jméno"})
 
+    def test_custom_prompt(self):
+        context = {"cookiecutter": {"value": {"prompt": "insert value",
+                                              "default": "default_value"}}}
+
+        def _check_custom_prompt(custom_prompt):
+            self.assertEqual(custom_prompt, 'insert value (default is "default_value")? ')
+            return '_aa\n'
+
+        with patch(input_str, _check_custom_prompt) as mocked:
+            cookiecutter_dict = prompt.prompt_for_config(context)
+
+        self.assertEqual(cookiecutter_dict, {"value": '_aa'})
+
+    def test_custom_prompt_unicode(self):
+        context = {"cookiecutter": {"value": {"prompt": "insert value",
+                                              "default": "défäult_välúé"}}}
+
+        def _check_custom_prompt(custom_prompt):
+            self.assertEqual(custom_prompt, 'insert value (default is "défäult_välúé")? ')
+            return '_aa\n'
+
+        with patch(input_str, _check_custom_prompt):
+            cookiecutter_dict = prompt.prompt_for_config(context)
+
+        self.assertEqual(cookiecutter_dict, {"value": '_aa'})
+
+    @patch(input_str, lambda x: '200\n')
+    def test_extended_prompt_type_int(self):
+        context = {"cookiecutter": {"value": {"type": "int"}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"value": 200})
+
+    @patch(input_str, lambda x: '0\n')
+    def test_extended_prompt_type_bool_0(self):
+        context = {"cookiecutter": {"logic": {"type": "bool"}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": False})
+
+    @patch(input_str, lambda x: 'n\n')
+    def test_extended_prompt_type_bool_n(self):
+        context = {"cookiecutter": {"logic": {"type": "bool"}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": False})
+
+    @patch(input_str, lambda x: 'y\n')
+    def test_extended_prompt_type_bool_y(self):
+        context = {"cookiecutter": {"logic": {"type": "bool"}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": True})
+
+    @patch(input_str, lambda x: '\n')
+    def test_extended_prompt_type_bool_default(self):
+        context = {"cookiecutter": {"logic": {"type": "bool", "default": "Y"}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"logic": True})
+
+    @patch(input_str, lambda x: '\n')
+    def test_prompt_iterpolation(self):
+        context = {"cookiecutter": OrderedDict((("name", "Name"),
+                                                ("title", "{{name}}")))}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+
+        self.assertEqual(cookiecutter_dict, {"name": "Name", "title": "Name"})
+
 
 class TestQueryAnswers(unittest.TestCase):
-
     @patch(input_str, lambda: 'y')
     def test_query_y(self):
         if not PY3:
@@ -123,7 +186,6 @@ class TestQueryAnswers(unittest.TestCase):
 
 
 class TestQueryDefaults(unittest.TestCase):
-
     @patch(input_str, lambda: 'y')
     def test_query_y_none_default(self):
         if not PY3:

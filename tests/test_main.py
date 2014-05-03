@@ -125,8 +125,8 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             # HACK: There are only 9 prompts in cookiecutter-pypackage's
             # cookiecutter.json (http://git.io/b-1MVA) but 10 \n chars here.
             # There was an "EOFError: EOF when reading a line" test fail here
-            # out of the blue, which an extra \n fixed. 
-            # Not sure why. There shouldn't be an extra prompt to delete 
+            # out of the blue, which an extra \n fixed.
+            # Not sure why. There shouldn't be an extra prompt to delete
             # the repo, since CookiecutterCleanSystemTestCase ensured that it
             # wasn't present.
             # It's possibly an edge case in CookiecutterCleanSystemTestCase.
