@@ -19,6 +19,10 @@ else:
     iteritems = lambda d: d.iteritems()
 
 
+def get_input(prompt=''):
+    return input(prompt)
+
+
 def _parse_bool(value):
     if value in "YyT":
         return True
@@ -44,9 +48,9 @@ def prompt_for_config(context):
         prompt = "{0} (default is \"{1}\")? ".format(prompt, default)
 
         if PY3:
-            new_val = input(prompt.encode('utf-8'))
+            new_val = get_input(prompt.encode('utf-8'))
         else:
-            new_val = input(prompt.encode('utf-8')).decode('utf-8')
+            new_val = get_input(prompt.encode('utf-8')).decode('utf-8')
 
         new_val = new_val.strip()
 
@@ -88,7 +92,7 @@ def query_yes_no(question, default="yes"):
 
     while True:
         sys.stdout.write(question + prompt)
-        choice = input().lower()
+        choice = get_input().lower()
 
         if default is not None and choice == '':
             return valid[default]
