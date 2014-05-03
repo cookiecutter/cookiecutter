@@ -48,7 +48,7 @@ def prompt_for_config(context):
         prompt = "{0} (default is \"{1}\")? ".format(prompt, default)
 
         if PY3:
-            new_val = get_input(prompt.encode('utf-8'))
+            new_val = get_input(prompt)
         else:
             new_val = get_input(prompt.encode('utf-8')).decode('utf-8')
 

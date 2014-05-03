@@ -73,14 +73,14 @@ class TestPrompt(unittest.TestCase):
 
 
     def test_custom_prompt(self):
-        context = {"cookiecutter": {"full_name": {"default": u"Řekni či napiš své jméno",
+        context = {"cookiecutter": {"full_name": {"default": u"Pizzä ïs Gööd",
                                                   "prompt": u"Prompt"}}}
 
         def _check_prompt(x):
             if PY3:
-                self.assertEqual(x, "Prompt (default is \"Řekni či napiš své jméno\")? ")
+                self.assertEqual(x, "Prompt (default is \"Pizzä ïs Gööd\")? ")
             else:
-                self.assertEqual(x, "Prompt (default is \"Řekni či napiš své jméno\")? ")
+                self.assertEqual(unicode(x), u"Prompt (default is \"Pizzä ïs Gööd\")? ")
             return '_check_prompt\n'
 
         with patch(input_str, _check_prompt):
