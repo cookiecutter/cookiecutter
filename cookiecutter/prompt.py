@@ -18,6 +18,13 @@ else:
     input = raw_input
     iteritems = lambda d: d.iteritems()
 
+def get_input(p=''):
+    return input(p)
+
+def _parse_bool(value):
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False, '0': False}
+    return valid.get(value.lower(), bool(value))
 
 def prompt_for_config(context):
     """
@@ -27,19 +34,35 @@ def prompt_for_config(context):
     cookiecutter_dict = {}
 
     for key, val in iteritems(context['cookiecutter']):
-        prompt = "{0} (default is \"{1}\")? ".format(key, val)
+        default = val
+        prompt = key
+        if isinstance(val, dict):
+            if PY3:
+                default = val.get('default', key)
+            else:
+                default = val.get('default', key).decode('utf-8')
+            prompt = val.get('prompt', key)
+
+        if default.startswith('{{') and default[2:-2] in cookiecutter_dict:
+            default = cookiecutter_dict[default[2:-2]]
+
+        prompt = "{0} (default is \"{1}\")? ".format(prompt, default)
 
         if PY3:
-            new_val = input(prompt.encode('utf-8'))
+            new_val = input(prompt)
         else:
-            new_val = input(prompt.encode('utf-8')).decode('utf-8')
+            new_val = get_input(prompt.encode('utf-8')).decode('utf-8')
 
         new_val = new_val.strip()
 
         if new_val == '':
-            new_val = val
+            new_val = default
+
+        if isinstance(val, dict) and 'type' in val:
+            new_val = {"int": int, "bool": _parse_bool}.get(val["type"])(new_val)
 
         cookiecutter_dict[key] = new_val
+
     return cookiecutter_dict
 
 
