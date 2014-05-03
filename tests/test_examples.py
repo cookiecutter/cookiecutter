@@ -19,12 +19,12 @@ import sys
 PY3 = sys.version > '3'
 if PY3:
     from unittest.mock import patch
-    input_str = 'cookiecutter.prompt.get_input'
+    input_str = 'builtins.input'
     from io import StringIO
 else:
     import __builtin__
     from mock import patch
-    input_str = 'cookiecutter.prompt.get_input'
+    input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
 if sys.version_info[:3] < (2, 7):
