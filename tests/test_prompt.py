@@ -89,9 +89,9 @@ class TestPrompt(unittest.TestCase):
 
         def _check_prompt(x):
             if PY3:
-                self.assertEqual(x, "Prompt")
+                self.assertEqual(x, "Prompt (default is \"Řekni či napiš své jméno\")? ")
             else:
-                self.assertEqual(x, u"Prompt")
+                self.assertEqual(x, u"Prompt (default is \"Řekni či napiš své jméno\")? ")
 
             return '\n'
 
