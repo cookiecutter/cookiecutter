@@ -32,9 +32,9 @@ else:
     from cStringIO import StringIO
 
 try:
-    nonetwork = os.environ[u'DISABLE_NETWORK_TESTS']
+    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
-    nonetwork = False
+    no_network = False
 
 
 # Log debug and above to console
@@ -96,7 +96,7 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.checkout, 'develop')
 
 
-@unittest.skipIf(condition=nonetwork, reason='Needs a network connection to GitHub/Bitbucket.')
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):

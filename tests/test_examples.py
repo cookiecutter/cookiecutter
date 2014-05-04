@@ -38,9 +38,9 @@ except KeyError:
     travis = False
 
 try:
-    nonetwork = os.environ[u'DISABLE_NETWORK_TESTS']
+    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
-    nonetwork = False
+    no_network = False
 
 from cookiecutter import config, utils
 from tests import force_delete, CookiecutterCleanSystemTestCase
@@ -50,7 +50,7 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-@unittest.skipIf(condition=nonetwork, reason='Needs a network connection to GitHub.')
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
 class TestPyPackage(CookiecutterCleanSystemTestCase):
 
 
@@ -85,7 +85,7 @@ class TestPyPackage(CookiecutterCleanSystemTestCase):
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-@unittest.skipIf(condition=nonetwork, reason='Needs a network connection to GitHub.')
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
 class TestJQuery(CookiecutterCleanSystemTestCase):
 
 
@@ -120,7 +120,7 @@ class TestJQuery(CookiecutterCleanSystemTestCase):
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-@unittest.skipIf(condition=nonetwork, reason='Needs a network connection to GitHub.')
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
 class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
@@ -146,7 +146,7 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-@unittest.skipIf(condition=nonetwork, reason='Needs a network connection to GitHub.')
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
 class TestGitBranch(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
