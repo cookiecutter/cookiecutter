@@ -34,9 +34,9 @@ else:
 from cookiecutter import utils, vcs
 
 try:
-    nonetwork = os.environ[u'DISABLE_NETWORK_TESTS']
+    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
-    nonetwork = False
+    no_network = False
 
 
 # Log debug and above to console
@@ -63,7 +63,7 @@ class TestIdentifyRepo(unittest.TestCase):
         self.assertEqual(vcs.identify_repo(repo_url), "hg")
 
 
-@unittest.skipIf(condition=nonetwork, reason='Needs a network connection to GitHub/Bitbucket.')
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCS(unittest.TestCase):
 
     def test_git_clone(self):
@@ -122,7 +122,7 @@ class TestVCS(unittest.TestCase):
             shutil.rmtree('cookiecutter-trytonmodule')
 
 
-@unittest.skipIf(condition=nonetwork, reason='Needs a network connection to GitHub/Bitbucket.')
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCSPrompt(unittest.TestCase):
 
     def setUp(self):
