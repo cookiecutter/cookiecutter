@@ -83,12 +83,12 @@ class TestPrompt(unittest.TestCase):
 
         def _check_custom_prompt(custom_prompt):
             self.assertEqual(custom_prompt, 'insert value (default is "default_value")? ')
-            return '_aa\n'
+            return '\n'
 
-        with patch(input_str, _check_custom_prompt) as mocked:
+        with patch(input_str, side_effects=_check_custom_prompt) as m:
             cookiecutter_dict = prompt.prompt_for_config(context)
 
-        self.assertEqual(cookiecutter_dict, {"value": '_aa'})
+        self.assertEqual(m.call_count, 1)
 
     def test_custom_prompt_unicode(self):
         context = {"cookiecutter": {"value": {"prompt": "insert value",
@@ -96,12 +96,12 @@ class TestPrompt(unittest.TestCase):
 
         def _check_custom_prompt(custom_prompt):
             self.assertEqual(custom_prompt, 'insert value (default is "défäult_välúé")? ')
-            return '_aa\n'
+            return '\n'
 
-        with patch(input_str, _check_custom_prompt):
+        with patch(input_str, side_effects=_check_custom_prompt) as m:
             cookiecutter_dict = prompt.prompt_for_config(context)
 
-        self.assertEqual(cookiecutter_dict, {"value": '_aa'})
+        self.assertEqual(m.call_count, 1)
 
     @patch(input_str, lambda x: '200\n')
     def test_extended_prompt_type_int(self):
@@ -161,11 +161,10 @@ class TestPrompt(unittest.TestCase):
             self.assertTrue(custom_prompt in values, custom_prompt)
             return '\n'
 
-        with patch(input_str,  side_effect=_check_custom_prompt) as m:
+        with patch(input_str, side_effect=_check_custom_prompt) as m:
             cookiecutter_dict = prompt.prompt_for_config(context)
 
         self.assertEqual(m.call_count, 2)
-
 
 
 class TestQueryAnswers(unittest.TestCase):
