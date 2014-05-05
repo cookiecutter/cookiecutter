@@ -139,13 +139,33 @@ class TestPrompt(unittest.TestCase):
         self.assertEqual(cookiecutter_dict, {"logic": True})
 
     @patch(input_str, lambda x: '\n')
-    def test_prompt_iterpolation(self):
+    def test_default_iterpolation(self):
         context = {"cookiecutter": OrderedDict((("name", "Name"),
-                                                ("title", "{{name}}")))}
+                                                ("title", "{name}")))}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
 
         self.assertEqual(cookiecutter_dict, {"name": "Name", "title": "Name"})
+
+    @patch(input_str, lambda x: '\n')
+    def test_prompt_iterpolation(self):
+        context = {"cookiecutter": OrderedDict((("name", "Name"),
+                                                ("create_virtualenv", {
+                                                    "default": "N",
+                                                    "type": "bool",
+                                                    "prompt": "Create virtualenv named `{name}` [yN]"
+                                                })))}
+
+        def _check_custom_prompt(custom_prompt):
+            values = ['name (default is "Name")? ', 'Create virtualenv named `Name` [yN] (default is "N")? ']
+            self.assertTrue(custom_prompt in values, custom_prompt)
+            return '\n'
+
+        with patch(input_str,  side_effect=_check_custom_prompt) as m:
+            cookiecutter_dict = prompt.prompt_for_config(context)
+
+        self.assertEqual(m.call_count, 2)
+
 
 
 class TestQueryAnswers(unittest.TestCase):

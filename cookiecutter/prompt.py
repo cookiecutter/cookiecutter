@@ -43,10 +43,16 @@ def prompt_for_config(context):
                 default = val.get('default', key).decode('utf-8')
             prompt = val.get('prompt', key)
 
-        if default.startswith('{{') and default[2:-2] in cookiecutter_dict:
-            default = cookiecutter_dict[default[2:-2]]
+        try:
+            default = default.format(**cookiecutter_dict)
+        except KeyError:
+            default = default
 
         prompt = "{0} (default is \"{1}\")? ".format(prompt, default)
+        try:
+            prompt = prompt.format(**cookiecutter_dict)
+        except KeyError:
+            prompt = prompt
 
         if PY3:
             new_val = input(prompt)
@@ -54,7 +60,6 @@ def prompt_for_config(context):
             new_val = get_input(prompt.encode('utf-8')).decode('utf-8')
 
         new_val = new_val.strip()
-
         if new_val == '':
             new_val = default
 
