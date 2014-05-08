@@ -7,6 +7,7 @@ test_prompt
 
 Tests for `cookiecutter.prompt` module.
 """
+import os
 
 import sys
 import unittest
@@ -165,6 +166,22 @@ class TestPrompt(unittest.TestCase):
             cookiecutter_dict = prompt.prompt_for_config(context)
 
         self.assertEqual(m.call_count, 2)
+
+    @patch(input_str, lambda x: '\n')
+    def test_prompt_iterpolation_environment(self):
+        user = os.environ.get('USER', '_USER_')
+        context = {"cookiecutter": {"username": {"default": "{$USER}",
+                                                 "prompt": "user `{$USER}`"}}}
+
+        def _check_custom_prompt(custom_prompt):
+            # self.assertTrue(custom_prompt, ' user `{0}` (default is "{0}")?'.format(user))
+            return '\n'
+
+        with patch(input_str, side_effect=_check_custom_prompt) as m:
+            cookiecutter_dict = prompt.prompt_for_config(context)
+
+        self.assertEqual(m.call_count, 1)
+        self.assertEqual(cookiecutter_dict['username'], user)
 
 
 class TestQueryAnswers(unittest.TestCase):

@@ -9,6 +9,7 @@ Functions for prompting the user for project info.
 """
 
 from __future__ import unicode_literals
+import os
 import sys
 
 PY3 = sys.version > '3'
@@ -25,6 +26,13 @@ def _parse_bool(value):
     valid = {"yes": True, "y": True, "ye": True,
              "no": False, "n": False, '0': False}
     return valid.get(value.lower(), bool(value))
+
+def merge(dest, dictionary):
+    try:
+        return dest.format(**dictionary)
+    except KeyError:
+        return dest
+
 
 def prompt_for_config(context):
     """
@@ -43,16 +51,11 @@ def prompt_for_config(context):
                 default = val.get('default', key).decode('utf-8')
             prompt = val.get('prompt', key)
 
-        try:
-            default = default.format(**cookiecutter_dict)
-        except KeyError:
-            default = default
+        default = merge(default, cookiecutter_dict)
+        default = merge(default, dict(('$%s' % k, v) for k, v in os.environ.items()))
 
-        prompt = "{0} (default is \"{1}\")? ".format(prompt, default)
-        try:
-            prompt = prompt.format(**cookiecutter_dict)
-        except KeyError:
-            prompt = prompt
+        prompt = merge("{0} (default is \"{1}\")? ".format(prompt, default), cookiecutter_dict)
+        prompt = merge(prompt, dict(('$%s' % k, v) for k, v in os.environ.items()))
 
         if PY3:
             new_val = input(prompt)
