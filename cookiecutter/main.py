@@ -71,9 +71,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     )
 
 
-def parse_cookiecutter_args(args):
-    """ Parse the command-line arguments to Cookiecutter. """
-
+def _get_parser():
     parser = argparse.ArgumentParser(
         description='Create a project from a Cookiecutter project template.'
     )
@@ -106,6 +104,12 @@ def parse_cookiecutter_args(args):
         help='Print debug information',
         action='store_true', default=False
     )
+
+    return parser
+
+def parse_cookiecutter_args(args):
+    """ Parse the command-line arguments to Cookiecutter. """
+    parser = _get_parser()
     return parser.parse_args(args)
 
 

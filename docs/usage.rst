@@ -29,7 +29,11 @@ Then generate your project from the project template::
 The only argument is the input directory. (The output directory is generated
 by rendering that, and it can't be the same as the input directory.)
 
+.. note:: see :ref:`command_line_options` for extra command line arguments
+
 Try it out!
+
+
 
 Works directly with git repos too
 ---------------------------------
@@ -66,3 +70,4 @@ Pre-0.7.0, this is how it worked:
   is output to your current directory.
 
 * Cloned cookiecutters were not saved locally.
+
