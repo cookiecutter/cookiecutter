@@ -73,7 +73,7 @@ class TestVCS(unittest.TestCase):
         self.assertEqual(repo_dir, 'cookiecutter-pypackage')
         self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
         if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+            shutil.rmtree('cookiecutter-pypackage', onerror=utils.force_delete)
 
     def test_git_clone_checkout(self):
         repo_dir = vcs.clone(
@@ -94,7 +94,7 @@ class TestVCS(unittest.TestCase):
         self.assertEqual('console-script', branch)
 
         if os.path.isdir(git_dir):
-            shutil.rmtree(git_dir)
+            shutil.rmtree(git_dir, onerror=utils.force_delete)
 
     def test_git_clone_custom_dir(self):
         os.makedirs("tests/custom_dir1/custom_dir2/")
@@ -108,9 +108,9 @@ class TestVCS(unittest.TestCase):
             self.assertEqual(repo_dir, test_dir)
             self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
             if os.path.isdir('cookiecutter-pypackage'):
-                shutil.rmtree('cookiecutter-pypackage')
+                shutil.rmtree('cookiecutter-pypackage', onerror=utils.force_delete)
         if os.path.isdir('tests/custom_dir1'):
-            shutil.rmtree('tests/custom_dir1')
+            shutil.rmtree('tests/custom_dir1', onerror=utils.force_delete)
 
     def test_hg_clone(self):
         repo_dir = vcs.clone(
@@ -119,7 +119,7 @@ class TestVCS(unittest.TestCase):
         self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
         if os.path.isdir('cookiecutter-trytonmodule'):
-            shutil.rmtree('cookiecutter-trytonmodule')
+            shutil.rmtree('cookiecutter-trytonmodule', onerror=utils.force_delete)
 
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
@@ -127,10 +127,10 @@ class TestVCSPrompt(unittest.TestCase):
 
     def setUp(self):
         if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+            shutil.rmtree('cookiecutter-pypackage', onerror=utils.force_delete)
         os.mkdir('cookiecutter-pypackage/')
         if os.path.isdir('cookiecutter-trytonmodule'):
-            shutil.rmtree('cookiecutter-trytonmodule')
+            shutil.rmtree('cookiecutter-trytonmodule', onerror=utils.force_delete)
         os.mkdir('cookiecutter-trytonmodule/')
 
     @patch(input_str, lambda: 'y')
@@ -175,9 +175,9 @@ class TestVCSPrompt(unittest.TestCase):
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+            shutil.rmtree('cookiecutter-pypackage', onerror=utils.force_delete)
         if os.path.isdir('cookiecutter-trytonmodule'):
-            shutil.rmtree('cookiecutter-trytonmodule')
+            shutil.rmtree('cookiecutter-trytonmodule', onerror=utils.force_delete)
 
 
 if __name__ == '__main__':
