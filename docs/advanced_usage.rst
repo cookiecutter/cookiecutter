@@ -6,7 +6,7 @@ Using Pre/Post-Generate Hooks (0.7.0+)
 --------------------------------------
 
 You can have Python or Shell scripts that run before and/or after your project
-is generated. 
+is generated.
 
 Put them in `hooks/` like this::
 
@@ -57,7 +57,7 @@ Calling Cookiecutter Functions From Python
 You can use Cookiecutter from Python::
 
     from cookiecutter.main import cookiecutter
-    
+
     # Create project from the cookiecutter-pypackage/ template
     cookiecutter('cookiecutter-pypackage/')
 
@@ -69,3 +69,13 @@ provide developers with a tool similar to `django-admin.py startproject` or
 `npm init`.
 
 See the :ref:`API Reference <apiref>` for more details.
+
+
+.. _command_line_options:
+
+Command Line Options
+--------------------
+
+.. cc-command-line-options::
+
+
