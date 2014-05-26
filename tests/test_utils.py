@@ -19,14 +19,23 @@ from cookiecutter import utils
 class TestUtils(unittest.TestCase):
 
     def test_make_sure_path_exists(self):
+        # On widows there is no /usr/
         self.assertTrue(utils.make_sure_path_exists('/usr/'))
         self.assertTrue(utils.make_sure_path_exists('tests/blah'))
         self.assertTrue(utils.make_sure_path_exists('tests/trailingslash/'))
-        self.assertFalse(
-            utils.make_sure_path_exists(
-                '/this-dir-does-not-exist-and-cant-be-created/'.replace("/", os.sep)
+        # and this creates dir on windows :D
+        if os.name == "nt":
+            self.assertFalse(
+                utils.make_sure_path_exists(
+                    '/this-dir-d**oes-not-exist-and-cant-be-created/'.replace("/", os.sep)
+                )
             )
-        )
+        else:
+            self.assertFalse(
+                utils.make_sure_path_exists(
+                    '/this-dir-does-not-exist-and-cant-be-created/'.replace("/", os.sep)
+                )
+            )
         shutil.rmtree('tests/blah/')
         shutil.rmtree('tests/trailingslash/')
 
