@@ -32,8 +32,7 @@ def prompt_for_config(context):
         if PY3:
             new_val = input(prompt.encode('utf-8'))
         else:
-            stdin_enc = sys.stdin.encoding
-            new_val = input(prompt.encode('utf-8')).decode(stdin_enc)
+            new_val = input(prompt.encode('utf-8')).decode('utf-8')
 
         new_val = new_val.strip()
 
