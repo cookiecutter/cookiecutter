@@ -4,4 +4,4 @@
 mock
 unittest2
 ordereddict
-simplejson
+simplejson>2.1

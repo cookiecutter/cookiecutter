@@ -33,7 +33,7 @@ def prompt_for_config(context):
             new_val = input(prompt.encode('utf-8'))
         else:
             try:
-                stdin_enc = sys.stdin.encoding
+                stdin_enc = sys.stdin.encoding if sys.stdin.encoding is not None else "utf-8"
             except AttributeError:
                 stdin_enc = "utf-8"
             new_val = input(prompt.encode('utf-8')).decode(stdin_enc)
