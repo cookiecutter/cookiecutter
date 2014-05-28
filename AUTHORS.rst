@@ -36,6 +36,9 @@ Contributors
 * Ned Batchelder (`@nedbat`_)
 * Dave Dash (`@davedash`_)
 * Johan Charpentier (`@cyberj`_)
+* Éric Araujo (`@merwok`_)
+* Raphael Pierzina (`@hackebrot`_)
+* saxix (`@saxix`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -64,3 +67,6 @@ Contributors
 .. _`@nedbat`: https://github.com/nedbat
 .. _`@davedash`: https://github.com/davedash
 .. _`@cyberj`: https://github.com/cyberj
+.. _`@merwok`: https://github.com/merwok
+.. _`@hackebrot`: https://github.com/hackebrot
+.. _`@saxix`: https://github.com/saxix
