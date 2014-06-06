@@ -8,6 +8,7 @@ cookiecutter.generate
 Functions for generating a project from a project template.
 """
 from __future__ import unicode_literals
+import inspect
 import logging
 import os
 import shutil
@@ -59,6 +60,32 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
 
     logging.debug('Context generated is {0}'.format(context))
     return context
+
+
+def get_jinja_options(option_file='jinja_options.json'):
+    """
+    Gets options to pass to the jinja environment from a JSON file.
+
+    :param option_file: JSON file containing options to be passed to the
+        jinja environment.
+    """
+    options = {}
+
+    # Read the options from file
+    if os.path.isfile(option_file):
+        logging.debug("Reading jinja options from {0}".format(option_file))
+        with open(option_file) as file_handle:
+            options = json.load(file_handle, encoding='utf-8')
+
+    # Remove unsupported jinja options
+    allowed_args = inspect.getargspec(Environment.__init__)[0]
+    allowed_args.remove('self')
+    for option in set(options).difference(set(allowed_args)):
+        logging.warning("Jinja2 option {0} not supported.".format(option))
+        del options[option]
+
+    logging.debug("Jinja options: {0}".format(options))
+    return options
 
 
 def generate_file(project_dir, infile, context, env):
@@ -149,15 +176,15 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def generate_files(repo_dir, context=None, output_dir="."):
+def generate_files(repo_dir, context=None, output_dir=".", jinja_options=None):
     """
     Renders the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
     :param context: Dict for populating the template's variables.
     :param output_dir: Where to output the generated project dir into.
+    :param jinja_options: Dict of options for the jinja2 environment.
     """
-
     template_dir = find_template(repo_dir)
     logging.debug('Generating project from {0}...'.format(template_dir))
     context = context or {}
@@ -181,7 +208,8 @@ def generate_files(repo_dir, context=None, output_dir="."):
         run_hook('pre_gen_project', project_dir)
 
     with work_in(template_dir):
-        env = Environment()
+        jinja_options = jinja_options or {}
+        env = Environment(**jinja_options)
         env.loader = FileSystemLoader(".")
 
         for root, dirs, files in os.walk("."):

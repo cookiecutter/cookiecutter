@@ -83,6 +83,36 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
             shutil.rmtree('fake-project')
 
 
+class TestCookiecutterLocalRepoWithJinjaOptions(CookiecutterCleanSystemTestCase):
+
+    def test_cookiecutter_repo_with_jinja_options(self):
+        main.cookiecutter('tests/fake-repo-jinja-options/', no_input=True)
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        self.assertFalse(os.path.exists('fake-project/jinja_options.json'))
+        with open('fake-project/README.rst') as f:
+            text = f.read()
+            self.assertEqual(
+                text,
+                """============\nFake Project\n============""")
+
+    def test_cookiecutter_repo_with_bad_jinja_options(self):
+        with patch('cookiecutter.generate.logging.warning') as warning:
+            main.cookiecutter('tests/fake-repo-jinja-options-bad/', no_input=True)
+            warning.assert_called_with('Jinja2 option bad_option not supported.')
+        self.assertTrue(os.path.isdir('fake-project'))
+        self.assertTrue(os.path.isfile('fake-project/README.rst'))
+        with open('fake-project/README.rst') as f:
+            text = f.read()
+            self.assertEqual(
+                text,
+                """============\nFake Project\n============""")
+
+    def tearDown(self):
+        if os.path.isdir('fake-project'):
+            shutil.rmtree('fake-project')
+
+
 class TestArgParsing(unittest.TestCase):
 
     def test_parse_cookiecutter_args(self):
