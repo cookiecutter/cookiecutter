@@ -27,6 +27,16 @@ Or this::
 
 See http://jinja.pocoo.org/docs/templates/#escaping for more info.
 
+You can also put the template file extensions in `_ignore_files` key in
+your `cookiecutter.json` file::
+
+    {
+        "repo_name": "sample",
+        "_ignore_files": [
+            "*.html"
+        ]
+    }
+
 Other common issues
 -------------------
 

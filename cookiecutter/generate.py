@@ -8,6 +8,7 @@ cookiecutter.generate
 Functions for generating a project from a project template.
 """
 from __future__ import unicode_literals
+import fnmatch
 import logging
 import os
 import shutil
@@ -30,6 +31,21 @@ if sys.version_info[:2] < (2, 7):
 else:
     import json
     from collections import OrderedDict
+
+
+def ignore_file(infile, context):
+    """ignore_file(infile, context) -> bool
+    
+    Returns True if `infile` filename match some pattern on `_ignore_files` context setting.
+    """
+    try:
+        for ignore in context["cookiecutter"]["_ignore_files"]:
+            if fnmatch.fnmatch(infile, ignore):
+                return True
+    except KeyError:
+        return False
+
+    return False
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None):
@@ -70,7 +86,7 @@ def generate_file(project_dir, infile, context, env):
         b. If infile is a text file, render its contents and write the
            rendered infile to outfile.
 
-    Precondition:
+    .. precondition::
 
         When calling `generate_file()`, the root template dir must be the
         current working directory. Using `utils.work_in()` is the recommended
@@ -90,9 +106,14 @@ def generate_file(project_dir, infile, context, env):
     outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
     logging.debug("outfile is {0}".format(outfile))
 
+    # Just copy over ignored files. Don't render.
+    if ignore_file(infile, context):
+        logging.debug("Copying ignored file {0} to {1} without rendering"
+                      .format(infile, outfile))
+        shutil.copyfile(infile, outfile)
+
     # Just copy over binary files. Don't render.
-    logging.debug("Check {0} to see if it's a binary".format(infile))
-    if is_binary(infile):
+    elif is_binary(infile):
         logging.debug("Copying binary {0} to {1} without rendering"
                       .format(infile, outfile))
         shutil.copyfile(infile, outfile)
