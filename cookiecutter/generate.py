@@ -186,7 +186,7 @@ def generate_files(repo_dir, context=None, output_dir="."):
         run_hook('pre_gen_project', project_dir)
 
     with work_in(template_dir):
-        env = Environment()
+        env = Environment(keep_trailing_newline=True)
         env.loader = FileSystemLoader(".")
 
         for root, dirs, files in os.walk("."):
