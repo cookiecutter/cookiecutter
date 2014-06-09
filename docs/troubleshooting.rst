@@ -27,13 +27,15 @@ Or this::
 
 See http://jinja.pocoo.org/docs/templates/#escaping for more info.
 
-You can also put the template file extensions in `_ignore_files` key in
-your `cookiecutter.json` file::
+You can also use the `_copy_without_render` key in your `cookiecutter.json`
+file, which accepts Unix shell-style wildcards::
 
     {
         "repo_name": "sample",
-        "_ignore_files": [
-            "*.html"
+        "_copy_without_render": [
+            "*.html",
+            "*not_rendered_dir",
+            "rendered_dir/not_rendered_file.ini",
         ]
     }
 
