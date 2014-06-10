@@ -83,6 +83,14 @@ class TestPrompt(unittest.TestCase):
         else:
             self.assertEqual(cookiecutter_dict, {"full_name": u"Řekni či napiš své jméno"})
 
+    @patch(input_str)
+    def test_dont_prompt_for_private_context_var(self, mocked_input_str):
+        context = {"cookiecutter": {"_copy_without_render": ["*.html"]}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertFalse(mocked_input_str.called)
+        self.assertEqual(cookiecutter_dict, {"_copy_without_render": ["*.html"]})
+
 
 class TestQueryAnswers(unittest.TestCase):
 
