@@ -178,7 +178,7 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
     # run pre-gen hook from repo_dir
     with work_in(repo_dir):
-        run_hook('pre_gen_project', project_dir)
+        run_hook('pre_gen_project', project_dir, context)
 
     with work_in(template_dir):
         env = Environment()
