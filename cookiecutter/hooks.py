@@ -12,6 +12,7 @@ import logging
 import os
 import subprocess
 import sys
+import json
 
 from .utils import make_sure_path_exists, unicode_open, work_in
 
@@ -71,8 +72,8 @@ def run_hook(hook_name, project_dir, context):
         return
 
     exported_config = dict(
-        ('COOKIECUTTER_{0}'.format(key), value)
-        for key, value in context.iteritems()
+        ('COOKIECUTTER_{0}'.format(key.upper()), str(value))
+        for key, value in context['cookiecutter'].iteritems()
     )
 
     os.environ.update(exported_config)
