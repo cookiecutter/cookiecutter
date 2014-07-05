@@ -9,14 +9,6 @@ cookiecutter Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`cleanup` Module
----------------------
-
-.. automodule:: cookiecutter.cleanup
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`config` Module
 --------------------
 

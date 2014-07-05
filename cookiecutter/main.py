@@ -16,15 +16,15 @@ import argparse
 import logging
 import os
 import sys
-import shutil
 
+from . import __version__
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
 
-
 logger = logging.getLogger(__name__)
+
 
 def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     """
@@ -74,9 +74,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     )
 
 
-def parse_cookiecutter_args(args):
-    """ Parse the command-line arguments to Cookiecutter. """
-
+def _get_parser():
     parser = argparse.ArgumentParser(
         description='Create a project from a Cookiecutter project template.'
     )
@@ -93,11 +91,28 @@ def parse_cookiecutter_args(args):
         '-c', '--checkout',
         help='branch, tag or commit to checkout after git clone'
     )
+    cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    parser.add_argument(
+        '-V', '--version',
+        help="Show version information and exit.",
+        action='version',
+        version='Cookiecutter %s from %s (Python %s)' % (
+            __version__,
+            cookiecutter_pkg_dir,
+            sys.version[:3]
+        )
+    )
     parser.add_argument(
         '-v', '--verbose',
         help='Print debug information',
         action='store_true', default=False
     )
+
+    return parser
+
+def parse_cookiecutter_args(args):
+    """ Parse the command-line arguments to Cookiecutter. """
+    parser = _get_parser()
     return parser.parse_args(args)
 
 
@@ -114,7 +129,7 @@ def main():
             format='%(levelname)s: %(message)s',
             level=logging.INFO
         )
-    
+
     cookiecutter(args.input_dir, args.checkout, args.no_input)
 
 

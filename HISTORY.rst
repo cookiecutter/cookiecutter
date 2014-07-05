@@ -3,6 +3,46 @@
 History
 -------
 
+In Development (Master Branch)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Nothing yet.
+
+0.7.1 (2014-04-26)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bug fixes:
+
+* Use the current Python interpreter to run Python hooks, thanks to
+  `@coderanger`_.
+* Include tests and documentation in source distribution, thanks to
+  `@vincentbernat`_.
+* Fix various warnings and missing things in the docs (#129, #130),
+  thanks to `@nedbat`_.
+* Add command line option to get version (#89), thanks to `@davedash`_
+  and `@cyberj`_.
+
+Other changes:
+
+* Add more Cookiecutters to the list:
+
+  * `cookiecutter-avr`_ by `@solarnz`_
+  * `cookiecutter-tumblr-theme`_ by `@relekang`_
+  * `cookiecutter-django-paas`_ by `@pbacterio`_
+
+.. _`@coderanger`: https://github.com/coderanger
+.. _`@vincentbernat`: https://github.com/vincentbernat
+.. _`@nedbat`: https://github.com/nedbat
+.. _`@davedash`: https://github.com/davedash
+.. _`@cyberj`: https://github.com/cyberj
+
+.. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
+.. _`@solarnz`: https://github.com/solarnz
+.. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
+.. _`@relekang`: https://github.com/relekang
+.. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
+.. _`@pbacterio`: https://github.com/pbacterio
+
 0.7.0 (2013-11-09)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

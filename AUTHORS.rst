@@ -28,7 +28,19 @@ Contributors
 * Alexander Artemenko (`@svetlyak40wt`_)
 * Mahmoud Abdelkader (`@mahmoudimus`_)
 * Leonardo Borges Avelino (`@lborgav`_)
+* Chris Trotman (`@solarnz`_)
+* Rolf (`@relekang`_)
+* Noah Kantrowitz (`@coderanger`_)
+* Vincent Bernat (`@vincentbernat`_)
+* Germán Moya (`@pbacterio`_)
+* Ned Batchelder (`@nedbat`_)
+* Dave Dash (`@davedash`_)
+* Johan Charpentier (`@cyberj`_)
+* Éric Araujo (`@merwok`_)
+* Raphael Pierzina (`@hackebrot`_)
+* saxix (`@saxix`_)
 
+.. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@sloria`: https://github.com/sloria
@@ -48,3 +60,13 @@ Contributors
 .. _`@svetlyak40wt`: https://github.com/svetlyak40wt
 .. _`@mahmoudimus`: https://github.com/mahmoudimus
 .. _`@lborgav`: https://github.com/lborgav
+.. _`@solarnz`: https://github.com/solarnz
+.. _`@relekang`: https://github.com/relekang
+.. _`@coderanger`: https://github.com/coderanger
+.. _`@pbacterio`: https://github.com/pbacterio
+.. _`@nedbat`: https://github.com/nedbat
+.. _`@davedash`: https://github.com/davedash
+.. _`@cyberj`: https://github.com/cyberj
+.. _`@merwok`: https://github.com/merwok
+.. _`@hackebrot`: https://github.com/hackebrot
+.. _`@saxix`: https://github.com/saxix

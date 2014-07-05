@@ -67,11 +67,11 @@ def generate_file(project_dir, infile, context, env):
     2. Deal with infile appropriately:
 
         a. If infile is a binary file, copy it over without rendering.
-        b. If infile is a text file, render its contents and write the 
+        b. If infile is a text file, render its contents and write the
            rendered infile to outfile.
 
-    .. precondition::
-    
+    Precondition:
+
         When calling `generate_file()`, the root template dir must be the
         current working directory. Using `utils.work_in()` is the recommended
         way to perform this directory change.

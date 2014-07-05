@@ -31,6 +31,11 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
+try:
+    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
+except KeyError:
+    no_network = False
+
 
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
@@ -97,6 +102,7 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.checkout, 'develop')
 
 
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):

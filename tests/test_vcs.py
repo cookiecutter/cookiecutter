@@ -26,7 +26,17 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
+if sys.version_info[:3] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
+
 from cookiecutter import utils, vcs
+
+try:
+    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
+except KeyError:
+    no_network = False
 
 
 # Log debug and above to console
@@ -53,6 +63,7 @@ class TestIdentifyRepo(unittest.TestCase):
         self.assertEqual(vcs.identify_repo(repo_url), "hg")
 
 
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCS(unittest.TestCase):
 
     def test_git_clone(self):
@@ -111,6 +122,7 @@ class TestVCS(unittest.TestCase):
             shutil.rmtree('cookiecutter-trytonmodule')
 
 
+@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCSPrompt(unittest.TestCase):
 
     def setUp(self):
