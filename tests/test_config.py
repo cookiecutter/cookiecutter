@@ -17,6 +17,7 @@ import yaml
 
 from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
+from cookiecutter.utils import fix_path
 
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
@@ -28,9 +29,13 @@ class TestGetConfig(unittest.TestCase):
 
     def test_get_config(self):
         """ Opening and reading config file """
-        conf = config.get_config('tests/test-config/valid-config.yaml')
+        conf = config.get_config(
+            'tests/test-config/valid-config.yaml'
+        )
         expected_conf = {
-        	'cookiecutters_dir': '/home/example/some-path-to-templates',
+        	'cookiecutters_dir': os.path.expanduser(
+                fix_path('~/example/some-path-to-templates')
+            ),
         	'default_context': {
         		"full_name": "Firstname Lastname",
         		"email": "firstname.lastname@gmail.com",
@@ -55,7 +60,8 @@ class TestGetConfig(unittest.TestCase):
         An invalid config file should raise an `InvalidConfiguration` exception.
         """
         self.assertRaises(InvalidConfiguration, config.get_config,
-                          "tests/test-config/invalid-config.yaml")
+                          "tests/test-config/invalid-config.yaml"
+        )
 
 
 class TestGetConfigWithDefaults(unittest.TestCase):
@@ -64,7 +70,9 @@ class TestGetConfigWithDefaults(unittest.TestCase):
         """ A config file that overrides 1 of 2 defaults """
         
         conf = config.get_config('tests/test-config/valid-partial-config.yaml')
-        default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
+        default_cookiecutters_dir = os.path.expanduser(
+            os.path.join('~', '.cookiecutters')
+        )
         expected_conf = {
         	'cookiecutters_dir': default_cookiecutters_dir,
         	'default_context': {
@@ -79,9 +87,11 @@ class TestGetConfigWithDefaults(unittest.TestCase):
 class TestGetUserConfig(unittest.TestCase):
 
     def setUp(self):
-        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path = os.path.expanduser(
+            os.path.join('~', '.cookiecutterrc')
+        )
         self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
+            os.path.join('~', '.cookiecutterrc.backup')
         )
 
         # If ~/.cookiecutterrc is pre-existing, move it to a temp location
@@ -98,10 +108,15 @@ class TestGetUserConfig(unittest.TestCase):
 
     def test_get_user_config_valid(self):
         """ Get config from a valid ~/.cookiecutterrc file """
-        shutil.copy('tests/test-config/valid-config.yaml', self.user_config_path)
+        shutil.copy(
+            fix_path('tests/test-config/valid-config.yaml'),
+            self.user_config_path
+        )
         conf = config.get_user_config()
         expected_conf = {
-        	'cookiecutters_dir': '/home/example/some-path-to-templates',
+        	'cookiecutters_dir': os.path.expanduser(
+                fix_path('~/example/some-path-to-templates')
+            ),
         	'default_context': {
         		"full_name": "Firstname Lastname",
         		"email": "firstname.lastname@gmail.com",
@@ -112,14 +127,15 @@ class TestGetUserConfig(unittest.TestCase):
 
     def test_get_user_config_invalid(self):
         """ Get config from an invalid ~/.cookiecutterrc file """
-        shutil.copy('tests/test-config/invalid-config.yaml', self.user_config_path)
+        shutil.copy(
+            fix_path('tests/test-config/invalid-config.yaml'),
+            self.user_config_path
+        )
         self.assertRaises(InvalidConfiguration, config.get_user_config)
 
     def test_get_user_config_nonexistent(self):
         """ Get config from a nonexistent ~/.cookiecutterrc file """
         self.assertEqual(config.get_user_config(), config.DEFAULT_CONFIG)
-        
-
 
 
 if __name__ == '__main__':

@@ -30,6 +30,7 @@ def make_sure_path_exists(path):
     """
     
     logging.debug("Making sure path exists: {0}".format(path))
+    path = fix_path(path)
     try:
         os.makedirs(path)
     except OSError as exception:
@@ -43,6 +44,7 @@ def unicode_open(filename, *args, **kwargs):
     Opens a file as usual on Python 3, and with UTF-8 encoding on Python 2.
     :param filename: Name of file to open.
     """
+    filename = fix_path(filename)
     kwargs['encoding'] = "utf-8"
     if PY3:
         return open(filename, *args, **kwargs)
@@ -58,7 +60,11 @@ def work_in(dirname=None):
     curdir = os.getcwd()
     try:
         if dirname is not None:
+            dirname = fix_path(dirname)
             os.chdir(dirname)
         yield
     finally:
         os.chdir(curdir)
+
+def fix_path(path):
+    return path.replace("/", os.sep)

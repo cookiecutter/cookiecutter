@@ -1,16 +1,41 @@
-build: false
 environment:
   matrix:
-    - TOXENV: "2.7"
-    - TOXENV: "3.4"
+    - PYTHON: "C:\\Python27"
+      PYTHON_VERSION: "2.7.8"
+      PYTHON_ARCH: "32"
+
+    # - PYTHON: "C:\\Python27-64"
+    #   PYTHON_VERSION: "2.7.8"
+    #   WINDOWS_SDK_VERSION: "v7.0"
+    #   PYTHON_ARCH: "64"
+
+    # - PYTHON: "C:\\Python34"
+    #   PYTHON_VERSION: "3.4.1"
+    #   PYTHON_ARCH: "32"
+
+    # - PYTHON: "C:\\Python34-64"
+    #   PYTHON_VERSION: "3.4.1"
+    #   WINDOWS_SDK_VERSION: "v7.1"
+    #   PYTHON_ARCH: "64"
+
 init:
-  - "ECHO %TOXENV%"
-  - ps: "ls C:/Python*"
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+
 install:
-  - ps: Invoke-WebRequest "https://bootstrap.pypa.io/ez_setup.py" -OutFile "c:/ez_setup.py"
-  - ps: Invoke-WebRequest "https://bootstrap.pypa.io/get-pip.py" -OutFile "c:/get-pip.py"
-  - "c:/python27/python c:/ez_setup.py"
-  - "c:/python27/python c:/get-pip.py"
-  - "c:/python27/Scripts/pip install tox"
+  - "appveyor/setup_build_env.cmd"
+  - "powershell appveyor/install.ps1"
+
+build: false  # Not a C# project, build stuff at the test step instead.
+
 test_script:
-  - "c:/python27/Scripts/tox"
+  - "%PYTHON%/python setup.py test"
+
+after_test:
+  - "%PYTHON%/python setup.py bdist_wheel"
+  - ps: "ls dist"
+
+artifacts:
+  - path: dist\*
+
+#on_success:
+#  - TODO: upload the content of dist/*.whl to a public wheelhouse

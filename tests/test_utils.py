@@ -9,6 +9,7 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
+import platform
 import shutil
 import sys
 import unittest
@@ -22,11 +23,12 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(utils.make_sure_path_exists('/usr/'))
         self.assertTrue(utils.make_sure_path_exists('tests/blah'))
         self.assertTrue(utils.make_sure_path_exists('tests/trailingslash/'))
-        self.assertFalse(
-            utils.make_sure_path_exists(
-                '/this-dir-does-not-exist-and-cant-be-created/'.replace("/", os.sep)
+        if "windows" not in platform.platform().lower():
+            self.assertFalse(
+                utils.make_sure_path_exists(
+                    '/this-dir-does-not-exist-and-cant-be-created/'
+                )
             )
-        )
         shutil.rmtree('tests/blah/')
         shutil.rmtree('tests/trailingslash/')
 
