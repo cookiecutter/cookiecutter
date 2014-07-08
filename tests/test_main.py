@@ -31,6 +31,8 @@ else:
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
+from tests import force_delete
+
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
@@ -61,7 +63,7 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('fake-project'):
-            shutil.rmtree('fake-project')
+            shutil.rmtree('fake-project', onerror=force_delete)
 
 
 class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
@@ -80,7 +82,7 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('fake-project'):
-            shutil.rmtree('fake-project')
+            shutil.rmtree('fake-project', onerror=force_delete)
 
 
 class TestArgParsing(unittest.TestCase):
@@ -101,13 +103,13 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+            shutil.rmtree('cookiecutter-pypackage', onerror=force_delete)
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
+            shutil.rmtree('boilerplate', onerror=force_delete)
         if os.path.isdir('cookiecutter-trytonmodule'):
-            shutil.rmtree('cookiecutter-trytonmodule')
+            shutil.rmtree('cookiecutter-trytonmodule', onerror=force_delete)
         if os.path.isdir('module_name'):
-            shutil.rmtree('module_name')
+            shutil.rmtree('module_name', onerror=force_delete)
         super(TestCookiecutterRepoArg, self).tearDown()
 
     # HACK: The *args is because:
@@ -134,11 +136,21 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
-        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
+        clone_dir = os.path.expanduser(
+            os.path.join('~', '.cookiecutters', 'cookiecutter-pypackage')
+        )
         self.assertTrue(os.path.exists(clone_dir))
         self.assertTrue(os.path.isdir('boilerplate'))
-        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
-        self.assertTrue(os.path.exists('boilerplate/setup.py'))
+        self.assertTrue(
+            os.path.isfile(
+                os.path.join('boilerplate', 'README.rst')
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join('boilerplate', 'setup.py')
+            )
+        )
 
     @patch(input_str, lambda x: '')
     def test_cookiecutter_mercurial(self):
@@ -149,8 +161,16 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.exists(clone_dir))
         self.assertTrue(os.path.isdir('module_name'))
-        self.assertTrue(os.path.isfile('module_name/README'))
-        self.assertTrue(os.path.exists('module_name/setup.py'))
+        self.assertTrue(
+            os.path.isfile(
+                os.path.join('module_name', 'README')
+            )
+        )
+        self.assertTrue(
+            os.path.exists(
+                os.path.join('module_name', 'setup.py')
+            )
+        )
 
 
 if __name__ == '__main__':

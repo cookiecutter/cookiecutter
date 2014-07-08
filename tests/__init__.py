@@ -57,7 +57,7 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
         # If ~/.cookiecutterrc is pre-existing, move it to a temp location
         self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
         self.user_config_path_backup = os.path.expanduser(
-            '~/.cookiecutterrc.backup'
+            os.path.join('~', '.cookiecutterrc.backup')
         )
         if os.path.exists(self.user_config_path):
             self.user_config_found = True
@@ -68,14 +68,18 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
 
         # If the default cookiecutters_dir is pre-existing, move it to a
         # temp location
-        self.cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
-        self.cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
+        self.cookiecutters_dir = os.path.expanduser(
+            os.path.join('~', '.cookiecutters')
+        )
+        self.cookiecutters_dir_backup = os.path.expanduser(
+            os.path.join('~', '.cookiecutters.backup')
+        )
         if os.path.isdir(self.cookiecutters_dir):
             self.cookiecutters_dir_found = True
 
             # Remove existing backups before backing up. If they exist, they're stale.
             if os.path.isdir(self.cookiecutters_dir_backup):
-                shutil.rmtree(self.cookiecutters_dir_backup)
+                shutil.rmtree(self.cookiecutters_dir_backup, onerror=force_delete)
 
             shutil.copytree(self.cookiecutters_dir, self.cookiecutters_dir_backup)
         else:
@@ -93,15 +97,15 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
         if self.cookiecutters_dir_found:        
             # Delete the created ~/.cookiecutters dir as long as a backup exists
             if os.path.isdir(self.cookiecutters_dir) and os.path.isdir(self.cookiecutters_dir_backup):
-                shutil.rmtree(self.cookiecutters_dir)
+                shutil.rmtree(self.cookiecutters_dir, onerror=force_delete)
         else:
             # Delete the created ~/.cookiecutters dir.
             # There's no backup because it never existed
             if os.path.isdir(self.cookiecutters_dir):
-                shutil.rmtree(self.cookiecutters_dir)
+                shutil.rmtree(self.cookiecutters_dir, onerror=force_delete)
         
         # Restore the user's default cookiecutters_dir contents
         if os.path.isdir(self.cookiecutters_dir_backup):
             shutil.copytree(self.cookiecutters_dir_backup, self.cookiecutters_dir)
         if os.path.isdir(self.cookiecutters_dir):
-            shutil.rmtree(self.cookiecutters_dir_backup)
+            shutil.rmtree(self.cookiecutters_dir_backup, onerror=force_delete)
