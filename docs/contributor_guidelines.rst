@@ -1,8 +1,8 @@
 Contributor Guidelines
-=======================
+-----------------------
 
 Pull Request Guidelines
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you submit a pull request, check that it meets these guidelines:
 
@@ -15,6 +15,6 @@ Before you submit a pull request, check that it meets these guidelines:
    the tests pass for all supported Python versions.
 
 Coding Standards
------------------
+~~~~~~~~~~~~~~~~
 
 TODO
