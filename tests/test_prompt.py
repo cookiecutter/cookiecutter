@@ -83,6 +83,24 @@ class TestPrompt(unittest.TestCase):
         else:
             self.assertEqual(cookiecutter_dict, {"full_name": u"Řekni či napiš své jméno"})
 
+    def test_prompt_for_config_with_interrupt(self):
+        context = {"cookiecutter": {"full_name": "Your Name"}}
+
+        if PY3:
+            # Create patch that will raise ``KeyboardInterrupt`` during input
+            exeption_patch = patch(
+                input_str,
+                return_value=lambda x: 'Audrey Roy',
+                side_effect=KeyboardInterrupt
+            )
+
+            # Use patch context
+            with exeption_patch:
+                # Test that the function catches the exeption and raises
+                # ``SystemExit``.
+                with self.assertRaises(SystemExit):
+                    prompt.prompt_for_config(context)
+
 
 class TestQueryAnswers(unittest.TestCase):
 
