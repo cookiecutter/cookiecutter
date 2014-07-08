@@ -31,7 +31,7 @@ def prompt_for_config(context):
 
         try:
             if PY3:
-                new_val = input(prompt.encode('utf-8'))
+                new_val = input(prompt)
             else:
                 new_val = input(prompt.encode('utf-8')).decode('utf-8')
         except KeyboardInterrupt:
