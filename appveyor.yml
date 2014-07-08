@@ -1,0 +1,16 @@
+build: false
+environment:
+  matrix:
+    - TOXENV: "2.7"
+    - TOXENV: "3.4"
+init:
+  - "ECHO %TOXENV%"
+  - ps: "ls C:/Python*"
+install:
+  - ps: Invoke-WebRequest "https://bootstrap.pypa.io/ez_setup.py" -OutFile "c:/ez_setup.py"
+  - ps: Invoke-WebRequest "https://bootstrap.pypa.io/get-pip.py" -OutFile "c:/get-pip.py"
+  - "c:/python27/python c:/ez_setup.py"
+  - "c:/python27/python c:/get-pip.py"
+  - "c:/python27/Scripts/pip install tox"
+test_script:
+  - "c:/python27/Scripts/tox"
