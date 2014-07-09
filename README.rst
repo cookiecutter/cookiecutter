@@ -259,6 +259,9 @@ Similar projects
 Community
 ---------
 
+The core committer team is `@audreyr`_, `@pydanny`_, and `@michaeljoseph`_. We
+welcome you and invite you to participate.
+
 Stuck? Try one of the following:
 
 * See the `Troubleshooting`_ page.
@@ -284,8 +287,9 @@ Connect with other Cookiecutter contributors and users in IRC:
 Encouragement is unbelievably motivating. If you want more work done on
 Cookiecutter, show support:
 
+* Thank a core committer for their efforts.
 * Star `Cookiecutter on GitHub`_.
-* Please, please join the `Cookiecutter Gittip community`_.
+* Join the `Cookiecutter Gittip community`_.
 
 Got criticism or complaints?
 
@@ -309,6 +313,7 @@ Waiting for a response to an issue/question?
 * Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
   available for hire for consultation or custom development.
 
+
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
 .. _`contributors`: https://github.com/audreyr/cookiecutter/blob/master/AUTHORS.rst
@@ -317,3 +322,5 @@ Waiting for a response to an issue/question?
 .. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
 .. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
 .. _`audreyr`: https://github.com/audreyr
+.. _`@pydanny`: https://github.com/pydanny
+.. _`@michaeljoseph`: https://github.com/michaeljoseph
