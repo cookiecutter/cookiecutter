@@ -301,14 +301,13 @@ Got criticism or complaints?
 
 Waiting for a response to an issue/question?
 
-* Be patient and persistent. All issues are on `audreyr`_'s radar and will be
-  considered thoughtfully, but due to the growing to-do list/free time ratio,
-  it may take time for a response. If urgent, it's fine to ping `audreyr`_
-  in the issue with a reminder.
+* Be patient and persistent. All issues are on the core committer team's radar and
+  will be considered thoughtfully, but we have a lot of issues to work through. If
+  urgent, it's fine to ping a core committer in the issue with a reminder.
 * Ask others to comment, discuss, review, etc.
 * Search the Cookiecutter repo for issues related to yours.
 * Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
-  available hourly for consultation or custom development.
+  available for hire for consultation or custom development.
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
