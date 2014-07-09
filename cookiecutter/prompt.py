@@ -23,16 +23,22 @@ def prompt_for_config(context):
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.
+
+    Abortable from command line via "ctrl-c".
     """
     cookiecutter_dict = {}
 
     for key, val in iteritems(context['cookiecutter']):
-        prompt = "{0} (default is \"{1}\")? ".format(key, val)
+        prompt = "[?] {0}: ({1}) ".format(key, val)
 
-        if PY3:
-            new_val = input(prompt.encode('utf-8'))
-        else:
-            new_val = input(prompt.encode('utf-8')).decode('utf-8')
+        try:
+            if PY3:
+                new_val = input(prompt)
+            else:
+                new_val = input(prompt.encode('utf-8')).decode('utf-8')
+        except KeyboardInterrupt:
+            # Exit and print a new line
+            sys.exit("\n")
 
         new_val = new_val.strip()
 
