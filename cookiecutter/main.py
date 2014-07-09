@@ -20,13 +20,13 @@ import sys
 from . import __version__
 from .config import get_user_config
 from .prompt import prompt_for_config
-from .generate import generate_context, generate_files
+from .generate import generate_context, generate_files, generate_parameters
 from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
 
-def cookiecutter(input_dir, checkout=None, no_input=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, parameters=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -53,9 +53,13 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
 
+    if parameters:
+        parameters = generate_parameters(parameters)
+
     context = generate_context(
         context_file=context_file,
-        default_context=config_dict['default_context']
+        default_context=config_dict['default_context'],
+        user_parameters=parameters
     )
 
     # prompt the user to manually configure at the command line.
@@ -80,6 +84,11 @@ def _get_parser():
         action="store_true",
         help='Do not prompt for parameters and only use cookiecutter.json '
              'file content')
+    parser.add_argument(
+        '--parameters',
+        metavar='parameters.json',
+        help="file containings parameters to be passed to cookiecutter"
+    )
     parser.add_argument(
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
@@ -127,7 +136,7 @@ def main():
             level=logging.INFO
         )
 
-    cookiecutter(args.input_dir, args.checkout, args.no_input)
+    cookiecutter(args.input_dir, args.checkout, args.no_input, args.parameters)
 
 
 if __name__ == '__main__':

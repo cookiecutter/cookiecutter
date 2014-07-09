@@ -18,7 +18,7 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
-from .exceptions import NonTemplatedInputDirException
+from . import exceptions
 from .find import find_template
 from .utils import make_sure_path_exists, unicode_open, work_in
 from .hooks import run_hook
@@ -32,7 +32,13 @@ else:
     from collections import OrderedDict
 
 
-def generate_context(context_file='cookiecutter.json', default_context=None):
+def generate_parameters(filename):
+    with open(filename) as file_handle:
+        return json.load(file_handle, encoding='utf-8',
+                         object_pairs_hook=OrderedDict)
+
+def generate_context(context_file='cookiecutter.json', default_context=None,
+                     user_parameters=None):
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
@@ -43,9 +49,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
     """
 
     context = {}
-
-    file_handle = open(context_file)
-    obj = json.load(file_handle, encoding='utf-8', object_pairs_hook=OrderedDict)
+    obj = generate_parameters(context_file)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
@@ -56,6 +60,17 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
     # user's global config, if available
     if default_context:
         obj.update(default_context)
+
+    # Overwrite context variables with user provided parameters. An error
+    # will be thrown if the user passed a parameter that is not associated
+    # with the project
+    if user_parameters:
+        unknown_keys = set(user_parameters.keys()) - set(obj.keys())
+        if len(unknown_keys):
+            raise exceptions.InvalidConfiguration(
+                "The following set of keys are not supported by "
+                "this cookiecutter project:\n{0}".format(unknown_keys))
+        obj.update(user_parameters)
 
     logging.debug('Context generated is {0}'.format(context))
     return context
@@ -146,7 +161,7 @@ def ensure_dir_is_templated(dirname):
         '}}' in dirname:
         return True
     else:
-        raise NonTemplatedInputDirException
+        raise exceptions.NonTemplatedInputDirException
 
 
 def generate_files(repo_dir, context=None, output_dir="."):
