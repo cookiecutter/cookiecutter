@@ -33,14 +33,14 @@ class TestGetConfig(unittest.TestCase):
             'tests/test-config/valid-config.yaml'
         )
         expected_conf = {
-        	'cookiecutters_dir': os.path.expanduser(
+            'cookiecutters_dir': os.path.expanduser(
                 fix_path('~/example/some-path-to-templates')
             ),
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
+            'default_context': {
+                "full_name": "Firstname Lastname",
+                "email": "firstname.lastname@gmail.com",
+                "github_username": "example"
+            }
         }
         self.assertEqual(conf, expected_conf)
 
@@ -74,12 +74,12 @@ class TestGetConfigWithDefaults(unittest.TestCase):
             os.path.join('~', '.cookiecutters')
         )
         expected_conf = {
-        	'cookiecutters_dir': default_cookiecutters_dir,
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
+            'cookiecutters_dir': default_cookiecutters_dir,
+            'default_context': {
+                "full_name": "Firstname Lastname",
+                "email": "firstname.lastname@gmail.com",
+                "github_username": "example"
+            }
         }
         self.assertEqual(conf, expected_conf)
 
@@ -114,14 +114,14 @@ class TestGetUserConfig(unittest.TestCase):
         )
         conf = config.get_user_config()
         expected_conf = {
-        	'cookiecutters_dir': os.path.expanduser(
+            'cookiecutters_dir': os.path.expanduser(
                 fix_path('~/example/some-path-to-templates')
             ),
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
+            'default_context': {
+                "full_name": "Firstname Lastname",
+                "email": "firstname.lastname@gmail.com",
+                "github_username": "example"
+            }
         }
         self.assertEqual(conf, expected_conf)
 

@@ -11,7 +11,6 @@ Global configuration handling
 from __future__ import unicode_literals
 import copy
 import os
-import platform
 
 import yaml
 
@@ -25,6 +24,7 @@ DEFAULT_CONFIG = {
     ),
     'default_context': {}
 }
+
 
 def get_config(config_path):
     """

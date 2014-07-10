@@ -13,13 +13,12 @@ import os
 import subprocess
 import sys
 
-from .utils import make_sure_path_exists, unicode_open, work_in
-
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
     # TODO: other hooks should be listed here
 ]
+
 
 def find_hooks():
     '''
