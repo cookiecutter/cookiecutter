@@ -73,8 +73,10 @@ def query_yes_no(question, default="yes"):
         sys.stdout.write(question + prompt)
         try:
             choice = input().lower()
-        except EOFError:
-            return valid[default]
+
+        # Ignore coverage on these two lines because they are Windows specific
+        except EOFError: # pragma: no cover
+            return valid[default] # pragma: no cover
 
         if default is not None and choice == '':
             return valid[default]
