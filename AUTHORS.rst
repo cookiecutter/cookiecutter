@@ -43,6 +43,7 @@ Contributors
 * Éric Araujo (`@merwok`_)
 * Raphael Pierzina (`@hackebrot`_)
 * saxix (`@saxix`_)
+* Tzu-ping Chung (`@uranusjr`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -74,3 +75,4 @@ Contributors
 .. _`@merwok`: https://github.com/merwok
 .. _`@hackebrot`: https://github.com/hackebrot
 .. _`@saxix`: https://github.com/saxix
+.. _`@uranusjr`: https://github.com/uranusjr
