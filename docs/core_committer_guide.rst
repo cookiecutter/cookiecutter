@@ -68,6 +68,18 @@ Stable
 * Stable APIs that tool builders can rely on
 * New features require a +1 from @audreyr
 
+VCS-Hosted Templates
+~~~~~~~~~~~~~~~~~~~~~
+
+Cookiecutter project templates are intentionally hosted VCS repos as-is.
+
+* They are easily forkable
+* It's easy for users to browse forks and files
+* They are searchable via standard Github/Bitbucket/other search interface
+* Minimizes the need for packaging-related cruft files
+* Easy to create a public project template and host it for free
+* Easy to collaborate
+
 Process: Pull Requests
 ------------------------
 

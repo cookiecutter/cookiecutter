@@ -7,10 +7,15 @@ Development Lead
 
 * Audrey Roy <audreyr@gmail.com>
 
+Core Committers
+---------------
+
+* Daniel Greenfeld (`@pydanny`_)
+* Michael Joseph (`@michaeljoseph`_)
+
 Contributors
 ------------
 
-* Daniel Greenfeld (`@pydanny`_)
 * Steven Loria (`@sloria`_)
 * Goran Peretin (`@gperetin`_)
 * Hamish Downer (`@foobacca`_)
@@ -23,7 +28,6 @@ Contributors
 * Alex Gaynor (`@alex`_)
 * Rolo (`@rolo`_)
 * Pablo (`@oubiga`_)
-* Michael Joseph (`@michaeljoseph`_)
 * Bruno Rocha (`@rochacbruno`_)
 * Alexander Artemenko (`@svetlyak40wt`_)
 * Mahmoud Abdelkader (`@mahmoudimus`_)

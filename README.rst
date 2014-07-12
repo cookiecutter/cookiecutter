@@ -259,6 +259,9 @@ Similar projects
 Community
 ---------
 
+The core committer team is `@audreyr`_, `@pydanny`_, and `@michaeljoseph`_. We
+welcome you and invite you to participate.
+
 Stuck? Try one of the following:
 
 * See the `Troubleshooting`_ page.
@@ -284,8 +287,9 @@ Connect with other Cookiecutter contributors and users in IRC:
 Encouragement is unbelievably motivating. If you want more work done on
 Cookiecutter, show support:
 
+* Thank a core committer for their efforts.
 * Star `Cookiecutter on GitHub`_.
-* Please, please join the `Cookiecutter Gittip community`_.
+* Join the `Cookiecutter Gittip community`_.
 
 Got criticism or complaints?
 
@@ -301,14 +305,14 @@ Got criticism or complaints?
 
 Waiting for a response to an issue/question?
 
-* Be patient and persistent. All issues are on `audreyr`_'s radar and will be
-  considered thoughtfully, but due to the growing to-do list/free time ratio,
-  it may take time for a response. If urgent, it's fine to ping `audreyr`_
-  in the issue with a reminder.
+* Be patient and persistent. All issues are on the core committer team's radar and
+  will be considered thoughtfully, but we have a lot of issues to work through. If
+  urgent, it's fine to ping a core committer in the issue with a reminder.
 * Ask others to comment, discuss, review, etc.
 * Search the Cookiecutter repo for issues related to yours.
 * Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
-  available hourly for consultation or custom development.
+  available for hire for consultation or custom development.
+
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
@@ -318,3 +322,5 @@ Waiting for a response to an issue/question?
 .. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
 .. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
 .. _`audreyr`: https://github.com/audreyr
+.. _`@pydanny`: https://github.com/pydanny
+.. _`@michaeljoseph`: https://github.com/michaeljoseph
