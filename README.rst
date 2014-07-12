@@ -156,6 +156,11 @@ C
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
 * `cookiecutter-avr`_: A template for avr development.
 
+C++
+~~~
+
+* `BoilerplatePP`_: A simple cmake template with unit testing for projects written in C++.
+
 Common Lisp
 ~~~~~~~~~~~
 
@@ -203,6 +208,7 @@ HTML
 .. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
+.. _`BoilerplatePP`: https://github.com/Paspartout/BoilerplatePP
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
