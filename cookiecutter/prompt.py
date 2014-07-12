@@ -23,6 +23,8 @@ def prompt_for_config(context):
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.
+
+    Abortable from command line via "ctrl-c".
     """
     cookiecutter_dict = {}
 

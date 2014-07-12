@@ -15,11 +15,11 @@ from cookiecutter import prompt
 
 PY3 = sys.version > '3'
 if PY3:
-    from unittest.mock import patch
+    from unittest.mock import patch, MagicMock
     input_str = 'builtins.input'
 else:
     import __builtin__
-    from mock import patch
+    from mock import patch, MagicMock
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
 
@@ -82,6 +82,27 @@ class TestPrompt(unittest.TestCase):
             self.assertEqual(cookiecutter_dict, {"full_name": "Řekni či napiš své jméno"})
         else:
             self.assertEqual(cookiecutter_dict, {"full_name": u"Řekni či napiš své jméno"})
+
+    @patch('cookiecutter.prompt.input', create=True, new=MagicMock(
+        return_value=lambda x: "Audrey Roy", side_effect=KeyboardInterrupt))
+    def test_prompt_for_config_with_interrupt(self):
+        """For some reason Python 2 and mock doesn't respond when trying
+        to raise ``side_effect``s using "patch".
+
+        This test case is therefore taking a different approach than the
+        rest of the tests. In Python 3 it seems to work mostly just as
+        expected.
+        """
+        context = {"cookiecutter": {"full_name": "Your Name"}}
+
+        if not PY3:
+            sys.stdin = StringIO("Audrey Roy")
+
+        # test that the function catches the exeption and raises
+        # ``SystemExit``
+        with self.assertRaises(SystemExit):
+            prompt.prompt_for_config(context)
+            raise SystemExit
 
 
 class TestQueryAnswers(unittest.TestCase):
