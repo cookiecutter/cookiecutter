@@ -19,8 +19,9 @@ import sys
 
 from . import __version__
 from .config import get_user_config
+from .generate import generate_context, generate_files
 from .prompt import prompt_for_config
-from .generate import generate_context, generate_files, generate_parameters
+from .utils import read_json_file
 from .vcs import clone
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False, parameters=None):
     :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     :param checkout: The branch, tag or commit ID to checkout after clone
+    :param parameters: dictionary containing parameters to be passed to
+        cookiecutter overriding values in cookiecutter.json and default_context.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -52,9 +55,6 @@ def cookiecutter(input_dir, checkout=None, no_input=False, parameters=None):
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
-
-    if parameters:
-        parameters = generate_parameters(parameters)
 
     context = generate_context(
         context_file=context_file,
@@ -116,6 +116,7 @@ def _get_parser():
 
     return parser
 
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
     parser = _get_parser()
@@ -128,7 +129,8 @@ def main():
     args = parse_cookiecutter_args(sys.argv[1:])
 
     if args.verbose:
-        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s',
+                            level=logging.DEBUG)
     else:
         # Log info and above to console
         logging.basicConfig(
@@ -136,7 +138,10 @@ def main():
             level=logging.INFO
         )
 
-    cookiecutter(args.input_dir, args.checkout, args.no_input, args.parameters)
+    # load parameters from the passed in --parameters JSON file
+    parameters = read_json_file(args.parameters) if args.parameters else None
+
+    cookiecutter(args.input_dir, args.checkout, args.no_input, parameters)
 
 
 if __name__ == '__main__':

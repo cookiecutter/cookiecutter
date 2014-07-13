@@ -11,7 +11,6 @@ from __future__ import unicode_literals
 import logging
 import os
 import shutil
-import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -19,23 +18,10 @@ from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from . import exceptions
+from . import utils
 from .find import find_template
-from .utils import make_sure_path_exists, unicode_open, work_in
 from .hooks import run_hook
 
-
-if sys.version_info[:2] < (2, 7):
-    import simplejson as json
-    from ordereddict import OrderedDict
-else:
-    import json
-    from collections import OrderedDict
-
-
-def generate_parameters(filename):
-    with open(filename) as file_handle:
-        return json.load(file_handle, encoding='utf-8',
-                         object_pairs_hook=OrderedDict)
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      user_parameters=None):
@@ -49,7 +35,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     """
 
     context = {}
-    obj = generate_parameters(context_file)
+    obj = utils.read_json_file(context_file)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
@@ -128,7 +114,7 @@ def generate_file(project_dir, infile, context, env):
 
         logging.debug("Writing {0}".format(outfile))
 
-        with unicode_open(outfile, 'w') as fh:
+        with utils.unicode_open(outfile, 'w') as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -139,7 +125,6 @@ def render_and_create_dir(dirname, context, output_dir):
     """
     Renders the name of a directory, creates the directory, and returns its path.
     """
-
     name_tmpl = Template(dirname)
     rendered_dirname = name_tmpl.render(**context)
     logging.debug('Rendered dir {0} must exist in output_dir {1}'.format(
@@ -149,7 +134,7 @@ def render_and_create_dir(dirname, context, output_dir):
     dir_to_create = os.path.normpath(
         os.path.join(output_dir, rendered_dirname)
     )
-    make_sure_path_exists(dir_to_create)
+    utils.make_sure_path_exists(dir_to_create)
     return dir_to_create
 
 
@@ -157,8 +142,7 @@ def ensure_dir_is_templated(dirname):
     """
     Ensures that dirname is a templated directory name.
     """
-    if '{{' in dirname and \
-        '}}' in dirname:
+    if '{{' in dirname and '}}' in dirname:
         return True
     else:
         raise exceptions.NonTemplatedInputDirException
@@ -192,10 +176,10 @@ def generate_files(repo_dir, context=None, output_dir="."):
     logging.debug("project_dir is {0}".format(project_dir))
 
     # run pre-gen hook from repo_dir
-    with work_in(repo_dir):
+    with utils.work_in(repo_dir):
         run_hook('pre_gen_project', project_dir)
 
-    with work_in(template_dir):
+    with utils.work_in(template_dir):
         env = Environment()
         env.loader = FileSystemLoader(".")
 
@@ -210,5 +194,5 @@ def generate_files(repo_dir, context=None, output_dir="."):
                 generate_file(project_dir, infile, context, env)
 
     # run post-gen hook from repo_dir
-    with work_in(repo_dir):
+    with utils.work_in(repo_dir):
         run_hook('post_gen_project', project_dir)
