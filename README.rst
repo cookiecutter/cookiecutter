@@ -131,8 +131,6 @@ Here is a list of **cookiecutters** (aka Cookiecutter project templates) for you
 
 Make your own, then submit a pull request adding yours to this list!
 
-Don't hesitate to try them online: http://diecutter.io/cookieforms/
-
 Python
 ~~~~~~
 
