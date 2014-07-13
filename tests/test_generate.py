@@ -111,6 +111,21 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
         else:
             self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
 
+    def test_generate_files_keep_trailing_newline(self):
+        generate.generate_files(
+            context={
+                'cookiecutter': {'food': 'pizzä'}
+            },
+            repo_dir='tests/test-generate-files',
+            jinja_options={'keep_trailing_newline': True}
+        )
+        self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
+        simple_text = open('inputpizzä/simple.txt', 'rt').read()
+        if PY3:
+            self.assertEqual(simple_text, 'I eat pizzä\n')
+        else:
+            self.assertEqual(simple_text, 'I eat pizzä\n'.encode('utf-8'))
+
     def test_generate_files_binaries(self):
         generate.generate_files(
             context={
