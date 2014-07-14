@@ -150,8 +150,8 @@ Python
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
 * `cookiecutter-pypackage-minimal`_: A mimimal Python package template.
 * `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
-* `cookiecutter-pylibrary`: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
-* `cookiecutter-pylibrary-minimal`: Same as above but without Pytest and static configuration for Tox/Travis/AppVeyor (no generator).
+* `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
+* `cookiecutter-pylibrary-minimal`_: Same as above but without Pytest and static configuration for Tox/Travis/AppVeyor (no generator).
 
 C
 ~~
