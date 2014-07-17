@@ -19,20 +19,23 @@ import sys
 
 from . import __version__
 from .config import get_user_config
-from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
+from .prompt import prompt_for_config
+from .utils import read_json_file
 from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
 
-def cookiecutter(input_dir, checkout=None, no_input=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, parameters=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
     :param input_dir: A directory containing a project template dir,
         or a URL to git repo.
     :param checkout: The branch, tag or commit ID to checkout after clone
+    :param parameters: dictionary containing parameters to be passed to
+        cookiecutter overriding values in cookiecutter.json and default_context.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -55,7 +58,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     context = generate_context(
         context_file=context_file,
-        default_context=config_dict['default_context']
+        default_context=config_dict['default_context'],
+        user_parameters=parameters
     )
 
     # prompt the user to manually configure at the command line.
@@ -80,6 +84,11 @@ def _get_parser():
         action="store_true",
         help='Do not prompt for parameters and only use cookiecutter.json '
              'file content')
+    parser.add_argument(
+        '--parameters',
+        metavar='parameters.json',
+        help="file containings parameters to be passed to cookiecutter"
+    )
     parser.add_argument(
         'input_dir',
         help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
@@ -107,6 +116,7 @@ def _get_parser():
 
     return parser
 
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
     parser = _get_parser()
@@ -119,7 +129,8 @@ def main():
     args = parse_cookiecutter_args(sys.argv[1:])
 
     if args.verbose:
-        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s',
+                            level=logging.DEBUG)
     else:
         # Log info and above to console
         logging.basicConfig(
@@ -127,7 +138,10 @@ def main():
             level=logging.INFO
         )
 
-    cookiecutter(args.input_dir, args.checkout, args.no_input)
+    # load parameters from the passed in --parameters JSON file
+    parameters = read_json_file(args.parameters) if args.parameters else None
+
+    cookiecutter(args.input_dir, args.checkout, args.no_input, parameters)
 
 
 if __name__ == '__main__':

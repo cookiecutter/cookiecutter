@@ -95,6 +95,19 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.input_dir, 'project/')
         self.assertEqual(args.checkout, 'develop')
 
+    def test_parse_cookiecutter_args_with_no_input(self):
+        args = main.parse_cookiecutter_args(['project/', '--no-input'])
+        self.assertEqual(args.input_dir, 'project/')
+        self.assertEqual(args.no_input, True)
+
+    def test_parse_cookiecutter_args_with_parameters(self):
+        args = main.parse_cookiecutter_args(['project/', '--parameters', 'myparams.json'])
+        self.assertEqual(args.input_dir, 'project/')
+        self.assertEqual(args.parameters, 'myparams.json')
+
+    def test_parse_cookiecutter_args_without_parameters(self):
+        args = main.parse_cookiecutter_args(['project/'])
+        self.assertEqual(args.parameters, None)
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
