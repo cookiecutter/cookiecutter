@@ -253,6 +253,8 @@ Similar projects
 
 * `init-skeleton`_ clones or copies a repository, executes npm install and bower install and removes the .git directory.
 
+* `Cog`_ python-based code generation toolkit developed by Ned Batchelder
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
@@ -263,6 +265,8 @@ Similar projects
 .. _`grunt-init`: https://github.com/gruntjs/grunt-init
 .. _`scaffolt`: https://github.com/paulmillr/scaffolt
 .. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
+.. _`Cog`: https://bitbucket.org/ned/cog
+
 
 Community
 ---------
