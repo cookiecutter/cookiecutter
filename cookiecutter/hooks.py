@@ -42,12 +42,14 @@ def find_hooks():
     return r
 
 
-def _run_hook(script_path, cwd='.'):
+def _run_hook(script_path, context, cwd='.'):
     '''
     Run a sigle external script located at `script_path` (path should be
     absolute).
     If `cwd` is provided, the script will be run from that directory.
     '''
+    if 'cookiecutter' in context:
+        os.environ.update(context['cookiecutter'])
     run_thru_shell = sys.platform.startswith('win')
     if script_path.endswith('.py'):
         script_command = [sys.executable, script_path]
@@ -60,7 +62,7 @@ def _run_hook(script_path, cwd='.'):
     )
     proc.wait()
 
-def run_hook(hook_name, project_dir):
+def run_hook(hook_name, context, project_dir):
     '''
     Try and find a script mapped to `hook_name` in the current working directory,
     and execute it from `project_dir`.
@@ -69,4 +71,4 @@ def run_hook(hook_name, project_dir):
     if script is None:
         logging.debug("No hooks found")
         return
-    return _run_hook(script, project_dir)
+    return _run_hook(script, context, project_dir)
