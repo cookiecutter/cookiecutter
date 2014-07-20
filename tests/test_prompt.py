@@ -9,6 +9,7 @@ Tests for `cookiecutter.prompt` module.
 """
 
 import sys
+import platform
 import unittest
 
 from cookiecutter import prompt
@@ -27,6 +28,15 @@ if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
 else:
     import unittest
+
+if 'windows' in platform.platform().lower():
+
+    old_stdin = sys.stdin
+
+    class X(object):
+        def readline(self):
+            return '\n'
+    sys.stdin = X()
 
 
 class TestPrompt(unittest.TestCase):
