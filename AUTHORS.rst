@@ -44,6 +44,7 @@ Contributors
 * Raphael Pierzina (`@hackebrot`_)
 * saxix (`@saxix`_)
 * Tzu-ping Chung (`@uranusjr`_)
+* Caleb Hattingh (`@cjrh`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -76,3 +77,4 @@ Contributors
 .. _`@hackebrot`: https://github.com/hackebrot
 .. _`@saxix`: https://github.com/saxix
 .. _`@uranusjr`: https://github.com/uranusjr
+.. _`@cjrh`: https://github.com/cjrh
