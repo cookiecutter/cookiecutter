@@ -81,7 +81,11 @@ class TestPyPackage(CookiecutterCleanSystemTestCase):
         proc.wait()
 
         self.assertTrue(os.path.isdir('cookiecutter-pypackage'))
-        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
+        self.assertTrue(
+            os.path.isfile(
+                os.path.join('boilerplate', 'README.rst')
+            )
+        )
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
@@ -116,7 +120,11 @@ class TestJQuery(CookiecutterCleanSystemTestCase):
         proc.wait()
 
         self.assertTrue(os.path.isdir('cookiecutter-jquery'))
-        self.assertTrue(os.path.isfile('boilerplate/README.md'))
+        self.assertTrue(
+            os.path.isfile(
+                os.path.join('boilerplate', 'README.md')
+            )
+        )
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
@@ -140,8 +148,12 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
         # Just skip all the prompts
         proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-        
-        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
+
+        self.assertTrue(
+            os.path.isfile(
+                os.path.join('boilerplate', 'README.rst')
+            )
+        )
 
 
 
@@ -167,8 +179,16 @@ class TestGitBranch(CookiecutterCleanSystemTestCase):
         # Just skip all the prompts
         proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
 
-        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
-        self.assertTrue(os.path.isfile('boilerplate/boilerplate/main.py'))
+        self.assertTrue(
+            os.path.isfile(
+                os.path.join('boilerplate', 'README.rst')
+            )
+        )
+        self.assertTrue(
+            os.path.isfile(
+                os.path.join('boilerplate', 'boilerplate', 'main.py')
+            )
+        )
 
 
 if __name__ == '__main__':

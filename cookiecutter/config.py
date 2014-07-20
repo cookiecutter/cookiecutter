@@ -15,12 +15,13 @@ import os
 import yaml
 
 from .exceptions import ConfigDoesNotExistException
-from .utils import unicode_open
+from .utils import unicode_open, fix_path
 from .exceptions import InvalidConfiguration
 
-
 DEFAULT_CONFIG = {
-    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
+    'cookiecutters_dir': os.path.expanduser(
+        os.path.join('~', '.cookiecutters')
+    ),
     'default_context': {}
 }
 
@@ -29,6 +30,7 @@ def get_config(config_path):
     """
     Retrieve the config from the specified path, returning it as a config dict.
     """
+    config_path = fix_path(config_path)
 
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException
@@ -43,6 +45,7 @@ def get_config(config_path):
 
     config_dict = copy.copy(DEFAULT_CONFIG)
     config_dict.update(yaml_dict)
+    config_dict['cookiecutters_dir'] = os.path.expanduser(config_dict['cookiecutters_dir'])
 
     return config_dict
 
@@ -54,7 +57,9 @@ def get_user_config():
     """
 
     # TODO: test on windows...
-    USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+    USER_CONFIG_PATH = os.path.expanduser(
+        os.path.join('~', '.cookiecutterrc')
+    )
 
     if os.path.exists(USER_CONFIG_PATH):
         return get_config(USER_CONFIG_PATH)
