@@ -9,6 +9,7 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
+import platform
 import shutil
 import sys
 import unittest

@@ -29,6 +29,18 @@ if sys.version_info[:2] < (2, 7):
 else:
     import unittest
 
+import platform
+
+
+if 'windows' in platform.platform().lower():
+
+    old_stdin = sys.stdin
+
+    class X(object):
+        def readline(self):
+            return '\n'
+    sys.stdin = X()
+
 
 if compat.WINDOWS:
 
