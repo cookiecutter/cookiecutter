@@ -107,7 +107,7 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
         simple_text = open('inputpizzä/simple.txt', 'rt').read()
         if PY3:
-            self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
+            self.assertEqual(simple_text, b'I eat pizzä')
         else:
             self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
 
