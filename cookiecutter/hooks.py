@@ -13,6 +13,8 @@ import os
 import subprocess
 import sys
 
+from . import compat
+
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
@@ -47,14 +49,13 @@ def _run_hook(script_path, cwd='.'):
     absolute).
     If `cwd` is provided, the script will be run from that directory.
     '''
-    run_thru_shell = sys.platform.startswith('win')
     if script_path.endswith('.py'):
         script_command = [sys.executable, script_path]
     else:
         script_command = [script_path]
     proc = subprocess.Popen(
         script_command,
-        shell=run_thru_shell,
+        shell=compat.WINDOWS,
         cwd=cwd
     )
     proc.wait()

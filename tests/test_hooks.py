@@ -12,7 +12,7 @@ import sys
 import os
 import unittest
 
-from cookiecutter import hooks, utils
+from cookiecutter import compat, hooks, utils
 
 
 class TestFindHooks(unittest.TestCase):

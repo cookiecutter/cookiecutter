@@ -9,12 +9,11 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
-import platform
 import shutil
 import sys
 import unittest
 
-from cookiecutter import utils
+from cookiecutter import utils, compat
 
 
 class TestUtils(unittest.TestCase):
@@ -23,7 +22,7 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(utils.make_sure_path_exists('/usr/'))
         self.assertTrue(utils.make_sure_path_exists('tests/blah'))
         self.assertTrue(utils.make_sure_path_exists('tests/trailingslash/'))
-        if "windows" not in platform.platform().lower():
+        if not compat.WINDOWS: # TODO - make this work in Windows
             self.assertFalse(
                 utils.make_sure_path_exists(
                     '/this-dir-does-not-exist-and-cant-be-created/'
@@ -41,7 +40,7 @@ Musical Notes: ♬ ♫ ♯"""
 
         with utils.unicode_open('tests/files/unicode.txt') as f:
             opened_text = f.read()
-            if sys.platform.startswith('win'):
+            if compat.WINDOWS:
                 unicode_text = os.linesep.join([s for s in unicode_text.splitlines() if not s.isspace()])
             self.assertEqual(unicode_text, opened_text)
 

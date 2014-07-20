@@ -11,6 +11,7 @@ Tests for `cookiecutter.prompt` module.
 import sys
 import unittest
 
+from cookiecutter import compat
 from cookiecutter import prompt
 
 PY3 = sys.version > '3'
@@ -28,10 +29,8 @@ if sys.version_info[:2] < (2, 7):
 else:
     import unittest
 
-import platform
 
-
-if 'windows' in platform.platform().lower():
+if compat.WINDOWS:
 
     old_stdin = sys.stdin
 
