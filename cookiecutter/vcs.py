@@ -24,6 +24,7 @@ def prompt_and_delete_repo(repo_dir):
     """
     Asks the user whether it's okay to delete the previously-cloned repo.
     If yes, deletes it. Otherwise, Cookiecutter exits.
+
     :param repo_dir: Directory of previously-cloned repo.
     """
 
@@ -40,6 +41,7 @@ def prompt_and_delete_repo(repo_dir):
 def identify_repo(repo_url):
     """
     Determines if `repo_url` should be treated as a URL to a git or hg repo.
+
     :param repo_url: Repo URL of unknown type.
     :returns: "git", "hg", or None.
     """

@@ -30,7 +30,7 @@ def prompt_for_config(context):
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
         if PY3:
-            new_val = input(prompt.encode('utf-8'))
+            new_val = input(prompt)
         else:
             try:
                 stdin_enc = sys.stdin.encoding if sys.stdin.encoding else "utf-8"

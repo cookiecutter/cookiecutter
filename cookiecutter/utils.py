@@ -26,6 +26,7 @@ else:
 def make_sure_path_exists(path):
     """
     Ensures that a directory exists.
+
     :param path: A directory path.
     """
 
@@ -41,6 +42,7 @@ def make_sure_path_exists(path):
 def unicode_open(filename, *args, **kwargs):
     """
     Opens a file as usual on Python 3, and with UTF-8 encoding on Python 2.
+
     :param filename: Name of file to open.
     """
     kwargs['encoding'] = "utf-8"

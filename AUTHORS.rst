@@ -7,10 +7,15 @@ Development Lead
 
 * Audrey Roy <audreyr@gmail.com>
 
+Core Committers
+---------------
+
+* Daniel Greenfeld (`@pydanny`_)
+* Michael Joseph (`@michaeljoseph`_)
+
 Contributors
 ------------
 
-* Daniel Greenfeld (`@pydanny`_)
 * Steven Loria (`@sloria`_)
 * Goran Peretin (`@gperetin`_)
 * Hamish Downer (`@foobacca`_)
@@ -23,7 +28,6 @@ Contributors
 * Alex Gaynor (`@alex`_)
 * Rolo (`@rolo`_)
 * Pablo (`@oubiga`_)
-* Michael Joseph (`@michaeljoseph`_)
 * Bruno Rocha (`@rochacbruno`_)
 * Alexander Artemenko (`@svetlyak40wt`_)
 * Mahmoud Abdelkader (`@mahmoudimus`_)
@@ -36,6 +40,10 @@ Contributors
 * Ned Batchelder (`@nedbat`_)
 * Dave Dash (`@davedash`_)
 * Johan Charpentier (`@cyberj`_)
+* Éric Araujo (`@merwok`_)
+* Raphael Pierzina (`@hackebrot`_)
+* saxix (`@saxix`_)
+* Tzu-ping Chung (`@uranusjr`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -64,3 +72,7 @@ Contributors
 .. _`@nedbat`: https://github.com/nedbat
 .. _`@davedash`: https://github.com/davedash
 .. _`@cyberj`: https://github.com/cyberj
+.. _`@merwok`: https://github.com/merwok
+.. _`@hackebrot`: https://github.com/hackebrot
+.. _`@saxix`: https://github.com/saxix
+.. _`@uranusjr`: https://github.com/uranusjr

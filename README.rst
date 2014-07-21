@@ -137,7 +137,6 @@ Python
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
-* `cookiecutter-flask-env`_: A lucuma-flavored flask app template.
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
@@ -149,12 +148,21 @@ Python
 * `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4.
 * `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
+* `cookiecutter-pypackage-minimal`_: A mimimal Python package template.
+* `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
+* `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
+* `cookiecutter-pylibrary-minimal`_: Same as above but without Pytest and static configuration for Tox/Travis/AppVeyor (no generator).
 
 C
 ~~
 
 * `bootstrap.c`_: A template for simple projects written in C with autotools.
 * `cookiecutter-avr`_: A template for avr development.
+
+C++
+~~~
+
+* `BoilerplatePP`_: A simple cmake template with unit testing for projects written in C++.
 
 Common Lisp
 ~~~~~~~~~~~
@@ -192,7 +200,6 @@ HTML
 .. _`@audreyr`: https://github.com/audreyr/
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
-.. _`cookiecutter-flask-env`: https://github.com/lucuma/cookiecutter-flask-env
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
@@ -202,7 +209,10 @@ HTML
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
 .. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
+.. _`cookiecutter-pypackage-minimal`: https://github.com/borntyping/cookiecutter-pypackage-minimal
+.. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
+.. _`BoilerplatePP`: https://github.com/Paspartout/BoilerplatePP
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
@@ -214,6 +224,8 @@ HTML
 .. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
 .. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
+.. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
+.. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
 
 
 Similar projects
@@ -245,6 +257,8 @@ Similar projects
 
 * `init-skeleton`_ clones or copies a repository, executes npm install and bower install and removes the .git directory.
 
+* `Cog`_ python-based code generation toolkit developed by Ned Batchelder
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
@@ -255,9 +269,14 @@ Similar projects
 .. _`grunt-init`: https://github.com/gruntjs/grunt-init
 .. _`scaffolt`: https://github.com/paulmillr/scaffolt
 .. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
+.. _`Cog`: https://bitbucket.org/ned/cog
+
 
 Community
 ---------
+
+The core committer team is `@audreyr`_, `@pydanny`_, and `@michaeljoseph`_. We
+welcome you and invite you to participate.
 
 Stuck? Try one of the following:
 
@@ -284,8 +303,9 @@ Connect with other Cookiecutter contributors and users in IRC:
 Encouragement is unbelievably motivating. If you want more work done on
 Cookiecutter, show support:
 
+* Thank a core committer for their efforts.
 * Star `Cookiecutter on GitHub`_.
-* Please, please join the `Cookiecutter Gittip community`_.
+* Join the `Cookiecutter Gittip community`_.
 
 Got criticism or complaints?
 
@@ -301,14 +321,14 @@ Got criticism or complaints?
 
 Waiting for a response to an issue/question?
 
-* Be patient and persistent. All issues are on `audreyr`_'s radar and will be
-  considered thoughtfully, but due to the growing to-do list/free time ratio,
-  it may take time for a response. If urgent, it's fine to ping `audreyr`_
-  in the issue with a reminder.
+* Be patient and persistent. All issues are on the core committer team's radar and
+  will be considered thoughtfully, but we have a lot of issues to work through. If
+  urgent, it's fine to ping a core committer in the issue with a reminder.
 * Ask others to comment, discuss, review, etc.
 * Search the Cookiecutter repo for issues related to yours.
 * Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
-  available hourly for consultation or custom development.
+  available for hire for consultation or custom development.
+
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
@@ -318,3 +338,5 @@ Waiting for a response to an issue/question?
 .. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
 .. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
 .. _`audreyr`: https://github.com/audreyr
+.. _`@pydanny`: https://github.com/pydanny
+.. _`@michaeljoseph`: https://github.com/michaeljoseph
