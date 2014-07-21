@@ -14,7 +14,7 @@ import logging
 import os
 import sys
 import contextlib
-
+import stat
 
 PY3 = sys.version > '3'
 if PY3:
@@ -64,3 +64,19 @@ def work_in(dirname=None):
         yield
     finally:
         os.chdir(curdir)
+
+
+# moved here from tests
+def force_delete(func, path, exc_info):
+    """
+    Error handler for `shutil.rmtree()` equivalent to `rm -rf`
+    Usage: `shutil.rmtree(path, onerror=force_delete)`
+    From stackoverflow.com/questions/2656322
+    """
+
+    if not os.access(path, os.W_OK):
+        # Is the error an access error?
+        os.chmod(path, stat.S_IWUSR)
+        func(path)
+    else:
+        raise

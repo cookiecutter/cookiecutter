@@ -17,7 +17,7 @@ import sys
 
 from .exceptions import UnknownRepoType
 from .prompt import query_yes_no
-from .utils import make_sure_path_exists
+from .utils import make_sure_path_exists, force_delete
 
 
 def prompt_and_delete_repo(repo_dir):
@@ -33,7 +33,7 @@ def prompt_and_delete_repo(repo_dir):
         default="yes"
     )
     if ok_to_delete:
-        shutil.rmtree(repo_dir)
+        shutil.rmtree(repo_dir, onerror=force_delete)
     else:
         sys.exit()
 
