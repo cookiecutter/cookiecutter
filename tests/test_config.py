@@ -10,10 +10,7 @@ Tests for `cookiecutter.config` module.
 
 import os
 import shutil
-import sys
 import unittest
-
-import yaml
 
 from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration

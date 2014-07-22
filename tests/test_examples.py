@@ -9,14 +9,12 @@ Tests for the Cookiecutter example repos.
 """
 
 from __future__ import unicode_literals
-import errno
 import logging
 import os
 import shutil
 import subprocess
-import sys
 
-from cookiecutter.compat import PY3, input_str, patch, unittest
+from cookiecutter.compat import unittest
 from cookiecutter import config, utils
 from tests import force_delete, CookiecutterCleanSystemTestCase
 

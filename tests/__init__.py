@@ -11,7 +11,6 @@ Contains testing helpers.
 import os
 import shutil
 import stat
-import sys
 
 from cookiecutter.compat import unittest
 
