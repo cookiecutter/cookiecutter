@@ -12,15 +12,9 @@ from __future__ import unicode_literals
 import errno
 import logging
 import os
-import sys
 import contextlib
 
-
-PY3 = sys.version > '3'
-if PY3:
-    pass
-else:
-    import codecs
+from cookiecutter.compat import open
 
 
 def make_sure_path_exists(path):
@@ -46,9 +40,7 @@ def unicode_open(filename, *args, **kwargs):
     :param filename: Name of file to open.
     """
     kwargs['encoding'] = "utf-8"
-    if PY3:
-        return open(filename, *args, **kwargs)
-    return codecs.open(filename, *args, **kwargs)
+    return open(filename, *args, **kwargs)
 
 
 @contextlib.contextmanager

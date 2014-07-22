@@ -13,23 +13,10 @@ import os
 import shutil
 import sys
 
+from cookiecutter.compat import PY3, StringIO, input_str, patch, unittest
 from cookiecutter import config, main
 from tests import CookiecutterCleanSystemTestCase
 
-if sys.version_info[:2] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
-
-PY3 = sys.version > '3'
-if PY3:
-    from unittest.mock import patch
-    input_str = 'builtins.input'
-else:
-    import __builtin__
-    from mock import patch
-    input_str = '__builtin__.raw_input'
-    from cStringIO import StringIO
 
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
@@ -125,8 +112,8 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             # HACK: There are only 9 prompts in cookiecutter-pypackage's
             # cookiecutter.json (http://git.io/b-1MVA) but 10 \n chars here.
             # There was an "EOFError: EOF when reading a line" test fail here
-            # out of the blue, which an extra \n fixed. 
-            # Not sure why. There shouldn't be an extra prompt to delete 
+            # out of the blue, which an extra \n fixed.
+            # Not sure why. There shouldn't be an extra prompt to delete
             # the repo, since CookiecutterCleanSystemTestCase ensured that it
             # wasn't present.
             # It's possibly an edge case in CookiecutterCleanSystemTestCase.
