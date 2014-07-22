@@ -12,25 +12,12 @@ import os
 import shutil
 import stat
 import sys
+from cookiecutter import utils
+
 if sys.version_info[:2] < (2, 7):
     import unittest2 as unittest
 else:
     import unittest
-
-
-def force_delete(func, path, exc_info):
-    """
-    Error handler for `shutil.rmtree()` equivalent to `rm -rf`
-    Usage: `shutil.rmtree(path, onerror=force_delete)`
-    From stackoverflow.com/questions/2656322
-    """
-
-    if not os.access(path, os.W_OK):
-        # Is the error an access error?
-        os.chmod(path, stat.S_IWUSR)
-        func(path)
-    else:
-        raise
 
 
 class CookiecutterCleanSystemTestCase(unittest.TestCase):
@@ -75,7 +62,7 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
 
             # Remove existing backups before backing up. If they exist, they're stale.
             if os.path.isdir(self.cookiecutters_dir_backup):
-                shutil.rmtree(self.cookiecutters_dir_backup)
+                utils.rmtree(self.cookiecutters_dir_backup)
 
             shutil.copytree(self.cookiecutters_dir, self.cookiecutters_dir_backup)
         else:
@@ -93,15 +80,15 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
         if self.cookiecutters_dir_found:        
             # Delete the created ~/.cookiecutters dir as long as a backup exists
             if os.path.isdir(self.cookiecutters_dir) and os.path.isdir(self.cookiecutters_dir_backup):
-                shutil.rmtree(self.cookiecutters_dir)
+                utils.rmtree(self.cookiecutters_dir)
         else:
             # Delete the created ~/.cookiecutters dir.
             # There's no backup because it never existed
             if os.path.isdir(self.cookiecutters_dir):
-                shutil.rmtree(self.cookiecutters_dir)
+                utils.rmtree(self.cookiecutters_dir)
         
         # Restore the user's default cookiecutters_dir contents
         if os.path.isdir(self.cookiecutters_dir_backup):
             shutil.copytree(self.cookiecutters_dir_backup, self.cookiecutters_dir)
         if os.path.isdir(self.cookiecutters_dir):
-            shutil.rmtree(self.cookiecutters_dir_backup)
+            utils.rmtree(self.cookiecutters_dir_backup)

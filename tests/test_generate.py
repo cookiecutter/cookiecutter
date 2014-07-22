@@ -10,7 +10,6 @@ Tests for `cookiecutter.generate` module.
 from __future__ import unicode_literals
 import logging
 import os
-import shutil
 import sys
 import unittest
 
@@ -20,6 +19,7 @@ from jinja2.exceptions import TemplateSyntaxError
 
 from cookiecutter import generate
 from cookiecutter import exceptions
+from cookiecutter import utils
 from tests import CookiecutterCleanSystemTestCase
 
 
@@ -76,15 +76,15 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.exists('inputpizzä'):
-            shutil.rmtree('inputpizzä')
+            utils.rmtree('inputpizzä')
         if os.path.exists('inputgreen'):
-            shutil.rmtree('inputgreen')
+            utils.rmtree('inputgreen')
         if os.path.exists('inputbinary_files'):
-            shutil.rmtree('inputbinary_files')
+            utils.rmtree('inputbinary_files')
         if os.path.exists('tests/custom_output_dir'):
-            shutil.rmtree('tests/custom_output_dir')
+            utils.rmtree('tests/custom_output_dir')
         if os.path.exists('inputpermissions'):
-            shutil.rmtree('inputpermissions')
+            utils.rmtree('inputpermissions')
         super(TestGenerateFiles, self).tearDown()
 
     def test_generate_files_nontemplated_exception(self):
@@ -209,7 +209,7 @@ class TestOutputFolder(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.exists('output_folder'):
-            shutil.rmtree('output_folder')
+            utils.rmtree('output_folder')
         super(TestOutputFolder, self).tearDown()
 
     def test_output_folder(self):
@@ -240,11 +240,11 @@ class TestHooks(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.exists('tests/test-pyhooks/inputpyhooks'):
-            shutil.rmtree('tests/test-pyhooks/inputpyhooks')
+            utils.rmtree('tests/test-pyhooks/inputpyhooks')
         if os.path.exists('inputpyhooks'):
-            shutil.rmtree('inputpyhooks')
+            utils.rmtree('inputpyhooks')
         if os.path.exists('tests/test-shellhooks/inputshellhooks'):
-            shutil.rmtree('tests/test-shellhooks/inputshellhooks')
+            utils.rmtree('tests/test-shellhooks/inputshellhooks')
         super(TestHooks, self).tearDown()
 
     def test_ignore_hooks_dirs(self):

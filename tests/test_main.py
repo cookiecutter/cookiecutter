@@ -10,10 +10,9 @@ Tests for `cookiecutter.main` module.
 
 import logging
 import os
-import shutil
 import sys
 
-from cookiecutter import config, main
+from cookiecutter import config, main, utils
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
@@ -61,7 +60,7 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('fake-project'):
-            shutil.rmtree('fake-project')
+            utils.rmtree('fake-project')
 
 
 class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
@@ -80,7 +79,7 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('fake-project'):
-            shutil.rmtree('fake-project')
+            utils.rmtree('fake-project')
 
 
 class TestArgParsing(unittest.TestCase):
@@ -101,13 +100,13 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage')
+            utils.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate')
+            utils.rmtree('boilerplate')
         if os.path.isdir('cookiecutter-trytonmodule'):
-            shutil.rmtree('cookiecutter-trytonmodule')
+            utils.rmtree('cookiecutter-trytonmodule')
         if os.path.isdir('module_name'):
-            shutil.rmtree('module_name')
+            utils.rmtree('module_name')
         super(TestCookiecutterRepoArg, self).tearDown()
 
     # HACK: The *args is because:
