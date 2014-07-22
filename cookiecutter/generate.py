@@ -222,7 +222,7 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
             for copy_dir in copy_dirs:
                 indir = os.path.normpath(os.path.join(root, copy_dir))
-                outdir = os.path.normpath(os.path.join(project_dir, copy_dir))
+                outdir = os.path.normpath(os.path.join(project_dir, indir))
                 logging.debug(
                     "Copying dir {0} to {1} without rendering".format(indir, outdir)
                 )
@@ -233,7 +233,7 @@ def generate_files(repo_dir, context=None, output_dir="."):
             dirs[:] = render_dirs
             for d in dirs:
                 indir = os.path.normpath(os.path.join(root, d))
-                unrendered_dir = os.path.join(project_dir, os.path.join(root, d))
+                unrendered_dir = os.path.join(project_dir, indir)
                 render_and_create_dir(unrendered_dir, context, output_dir)
 
             for f in files:
