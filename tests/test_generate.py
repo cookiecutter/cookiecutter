@@ -238,13 +238,19 @@ It is 2014."""
 
 class TestHooks(CookiecutterCleanSystemTestCase):
 
+    if sys.platform.startswith('win'):
+        shellhooks = os.path.join('tests', 'test-shellhooks-win')
+    else:
+        shellhooks = os.path.join('tests', 'test-shellhooks-unix')
+
     def tearDown(self):
         if os.path.exists('tests/test-pyhooks/inputpyhooks'):
             utils.rmtree('tests/test-pyhooks/inputpyhooks')
         if os.path.exists('inputpyhooks'):
             utils.rmtree('inputpyhooks')
-        if os.path.exists('tests/test-shellhooks/inputshellhooks'):
-            utils.rmtree('tests/test-shellhooks/inputshellhooks')
+        inputshellhooks = os.path.join(self.shellhooks, 'inputshellhooks')
+        if os.path.exists(inputshellhooks):
+            utils.rmtree(inputshellhooks)
         super(TestHooks, self).tearDown()
 
     def test_ignore_hooks_dirs(self):
@@ -283,11 +289,12 @@ class TestHooks(CookiecutterCleanSystemTestCase):
             context={
                 'cookiecutter' : {'shellhooks': 'shellhooks'}
             },
-            repo_dir='tests/test-shellhooks/',
-            output_dir='tests/test-shellhooks/'
+            repo_dir=self.shellhooks,
+            output_dir=self.shellhooks
         )
-        self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_pre.txt'))
-        self.assertTrue(os.path.exists('tests/test-shellhooks/inputshellhooks/shell_post.txt'))
+        inputshellhooks = os.path.join(self.shellhooks, 'inputshellhooks')
+        self.assertTrue(os.path.exists(os.path.join(inputshellhooks, 'shell_pre.txt')))
+        self.assertTrue(os.path.exists(os.path.join(inputshellhooks, 'shell_post.txt')))
 
 
 if __name__ == '__main__':
