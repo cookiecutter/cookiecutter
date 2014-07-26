@@ -29,11 +29,7 @@ def prompt_for_config(context):
     for key, val in iteritems(context['cookiecutter']):
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
-        if PY3:
-            new_val = input(prompt)
-        else:
-            new_val = input(prompt.encode('utf-8')).decode('utf-8')
-
+        new_val = input(prompt)
         new_val = new_val.strip()
 
         if new_val == '':
