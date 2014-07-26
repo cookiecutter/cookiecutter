@@ -13,6 +13,8 @@ import errno
 import logging
 import os
 import sys
+import stat
+import shutil
 import contextlib
 
 
@@ -21,6 +23,27 @@ if PY3:
     pass
 else:
     import codecs
+
+
+def force_delete(func, path, exc_info):
+    """
+    Error handler for `shutil.rmtree()` equivalent to `rm -rf`
+    Usage: `shutil.rmtree(path, onerror=force_delete)`
+    From stackoverflow.com/questions/1889597
+    """
+
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
+def rmtree(path):
+    """
+    Removes a directory and all its contents. Like rm -rf on Unix.
+
+    :param path: A directory path.
+    """
+
+    shutil.rmtree(path, onerror=force_delete)
 
 
 def make_sure_path_exists(path):

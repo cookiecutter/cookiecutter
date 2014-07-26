@@ -9,14 +9,25 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
-import shutil
 import sys
+import stat
 import unittest
 
 from cookiecutter import utils
 
+def make_readonly(path):
+    mode = os.stat(path).st_mode
+    os.chmod(path, mode & ~stat.S_IWRITE)
 
 class TestUtils(unittest.TestCase):
+
+    def test_rmtree(self):
+        os.mkdir('foo')
+        with open('foo/bar', "w") as f:
+            f.write("Test data")
+        make_readonly('foo/bar')
+        utils.rmtree('foo')
+        self.assertFalse(os.path.exists('foo'))
 
     def test_make_sure_path_exists(self):
         self.assertTrue(utils.make_sure_path_exists('/usr/'))
@@ -27,8 +38,8 @@ class TestUtils(unittest.TestCase):
                 '/this-dir-does-not-exist-and-cant-be-created/'.replace("/", os.sep)
             )
         )
-        shutil.rmtree('tests/blah/')
-        shutil.rmtree('tests/trailingslash/')
+        utils.rmtree('tests/blah/')
+        utils.rmtree('tests/trailingslash/')
 
     def test_unicode_open(self):
         """ Test unicode_open(filename, *args, **kwargs). """

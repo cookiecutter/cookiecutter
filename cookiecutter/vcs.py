@@ -11,13 +11,12 @@ Helper functions for working with version control systems.
 from __future__ import unicode_literals
 import logging
 import os
-import shutil
 import subprocess
 import sys
 
 from .exceptions import UnknownRepoType
 from .prompt import query_yes_no
-from .utils import make_sure_path_exists
+from .utils import make_sure_path_exists, rmtree
 
 
 def prompt_and_delete_repo(repo_dir):
@@ -33,7 +32,7 @@ def prompt_and_delete_repo(repo_dir):
         default="yes"
     )
     if ok_to_delete:
-        shutil.rmtree(repo_dir)
+        rmtree(repo_dir)
     else:
         sys.exit()
 
