@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import logging
 import os
 import sys
+import stat
 import unittest
 
 from jinja2 import FileSystemLoader
@@ -236,6 +237,50 @@ It is 2014."""
         self.assertTrue(os.path.isfile('output_folder/im_a.dir/im_a.file.py'))
 
 
+def make_test_repo(name):
+    hooks = os.path.join(name, 'hooks')
+    template = os.path.join(name, 'input{{cookiecutter.shellhooks}}')
+    os.mkdir(name)
+    os.mkdir(hooks)
+    os.mkdir(template)
+
+    with open(os.path.join(template, 'README.rst'), 'w') as f:
+        f.write("foo\n===\n\nbar\n")
+
+    if sys.platform.startswith('win'):
+        filename = os.path.join(hooks, 'pre_gen_project.bat')
+        with open(filename, 'w') as f:
+            f.write("@echo off\n")
+            f.write("\n")
+            f.write("echo pre generation hook\n")
+            f.write("echo. >shell_pre.txt\n")
+
+        filename = os.path.join(hooks, 'post_gen_project.bat')
+        with open(filename, 'w') as f:
+            f.write("@echo off\n")
+            f.write("\n")
+            f.write("echo post generation hook\n")
+            f.write("echo. >shell_post.txt\n")
+    else:
+        filename = os.path.join(hooks, 'pre_gen_project.sh')
+        with open(filename, 'w') as f:
+            f.write("#!/bin/bash\n")
+            f.write("\n")
+            f.write("echo 'pre generation hook';\n")
+            f.write("touch 'shell_pre.txt'\n")
+        # Set the execute bit
+        os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
+
+        filename = os.path.join(hooks, 'post_gen_project.sh')
+        with open(filename, 'w') as f:
+            f.write("#!/bin/bash\n")
+            f.write("\n")
+            f.write("echo 'post generation hook';\n")
+            f.write("touch 'shell_post.txt'\n")
+        # Set the execute bit
+        os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
+
+
 class TestHooks(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
@@ -243,8 +288,8 @@ class TestHooks(CookiecutterCleanSystemTestCase):
             utils.rmtree('tests/test-pyhooks/inputpyhooks')
         if os.path.exists('inputpyhooks'):
             utils.rmtree('inputpyhooks')
-        if os.path.exists('tests/test-shellhooks/inputshellhooks'):
-            utils.rmtree('tests/test-shellhooks/inputshellhooks')
+        if os.path.exists('tests/test-shellhooks'):
+            utils.rmtree('tests/test-shellhooks')
         super(TestHooks, self).tearDown()
 
     def test_ignore_hooks_dirs(self):
@@ -279,6 +324,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.exists('inputpyhooks/python_post.txt'))
 
     def test_run_shell_hooks(self):
+        make_test_repo('tests/test-shellhooks')
         generate.generate_files(
             context={
                 'cookiecutter' : {'shellhooks': 'shellhooks'}
