@@ -29,6 +29,11 @@ Shell scripts work similarly::
 It shouldn't be too hard to extend Cookiecutter to work with other types of
 scripts too. Pull requests are welcome.
 
+For portability, you should use Python scripts (with extension `.py`) for your
+hooks, as these can be run on any platform. However, if you intend for your
+template to only be run on a single platform, a shell script (or `.bat` file
+on Windows) can be a quicker alternative.
+
 User Config (0.7.0+)
 ----------------------
 
