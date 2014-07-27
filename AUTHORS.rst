@@ -45,6 +45,7 @@ Contributors
 * saxix (`@saxix`_)
 * Tzu-ping Chung (`@uranusjr`_)
 * Caleb Hattingh (`@cjrh`_)
+* Paul Moore (`pfmoore`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -78,3 +79,4 @@ Contributors
 .. _`@saxix`: https://github.com/saxix
 .. _`@uranusjr`: https://github.com/uranusjr
 .. _`@cjrh`: https://github.com/cjrh
+.. _`@pfmoore`: https://github.com/pfmoore
