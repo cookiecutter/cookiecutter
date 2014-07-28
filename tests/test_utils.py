@@ -30,14 +30,17 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(os.path.exists('foo'))
 
     def test_make_sure_path_exists(self):
-        self.assertTrue(utils.make_sure_path_exists('/usr/'))
+        if sys.platform.startswith('win'):
+            existing_directory = os.path.abspath(os.curdir)
+            uncreatable_directory = 'a*b'
+        else:
+            existing_directory = '/usr/'
+            uncreatable_directory = '/this-dir-does-not-exist-and-cant-be-created/'
+
+        self.assertTrue(utils.make_sure_path_exists(existing_directory))
         self.assertTrue(utils.make_sure_path_exists('tests/blah'))
         self.assertTrue(utils.make_sure_path_exists('tests/trailingslash/'))
-        self.assertFalse(
-            utils.make_sure_path_exists(
-                '/this-dir-does-not-exist-and-cant-be-created/'.replace("/", os.sep)
-            )
-        )
+        self.assertFalse(utils.make_sure_path_exists(uncreatable_directory))
         utils.rmtree('tests/blah/')
         utils.rmtree('tests/trailingslash/')
 
