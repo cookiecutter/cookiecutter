@@ -12,6 +12,7 @@ Core Committers
 
 * Daniel Greenfeld (`@pydanny`_)
 * Michael Joseph (`@michaeljoseph`_)
+* Paul Moore (`pfmoore`_)
 
 Contributors
 ------------
@@ -45,7 +46,6 @@ Contributors
 * saxix (`@saxix`_)
 * Tzu-ping Chung (`@uranusjr`_)
 * Caleb Hattingh (`@cjrh`_)
-* Paul Moore (`pfmoore`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
