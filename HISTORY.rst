@@ -36,8 +36,8 @@ Other Changes:
 
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
 
-.. _`audreyr`: https://github.com/audreyr
-.. _`uranusjr`: https://github.com/uranusjr
+.. _`@audreyr`: https://github.com/audreyr
+.. _`@uranusjr`: https://github.com/uranusjr
 .. _`@saxix`: https://github.com/saxix
 .. _`@hackebrot`: https://github.com/hackebrot
 
