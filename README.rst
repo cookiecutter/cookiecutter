@@ -275,7 +275,8 @@ Similar projects
 Community
 ---------
 
-The core committer team is `@audreyr`_, `@pydanny`_, and `@michaeljoseph`_. We
+The core committer team is `@audreyr`_, `@pydanny`_, `@michaeljoseph`_, and
+`@pfmoore`_. We
 welcome you and invite you to participate.
 
 Stuck? Try one of the following:
@@ -298,7 +299,7 @@ Development on Cookiecutter is community-driven:
 Connect with other Cookiecutter contributors and users in IRC:
 
 * #cookiecutter on irc.freenode.net (note: due to work and commitments,
-  `@audreyr`_ might not always be available)
+  a core committer might not always be available)
 
 Encouragement is unbelievably motivating. If you want more work done on
 Cookiecutter, show support:
@@ -313,7 +314,7 @@ Got criticism or complaints?
   and constructive about what could be better. Make detailed suggestions.
 * **Keep us in the loop so that we can help.** For example, if you are
   discussing problems with Cookiecutter on a mailing list, `file an issue`_
-  where you link to the discussion thread and/or cc `audreyr@gmail.com` on
+  where you link to the discussion thread and/or cc at least 1 core committer on
   the email.
 * Be encouraging. A comment like "This function ought to be rewritten like
   this" is much more likely to result in action than a comment like "Eww, look
@@ -340,3 +341,4 @@ Waiting for a response to an issue/question?
 .. _`audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
+.. _`@pfmoore`: https://github.com/pfmoore
