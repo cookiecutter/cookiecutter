@@ -12,7 +12,7 @@ Core Committers
 
 * Daniel Greenfeld (`@pydanny`_)
 * Michael Joseph (`@michaeljoseph`_)
-* Paul Moore (`pfmoore`_)
+* Paul Moore (`@pfmoore`_)
 
 Contributors
 ------------
