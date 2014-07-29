@@ -6,7 +6,42 @@ History
 In Development (Master Branch)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Nothing yet.
+**Note:** Up to July 9 only. Need to finish adding material.
+
+Bug Fixes:
+
+* Fixed the contributing file so it displays nicely in Github, thanks to `@pydanny`_.
+* Updates 2.6 requirements to include simplejson, thanks to `@sasix`_.
+* Avoid unwanted extra spaces in string literal, thanks to `@merwok`_.
+* Fix `@unittest.skipIf` error on Python 2.6.
+
+.. _`@merwok`: https://github.com/merwok/
+
+Other Changes:
+
+* Elevated `@pydanny`_ and `michaeljoseph`_ to core committer status. Their condition: `@audreyr`_ formally accept position as **BDFL of cookiecutter**.
+* Added vision and scope, by `@audreyr`_.
+* Generated apidocs from `make docs`, by `@audreyr`_.
+* Added `contributing` command to the `make docs` function, by `@pydanny`_.
+* Refactored contributing documentation, included adding core committer instructions, by `@pydanny`_ and `@audreyr`_.
+* Stopped converting input prompt to bytes, useful for Python 3, thanks to `@uranusjr`_.
+* Added troubleshooting info about Python 3.3 tests and tox.
+* Added documentation about command line arguments, thanks to `@sasix`_.
+* Style cleanups.
+* Add an environment variable to disable network tests for environments without networking, thanks to `@vincentbernat`_.
+* Add more Cookiecutters to the list:
+
+  * `cookiecutter-kivy`_ by `@hackebrot`_
+
+
+.. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
+
+.. _`audreyr`: https://github.com/audreyr
+.. _`uranusjr`: https://github.com/uranusjr
+.. _`@saxix`: https://github.com/saxix
+.. _`@hackebrot`: https://github.com/hackebrot
+
+
 
 0.7.1 (2014-04-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,39 +238,5 @@ Bumped to "Development Status :: 3 - Alpha".
 Roadmap
 -------
 
-If something is not listed here, check the `issues under each milestone`_.
+https://github.com/audreyr/cookiecutter/issues/milestones
 
-This is subject to change depending on the needs and contributions of the
-community. Feedback on pull requests/issues affects the priority of items on
-the roadmap.
-
-Also, please be patient and keep in mind that this is a volunteer effort, and
-that the review process takes time.
-
-.. _`issues under each milestone`: https://github.com/audreyr/cookiecutter/issues/milestones
-
-0.7.1
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is a patch release to fix minor bugs and any potential problems with 0.7.0.
-
-* Various README enhancements.
-* TODO
-
-0.8.0
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This release will include a number of features and bug fixes proposed and
-implemented by the community in pull requests.
-
-* TODO
-
-0.9.0
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This release is for new features proposed through issues. Note: some issues
-tagged 0.9.0 might be moved to 0.8.0 if anyone implements them and submits a
-pull request.
-
-* Support for alternate config location as per XDG Base Directory Spec
-* TODO
