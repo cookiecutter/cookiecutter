@@ -10,6 +10,7 @@ Tests for `cookiecutter.generate` module.
 from __future__ import unicode_literals
 import logging
 import os
+import io
 import sys
 import stat
 import unittest
@@ -106,11 +107,8 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             repo_dir='tests/test-generate-files'
         )
         self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
-        simple_text = open('inputpizzä/simple.txt', 'rt').read()
-        if PY3:
-            self.assertEqual(simple_text, 'I eat pizzä')
-        else:
-            self.assertEqual(simple_text, 'I eat pizzä'.encode('utf-8'))
+        simple_text = io.open('inputpizzä/simple.txt', 'rt', encoding='utf-8').read()
+        self.assertEqual(simple_text, u'I eat pizzä')
 
     def test_generate_files_binaries(self):
         generate.generate_files(
