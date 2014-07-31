@@ -9,6 +9,7 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
+import io
 import sys
 import stat
 import unittest
@@ -45,16 +46,14 @@ class TestUtils(unittest.TestCase):
         utils.rmtree('tests/trailingslash/')
 
     def test_unicode_open(self):
-        """ Test unicode_open(filename, *args, **kwargs). """
+        """ Test that io.open(filename, mode, encoding='utf-8') works as we expect. """
 
         unicode_text = u"""Polish: Ą Ł Ż
 Chinese: 倀 倁 倂 倃 倄 倅 倆 倇 倈
 Musical Notes: ♬ ♫ ♯"""
 
-        with utils.unicode_open('tests/files/unicode.txt') as f:
+        with io.open('tests/files/unicode.txt', encoding='utf-8') as f:
             opened_text = f.read()
-            if sys.platform.startswith('win'):
-                unicode_text = os.linesep.join([s for s in unicode_text.splitlines() if not s.isspace()])
             self.assertEqual(unicode_text, opened_text)
 
     def test_workin(self):
