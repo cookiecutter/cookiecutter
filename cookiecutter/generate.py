@@ -10,6 +10,7 @@ Functions for generating a project from a project template.
 from __future__ import unicode_literals
 import logging
 import os
+import io
 import shutil
 import sys
 
@@ -20,7 +21,7 @@ from binaryornot.check import is_binary
 
 from .exceptions import NonTemplatedInputDirException
 from .find import find_template
-from .utils import make_sure_path_exists, unicode_open, work_in
+from .utils import make_sure_path_exists, work_in
 from .hooks import run_hook
 
 
@@ -45,7 +46,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
     context = {}
 
     file_handle = open(context_file)
-    obj = json.load(file_handle, encoding='utf-8', object_pairs_hook=OrderedDict)
+    obj = json.load(file_handle, object_pairs_hook=OrderedDict)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
@@ -113,7 +114,7 @@ def generate_file(project_dir, infile, context, env):
 
         logging.debug("Writing {0}".format(outfile))
 
-        with unicode_open(outfile, 'w') as fh:
+        with io.open(outfile, 'w', encoding="utf-8") as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file

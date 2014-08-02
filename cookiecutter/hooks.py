@@ -13,6 +13,8 @@ import os
 import subprocess
 import sys
 
+from .utils import make_sure_path_exists, work_in
+
 
 _HOOKS = [
     'pre_gen_project',

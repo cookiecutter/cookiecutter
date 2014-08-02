@@ -12,6 +12,7 @@ Core Committers
 
 * Daniel Greenfeld (`@pydanny`_)
 * Michael Joseph (`@michaeljoseph`_)
+* Paul Moore (`@pfmoore`_)
 
 Contributors
 ------------
@@ -78,3 +79,4 @@ Contributors
 .. _`@saxix`: https://github.com/saxix
 .. _`@uranusjr`: https://github.com/uranusjr
 .. _`@cjrh`: https://github.com/cjrh
+.. _`@pfmoore`: https://github.com/pfmoore

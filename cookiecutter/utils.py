@@ -12,9 +12,32 @@ from __future__ import unicode_literals
 import errno
 import logging
 import os
+import stat
+import shutil
 import contextlib
 
 from cookiecutter.compat import open
+
+
+def force_delete(func, path, exc_info):
+    """
+    Error handler for `shutil.rmtree()` equivalent to `rm -rf`
+    Usage: `shutil.rmtree(path, onerror=force_delete)`
+    From stackoverflow.com/questions/1889597
+    """
+
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
+def rmtree(path):
+    """
+    Removes a directory and all its contents. Like rm -rf on Unix.
+
+    :param path: A directory path.
+    """
+
+    shutil.rmtree(path, onerror=force_delete)
 
 
 def make_sure_path_exists(path):
@@ -31,16 +54,6 @@ def make_sure_path_exists(path):
         if exception.errno != errno.EEXIST:
             return False
     return True
-
-
-def unicode_open(filename, *args, **kwargs):
-    """
-    Opens a file as usual on Python 3, and with UTF-8 encoding on Python 2.
-
-    :param filename: Name of file to open.
-    """
-    kwargs['encoding'] = "utf-8"
-    return open(filename, *args, **kwargs)
 
 
 @contextlib.contextmanager

@@ -16,8 +16,7 @@ import subprocess
 
 from cookiecutter.compat import unittest
 from cookiecutter import config, utils
-from tests import force_delete, CookiecutterCleanSystemTestCase
-
+from tests import CookiecutterCleanSystemTestCase
 
 try:
     travis = os.environ[u'TRAVIS']
@@ -29,7 +28,6 @@ try:
 except KeyError:
     no_network = False
 
-
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
@@ -40,9 +38,9 @@ class TestPyPackage(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
-            shutil.rmtree('cookiecutter-pypackage', onerror=force_delete)
+            utils.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate', onerror=force_delete)
+            utils.rmtree('boilerplate')
         super(TestPyPackage, self).tearDown()
 
     def test_cookiecutter_pypackage(self):
@@ -75,9 +73,9 @@ class TestJQuery(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-jquery'):
-            shutil.rmtree('cookiecutter-jquery', onerror=force_delete)
+            utils.rmtree('cookiecutter-jquery')
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate', onerror=force_delete)
+            utils.rmtree('boilerplate')
         super(TestJQuery, self).tearDown()
 
     def test_cookiecutter_jquery(self):
@@ -110,9 +108,9 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
     def tearDown(self):
         with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
             if os.path.isdir('cookiecutter-pypackage'):
-                shutil.rmtree('cookiecutter-pypackage', onerror=force_delete)
+                utils.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate', onerror=force_delete)
+            utils.rmtree('boilerplate')
         super(TestExamplesRepoArg, self).tearDown()
 
     def test_cookiecutter_pypackage_git(self):
@@ -136,9 +134,9 @@ class TestGitBranch(CookiecutterCleanSystemTestCase):
     def tearDown(self):
         with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
             if os.path.isdir('cookiecutter-pypackage'):
-                shutil.rmtree('cookiecutter-pypackage', onerror=force_delete)
+                utils.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
-            shutil.rmtree('boilerplate', onerror=force_delete)
+            utils.rmtree('boilerplate')
         super(TestGitBranch, self).tearDown()
 
     def test_branch(self):

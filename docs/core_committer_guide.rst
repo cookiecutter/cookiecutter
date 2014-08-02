@@ -114,6 +114,10 @@ New features require a +1 from @audreyr.
 Process: Roadmap
 -----------------
 
+The roadmap is https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
+
+Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
+
 How to number milestones:
 
 * Follow semantic versioning. See http://semver.org

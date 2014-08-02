@@ -11,11 +11,11 @@ Global configuration handling
 from __future__ import unicode_literals
 import copy
 import os
+import io
 
 import yaml
 
 from .exceptions import ConfigDoesNotExistException
-from .utils import unicode_open
 from .exceptions import InvalidConfiguration
 
 
@@ -34,7 +34,7 @@ def get_config(config_path):
         raise ConfigDoesNotExistException
 
     print("config_path is {0}".format(config_path))
-    with unicode_open(config_path) as file_handle:
+    with io.open(config_path, encoding="utf-8") as file_handle:
         try:
             yaml_dict = yaml.safe_load(file_handle)
         except yaml.scanner.ScannerError:
