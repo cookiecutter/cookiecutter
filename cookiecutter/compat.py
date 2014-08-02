@@ -8,6 +8,8 @@ if PY3:
     from unittest.mock import patch
     input_str = 'builtins.input'
     iteritems = lambda d: iter(d.items())
+    from builtins import open
+    import unittest
 else:
     import __builtin__
     from mock import patch
