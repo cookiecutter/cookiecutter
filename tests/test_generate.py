@@ -19,13 +19,12 @@ from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 
+from cookiecutter.compat import PY3
 from cookiecutter import generate
 from cookiecutter import exceptions
 from cookiecutter import utils
 from tests import CookiecutterCleanSystemTestCase
 
-
-PY3 = sys.version > '3'
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 

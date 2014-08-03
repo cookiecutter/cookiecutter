@@ -9,28 +9,14 @@ Tests for the Cookiecutter example repos.
 """
 
 from __future__ import unicode_literals
-import errno
 import logging
 import os
 import shutil
 import subprocess
-import sys
 
-PY3 = sys.version > '3'
-if PY3:
-    from unittest.mock import patch
-    input_str = 'builtins.input'
-    from io import StringIO
-else:
-    import __builtin__
-    from mock import patch
-    input_str = '__builtin__.raw_input'
-    from cStringIO import StringIO
-
-if sys.version_info[:3] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
+from cookiecutter.compat import unittest
+from cookiecutter import config, utils
+from tests import CookiecutterCleanSystemTestCase
 
 try:
     travis = os.environ[u'TRAVIS']
@@ -41,10 +27,6 @@ try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
     no_network = False
-
-from cookiecutter import config, utils
-from tests import CookiecutterCleanSystemTestCase
-
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
@@ -140,7 +122,7 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
         # Just skip all the prompts
         proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-        
+
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
 

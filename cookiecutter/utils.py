@@ -12,10 +12,11 @@ from __future__ import unicode_literals
 import errno
 import logging
 import os
-import sys
 import stat
 import shutil
 import contextlib
+
+from cookiecutter.compat import open
 
 
 def force_delete(func, path, exc_info):
