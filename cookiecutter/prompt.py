@@ -11,7 +11,7 @@ Functions for prompting the user for project info.
 from __future__ import unicode_literals
 import sys
 
-from cookiecutter.compat import PY3, input, iteritems
+from cookiecutter.compat import PY3, iteritems
 
 
 def prompt_for_config(context):

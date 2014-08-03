@@ -16,7 +16,6 @@ from cookiecutter.compat import PY3, StringIO, input_str, patch, unittest
 from cookiecutter import config, main, utils
 from tests import CookiecutterCleanSystemTestCase
 
-
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
