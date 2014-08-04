@@ -83,3 +83,20 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
             subprocess.check_call([repo_type, 'checkout', checkout], cwd=repo_dir)
 
     return repo_dir
+
+
+hosting_abbreviations = {'gh': 'https://github.com/{0}.git',
+                         'bb': 'https://bitbucket.org/{0}',
+                        }
+
+def expand_hosting_abbreviation(input_dir):
+    if ':' not in input_dir:
+        return input_dir
+
+    abbr, detail = input_dir.split(':', 1)
+    try:
+        template = hosting_abbreviations[abbr]
+    except KeyError:
+        return input_dir
+    else:
+        return template.format(detail)
