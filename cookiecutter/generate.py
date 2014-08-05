@@ -19,18 +19,11 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
+from .compat import json, OrderedDict
 from .exceptions import NonTemplatedInputDirException
 from .find import find_template
 from .utils import make_sure_path_exists, work_in
 from .hooks import run_hook
-
-
-if sys.version_info[:2] < (2, 7):
-    import simplejson as json
-    from ordereddict import OrderedDict
-else:
-    import json
-    from collections import OrderedDict
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None):
