@@ -12,12 +12,8 @@ import os
 import shutil
 import stat
 import sys
+from cookiecutter.compat import unittest
 from cookiecutter import utils
-
-if sys.version_info[:2] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
 
 
 class CookiecutterCleanSystemTestCase(unittest.TestCase):

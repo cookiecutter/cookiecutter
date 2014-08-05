@@ -25,8 +25,6 @@ from cookiecutter import utils
 from tests import CookiecutterCleanSystemTestCase
 
 
-PY3 = sys.version > '3'
-
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 class TestGenerateFile(unittest.TestCase):

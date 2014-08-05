@@ -15,13 +15,9 @@ import unittest
 
 import yaml
 
+from cookiecutter.compat import unittest
 from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
-
-if sys.version_info[:2] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
 
 
 class TestGetConfig(unittest.TestCase):

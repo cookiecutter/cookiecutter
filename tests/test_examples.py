@@ -16,21 +16,9 @@ import shutil
 import subprocess
 import sys
 
-PY3 = sys.version > '3'
-if PY3:
-    from unittest.mock import patch
-    input_str = 'builtins.input'
-    from io import StringIO
-else:
-    import __builtin__
-    from mock import patch
-    input_str = '__builtin__.raw_input'
-    from cStringIO import StringIO
-
-if sys.version_info[:3] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
+from cookiecutter.compat import PY3, StringIO, input_str, patch, unittest
+from cookiecutter import config, utils
+from tests import CookiecutterCleanSystemTestCase
 
 try:
     travis = os.environ[u'TRAVIS']
@@ -41,10 +29,6 @@ try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
     no_network = False
-
-from cookiecutter import config, utils
-from tests import CookiecutterCleanSystemTestCase
-
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
