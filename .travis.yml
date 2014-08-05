@@ -22,11 +22,12 @@ install:
 
 # command to run tests, e.g. python setup.py test
 script:
-  - coverage run --parallel --source cookiecutter setup.py test
+ - coverage run --parallel-mode --source cookiecutter setup.py test
 
 before_success:
   - coverage erase
 
 after_success:
   - coverage combine
+  - coverage report --show-missing 
   - coveralls
