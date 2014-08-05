@@ -11,12 +11,7 @@ Functions for prompting the user for project info.
 from __future__ import unicode_literals
 import sys
 
-PY3 = sys.version > '3'
-if PY3:
-    iteritems = lambda d: iter(d.items())
-else:
-    input = raw_input
-    iteritems = lambda d: d.iteritems()
+from .compat import *
 
 
 def prompt_for_config(context):

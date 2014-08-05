@@ -8,26 +8,11 @@ test_prompt
 Tests for `cookiecutter.prompt` module.
 """
 
-import sys
 import platform
-import unittest
+import sys
 
+from cookiecutter.compat import PY3, StringIO, input_str, patch, unittest
 from cookiecutter import prompt
-
-PY3 = sys.version > '3'
-if PY3:
-    from unittest.mock import patch
-    input_str = 'builtins.input'
-else:
-    import __builtin__
-    from mock import patch
-    input_str = '__builtin__.raw_input'
-    from cStringIO import StringIO
-
-if sys.version_info[:2] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
 
 if 'windows' in platform.platform().lower():
 
