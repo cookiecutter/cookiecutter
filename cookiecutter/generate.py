@@ -12,7 +12,6 @@ import logging
 import os
 import io
 import shutil
-import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment

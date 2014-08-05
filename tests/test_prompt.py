@@ -109,13 +109,6 @@ class TestQueryAnswers(unittest.TestCase):
         answer = prompt.query_yes_no("Blah?")
         self.assertFalse(answer)
 
-    @patch(input_str, lambda: 'no')
-    def test_query_n(self):
-        if not PY3:
-            sys.stdin = StringIO('no')
-        answer = prompt.query_yes_no("Blah?")
-        self.assertFalse(answer)
-
 
 class TestQueryDefaults(unittest.TestCase):
 

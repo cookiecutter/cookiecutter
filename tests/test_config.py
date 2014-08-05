@@ -10,10 +10,6 @@ Tests for `cookiecutter.config` module.
 
 import os
 import shutil
-import sys
-import unittest
-
-import yaml
 
 from cookiecutter.compat import unittest
 from cookiecutter import config
@@ -58,7 +54,7 @@ class TestGetConfigWithDefaults(unittest.TestCase):
 
     def test_get_config_with_defaults(self):
         """ A config file that overrides 1 of 2 defaults """
-        
+
         conf = config.get_config('tests/test-config/valid-partial-config.yaml')
         default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
         expected_conf = {
@@ -91,7 +87,6 @@ class TestGetUserConfig(unittest.TestCase):
             shutil.copy(self.user_config_path_backup, self.user_config_path)
             os.remove(self.user_config_path_backup)
 
-
     def test_get_user_config_valid(self):
         """ Get config from a valid ~/.cookiecutterrc file """
         shutil.copy('tests/test-config/valid-config.yaml', self.user_config_path)
@@ -114,8 +109,6 @@ class TestGetUserConfig(unittest.TestCase):
     def test_get_user_config_nonexistent(self):
         """ Get config from a nonexistent ~/.cookiecutterrc file """
         self.assertEqual(config.get_user_config(), config.DEFAULT_CONFIG)
-        
-
 
 
 if __name__ == '__main__':

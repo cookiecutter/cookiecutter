@@ -29,3 +29,5 @@ else:
         import json
         from collections import OrderedDict
         import unittest
+
+_hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest)
