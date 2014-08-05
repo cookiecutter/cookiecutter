@@ -90,6 +90,13 @@ hosting_abbreviations = {'gh': 'https://github.com/{0}.git',
                         }
 
 def expand_hosting_abbreviation(input_dir):
+    """
+    Expand an abbreviated URL for a project on a common hosting site. If the
+    input is not an abbreviated URL, it is returned unmodified.
+    
+    :param input_dir: The input directory, possibly abbreviated.
+    :returns: The expanded repository URL, or the input.
+    """
     if ':' not in input_dir:
         return input_dir
 
