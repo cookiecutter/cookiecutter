@@ -3,10 +3,13 @@
 History
 -------
 
-In Development (Master Branch)
+0.7.2 (2014-08-05)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Note:** Up to July 9 only. Need to finish adding material.
+The goal of this release was to fix cross-platform compatibility, primarily
+Windows bugs that had crept in during the addition of new features. As of this
+release, Windows is a first-class citizen again, now complete with continuous
+integration.
 
 Bug Fixes:
 
