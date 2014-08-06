@@ -121,6 +121,60 @@ class TestGetUserConfig(unittest.TestCase):
         
 
 
+class TestGetUserConfigFromEnv(unittest.TestCase):
+
+    def setUp(self):
+        self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
+        self.user_config_path_backup = os.path.expanduser(
+            '~/.cookiecutterrc.backup'
+        )
+
+        # If ~/.cookiecutterrc is pre-existing, move it to a temp location
+        if os.path.exists(self.user_config_path):
+            shutil.copy(self.user_config_path, self.user_config_path_backup)
+            os.remove(self.user_config_path)
+
+        # Save and clear out cookiecutter's environment variables
+        self.cookiecutter_config = os.environ.get("COOKIECUTTER_CONFIG")
+        if "COOKIECUTTER_CONFIG" in os.environ:
+            del os.environ["COOKIECUTTER_CONFIG"]
+
+    def tearDown(self):
+        # If it existed, restore ~/.cookiecutterrc
+        if os.path.exists(self.user_config_path_backup):
+            shutil.copy(self.user_config_path_backup, self.user_config_path)
+            os.remove(self.user_config_path_backup)
+
+        # Restore any saved cookiecutter environment variables
+        if "COOKIECUTTER_CONFIG" in os.environ:
+            del os.environ["COOKIECUTTER_CONFIG"]
+        if self.cookiecutter_config is not None:
+            os.environ["COOKIECUTTER_CONFIG"] = self.cookiecutter_config
+
+    def test_get_env_config_valid(self):
+        """ Environment variable specifies a valid ~/.cookiecutterrc file"""
+        os.environ["COOKIECUTTER_CONFIG"] = 'tests/test-config/valid-config.yaml'
+        conf = config.get_user_config()
+        expected_conf = {
+                'cookiecutters_dir': '/home/example/some-path-to-templates',
+                'default_context': {
+                        "full_name": "Firstname Lastname",
+                        "email": "firstname.lastname@gmail.com",
+                        "github_username": "example"
+                }
+        }
+        self.assertEqual(conf, expected_conf)
+
+    def test_get_env_config_invalid(self):
+        """ Environment variable specifies an invalid .cookiecutterrc file"""
+        os.environ["COOKIECUTTER_CONFIG"] = 'tests/test-config/invalid-config.yaml'
+        self.assertRaises(InvalidConfiguration, config.get_user_config)
+
+    def test_get_env_config_nonexistent(self):
+        """ The file specified in COOKIECUTTER_CONFIG does not exist """
+        os.environ["COOKIECUTTER_CONFIG"] = 'tests/nonexistent-config.yaml'
+        self.assertEqual(config.get_user_config(), config.DEFAULT_CONFIG)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -56,6 +56,10 @@ Possible settings are:
 * cookiecutters_dir: Directory where your cookiecutters are cloned to when you
   use Cookiecutter with a repo argument.
 
+If you want to locate the config file somewhere else, you can set the
+environment variable `COOKIECUTTER_CONFIG` to the name of the file you want
+to use.
+
 Calling Cookiecutter Functions From Python
 ------------------------------------------
 

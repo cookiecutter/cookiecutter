@@ -54,7 +54,8 @@ def get_user_config():
     """
 
     # TODO: test on windows...
-    USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+    USER_CONFIG_PATH = os.environ.get("COOKIECUTTER_CONFIG",
+        os.path.expanduser('~/.cookiecutterrc'))
 
     if os.path.exists(USER_CONFIG_PATH):
         return get_config(USER_CONFIG_PATH)
