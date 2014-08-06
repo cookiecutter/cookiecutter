@@ -11,35 +11,67 @@ In Development (Master Branch)
 Bug Fixes:
 
 * Fixed the contributing file so it displays nicely in Github, thanks to `@pydanny`_.
-* Updates 2.6 requirements to include simplejson, thanks to `@sasix`_.
+* Updates 2.6 requirements to include simplejson, thanks to `@saxix`_.
 * Avoid unwanted extra spaces in string literal, thanks to `@merwok`_.
 * Fix `@unittest.skipIf` error on Python 2.6.
+* Let sphinx parse `:param:` properly by inserting newlines #213, thanks to `@mineo`_.
+* Fixed Windows test prompt failure by replacing stdin per `@cjrh`_ in #195.
+* Made rmtree remove readonly files, thanks to `@pfmoore`_.
+* Now using tox to run tests on Appveyor, thanks to `@pfmoore`_ (#241).
+* Fixed tests that assumed the system encoding was utf-8, thanks to `@pfmoore`_ (#242, #244).
+* Added a tox ini file that uses py.test, thanks to `@pfmoore`_ (#245).
 
-.. _`@merwok`: https://github.com/merwok/
+.. _`@merwok`: https://github.com/merwok
+.. _`@mineo`: https://github.com/mineo
+.. _`@cjrh`: https://github.com/cjrh
 
 Other Changes:
 
-* Elevated `@pydanny`_ and `michaeljoseph`_ to core committer status. Their condition: `@audreyr`_ formally accept position as **BDFL of cookiecutter**.
-* Added vision and scope, by `@audreyr`_.
+* `@audreyr`_ formally accepted position as **BDFL of cookiecutter**.
+* Elevated `@pydanny`_, `@michaeljoseph`_, and `@pfmoore`_ to core committer status.
+* Added Core Committer guide, by `@audreyr`_.
 * Generated apidocs from `make docs`, by `@audreyr`_.
 * Added `contributing` command to the `make docs` function, by `@pydanny`_.
 * Refactored contributing documentation, included adding core committer instructions, by `@pydanny`_ and `@audreyr`_.
-* Stopped converting input prompt to bytes, useful for Python 3, thanks to `@uranusjr`_.
+* Do not convert input prompt to bytes, thanks to `@uranusjr`_ (#192).
 * Added troubleshooting info about Python 3.3 tests and tox.
-* Added documentation about command line arguments, thanks to `@sasix`_.
+* Added documentation about command line arguments, thanks to `@saxix`_.
 * Style cleanups.
-* Add an environment variable to disable network tests for environments without networking, thanks to `@vincentbernat`_.
-* Add more Cookiecutters to the list:
+* Added environment variable to disable network tests for environments without networking, thanks to `@vincentbernat`_.
+* Added Appveyor support to aid Windows integrations, thanks to `@pydanny`_ (#215).
+* CONTRIBUTING.rst is now generated via `make contributing`, thanks to `@pydanny`_ (#220).
+* Removed unnecessary endoing argument to `json.load`, thanks to `@pfmoore`_ (#234).
+* Now generating shell hooks dynamically for Unix/Windows portability, thanks to `@pfmoore`_ (#236).
+* Removed non-portable assumptions about directory structure, thanks to `@pfmoore`_ (#238).
+* Added a note on portability to the hooks documentation, thanks to `@pfmoore`_ (#239).
+* Replaced `unicode_open` with direct use of `io.open`, thanks to `@pfmoore`_ (#229).
+* Added more Cookiecutters to the list:
 
   * `cookiecutter-kivy`_ by `@hackebrot`_
+  * BoilerplatePP_ by `@Paspartout`_
+  * `cookiecutter-pypackage-minimal`_ by `@borntyping`_
+  * `cookiecutter-ansible-role`_ by `@iknite`_
+  * `cookiecutter-pylibrary`_ by `@ionelmc`_
+  * `cookiecutter-pylibrary-minimal`_ by `@ionelmc`_
 
 
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
+.. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
+.. _BoilerplatePP: https://github.com/Paspartout/BoilerplatePP
+.. _`cookiecutter-pypackage-minimal`: https://github.com/borntyping/cookiecutter-pypackage-minimal
+.. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
+.. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
 
+.. _`@michaeljoseph`: https://github.com/michaeljoseph
+.. _`@iknite`: https://github.com/iknite
+.. _`@borntyping`: https://github.com/borntyping
+.. _`@Paspartout`: https://github.com/Paspartout
+.. _`@pfmoore`: https://github.com/pfmoore
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@uranusjr`: https://github.com/uranusjr
 .. _`@saxix`: https://github.com/saxix
 .. _`@hackebrot`: https://github.com/hackebrot
+.. _`@ionelmc`: https://github.com/ionelmc
 
 
 
