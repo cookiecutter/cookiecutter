@@ -197,7 +197,6 @@ HTML
 * `cookiecutter-tumblr-theme`_: A cookiecutter for a Tumblr theme project with GruntJS as concatination tool.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-.. _`@audreyr`: https://github.com/audreyr/
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
@@ -327,7 +326,7 @@ Waiting for a response to an issue/question?
   urgent, it's fine to ping a core committer in the issue with a reminder.
 * Ask others to comment, discuss, review, etc.
 * Search the Cookiecutter repo for issues related to yours.
-* Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
+* Need a fix/feature/release/help urgently, and can't wait? `@audreyr`_ is
   available for hire for consultation or custom development.
 
 
@@ -338,7 +337,7 @@ Waiting for a response to an issue/question?
 .. _`Stack Overflow`: http://stackoverflow.com/
 .. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
 .. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
-.. _`audreyr`: https://github.com/audreyr
+.. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
 .. _`@pfmoore`: https://github.com/pfmoore
