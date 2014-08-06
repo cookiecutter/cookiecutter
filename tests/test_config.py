@@ -30,12 +30,12 @@ class TestGetConfig(unittest.TestCase):
         """ Opening and reading config file """
         conf = config.get_config('tests/test-config/valid-config.yaml')
         expected_conf = {
-        	'cookiecutters_dir': '/home/example/some-path-to-templates',
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
+                'cookiecutters_dir': '/home/example/some-path-to-templates',
+                'default_context': {
+                        'full_name': 'Firstname Lastname',
+                        'email': 'firstname.lastname@gmail.com',
+                        'github_username': 'example'
+                }
         }
         self.assertEqual(conf, expected_conf)
 
@@ -55,7 +55,7 @@ class TestGetConfig(unittest.TestCase):
         An invalid config file should raise an `InvalidConfiguration` exception.
         """
         self.assertRaises(InvalidConfiguration, config.get_config,
-                          "tests/test-config/invalid-config.yaml")
+                          'tests/test-config/invalid-config.yaml')
 
 
 class TestGetConfigWithDefaults(unittest.TestCase):
@@ -66,12 +66,12 @@ class TestGetConfigWithDefaults(unittest.TestCase):
         conf = config.get_config('tests/test-config/valid-partial-config.yaml')
         default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
         expected_conf = {
-        	'cookiecutters_dir': default_cookiecutters_dir,
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
+                'cookiecutters_dir': default_cookiecutters_dir,
+                'default_context': {
+                        'full_name': 'Firstname Lastname',
+                        'email': 'firstname.lastname@gmail.com',
+                        'github_username': 'example'
+                }
         }
         self.assertEqual(conf, expected_conf)
 
@@ -101,12 +101,12 @@ class TestGetUserConfig(unittest.TestCase):
         shutil.copy('tests/test-config/valid-config.yaml', self.user_config_path)
         conf = config.get_user_config()
         expected_conf = {
-        	'cookiecutters_dir': '/home/example/some-path-to-templates',
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
+                'cookiecutters_dir': '/home/example/some-path-to-templates',
+                'default_context': {
+                        'full_name': 'Firstname Lastname',
+                        'email': 'firstname.lastname@gmail.com',
+                        'github_username': 'example'
+                }
         }
         self.assertEqual(conf, expected_conf)
 
@@ -135,9 +135,9 @@ class TestGetUserConfigFromEnv(unittest.TestCase):
             os.remove(self.user_config_path)
 
         # Save and clear out cookiecutter's environment variables
-        self.cookiecutter_config = os.environ.get("COOKIECUTTER_CONFIG")
-        if "COOKIECUTTER_CONFIG" in os.environ:
-            del os.environ["COOKIECUTTER_CONFIG"]
+        self.cookiecutter_config = os.environ.get('COOKIECUTTER_CONFIG')
+        if 'COOKIECUTTER_CONFIG' in os.environ:
+            del os.environ['COOKIECUTTER_CONFIG']
 
     def tearDown(self):
         # If it existed, restore ~/.cookiecutterrc
@@ -146,33 +146,33 @@ class TestGetUserConfigFromEnv(unittest.TestCase):
             os.remove(self.user_config_path_backup)
 
         # Restore any saved cookiecutter environment variables
-        if "COOKIECUTTER_CONFIG" in os.environ:
-            del os.environ["COOKIECUTTER_CONFIG"]
+        if 'COOKIECUTTER_CONFIG' in os.environ:
+            del os.environ['COOKIECUTTER_CONFIG']
         if self.cookiecutter_config is not None:
-            os.environ["COOKIECUTTER_CONFIG"] = self.cookiecutter_config
+            os.environ['COOKIECUTTER_CONFIG'] = self.cookiecutter_config
 
     def test_get_env_config_valid(self):
         """ Environment variable specifies a valid ~/.cookiecutterrc file"""
-        os.environ["COOKIECUTTER_CONFIG"] = 'tests/test-config/valid-config.yaml'
+        os.environ['COOKIECUTTER_CONFIG'] = 'tests/test-config/valid-config.yaml'
         conf = config.get_user_config()
         expected_conf = {
                 'cookiecutters_dir': '/home/example/some-path-to-templates',
                 'default_context': {
-                        "full_name": "Firstname Lastname",
-                        "email": "firstname.lastname@gmail.com",
-                        "github_username": "example"
+                        'full_name': 'Firstname Lastname',
+                        'email': 'firstname.lastname@gmail.com',
+                        'github_username': 'example'
                 }
         }
         self.assertEqual(conf, expected_conf)
 
     def test_get_env_config_invalid(self):
         """ Environment variable specifies an invalid .cookiecutterrc file"""
-        os.environ["COOKIECUTTER_CONFIG"] = 'tests/test-config/invalid-config.yaml'
+        os.environ['COOKIECUTTER_CONFIG'] = 'tests/test-config/invalid-config.yaml'
         self.assertRaises(InvalidConfiguration, config.get_user_config)
 
     def test_get_env_config_nonexistent(self):
         """ The file specified in COOKIECUTTER_CONFIG does not exist """
-        os.environ["COOKIECUTTER_CONFIG"] = 'tests/nonexistent-config.yaml'
+        os.environ['COOKIECUTTER_CONFIG'] = 'tests/nonexistent-config.yaml'
         self.assertEqual(config.get_user_config(), config.DEFAULT_CONFIG)
 
 
