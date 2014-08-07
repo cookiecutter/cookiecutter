@@ -46,6 +46,10 @@ Contributors
 * saxix (`@saxix`_)
 * Tzu-ping Chung (`@uranusjr`_)
 * Caleb Hattingh (`@cjrh`_)
+* Flavio Curella (`@fcurella`_)
+* Adam Venturella (`@aventurella`_)
+* Monty Taylor (`@emonty`_)
+* schacki (`@schacki`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -80,3 +84,7 @@ Contributors
 .. _`@uranusjr`: https://github.com/uranusjr
 .. _`@cjrh`: https://github.com/cjrh
 .. _`@pfmoore`: https://github.com/pfmoore
+.. _`@fcurella`: https://github.com/fcurella
+.. _`@aventurella`: https://github.com/aventurella
+.. _`@emonty`: https://github.com/emonty
+.. _`@schacki`: https://github.com/schacki
