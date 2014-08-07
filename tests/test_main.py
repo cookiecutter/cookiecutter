@@ -12,7 +12,7 @@ import logging
 import os
 import sys
 
-from cookiecutter import config, main, utils
+from cookiecutter import main, utils
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
@@ -25,7 +25,6 @@ if PY3:
     from unittest.mock import patch
     input_str = 'builtins.input'
 else:
-    import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO

@@ -19,7 +19,6 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
-from .exceptions import NonTemplatedInputDirException
 from .find import find_template
 from .utils import make_sure_path_exists, work_in
 from .hooks import run_hook

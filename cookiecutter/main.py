@@ -50,7 +50,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
             clone_to_dir=config_dict['cookiecutters_dir']
         )
     else:
-        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
+        # Use the local repo
         repo_dir = input_dir
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
@@ -111,6 +111,7 @@ def _get_parser():
 
     return parser
 
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
     parser = _get_parser()
@@ -123,7 +124,10 @@ def main():
     args = parse_cookiecutter_args(sys.argv[1:])
 
     if args.verbose:
-        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(
+            format='%(levelname)s %(filename)s: %(message)s',
+            level=logging.DEBUG
+        )
     else:
         # Log info and above to console
         logging.basicConfig(
