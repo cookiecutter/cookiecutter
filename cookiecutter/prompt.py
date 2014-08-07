@@ -10,6 +10,7 @@ Functions for prompting the user for project info.
 
 from __future__ import unicode_literals
 import sys
+import json
 
 PY3 = sys.version > '3'
 if PY3:
@@ -27,7 +28,7 @@ def prompt_for_config(context):
     cookiecutter_dict = {}
 
     for key, val in iteritems(context['cookiecutter']):
-        prompt = "{0} (default is \"{1}\")? ".format(key, val)
+        prompt = "{0} (default is {1})? ".format(key, json.dumps(val))
 
         if PY3:
             new_val = input(prompt)
@@ -38,6 +39,13 @@ def prompt_for_config(context):
 
         if new_val == '':
             new_val = val
+        else:
+            # attempt to treat input as a json structure
+            try:
+                new_val = json.loads(new_val)
+            # attempt to treat input as a json string
+            except ValueError as _:
+                new_val = json.loads('"%s"' % new_val)
 
         cookiecutter_dict[key] = new_val
     return cookiecutter_dict
