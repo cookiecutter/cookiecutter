@@ -10,9 +10,7 @@ Functions for generating a project from a project template.
 from __future__ import unicode_literals
 import logging
 import os
-import io
 import shutil
-import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -22,14 +20,6 @@ from binaryornot.check import is_binary
 from .find import find_template
 from .utils import make_sure_path_exists, read_json_file, work_in, write_file
 from .hooks import run_hook
-
-
-if sys.version_info[:2] < (2, 7):
-    import simplejson as json
-    from ordereddict import OrderedDict
-else:
-    import json
-    from collections import OrderedDict
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None,

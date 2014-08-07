@@ -11,10 +11,8 @@ Global configuration handling
 from __future__ import unicode_literals
 import copy
 import os
-import io
 
 from .exceptions import ConfigDoesNotExistException
-
 from .utils import read_yaml_file
 
 

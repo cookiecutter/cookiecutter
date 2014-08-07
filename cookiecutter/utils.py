@@ -81,6 +81,7 @@ def work_in(dirname=None):
     finally:
         os.chdir(curdir)
 
+
 def read_file(filename, encoding='utf-8'):
     """
     Read and return the contents of a file
@@ -94,7 +95,10 @@ def read_file(filename, encoding='utf-8'):
 
 def read_json_file(filename, encoding='utf-8', with_order=False):
     hook = OrderedDict if with_order else None
-    return json.loads(read_file(filename, encoding=encoding), object_pairs_hook=hook)
+    return json.loads(
+        read_file(filename, encoding=encoding),
+        object_pairs_hook=hook
+    )
 
 
 def read_yaml_file(filename, encoding='utf-8'):
