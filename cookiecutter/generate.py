@@ -10,9 +10,7 @@ Functions for generating a project from a project template.
 from __future__ import unicode_literals
 import logging
 import os
-import io
 import shutil
-import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -20,16 +18,8 @@ from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from .find import find_template
-from .utils import make_sure_path_exists, work_in
+from .utils import make_sure_path_exists, read_json_file, work_in, write_file
 from .hooks import run_hook
-
-
-if sys.version_info[:2] < (2, 7):
-    import simplejson as json
-    from ordereddict import OrderedDict
-else:
-    import json
-    from collections import OrderedDict
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
@@ -46,8 +36,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     context = {}
 
-    file_handle = open(context_file)
-    obj = json.load(file_handle, object_pairs_hook=OrderedDict)
+    obj = read_json_file(context_file, with_order=True)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
@@ -117,8 +106,7 @@ def generate_file(project_dir, infile, context, env):
 
         logging.debug("Writing {0}".format(outfile))
 
-        with io.open(outfile, 'w', encoding="utf-8") as fh:
-            fh.write(rendered_file)
+        write_file(outfile, rendered_file)
 
     # Apply file permissions to output file
     shutil.copymode(infile, outfile)
