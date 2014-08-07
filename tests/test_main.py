@@ -58,8 +58,8 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertFalse(os.path.exists('fake-project/json/'))
 
     def test_cookiecutter_extra_context(self):
-        context = {'repo_name': 'bar'}
-        main.cookiecutter('tests/fake-repo-pre', no_input=True, extra_context=context)
+        parameters = {'repo_name': 'bar'}
+        main.cookiecutter('tests/fake-repo-pre', no_input=True, parameters=parameters)
         self.assertTrue(os.path.isdir('bar'))
 
     def tearDown(self):
