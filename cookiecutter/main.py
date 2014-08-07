@@ -22,6 +22,7 @@ from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
+from .utils import read_json_file
 
 logger = logging.getLogger(__name__)
 
@@ -92,6 +93,10 @@ def _get_parser():
         '-c', '--checkout',
         help='branch, tag or commit to checkout after git clone'
     )
+    parser.add_argument(
+        '-e', '--extra-context',
+        help='Path to a JSON file containing parameter override values'
+    )
     cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     parser.add_argument(
         '-V', '--version',
@@ -135,7 +140,11 @@ def main():
             level=logging.INFO
         )
 
-    cookiecutter(args.input_dir, args.checkout, args.no_input)
+    extra_context = None
+    if args.extra_context:
+        extra_context = read_json_file(args.extra_context)
+
+    cookiecutter(args.input_dir, args.checkout, args.no_input, extra_context)
 
 
 if __name__ == '__main__':
