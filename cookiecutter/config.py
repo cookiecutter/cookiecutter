@@ -13,10 +13,9 @@ import copy
 import os
 import io
 
-import yaml
-
 from .exceptions import ConfigDoesNotExistException
-from .exceptions import InvalidConfiguration
+
+from .utils import read_yaml_file
 
 
 DEFAULT_CONFIG = {
@@ -34,13 +33,8 @@ def get_config(config_path):
         raise ConfigDoesNotExistException
 
     print("config_path is {0}".format(config_path))
-    with io.open(config_path, encoding="utf-8") as file_handle:
-        try:
-            yaml_dict = yaml.safe_load(file_handle)
-        except yaml.scanner.ScannerError:
-            raise InvalidConfiguration(
-                "%s is no a valid YAML file" % config_path)
 
+    yaml_dict = read_yaml_file(config_path)
     config_dict = copy.copy(DEFAULT_CONFIG)
     config_dict.update(yaml_dict)
 

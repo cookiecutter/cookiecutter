@@ -16,6 +16,18 @@ import sys
 import stat
 import shutil
 import contextlib
+import io
+
+import yaml
+
+from .exceptions import InvalidConfiguration
+
+if sys.version_info[:2] < (2, 7):
+    import simplejson as json
+    from ordereddict import OrderedDict
+else:
+    import json
+    from collections import OrderedDict
 
 
 def force_delete(func, path, exc_info):
@@ -68,3 +80,31 @@ def work_in(dirname=None):
         yield
     finally:
         os.chdir(curdir)
+
+def read_file(filename, encoding='utf-8'):
+    """
+    Read and return the contents of a file
+
+    :param filename: Path to the file to read
+    :param encoding: The encoding of the file.
+    """
+    with io.open(filename, 'r', encoding=encoding) as stream:
+        return stream.read()
+
+
+def read_json_file(filename, encoding='utf-8', with_order=False):
+    hook = OrderedDict if with_order else None
+    return json.loads(read_file(filename, encoding=encoding), object_pairs_hook=hook)
+
+
+def read_yaml_file(filename, encoding='utf-8'):
+    try:
+        return yaml.safe_load(read_file(filename, encoding=encoding))
+    except yaml.scanner.ScannerError:
+        raise InvalidConfiguration(
+            "%s is not a valid YAML file" % filename)
+
+
+def write_file(filename, contents, encoding='utf-8'):
+    with io.open(filename, 'w', encoding=encoding) as stream:
+        stream.write(contents)
