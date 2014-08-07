@@ -17,20 +17,19 @@ from .exceptions import NonTemplatedInputDirException
 def find_template(repo_dir):
     """
     Determines which child directory of `repo_dir` is the project template.
-    
+
     :param repo_dir: Local directory of newly cloned repo.
     :returns project_template: Relative path to project template.
     """
 
     logging.debug('Searching {0} for the project template.'.format(repo_dir))
-    
+
     repo_dir_contents = os.listdir(repo_dir)
 
     project_template = None
+    required_parts = ['cookiecutter', '{{', '}}']
     for item in repo_dir_contents:
-        if 'cookiecutter' in item and \
-            '{{' in item and \
-            '}}' in item:
+        if all([part in item for part in required_parts]):
             project_template = item
             break
 
