@@ -33,14 +33,16 @@ else:
     from collections import OrderedDict
 
 
-def generate_context(context_file='cookiecutter.json', default_context=None):
+def generate_context(context_file='cookiecutter.json', default_context=None,
+                     extra_context=None):
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
 
     :param context_file: JSON file containing key/value pairs for populating
         the cookiecutter's variables.
-    :param config_dict: Dict containing any config to take into account.
+    :param default_context: Dictionary containing any config to take into account.
+    :param extra_context: Dictionary containing configuration overrides
     """
 
     context = {}
@@ -57,6 +59,8 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
     # user's global config, if available
     if default_context:
         obj.update(default_context)
+    if extra_context:
+        obj.update(extra_context)
 
     logging.debug('Context generated is {0}'.format(context))
     return context
@@ -139,17 +143,6 @@ def render_and_create_dir(dirname, context, output_dir):
     return dir_to_create
 
 
-def ensure_dir_is_templated(dirname):
-    """
-    Ensures that dirname is a templated directory name.
-    """
-    if '{{' in dirname and \
-        '}}' in dirname:
-        return True
-    else:
-        raise NonTemplatedInputDirException
-
-
 def generate_files(repo_dir, context=None, output_dir="."):
     """
     Renders the templates and saves them to files.
@@ -164,7 +157,7 @@ def generate_files(repo_dir, context=None, output_dir="."):
     context = context or {}
 
     unrendered_dir = os.path.split(template_dir)[1]
-    ensure_dir_is_templated(unrendered_dir)
+
     project_dir = render_and_create_dir(unrendered_dir, context, output_dir)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
