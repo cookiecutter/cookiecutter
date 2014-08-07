@@ -143,17 +143,6 @@ def render_and_create_dir(dirname, context, output_dir):
     return dir_to_create
 
 
-def ensure_dir_is_templated(dirname):
-    """
-    Ensures that dirname is a templated directory name.
-    """
-    if '{{' in dirname and \
-        '}}' in dirname:
-        return True
-    else:
-        raise NonTemplatedInputDirException
-
-
 def generate_files(repo_dir, context=None, output_dir="."):
     """
     Renders the templates and saves them to files.
@@ -168,7 +157,10 @@ def generate_files(repo_dir, context=None, output_dir="."):
     context = context or {}
 
     unrendered_dir = os.path.split(template_dir)[1]
-    ensure_dir_is_templated(unrendered_dir)
+
+    if not ('{{' in unrendered_dir and '}}' in unrendered_dir):
+        raise NonTemplatedInputDirException
+
     project_dir = render_and_create_dir(unrendered_dir, context, output_dir)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
