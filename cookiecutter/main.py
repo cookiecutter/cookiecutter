@@ -22,11 +22,12 @@ from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
+from .utils import read_json_file
 
 logger = logging.getLogger(__name__)
 
 
-def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(input_dir, checkout=None, no_input=False, parameters=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -34,7 +35,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
         or a URL to a git repository.
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
-    :param extra_context: A dictionary of context that overrides default
+    :param parameters: A dictionary of parameters that overrides default
         and user configuration.
     """
 
@@ -59,7 +60,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     context = generate_context(
         context_file=context_file,
         default_context=config_dict['default_context'],
-        extra_context=extra_context,
+        extra_context=parameters,
     )
 
     # prompt the user to manually configure at the command line.
@@ -91,6 +92,10 @@ def _get_parser():
     parser.add_argument(
         '-c', '--checkout',
         help='branch, tag or commit to checkout after git clone'
+    )
+    parser.add_argument(
+        '-p', '--parameters',
+        help='Path to a JSON file containing parameter override values'
     )
     cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     parser.add_argument(
@@ -135,7 +140,9 @@ def main():
             level=logging.INFO
         )
 
-    cookiecutter(args.input_dir, args.checkout, args.no_input)
+    parameters = read_json_file(args.parameters) if args.parameters else None
+
+    cookiecutter(args.input_dir, args.checkout, args.no_input, parameters)
 
 
 if __name__ == '__main__':
