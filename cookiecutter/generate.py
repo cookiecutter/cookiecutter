@@ -158,9 +158,6 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
     unrendered_dir = os.path.split(template_dir)[1]
 
-    if not ('{{' in unrendered_dir and '}}' in unrendered_dir):
-        raise NonTemplatedInputDirException
-
     project_dir = render_and_create_dir(unrendered_dir, context, output_dir)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
