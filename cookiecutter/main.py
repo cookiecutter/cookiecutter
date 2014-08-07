@@ -26,13 +26,16 @@ from .vcs import clone
 logger = logging.getLogger(__name__)
 
 
-def cookiecutter(input_dir, checkout=None, no_input=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
     :param input_dir: A directory containing a project template dir,
-        or a URL to git repo.
-    :param checkout: The branch, tag or commit ID to checkout after clone
+        or a URL to a git repository.
+    :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param no_input: Prompt the user at command line for manual configuration?
+    :param extra_context: A dictionary of context that overrides default
+        and user configuration.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -55,7 +58,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     context = generate_context(
         context_file=context_file,
-        default_context=config_dict['default_context']
+        default_context=config_dict['default_context'],
+        extra_context=extra_context,
     )
 
     # prompt the user to manually configure at the command line.
