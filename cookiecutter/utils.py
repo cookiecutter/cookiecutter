@@ -101,7 +101,7 @@ def read_json_file(filename, encoding='utf-8', with_order=False):
     )
 
 
-def read_yaml_file(filename, encoding='utf-8'):
+def read_user_configuration(filename, encoding='utf-8'):
     try:
         return yaml.safe_load(read_file(filename, encoding=encoding))
     except yaml.scanner.ScannerError:
