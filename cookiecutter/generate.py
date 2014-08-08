@@ -18,6 +18,7 @@ from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from .find import find_template
+from .exceptions import InvalidConfiguration
 from .utils import make_sure_path_exists, read_json_file, work_in, write_file
 from .hooks import run_hook
 
@@ -30,14 +31,14 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     :param context_file: JSON file containing key/value pairs for populating
         the cookiecutter's variables.
-    :param default_context: Dictionary containing any config to take into account.
+    :param default_context: Dictionary containing any configuration to
+        take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
 
     context = {}
 
     obj = read_json_file(context_file, with_order=True)
-
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
@@ -47,10 +48,22 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     # user's global config, if available
     if default_context:
         obj.update(default_context)
+
+    # Overwrite context variables with user provided parameters. An error
+    # will be thrown if the user passes a key that is not associated
+    # with the project
     if extra_context:
+        unknown_keys = set(extra_context.keys()) - set(obj.keys())
+
+        if unknown_keys:
+            raise InvalidConfiguration(
+                'The following set of keys are not supported by'
+                'this cookiecutter project:\n%s' % unknown_keys
+            )
+
         obj.update(extra_context)
 
-    logging.debug('Context generated is {0}'.format(context))
+    logging.debug('Context generated is %s', context)
     return context
 
 
@@ -114,7 +127,8 @@ def generate_file(project_dir, infile, context, env):
 
 def render_and_create_dir(dirname, context, output_dir):
     """
-    Renders the name of a directory, creates the directory, and returns its path.
+    Renders the name of a directory, creates the directory,
+    and returns its path.
     """
 
     name_tmpl = Template(dirname)
@@ -167,7 +181,9 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
         for root, dirs, files in os.walk("."):
             for d in dirs:
-                unrendered_dir = os.path.join(project_dir, os.path.join(root, d))
+                unrendered_dir = os.path.join(
+                    project_dir, os.path.join(root, d)
+                )
                 render_and_create_dir(unrendered_dir, context, output_dir)
 
             for f in files:

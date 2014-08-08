@@ -10,7 +10,6 @@ Tests for `cookiecutter.generate` module.
 from __future__ import unicode_literals
 import logging
 import os
-import io
 import sys
 import stat
 import unittest
@@ -108,7 +107,7 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             repo_dir='tests/test-generate-files'
         )
         self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
-        simple_text = io.open('inputpizzä/simple.txt', 'rt', encoding='utf-8').read()
+        simple_text = utils.read_file('inputpizzä/simple.txt')
         self.assertEqual(simple_text, u'I eat pizzä')
 
     def test_generate_files_binaries(self):
@@ -121,24 +120,14 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('inputbinary_files/logo.png'))
         self.assertTrue(os.path.isfile('inputbinary_files/.DS_Store'))
         self.assertTrue(os.path.isfile('inputbinary_files/readme.txt'))
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/some_font.otf')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/logo.png')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/.DS_Store')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/readme.txt')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/some_font.otf')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/binary_files/logo.png')
-        )
+        self.assertTrue(os.path.isfile('inputbinary_files/some_font.otf'))
+
+        bin_files = 'inputbinary_files/binary_files'
+        self.assertTrue(os.path.isfile('%s/logo.png' % bin_files))
+        self.assertTrue(os.path.isfile('%s/.DS_Store' % bin_files))
+        self.assertTrue(os.path.isfile('%s/readme.txt' % bin_files))
+        self.assertTrue(os.path.isfile('%s/some_font.otf' % bin_files))
+        self.assertTrue(os.path.isfile('%s/logo.png' % bin_files))
 
     def test_generate_files_absolute_path(self):
         generate.generate_files(
@@ -158,7 +147,9 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             repo_dir=os.path.abspath('tests/test-generate-files'),
             output_dir='tests/custom_output_dir'
         )
-        self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
+        self.assertTrue(
+            os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
+        )
 
     def test_generate_files_permissions(self):
         """
@@ -204,13 +195,24 @@ class TestGenerateContext(CookiecutterCleanSystemTestCase):
         )
         self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
 
-    def test_generate_context_with_extra(self):
+    def test_generate_context_with_default_and_extra(self):
         context = generate.generate_context(
             context_file='tests/test-generate-context/test.json',
-            default_context={'1': 3},
-            extra_context={'1': 4},
+            default_context={"1": 3},
+            extra_context={"1": 5, "some_key": "some_other_val"}
         )
-        self.assertEqual(context, {'test': {'1': 4, 'some_key': 'some_val'}})
+        self.assertEqual(context, {"test": {
+            "1": 5,
+            "some_key": "some_other_val"
+        }})
+
+    def test_generate_context_with_extra_context_not_in_project(self):
+        with self.assertRaises(exceptions.InvalidConfiguration):
+            generate.generate_context(
+                context_file='tests/test-generate-context/test.json',
+                default_context={"1": 3},
+                extra_context={"2": 5, "some_key": "some_other_val"}
+            )
 
 
 class TestOutputFolder(CookiecutterCleanSystemTestCase):

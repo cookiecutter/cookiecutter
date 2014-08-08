@@ -82,14 +82,14 @@ def work_in(dirname=None):
         os.chdir(curdir)
 
 
-def read_file(filename, encoding='utf-8'):
+def read_file(filename, encoding='utf-8', mode='r'):
     """
     Read and return the contents of a file
 
     :param filename: Path to the file to read
     :param encoding: The encoding of the file.
     """
-    with io.open(filename, 'r', encoding=encoding) as stream:
+    with io.open(filename, mode=mode, encoding=encoding) as stream:
         return stream.read()
 
 
