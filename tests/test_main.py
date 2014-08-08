@@ -23,12 +23,8 @@ else:
 PY3 = sys.version > '3'
 if PY3:
     from unittest.mock import patch
-    input_str = 'builtins.input'
 else:
-    import __builtin__
     from mock import patch
-    input_str = '__builtin__.raw_input'
-    from cStringIO import StringIO
 
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
@@ -76,11 +72,8 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
 class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 
-    @patch(input_str, lambda x: '\n')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
     def test_cookiecutter_local_with_input(self):
-        if not PY3:
-            sys.stdin = StringIO("\n\n\n\n\n\n\n\n\n\n\n\n")
-
         main.cookiecutter('tests/fake-repo-pre/', no_input=False)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
         self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
@@ -135,28 +128,8 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             utils.rmtree('module_name')
         super(TestCookiecutterRepoArg, self).tearDown()
 
-    # HACK: The *args is because:
-    # 1. If the lambda has 1 arg named x, I sometimes get this error:
-    #    TypeError: <lambda>() missing 1 required positional argument: 'x'
-    # 2. If lambda has no args, I unpredictably get this error:
-    #    TypeError: <lambda>() takes 0 positional arguments but 1 was given
-    # *args is the best of both worlds.
-    # But I am not sure why I started getting these errors for no reason.
-    # Any help would be appreciated. -- @audreyr
-    @patch(input_str, lambda *args: '')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'')
     def test_cookiecutter_git(self):
-        if not PY3:
-            # Simulate pressing return 10x.
-            # HACK: There are only 9 prompts in cookiecutter-pypackage's
-            # cookiecutter.json (http://git.io/b-1MVA) but 10 \n chars here.
-            # There was an "EOFError: EOF when reading a line" test fail here
-            # out of the blue, which an extra \n fixed. 
-            # Not sure why. There shouldn't be an extra prompt to delete 
-            # the repo, since CookiecutterCleanSystemTestCase ensured that it
-            # wasn't present.
-            # It's possibly an edge case in CookiecutterCleanSystemTestCase.
-            # Improvements to this would be appreciated. -- @audreyr
-            sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
@@ -165,10 +138,8 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
 
-    @patch(input_str, lambda x: '')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'')
     def test_cookiecutter_mercurial(self):
-        if not PY3:
-            sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')
         main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-trytonmodule')
