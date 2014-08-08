@@ -18,6 +18,7 @@ from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from .find import find_template
+from .exceptions import InvalidConfiguration
 from .utils import make_sure_path_exists, read_json_file, work_in, write_file
 from .hooks import run_hook
 
@@ -47,10 +48,22 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     # user's global config, if available
     if default_context:
         obj.update(default_context)
+
+    # Overwrite context variables with user provided parameters. An error
+    # will be thrown if the user passes a key that is not associated
+    # with the project
     if extra_context:
+        unknown_keys = set(extra_context.keys()) - set(obj.keys())
+
+        if unknown_keys:
+            raise InvalidConfiguration(
+                'The following set of keys are not supported by'
+                'this cookiecutter project:\n%s' % unknown_keys
+            )
+
         obj.update(extra_context)
 
-    logging.debug('Context generated is {0}'.format(context))
+    logging.debug('Context generated is %s', context)
     return context
 
 
