@@ -50,6 +50,7 @@ Contributors
 * Adam Venturella (`@aventurella`_)
 * Monty Taylor (`@emonty`_)
 * schacki (`@schacki`_)
+* Ryan Olson(`@ryanolson`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -88,3 +89,5 @@ Contributors
 .. _`@aventurella`: https://github.com/aventurella
 .. _`@emonty`: https://github.com/emonty
 .. _`@schacki`: https://github.com/schacki
+.. _`@ryanolson`: https://github.com/ryanolson
+
