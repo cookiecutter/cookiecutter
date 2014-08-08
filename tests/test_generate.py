@@ -214,15 +214,6 @@ class TestGenerateContext(CookiecutterCleanSystemTestCase):
                 extra_context={"2": 5, "some_key": "some_other_val"}
             )
 
-    def test_generate_context_context_validation(self):
-        self.assertRaises(
-            exceptions.InvalidConfiguration,
-            generate.generate_context,
-            context_file='tests/test-generate-context/test.json',
-            default_context={'1': 3},
-            extra_context={'unknown': 'y'},
-        )
-
 
 class TestOutputFolder(CookiecutterCleanSystemTestCase):
 
