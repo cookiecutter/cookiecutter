@@ -95,6 +95,37 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.checkout, 'develop')
 
 
+class TestArgParsing(unittest.TestCase):
+
+    def test_alias_expansion(self):
+        input_dir = main.expand_aliases('foo', {'aliases': {'foo': 'bar'}})
+        self.assertEqual(input_dir, 'bar')
+
+    def test_alias_expansion_not_an_alias(self):
+        input_dir = main.expand_aliases('baz', {'aliases': {'foo': 'bar'}})
+        self.assertEqual(input_dir, 'baz')
+
+    def test_alias_expansion_prefix(self):
+        input_dir = main.expand_aliases('xx:a', {'prefixes': {'xx': '<{0}>'}})
+        self.assertEqual(input_dir, '<a>')
+
+    def test_alias_expansion_builtin(self):
+        input_dir = main.expand_aliases('gh:a', {})
+        self.assertEqual(input_dir, 'https://github.com/a.git')
+
+    def test_alias_expansion_override_builtin(self):
+        input_dir = main.expand_aliases('gh:a', {'prefixes': {'gh': '<{0}>'}})
+        self.assertEqual(input_dir, '<a>')
+
+    def test_alias_expansion_prefix_ignores_suffix(self):
+        input_dir = main.expand_aliases('xx:a', {'prefixes': {'xx': '<>'}})
+        self.assertEqual(input_dir, '<>')
+
+    def test_alias_expansion_prefix_not_0_in_braces(self):
+        input_dir = main.expand_aliases('xx:a', {'prefixes': {'xx': '{1}'}})
+        self.assertEqual(input_dir, '{1}')
+
+
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 

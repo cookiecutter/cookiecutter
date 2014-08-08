@@ -25,6 +25,25 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
+builtin_prefixes = {
+    'gh': 'https://github.com/{0}.git',
+    'bb': 'https://bitbucket.org/{0}',
+}
+
+def expand_aliases(input_dir, config_dict):
+    aliases = config_dict.get('aliases', {})
+    prefixes = builtin_prefixes.copy()
+    prefixes.update(config_dict.get('prefixes', {}))
+
+    if input_dir in aliases:
+        return aliases[input_dir]
+
+    prefix, sep, rest = input_dir.partition(':')
+    if sep and prefix in prefixes:
+        return prefixes[prefix].replace('{0}', rest)
+
+    return input_dir
+
 
 def cookiecutter(input_dir, checkout=None, no_input=False):
     """
@@ -38,6 +57,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
+
+    input_dir = expand_aliases(input_dir, config_dict)
 
     # TODO: find a better way to tell if it's a repo URL
     if "git@" in input_dir or "https://" in input_dir:
