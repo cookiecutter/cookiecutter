@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import logging
 import os
 import shutil
+import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -21,6 +22,18 @@ from .find import find_template
 from .exceptions import InvalidConfiguration
 from .utils import make_sure_path_exists, read_json_file, work_in, write_file
 from .hooks import run_hook
+
+
+def validate_parameters(parameters, source):
+    if parameters:
+        unknown_keys = set(parameters.keys()) - set(source.keys())
+        if unknown_keys:
+            raise InvalidConfiguration(
+                'The following set of keys are not supported by '
+                'this cookiecutter project:\n%s' % unknown_keys
+            )
+        source.update(parameters)
+    return source
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
@@ -38,7 +51,8 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     context = {}
 
-    obj = read_json_file(context_file, with_order=True)
+    obj = read_json_file(context_file, encoding=sys.getdefaultencoding(), with_order=True)
+
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
@@ -52,16 +66,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     # Overwrite context variables with user provided parameters. An error
     # will be thrown if the user passes a key that is not associated
     # with the project
-    if extra_context:
-        unknown_keys = set(extra_context.keys()) - set(obj.keys())
-
-        if unknown_keys:
-            raise InvalidConfiguration(
-                'The following set of keys are not supported by'
-                'this cookiecutter project:\n%s' % unknown_keys
-            )
-
-        obj.update(extra_context)
+    obj = validate_parameters(extra_context, obj)
 
     logging.debug('Context generated is %s', context)
     return context

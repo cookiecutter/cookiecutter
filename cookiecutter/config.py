@@ -13,7 +13,7 @@ import copy
 import os
 
 from .exceptions import ConfigDoesNotExistException
-from .utils import read_user_configuration
+from .utils import read_yaml_file
 
 
 DEFAULT_CONFIG = {
@@ -33,7 +33,7 @@ def get_config(config_path):
     print("config_path is {0}".format(config_path))
 
     config_dict = copy.copy(DEFAULT_CONFIG)
-    config_dict.update(read_user_configuration(config_path))
+    config_dict.update(read_yaml_file(config_path) or {})
     return config_dict
 
 
