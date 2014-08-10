@@ -39,6 +39,12 @@ except KeyError:
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
+class TestCookiecutterMain(unittest.TestCase):
+    def test_main(self):
+        with self.assertRaises(SystemExit):
+            main.main()
+
+
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
     def test_cookiecutter(self):
