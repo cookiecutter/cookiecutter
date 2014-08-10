@@ -39,6 +39,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     context = {}
 
     obj = read_json_file(context_file, with_order=True)
+
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]

@@ -110,9 +110,9 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.no_input, True)
 
     def test_parse_cookiecutter_args_with_parameters(self):
-        args = main.parse_cookiecutter_args(['project/', '--parameters', 'myparams.json'])
+        args = main.parse_cookiecutter_args(['project/', '--parameters', 'params.yaml'])
         self.assertEqual(args.input_dir, 'project/')
-        self.assertEqual(args.parameters, 'myparams.json')
+        self.assertEqual(args.parameters, 'params.yaml')
 
     def test_parse_cookiecutter_args_without_parameters(self):
         args = main.parse_cookiecutter_args(['project/'])

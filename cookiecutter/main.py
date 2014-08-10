@@ -22,7 +22,7 @@ from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
-from .utils import read_json_file
+from .utils import read_yaml_file
 
 logger = logging.getLogger(__name__)
 
@@ -95,7 +95,7 @@ def _get_parser():
     )
     parser.add_argument(
         '-p', '--parameters',
-        help='Path to a JSON file containing parameter override values'
+        help='Path to a YAML file containing parameter override values'
     )
     cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     parser.add_argument(
@@ -140,7 +140,7 @@ def main():
             level=logging.INFO
         )
 
-    parameters = read_json_file(args.parameters) if args.parameters else None
+    parameters = read_yaml_file(args.parameters) if args.parameters else None
 
     cookiecutter(args.input_dir, args.checkout, args.no_input, parameters)
 
