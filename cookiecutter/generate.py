@@ -11,7 +11,6 @@ from __future__ import unicode_literals
 import logging
 import os
 import shutil
-import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -29,7 +28,7 @@ def validate_parameters(parameters, source):
         unknown_keys = set(parameters.keys()) - set(source.keys())
         if unknown_keys:
             raise InvalidConfiguration(
-                'The following set of keys are not supported by '
+                'The following set of keys are not supported by'
                 'this cookiecutter project:\n%s' % unknown_keys
             )
         source.update(parameters)
@@ -51,7 +50,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     context = {}
 
-    obj = read_json_file(context_file, encoding=sys.getdefaultencoding(), with_order=True)
+    obj = read_json_file(context_file, with_order=True)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]

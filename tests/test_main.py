@@ -12,7 +12,7 @@ import logging
 import os
 import sys
 
-from cookiecutter import main, utils
+from cookiecutter import exceptions, main, utils
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
@@ -24,6 +24,7 @@ PY3 = sys.version > '3'
 if PY3:
     from unittest.mock import patch
     input_str = 'builtins.input'
+    from io import StringIO
 else:
     from mock import patch
     input_str = '__builtin__.raw_input'
@@ -40,9 +41,29 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 class TestCookiecutterMain(unittest.TestCase):
+
     def test_main(self):
-        with self.assertRaises(SystemExit):
+        expected_err = 'arguments'
+        with patch('sys.argv', ['cookiecutter']):
+            with patch('sys.stderr', new_callable=StringIO) as err:
+                try:
+                    main.main()
+                except SystemExit:
+                    self.assertTrue(expected_err in err.getvalue())
+
+    def test_main_with_options(self):
+        argv = ('cookiecutter --no-input -p '
+                'tests/test-config/valid-parameters.yaml '
+                'tests/fake-repo-pre/').split(' ')
+        with patch('sys.argv', argv):
             main.main()
+
+    def test_main_parameter_validation(self):
+         argv = ('cookiecutter -v -p '
+                 'tests/test-config/invalid-parameters.yaml '
+                 'tests/fake-repo-pre/').split(' ')
+         with patch('sys.argv', argv):
+             self.assertRaises(exceptions.InvalidConfiguration, main.main)
 
 
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
