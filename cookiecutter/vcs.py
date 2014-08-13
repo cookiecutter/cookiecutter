@@ -53,7 +53,7 @@ def identify_repo(repo_url):
         raise UnknownRepoType
 
 
-def clone(repo_url, checkout=None, clone_to_dir="."):
+def clone(repo_url, checkout=None, no_input=None, clone_to_dir="."):
     """
     Clone a repo to the current directory.
 
@@ -75,7 +75,11 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        prompt_and_delete_repo(repo_dir)
+        # If no input is enable don't clone and take local
+        if no_input:
+            return repo_dir
+        else:
+            prompt_and_delete_repo(repo_dir)
 
     if repo_type in ["git", "hg"]:
         subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
