@@ -27,6 +27,10 @@ def prompt_for_config(context):
     cookiecutter_dict = {}
 
     for key, val in iteritems(context['cookiecutter']):
+        if key.startswith("_"):
+            cookiecutter_dict[key] = val
+            continue
+
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
         if PY3:
