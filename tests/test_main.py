@@ -12,7 +12,7 @@ import logging
 import os
 import sys
 
-from cookiecutter import exceptions, main, utils
+from cookiecutter import main, utils
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
@@ -52,18 +52,10 @@ class TestCookiecutterMain(unittest.TestCase):
                     self.assertTrue(expected_err in err.getvalue())
 
     def test_main_with_options(self):
-        argv = ('cookiecutter --no-input -p '
-                'tests/test-config/valid-parameters.yaml '
+        argv = ('cookiecutter --no-input -o foo=bar -o fizz=buzz '
                 'tests/fake-repo-pre/').split(' ')
         with patch('sys.argv', argv):
             main.main()
-
-    def test_main_parameter_validation(self):
-         argv = ('cookiecutter -v -p '
-                 'tests/test-config/invalid-parameters.yaml '
-                 'tests/fake-repo-pre/').split(' ')
-         with patch('sys.argv', argv):
-             self.assertRaises(exceptions.InvalidConfiguration, main.main)
 
 
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
@@ -84,9 +76,12 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
 
-    def test_cookiecutter_parameters(self):
-        parameters = {'repo_name': 'bar'}
-        main.cookiecutter('tests/fake-repo-pre', no_input=True, parameters=parameters)
+    def test_cookiecutter_overrides(self):
+        main.cookiecutter(
+            'tests/fake-repo-pre',
+            no_input=True,
+            overrides={'repo_name': 'bar'}
+        )
         self.assertTrue(os.path.isdir('bar'))
 
     def tearDown(self):
@@ -130,14 +125,15 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.input_dir, 'project/')
         self.assertEqual(args.no_input, True)
 
-    def test_parse_cookiecutter_args_with_parameters(self):
-        args = main.parse_cookiecutter_args(['project/', '--parameters', 'params.yaml'])
+    def test_parse_cookiecutter_args_with_overrides(self):
+        args = main.parse_cookiecutter_args(['project/', '--override', 'foo=bar', '-o', 'fizz=buzz'])
         self.assertEqual(args.input_dir, 'project/')
-        self.assertEqual(args.parameters, 'params.yaml')
+        self.assertEqual(args.override, ['foo=bar', 'fizz=buzz'])
+        self.assertEqual(args.overrides, {'foo': 'bar', 'fizz': 'buzz'})
 
-    def test_parse_cookiecutter_args_without_parameters(self):
-        args = main.parse_cookiecutter_args(['project/'])
-        self.assertEqual(args.parameters, None)
+    def test_parse_cookiecutter_args_with_invalid_overrides(self):
+        with self.assertRaises(Exception):
+            main.parse_cookiecutter_args(['project/', '--override', 'foo=bar', '-o', 'fizz'])
 
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
