@@ -27,7 +27,7 @@ Shell scripts work similarly::
     └── cookiecutter.json
 
 It shouldn't be too hard to extend Cookiecutter to work with other types of
-scripts too. Pull requests are welcome.
+cripts too. Pull requests are welcome.
 
 For portability, you should use Python scripts (with extension `.py`) for your
 hooks, as these can be run on any platform. However, if you intend for your
@@ -35,7 +35,7 @@ template to only be run on a single platform, a shell script (or `.bat` file
 on Windows) can be a quicker alternative.
 
 User Config (0.7.0+)
-----------------------
+--------------------
 
 If you use Cookiecutter a lot, you'll find it useful to have a
 `.cookiecutterrc` file in your home directory like this:
@@ -73,16 +73,45 @@ This is useful if, for example, you're writing a web framework and need to
 provide developers with a tool similar to `django-admin.py startproject` or
 `npm init`.
 
-It is also possible to specify an `extra_context` dictionary that will override values from `cookiecutter.json` or `.cookiecutterrc`::
+
+Overriding Context
+------------------
+
+It is also possible to specify an `overrides` dictionary that will 
+override values from `.cookiecutterrc` and `cookiecutter.json`
+(`.cookiecutterrc` overrides values from `cookiecutter.json`).
+
+This example overrides the `project_name` value::
+
+    from cookiecutter.main import cookiecutter
 
     cookiecutter('cookiecutter-pypackage/',
-                 extra_context={'project_name': 'TheGreatest'})
+                 overrides={'project_name': 'TheGreatest'})
 
-If you combine that with the no_input parameter, you can programmatically create the project with a set list of context parameters and without any command line prompts::
+If you combine overrides with the `no_input` parameter, you can programmatically
+create the project with a set list of context parameters and without any
+command line prompts::
+
+    from cookiecutter.main import cookiecutter
 
     cookiecutter('cookiecutter-pypackage/',
                  no_input=True,
-                 extra_context={'project_name': 'TheGreatest'})
+                 overrides={'project_name': 'TheGreatest'})
+
+Context Injection
+-----------------
+
+You can use this feature to dynamically inject values into the context::
+
+    """ baked_timestamp.py is a utility script for cookiecutter that adds a timestamp. """
+    from cookiecutter.main import cookiecutter
+
+    from datetime import datetime
+
+    cookiecutter(
+        'cookiecutter-django',
+        overrides={'timestamp': datetime.utcnow().isoformat()}
+    )
 
 See the :ref:`API Reference <apiref>` for more details.
 
