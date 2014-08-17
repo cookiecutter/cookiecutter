@@ -12,7 +12,7 @@ import logging
 import os
 import sys
 
-from cookiecutter import exceptions, main, utils
+from cookiecutter import main, utils
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):

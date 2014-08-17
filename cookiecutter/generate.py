@@ -18,7 +18,6 @@ from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from .find import find_template
-from .exceptions import InvalidConfiguration
 from .utils import make_sure_path_exists, read_json_file, work_in, write_file
 from .hooks import run_hook
 
