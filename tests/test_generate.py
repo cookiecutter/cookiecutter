@@ -10,7 +10,6 @@ Tests for `cookiecutter.generate` module.
 from __future__ import unicode_literals
 import logging
 import os
-import io
 import sys
 import stat
 import unittest
@@ -28,6 +27,7 @@ from tests import CookiecutterCleanSystemTestCase
 PY3 = sys.version > '3'
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+
 
 class TestGenerateFile(unittest.TestCase):
 
@@ -107,7 +107,7 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             repo_dir='tests/test-generate-files'
         )
         self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
-        simple_text = io.open('inputpizzä/simple.txt', 'rt', encoding='utf-8').read()
+        simple_text = utils.read_file('inputpizzä/simple.txt')
         self.assertEqual(simple_text, u'I eat pizzä')
 
     def test_generate_files_binaries(self):
@@ -120,24 +120,14 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('inputbinary_files/logo.png'))
         self.assertTrue(os.path.isfile('inputbinary_files/.DS_Store'))
         self.assertTrue(os.path.isfile('inputbinary_files/readme.txt'))
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/some_font.otf')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/logo.png')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/.DS_Store')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/readme.txt')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/some_font.otf')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/binary_files/logo.png')
-        )
+        self.assertTrue(os.path.isfile('inputbinary_files/some_font.otf'))
+
+        bin_files = 'inputbinary_files/binary_files'
+        self.assertTrue(os.path.isfile('%s/logo.png' % bin_files))
+        self.assertTrue(os.path.isfile('%s/.DS_Store' % bin_files))
+        self.assertTrue(os.path.isfile('%s/readme.txt' % bin_files))
+        self.assertTrue(os.path.isfile('%s/some_font.otf' % bin_files))
+        self.assertTrue(os.path.isfile('%s/logo.png' % bin_files))
 
     def test_generate_files_absolute_path(self):
         generate.generate_files(
@@ -157,7 +147,9 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             repo_dir=os.path.abspath('tests/test-generate-files'),
             output_dir='tests/custom_output_dir'
         )
-        self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
+        self.assertTrue(
+            os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
+        )
 
     def test_generate_files_permissions(self):
         """
@@ -202,6 +194,17 @@ class TestGenerateContext(CookiecutterCleanSystemTestCase):
             default_context={"1": 3}
         )
         self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
+
+    def test_generate_context_with_default_and_overrides(self):
+        context = generate.generate_context(
+            context_file='tests/test-generate-context/test.json',
+            default_context={"1": 3},
+            overrides={"1": 5, "some_key": "some_other_val"}
+        )
+        self.assertEqual(context, {"test": {
+            "1": 5,
+            "some_key": "some_other_val"
+        }})
 
 
 class TestOutputFolder(CookiecutterCleanSystemTestCase):
@@ -293,7 +296,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
     def test_ignore_hooks_dirs(self):
         generate.generate_files(
             context={
-                'cookiecutter' : {'pyhooks': 'pyhooks'}
+                'cookiecutter': {'pyhooks': 'pyhooks'}
             },
             repo_dir='tests/test-pyhooks/',
             output_dir='tests/test-pyhooks/'
@@ -303,7 +306,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
     def test_run_python_hooks(self):
         generate.generate_files(
             context={
-                'cookiecutter' : {'pyhooks': 'pyhooks'}
+                'cookiecutter': {'pyhooks': 'pyhooks'}
             },
             repo_dir='tests/test-pyhooks/'.replace("/", os.sep),
             output_dir='tests/test-pyhooks/'.replace("/", os.sep)
@@ -314,7 +317,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
     def test_run_python_hooks_cwd(self):
         generate.generate_files(
             context={
-                'cookiecutter' : {'pyhooks': 'pyhooks'}
+                'cookiecutter': {'pyhooks': 'pyhooks'}
             },
             repo_dir='tests/test-pyhooks/'
         )
@@ -325,7 +328,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
         make_test_repo('tests/test-shellhooks')
         generate.generate_files(
             context={
-                'cookiecutter' : {'shellhooks': 'shellhooks'}
+                'cookiecutter': {'shellhooks': 'shellhooks'}
             },
             repo_dir='tests/test-shellhooks/',
             output_dir='tests/test-shellhooks/'

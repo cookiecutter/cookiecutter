@@ -12,7 +12,7 @@ import logging
 import os
 import sys
 
-from cookiecutter import config, main, utils
+from cookiecutter import main, utils
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
@@ -24,8 +24,8 @@ PY3 = sys.version > '3'
 if PY3:
     from unittest.mock import patch
     input_str = 'builtins.input'
+    from io import StringIO
 else:
-    import __builtin__
     from mock import patch
     input_str = '__builtin__.raw_input'
     from cStringIO import StringIO
@@ -38,6 +38,33 @@ except KeyError:
 
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+
+
+class TestCookiecutterMain(unittest.TestCase):
+
+    def test_main_help(self):
+        expected = 'Create a project from a Cookiecutter project template.'
+        with patch('sys.argv', ['cookiecutter', '-h']):
+            with patch('sys.stdout', new_callable=StringIO) as out:
+                try:
+                    main.main()
+                except SystemExit:
+                    self.assertTrue(expected in out.getvalue())
+
+    def test_main(self):
+        expected_err = 'arguments'
+        with patch('sys.argv', ['cookiecutter']):
+            with patch('sys.stderr', new_callable=StringIO) as err:
+                try:
+                    main.main()
+                except SystemExit:
+                    self.assertTrue(expected_err in err.getvalue())
+
+    def test_main_with_options(self):
+        argv = ('cookiecutter --no-input -o foo=bar -o fizz=buzz '
+                'tests/fake-repo-pre/').split(' ')
+        with patch('sys.argv', argv):
+            main.main()
 
 
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
@@ -57,6 +84,14 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isdir('fake-project'))
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
+
+    def test_cookiecutter_overrides(self):
+        main.cookiecutter(
+            'tests/fake-repo-pre',
+            no_input=True,
+            overrides={'repo_name': 'bar'}
+        )
+        self.assertTrue(os.path.isdir('bar'))
 
     def tearDown(self):
         if os.path.isdir('fake-project'):
@@ -94,6 +129,21 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.input_dir, 'project/')
         self.assertEqual(args.checkout, 'develop')
 
+    def test_parse_cookiecutter_args_with_no_input(self):
+        args = main.parse_cookiecutter_args(['project/', '--no-input'])
+        self.assertEqual(args.input_dir, 'project/')
+        self.assertEqual(args.no_input, True)
+
+    def test_parse_cookiecutter_args_with_overrides(self):
+        args = main.parse_cookiecutter_args(['project/', '--override', 'foo=bar', '-o', 'fizz=buzz'])
+        self.assertEqual(args.input_dir, 'project/')
+        self.assertEqual(args.override, ['foo=bar', 'fizz=buzz'])
+        self.assertEqual(args.overrides, {'foo': 'bar', 'fizz': 'buzz'})
+
+    def test_parse_cookiecutter_args_with_invalid_overrides(self):
+        with self.assertRaises(Exception):
+            main.parse_cookiecutter_args(['project/', '--override', 'foo=bar', '-o', 'fizz'])
+
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
@@ -124,8 +174,8 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
             # HACK: There are only 9 prompts in cookiecutter-pypackage's
             # cookiecutter.json (http://git.io/b-1MVA) but 10 \n chars here.
             # There was an "EOFError: EOF when reading a line" test fail here
-            # out of the blue, which an extra \n fixed. 
-            # Not sure why. There shouldn't be an extra prompt to delete 
+            # out of the blue, which an extra \n fixed.
+            # Not sure why. There shouldn't be an extra prompt to delete
             # the repo, since CookiecutterCleanSystemTestCase ensured that it
             # wasn't present.
             # It's possibly an edge case in CookiecutterCleanSystemTestCase.
@@ -139,7 +189,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
         self.assertTrue(os.path.exists('boilerplate/setup.py'))
 
-    @patch(input_str, lambda x: '')
+    @patch(input_str, lambda *args: '')
     def test_cookiecutter_mercurial(self):
         if not PY3:
             sys.stdin = StringIO('\n\n\n\n\n\n\n\n\n')

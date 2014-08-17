@@ -26,13 +26,16 @@ from .vcs import clone
 logger = logging.getLogger(__name__)
 
 
-def cookiecutter(input_dir, checkout=None, no_input=False):
+def cookiecutter(input_dir, checkout=None, no_input=False, overrides=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
     :param input_dir: A directory containing a project template dir,
-        or a URL to git repo.
-    :param checkout: The branch, tag or commit ID to checkout after clone
+        or a URL to a git repository.
+    :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param no_input: Prompt the user at command line for manual configuration?
+    :param overrides: A dictionary that overrides default and user
+        configuration.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -47,7 +50,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
             clone_to_dir=config_dict['cookiecutters_dir']
         )
     else:
-        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
+        # Use the local repo
         repo_dir = input_dir
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
@@ -55,7 +58,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
 
     context = generate_context(
         context_file=context_file,
-        default_context=config_dict['default_context']
+        default_context=config_dict['default_context'],
+        overrides=overrides,
     )
 
     # prompt the user to manually configure at the command line.
@@ -88,6 +92,10 @@ def _get_parser():
         '-c', '--checkout',
         help='branch, tag or commit to checkout after git clone'
     )
+    parser.add_argument(
+        '-o', '--override', action='append', nargs='?',
+        help='Override context values, e.g.cookiecutter tmpl/ -o repo_name=my_new_project -o year=`date +%%Y`'
+    )
     cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     parser.add_argument(
         '-V', '--version',
@@ -107,10 +115,28 @@ def _get_parser():
 
     return parser
 
+
+def construct_overrides(args):
+    """ Custom validation of Cookiecutter command-line arguments. """
+    if args.override:
+        # Validate override key=value syntax
+        if not all(['=' in override for override in args.override]):
+            raise Exception('Invalid %s' % args.override)
+
+        # Construct overrides dictionary
+        return dict(
+            [override.split('=') for override in args.override]
+        )
+    return {}
+
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
-    parser = _get_parser()
-    return parser.parse_args(args)
+    arguments = _get_parser().parse_args(args)
+
+    arguments.overrides = construct_overrides(arguments)
+
+    return arguments
 
 
 def main():
@@ -119,15 +145,17 @@ def main():
     args = parse_cookiecutter_args(sys.argv[1:])
 
     if args.verbose:
-        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(
+            format='%(levelname)s %(filename)s: %(message)s',
+            level=logging.DEBUG
+        )
     else:
         # Log info and above to console
         logging.basicConfig(
             format='%(levelname)s: %(message)s',
             level=logging.INFO
         )
-
-    cookiecutter(args.input_dir, args.checkout, args.no_input)
+    cookiecutter(args.input_dir, args.checkout, args.no_input, args.overrides)
 
 
 if __name__ == '__main__':
