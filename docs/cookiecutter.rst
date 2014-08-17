@@ -1,83 +1,86 @@
-cookiecutter Package
+cookiecutter package
 ====================
 
-:mod:`cookiecutter` Package
----------------------------
+Submodules
+----------
 
-.. automodule:: cookiecutter.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`config` Module
---------------------
+cookiecutter.config module
+--------------------------
 
 .. automodule:: cookiecutter.config
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`exceptions` Module
-------------------------
+cookiecutter.exceptions module
+------------------------------
 
 .. automodule:: cookiecutter.exceptions
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`find` Module
-------------------
+cookiecutter.find module
+------------------------
 
 .. automodule:: cookiecutter.find
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`generate` Module
-----------------------
+cookiecutter.generate module
+----------------------------
 
 .. automodule:: cookiecutter.generate
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`hooks` Module
--------------------
+cookiecutter.hooks module
+-------------------------
 
 .. automodule:: cookiecutter.hooks
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`main` Module
-------------------
+cookiecutter.main module
+------------------------
 
 .. automodule:: cookiecutter.main
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`prompt` Module
---------------------
+cookiecutter.prompt module
+--------------------------
 
 .. automodule:: cookiecutter.prompt
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`utils` Module
--------------------
+cookiecutter.utils module
+-------------------------
 
 .. automodule:: cookiecutter.utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`vcs` Module
------------------
+cookiecutter.vcs module
+-----------------------
 
 .. automodule:: cookiecutter.vcs
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: cookiecutter
+    :members:
+    :undoc-members:
+    :show-inheritance:
