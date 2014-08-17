@@ -23,29 +23,16 @@ from .utils import make_sure_path_exists, read_json_file, work_in, write_file
 from .hooks import run_hook
 
 
-def validate_parameters(parameters, source):
-    if parameters:
-        unknown_keys = set(parameters.keys()) - set(source.keys())
-        if unknown_keys:
-            raise InvalidConfiguration(
-                'The following set of keys are not supported by'
-                'this cookiecutter project:\n%s' % unknown_keys
-            )
-        source.update(parameters)
-    return source
-
-
 def generate_context(context_file='cookiecutter.json', default_context=None,
-                     extra_context=None):
+                     overrides=None):
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
 
     :param context_file: JSON file containing key/value pairs for populating
-        the cookiecutter's variables.
-    :param default_context: Dictionary containing any configuration to
-        take into account.
-    :param extra_context: Dictionary containing configuration overrides
+        the cookiecutter context.
+    :param default_context: Dictionary containing default configuration.
+    :param overrides: Dictionary containing configuration overrides.
     """
 
     context = {}
@@ -58,14 +45,13 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     context[file_stem] = obj
 
     # Overwrite context variable defaults with the default context from the
-    # user's global config, if available
+    # user's global config, if available.
     if default_context:
         obj.update(default_context)
 
-    # Overwrite context variables with user provided parameters. An error
-    # will be thrown if the user passes a key that is not associated
-    # with the project
-    obj = validate_parameters(extra_context, obj)
+    # Override context variables with user provided overrides.
+    if overrides:
+        obj.update(overrides)
 
     logging.debug('Context generated is %s', context)
     return context

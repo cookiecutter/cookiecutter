@@ -195,24 +195,16 @@ class TestGenerateContext(CookiecutterCleanSystemTestCase):
         )
         self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
 
-    def test_generate_context_with_default_and_extra(self):
+    def test_generate_context_with_default_and_overrides(self):
         context = generate.generate_context(
             context_file='tests/test-generate-context/test.json',
             default_context={"1": 3},
-            extra_context={"1": 5, "some_key": "some_other_val"}
+            overrides={"1": 5, "some_key": "some_other_val"}
         )
         self.assertEqual(context, {"test": {
             "1": 5,
             "some_key": "some_other_val"
         }})
-
-    def test_generate_context_with_extra_context_not_in_project(self):
-        with self.assertRaises(exceptions.InvalidConfiguration):
-            generate.generate_context(
-                context_file='tests/test-generate-context/test.json',
-                default_context={"1": 3},
-                extra_context={"2": 5, "some_key": "some_other_val"}
-            )
 
 
 class TestOutputFolder(CookiecutterCleanSystemTestCase):
