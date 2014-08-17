@@ -42,6 +42,15 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 class TestCookiecutterMain(unittest.TestCase):
 
+    def test_main_help(self):
+        expected = 'Create a project from a Cookiecutter project template.'
+        with patch('sys.argv', ['cookiecutter', '-h']):
+            with patch('sys.stdout', new_callable=StringIO) as out:
+                try:
+                    main.main()
+                except SystemExit:
+                    self.assertTrue(expected in out.getvalue())
+
     def test_main(self):
         expected_err = 'arguments'
         with patch('sys.argv', ['cookiecutter']):

@@ -94,7 +94,7 @@ def _get_parser():
     )
     parser.add_argument(
         '-o', '--override', action='append', nargs='?',
-        help='Override context values, e.g.cookiecutter tmpl/ -o repo_name=my_new_project -o year=`date +%Y`'
+        help='Override context values, e.g.cookiecutter tmpl/ -o repo_name=my_new_project -o year=`date +%%Y`'
     )
     cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     parser.add_argument(
