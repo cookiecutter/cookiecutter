@@ -33,35 +33,6 @@ else:
     from collections import OrderedDict
 
 
-def generate_context(context_file='cookiecutter.json', default_context=None):
-    """
-    Generates the context for a Cookiecutter project template.
-    Loads the JSON file as a Python object, with key being the JSON filename.
-
-    :param context_file: JSON file containing key/value pairs for populating
-        the cookiecutter's variables.
-    :param config_dict: Dict containing any config to take into account.
-    """
-
-    context = {}
-
-    file_handle = open(context_file)
-    obj = json.load(file_handle, object_pairs_hook=OrderedDict)
-
-    # Add the Python object to the context dictionary
-    file_name = os.path.split(context_file)[1]
-    file_stem = file_name.split('.')[0]
-    context[file_stem] = obj
-
-    # Overwrite context variable defaults with the default context from the
-    # user's global config, if available
-    if default_context:
-        obj.update(default_context)
-
-    logging.debug('Context generated is {0}'.format(context))
-    return context
-
-
 def generate_file(project_dir, infile, context, env):
     """
     1. Render the filename of infile as the name of outfile.

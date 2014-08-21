@@ -20,7 +20,8 @@ import sys
 from . import __version__
 from .config import get_user_config
 from .prompt import prompt_for_config
-from .generate import generate_context, generate_files
+from .generate import generate_files
+from .settings import get_settings, get_context_from_settings
 from .vcs import clone
 
 logger = logging.getLogger(__name__)
@@ -50,13 +51,14 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
         # If it's a local repo, no need to clone or copy to your cookiecutters_dir
         repo_dir = input_dir
 
-    context_file = os.path.join(repo_dir, 'cookiecutter.json')
+    context_file = os.path.join(repo_dir, 'cookiecutter')
     logging.debug('context_file is {0}'.format(context_file))
 
-    context = generate_context(
-        context_file=context_file,
+    template_settings = get_settings(
+        name=context_file,
         default_context=config_dict['default_context']
     )
+    context = get_context_from_settings(template_settings)
 
     # prompt the user to manually configure at the command line.
     # except when 'no-input' flag is set

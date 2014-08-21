@@ -51,3 +51,13 @@ class UnknownRepoType(CookiecutterException):
     """
     Raised if a repo's type cannot be determined.
     """
+
+class MissingTemplateSettingsException(CookiecutterException):
+    """
+    Raised if a repo has no settings file
+    """
+
+class MultipleTemplateSettingsException(CookiecutterException):
+    """
+    Raised if a repo has both YAML and JSON settings files
+    """
