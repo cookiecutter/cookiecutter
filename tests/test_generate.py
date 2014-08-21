@@ -22,6 +22,7 @@ from jinja2.exceptions import TemplateSyntaxError
 from cookiecutter import generate
 from cookiecutter import exceptions
 from cookiecutter import utils
+from cookiecutter import settings
 from tests import CookiecutterCleanSystemTestCase
 
 
@@ -191,16 +192,18 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
 class TestGenerateContext(CookiecutterCleanSystemTestCase):
 
     def test_generate_context(self):
-        context = generate.generate_context(
-            context_file='tests/test-generate-context/test.json'
+        template_settings = settings.get_settings(
+            'tests/test-generate-context/test'
         )
+        context = settings.get_context_from_settings(template_settings)
         self.assertEqual(context, {"test": {"1": 2, "some_key": "some_val"}})
 
     def test_generate_context_with_default(self):
-        context = generate.generate_context(
-            context_file='tests/test-generate-context/test.json',
+        template_settings = settings.get_settings(
+            'tests/test-generate-context/test',
             default_context={"1": 3}
         )
+        context = settings.get_context_from_settings(template_settings)
         self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
 
 
@@ -212,9 +215,10 @@ class TestOutputFolder(CookiecutterCleanSystemTestCase):
         super(TestOutputFolder, self).tearDown()
 
     def test_output_folder(self):
-        context = generate.generate_context(
-            context_file='tests/test-output-folder/cookiecutter.json'
+        template_settings = settings.get_settings(
+            'tests/test-output-folder/cookiecutter'
         )
+        context = settings.get_context_from_settings(template_settings)
         logging.debug('Context is {0}'.format(context))
         generate.generate_files(
             context=context,
