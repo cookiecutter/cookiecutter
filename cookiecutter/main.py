@@ -25,22 +25,31 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
-builtin_prefixes = {
+builtin_abbreviations = {
     'gh': 'https://github.com/{0}.git',
     'bb': 'https://bitbucket.org/{0}',
 }
 
-def expand_aliases(input_dir, config_dict):
-    aliases = config_dict.get('aliases', {})
-    prefixes = builtin_prefixes.copy()
-    prefixes.update(config_dict.get('prefixes', {}))
+def expand_abbreviations(input_dir, config_dict):
+    """
+    Expand abbreviations in a template name.
 
-    if input_dir in aliases:
-        return aliases[input_dir]
+    :param input_dir: The project template name.
+    :param config_dict: The user config, which will contain abbreviation
+        definitions.
+    """
 
+    abbreviations = builtin_abbreviations.copy()
+    abbreviations.update(config_dict.get('abbreviations', {}))
+
+    if input_dir in abbreviations:
+        return abbreviations[input_dir]
+
+    # Split on colon. If there is no colon, rest will be empty
+    # and prefix will be the whole input_dir
     prefix, sep, rest = input_dir.partition(':')
-    if sep and prefix in prefixes:
-        return prefixes[prefix].replace('{0}', rest)
+    if prefix in abbreviations:
+        return abbreviations[prefix].format(rest)
 
     return input_dir
 
@@ -58,7 +67,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False):
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
 
-    input_dir = expand_aliases(input_dir, config_dict)
+    input_dir = expand_abbreviations(input_dir, config_dict)
 
     # TODO: find a better way to tell if it's a repo URL
     if "git@" in input_dir or "https://" in input_dir:

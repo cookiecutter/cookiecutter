@@ -47,9 +47,8 @@ If you use Cookiecutter a lot, you'll find it useful to have a
         email: "audreyr@gmail.com"
         github_username: "audreyr"
     cookiecutters_dir: "/home/audreyr/my-custom-cookiecutters-dir/"
-    aliases:
+    abbreviations:
         pp: https://github.com/audreyr/cookiecutter-pypackage.git
-    prefixes:
         gh: https://github.com/{0}.git
         bb: https://bitbucket.org/{0}
 
@@ -60,13 +59,12 @@ Possible settings are:
   like the defaults in `cookiecutter.json`, upon generation of any project.
 * cookiecutters_dir: Directory where your cookiecutters are cloned to when you
   use Cookiecutter with a repo argument.
-* aliases: A list of short names for cookiecutters. With the above aliases, you
-  could use the `cookiecutter-pypackage` template simply by saying `cookiecutter pp`.
-* prefixes: A list of URL-like prefixes that can be used to abbreviate common
-  locations for cookiecutters. The `{0}` will be replaced with the part of the
-  argument after the prefix. So, for example,
-  `gh:audreyr/cookiecutter-pypackage` is a short form for
-  `https://github.com/audreyr/cookiecutter-pypackage.git`.
+* abbreviations: A list of abbreviations for cookiecutters. Abbreviations can
+  be simple aliases for a repo name, or can be used as a prefix, in the form
+  `abbr:suffix`. Any suffix will be inserted into the expansion in place of
+  the text `{0}`, using standard Python string formatting.  With the above
+  aliases, you could use the `cookiecutter-pypackage` template simply by saying
+  `cookiecutter pp`, or `cookiecutter gh:audreyr/cookiecutter-pypackage`.
   The `gh` (github) and `bb` (bitbucket) abbreviations shown above are actually
   built in, and can be used without defining them yourself.
 
