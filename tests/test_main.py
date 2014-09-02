@@ -58,9 +58,20 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
 
+    def test_cookiecutter_no_input_extra_context(self):
+        """ `Call cookiecutter()` with `no_input=True` and `extra_context` """
+        main.cookiecutter(
+            'tests/fake-repo-pre', 
+            no_input=True, 
+            extra_context={'repo_name': 'fake-project-extra'}
+        )
+        self.assertTrue(os.path.isdir('fake-project-extra'))
+
     def tearDown(self):
         if os.path.isdir('fake-project'):
             utils.rmtree('fake-project')
+        if os.path.isdir('fake-project-extra'):
+            utils.rmtree('fake-project-extra')
 
 
 class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
