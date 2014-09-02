@@ -88,9 +88,24 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
 
+    @patch(input_str, lambda x: '\n')
+    def test_cookiecutter_input_extra_context(self):
+        """ `Call cookiecutter()` with `no_input=False` and `extra_context` """
+        if not PY3:
+            sys.stdin = StringIO("\n\n\n\n\n\n\n\n\n\n\n\n")
+
+        main.cookiecutter(
+            'tests/fake-repo-pre', 
+            no_input=True, 
+            extra_context={'repo_name': 'fake-project-input-extra'}
+        )
+        self.assertTrue(os.path.isdir('fake-project-input-extra'))
+
     def tearDown(self):
         if os.path.isdir('fake-project'):
             utils.rmtree('fake-project')
+        if os.path.isdir('fake-project-input-extra'):
+            utils.rmtree('fake-project-input-extra')
 
 
 class TestArgParsing(unittest.TestCase):
