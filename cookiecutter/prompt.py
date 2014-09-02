@@ -15,9 +15,26 @@ PY3 = sys.version > '3'
 if PY3:
     iteritems = lambda d: iter(d.items())
     def read_response(prompt=''):
+        """
+        Prompt the user for a response.
+
+        Prints the given prompt (which should be a Unicode string),
+        and returns the text entered by the user as a Unicode string.
+
+        :param prompt: A Unicode string that is presented to the user.
+        """
+        # The Python 3 input function does exactly what we want
         return input(prompt)
 else:
     def read_response(prompt=''):
+        """
+        Prompt the user for a response.
+
+        Prints the given prompt (which should be a Unicode string),
+        and returns the text entered by the user as a Unicode string.
+
+        :param prompt: A Unicode string that is presented to the user.
+        """
         # For Python 2, raw_input takes a byte string argument for the prompt.
         # This must be encoded using the encoding used by sys.stdout.
         # The result is a byte string encoding using sys.stdin.encoding.
