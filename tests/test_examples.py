@@ -24,7 +24,7 @@ if PY3:
 else:
     import __builtin__
     from mock import patch
-    input_str = '__builtin__.raw_input'
+    input_str = 'cookiecutter.prompt.get_input'
     from cStringIO import StringIO
 
 if sys.version_info[:3] < (2, 7):
@@ -140,7 +140,7 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
         # Just skip all the prompts
         proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-        
+
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
 
