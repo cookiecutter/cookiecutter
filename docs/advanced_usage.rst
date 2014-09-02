@@ -73,12 +73,31 @@ This is useful if, for example, you're writing a web framework and need to
 provide developers with a tool similar to `django-admin.py startproject` or
 `npm init`.
 
-It is also possible to specify an `extra_context` dictionary that will override values from `cookiecutter.json` or `.cookiecutterrc`::
+Injecting Extra Context
+-----------------------
+
+You can specify an `extra_context` dictionary that will override values from `cookiecutter.json` or `.cookiecutterrc`::
 
     cookiecutter('cookiecutter-pypackage/',
                  extra_context={'project_name': 'TheGreatest'})
 
-If you combine that with the no_input parameter, you can programmatically create the project with a set list of context parameters and without any command line prompts::
+Suppressing Command-Line Prompts
+--------------------------------
+
+To suppress the prompts asking for input, use `no_input`.
+
+Basic: Using the Defaults
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO: document `no_input`:
+
+* As command-line argument
+* As parameter of `cookiecutter()`
+
+Advanced: Defaults + Extra Context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you combine an `extra_context` dict with the `no_input` argument, you can programmatically create the project with a set list of context parameters and without any command line prompts::
 
     cookiecutter('cookiecutter-pypackage/',
                  no_input=True,
