@@ -152,6 +152,7 @@ Python
 * `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
 * `cookiecutter-pylibrary-minimal`_: Same as above but without Pytest and static configuration for Tox/Travis/AppVeyor (no generator).
+* `cookiecutter-webapp`_: Flask-based web application providing a fully configured virtual machine for development and testing.
 
 C
 ~~
@@ -225,6 +226,7 @@ HTML
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
+.. _`cookiecutter-webapp`: https://github.com/ryanolson/cookiecutter-webapp
 
 
 Similar projects
