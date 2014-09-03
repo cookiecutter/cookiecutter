@@ -14,8 +14,43 @@ import sys
 PY3 = sys.version > '3'
 if PY3:
     iteritems = lambda d: iter(d.items())
+    def read_response(prompt=''):
+        """
+        Prompt the user for a response.
+
+        Prints the given prompt (which should be a Unicode string),
+        and returns the text entered by the user as a Unicode string.
+
+        :param prompt: A Unicode string that is presented to the user.
+        """
+        # The Python 3 input function does exactly what we want
+        return input(prompt)
 else:
-    input = raw_input
+    def read_response(prompt=''):
+        """
+        Prompt the user for a response.
+
+        Prints the given prompt (which should be a Unicode string),
+        and returns the text entered by the user as a Unicode string.
+
+        :param prompt: A Unicode string that is presented to the user.
+        """
+        # For Python 2, raw_input takes a byte string argument for the prompt.
+        # This must be encoded using the encoding used by sys.stdout.
+        # The result is a byte string encoding using sys.stdin.encoding.
+        # However, if the program is not being run interactively, sys.stdout
+        # and sys.stdin may not have encoding attributes.
+        # In that case we don't print a prompt (stdin/out isn't interactive,
+        # so prompting is pointless), and we assume the returned data is
+        # encoded using sys.getdefaultencoding(). This may not be right,
+        # but it's likely the best we can do.
+        # Isn't Python 2 encoding support wonderful? :-)
+        if sys.stdout.encoding:
+            prompt = prompt.encode(sys.stdout.encoding)
+        else:
+            prompt = ''
+        enc = sys.stdin.encoding or sys.getdefaultencoding()
+        return raw_input(prompt).decode(enc)
     iteritems = lambda d: d.iteritems()
 
 
@@ -29,12 +64,7 @@ def prompt_for_config(context):
     for key, val in iteritems(context['cookiecutter']):
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
-        if PY3:
-            new_val = input(prompt)
-        else:
-            new_val = input(prompt.encode('utf-8')).decode('utf-8')
-
-        new_val = new_val.strip()
+        new_val = read_response(prompt).strip()
 
         if new_val == '':
             new_val = val
@@ -45,7 +75,7 @@ def prompt_for_config(context):
 
 def query_yes_no(question, default="yes"):
     """
-    Ask a yes/no question via `raw_input()` and return their answer.
+    Ask a yes/no question via `read_response()` and return their answer.
 
     :param question: A string that is presented to the user.
     :param default: The presumed answer if the user just hits <Enter>.
@@ -71,7 +101,7 @@ def query_yes_no(question, default="yes"):
 
     while True:
         sys.stdout.write(question + prompt)
-        choice = input().lower()
+        choice = read_response().lower()
 
         if default is not None and choice == '':
             return valid[default]
