@@ -123,6 +123,13 @@ class TestExternalHooks(unittest.TestCase):
             hooks.run_hook('post_gen_project', tests_dir)
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
 
+    def test_run_hook_with_context(self):
+        '''execute a hook script, passing a context'''
+        context = {'cookiecutter':{'file':'shell_post.txt'}}
+        shell_script = os.path.join(self.hooks_path, 'post_gen_project_with_context.sh')
+        hooks._run_hook(shell_script, 'tests', context)
+        self.assertTrue(os.path.isfile('tests/shell_post.txt'))
+        self.assertFalse('tests' in os.getcwd())
 
 if __name__ == '__main__':
     unittest.main()
