@@ -28,16 +28,15 @@ def find_template(repo_dir):
 
     project_template = None
     for item in repo_dir_contents:
-        if 'cookiecutter' in item and \
-                '{{' in item and \
-                '}}' in item:
+        if 'cookiecutter' in item and '{{' in item and '}}' in item:
             project_template = item
             break
 
     if project_template:
         project_template = os.path.join(repo_dir, project_template)
-        logging.debug('The project template appears to be {0}'.format(
-            project_template))
+        logging.debug(
+            'The project template appears to be {0}'.format(project_template)
+        )
         return project_template
     else:
         raise NonTemplatedInputDirException
