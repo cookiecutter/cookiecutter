@@ -35,7 +35,7 @@ file, which accepts Unix shell-style wildcards::
         "_copy_without_render": [
             "*.html",
             "*not_rendered_dir",
-            "rendered_dir/not_rendered_file.ini",
+            "rendered_dir/not_rendered_file.ini"
         ]
     }
 
