@@ -222,6 +222,23 @@ class TestGenerateContext(CookiecutterCleanSystemTestCase):
         self.assertEqual(context, {'test': {'1': 5, 'some_key': 'some_val'}})
 
 
+class TestGetJinjaOptions(CookiecutterCleanSystemTestCase):
+
+    def test_get_jinja_options(self):
+        options = generate.get_jinja_options(
+            option_file='tests/test-get-jinja-options/options.json'
+        )
+        self.assertEqual(
+            options,
+            {"block_start_string": "<:", "block_end_string": ":>"})
+
+    def test_get_jinja_options_exclude_bad(self):
+        options = generate.get_jinja_options(
+            option_file='tests/test-get-jinja-options/bad_options.json'
+        )
+        self.assertNotIn('bad_option', options)
+
+
 class TestOutputFolder(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
