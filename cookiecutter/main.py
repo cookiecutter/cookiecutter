@@ -47,7 +47,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
         repo_dir = clone(
             repo_url=input_dir,
             checkout=checkout,
-            clone_to_dir=config_dict['cookiecutters_dir']
+            clone_to_dir=config_dict['cookiecutters_dir'],
+            no_input=no_input
         )
     else:
         # If it's a local repo, no need to clone or copy to your cookiecutters_dir
