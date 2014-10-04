@@ -118,11 +118,9 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             repo_dir='tests/test-generate-files'
         )
         self.assertTrue(os.path.isfile('inputpizzä/simple-with-newline.txt'))
-        simple_text = open('inputpizzä/simple-with-newline.txt', 'rt').read()
-        if PY3:
-            self.assertEqual(simple_text, 'I eat pizzä\n')
-        else:
-            self.assertEqual(simple_text, u'I eat pizzä\n')
+        with io.open('inputpizzä/simple-with-newline.txt', 'r', encoding='utf-8') as f:
+            simple_text = f.read()
+        self.assertEqual(simple_text, u'I eat pizzä\n')
 
     def test_generate_files_binaries(self):
         generate.generate_files(
