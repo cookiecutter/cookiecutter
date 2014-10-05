@@ -148,8 +148,7 @@ def ensure_dir_is_templated(dirname):
     """
     Ensures that dirname is a templated directory name.
     """
-    if '{{' in dirname and \
-            '}}' in dirname:
+    if '{{' in dirname and '}}' in dirname:
         return True
     else:
         raise NonTemplatedInputDirException
