@@ -25,14 +25,16 @@ from .utils import make_sure_path_exists, work_in
 from .hooks import run_hook
 
 
-def generate_context(context_file='cookiecutter.json', default_context=None):
+def generate_context(context_file='cookiecutter.json', default_context=None,
+                     extra_context=None):
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
 
     :param context_file: JSON file containing key/value pairs for populating
         the cookiecutter's variables.
-    :param config_dict: Dict containing any config to take into account.
+    :param default_context: Dictionary containing any config to take into account.
+    :param extra_context: Dictionary containing configuration overrides
     """
 
     context = {}
@@ -49,6 +51,8 @@ def generate_context(context_file='cookiecutter.json', default_context=None):
     # user's global config, if available
     if default_context:
         obj.update(default_context)
+    if extra_context:
+        obj.update(extra_context)
 
     logging.debug('Context generated is {0}'.format(context))
     return context

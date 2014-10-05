@@ -26,115 +26,80 @@ if 'windows' in platform.platform().lower():
 
 class TestPrompt(unittest.TestCase):
 
-    @patch(input_str, lambda x: 'Audrey Roy')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'Audrey Roy')
     def test_prompt_for_config_simple(self):
         context = {"cookiecutter": {"full_name": "Your Name"}}
 
-        if not PY3:
-            sys.stdin = StringIO("Audrey Roy")
-
         cookiecutter_dict = prompt.prompt_for_config(context)
-        self.assertEqual(cookiecutter_dict, {"full_name": "Audrey Roy"})
+        self.assertEqual(cookiecutter_dict, {"full_name": u"Audrey Roy"})
 
-    @patch(input_str, lambda x: 'Pizzä ïs Gööd')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'Pizzä ïs Gööd')
     def test_prompt_for_config_unicode(self):
         context = {"cookiecutter": {"full_name": "Your Name"}}
 
-        if not PY3:
-            sys.stdin = StringIO("Pizzä ïs Gööd")
-
         cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
 
-        if PY3:
-            self.assertEqual(cookiecutter_dict, {"full_name": "Pizzä ïs Gööd"})
-        else:
-            self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
-
-    @patch(input_str, lambda x: 'Pizzä ïs Gööd')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'Pizzä ïs Gööd')
     def test_unicode_prompt_for_config_unicode(self):
         context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
 
-        if not PY3:
-            sys.stdin = StringIO("Pizzä ïs Gööd")
-
         cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
 
-        if PY3:
-            self.assertEqual(cookiecutter_dict, {"full_name": "Pizzä ïs Gööd"})
-        else:
-            self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
-
-    @patch(input_str, lambda x: '\n')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
     def test_unicode_prompt_for_default_config_unicode(self):
         context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
 
-        if not PY3:
-            sys.stdin = StringIO("\n")
-
         cookiecutter_dict = prompt.prompt_for_config(context)
-
-        if PY3:
-            self.assertEqual(cookiecutter_dict, {"full_name": "Řekni či napiš své jméno"})
-        else:
-            self.assertEqual(cookiecutter_dict, {"full_name": u"Řekni či napiš své jméno"})
+        self.assertEqual(cookiecutter_dict, {"full_name": u"Řekni či napiš své jméno"})
 
 
 class TestQueryAnswers(unittest.TestCase):
 
-    @patch(input_str, lambda: 'y')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
     def test_query_y(self):
-        if not PY3:
-            sys.stdin = StringIO('y')
         answer = prompt.query_yes_no("Blah?")
         self.assertTrue(answer)
 
-    @patch(input_str, lambda: 'ye')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'ye')
     def test_query_ye(self):
-        if not PY3:
-            sys.stdin = StringIO('ye')
         answer = prompt.query_yes_no("Blah?")
         self.assertTrue(answer)
 
-    @patch(input_str, lambda: 'yes')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'yes')
     def test_query_yes(self):
-        if not PY3:
-            sys.stdin = StringIO('yes')
         answer = prompt.query_yes_no("Blah?")
         self.assertTrue(answer)
 
-    @patch(input_str, lambda: 'n')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
     def test_query_n(self):
-        if not PY3:
-            sys.stdin = StringIO('n')
+        answer = prompt.query_yes_no("Blah?")
+        self.assertFalse(answer)
+
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'no')
+    def test_query_n(self):
         answer = prompt.query_yes_no("Blah?")
         self.assertFalse(answer)
 
 
 class TestQueryDefaults(unittest.TestCase):
 
-    @patch(input_str, lambda: 'y')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
     def test_query_y_none_default(self):
-        if not PY3:
-            sys.stdin = StringIO('y')
         answer = prompt.query_yes_no("Blah?", default=None)
         self.assertTrue(answer)
 
-    @patch(input_str, lambda: 'n')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
     def test_query_n_none_default(self):
-        if not PY3:
-            sys.stdin = StringIO('n')
         answer = prompt.query_yes_no("Blah?", default=None)
         self.assertFalse(answer)
 
-    @patch(input_str, lambda: '')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'')
     def test_query_no_default(self):
-        if not PY3:
-            sys.stdin = StringIO('\n')
         answer = prompt.query_yes_no("Blah?", default='no')
         self.assertFalse(answer)
 
-    @patch(input_str, lambda: 'junk')
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'junk')
     def test_query_bad_default(self):
-        if not PY3:
-            sys.stdin = StringIO('junk')
         self.assertRaises(ValueError, prompt.query_yes_no, "Blah?", default='yn')

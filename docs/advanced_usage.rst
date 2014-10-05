@@ -73,8 +73,60 @@ This is useful if, for example, you're writing a web framework and need to
 provide developers with a tool similar to `django-admin.py startproject` or
 `npm init`.
 
-See the :ref:`API Reference <apiref>` for more details.
+Injecting Extra Context
+-----------------------
 
+You can specify an `extra_context` dictionary that will override values from `cookiecutter.json` or `.cookiecutterrc`::
+
+    cookiecutter('cookiecutter-pypackage/',
+                 extra_context={'project_name': 'TheGreatest'})
+
+Example: Injecting a Timestamp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is a sample Python script that dynamically injects a timestamp value
+as a project is generated::
+
+    from cookiecutter.main import cookiecutter
+
+    from datetime import datetime
+
+    cookiecutter(
+        'cookiecutter-django',
+        extra_context={'timestamp': datetime.utcnow().isoformat()}
+    )
+
+How this works:
+
+1. The script uses `datetime` to get the current UTC time in ISO format.
+2. To generate the project, `cookiecutter()` is called, passing the timestamp
+   in as context via the `extra_context` dict.
+
+Suppressing Command-Line Prompts
+--------------------------------
+
+To suppress the prompts asking for input, use `no_input`.
+
+Basic Example: Using the Defaults
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO: document `no_input`:
+
+* As command-line argument
+* As parameter of `cookiecutter()`
+
+TODO: document where context values come from in this example (`cookiecutter.json` and `.cookiecutterrc`)
+
+Advanced Example: Defaults + Extra Context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you combine an `extra_context` dict with the `no_input` argument, you can programmatically create the project with a set list of context parameters and without any command line prompts::
+
+    cookiecutter('cookiecutter-pypackage/',
+                 no_input=True,
+                 extra_context={'project_name': 'TheGreatest'})
+
+See the :ref:`API Reference <apiref>` for more details.
 
 .. _command_line_options:
 

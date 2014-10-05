@@ -24,12 +24,7 @@ def prompt_for_config(context):
     for key, val in iteritems(context['cookiecutter']):
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
-        if PY3:
-            new_val = input(prompt)
-        else:
-            new_val = input(prompt.encode('utf-8')).decode('utf-8')
-
-        new_val = new_val.strip()
+        new_val = read_response(prompt).strip()
 
         if new_val == '':
             new_val = val
@@ -40,7 +35,7 @@ def prompt_for_config(context):
 
 def query_yes_no(question, default="yes"):
     """
-    Ask a yes/no question via `raw_input()` and return their answer.
+    Ask a yes/no question via `read_response()` and return their answer.
 
     :param question: A string that is presented to the user.
     :param default: The presumed answer if the user just hits <Enter>.
@@ -66,7 +61,7 @@ def query_yes_no(question, default="yes"):
 
     while True:
         sys.stdout.write(question + prompt)
-        choice = input().lower()
+        choice = read_response().lower()
 
         if default is not None and choice == '':
             return valid[default]

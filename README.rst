@@ -141,6 +141,7 @@ Python
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
+* `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
 * `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
@@ -152,6 +153,7 @@ Python
 * `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
 * `cookiecutter-pylibrary-minimal`_: Same as above but without Pytest and static configuration for Tox/Travis/AppVeyor (no generator).
+* `cookiecutter-pyvanguard`_: A template for cutting edge Python development. `Invoke`_, pytest, bumpversion, and Python 2/3 compatability.
 
 C
 ~~
@@ -197,13 +199,13 @@ HTML
 * `cookiecutter-tumblr-theme`_: A cookiecutter for a Tumblr theme project with GruntJS as concatination tool.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-.. _`@audreyr`: https://github.com/audreyr/
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-cms`: https://github.com/palazzem/cookiecutter-django-cms
+.. _`cookiecutter-djangocms-plugin`: https://github.com/mishbahr/cookiecutter-djangocms-plugin
 .. _`cookiecutter-django-crud`: https://github.com/wildfish/cookiecutter-django-crud
 .. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
@@ -226,6 +228,8 @@ HTML
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
+.. _`cookiecutter-pyvanguard`: https://github.com/robinandeer/cookiecutter-pyvanguard
+.. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 
 
 Similar projects
@@ -327,7 +331,7 @@ Waiting for a response to an issue/question?
   urgent, it's fine to ping a core committer in the issue with a reminder.
 * Ask others to comment, discuss, review, etc.
 * Search the Cookiecutter repo for issues related to yours.
-* Need a fix/feature/release/help urgently, and can't wait? `audreyr`_ is
+* Need a fix/feature/release/help urgently, and can't wait? `@audreyr`_ is
   available for hire for consultation or custom development.
 
 
@@ -338,7 +342,7 @@ Waiting for a response to an issue/question?
 .. _`Stack Overflow`: http://stackoverflow.com/
 .. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
 .. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
-.. _`audreyr`: https://github.com/audreyr
+.. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
 .. _`@pfmoore`: https://github.com/pfmoore
