@@ -16,12 +16,14 @@ Features:
 
 Bug Fixes:
 
+* Newlines at the end of files are no longer stripped, thanks to `@treyhunner`_ (#183).
 * TODO go through post-0.7.2 commits and add bug fixes here.
 
 Other Changes:
 
 * TODO anything else?
 
+.. _`@treyhunner`: https://github.com/treyhunner
 .. _`@pfmoore`: https://github.com/pfmoore
 .. _`@fcurella`: https://github.com/fcurella
 .. _`@aventurella`: https://github.com/aventurella
