@@ -22,13 +22,13 @@ _HOOKS = [
 ]
 
 def find_hooks():
-    '''
+    """
     Must be called with the project template as the current working directory.
     Returns a dict of all hook scripts provided.
     Dict's key will be the hook/script's name, without extension, while
     values will be the absolute path to the script.
     Missing scripts will not be included in the returned dict.
-    '''
+    """
     hooks_dir = 'hooks'
     r = {}
     logging.debug("hooks_dir is {0}".format(hooks_dir))
@@ -43,11 +43,12 @@ def find_hooks():
 
 
 def _run_hook(script_path, cwd='.'):
-    '''
-    Run a sigle external script located at `script_path` (path should be
-    absolute).
-    If `cwd` is provided, the script will be run from that directory.
-    '''
+    """
+    Executes a script from a working directory.
+
+    :param script_path: Absolute path to the script to run.
+    :param cwd: The directory to run the script from.
+    """
     run_thru_shell = sys.platform.startswith('win')
     if script_path.endswith('.py'):
         script_command = [sys.executable, script_path]
@@ -61,10 +62,13 @@ def _run_hook(script_path, cwd='.'):
     proc.wait()
 
 def run_hook(hook_name, project_dir):
-    '''
-    Try and find a script mapped to `hook_name` in the current working directory,
-    and execute it from `project_dir`.
-    '''
+    """
+    Try to find and execute a hook from the specified project directory.
+
+    :param hook_name: The hook to execute.
+    :param project_dir: The directory to execute the script from.
+    :param context: Cookiecutter project context.
+    """
     script = find_hooks().get(hook_name)
     if script is None:
         logging.debug("No hooks found")
