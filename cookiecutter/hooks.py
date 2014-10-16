@@ -42,7 +42,7 @@ def find_hooks():
     return r
 
 
-def _run_hook(script_path, cwd='.'):
+def run_script(script_path, cwd='.'):
     """
     Executes a script from a working directory.
 
@@ -73,4 +73,4 @@ def run_hook(hook_name, project_dir):
     if script is None:
         logging.debug("No hooks found")
         return
-    return _run_hook(script, project_dir)
+    return run_script(script, project_dir)
