@@ -110,6 +110,18 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
         simple_text = io.open('inputpizzä/simple.txt', 'rt', encoding='utf-8').read()
         self.assertEqual(simple_text, u'I eat pizzä')
 
+    def test_generate_files_with_trailing_newline(self):
+        generate.generate_files(
+            context={
+                'cookiecutter': {'food': 'pizzä'}
+            },
+            repo_dir='tests/test-generate-files'
+        )
+        self.assertTrue(os.path.isfile('inputpizzä/simple-with-newline.txt'))
+        with io.open('inputpizzä/simple-with-newline.txt', 'r', encoding='utf-8') as f:
+            simple_text = f.read()
+        self.assertEqual(simple_text, u'I eat pizzä\n')
+
     def test_generate_files_binaries(self):
         generate.generate_files(
             context={
@@ -202,6 +214,24 @@ class TestGenerateContext(CookiecutterCleanSystemTestCase):
             default_context={"1": 3}
         )
         self.assertEqual(context, {"test": {"1": 3, "some_key": "some_val"}})
+
+    def test_generate_context_with_extra(self):
+        """ Call `generate_context()` with extra_context. """
+        context = generate.generate_context(
+            context_file='tests/test-generate-context/test.json',
+            extra_context={'1': 4},
+        )
+        self.assertEqual(context, {'test': {'1': 4, 'some_key': 'some_val'}})
+
+    def test_generate_context_with_default_and_extra(self):
+        """ Call `generate_context()` with `default_context` and 
+            `extra_context`. """
+        context = generate.generate_context(
+            context_file='tests/test-generate-context/test.json',
+            default_context={'1': 3},
+            extra_context={'1': 5},
+        )
+        self.assertEqual(context, {'test': {'1': 5, 'some_key': 'some_val'}})
 
 
 class TestOutputFolder(CookiecutterCleanSystemTestCase):
