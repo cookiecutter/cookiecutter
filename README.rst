@@ -235,8 +235,6 @@ HTML
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 
->>>>>>> master
-
 Similar projects
 ----------------
 
