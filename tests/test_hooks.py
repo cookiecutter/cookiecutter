@@ -100,28 +100,55 @@ class TestExternalHooks(unittest.TestCase):
             os.remove('tests/test-hooks/input{{hooks}}/python_pre.txt')
         if os.path.exists('tests/test-hooks/input{{hooks}}/shell_post.txt'):
             os.remove('tests/test-hooks/input{{hooks}}/shell_post.txt')
+        if os.path.exists('tests/context_post.txt'):
+            os.remove('tests/context_post.txt')
 
     def test_run_script(self):
+        """Execute a hook script, independently of project generation"""
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         self.assertTrue(os.path.isfile('shell_post.txt'))
 
     def test_run_script_cwd(self):
-        hooks.run_script(os.path.join(self.hooks_path, self.post_hook),
-                        'tests')
         """Change directory before running hook"""
+        hooks.run_script(
+            os.path.join(self.hooks_path, self.post_hook),
+            'tests'
+        )
         self.assertTrue(os.path.isfile('tests/shell_post.txt'))
+        self.assertFalse('tests' in os.getcwd())
+
+    def test_run_script_with_context(self):
+        """Execute a hook script, passing a context"""
+
+        hook_path = os.path.join(self.hooks_path, 'post_gen_project.sh')
+        with open(hook_path, 'w') as fh:
+            fh.write("#!/bin/bash\n")
+            fh.write("\n")
+            fh.write("echo 'post generation hook';\n")
+            fh.write("touch 'shell_post.txt'\n")
+            fh.write("touch '{{cookiecutter.file}}'\n")
+            os.chmod(hook_path, os.stat(hook_path).st_mode | stat.S_IXUSR)
+
+        hooks.run_script_with_context(
+            os.path.join(self.hooks_path, self.post_hook),
+            'tests',
+            {
+                'cookiecutter': {
+                    'file': 'context_post.txt'
+                }
+            })
+        self.assertTrue(os.path.isfile('tests/context_post.txt'))
         self.assertFalse('tests' in os.getcwd())
 
     def test_run_hook(self):
         """Execute hook from specified template in specified output directory"""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
-            hooks.run_hook('pre_gen_project', tests_dir)
+            hooks.run_hook('pre_gen_project', tests_dir, {})
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'python_pre.txt')))
 
-            hooks.run_hook('post_gen_project', tests_dir)
+            hooks.run_hook('post_gen_project', tests_dir, {})
             self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
-
 
 if __name__ == '__main__':
     unittest.main()

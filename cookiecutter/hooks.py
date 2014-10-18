@@ -8,12 +8,15 @@ cookiecutter.hooks
 Functions for discovering and executing various cookiecutter hooks.
 """
 
+import io
 import logging
 import os
 import subprocess
 import sys
 
-from .utils import make_sure_path_exists, work_in
+from jinja2 import Template
+
+from cookiecutter import utils
 
 _HOOKS = [
     'pre_gen_project',
@@ -48,12 +51,16 @@ def run_script(script_path, cwd='.'):
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
+    :param context: Cookiecutter project template context.
     """
     run_thru_shell = sys.platform.startswith('win')
     if script_path.endswith('.py'):
         script_command = [sys.executable, script_path]
     else:
         script_command = [script_path]
+
+    utils.make_executable(script_path)
+
     proc = subprocess.Popen(
         script_command,
         shell=run_thru_shell,
@@ -61,7 +68,19 @@ def run_script(script_path, cwd='.'):
     )
     proc.wait()
 
-def run_hook(hook_name, project_dir):
+
+def run_script_with_context(script_path, cwd, context):
+    """
+    Executes a script after
+    """
+    with io.open(script_path, 'r', encoding='utf-8') as fh:
+        temp_script_path = utils.write_to_temp_file(
+            Template(fh.read()).render(**context)
+        )
+        run_script(temp_script_path, cwd)
+
+
+def run_hook(hook_name, project_dir, context):
     """
     Try to find and execute a hook from the specified project directory.
 
@@ -73,4 +92,4 @@ def run_hook(hook_name, project_dir):
     if script is None:
         logging.debug("No hooks found")
         return
-    return run_script(script, project_dir)
+    return run_script_with_context(script, project_dir, context)
