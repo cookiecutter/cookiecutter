@@ -10,7 +10,9 @@ Functions for discovering and executing various cookiecutter hooks.
 
 import io
 import logging
+import ntpath
 import os
+import shutil
 import subprocess
 import sys
 
@@ -80,7 +82,13 @@ def run_script_with_context(script_path, cwd, context):
         temp_script_path = utils.write_to_temp_file(
             Template(fh.read()).render(**context)
         )
-        run_script(temp_script_path, cwd)
+        script_path = os.path.join(
+            os.path.dirname(temp_script_path),
+            ntpath.basename(script_path),
+        )
+        shutil.copyfile(temp_script_path, script_path)
+        run_script(script_path, cwd)
+        os.remove(script_path)
 
 
 def run_hook(hook_name, project_dir, context):
