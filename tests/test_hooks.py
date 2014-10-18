@@ -65,8 +65,8 @@ class TestFindHooks(unittest.TestCase):
     def tearDown(self):
         utils.rmtree(self.repo_path)
 
-    def test_find_hooks(self):
-        '''Getting the list of all defined hooks'''
+    def test_find_hook(self):
+        """Finds the specified hook"""
         with utils.work_in(self.repo_path):
             self.assertEqual({
                 'pre_gen_project': os.path.abspath('hooks/pre_gen_project.py'),
@@ -74,7 +74,7 @@ class TestFindHooks(unittest.TestCase):
             }, hooks.find_hooks())
 
     def test_no_hooks(self):
-        '''find_hooks should return an empty dict if no hooks folder could be found. '''
+        """find_hooks should return None if the hook could not be found. """
         with utils.work_in('tests/fake-repo'):
             self.assertEqual({}, hooks.find_hooks())
 
@@ -102,19 +102,18 @@ class TestExternalHooks(unittest.TestCase):
             os.remove('tests/test-hooks/input{{hooks}}/shell_post.txt')
 
     def test_run_script(self):
-        '''execute a hook script, independently of project generation'''
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         self.assertTrue(os.path.isfile('shell_post.txt'))
 
     def test_run_script_cwd(self):
-        '''Change directory before running hook'''
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook),
                         'tests')
+        """Change directory before running hook"""
         self.assertTrue(os.path.isfile('tests/shell_post.txt'))
         self.assertFalse('tests' in os.getcwd())
 
     def test_run_hook(self):
-        '''Execute hook from specified template in specified output directory'''
+        """Execute hook from specified template in specified output directory"""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
             hooks.run_hook('pre_gen_project', tests_dir)
