@@ -9,13 +9,13 @@ Helper functions used throughout Cookiecutter.
 """
 
 from __future__ import unicode_literals
+import contextlib
 import errno
 import logging
 import os
-import sys
 import stat
 import shutil
-import contextlib
+import tempfile
 
 
 def force_delete(func, path, exc_info):
@@ -68,3 +68,25 @@ def work_in(dirname=None):
         yield
     finally:
         os.chdir(curdir)
+
+
+def write_to_temp_file(contents):
+    """
+    Write context to a temporary file
+
+    :param contents: temporary file contents
+    :returns: path to temporary file
+    """
+    with tempfile.NamedTemporaryFile(delete=False, mode='w') as temp:
+        temp.write(contents)
+        return temp.name
+
+
+def make_executable(script_path):
+    """
+    Makes `script_path` executable
+
+    :param script_path: The file to change
+    """
+    status = os.stat(script_path)
+    os.chmod(script_path, status.st_mode | stat.S_IEXEC)
