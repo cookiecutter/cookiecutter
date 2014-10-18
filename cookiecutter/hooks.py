@@ -51,7 +51,6 @@ def run_script(script_path, cwd='.'):
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
-    :param context: Cookiecutter project template context.
     """
     run_thru_shell = sys.platform.startswith('win')
     if script_path.endswith('.py'):
@@ -71,7 +70,11 @@ def run_script(script_path, cwd='.'):
 
 def run_script_with_context(script_path, cwd, context):
     """
-    Executes a script after
+    Executes a script after rendering with it Jinja.
+
+    :param script_path: Absolute path to the script to run.
+    :param cwd: The directory to run the script from.
+    :param context: Cookiecutter project template context.
     """
     with io.open(script_path, 'r', encoding='utf-8') as fh:
         temp_script_path = utils.write_to_temp_file(
