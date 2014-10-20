@@ -24,17 +24,40 @@ else:
 PY3 = sys.version > '3'
 if PY3:
     from unittest.mock import patch
+    from io import StringIO
 else:
     from mock import patch
+    from cStringIO import StringIO
 
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
     no_network = False
 
-
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+
+
+class TestCookiecutterMain(unittest.TestCase):
+
+    def test_main_help(self):
+        """ Test `cookiecutter` command line help. """
+        expected = 'Create a project from a Cookiecutter project template.'
+        with patch('sys.argv', ['cookiecutter', '-h']):
+            with patch('sys.stdout', new_callable=StringIO) as out:
+                try:
+                    main()
+                except SystemExit:
+                    self.assertTrue(expected in out.getvalue())
+
+    def test_main_with_options(self):
+        """ Test `cookiecutter` cli with options. """
+        expected = 'config_path is'
+        argv = 'cookiecutter -v --no-input tests/fake-repo-pre/'.split(' ')
+        with patch('sys.argv', argv):
+            with patch('sys.stdout', new_callable=StringIO) as out:
+                main()
+                self.assertTrue(expected in out.getvalue())
 
 
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
