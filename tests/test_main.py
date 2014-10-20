@@ -66,6 +66,14 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         )
         self.assertTrue(os.path.isdir('fake-project-extra'))
 
+    def test_cookiecutter_no_input_checkout(self):
+        """ Call `cookiecutter()` with `no_input=True` and `checkout` """
+        cookiecutter(
+            'tests/fake-repo-pre',
+            no_input=True,
+            checkout='test',
+        )
+
     def tearDown(self):
         if os.path.isdir('fake-project'):
             utils.rmtree('fake-project')
