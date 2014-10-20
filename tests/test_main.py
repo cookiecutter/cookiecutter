@@ -12,7 +12,8 @@ import logging
 import os
 import sys
 
-from cookiecutter import config, main, utils
+from cookiecutter.main import cookiecutter, main, parse_cookiecutter_args
+from cookiecutter import utils
 from tests import CookiecutterCleanSystemTestCase
 
 if sys.version_info[:2] < (2, 7):
@@ -39,15 +40,17 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
     def test_cookiecutter(self):
-        main.cookiecutter('tests/fake-repo-pre/', no_input=True)
+        """ Call `cookiecutter()` with `no_input=True`. """
+        cookiecutter('tests/fake-repo-pre/', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
         self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isdir('fake-project'))
         self.assertTrue(os.path.isfile('fake-project/README.rst'))
         self.assertFalse(os.path.exists('fake-project/json/'))
 
+    # FIXME: this test looks exactly the same as :points_up:?
     def test_cookiecutter_no_slash(self):
-        main.cookiecutter('tests/fake-repo-pre', no_input=True)
+        cookiecutter('tests/fake-repo-pre', no_input=True)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
         self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isdir('fake-project'))
@@ -55,10 +58,10 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         self.assertFalse(os.path.exists('fake-project/json/'))
 
     def test_cookiecutter_no_input_extra_context(self):
-        """ `Call cookiecutter()` with `no_input=True` and `extra_context` """
-        main.cookiecutter(
-            'tests/fake-repo-pre', 
-            no_input=True, 
+        """ Call `cookiecutter()` with `no_input=True` and `extra_context` """
+        cookiecutter(
+            'tests/fake-repo-pre',
+            no_input=True,
             extra_context={'repo_name': 'fake-project-extra'}
         )
         self.assertTrue(os.path.isdir('fake-project-extra'))
@@ -74,7 +77,7 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
     def test_cookiecutter_local_with_input(self):
-        main.cookiecutter('tests/fake-repo-pre/', no_input=False)
+        cookiecutter('tests/fake-repo-pre/', no_input=False)
         self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
         self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
         self.assertTrue(os.path.isdir('fake-project'))
@@ -84,9 +87,9 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
     def test_cookiecutter_input_extra_context(self):
         """ `Call cookiecutter()` with `no_input=False` and `extra_context` """
-        main.cookiecutter(
             'tests/fake-repo-pre', 
             no_input=True, 
+        cookiecutter(
             extra_context={'repo_name': 'fake-project-input-extra'}
         )
         self.assertTrue(os.path.isdir('fake-project-input-extra'))
@@ -101,12 +104,12 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 class TestArgParsing(unittest.TestCase):
 
     def test_parse_cookiecutter_args(self):
-        args = main.parse_cookiecutter_args(['project/'])
+        args = parse_cookiecutter_args(['project/'])
         self.assertEqual(args.input_dir, 'project/')
         self.assertEqual(args.checkout, None)
 
     def test_parse_cookiecutter_args_with_branch(self):
-        args = main.parse_cookiecutter_args(['project/', '--checkout', 'develop'])
+        args = parse_cookiecutter_args(['project/', '--checkout', 'develop'])
         self.assertEqual(args.input_dir, 'project/')
         self.assertEqual(args.checkout, 'develop')
 
@@ -127,7 +130,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'')
     def test_cookiecutter_git(self):
-        main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+        cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
         self.assertTrue(os.path.exists(clone_dir))
@@ -137,7 +140,7 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'')
     def test_cookiecutter_mercurial(self):
-        main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
+        cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
         clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-trytonmodule')
         self.assertTrue(os.path.exists(clone_dir))
