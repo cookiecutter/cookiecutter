@@ -17,12 +17,27 @@ Features:
 Bug Fixes:
 
 * Newlines at the end of files are no longer stripped, thanks to `@treyhunner`_ (#183).
+* Cloning prompt suppressed by respecting the `no_input` flag, thanks to `@trustrachel` (#285)
 * TODO go through post-0.7.2 commits and add bug fixes here.
 
 Other Changes:
 
-* TODO anything else?
+* Added more Cookiecutters to the list:
 
+  * `Python-iOS-template`_ by `@freakboy3742`_
+  * `Python-Android-template`_ by `@freakboy3742`_
+  * `cookiecutter-djangocms-plugin`_ by `@mishbahr`_
+  * `cookiecutter-pyvanguard`_ by `@robinandeer`_
+
+.. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
+.. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
+.. _`cookiecutter-djangocms-plugin`: https://github.com/mishbahr/cookiecutter-djangocms-plugin
+.. _`cookiecutter-pyvanguard`: https://github.com/robinandeer/cookiecutter-pyvanguard
+
+.. _`@trustrachel`: https://github.com/trustrachel
+.. _`@robinandeer`: https://github.com/robinandeer
+.. _`@mishbahr`: https://github.com/mishbahr
+.. _`@freakboy3742`: https://github.com/freakboy3742
 .. _`@treyhunner`: https://github.com/treyhunner
 .. _`@pfmoore`: https://github.com/pfmoore
 .. _`@fcurella`: https://github.com/fcurella
