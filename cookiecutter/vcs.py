@@ -19,18 +19,24 @@ from .prompt import query_yes_no
 from .utils import make_sure_path_exists, rmtree
 
 
-def prompt_and_delete_repo(repo_dir):
+def prompt_and_delete_repo(repo_dir, no_input=False):
     """
     Asks the user whether it's okay to delete the previously-cloned repo.
     If yes, deletes it. Otherwise, Cookiecutter exits.
 
     :param repo_dir: Directory of previously-cloned repo.
+    :param no_input: Suppress prompt to delete repo and just delete it.
     """
 
-    ok_to_delete = query_yes_no("You've cloned {0} before. "
-        "Is it okay to delete and re-clone it?".format(repo_dir),
-        default="yes"
-    )
+    # Suppress prompt if called via API
+    if no_input:
+        ok_to_delete = True
+    else:
+        ok_to_delete = query_yes_no("You've cloned {0} before. "
+            "Is it okay to delete and re-clone it?".format(repo_dir),
+            default="yes"
+        )
+
     if ok_to_delete:
         rmtree(repo_dir)
     else:
@@ -53,12 +59,14 @@ def identify_repo(repo_url):
         raise UnknownRepoType
 
 
-def clone(repo_url, checkout=None, clone_to_dir="."):
+def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
     """
     Clone a repo to the current directory.
 
     :param repo_url: Repo URL of unknown type.
-    :param checkout: The branch, tag or commit ID to checkout after clone
+    :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param clone_to_dir: The directory to clone to. Defaults to the current directory.
+    :param no_input: Suppress all user prompts when calling via API.
     """
 
     # Ensure that clone_to_dir exists
@@ -75,7 +83,7 @@ def clone(repo_url, checkout=None, clone_to_dir="."):
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        prompt_and_delete_repo(repo_dir)
+        prompt_and_delete_repo(repo_dir, no_input=no_input)
 
     if repo_type in ["git", "hg"]:
         subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
