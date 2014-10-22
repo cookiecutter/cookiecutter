@@ -52,6 +52,10 @@ Contributors
 * schacki (`@schacki`_)
 * Ryan Olson (`@ryanolson`_)
 * Trey Hunner (`@treyhunner`_)
+* Russell Keith-Magee (`@freakboy3742`_)
+* Mishbah Razzaque (`@mishbahr`_)
+* Robin Andeer (`@robinandeer`_)
+* Rachel Sanders (`@trustrachel`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -92,4 +96,7 @@ Contributors
 .. _`@schacki`: https://github.com/schacki
 .. _`@ryanolson`: https://github.com/ryanolson
 .. _`@treyhunner`: https://github.com/treyhunner 
-
+.. _`@freakboy3742`: https://github.com/freakboy3742
+.. _`@mishbahr`: https://github.com/mishbahr
+.. _`@robinandeer`: https://github.com/robinandeer
+.. _`@trustrachel`: https://github.com/trustrachel
