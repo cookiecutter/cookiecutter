@@ -17,7 +17,7 @@ Features:
 Bug Fixes:
 
 * Newlines at the end of files are no longer stripped, thanks to `@treyhunner`_ (#183).
-* Cloning prompt suppressed by respecting the `no_input` flag, thanks to `@trustrachel` (#285)
+* Cloning prompt suppressed by respecting the `no_input` flag, thanks to `@trustrachel`_ (#285)
 * TODO go through post-0.7.2 commits and add bug fixes here.
 
 Other Changes:
