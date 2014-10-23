@@ -12,6 +12,7 @@ from __future__ import unicode_literals
 import sys
 
 from .compat import iteritems, read_response
+from jinja2.environment import Environment
 
 
 def prompt_for_config(context):
@@ -20,8 +21,10 @@ def prompt_for_config(context):
     field names and sample values.
     """
     cookiecutter_dict = {}
+    env = Environment()
 
     for key, val in iteritems(context['cookiecutter']):
+        val = env.from_string(val).render(**cookiecutter_dict)
         prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
         new_val = read_response(prompt).strip()
