@@ -10,11 +10,10 @@ Functions for discovering and executing various cookiecutter hooks.
 
 import io
 import logging
-import ntpath
 import os
-import shutil
 import subprocess
 import sys
+import tempfile
 
 from jinja2 import Template
 
@@ -25,6 +24,7 @@ _HOOKS = [
     'post_gen_project',
     # TODO: other hooks should be listed here
 ]
+
 
 def find_hooks():
     """
@@ -78,17 +78,14 @@ def run_script_with_context(script_path, cwd, context):
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
     """
-    with io.open(script_path, 'r', encoding='utf-8') as fh:
-        temp_script_path = utils.write_to_temp_file(
-            Template(fh.read()).render(**context)
-        )
-        script_path = os.path.join(
-            os.path.dirname(temp_script_path),
-            ntpath.basename(script_path),
-        )
-        shutil.copyfile(temp_script_path, script_path)
-        run_script(script_path, cwd)
-        os.remove(script_path)
+    _, extension = os.path.splitext(script_path)
+
+    contents = io.open(script_path, 'r', encoding='utf-8').read()
+
+    with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix=extension) as temp:
+        temp.write(Template(contents).render(**context))
+
+    run_script(temp.name, cwd)
 
 
 def run_hook(hook_name, project_dir, context):
