@@ -91,3 +91,27 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
             subprocess.check_call([repo_type, 'checkout', checkout], cwd=repo_dir)
 
     return repo_dir
+
+
+hosting_abbreviations = {'gh': 'https://github.com/{0}.git',
+                         'bb': 'https://bitbucket.org/{0}',
+                        }
+
+def expand_hosting_abbreviation(input_dir):
+    """
+    Expand an abbreviated URL for a project on a common hosting site. If the
+    input is not an abbreviated URL, it is returned unmodified.
+    
+    :param input_dir: The input directory, possibly abbreviated.
+    :returns: The expanded repository URL, or the input.
+    """
+    if ':' not in input_dir:
+        return input_dir
+
+    abbr, detail = input_dir.split(':', 1)
+    try:
+        template = hosting_abbreviations[abbr]
+    except KeyError:
+        return input_dir
+    else:
+        return template.format(detail)

@@ -21,7 +21,7 @@ from . import __version__
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
-from .vcs import clone
+from .vcs import clone, expand_hosting_abbreviation
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +41,9 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
+
+    # Expand abbreviations, e.g. 'gh:user/repo' to full URL
+    input_dir = expand_hosting_abbreviation(input_dir)
 
     # TODO: find a better way to tell if it's a repo URL
     if "git@" in input_dir or "https://" in input_dir:

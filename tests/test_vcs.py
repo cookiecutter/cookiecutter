@@ -175,5 +175,23 @@ class TestVCSPrompt(unittest.TestCase):
             utils.rmtree('cookiecutter-trytonmodule')
 
 
+class TestHostingAbbreviations(unittest.TestCase):
+    def test_expand_github(self):
+        short_url = 'gh:audreyr/cookiecutter-pypackage'
+        full_url = 'https://github.com/audreyr/cookiecutter-pypackage.git'
+        self.assertEqual(vcs.expand_hosting_abbreviation(short_url), full_url)
+    
+    def test_expand_bitbucket(self):
+        short_url = 'bb:pokoli/cookiecutter-trytonmodule'
+        full_url = 'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
+        self.assertEqual(vcs.expand_hosting_abbreviation(short_url), full_url)
+    
+    def test_dont_expand(self):
+        full_url = 'https://github.com/audreyr/cookiecutter-pypackage.git'
+        self.assertEqual(vcs.expand_hosting_abbreviation(full_url), full_url)
+
+        local_dir = '~/Code/cookiecutter-pypackage'
+        self.assertEqual(vcs.expand_hosting_abbreviation(local_dir), local_dir)
+
 if __name__ == '__main__':
     unittest.main()
