@@ -12,6 +12,7 @@ from __future__ import unicode_literals
 import contextlib
 import errno
 import logging
+import ntpath
 import os
 import stat
 import shutil
@@ -68,18 +69,6 @@ def work_in(dirname=None):
         yield
     finally:
         os.chdir(curdir)
-
-
-def write_to_temp_file(contents):
-    """
-    Write context to a temporary file
-
-    :param contents: temporary file contents
-    :returns: path to temporary file
-    """
-    with tempfile.NamedTemporaryFile(delete=False, mode='w') as temp:
-        temp.write(contents)
-        return temp.name
 
 
 def make_executable(script_path):

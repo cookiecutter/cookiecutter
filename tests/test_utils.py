@@ -24,15 +24,6 @@ def make_readonly(path):
 
 class TestUtils(unittest.TestCase):
 
-    def test_write_to_temp_file(self):
-        script_path = utils.write_to_temp_file('foo')
-        self.assertEqual(open(script_path).read(), 'foo')
-
-    def test_make_executable(self):
-        script_path = utils.write_to_temp_file('bar')
-        utils.make_executable(script_path)
-        self.assertTrue(stat.S_IEXEC & os.stat(script_path)[stat.ST_MODE])
-
     def test_rmtree(self):
         os.mkdir('foo')
         with open('foo/bar', "w") as f:
