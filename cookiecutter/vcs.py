@@ -66,7 +66,7 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
 
     :param repo_url: Repo URL of unknown type.
     :param checkout: The branch, tag or commit ID to checkout after clone.
-    :param clone_to_dir: The directory to clone to. 
+    :param clone_to_dir: The directory to clone to.
                          Defaults to the current directory.
     :param no_input: Suppress all user prompts when calling via API.
     """
