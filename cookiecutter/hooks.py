@@ -12,6 +12,7 @@ import logging
 import os
 import subprocess
 import sys
+import json
 
 from .utils import make_sure_path_exists, work_in
 
@@ -60,7 +61,7 @@ def _run_hook(script_path, cwd='.'):
     )
     proc.wait()
 
-def run_hook(hook_name, project_dir):
+def run_hook(hook_name, project_dir, context):
     '''
     Try and find a script mapped to `hook_name` in the current working directory,
     and execute it from `project_dir`.
@@ -69,4 +70,17 @@ def run_hook(hook_name, project_dir):
     if script is None:
         logging.debug("No hooks found")
         return
-    return _run_hook(script, project_dir)
+
+    exported_config = dict(
+        ('COOKIECUTTER_{0}'.format(key.upper()), str(value))
+        for key, value in context['cookiecutter'].iteritems()
+    )
+
+    os.environ.update(exported_config)
+
+    retval = _run_hook(script, project_dir)
+
+    for key in exported_config:
+        os.environ.pop(key, None)
+
+    return retval
