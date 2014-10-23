@@ -11,7 +11,7 @@ Functions for prompting the user for project info.
 from __future__ import unicode_literals
 import sys
 
-from .compat import *
+from .compat import iteritems, read_response
 
 
 def prompt_for_config(context):
