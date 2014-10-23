@@ -15,7 +15,7 @@ from .compat import iteritems, read_response
 from jinja2.environment import Environment
 
 
-def prompt_for_config(context):
+def prompt_for_config(context, no_input=False):
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.
@@ -23,16 +23,18 @@ def prompt_for_config(context):
     cookiecutter_dict = {}
     env = Environment()
 
-    for key, val in iteritems(context['cookiecutter']):
-        val = env.from_string(val).render(**cookiecutter_dict)
-        prompt = "{0} (default is \"{1}\")? ".format(key, val)
+    for key, raw in iteritems(context['cookiecutter']):
+        val = env.from_string(raw).render(**cookiecutter_dict)
 
-        new_val = read_response(prompt).strip()
+        if not no_input:
+            prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
-        if new_val == '':
-            new_val = val
+            new_val = read_response(prompt).strip()
 
-        cookiecutter_dict[key] = new_val
+            if new_val != '':
+                val = new_val
+
+        cookiecutter_dict[key] = val
     return cookiecutter_dict
 
 
