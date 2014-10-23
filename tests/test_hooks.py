@@ -15,6 +15,7 @@ import unittest
 
 from cookiecutter import hooks, utils
 
+
 def make_test_repo(name):
     hooks = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
@@ -81,7 +82,7 @@ class TestFindHooks(unittest.TestCase):
 
 class TestExternalHooks(unittest.TestCase):
 
-    repo_path  = os.path.abspath('tests/test-hooks/')
+    repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
     def setUp(self):
@@ -121,13 +122,22 @@ class TestExternalHooks(unittest.TestCase):
         """Execute a hook script, passing a context"""
 
         hook_path = os.path.join(self.hooks_path, 'post_gen_project.sh')
-        with open(hook_path, 'w') as fh:
-            fh.write("#!/bin/bash\n")
-            fh.write("\n")
-            fh.write("echo 'post generation hook';\n")
-            fh.write("touch 'shell_post.txt'\n")
-            fh.write("touch '{{cookiecutter.file}}'\n")
-            os.chmod(hook_path, os.stat(hook_path).st_mode | stat.S_IXUSR)
+
+        if sys.platform.startswith('win'):
+            post = 'post_gen_project.bat'
+            with open(os.path.join(hooks, post), 'w') as f:
+                f.write("@echo off\n")
+                f.write("\n")
+                f.write("echo post generation hook\n")
+                f.write("echo. >{{cookiecutter.file}}\n")
+        else:
+            with open(hook_path, 'w') as fh:
+                fh.write("#!/bin/bash\n")
+                fh.write("\n")
+                fh.write("echo 'post generation hook';\n")
+                fh.write("touch 'shell_post.txt'\n")
+                fh.write("touch '{{cookiecutter.file}}'\n")
+                os.chmod(hook_path, os.stat(hook_path).st_mode | stat.S_IXUSR)
 
         hooks.run_script_with_context(
             os.path.join(self.hooks_path, self.post_hook),
