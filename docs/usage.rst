@@ -40,6 +40,11 @@ Works directly with git repos too
 
 To create a project from the cookiecutter-pypackage.git repo template::
 
+    $ cookiecutter gh:audreyr/cookiecutter-pypackage
+
+Cookiecutter knows abbreviations for Github (``gh``) and Bitbucket (``bb``)
+projects, but you can also give it the full URL to any repository::
+
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
 
 You will be prompted to enter a bunch of project config values. (These are
