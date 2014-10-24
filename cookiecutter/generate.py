@@ -41,7 +41,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     :param context_file: JSON file containing key/value pairs for populating
         the cookiecutter's variables.
-    :param default_context: Dictionary containing any config to take into account.
+    :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
 
@@ -127,7 +127,8 @@ def generate_file(project_dir, infile, context, env):
 
 def render_and_create_dir(dirname, context, output_dir):
     """
-    Renders the name of a directory, creates the directory, and returns its path.
+    Renders the name of a directory, creates the directory, and
+    returns its path.
     """
 
     name_tmpl = Template(dirname)
@@ -147,8 +148,7 @@ def ensure_dir_is_templated(dirname):
     """
     Ensures that dirname is a templated directory name.
     """
-    if '{{' in dirname and \
-        '}}' in dirname:
+    if '{{' in dirname and '}}' in dirname:
         return True
     else:
         raise NonTemplatedInputDirException
@@ -191,7 +191,8 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
         for root, dirs, files in os.walk("."):
             for d in dirs:
-                unrendered_dir = os.path.join(project_dir, os.path.join(root, d))
+                unrendered_dir = os.path.join(project_dir,
+                                              os.path.join(root, d))
                 render_and_create_dir(unrendered_dir, context, output_dir)
 
             for f in files:

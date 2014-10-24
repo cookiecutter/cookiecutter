@@ -13,13 +13,12 @@ import os
 import subprocess
 import sys
 
-from .utils import make_sure_path_exists, work_in
-
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
     # TODO: other hooks should be listed here
 ]
+
 
 def find_hooks():
     '''
@@ -60,10 +59,11 @@ def _run_hook(script_path, cwd='.'):
     )
     proc.wait()
 
+
 def run_hook(hook_name, project_dir):
     '''
-    Try and find a script mapped to `hook_name` in the current working directory,
-    and execute it from `project_dir`.
+    Try and find a script mapped to `hook_name` in the current working
+    directory, and execute it from `project_dir`.
     '''
     script = find_hooks().get(hook_name)
     if script is None:
