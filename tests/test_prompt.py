@@ -57,7 +57,7 @@ class TestPrompt(unittest.TestCase):
     def test_unicode_prompt_for_templated_config(self):
         context = {"cookiecutter": OrderedDict([
             ("project_name", u"A New Project"),
-            ("pkg_name", u"{{ project_name|lower|replace(' ', '') }}")
+            ("pkg_name", u"{{ cookiecutter.project_name|lower|replace(' ', '') }}")
         ])}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
