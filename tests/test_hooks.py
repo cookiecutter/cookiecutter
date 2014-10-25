@@ -17,16 +17,16 @@ from cookiecutter import hooks, utils
 
 
 def make_test_repo(name):
-    hooks = os.path.join(name, 'hooks')
+    hook_dir = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
     os.mkdir(name)
-    os.mkdir(hooks)
+    os.mkdir(hook_dir)
     os.mkdir(template)
 
     with open(os.path.join(template, 'README.rst'), 'w') as f:
         f.write("foo\n===\n\nbar\n")
 
-    with open(os.path.join(hooks, 'pre_gen_project.py'), 'w') as f:
+    with open(os.path.join(hook_dir, 'pre_gen_project.py'), 'w') as f:
         f.write("#!/usr/bin/env python\n")
         f.write("# -*- coding: utf-8 -*-\n")
         f.write("from __future__ import print_function\n")
@@ -37,14 +37,14 @@ def make_test_repo(name):
 
     if sys.platform.startswith('win'):
         post = 'post_gen_project.bat'
-        with open(os.path.join(hooks, post), 'w') as f:
+        with open(os.path.join(hook_dir, post), 'w') as f:
             f.write("@echo off\n")
             f.write("\n")
             f.write("echo post generation hook\n")
             f.write("echo. >shell_post.txt\n")
     else:
         post = 'post_gen_project.sh'
-        filename = os.path.join(hooks, post)
+        filename = os.path.join(hook_dir, post)
         with open(filename, 'w') as f:
             f.write("#!/bin/bash\n")
             f.write("\n")
@@ -125,7 +125,7 @@ class TestExternalHooks(unittest.TestCase):
 
         if sys.platform.startswith('win'):
             post = 'post_gen_project.bat'
-            with open(os.path.join(hooks, post), 'w') as f:
+            with open(os.path.join(self.hooks_path, post), 'w') as f:
                 f.write("@echo off\n")
                 f.write("\n")
                 f.write("echo post generation hook\n")
