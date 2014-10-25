@@ -32,7 +32,8 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
     if no_input:
         ok_to_delete = True
     else:
-        ok_to_delete = query_yes_no("You've cloned {0} before. "
+        ok_to_delete = query_yes_no(
+            "You've cloned {0} before. "
             "Is it okay to delete and re-clone it?".format(repo_dir),
             default="yes"
         )
@@ -65,7 +66,8 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
 
     :param repo_url: Repo URL of unknown type.
     :param checkout: The branch, tag or commit ID to checkout after clone.
-    :param clone_to_dir: The directory to clone to. Defaults to the current directory.
+    :param clone_to_dir: The directory to clone to.
+                         Defaults to the current directory.
     :param no_input: Suppress all user prompts when calling via API.
     """
 
@@ -77,7 +79,8 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
 
     tail = os.path.split(repo_url)[1]
     if repo_type == "git":
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir,
+                                                 tail.rsplit('.git')[0]))
     elif repo_type == "hg":
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail))
     logging.debug('repo_dir is {0}'.format(repo_dir))
@@ -88,6 +91,7 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
     if repo_type in ["git", "hg"]:
         subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
         if checkout is not None:
-            subprocess.check_call([repo_type, 'checkout', checkout], cwd=repo_dir)
+            subprocess.check_call([repo_type, 'checkout', checkout],
+                                  cwd=repo_dir)
 
     return repo_dir
