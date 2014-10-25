@@ -25,6 +25,34 @@ from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
+builtin_abbreviations = {
+    'gh': 'https://github.com/{0}.git',
+    'bb': 'https://bitbucket.org/{0}',
+}
+
+def expand_abbreviations(input_dir, config_dict):
+    """
+    Expand abbreviations in a template name.
+
+    :param input_dir: The project template name.
+    :param config_dict: The user config, which will contain abbreviation
+        definitions.
+    """
+
+    abbreviations = builtin_abbreviations.copy()
+    abbreviations.update(config_dict.get('abbreviations', {}))
+
+    if input_dir in abbreviations:
+        return abbreviations[input_dir]
+
+    # Split on colon. If there is no colon, rest will be empty
+    # and prefix will be the whole input_dir
+    prefix, sep, rest = input_dir.partition(':')
+    if prefix in abbreviations:
+        return abbreviations[prefix].format(rest)
+
+    return input_dir
+
 
 def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     """
@@ -42,6 +70,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
 
+    input_dir = expand_abbreviations(input_dir, config_dict)
+
     # TODO: find a better way to tell if it's a repo URL
     if "git@" in input_dir or "https://" in input_dir:
         repo_dir = clone(
@@ -51,7 +81,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
             no_input=no_input
         )
     else:
-        # If it's a local repo, no need to clone or copy to your cookiecutters_dir
+        # If it's a local repo, no need to clone or copy to your
+        # cookiecutters_dir
         repo_dir = input_dir
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
@@ -93,7 +124,9 @@ def _get_parser():
         '-c', '--checkout',
         help='branch, tag or commit to checkout after git clone'
     )
-    cookiecutter_pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cookiecutter_pkg_dir = os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    )
     parser.add_argument(
         '-V', '--version',
         help="Show version information and exit.",
@@ -112,6 +145,7 @@ def _get_parser():
 
     return parser
 
+
 def parse_cookiecutter_args(args):
     """ Parse the command-line arguments to Cookiecutter. """
     parser = _get_parser()
@@ -124,7 +158,8 @@ def main():
     args = parse_cookiecutter_args(sys.argv[1:])
 
     if args.verbose:
-        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s',
+                            level=logging.DEBUG)
     else:
         # Log info and above to console
         logging.basicConfig(
