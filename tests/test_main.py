@@ -10,9 +10,8 @@ Tests for `cookiecutter.main` module.
 
 import logging
 import os
-import sys
 
-from cookiecutter.compat import PY3, StringIO, input_str, patch, unittest
+from cookiecutter.compat import patch, unittest
 from cookiecutter import main, utils
 from tests import CookiecutterCleanSystemTestCase
 

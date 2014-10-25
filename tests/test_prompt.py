@@ -11,7 +11,7 @@ Tests for `cookiecutter.prompt` module.
 import platform
 import sys
 
-from cookiecutter.compat import PY3, StringIO, input_str, patch, unittest
+from cookiecutter.compat import patch, unittest
 from cookiecutter import prompt
 
 if 'windows' in platform.platform().lower():
@@ -73,11 +73,6 @@ class TestQueryAnswers(unittest.TestCase):
         self.assertTrue(answer)
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
-    def test_query_n(self):
-        answer = prompt.query_yes_no("Blah?")
-        self.assertFalse(answer)
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'no')
     def test_query_n(self):
         answer = prompt.query_yes_no("Blah?")
         self.assertFalse(answer)
