@@ -57,6 +57,7 @@ Contributors
 * Robin Andeer (`@robinandeer`_)
 * Rachel Sanders (`@trustrachel`_)
 * Rémy Hubscher (`@Natim`_)
+* Dino Petron3 (`@dinopetrone`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -102,3 +103,4 @@ Contributors
 .. _`@robinandeer`: https://github.com/robinandeer
 .. _`@trustrachel`: https://github.com/trustrachel
 .. _`@Natim`: https://github.com/Natim
+.. _`@dinopetrone`: https://github.com/dinopetrone
