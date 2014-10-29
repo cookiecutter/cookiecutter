@@ -9,12 +9,14 @@ Helper functions used throughout Cookiecutter.
 """
 
 from __future__ import unicode_literals
+import contextlib
 import errno
 import logging
+import ntpath
 import os
 import stat
 import shutil
-import contextlib
+import tempfile
 
 
 def force_delete(func, path, exc_info):
@@ -67,3 +69,13 @@ def work_in(dirname=None):
         yield
     finally:
         os.chdir(curdir)
+
+
+def make_executable(script_path):
+    """
+    Makes `script_path` executable
+
+    :param script_path: The file to change
+    """
+    status = os.stat(script_path)
+    os.chmod(script_path, status.st_mode | stat.S_IEXEC)

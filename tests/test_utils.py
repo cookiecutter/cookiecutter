@@ -16,9 +16,11 @@ import unittest
 
 from cookiecutter import utils
 
+
 def make_readonly(path):
     mode = os.stat(path).st_mode
     os.chmod(path, mode & ~stat.S_IWRITE)
+
 
 class TestUtils(unittest.TestCase):
 
