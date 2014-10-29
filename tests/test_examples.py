@@ -9,17 +9,13 @@ Tests for the Cookiecutter example repos.
 """
 
 from __future__ import unicode_literals
-import errno
 import logging
 import os
-import shutil
 import subprocess
-import sys
 
-if sys.version_info[:3] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
+from cookiecutter.compat import unittest
+from cookiecutter import config, utils
+from tests import CookiecutterCleanSystemTestCase
 
 try:
     travis = os.environ[u'TRAVIS']
@@ -31,17 +27,12 @@ try:
 except KeyError:
     no_network = False
 
-from cookiecutter import config, utils
-from tests import CookiecutterCleanSystemTestCase
-
-
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
 class TestPyPackage(CookiecutterCleanSystemTestCase):
-
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-pypackage'):
@@ -76,7 +67,6 @@ class TestPyPackage(CookiecutterCleanSystemTestCase):
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
 class TestJQuery(CookiecutterCleanSystemTestCase):
-
 
     def tearDown(self):
         if os.path.isdir('cookiecutter-jquery'):
@@ -129,9 +119,8 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
         # Just skip all the prompts
         proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-        
-        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
+        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')

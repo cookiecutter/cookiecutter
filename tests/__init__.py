@@ -10,25 +10,19 @@ Contains testing helpers.
 
 import os
 import shutil
-import stat
-import sys
+from cookiecutter.compat import unittest
 from cookiecutter import utils
-
-if sys.version_info[:2] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
 
 
 class CookiecutterCleanSystemTestCase(unittest.TestCase):
     """
     Test case that simulates a clean system with no config/cloned cookiecutters.
-    
+
     During setUp:
 
     * Back up the `~/.cookiecutterrc` config file to `~/.cookiecutterrc.backup`
     * Back up the `~/.cookiecutters/` dir to `~/.cookiecutters.backup/`
-    * Starts off a test case with no pre-existing `~/.cookiecutterrc` or 
+    * Starts off a test case with no pre-existing `~/.cookiecutterrc` or
       `~/.cookiecutters/`
 
     During tearDown:
@@ -76,8 +70,8 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
             os.remove(self.user_config_path_backup)
 
         # Carefully delete the created ~/.cookiecutters dir only in certain
-        # conditions. 
-        if self.cookiecutters_dir_found:        
+        # conditions.
+        if self.cookiecutters_dir_found:
             # Delete the created ~/.cookiecutters dir as long as a backup exists
             if os.path.isdir(self.cookiecutters_dir) and os.path.isdir(self.cookiecutters_dir_backup):
                 utils.rmtree(self.cookiecutters_dir)
@@ -86,7 +80,7 @@ class CookiecutterCleanSystemTestCase(unittest.TestCase):
             # There's no backup because it never existed
             if os.path.isdir(self.cookiecutters_dir):
                 utils.rmtree(self.cookiecutters_dir)
-        
+
         # Restore the user's default cookiecutters_dir contents
         if os.path.isdir(self.cookiecutters_dir_backup):
             shutil.copytree(self.cookiecutters_dir_backup, self.cookiecutters_dir)

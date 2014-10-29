@@ -8,22 +8,20 @@ test_prompt
 Tests for `cookiecutter.prompt` module.
 """
 
-import sys
 import platform
-import unittest
+import sys
 
+from cookiecutter.compat import patch, unittest
 from cookiecutter import prompt
 
-PY3 = sys.version > '3'
-if PY3:
-    from unittest.mock import patch
-else:
-    from mock import patch
+if 'windows' in platform.platform().lower():
 
-if sys.version_info[:2] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
+    old_stdin = sys.stdin
+
+    class X(object):
+        def readline(self):
+            return '\n'
+    sys.stdin = X()
 
 
 class TestPrompt(unittest.TestCase):
@@ -75,11 +73,6 @@ class TestQueryAnswers(unittest.TestCase):
         self.assertTrue(answer)
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
-    def test_query_n(self):
-        answer = prompt.query_yes_no("Blah?")
-        self.assertFalse(answer)
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'no')
     def test_query_n(self):
         answer = prompt.query_yes_no("Blah?")
         self.assertFalse(answer)

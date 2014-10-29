@@ -12,20 +12,8 @@ import locale
 import logging
 import os
 import subprocess
-import sys
-import unittest
 
-PY3 = sys.version > '3'
-if PY3:
-    from unittest.mock import patch
-else:
-    from mock import patch
-
-if sys.version_info[:3] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
-
+from cookiecutter.compat import patch, unittest
 from cookiecutter import utils, vcs
 
 try:

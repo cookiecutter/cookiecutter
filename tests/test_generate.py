@@ -24,10 +24,8 @@ from cookiecutter import exceptions
 from cookiecutter import utils
 from tests import CookiecutterCleanSystemTestCase
 
-
-PY3 = sys.version > '3'
-
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+
 
 class TestGenerateFile(unittest.TestCase):
 
@@ -323,7 +321,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
     def test_ignore_hooks_dirs(self):
         generate.generate_files(
             context={
-                'cookiecutter' : {'pyhooks': 'pyhooks'}
+                'cookiecutter': {'pyhooks': 'pyhooks'}
             },
             repo_dir='tests/test-pyhooks/',
             output_dir='tests/test-pyhooks/'
@@ -333,7 +331,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
     def test_run_python_hooks(self):
         generate.generate_files(
             context={
-                'cookiecutter' : {'pyhooks': 'pyhooks'}
+                'cookiecutter': {'pyhooks': 'pyhooks'}
             },
             repo_dir='tests/test-pyhooks/'.replace("/", os.sep),
             output_dir='tests/test-pyhooks/'.replace("/", os.sep)
@@ -344,7 +342,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
     def test_run_python_hooks_cwd(self):
         generate.generate_files(
             context={
-                'cookiecutter' : {'pyhooks': 'pyhooks'}
+                'cookiecutter': {'pyhooks': 'pyhooks'}
             },
             repo_dir='tests/test-pyhooks/'
         )
@@ -355,7 +353,7 @@ class TestHooks(CookiecutterCleanSystemTestCase):
         make_test_repo('tests/test-shellhooks')
         generate.generate_files(
             context={
-                'cookiecutter' : {'shellhooks': 'shellhooks'}
+                'cookiecutter': {'shellhooks': 'shellhooks'}
             },
             repo_dir='tests/test-shellhooks/',
             output_dir='tests/test-shellhooks/'

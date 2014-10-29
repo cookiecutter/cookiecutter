@@ -10,27 +10,15 @@ Tests for `cookiecutter.main` module.
 
 import logging
 import os
-import sys
 
-from cookiecutter import config, main, utils
+from cookiecutter.compat import patch, unittest
+from cookiecutter import main, utils
 from tests import CookiecutterCleanSystemTestCase
-
-if sys.version_info[:2] < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
-
-PY3 = sys.version > '3'
-if PY3:
-    from unittest.mock import patch
-else:
-    from mock import patch
 
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
     no_network = False
-
 
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
@@ -57,8 +45,8 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
     def test_cookiecutter_no_input_extra_context(self):
         """ `Call cookiecutter()` with `no_input=True` and `extra_context` """
         main.cookiecutter(
-            'tests/fake-repo-pre', 
-            no_input=True, 
+            'tests/fake-repo-pre',
+            no_input=True,
             extra_context={'repo_name': 'fake-project-extra'}
         )
         self.assertTrue(os.path.isdir('fake-project-extra'))
@@ -85,8 +73,8 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
     def test_cookiecutter_input_extra_context(self):
         """ `Call cookiecutter()` with `no_input=False` and `extra_context` """
         main.cookiecutter(
-            'tests/fake-repo-pre', 
-            no_input=True, 
+            'tests/fake-repo-pre',
+            no_input=True,
             extra_context={'repo_name': 'fake-project-input-extra'}
         )
         self.assertTrue(os.path.isdir('fake-project-input-extra'))
