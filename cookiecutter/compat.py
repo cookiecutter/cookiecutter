@@ -3,7 +3,7 @@ import sys
 PY3 = sys.version_info[0] == 3
 OLD_PY2 = sys.version_info[:2] < (2, 7)
 
-if PY3:
+if PY3:  # pragma: no cover
     input_str = 'builtins.input'
     iteritems = lambda d: iter(d.items())
     from unittest.mock import patch
@@ -24,7 +24,7 @@ if PY3:
         """
         # The Python 3 input function does exactly what we want
         return input(prompt)
-else:
+else:  # pragma: no cover
     from __builtin__ import raw_input
     input = raw_input
     input_str = '__builtin__.raw_input'
