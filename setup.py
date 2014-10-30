@@ -27,7 +27,7 @@ if sys.version_info[:2] < (2, 7):
 
 # Add Python 2.6 and 2.7-specific dependencies
 if sys.version < '3':
-    test_requirements.append('mock')
+    requirements.append('mock')
 
 # There are no Python 3-specific dependencies to add
 
