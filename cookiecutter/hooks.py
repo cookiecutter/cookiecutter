@@ -82,7 +82,11 @@ def run_script_with_context(script_path, cwd, context):
 
     contents = io.open(script_path, 'r', encoding='utf-8').read()
 
-    with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix=extension) as temp:
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        mode='w',
+        suffix=extension
+    ) as temp:
         temp.write(Template(contents).render(**context))
 
     run_script(temp.name, cwd)
