@@ -3,22 +3,25 @@
 History
 -------
 
-In Development (Master Branch)
+0.8.0 (2014-08-05)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The goal of this release is to allow for injection of extra context via the
+The goal of this release was to allow for injection of extra context via the
 Cookiecutter API, and to fix minor bugs.
 
 Features:
 
 * `cookiecutter()` now takes an optional `extra_context` parameter, thanks to `@michaeljoseph`_, `@fcurella`_, `@aventurella`_, `@emonty`_, `@schacki`_, `@ryanolson`_, `@pfmoore`_, `@pydanny`_, `@audreyr`_ (#260).
-* TODO if any other features were added post-0.7.2, add them here.
+* Context is now injected into hooks, thanks to `@michaeljoseph`_ and `@dinopetrone`_.
+* Moved all Python 2/3 compatability code into `cookiecutter.compat`, making the eventual move to `six` easier, thanks to `@michaeljoseph`_ (#60, #102).
+* Added `cookiecutterrc` defined aliases for cookiecutters, thanks to `@pfmoore`_ (#246)
+* Added `flake8` to tox to check for pep8 violations, thanks to `@natim`_.
 
 Bug Fixes:
 
 * Newlines at the end of files are no longer stripped, thanks to `@treyhunner`_ (#183).
 * Cloning prompt suppressed by respecting the `no_input` flag, thanks to `@trustrachel`_ (#285)
-* TODO go through post-0.7.2 commits and add bug fixes here.
+* With Python 3, input is no longer converted to bytes, thanks to `@uranusjr `_ (#98).
 
 Other Changes:
 
@@ -45,6 +48,7 @@ Other Changes:
 .. _`@emonty`: https://github.com/emonty
 .. _`@schacki`: https://github.com/schacki
 .. _`@ryanolson`: https://github.com/ryanolson
+.. _`@Natim`: https://github.com/Natim
 
 0.7.2 (2014-08-05)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -267,14 +271,14 @@ Other changes:
 
     # Create project from the cookiecutter-pypackage/ template
     $ cookiecutter cookiecutter-pypackage/
-    
+
     # Create project from the cookiecutter-pypackage.git repo template
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
 
 * Can now use Cookiecutter from Python as a package::
 
     from cookiecutter.main import cookiecutter
-    
+
     # Create project from the cookiecutter-pypackage/ template
     cookiecutter('cookiecutter-pypackage/')
 
