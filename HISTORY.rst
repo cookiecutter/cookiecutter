@@ -3,7 +3,7 @@
 History
 -------
 
-0.8.0 (2014-08-05)
+0.8.0 (2014-10-30)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal of this release was to allow for injection of extra context via the
