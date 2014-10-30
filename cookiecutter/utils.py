@@ -12,11 +12,9 @@ from __future__ import unicode_literals
 import contextlib
 import errno
 import logging
-import ntpath
 import os
 import stat
 import shutil
-import tempfile
 
 
 def force_delete(func, path, exc_info):

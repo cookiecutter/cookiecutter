@@ -30,6 +30,7 @@ builtin_abbreviations = {
     'bb': 'https://bitbucket.org/{0}',
 }
 
+
 def expand_abbreviations(input_dir, config_dict):
     """
     Expand abbreviations in a template name.
