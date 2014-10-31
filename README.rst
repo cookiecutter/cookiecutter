@@ -14,6 +14,9 @@ Cookiecutter
 .. image:: https://coveralls.io/repos/audreyr/cookiecutter/badge.png?branch=master
         :target: https://coveralls.io/r/audreyr/cookiecutter?branch=master
 
+.. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
+        :target: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
+
 
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
