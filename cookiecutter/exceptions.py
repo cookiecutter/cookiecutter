@@ -56,3 +56,9 @@ class UnknownRepoType(CookiecutterException):
     """
     Raised if a repo's type cannot be determined.
     """
+
+
+class VCSNotInstalled(CookiecutterException):
+    """
+    Raised if the version control system (git or hg) is not installed.
+    """

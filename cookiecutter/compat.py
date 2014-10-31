@@ -1,3 +1,4 @@
+import os
 import sys
 
 PY3 = sys.version_info[0] == 3
@@ -24,6 +25,8 @@ if PY3:  # pragma: no cover
         """
         # The Python 3 input function does exactly what we want
         return input(prompt)
+
+    from shutil import which
 else:  # pragma: no cover
     from __builtin__ import raw_input
     input = raw_input
@@ -66,5 +69,29 @@ else:  # pragma: no cover
             prompt = ''
         enc = sys.stdin.encoding or sys.getdefaultencoding()
         return raw_input(prompt).decode(enc)
+
+    def is_exe(program):
+        return os.path.isfile(program) and os.access(program, os.X_OK)
+
+    def which(shell_command):
+        """
+        Returns the location of the shell command or None if it does not exist.
+
+        :param shell_command: The name of a shell command.
+        """
+        # http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
+        fpath, fname = os.path.split(shell_command)
+        if fpath:
+            if is_exe(shell_command):
+                return shell_command
+        else:
+            for path in os.environ["PATH"].split(os.pathsep):
+                path = path.strip('"')
+                exe_file = os.path.join(path, shell_command)
+                if is_exe(exe_file):
+                    return exe_file
+
+        return None
+
 
 _hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest)

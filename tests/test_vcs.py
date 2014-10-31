@@ -14,7 +14,7 @@ import os
 import subprocess
 
 from cookiecutter.compat import patch, unittest
-from cookiecutter import utils, vcs
+from cookiecutter import exceptions, utils, vcs
 
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
@@ -44,6 +44,14 @@ class TestIdentifyRepo(unittest.TestCase):
     def test_identify_hg_mercurial(self):
         repo_url = "https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket"
         self.assertEqual(vcs.identify_repo(repo_url), "hg")
+
+    def test_unknown_repo_type(self):
+        repo_url = "http://norepotypespecified.com"
+        self.assertRaises(
+            exceptions.UnknownRepoType,
+            vcs.identify_repo,
+            repo_url
+        )
 
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
@@ -104,6 +112,14 @@ class TestVCS(unittest.TestCase):
         if os.path.isdir('cookiecutter-trytonmodule'):
             utils.rmtree('cookiecutter-trytonmodule')
 
+    @patch('cookiecutter.vcs.identify_repo', lambda x: u'stringthatisntashellcommand')
+    def test_vcs_not_installed(self):
+        self.assertRaises(
+            exceptions.VCSNotInstalled,
+            vcs.clone,
+            "http://norepotypespecified.com"
+        )
+
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCSPrompt(unittest.TestCase):
@@ -161,6 +177,19 @@ class TestVCSPrompt(unittest.TestCase):
             utils.rmtree('cookiecutter-pypackage')
         if os.path.isdir('cookiecutter-trytonmodule'):
             utils.rmtree('cookiecutter-trytonmodule')
+
+
+class TestIsVCSInstalled(unittest.TestCase):
+
+    def test_existing_repo_type(self):
+        self.assertTrue(
+            vcs.is_vcs_installed("git"),
+        )
+
+    def test_non_existing_repo_type(self):
+        self.assertFalse(
+            vcs.is_vcs_installed("stringthatisntashellcommand")
+        )
 
 
 if __name__ == '__main__':
