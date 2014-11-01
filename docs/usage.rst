@@ -35,8 +35,8 @@ Try it out!
 
 
 
-Works directly with git repos too
----------------------------------
+Works directly with git and hg (mercurial) repos too
+------------------------------------------------------
 
 To create a project from the cookiecutter-pypackage.git repo template::
 

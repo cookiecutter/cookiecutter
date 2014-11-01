@@ -17,4 +17,5 @@ Before you submit a pull request, check that it meets these guidelines:
 Coding Standards
 ~~~~~~~~~~~~~~~~
 
-TODO
+* PEP8
+* Functions over classes except in tests
