@@ -14,14 +14,14 @@ Or, if you have pip (the Python package installer tool):
 
     $ [sudo] pip install cookiecutter
 
-Upgrading from 0.6.4 to 0.7.0
------------------------------
+Upgrading from 0.6.4 to 0.7.0 or greater
+-----------------------------------------
 
 First, read :doc:`history` in detail. There are a lot of major
 changes. The big ones are:
 
 * Cookiecutter no longer deletes the cloned repo after generating a project.
-* Cloned repos are saved into `~/.cookiecutters/`. 
+* Cloned repos are saved into `~/.cookiecutters/`.
 * You can optionally create a `~/.cookiecutterrc` config file.
 
 Upgrade Cookiecutter either with easy_install:
