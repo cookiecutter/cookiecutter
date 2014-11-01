@@ -153,14 +153,26 @@ This will generate the following message::
     echo "WARNING: Don't forget to replace any :ref: statements with literal names"
     WARNING: Don't forget to replace any :ref: statements with literal names
 
+Process: Your own code changes
+-------------------------------
+
+All code changes, regardless of who does them, need to be reviewed and merged by someone else.
+This rule applies to all the core committers.
+
+Exceptions:
+
+* Minor corrections and fixes to pull requests submitted by others.
+* While making a formal release, the release manager can make necessary, appropriate changes.
+* Small documentation changes that reinforce existing subject matter. Most commonly being, but not limited to spelling and grammar corrections.
+
 Responsibilities
 -----------------
 
-#. Give priority to bug fixes over new features. This includes fixes for the Windows tests that broke at some point.
 #. Ensure cross-platform compatibility for every change that's accepted. Windows, Mac, Debian & Ubuntu Linux.
 #. Ensure that code that goes into core meets all requirements in this checklist: https://gist.github.com/audreyr/4feef90445b9680475f2
 #. Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 #. Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
+#. Keep feature versions as small as possible, preferably one new feature per version.
 #. Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the Python Community Code of Conduct (https://www.python.org/psf/codeofconduct/).
 
 Becoming a Core Committer
