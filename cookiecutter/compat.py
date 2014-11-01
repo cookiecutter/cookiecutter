@@ -26,7 +26,6 @@ if PY3:  # pragma: no cover
         # The Python 3 input function does exactly what we want
         return input(prompt)
 
-    from shutil import which
 else:  # pragma: no cover
     from __builtin__ import raw_input
     input = raw_input
@@ -70,7 +69,17 @@ else:  # pragma: no cover
         enc = sys.stdin.encoding or sys.getdefaultencoding()
         return raw_input(prompt).decode(enc)
 
+
+if PY3:  # Forced testing
+
+    from shutil import which
+
+else:  # Forced testing
+
     def is_exe(program):
+        """
+        Returns whether or not a file is an executable.
+        """
         return os.path.isfile(program) and os.access(program, os.X_OK)
 
     def which(shell_command):
@@ -93,5 +102,4 @@ else:  # pragma: no cover
 
         return None
 
-
-_hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest)
+_hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest, which)

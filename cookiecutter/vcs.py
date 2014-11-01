@@ -115,4 +115,3 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
                                   cwd=repo_dir)
 
     return repo_dir
-
