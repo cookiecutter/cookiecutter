@@ -119,6 +119,8 @@ Did someone say features?
 * Default context: specify key/value pairs that you want used as defaults
   whenever you generate a project
 
+* Direct access to the Cookiecutter API allows for injection of extra context.
+
 * Pre- and post-generate hooks: Python or shell scripts to run before or after
   generating a project.
 
