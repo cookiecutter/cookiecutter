@@ -12,24 +12,31 @@ from __future__ import unicode_literals
 import sys
 
 from .compat import iteritems, read_response
+from jinja2.environment import Environment
 
 
-def prompt_for_config(context):
+def prompt_for_config(context, no_input=False):
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.
+
+    :param no_input: Prompt the user at command line for manual configuration?
     """
     cookiecutter_dict = {}
+    env = Environment()
 
-    for key, val in iteritems(context['cookiecutter']):
-        prompt = "{0} (default is \"{1}\")? ".format(key, val)
+    for key, raw in iteritems(context['cookiecutter']):
+        val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
 
-        new_val = read_response(prompt).strip()
+        if not no_input:
+            prompt = "{0} (default is \"{1}\")? ".format(key, val)
 
-        if new_val == '':
-            new_val = val
+            new_val = read_response(prompt).strip()
 
-        cookiecutter_dict[key] = new_val
+            if new_val != '':
+                val = new_val
+
+        cookiecutter_dict[key] = val
     return cookiecutter_dict
 
 

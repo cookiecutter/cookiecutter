@@ -51,11 +51,24 @@ class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
         )
         self.assertTrue(os.path.isdir('fake-project-extra'))
 
+    def test_cookiecutter_templated_context(self):
+        """
+        `Call cookiecutter()` with `no_input=True` and templates in the
+        cookiecutter.json file
+        """
+        main.cookiecutter(
+            'tests/fake-repo-tmpl',
+            no_input=True
+        )
+        self.assertTrue(os.path.isdir('fake-project-templated'))
+
     def tearDown(self):
         if os.path.isdir('fake-project'):
             utils.rmtree('fake-project')
         if os.path.isdir('fake-project-extra'):
             utils.rmtree('fake-project-extra')
+        if os.path.isdir('fake-project-templated'):
+            utils.rmtree('fake-project-templated')
 
 
 class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
