@@ -11,7 +11,7 @@ Tests for `cookiecutter.prompt` module.
 import platform
 import sys
 
-from cookiecutter.compat import patch, unittest
+from cookiecutter.compat import patch, unittest, OrderedDict
 from cookiecutter import prompt
 
 if 'windows' in platform.platform().lower():
