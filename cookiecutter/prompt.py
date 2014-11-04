@@ -19,7 +19,7 @@ def prompt_for_config(context, no_input=False):
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.
-    
+
     :param no_input: Prompt the user at command line for manual configuration?
     """
     cookiecutter_dict = {}
