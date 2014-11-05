@@ -190,6 +190,7 @@ LaTeX/XeTeX
 ~~~~~~~~~~~
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
+* `cookiecutter-beamer`_: A template for a LaTeX Beamer presentation.
 
 
 Berkshelf-Vagrant
@@ -238,6 +239,7 @@ HTML
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
+.. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer/
 
 Similar projects
 ----------------
