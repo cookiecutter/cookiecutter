@@ -19,10 +19,11 @@ from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
 from .compat import json, OrderedDict
-from .exceptions import NonTemplatedInputDirException
+from .exceptions import NonTemplatedInputDirException, InvalidValidationDefinition
 from .find import find_template
 from .utils import make_sure_path_exists, work_in
 from .hooks import run_hook
+from .prompt import iteritems
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
@@ -195,3 +196,38 @@ def generate_files(repo_dir, context=None, output_dir="."):
     # run post-gen hook from repo_dir
     with work_in(repo_dir):
         run_hook('post_gen_project', project_dir, context)
+
+
+def generate_validation(validation_file='cookiecutter.validation.json'):
+    """
+    Generates the validation for a Cookiecutter project template.
+    Loads the JSON file as a Python object, with key being the JSON filename.
+
+    :param validation_file: JSON file containing key/value pairs for populating
+        the cookiecutter's validation variables.
+    """
+
+    validation = {'cookiecutter.validation' : {}}
+
+    try:
+        file_handle = open(validation_file)
+        obj = json.load(file_handle, encoding='utf-8', object_pairs_hook=OrderedDict)
+
+        # Add the Python object to the validation dictionary
+        file_name = os.path.split(validation_file)[1]
+        file_stem = os.path.splitext(file_name)[0]
+        validation[file_stem] = obj
+    except:
+        # Validation is optional
+        logging.debug('Validation disabled')
+        pass
+    else:
+        # Lets check whether the regexs defined are valid
+        for _, regex in iteritems(validation['cookiecutter.validation']):
+            try:
+                re.compile(regex)
+            except:
+                raise InvalidValidationDefinition('Regex not valid {0}'.format(regex))
+
+    logging.debug('Validation generated is {0}'.format(validation))
+    return validation

@@ -56,3 +56,13 @@ class UnknownRepoType(CookiecutterException):
     """
     Raised if a repo's type cannot be determined.
     """
+
+class InvalidValidationDefinition(CookiecutterException):
+    """
+    Raised if an invalid regex is found in the validation file.
+    """
+
+class InvalidValidation(CookiecutterException):
+    """
+    Raised if an value doesn't validate.
+    """
