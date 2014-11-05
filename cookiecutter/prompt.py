@@ -39,10 +39,10 @@ def prompt_for_config(context, no_input=False, validation=None):
                 val = new_val
 
             # Check whether this key needs validation
-            if validation['cookiecutter.validation'].has_key(key):
+            if key in validation['cookiecutter.validation']:
                 regex = validation['cookiecutter.validation'][key]
-                if not re.match(regex, new_val):
-                    msg = 'Value "{0}" doesnt validate against regex {1}'.format(new_val, regex)
+                if not re.match(regex, val):
+                    msg = 'Value "{0}" doesnt validate against regex {1}'.format(val, regex)
                     raise InvalidValidation(msg)
 
         cookiecutter_dict[key] = val

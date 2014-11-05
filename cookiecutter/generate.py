@@ -12,6 +12,7 @@ import logging
 import os
 import io
 import shutil
+import re
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -217,17 +218,16 @@ def generate_validation(validation_file='cookiecutter.validation.json'):
         file_name = os.path.split(validation_file)[1]
         file_stem = os.path.splitext(file_name)[0]
         validation[file_stem] = obj
-    except:
+    except Exception, msg:
         # Validation is optional
-        logging.debug('Validation disabled')
-        pass
+        logging.debug('Validation disabled. {0}'.format(msg))
     else:
         # Lets check whether the regexs defined are valid
         for _, regex in iteritems(validation['cookiecutter.validation']):
             try:
                 re.compile(regex)
-            except:
-                raise InvalidValidationDefinition('Regex not valid {0}'.format(regex))
+            except Exception, msg:
+                raise InvalidValidationDefinition('Regex not valid {0}. {1}'.format(regex, msg))
 
     logging.debug('Validation generated is {0}'.format(validation))
     return validation
