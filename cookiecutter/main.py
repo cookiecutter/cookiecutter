@@ -28,11 +28,11 @@ builtin_abbreviations = {
 }
 
 
-def expand_abbreviations(input_dir, config_dict):
+def expand_abbreviations(template, config_dict):
     """
     Expand abbreviations in a template name.
 
-    :param input_dir: The project template name.
+    :param template: The project template name.
     :param config_dict: The user config, which will contain abbreviation
         definitions.
     """
@@ -40,16 +40,16 @@ def expand_abbreviations(input_dir, config_dict):
     abbreviations = builtin_abbreviations.copy()
     abbreviations.update(config_dict.get('abbreviations', {}))
 
-    if input_dir in abbreviations:
-        return abbreviations[input_dir]
+    if template in abbreviations:
+        return abbreviations[template]
 
     # Split on colon. If there is no colon, rest will be empty
-    # and prefix will be the whole input_dir
-    prefix, sep, rest = input_dir.partition(':')
+    # and prefix will be the whole template
+    prefix, sep, rest = template.partition(':')
     if prefix in abbreviations:
         return abbreviations[prefix].format(rest)
 
-    return input_dir
+    return template
 
 
 def cookiecutter(template, checkout=None, no_input=False, extra_context=None):

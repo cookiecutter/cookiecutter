@@ -103,28 +103,28 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 class TestAbbreviationExpansion(unittest.TestCase):
 
     def test_abbreviation_expansion(self):
-        input_dir = main.expand_abbreviations('foo', {'abbreviations': {'foo': 'bar'}})
-        self.assertEqual(input_dir, 'bar')
+        template = main.expand_abbreviations('foo', {'abbreviations': {'foo': 'bar'}})
+        self.assertEqual(template, 'bar')
 
     def test_abbreviation_expansion_not_an_abbreviation(self):
-        input_dir = main.expand_abbreviations('baz', {'abbreviations': {'foo': 'bar'}})
-        self.assertEqual(input_dir, 'baz')
+        template = main.expand_abbreviations('baz', {'abbreviations': {'foo': 'bar'}})
+        self.assertEqual(template, 'baz')
 
     def test_abbreviation_expansion_prefix(self):
-        input_dir = main.expand_abbreviations('xx:a', {'abbreviations': {'xx': '<{0}>'}})
-        self.assertEqual(input_dir, '<a>')
+        template = main.expand_abbreviations('xx:a', {'abbreviations': {'xx': '<{0}>'}})
+        self.assertEqual(template, '<a>')
 
     def test_abbreviation_expansion_builtin(self):
-        input_dir = main.expand_abbreviations('gh:a', {})
-        self.assertEqual(input_dir, 'https://github.com/a.git')
+        template = main.expand_abbreviations('gh:a', {})
+        self.assertEqual(template, 'https://github.com/a.git')
 
     def test_abbreviation_expansion_override_builtin(self):
-        input_dir = main.expand_abbreviations('gh:a', {'abbreviations': {'gh': '<{0}>'}})
-        self.assertEqual(input_dir, '<a>')
+        template = main.expand_abbreviations('gh:a', {'abbreviations': {'gh': '<{0}>'}})
+        self.assertEqual(template, '<a>')
 
     def test_abbreviation_expansion_prefix_ignores_suffix(self):
-        input_dir = main.expand_abbreviations('xx:a', {'abbreviations': {'xx': '<>'}})
-        self.assertEqual(input_dir, '<>')
+        template = main.expand_abbreviations('xx:a', {'abbreviations': {'xx': '<>'}})
+        self.assertEqual(template, '<>')
 
     def test_abbreviation_expansion_prefix_not_0_in_braces(self):
         self.assertRaises(
