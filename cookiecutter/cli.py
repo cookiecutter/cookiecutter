@@ -34,7 +34,7 @@ def print_version(context, param, value):
 
 
 @click.command()
-@click.argument('input_dir', type=click.Path(exists=True))
+@click.argument('template')
 @click.option(
     '--no-input', is_flag=True,
     help='Do not prompt for parameters and only use cookiecutter.json '
@@ -53,8 +53,8 @@ def print_version(context, param, value):
     '-v', '--verbose',
     is_flag=True, help='Print debug information', default=False
 )
-def main(input_dir, no_input, checkout, verbose):
-    """Create a project from a Cookiecutter project template (INPUT_DIR)."""
+def main(template, no_input, checkout, verbose):
+    """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
             format='%(levelname)s %(filename)s: %(message)s',
@@ -67,4 +67,4 @@ def main(input_dir, no_input, checkout, verbose):
             level=logging.INFO
         )
 
-    cookiecutter(input_dir, checkout, no_input)
+    cookiecutter(template, checkout, no_input)

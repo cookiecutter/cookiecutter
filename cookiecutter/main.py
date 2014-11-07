@@ -52,11 +52,11 @@ def expand_abbreviations(input_dir, config_dict):
     return input_dir
 
 
-def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
-    :param input_dir: A directory containing a project template dir,
+    :param template: A directory containing a project template directory,
         or a URL to a git repository.
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
@@ -68,12 +68,12 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
     config_dict = get_user_config()
 
-    input_dir = expand_abbreviations(input_dir, config_dict)
+    template = expand_abbreviations(template, config_dict)
 
     # TODO: find a better way to tell if it's a repo URL
     if 'git@' in input_dir or 'https://' in input_dir:
         repo_dir = clone(
-            repo_url=input_dir,
+            repo_url=template,
             checkout=checkout,
             clone_to_dir=config_dict['cookiecutters_dir'],
             no_input=no_input
@@ -81,7 +81,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     else:
         # If it's a local repo, no need to clone or copy to your
         # cookiecutters_dir
-        repo_dir = input_dir
+        repo_dir = template
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logging.debug('context_file is {0}'.format(context_file))
