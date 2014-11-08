@@ -49,6 +49,8 @@ Did someone say features?
         # You'll be prompted to enter values.
         # Then it'll create your Python package in the current working directory,
         # based on those values.
+        $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
+        # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
         $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
 * Can also use it at the command line with a local template:
