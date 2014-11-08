@@ -8,6 +8,9 @@ Cookiecutter
 .. image:: https://travis-ci.org/audreyr/cookiecutter.png?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
 
+.. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
+        :target: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
+
 .. image:: https://pypip.in/d/cookiecutter/badge.png
         :target: https://crate.io/packages/cookiecutter?version=latest
 
