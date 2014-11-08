@@ -68,6 +68,12 @@ Possible settings are:
   The `gh` (github) and `bb` (bitbucket) abbreviations shown above are actually
   built in, and can be used without defining them yourself.
 
+If you want to locate the config file somewhere else, you can set the
+environment variable `COOKIECUTTER_CONFIG` to the path to the file you want
+to use. For example::
+
+    export COOKIECUTTER_CONFIG=/home/audreyr/my-custom-config.yaml
+
 Calling Cookiecutter Functions From Python
 ------------------------------------------
 
