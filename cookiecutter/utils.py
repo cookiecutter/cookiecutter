@@ -15,7 +15,6 @@ import logging
 import os
 import stat
 import shutil
-import tempfile
 
 
 def force_delete(func, path, exc_info):
