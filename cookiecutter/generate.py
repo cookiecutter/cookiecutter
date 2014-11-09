@@ -80,17 +80,17 @@ def generate_file(project_dir, infile, context, env):
     :param env: Jinja2 template execution environment.
     """
 
-    logging.debug("Generating file {0}".format(infile))
+    logging.debug('Generating file {0}'.format(infile))
 
     # Render the path to the output file (not including the root project dir)
     outfile_tmpl = Template(infile)
     outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
-    logging.debug("outfile is {0}".format(outfile))
+    logging.debug('outfile is {0}'.format(outfile))
 
     # Just copy over binary files. Don't render.
     logging.debug("Check {0} to see if it's a binary".format(infile))
     if is_binary(infile):
-        logging.debug("Copying binary {0} to {1} without rendering"
+        logging.debug('Copying binary {0} to {1} without rendering'
                       .format(infile, outfile))
         shutil.copyfile(infile, outfile)
     else:
@@ -108,9 +108,9 @@ def generate_file(project_dir, infile, context, env):
             raise
         rendered_file = tmpl.render(**context)
 
-        logging.debug("Writing {0}".format(outfile))
+        logging.debug('Writing {0}'.format(outfile))
 
-        with io.open(outfile, 'w', encoding="utf-8") as fh:
+        with io.open(outfile, 'w', encoding='utf-8') as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -146,7 +146,7 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def generate_files(repo_dir, context=None, output_dir="."):
+def generate_files(repo_dir, context=None, output_dir='.'):
     """
     Renders the templates and saves them to files.
 
@@ -165,13 +165,13 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
-    #   + Set Jinja's path to "."
+    #   + Set Jinja's path to '.'
     #
     #  In order to build our files to the correct folder(s), we'll use an
     # absolute path for the target folder (project_dir)
 
     project_dir = os.path.abspath(project_dir)
-    logging.debug("project_dir is {0}".format(project_dir))
+    logging.debug('project_dir is {0}'.format(project_dir))
 
     # run pre-gen hook from repo_dir
     with work_in(repo_dir):
@@ -179,9 +179,9 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
     with work_in(template_dir):
         env = Environment(keep_trailing_newline=True)
-        env.loader = FileSystemLoader(".")
+        env.loader = FileSystemLoader('.')
 
-        for root, dirs, files in os.walk("."):
+        for root, dirs, files in os.walk('.'):
             for d in dirs:
                 unrendered_dir = os.path.join(project_dir,
                                               os.path.join(root, d))
@@ -189,7 +189,7 @@ def generate_files(repo_dir, context=None, output_dir="."):
 
             for f in files:
                 infile = os.path.join(root, f)
-                logging.debug("f is {0}".format(f))
+                logging.debug('f is {0}'.format(f))
                 generate_file(project_dir, infile, context, env)
 
     # run post-gen hook from repo_dir

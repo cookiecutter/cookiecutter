@@ -34,8 +34,8 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
     else:
         ok_to_delete = query_yes_no(
             "You've cloned {0} before. "
-            "Is it okay to delete and re-clone it?".format(repo_dir),
-            default="yes"
+            'Is it okay to delete and re-clone it?'.format(repo_dir),
+            default='yes'
         )
 
     if ok_to_delete:
@@ -52,15 +52,15 @@ def identify_repo(repo_url):
     :returns: "git", "hg", or None.
     """
 
-    if "git" in repo_url:
-        return "git"
-    elif "bitbucket" in repo_url:
-        return "hg"
+    if 'git' in repo_url:
+        return 'git'
+    elif 'bitbucket' in repo_url:
+        return 'hg'
     else:
         raise UnknownRepoType
 
 
-def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
+def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     """
     Clone a repo to the current directory.
 
@@ -78,17 +78,17 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
     repo_type = identify_repo(repo_url)
 
     tail = os.path.split(repo_url)[1]
-    if repo_type == "git":
+    if repo_type == 'git':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir,
                                                  tail.rsplit('.git')[0]))
-    elif repo_type == "hg":
+    elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail))
     logging.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
         prompt_and_delete_repo(repo_dir, no_input=no_input)
 
-    if repo_type in ["git", "hg"]:
+    if repo_type in ['git', 'hg']:
         subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
         if checkout is not None:
             subprocess.check_call([repo_type, 'checkout', checkout],

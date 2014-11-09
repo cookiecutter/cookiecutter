@@ -15,6 +15,7 @@ import logging
 import os
 import stat
 import shutil
+import tempfile
 
 
 def force_delete(func, path, exc_info):
@@ -45,7 +46,7 @@ def make_sure_path_exists(path):
     :param path: A directory path.
     """
 
-    logging.debug("Making sure path exists: {0}".format(path))
+    logging.debug('Making sure path exists: {0}'.format(path))
     try:
         os.makedirs(path)
     except OSError as exception:
