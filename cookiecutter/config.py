@@ -10,6 +10,7 @@ Global configuration handling
 
 from __future__ import unicode_literals
 import copy
+import logging
 import os
 import io
 
@@ -18,6 +19,8 @@ import yaml
 from .exceptions import ConfigDoesNotExistException
 from .exceptions import InvalidConfiguration
 
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
@@ -33,8 +36,8 @@ def get_config(config_path):
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException
 
-    print("config_path is {0}".format(config_path))
-    with io.open(config_path, encoding="utf-8") as file_handle:
+    logger.debug('config_path is {0}'.format(config_path))
+    with io.open(config_path, encoding='utf-8') as file_handle:
         try:
             yaml_dict = yaml.safe_load(file_handle)
         except yaml.scanner.ScannerError:
