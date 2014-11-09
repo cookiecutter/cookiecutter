@@ -1,0 +1,38 @@
+Testing
+-------
+
+To run a particular test::
+
+    $ python -m unittest tests.test_find.TestFind.test_find_template
+
+To run a subset of tests::
+
+    $ python -m unittest tests.test_find
+
+Testing with py.test
+--------------------
+
+There is a specific configuration for py.test, to use this configuration one need to run::
+
+    $ tox -c tox_pytest.ini
+
+This configuration file setup the pytest-cov plugin and it is an additional
+dependency. It generate a coverage report after the tests.
+
+It is possible to tests with some versions of python, to do this the command
+is::
+
+    $ tox -e py27,py34,pypy -c tox_pytest.ini
+
+Will run py.test with the python2.7, python3.4 nd pypy interpreters, for
+example.
+
+Troubleshooting for Contributors
+---------------------------------
+
+Python 3.3 tests fail locally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Try upgrading Tox to the latest version. I noticed that they were failing
+locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
+
