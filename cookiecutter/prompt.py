@@ -30,7 +30,7 @@ def prompt_for_config(context, no_input=False):
         val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
 
         if not no_input:
-            prompt = '{0} (default is "{1}")? '.format(key, val)
+            prompt = "{key}: ({default}) ".format(key=key, default=val)
 
             new_val = read_response(prompt).strip()
 
