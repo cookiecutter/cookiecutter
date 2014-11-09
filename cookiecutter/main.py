@@ -130,7 +130,7 @@ def _get_parser():
         '-V', '--version',
         help="Show version information and exit.",
         action='version',
-        version='Cookiecutter %s from %s (Python %s)' % (
+        version='Cookiecutter {0} from {1} (Python {2})'.format(
             __version__,
             cookiecutter_pkg_dir,
             sys.version[:3]

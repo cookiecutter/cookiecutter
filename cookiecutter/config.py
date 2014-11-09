@@ -39,7 +39,7 @@ def get_config(config_path):
             yaml_dict = yaml.safe_load(file_handle)
         except yaml.scanner.ScannerError:
             raise InvalidConfiguration(
-                "%s is no a valid YAML file" % config_path)
+                '{0} is no a valid YAML file'.format(config_path))
 
     config_dict = copy.copy(DEFAULT_CONFIG)
     config_dict.update(yaml_dict)
