@@ -20,6 +20,10 @@ Cookiecutter
 .. image:: https://badges.gitter.im/Join Chat.svg
         :target: https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
+.. image:: https://readthedocs.org/projects/cookiecutter/badge/?version=latest
+        :target: https://readthedocs.org/projects/cookiecutter/?badge=latest
+        :alt: Documentation Status
+
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
 
