@@ -23,19 +23,17 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and flake8::
 
     $ flake8 cookiecutter tests
-    $ python setup.py test
-    $ tox
+    $ make test 
+    $ make test-all
 
-6. Commit your changes and push your branch to GitHub::
+6. Check that the test coverage hasn't dropped::
 
-    $ git add .
+    make coverage
+
+7. Commit your changes and push your branch to GitHub::
+
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Check that the test coverage hasn't dropped::
-
-    coverage run --source cookiecutter setup.py test
-    coverage report -m
-    coverage html
 
 8. Submit a pull request through the GitHub website.
