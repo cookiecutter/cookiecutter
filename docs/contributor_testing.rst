@@ -12,6 +12,21 @@ To run a subset of tests::
 Testing with py.test
 --------------------
 
+To run a particular test class with py.test::
+
+    $ py.test -k TestGetConfig
+
+To run some tests with names matching a string expression::
+
+    $ py.test -k generate
+
+Will run all tests matching "generate", test_generate_files for example.
+
+To run just one method::
+
+    $ py.test -k TestGetConfig::test_get_config
+
+
 There is a specific configuration for py.test, to use this configuration one need to run::
 
     $ tox -c tox_pytest.ini
