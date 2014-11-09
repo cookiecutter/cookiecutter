@@ -106,7 +106,7 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and flake8::
 
     $ flake8 cookiecutter tests
-    $ python setup.py test
+    $ py.test
     $ tox
 
 6. Commit your changes and push your branch to GitHub::
@@ -117,7 +117,7 @@ Now you can make your changes locally.
 
 7. Check that the test coverage hasn't dropped::
 
-    coverage run --source cookiecutter setup.py test
+    coverage run --source cookiecutter -m py.test
     coverage report -m
     coverage html
 
