@@ -48,7 +48,7 @@ Fast and Focused
 
 Cookiecutter is designed to do one thing, and do that one thing very well.
 
-* Cover the use cases that @audreyr needs, and as little as possible beyond that :)
+* Cover the use cases that the core committers need, and as little as possible beyond that :)
 * Generates project templates from the command-line or API, nothing more
 * Minimize internal line of code (LOC) count
 * Ultra-fast project generation for high performance downstream tools
@@ -66,7 +66,7 @@ Stable
 * No pull requests will be accepted that drop test coverage on any platform, including Windows
 * Conservative decisions patterned after CPython's conservative decisions with stability in mind
 * Stable APIs that tool builders can rely on
-* New features require a +1 from @audreyr
+* New features require a +1 from 3 core committers
 
 VCS-Hosted Templates
 ~~~~~~~~~~~~~~~~~~~~~
@@ -109,7 +109,7 @@ Then either fix it or mark as please-help.
 
 For other issues: encourage friendly discussion, moderate debate, offer your thoughts.
 
-New features require a +1 from @audreyr.
+New features require a +1 from 2 other core committers (besides yourself).
 
 Process: Roadmap
 -----------------
@@ -181,6 +181,6 @@ Becoming a Core Committer
 Contributors may be given core commit privileges. Preference will be given to those with:
 
 A. Past contributions to Cookiecutter and other open-source projects. Contributions to Cookiecutter include both code (both accepted and pending) and friendly participation in the issue tracker. Quantity and quality are considered.
-B. A coding style that @audreyr finds simple, minimal, and clean.
+B. A coding style that the other core committers find simple, minimal, and clean.
 C. Access to resources for cross-platform development and testing.
 D. Time to devote to the project regularly.
