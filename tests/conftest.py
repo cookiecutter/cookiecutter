@@ -49,16 +49,16 @@ def clean_system(request):
 
     # If the default cookiecutters_dir is pre-existing, move it to a
     # temp location
-    self.cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
-    self.cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
-    if os.path.isdir(self.cookiecutters_dir):
+    cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
+    cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
+    if os.path.isdir(cookiecutters_dir):
         cookiecutters_dir_found = True
 
         # Remove existing backups before backing up. If they exist, they're stale.
-        if os.path.isdir(self.cookiecutters_dir_backup):
-            utils.rmtree(self.cookiecutters_dir_backup)
+        if os.path.isdir(cookiecutters_dir_backup):
+            utils.rmtree(cookiecutters_dir_backup)
 
-        shutil.copytree(self.cookiecutters_dir, self.cookiecutters_dir_backup)
+        shutil.copytree(cookiecutters_dir, cookiecutters_dir_backup)
     else:
         cookiecutters_dir_found = False
 
@@ -73,18 +73,18 @@ def clean_system(request):
         # conditions.
         if cookiecutters_dir_found:
             # Delete the created ~/.cookiecutters dir as long as a backup exists
-            if os.path.isdir(self.cookiecutters_dir) and os.path.isdir(self.cookiecutters_dir_backup):
-                utils.rmtree(self.cookiecutters_dir)
+            if os.path.isdir(cookiecutters_dir) and os.path.isdir(cookiecutters_dir_backup):
+                utils.rmtree(cookiecutters_dir)
         else:
             # Delete the created ~/.cookiecutters dir.
             # There's no backup because it never existed
-            if os.path.isdir(self.cookiecutters_dir):
-                utils.rmtree(self.cookiecutters_dir)
+            if os.path.isdir(cookiecutters_dir):
+                utils.rmtree(cookiecutters_dir)
 
         # Restore the user's default cookiecutters_dir contents
-        if os.path.isdir(self.cookiecutters_dir_backup):
-            shutil.copytree(self.cookiecutters_dir_backup, self.cookiecutters_dir)
-        if os.path.isdir(self.cookiecutters_dir):
-            utils.rmtree(self.cookiecutters_dir_backup)
+        if os.path.isdir(cookiecutters_dir_backup):
+            shutil.copytree(cookiecutters_dir_backup, cookiecutters_dir)
+        if os.path.isdir(cookiecutters_dir):
+            utils.rmtree(cookiecutters_dir_backup)
     request.addfinalizer(restore_backup)
 
