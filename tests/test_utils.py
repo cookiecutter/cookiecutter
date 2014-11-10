@@ -9,7 +9,6 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
-import io
 import sys
 import stat
 import unittest
@@ -38,7 +37,7 @@ class TestUtils(unittest.TestCase):
             uncreatable_directory = 'a*b'
         else:
             existing_directory = '/usr/'
-            uncreatable_directory = '/this-dir-does-not-exist-and-cant-be-created/'
+            uncreatable_directory = '/this-doesnt-exist-and-cant-be-created/'
 
         self.assertTrue(utils.make_sure_path_exists(existing_directory))
         self.assertTrue(utils.make_sure_path_exists('tests/blah'))
