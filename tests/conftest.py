@@ -86,5 +86,6 @@ def clean_system(request):
             shutil.copytree(cookiecutters_dir_backup, cookiecutters_dir)
         if os.path.isdir(cookiecutters_dir):
             utils.rmtree(cookiecutters_dir_backup)
+
     request.addfinalizer(restore_backup)
 
