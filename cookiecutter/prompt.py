@@ -29,7 +29,7 @@ def prompt_for_config(context, no_input=False):
         val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
 
         if not no_input:
-            prompt = "{0} (default is \"{1}\")? ".format(key, val)
+            prompt = '{0} (default is "{1}")? '.format(key, val)
 
             new_val = read_response(prompt).strip()
 
@@ -40,7 +40,7 @@ def prompt_for_config(context, no_input=False):
     return cookiecutter_dict
 
 
-def query_yes_no(question, default="yes"):
+def query_yes_no(question, default='yes'):
     """
     Ask a yes/no question via `read_response()` and return their answer.
 
@@ -56,15 +56,15 @@ def query_yes_no(question, default="yes"):
     http://code.activestate.com/recipes/577058/
 
     """
-    valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
+    valid = {'yes': True, 'y': True, 'ye': True, 'no': False, 'n': False}
     if default is None:
-        prompt = " [y/n] "
-    elif default == "yes":
-        prompt = " [Y/n] "
-    elif default == "no":
-        prompt = " [y/N] "
+        prompt = ' [y/n] '
+    elif default == 'yes':
+        prompt = ' [Y/n] '
+    elif default == 'no':
+        prompt = ' [y/N] '
     else:
-        raise ValueError("invalid default answer: '%s'" % default)
+        raise ValueError('Invalid default answer: "{0}"'.format(default))
 
     while True:
         sys.stdout.write(question + prompt)
@@ -75,5 +75,5 @@ def query_yes_no(question, default="yes"):
         elif choice in valid:
             return valid[choice]
         else:
-            sys.stdout.write("Please respond with 'yes' or 'no' "
-                             "(or 'y' or 'n').\n")
+            sys.stdout.write('Please respond with "yes" or "no" '
+                             '(or "y" or "n").\n')

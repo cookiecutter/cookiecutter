@@ -74,7 +74,7 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
     input_dir = expand_abbreviations(input_dir, config_dict)
 
     # TODO: find a better way to tell if it's a repo URL
-    if "git@" in input_dir or "https://" in input_dir:
+    if 'git@' in input_dir or 'https://' in input_dir:
         repo_dir = clone(
             repo_url=input_dir,
             checkout=checkout,
@@ -112,7 +112,7 @@ def _get_parser():
     )
     parser.add_argument(
         '--no-input',
-        action="store_true",
+        action='store_true',
         help='Do not prompt for parameters and only use cookiecutter.json '
              'file content')
     parser.add_argument(
@@ -128,9 +128,9 @@ def _get_parser():
     )
     parser.add_argument(
         '-V', '--version',
-        help="Show version information and exit.",
+        help='Show version information and exit.',
         action='version',
-        version='Cookiecutter %s from %s (Python %s)' % (
+        version='Cookiecutter {0} from {1} (Python {2})'.format(
             __version__,
             cookiecutter_pkg_dir,
             sys.version[:3]
