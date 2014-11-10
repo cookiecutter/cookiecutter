@@ -21,8 +21,14 @@ from cookiecutter import utils
 @pytest.fixture(scope="function")
 def clean_system_remove_additional_folders(request, clean_system):
     """
-    Uses the global clean_system fixture and runs additional teardown code
-    to remove some special folders.
+    Use the global clean_system fixture and run additional teardown code to
+    remove some special folders.
+
+    For a better understanding - order of fixture calls:
+    clean_system setup code
+    clean_system_remove_additional_folders setup code
+    clean_system_remove_additional_folders teardown code
+    clean_system teardown code
     """
     def remove_additional_folders():
         if os.path.exists('inputpizzä'):
