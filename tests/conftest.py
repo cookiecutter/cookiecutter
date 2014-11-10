@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Contains pytest fixtures which are globally available throughout the suite.
+"""
+conftest
+--------
+
+Contains pytest fixtures which are globally available throughout the suite.
 """
 
 import pytest
