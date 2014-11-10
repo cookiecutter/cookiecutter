@@ -41,18 +41,18 @@ def clean_system(request):
         '~/.cookiecutterrc.backup'
     )
     if os.path.exists(user_config_path):
-        self.user_config_found = True
+        user_config_found = True
         shutil.copy(user_config_path, user_config_path_backup)
         os.remove(user_config_path)
     else:
-        self.user_config_found = False
+        user_config_found = False
 
     # If the default cookiecutters_dir is pre-existing, move it to a
     # temp location
     self.cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
     self.cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
     if os.path.isdir(self.cookiecutters_dir):
-        self.cookiecutters_dir_found = True
+        cookiecutters_dir_found = True
 
         # Remove existing backups before backing up. If they exist, they're stale.
         if os.path.isdir(self.cookiecutters_dir_backup):
@@ -60,18 +60,18 @@ def clean_system(request):
 
         shutil.copytree(self.cookiecutters_dir, self.cookiecutters_dir_backup)
     else:
-        self.cookiecutters_dir_found = False
+        cookiecutters_dir_found = False
 
     def restore_backup():
         # If it existed, restore ~/.cookiecutterrc
         # We never write to ~/.cookiecutterrc, so this logic is simpler.
-        if self.user_config_found and os.path.exists(user_config_path_backup):
+        if user_config_found and os.path.exists(user_config_path_backup):
             shutil.copy(user_config_path_backup, user_config_path)
             os.remove(user_config_path_backup)
 
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.
-        if self.cookiecutters_dir_found:
+        if cookiecutters_dir_found:
             # Delete the created ~/.cookiecutters dir as long as a backup exists
             if os.path.isdir(self.cookiecutters_dir) and os.path.isdir(self.cookiecutters_dir_backup):
                 utils.rmtree(self.cookiecutters_dir)
