@@ -71,7 +71,7 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     template = expand_abbreviations(template, config_dict)
 
     # TODO: find a better way to tell if it's a repo URL
-    if 'git@' in input_dir or 'https://' in input_dir:
+    if 'git@' in template or 'https://' in template:
         repo_dir = clone(
             repo_url=template,
             checkout=checkout,
