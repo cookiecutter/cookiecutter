@@ -20,6 +20,10 @@ from cookiecutter import utils
 
 @pytest.fixture(scope="function")
 def clean_system_remove_additional_folders(request, clean_system):
+    """
+    Uses the global clean_system fixture and runs additional teardown code
+    to remove some special folders.
+    """
     def remove_additional_folders():
         if os.path.exists('inputpizzä'):
             utils.rmtree('inputpizzä')

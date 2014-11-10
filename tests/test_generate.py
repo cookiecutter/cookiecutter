@@ -87,16 +87,6 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             utils.rmtree('inputpermissions')
         super(TestGenerateFiles, self).tearDown()
 
-    def test_generate_files_nontemplated_exception(self):
-        self.assertRaises(
-            exceptions.NonTemplatedInputDirException,
-            generate.generate_files,
-            context={
-                'cookiecutter': {'food': 'pizza'}
-            },
-            repo_dir='tests/test-generate-files-nontemplated'
-        )
-
     def test_generate_files(self):
         generate.generate_files(
             context={
