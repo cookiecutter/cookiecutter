@@ -9,6 +9,9 @@ Contains pytest fixtures which are globally available throughout the suite.
 """
 
 import pytest
+import os
+import shutil
+from cookiecutter import utils
 
 
 @pytest.fixture(scope="function")
