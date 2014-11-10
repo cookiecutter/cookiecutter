@@ -36,14 +36,14 @@ def clean_system(request):
     """
 
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-    self.user_config_path = os.path.expanduser('~/.cookiecutterrc')
-    self.user_config_path_backup = os.path.expanduser(
+    user_config_path = os.path.expanduser('~/.cookiecutterrc')
+    user_config_path_backup = os.path.expanduser(
         '~/.cookiecutterrc.backup'
     )
-    if os.path.exists(self.user_config_path):
+    if os.path.exists(user_config_path):
         self.user_config_found = True
-        shutil.copy(self.user_config_path, self.user_config_path_backup)
-        os.remove(self.user_config_path)
+        shutil.copy(user_config_path, user_config_path_backup)
+        os.remove(user_config_path)
     else:
         self.user_config_found = False
 
@@ -65,9 +65,9 @@ def clean_system(request):
     def restore_backup():
         # If it existed, restore ~/.cookiecutterrc
         # We never write to ~/.cookiecutterrc, so this logic is simpler.
-        if self.user_config_found and os.path.exists(self.user_config_path_backup):
-            shutil.copy(self.user_config_path_backup, self.user_config_path)
-            os.remove(self.user_config_path_backup)
+        if self.user_config_found and os.path.exists(user_config_path_backup):
+            shutil.copy(user_config_path_backup, user_config_path)
+            os.remove(user_config_path_backup)
 
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.
