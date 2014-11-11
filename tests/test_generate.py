@@ -87,17 +87,6 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             utils.rmtree('inputpermissions')
         super(TestGenerateFiles, self).tearDown()
 
-    def test_generate_files(self):
-        generate.generate_files(
-            context={
-                'cookiecutter': {'food': 'pizzä'}
-            },
-            repo_dir='tests/test-generate-files'
-        )
-        self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
-        simple_text = io.open('inputpizzä/simple.txt', 'rt', encoding='utf-8').read()
-        self.assertEqual(simple_text, u'I eat pizzä')
-
     def test_generate_files_with_trailing_newline(self):
         generate.generate_files(
             context={
