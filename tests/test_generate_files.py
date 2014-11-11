@@ -50,18 +50,24 @@ def clean_system_remove_additional_folders(request, clean_system):
 def test_generate_files_nontemplated_exception():
     with pytest.raises(exceptions.NonTemplatedInputDirException):
         generate.generate_files(
-            context={'cookiecutter': {'food': 'pizza'}},
+            context={
+                'cookiecutter': {'food': 'pizza'}
+            },
             repo_dir='tests/test-generate-files-nontemplated'
         )
 
 
-def test_generate_files(self):
+@pytest.mark.usefixtures("clean_system_remove_additional_folders")
+def test_generate_files():
     generate.generate_files(
         context={
             'cookiecutter': {'food': 'pizzä'}
         },
         repo_dir='tests/test-generate-files'
     )
-    self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
-    simple_text = io.open('inputpizzä/simple.txt', 'rt', encoding='utf-8').read()
-    self.assertEqual(simple_text, u'I eat pizzä')
+
+    simple_file = 'inputpizzä/simple.txt'
+    assert os.path.isfile(simple_file)
+
+    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    assert simple_text == u'I eat pizzä'
