@@ -87,35 +87,6 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             utils.rmtree('inputpermissions')
         super(TestGenerateFiles, self).tearDown()
 
-    def test_generate_files_binaries(self):
-        generate.generate_files(
-            context={
-                'cookiecutter': {'binary_test': 'binary_files'}
-            },
-            repo_dir='tests/test-generate-binaries'
-        )
-        self.assertTrue(os.path.isfile('inputbinary_files/logo.png'))
-        self.assertTrue(os.path.isfile('inputbinary_files/.DS_Store'))
-        self.assertTrue(os.path.isfile('inputbinary_files/readme.txt'))
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/some_font.otf')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/logo.png')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/.DS_Store')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/readme.txt')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/some_font.otf')
-        )
-        self.assertTrue(
-            os.path.isfile('inputbinary_files/binary_files/binary_files/logo.png')
-        )
-
     def test_generate_files_absolute_path(self):
         generate.generate_files(
             context={
