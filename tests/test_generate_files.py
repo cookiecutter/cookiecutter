@@ -157,9 +157,35 @@ def test_generate_files_permissions():
     assert os.path.isfile('inputpermissions/simple.txt')
 
     # simple.txt should still be 0o644
-    assert os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/simple.txt').st_mode & 0o777 == os.stat('inputpermissions/simple.txt').st_mode & 0o777
+    tests_simple_file = os.path.join(
+        'tests',
+        'test-generate-files-permissions',
+        'input{{cookiecutter.permissions}}',
+        'simple.txt'
+    )
+    tests_simple_file_mode = os.stat(tests_simple_file).st_mode & 0o777
+
+    input_simple_file = os.path.join(
+        'inputpermissions',
+        'simple.txt'
+    )
+    input_simple_file_mode = os.stat(input_simple_file).st_mode & 0o777
+    assert tests_simple_file_mode == input_simple_file_mode
 
     assert os.path.isfile('inputpermissions/script.sh')
 
     # script.sh should still be 0o755
-    assert os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/script.sh').st_mode & 0o777 == os.stat('inputpermissions/script.sh').st_mode & 0o777
+    tests_script_file = os.path.join(
+        'tests',
+        'test-generate-files-permissions',
+        'input{{cookiecutter.permissions}}',
+        'script.sh'
+    )
+    tests_script_file_mode = os.stat(tests_script_file).st_mode & 0o777
+
+    input_script_file = os.path.join(
+        'inputpermissions',
+        'script.sh'
+    )
+    input_script_file_mode = os.stat(input_script_file).st_mode & 0o777
+    assert tests_script_file_mode == input_script_file_mode
