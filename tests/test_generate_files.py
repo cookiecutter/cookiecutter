@@ -7,10 +7,12 @@ test_generate_files
 
 Test formerly known from a unittest residing in test_generate.py named
 TestGenerateFiles.test_generate_files_nontemplated_exception
+TestGenerateFiles.test_generate_files
 """
 
 from __future__ import unicode_literals
 import os
+import io
 import pytest
 
 from cookiecutter import generate
@@ -51,3 +53,15 @@ def test_generate_files_nontemplated_exception():
             context={'cookiecutter': {'food': 'pizza'}},
             repo_dir='tests/test-generate-files-nontemplated'
         )
+
+
+def test_generate_files(self):
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir='tests/test-generate-files'
+    )
+    self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
+    simple_text = io.open('inputpizzä/simple.txt', 'rt', encoding='utf-8').read()
+    self.assertEqual(simple_text, u'I eat pizzä')
