@@ -27,9 +27,9 @@ To run just one method::
     $ py.test -k TestGetConfig::test_get_config
 
 
-There is a specific configuration for py.test, to use this configuration one need to run::
+To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox.::
 
-    $ tox -c tox_pytest.ini
+    $ tox
 
 This configuration file setup the pytest-cov plugin and it is an additional
 dependency. It generate a coverage report after the tests.
@@ -37,9 +37,9 @@ dependency. It generate a coverage report after the tests.
 It is possible to tests with some versions of python, to do this the command
 is::
 
-    $ tox -e py27,py34,pypy -c tox_pytest.ini
+    $ tox -e py27,py34,pypy
 
-Will run py.test with the python2.7, python3.4 nd pypy interpreters, for
+Will run py.test with the python2.7, python3.4 and pypy interpreters, for
 example.
 
 Troubleshooting for Contributors
