@@ -67,6 +67,9 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Topic :: Software Development',
     ],
     keywords='cookiecutter, Python, projects, project templates, Jinja2, \
         skeleton, scaffolding, project directory, setup.py, package, packaging',
