@@ -87,17 +87,6 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             utils.rmtree('inputpermissions')
         super(TestGenerateFiles, self).tearDown()
 
-    def test_generate_files_output_dir(self):
-        os.mkdir('tests/custom_output_dir')
-        generate.generate_files(
-            context={
-                'cookiecutter': {'food': 'pizzä'}
-            },
-            repo_dir=os.path.abspath('tests/test-generate-files'),
-            output_dir='tests/custom_output_dir'
-        )
-        self.assertTrue(os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt'))
-
     def test_generate_files_permissions(self):
         """
         simple.txt and script.sh should retain their respective 0o644 and

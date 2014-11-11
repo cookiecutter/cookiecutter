@@ -5,12 +5,13 @@
 test_generate_files
 -------------------
 
-Test formerly known from a unittest residing in test_generate.py named
+Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateFiles.test_generate_files_nontemplated_exception
 TestGenerateFiles.test_generate_files
 TestGenerateFiles.test_generate_files_with_trailing_newline
 TestGenerateFiles.test_generate_files_binaries
 TestGenerateFiles.test_generate_files_absolute_path
+TestGenerateFiles.test_generate_files_output_dir
 """
 
 from __future__ import unicode_literals
@@ -124,3 +125,16 @@ def test_generate_files_absolute_path():
         repo_dir=os.path.abspath('tests/test-generate-files')
     )
     assert os.path.isfile('inputpizzä/simple.txt')
+
+
+@pytest.mark.usefixtures("clean_system_remove_additional_folders")
+def test_generate_files_output_dir():
+    os.mkdir('tests/custom_output_dir')
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files'),
+        output_dir='tests/custom_output_dir'
+    )
+    assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
