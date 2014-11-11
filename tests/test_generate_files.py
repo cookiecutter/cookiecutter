@@ -91,31 +91,23 @@ def test_generate_files_with_trailing_newline():
     assert simple_text == u'I eat pizzä\n'
 
 
-def test_generate_files_binaries(self):
+@pytest.mark.usefixtures("clean_system_remove_additional_folders")
+def test_generate_files_binaries():
     generate.generate_files(
         context={
             'cookiecutter': {'binary_test': 'binary_files'}
         },
         repo_dir='tests/test-generate-binaries'
     )
-    self.assertTrue(os.path.isfile('inputbinary_files/logo.png'))
-    self.assertTrue(os.path.isfile('inputbinary_files/.DS_Store'))
-    self.assertTrue(os.path.isfile('inputbinary_files/readme.txt'))
-    self.assertTrue(
-        os.path.isfile('inputbinary_files/some_font.otf')
-    )
-    self.assertTrue(
-        os.path.isfile('inputbinary_files/binary_files/logo.png')
-    )
-    self.assertTrue(
-        os.path.isfile('inputbinary_files/binary_files/.DS_Store')
-    )
-    self.assertTrue(
-        os.path.isfile('inputbinary_files/binary_files/readme.txt')
-    )
-    self.assertTrue(
-        os.path.isfile('inputbinary_files/binary_files/some_font.otf')
-    )
-    self.assertTrue(
-        os.path.isfile('inputbinary_files/binary_files/binary_files/logo.png')
+
+    assert os.path.isfile('inputbinary_files/logo.png')
+    assert os.path.isfile('inputbinary_files/.DS_Store')
+    assert os.path.isfile('inputbinary_files/readme.txt')
+    assert os.path.isfile('inputbinary_files/some_font.otf')
+    assert os.path.isfile('inputbinary_files/binary_files/logo.png')
+    assert os.path.isfile('inputbinary_files/binary_files/.DS_Store')
+    assert os.path.isfile('inputbinary_files/binary_files/readme.txt')
+    assert os.path.isfile('inputbinary_files/binary_files/some_font.otf')
+    assert os.path.isfile(
+        'inputbinary_files/binary_files/binary_files/logo.png'
     )
