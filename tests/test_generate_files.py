@@ -12,6 +12,7 @@ TestGenerateFiles.test_generate_files_with_trailing_newline
 TestGenerateFiles.test_generate_files_binaries
 TestGenerateFiles.test_generate_files_absolute_path
 TestGenerateFiles.test_generate_files_output_dir
+TestGenerateFiles.test_generate_files_permissions
 """
 
 from __future__ import unicode_literals
@@ -138,3 +139,27 @@ def test_generate_files_output_dir():
         output_dir='tests/custom_output_dir'
     )
     assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
+
+
+@pytest.mark.usefixtures("clean_system_remove_additional_folders")
+def test_generate_files_permissions():
+    """
+    simple.txt and script.sh should retain their respective 0o644 and
+    0o755 permissions
+    """
+    generate.generate_files(
+        context={
+            'cookiecutter': {'permissions': 'permissions'}
+        },
+        repo_dir='tests/test-generate-files-permissions'
+    )
+
+    assert os.path.isfile('inputpermissions/simple.txt')
+
+    # simple.txt should still be 0o644
+    assert os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/simple.txt').st_mode & 0o777 == os.stat('inputpermissions/simple.txt').st_mode & 0o777
+
+    assert os.path.isfile('inputpermissions/script.sh')
+
+    # script.sh should still be 0o755
+    assert os.stat('tests/test-generate-files-permissions/input{{cookiecutter.permissions}}/script.sh').st_mode & 0o777 == os.stat('inputpermissions/script.sh').st_mode & 0o777
