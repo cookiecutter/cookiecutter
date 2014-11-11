@@ -8,7 +8,9 @@ test_generate_files
 Test formerly known from a unittest residing in test_generate.py named
 TestGenerateFiles.test_generate_files_nontemplated_exception
 TestGenerateFiles.test_generate_files
+TestGenerateFiles.test_generate_files_with_trailing_newline
 TestGenerateFiles.test_generate_files_binaries
+TestGenerateFiles.test_generate_files_absolute_path
 """
 
 from __future__ import unicode_literals
@@ -111,3 +113,14 @@ def test_generate_files_binaries():
     assert os.path.isfile(
         'inputbinary_files/binary_files/binary_files/logo.png'
     )
+
+
+@pytest.mark.usefixtures("clean_system_remove_additional_folders")
+def test_generate_files_absolute_path():
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files')
+    )
+    assert os.path.isfile('inputpizzä/simple.txt')

@@ -87,15 +87,6 @@ class TestGenerateFiles(CookiecutterCleanSystemTestCase):
             utils.rmtree('inputpermissions')
         super(TestGenerateFiles, self).tearDown()
 
-    def test_generate_files_absolute_path(self):
-        generate.generate_files(
-            context={
-                'cookiecutter': {'food': 'pizzä'}
-            },
-            repo_dir=os.path.abspath('tests/test-generate-files')
-        )
-        self.assertTrue(os.path.isfile('inputpizzä/simple.txt'))
-
     def test_generate_files_output_dir(self):
         os.mkdir('tests/custom_output_dir')
         generate.generate_files(
