@@ -9,7 +9,6 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
-import io
 import sys
 import stat
 import unittest
@@ -38,7 +37,7 @@ class TestUtils(unittest.TestCase):
             uncreatable_directory = 'a*b'
         else:
             existing_directory = '/usr/'
-            uncreatable_directory = '/this-dir-does-not-exist-and-cant-be-created/'
+            uncreatable_directory = '/this-doesnt-exist-and-cant-be-created/'
 
         self.assertTrue(utils.make_sure_path_exists(existing_directory))
         self.assertTrue(utils.make_sure_path_exists('tests/blah'))
@@ -46,17 +45,6 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(utils.make_sure_path_exists(uncreatable_directory))
         utils.rmtree('tests/blah/')
         utils.rmtree('tests/trailingslash/')
-
-    def test_unicode_open(self):
-        """ Test that io.open(filename, mode, encoding='utf-8') works as we expect. """
-
-        unicode_text = u"""Polish: Ą Ł Ż
-Chinese: 倀 倁 倂 倃 倄 倅 倆 倇 倈
-Musical Notes: ♬ ♫ ♯"""
-
-        with io.open('tests/files/unicode.txt', encoding='utf-8') as f:
-            opened_text = f.read()
-            self.assertEqual(unicode_text, opened_text)
 
     def test_workin(self):
         cwd = os.getcwd()
