@@ -8,6 +8,7 @@ test_generate_files
 Test formerly known from a unittest residing in test_generate.py named
 TestGenerateFiles.test_generate_files_nontemplated_exception
 TestGenerateFiles.test_generate_files
+TestGenerateFiles.test_generate_files_binaries
 """
 
 from __future__ import unicode_literals
@@ -88,3 +89,33 @@ def test_generate_files_with_trailing_newline():
     with io.open(newline_file, 'r', encoding='utf-8') as f:
         simple_text = f.read()
     assert simple_text == u'I eat pizzä\n'
+
+
+def test_generate_files_binaries(self):
+    generate.generate_files(
+        context={
+            'cookiecutter': {'binary_test': 'binary_files'}
+        },
+        repo_dir='tests/test-generate-binaries'
+    )
+    self.assertTrue(os.path.isfile('inputbinary_files/logo.png'))
+    self.assertTrue(os.path.isfile('inputbinary_files/.DS_Store'))
+    self.assertTrue(os.path.isfile('inputbinary_files/readme.txt'))
+    self.assertTrue(
+        os.path.isfile('inputbinary_files/some_font.otf')
+    )
+    self.assertTrue(
+        os.path.isfile('inputbinary_files/binary_files/logo.png')
+    )
+    self.assertTrue(
+        os.path.isfile('inputbinary_files/binary_files/.DS_Store')
+    )
+    self.assertTrue(
+        os.path.isfile('inputbinary_files/binary_files/readme.txt')
+    )
+    self.assertTrue(
+        os.path.isfile('inputbinary_files/binary_files/some_font.otf')
+    )
+    self.assertTrue(
+        os.path.isfile('inputbinary_files/binary_files/binary_files/logo.png')
+    )
