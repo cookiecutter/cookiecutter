@@ -71,3 +71,20 @@ def test_generate_files():
 
     simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
     assert simple_text == u'I eat pizzä'
+
+
+@pytest.mark.usefixtures("clean_system_remove_additional_folders")
+def test_generate_files_with_trailing_newline():
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir='tests/test-generate-files'
+    )
+
+    newline_file = 'inputpizzä/simple-with-newline.txt'
+    assert os.path.isfile(newline_file)
+
+    with io.open(newline_file, 'r', encoding='utf-8') as f:
+        simple_text = f.read()
+    assert simple_text == u'I eat pizzä\n'
