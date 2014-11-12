@@ -10,12 +10,14 @@ Functions for prompting the user for project info.
 
 from __future__ import unicode_literals
 import sys
+import re
 
 from .compat import iteritems, read_response
+from .exceptions import InvalidValidation
 from jinja2.environment import Environment
 
 
-def prompt_for_config(context, no_input=False):
+def prompt_for_config(context, no_input=False, validation=None):
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.
@@ -35,6 +37,13 @@ def prompt_for_config(context, no_input=False):
 
             if new_val != '':
                 val = new_val
+
+            # Check whether this key needs validation
+            if validation and key in validation['cookiecutter.validation']:
+                regex = validation['cookiecutter.validation'][key]
+                if not re.match(regex, val):
+                    msg = 'Value "{0}" doesnt validate against regex {1}'.format(val, regex)
+                    raise InvalidValidation(msg)
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict
