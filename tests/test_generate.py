@@ -74,12 +74,6 @@ class TestGenerateFile(unittest.TestCase):
 
 class TestGenerateContext(CookiecutterCleanSystemTestCase):
 
-    def test_generate_context(self):
-        context = generate.generate_context(
-            context_file='tests/test-generate-context/test.json'
-        )
-        self.assertEqual(context, {"test": {"1": 2, "some_key": "some_val"}})
-
     def test_generate_context_with_default(self):
         context = generate.generate_context(
             context_file='tests/test-generate-context/test.json',
