@@ -8,6 +8,7 @@ test_generate_context
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateContext.test_generate_context
 TestGenerateContext.test_generate_context_with_default
+TestGenerateContext.test_generate_context_with_extra
 """
 
 from __future__ import unicode_literals
@@ -31,3 +32,13 @@ def test_generate_context_with_default():
         default_context={"1": 3}
     )
     assert context == {"test": {"1": 3, "some_key": "some_val"}}
+
+
+@pytest.mark.usefixtures("clean_system")
+def test_generate_context_with_extra():
+    """ Call `generate_context()` with extra_context. """
+    context = generate.generate_context(
+        context_file='tests/test-generate-context/test.json',
+        extra_context={'1': 4},
+    )
+    assert context == {'test': {'1': 4, 'some_key': 'some_val'}}
