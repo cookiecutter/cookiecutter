@@ -13,6 +13,15 @@ TestGenerateFiles.test_generate_files_binaries
 TestGenerateFiles.test_generate_files_absolute_path
 TestGenerateFiles.test_generate_files_output_dir
 TestGenerateFiles.test_generate_files_permissions
+
+Use the global clean_system fixture and run additional teardown code to remove
+some special folders.
+
+For a better understanding - order of fixture calls:
+clean_system setup code
+remove_additional_folders setup code
+remove_additional_folders teardown code
+clean_system teardown code
 """
 
 from __future__ import unicode_literals
@@ -28,14 +37,7 @@ from cookiecutter import utils
 @pytest.fixture(scope="function")
 def remove_additional_folders(request):
     """
-    Use the global clean_system fixture and run additional teardown code to
-    remove some special folders.
-
-    For a better understanding - order of fixture calls:
-    clean_system setup code
-    clean_system_remove_additional_folders setup code
-    clean_system_remove_additional_folders teardown code
-    clean_system teardown code
+    Remove some special folders which are created by the tests.
     """
     def fin_remove_additional_folders():
         if os.path.exists('inputpizzä'):
