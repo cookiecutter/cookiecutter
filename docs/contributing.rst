@@ -12,5 +12,5 @@ little bit helps, and credit will always be given.
    types_of_contributions
    contributor_setup
    contributor_guidelines
-   contributor_tips
+   contributor_testing
    core_committer_guide

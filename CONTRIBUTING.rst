@@ -12,7 +12,7 @@ little bit helps, and credit will always be given.
    types_of_contributions
    contributor_setup
    contributor_guidelines
-   contributor_tips
+   contributor_testing
    core_committer_guide
 
 Types of Contributions
@@ -106,7 +106,7 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and flake8::
 
     $ flake8 cookiecutter tests
-    $ py.test
+    $ python setup.py test
     $ tox
 
 6. Commit your changes and push your branch to GitHub::
@@ -117,7 +117,7 @@ Now you can make your changes locally.
 
 7. Check that the test coverage hasn't dropped::
 
-    coverage run --source cookiecutter -m py.test
+    coverage run --source cookiecutter setup.py test
     coverage report -m
     coverage html
 
@@ -134,18 +134,19 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, 3.3, and PyPy. Check
-   https://travis-ci.org/audreyr/cookiecutter/pull_requests and make sure that
-   the tests pass for all supported Python versions.
+3. The pull request should work for Python 2.6, 2.7, 3.3, and PyPy on Appveyor and Travis CI.
+4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and 
+   https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
 Coding Standards
 ~~~~~~~~~~~~~~~~
 
 * PEP8
 * Functions over classes except in tests
+* Prefer single quotes (unless inconvenient) http://stackoverflow.com/a/56190/5549
 
-Tips
-----
+Testing
+-------
 
 To run a particular test::
 
@@ -155,6 +156,39 @@ To run a subset of tests::
 
     $ python -m unittest tests.test_find
 
+Testing with py.test
+--------------------
+
+To run a particular test class with py.test::
+
+    $ py.test -k TestGetConfig
+
+To run some tests with names matching a string expression::
+
+    $ py.test -k generate
+
+Will run all tests matching "generate", test_generate_files for example.
+
+To run just one method::
+
+    $ py.test -k TestGetConfig::test_get_config
+
+
+To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox.::
+
+    $ tox
+
+This configuration file setup the pytest-cov plugin and it is an additional
+dependency. It generate a coverage report after the tests.
+
+It is possible to tests with some versions of python, to do this the command
+is::
+
+    $ tox -e py27,py34,pypy
+
+Will run py.test with the python2.7, python3.4 and pypy interpreters, for
+example.
+
 Troubleshooting for Contributors
 ---------------------------------
 
@@ -163,6 +197,7 @@ Python 3.3 tests fail locally
 
 Try upgrading Tox to the latest version. I noticed that they were failing
 locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
+
 
 Core Committer Guide
 ====================
