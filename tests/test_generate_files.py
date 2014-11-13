@@ -34,7 +34,7 @@ from cookiecutter import exceptions
 from cookiecutter import utils
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope='function')
 def remove_additional_folders(request):
     """
     Remove some special folders which are created by the tests.
@@ -53,7 +53,7 @@ def remove_additional_folders(request):
     request.addfinalizer(fin_remove_additional_folders)
 
 
-@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_nontemplated_exception():
     with pytest.raises(exceptions.NonTemplatedInputDirException):
         generate.generate_files(
@@ -64,7 +64,7 @@ def test_generate_files_nontemplated_exception():
         )
 
 
-@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files():
     generate.generate_files(
         context={
@@ -80,7 +80,7 @@ def test_generate_files():
     assert simple_text == u'I eat pizzä'
 
 
-@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_with_trailing_newline():
     generate.generate_files(
         context={
@@ -97,7 +97,7 @@ def test_generate_files_with_trailing_newline():
     assert simple_text == u'I eat pizzä\n'
 
 
-@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_binaries():
     generate.generate_files(
         context={
@@ -119,7 +119,7 @@ def test_generate_files_binaries():
     )
 
 
-@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_absolute_path():
     generate.generate_files(
         context={
@@ -130,7 +130,7 @@ def test_generate_files_absolute_path():
     assert os.path.isfile('inputpizzä/simple.txt')
 
 
-@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_output_dir():
     os.mkdir('tests/custom_output_dir')
     generate.generate_files(
@@ -143,7 +143,7 @@ def test_generate_files_output_dir():
     assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
 
 
-@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_permissions():
     """
     simple.txt and script.sh should retain their respective 0o644 and

@@ -24,17 +24,17 @@ def context_data():
             'context_file': 'tests/test-generate-context/test.json'
         },
         {
-            "test": {"1": 2, "some_key": "some_val"}
+            'test': {'1': 2, 'some_key': 'some_val'}
         }
     )
 
     context_with_default = (
         {
             'context_file': 'tests/test-generate-context/test.json',
-            'default_context': {"1": 3}
+            'default_context': {'1': 3}
         },
         {
-            "test": {"1": 3, "some_key": "some_val"}
+            'test': {'1': 3, 'some_key': 'some_val'}
         }
     )
 
@@ -65,8 +65,8 @@ def context_data():
     yield context_with_default_and_extra
 
 
-@pytest.mark.usefixtures("clean_system")
-@pytest.mark.parametrize("input_params, expected_context", context_data())
+@pytest.mark.usefixtures('clean_system')
+@pytest.mark.parametrize('input_params, expected_context', context_data())
 def test_generate_context(input_params, expected_context):
     """
     Test the generated context for several input parameters against the

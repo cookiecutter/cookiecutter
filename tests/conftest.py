@@ -14,7 +14,7 @@ import shutil
 from cookiecutter import utils
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope='function')
 def clean_system(request):
     """
     Fixture that simulates a clean system with no config/cloned cookiecutters.
