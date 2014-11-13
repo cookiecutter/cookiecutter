@@ -72,37 +72,6 @@ class TestGenerateFile(unittest.TestCase):
             os.remove('tests/files/cheese.txt')
 
 
-class TestOutputFolder(CookiecutterCleanSystemTestCase):
-
-    def tearDown(self):
-        if os.path.exists('output_folder'):
-            utils.rmtree('output_folder')
-        super(TestOutputFolder, self).tearDown()
-
-    def test_output_folder(self):
-        context = generate.generate_context(
-            context_file='tests/test-output-folder/cookiecutter.json'
-        )
-        logging.debug('Context is {0}'.format(context))
-        generate.generate_files(
-            context=context,
-            repo_dir='tests/test-output-folder'
-        )
-
-        something = """Hi!
-My name is Audrey Greenfeld.
-It is 2014."""
-        something2 = open('output_folder/something.txt').read()
-        self.assertEqual(something, something2)
-
-        in_folder = "The color is green and the letter is D."
-        in_folder2 = open('output_folder/folder/in_folder.txt').read()
-        self.assertEqual(in_folder, in_folder2)
-
-        self.assertTrue(os.path.isdir('output_folder/im_a.dir'))
-        self.assertTrue(os.path.isfile('output_folder/im_a.dir/im_a.file.py'))
-
-
 def make_test_repo(name):
     hooks = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{cookiecutter.shellhooks}}')
