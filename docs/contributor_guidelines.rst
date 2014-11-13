@@ -20,3 +20,5 @@ Coding Standards
 * PEP8
 * Functions over classes except in tests
 * Prefer single quotes (unless inconvenient) http://stackoverflow.com/a/56190/5549
+* Fully qualified imports.
+* Write new code in Python 3.
