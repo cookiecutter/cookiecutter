@@ -8,6 +8,7 @@ test_generate_hooks
 Tests formerly known from a unittest residing in test_generate.py named
 TestHooks.test_ignore_hooks_dirs
 TestHooks.test_run_python_hooks
+TestHooks.test_run_python_hooks_cwd
 """
 
 from __future__ import unicode_literals
@@ -56,3 +57,15 @@ def test_run_python_hooks():
     )
     assert os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt')
     assert os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_run_python_hooks_cwd():
+    generate.generate_files(
+        context={
+            'cookiecutter': {'pyhooks': 'pyhooks'}
+        },
+        repo_dir='tests/test-pyhooks/'
+    )
+    assert os.path.exists('inputpyhooks/python_pre.txt')
+    assert os.path.exists('inputpyhooks/python_post.txt')
