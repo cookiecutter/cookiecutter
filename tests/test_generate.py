@@ -127,17 +127,6 @@ class TestHooks(CookiecutterCleanSystemTestCase):
             utils.rmtree('tests/test-shellhooks')
         super(TestHooks, self).tearDown()
 
-    def test_run_python_hooks(self):
-        generate.generate_files(
-            context={
-                'cookiecutter': {'pyhooks': 'pyhooks'}
-            },
-            repo_dir='tests/test-pyhooks/'.replace("/", os.sep),
-            output_dir='tests/test-pyhooks/'.replace("/", os.sep)
-        )
-        self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt'))
-        self.assertTrue(os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt'))
-
     def test_run_python_hooks_cwd(self):
         generate.generate_files(
             context={
