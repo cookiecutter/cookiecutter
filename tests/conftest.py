@@ -19,14 +19,22 @@ def clean_system(request):
     """
     Fixture that simulates a clean system with no config/cloned cookiecutters.
 
-    During fixture:
+    It runs code which can be regarded as setup code as known from a unittest
+    TestCase. Additionally it defines a local function referring to values
+    which have been stored to local variables in the setup such as the location
+    of the cookiecutters on disk. This function is registered as a teardown
+    hook with `request.addfinalizer` at the very end of the fixture. Pytest
+    runs the named hook as soon as the fixture is out of scope, when the test
+    finished to put it another way.
+
+    During setup:
 
     * Back up the `~/.cookiecutterrc` config file to `~/.cookiecutterrc.backup`
     * Back up the `~/.cookiecutters/` dir to `~/.cookiecutters.backup/`
     * Starts off a test case with no pre-existing `~/.cookiecutterrc` or
       `~/.cookiecutters/`
 
-    During finalizer:
+    During teardown:
 
     * Delete `~/.cookiecutters/` only if a backup is present at
       `~/.cookiecutters.backup/`
