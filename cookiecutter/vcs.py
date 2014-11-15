@@ -61,9 +61,6 @@ def identify_repo(repo_url):
         raise UnknownRepoType
 
 
-<<<<<<< HEAD
-def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
-=======
 def is_vcs_installed(repo_type):
     """
     Check if the version control system for a repo type is installed.
@@ -74,7 +71,6 @@ def is_vcs_installed(repo_type):
 
 
 def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
->>>>>>> Added vcs.is_vcs_installed function to provide verbose exceptions for users without git or hg installed.
     """
     Clone a repo to the current directory.
 
