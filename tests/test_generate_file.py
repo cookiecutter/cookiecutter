@@ -19,7 +19,6 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 
 from cookiecutter import generate
-from cookiecutter import utils
 
 
 @pytest.fixture(scope='function')
