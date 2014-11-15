@@ -5,7 +5,7 @@
 test_cookiecutters
 ------------------
 
-Tests formerly known from a unittest residing in test_generate.py named
+Tests formerly known from a unittest residing in test_examples.py named
 TestPyPackage.test_cookiecutter_pypackage
 TestJQuery.test_cookiecutter_jquery
 """

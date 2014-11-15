@@ -5,7 +5,7 @@
 test_more_cookiecutters
 -----------------------
 
-Test formerly known from a unittest residing in test_generate.py named
+Test formerly known from a unittest residing in test_examples.py named
 TestGitBranch.test_branch
 TestExamplesRepoArg.test_cookiecutter_pypackage_git
 """
