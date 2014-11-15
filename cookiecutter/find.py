@@ -11,7 +11,7 @@ Functions for finding Cookiecutter templates and other components.
 import logging
 import os
 
-from .exceptions import NonTemplatedInputDirException
+from cookiecutter.exceptions import NonTemplatedInputDirException
 
 
 def find_template(repo_dir):

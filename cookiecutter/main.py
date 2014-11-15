@@ -17,11 +17,11 @@ import logging
 import os
 import sys
 
-from . import __version__
-from .config import get_user_config
-from .prompt import prompt_for_config
-from .generate import generate_context, generate_files
-from .vcs import clone
+from cookiecutter import __version__
+from cookiecutter.config import get_user_config
+from cookiecutter.prompt import prompt_for_config
+from cookiecutter.generate import generate_context, generate_files
+from cookiecutter.vcs import clone
 
 logger = logging.getLogger(__name__)
 

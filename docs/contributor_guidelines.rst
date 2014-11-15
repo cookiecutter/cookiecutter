@@ -17,6 +17,8 @@ Before you submit a pull request, check that it meets these guidelines:
 Coding Standards
 ~~~~~~~~~~~~~~~~
 
-* PEP8
+* `PEP8`_
 * Functions over classes except in tests
 * Prefer single quotes (unless inconvenient) http://stackoverflow.com/a/56190/5549
+* Use absolute imports
+.. _`PEP8`: https://www.python.org/dev/peps/pep-0008/

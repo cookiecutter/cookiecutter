@@ -14,9 +14,9 @@ import os
 import subprocess
 import sys
 
-from .exceptions import UnknownRepoType
-from .prompt import query_yes_no
-from .utils import make_sure_path_exists, rmtree
+from cookiecutter.exceptions import UnknownRepoType
+from cookiecutter.prompt import query_yes_no
+from cookiecutter.utils import make_sure_path_exists, rmtree
 
 
 def prompt_and_delete_repo(repo_dir, no_input=False):

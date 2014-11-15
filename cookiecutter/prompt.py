@@ -11,7 +11,7 @@ Functions for prompting the user for project info.
 from __future__ import unicode_literals
 import sys
 
-from .compat import iteritems, read_response
+from cookiecutter.compat import iteritems, read_response
 from jinja2.environment import Environment
 
 
