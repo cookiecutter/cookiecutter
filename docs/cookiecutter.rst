@@ -81,3 +81,10 @@ cookiecutter Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`compat` Module
+----------------------
+
+.. automodule:: cookiecutter.compat
+    :members:
+    :undoc-members:
+    :show-inheritance:
