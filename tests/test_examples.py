@@ -55,31 +55,5 @@ class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
         self.assertTrue(os.path.isfile('boilerplate/README.rst'))
 
 
-@unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
-class TestGitBranch(CookiecutterCleanSystemTestCase):
-
-    def tearDown(self):
-        with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
-            if os.path.isdir('cookiecutter-pypackage'):
-                utils.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('boilerplate'):
-            utils.rmtree('boilerplate')
-        super(TestGitBranch, self).tearDown()
-
-    def test_branch(self):
-        proc = subprocess.Popen(
-            'cookiecutter -c console-script https://github.com/audreyr/cookiecutter-pypackage.git',
-            stdin=subprocess.PIPE,
-            shell=True
-        )
-
-        # Just skip all the prompts
-        proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
-
-        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
-        self.assertTrue(os.path.isfile('boilerplate/boilerplate/main.py'))
-
-
 if __name__ == '__main__':
     unittest.main()
