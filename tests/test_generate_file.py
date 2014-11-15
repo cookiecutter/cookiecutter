@@ -55,8 +55,18 @@ def test_generate_file(env):
         assert generated_text == 'Testing cheese'
 
 
+@pytest.fixture
+def expected_msg():
+    msg = (
+        'Missing end of comment tag\n'
+        '  File "./tests/files/syntax_error.txt", line 1\n'
+        '    I eat {{ syntax_error }} {# this comment is not closed}'
+    )
+    return msg.replace("/", os.sep)
+
+
 @pytest.mark.usefixtures('remove_cheese_file')
-def test_generate_file_verbose_template_syntax_error(env):
+def test_generate_file_verbose_template_syntax_error(env, expected_msg):
     try:
         generate.generate_file(
             project_dir=".",
@@ -65,13 +75,7 @@ def test_generate_file_verbose_template_syntax_error(env):
             env=env
         )
     except TemplateSyntaxError as exception:
-        expected = (
-            'Missing end of comment tag\n'
-            '  File "./tests/files/syntax_error.txt", line 1\n'
-            '    I eat {{ syntax_error }} {# this comment is not closed}'
-        )
-        expected = expected.replace("/", os.sep)
-        assert str(exception) == expected
+        assert str(exception) == expected_msg
     except Exception as exception:
         pytest.fail('Unexpected exception thrown: {0}'.format(exception))
     else:
