@@ -15,17 +15,7 @@ import subprocess
 import pytest
 
 from cookiecutter import utils
-
-
-try:
-    travis = os.environ[u'TRAVIS']
-except KeyError:
-    travis = False
-
-try:
-    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
-except KeyError:
-    no_network = False
+from tests.skipif_markers import skipif_travis, skipif_no_network
 
 
 @pytest.fixture(scope='function')
@@ -41,15 +31,8 @@ def remove_additional_dirs(request):
     request.addfinalizer(fin_remove_additional_dirs)
 
 
-# For some reason pytest incorrectly uses the first reason text regardless of
-# which condition matches. Using a unified message for now
-# travis_reason = 'Works locally with tox but fails on Travis.'
-# no_network_reason = 'Needs a network connection to GitHub.'
-reason = 'Fails on Travis or else there is no network connection to GitHub'
-
-
-@pytest.mark.skipif(travis, reason=reason)
-@pytest.mark.skipif(no_network, reason=reason)
+@skipif_travis
+@skipif_no_network
 @pytest.mark.usefixtures('remove_additional_dirs')
 def test_cookiecutter_pypackage():
     """
