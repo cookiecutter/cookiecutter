@@ -59,6 +59,8 @@ Contributors
 * Rémy Hubscher (`@Natim`_)
 * Dino Petron3 (`@dinopetrone`_)
 * Peter Inglesby (`@inglesp`_)
+* Ramiro Batista da Luz (`@ramiroluz`_)
+* Omer Katz (`@thedrow`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -106,3 +108,5 @@ Contributors
 .. _`@Natim`: https://github.com/Natim
 .. _`@dinopetrone`: https://github.com/dinopetrone
 .. _`@inglesp`: https://github.com/inglesp
+.. _`@ramiroluz`: https://github.com/ramiroluz
+.. _`@thedrow`: https://github.com/thedrow

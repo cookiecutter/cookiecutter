@@ -12,18 +12,24 @@ Features:
 
 * Python 3.4 is now a first class citizen, thanks to everyone.
 * Interpret cookiecutter.json values as templates, thanks to @bollwyvl (#291).
-* Switch to py.test for testing thanks to @pfmoore, @ramiroluz, et al (#319).
+* Move to `py.test`, thanks to `@pfmoore`_ (#319) and `@ramiroluz`_ (#310).
+
 
 Bug Fixes:
 
 * `cookiecutter.json` values are now rendered jinja2 templates, thanks to @bollwyvl (#291).
-* Corrected typo in `Makefile`, thanks to @inglesp  (#297).
+* Corrected typo in `Makefile`, thanks to `@inglesp`_ (#297).
 
 Other changes:
 
 * Creation of gitter account for logged chat, thanks to `@michaeljoseph`_.
 * Added ReadTheDocs badge, thanks to `@michaeljoseph`_.
 * Added AppVeyor badge, thanks to `@pydanny`_
+* Documentation and PyPI trove classifier updates, thanks to `@thedrow`_ (#323 and #324)
+
+.. _`@inglesp`: https://github.com/inglesp
+.. _`@ramiroluz`: https://github.com/ramiroluz
+.. _`@thedrow`: https://github.com/thedrow
 
 0.8.0 (2014-10-30)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
