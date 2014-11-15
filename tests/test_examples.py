@@ -32,40 +32,6 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 @unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
-class TestJQuery(CookiecutterCleanSystemTestCase):
-
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-jquery'):
-            utils.rmtree('cookiecutter-jquery')
-        if os.path.isdir('boilerplate'):
-            utils.rmtree('boilerplate')
-        super(TestJQuery, self).tearDown()
-
-    def test_cookiecutter_jquery(self):
-        """
-        Tests that https://github.com/audreyr/cookiecutter-jquery.git works.
-        """
-
-        proc = subprocess.Popen(
-            'git clone https://github.com/audreyr/cookiecutter-jquery.git',
-            stdin=subprocess.PIPE,
-            shell=True
-        )
-        proc.wait()
-
-        proc = subprocess.Popen(
-            'cookiecutter --no-input cookiecutter-jquery/',
-            stdin=subprocess.PIPE,
-            shell=True
-        )
-        proc.wait()
-
-        self.assertTrue(os.path.isdir('cookiecutter-jquery'))
-        self.assertTrue(os.path.isfile('boilerplate/README.md'))
-
-
-@unittest.skipIf(condition=travis, reason='Works locally with tox but fails on Travis.')
-@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub.')
 class TestExamplesRepoArg(CookiecutterCleanSystemTestCase):
 
     def tearDown(self):
