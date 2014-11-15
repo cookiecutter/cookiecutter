@@ -13,14 +13,18 @@ import os
 
 
 try:
-    travis = os.environ[u'TRAVIS']
+    os.environ[u'TRAVIS']
 except KeyError:
     travis = False
+else:
+    travis = True
 
 try:
-    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
+    os.environ[u'DISABLE_NETWORK_TESTS']
 except KeyError:
     no_network = False
+else:
+    no_network = True
 
 # For some reason pytest incorrectly uses the first reason text regardless of
 # which condition matches. Using a unified message for now
