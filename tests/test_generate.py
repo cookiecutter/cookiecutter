@@ -29,21 +29,6 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 class TestGenerateFile(unittest.TestCase):
 
-    def test_generate_file(self):
-        env = Environment()
-        env.loader = FileSystemLoader('.')
-        infile = 'tests/files/{{generate_file}}.txt'
-        generate.generate_file(
-            project_dir=".",
-            infile=infile,
-            context={'generate_file': 'cheese'},
-            env=env
-        )
-        self.assertTrue(os.path.isfile('tests/files/cheese.txt'))
-        with open('tests/files/cheese.txt', 'rt') as f:
-            generated_text = f.read()
-            self.assertEqual(generated_text, 'Testing cheese')
-
     def test_generate_file_verbose_template_syntax_error(self):
         env = Environment()
         env.loader = FileSystemLoader('.')
