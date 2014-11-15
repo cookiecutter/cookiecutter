@@ -33,10 +33,15 @@ def remove_cheese_file(request):
     request.addfinalizer(fin_remove_cheese_file)
 
 
+@pytest.fixture
+def env():
+    environment = Environment()
+    environment.loader = FileSystemLoader('.')
+    return environment
+
+
 @pytest.mark.usefixtures('remove_cheese_file')
-def test_generate_file():
-    env = Environment()
-    env.loader = FileSystemLoader('.')
+def test_generate_file(env):
     infile = 'tests/files/{{generate_file}}.txt'
     generate.generate_file(
         project_dir=".",
@@ -51,9 +56,7 @@ def test_generate_file():
 
 
 @pytest.mark.usefixtures('remove_cheese_file')
-def test_generate_file_verbose_template_syntax_error():
-    env = Environment()
-    env.loader = FileSystemLoader('.')
+def test_generate_file_verbose_template_syntax_error(env):
     try:
         generate.generate_file(
             project_dir=".",
