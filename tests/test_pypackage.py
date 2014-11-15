@@ -33,7 +33,7 @@ def remove_additional_dirs(request):
 
 @skipif_travis
 @skipif_no_network
-@pytest.mark.usefixtures('remove_additional_dirs')
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_pypackage():
     """
     Tests that https://github.com/audreyr/cookiecutter-pypackage.git works.
