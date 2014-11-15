@@ -19,6 +19,25 @@ Coding Standards
 
 * PEP8
 * Functions over classes except in tests
-* Prefer single quotes (unless inconvenient) http://stackoverflow.com/a/56190/5549
-* Fully qualified imports.
-* Write new code in Python 3.
+* Quotes via http://stackoverflow.com/a/56190/5549
+  * Use double quotes around strings that are used for interpolation or that are natural language messages
+  * Use single quotes for small symbol-like strings (but break the rules if the strings contain quotes)
+  * Use triple double quotes for docstrings and raw string literals for regular expressions even if they aren't needed.
+  * Example:
+
+    .. code-block:: python
+
+        LIGHT_MESSAGES = {
+            'English': "There are %(number_of_lights)s lights.",
+            'Pirate':  "Arr! Thar be %(number_of_lights)s lights."
+        }
+
+        def lights_message(language, number_of_lights):
+            """Return a language-appropriate string reporting the light count."""
+            return LIGHT_MESSAGES[language] % locals()
+
+        def is_pirate(message):
+            """Return True if the given message sounds piratical."""
+            return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
+
+  * Write new code in Python 3.
