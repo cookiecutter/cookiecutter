@@ -6,11 +6,13 @@ History
 0.9.0 (???)
 ~~~~~~~~~~~~~~~~
 
-The goals of this release is to add the ability to skip rendering of specified directories, Jinja2ify the `cookiecutter.json` default values, switch to click, and formally launch support for Python 3.4.
+The goals of this release is to add the ability to inja2ify the `cookiecutter.json` default values, switch to click, and formally launch support for Python 3.4.
 
 Features:
 
 * Python 3.4 is now a first class citizen, thanks to everyone.
+* Interpret cookiecutter.json values as templates, thanks to @bollwyvl (#291).
+* Switch to py.test for testing thanks to @pfmoore, @ramiroluz, et al (#319).
 
 Bug Fixes:
 
@@ -20,6 +22,8 @@ Bug Fixes:
 Other changes:
 
 * Creation of gitter account for logged chat, thanks to `@michaeljoseph`_.
+* Added ReadTheDocs badge, thanks to `@michaeljoseph`_.
+* Added AppVeyor badge, thanks to `@pydanny`_
 
 0.8.0 (2014-10-30)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
