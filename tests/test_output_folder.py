@@ -10,15 +10,11 @@ TestOutputFolder.test_output_folder
 """
 
 from __future__ import unicode_literals
-import logging
 import os
 import pytest
 
 from cookiecutter import generate
 from cookiecutter import utils
-
-
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 @pytest.fixture(scope='function')
@@ -37,7 +33,6 @@ def test_output_folder():
     context = generate.generate_context(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
-    logging.debug('Context is {0}'.format(context))
     generate.generate_files(
         context=context,
         repo_dir='tests/test-output-folder'
