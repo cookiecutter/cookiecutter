@@ -22,10 +22,11 @@ Bug Fixes:
 
 Other changes:
 
-* Creation of gitter account for logged chat, thanks to `@michaeljoseph`_.
+* Creation of `gitter`_ account for logged chat, thanks to `@michaeljoseph`_.
 * Added ReadTheDocs badge, thanks to `@michaeljoseph`_.
 * Added AppVeyor badge, thanks to `@pydanny`_
 * Documentation and PyPI trove classifier updates, thanks to `@thedrow`_ (#323 and #324)
+.. _`gitter`: https://gitter.im/audreyr/cookiecutter
 
 .. _`@inglesp`: https://github.com/inglesp
 .. _`@ramiroluz`: https://github.com/ramiroluz
