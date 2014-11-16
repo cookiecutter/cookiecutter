@@ -9,6 +9,7 @@ Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalNoInput.test_cookiecutter
 TestCookiecutterLocalNoInput.test_cookiecutter_no_slash
 TestCookiecutterLocalNoInput.test_cookiecutter_no_input_extra_context
+TestCookiecutterLocalNoInput.test_cookiecutter_templated_context
 """
 
 import os
@@ -60,3 +61,16 @@ def test_cookiecutter_no_input_extra_context():
         extra_context={'repo_name': 'fake-project-extra'}
     )
     assert os.path.isdir('fake-project-extra')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+def test_cookiecutter_templated_context():
+    """
+    `Call cookiecutter()` with `no_input=True` and templates in the
+    cookiecutter.json file
+    """
+    main.cookiecutter(
+        'tests/fake-repo-tmpl',
+        no_input=True
+    )
+    assert os.path.isdir('fake-project-templated')
