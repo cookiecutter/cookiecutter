@@ -48,6 +48,7 @@ setup(
     entry_points={
         'console_scripts': [
             'cookiecutter = cookiecutter.main:main',
+            'bake = cookiecutter.main:main',
         ]
     },
     include_package_data=True,
