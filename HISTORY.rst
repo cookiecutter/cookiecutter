@@ -3,8 +3,8 @@
 History
 -------
 
-0.9.0 (???)
-~~~~~~~~~~~~~~~~
+0.9.0 (Development)
+~~~~~~~~~~~~~~~~~~~
 
 The goals of this release were to add the ability to Jinja2ify the `cookiecutter.json` default values, switch to click, and formally launch support for Python 3.4.
 
@@ -13,12 +13,13 @@ Features:
 * Python 3.4 is now a first class citizen, thanks to everyone.
 * Interpret cookiecutter.json values as templates, thanks to @bollwyvl (#291).
 * Move to `py.test`, thanks to `@pfmoore`_ (#319) and `@ramiroluz`_ (#310).
-
+* Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322).
 
 Bug Fixes:
 
 * `cookiecutter.json` values are now rendered jinja2 templates, thanks to @bollwyvl (#291).
 * Corrected typo in `Makefile`, thanks to `@inglesp`_ (#297).
+* Raise an exception when users don't have `git` or `hg` installed, thanks to `@pydanny`_ (#303).
 
 Other changes:
 
@@ -30,6 +31,7 @@ Other changes:
 .. _`@inglesp`: https://github.com/inglesp
 .. _`@ramiroluz`: https://github.com/ramiroluz
 .. _`@thedrow`: https://github.com/thedrow
+.. _`@hackebrot`: https://github.com/hackebrot
 
 0.8.0 (2014-10-30)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
