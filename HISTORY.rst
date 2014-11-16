@@ -6,7 +6,7 @@ History
 0.9.0 (???)
 ~~~~~~~~~~~~~~~~
 
-The goals of this release is to add the ability to inja2ify the `cookiecutter.json` default values, switch to click, and formally launch support for Python 3.4.
+The goals of this release were to add the ability to Jinja2ify the `cookiecutter.json` default values, switch to click, and formally launch support for Python 3.4.
 
 Features:
 
