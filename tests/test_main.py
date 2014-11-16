@@ -26,15 +26,6 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
-    def test_cookiecutter_no_input_extra_context(self):
-        """ `Call cookiecutter()` with `no_input=True` and `extra_context` """
-        main.cookiecutter(
-            'tests/fake-repo-pre',
-            no_input=True,
-            extra_context={'repo_name': 'fake-project-extra'}
-        )
-        self.assertTrue(os.path.isdir('fake-project-extra'))
-
     def test_cookiecutter_templated_context(self):
         """
         `Call cookiecutter()` with `no_input=True` and templates in the

@@ -8,6 +8,7 @@ test_cookiecutter_local_no_input
 Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalNoInput.test_cookiecutter
 TestCookiecutterLocalNoInput.test_cookiecutter_no_slash
+TestCookiecutterLocalNoInput.test_cookiecutter_no_input_extra_context
 """
 
 import os
@@ -46,3 +47,16 @@ def test_cookiecutter():
     assert os.path.isdir('fake-project')
     assert os.path.isfile('fake-project/README.rst')
     assert not os.path.exists('fake-project/json/')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+def test_cookiecutter_no_input_extra_context():
+    """
+    `Call cookiecutter()` with `no_input=True` and `extra_context
+    """
+    main.cookiecutter(
+        'tests/fake-repo-pre',
+        no_input=True,
+        extra_context={'repo_name': 'fake-project-extra'}
+    )
+    assert os.path.isdir('fake-project-extra')
