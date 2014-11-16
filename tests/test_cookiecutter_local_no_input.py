@@ -7,6 +7,7 @@ test_cookiecutter_local_no_input
 
 Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalNoInput.test_cookiecutter
+TestCookiecutterLocalNoInput.test_cookiecutter_no_slash
 """
 
 import os
@@ -30,9 +31,16 @@ def remove_additional_dirs(request):
     request.addfinalizer(fin_remove_additional_dirs)
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.fixture(params=['tests/fake-repo-pre/', 'tests/fake-repo-pre'])
+def bake(request):
+    """
+    Run cookiecutter with the given input_dir path.
+    """
+    main.cookiecutter(request.param, no_input=True)
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs', 'bake')
 def test_cookiecutter():
-    main.cookiecutter('tests/fake-repo-pre/', no_input=True)
     assert os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}')
     assert not os.path.isdir('tests/fake-repo-pre/fake-project')
     assert os.path.isdir('fake-project')

@@ -26,14 +26,6 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
 
-    def test_cookiecutter_no_slash(self):
-        main.cookiecutter('tests/fake-repo-pre', no_input=True)
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isdir('fake-project'))
-        self.assertTrue(os.path.isfile('fake-project/README.rst'))
-        self.assertFalse(os.path.exists('fake-project/json/'))
-
     def test_cookiecutter_no_input_extra_context(self):
         """ `Call cookiecutter()` with `no_input=True` and `extra_context` """
         main.cookiecutter(
