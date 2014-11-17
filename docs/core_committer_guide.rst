@@ -127,6 +127,33 @@ Milestone size:
 * If a milestone contains too much, move some to the next milestone.
 * Err on the side of more frequent patch releases.
 
+Process: Pull Request merging and HISTORY.rst maintenance
+---------------------------------------------------------
+
+If you merge a pull request, you're responsible for updating `AUTHORS.rst` and `HISTORY.rst`
+
+When you're processing the first change after a release, create boilerplate following the existing pattern:
+
+    x.y.z (Development)
+    ~~~~~~~~~~~~~~~~~~~
+
+    The goals of this release are TODO: release summary of features
+
+    Features:
+
+    * Feature description, thanks to @contributor (#PR).
+
+    Bug Fixes:
+
+    * Bug fix description, thanks to @contributor (#PR).
+
+    Other changes:
+
+    * Description of the change, thanks to @contributor (#PR). 
+                      
+    .. _`@contributor`: https://github.com/contributor
+
+
 Process: Generating CONTRIBUTING.rst
 -------------------------------------
 
