@@ -99,19 +99,6 @@ class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
             utils.rmtree('fake-project-input-extra')
 
 
-class TestArgParsing(unittest.TestCase):
-
-    def test_parse_cookiecutter_args(self):
-        args = main.parse_cookiecutter_args(['project/'])
-        self.assertEqual(args.input_dir, 'project/')
-        self.assertEqual(args.checkout, None)
-
-    def test_parse_cookiecutter_args_with_branch(self):
-        args = main.parse_cookiecutter_args(['project/', '--checkout', 'develop'])
-        self.assertEqual(args.input_dir, 'project/')
-        self.assertEqual(args.checkout, 'develop')
-
-
 class TestAbbreviationExpansion(unittest.TestCase):
 
     def test_abbreviation_expansion(self):
