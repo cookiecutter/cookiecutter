@@ -6,7 +6,7 @@ History
 0.9.0 (Development)
 ~~~~~~~~~~~~~~~~~~~
 
-The goals of this release were to add the ability to Jinja2ify the `cookiecutter.json` default values, switch to click, and formally launch support for Python 3.4.
+The goals of this release were to add the ability to Jinja2ify the `cookiecutter.json` default values, and formally launch support for Python 3.4.
 
 Features:
 
@@ -14,6 +14,7 @@ Features:
 * `cookiecutter.json` values are now rendered Jinja2 templates, thanks to @bollwyvl (#291).
 * Move to `py.test`, thanks to `@pfmoore`_ (#319) and `@ramiroluz`_ (#310).
 * Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322).
+* Add `PendingDeprecation` warning for users of Python 2.6, as support for it is gone in Python 2.7, thanks to `@michaeljoseph`_ (#201).
 
 Bug Fixes:
 
@@ -26,8 +27,9 @@ Other changes:
 * Added ReadTheDocs badge, thanks to `@michaeljoseph`_.
 * Added AppVeyor badge, thanks to `@pydanny`_
 * Documentation and PyPI trove classifier updates, thanks to `@thedrow`_ (#323 and #324)
-.. _`gitter`: https://gitter.im/audreyr/cookiecutter
+* Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
 
+.. _`gitter`: https://gitter.im/audreyr/cookiecutter
 .. _`@inglesp`: https://github.com/inglesp
 .. _`@ramiroluz`: https://github.com/ramiroluz
 .. _`@thedrow`: https://github.com/thedrow
