@@ -14,6 +14,7 @@ Features:
 * `cookiecutter.json` values are now rendered Jinja2 templates, thanks to @bollwyvl (#291).
 * Move to `py.test`, thanks to `@pfmoore`_ (#319) and `@ramiroluz`_ (#310).
 * Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322).
+* Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
 * Add `PendingDeprecation` warning for users of Python 2.6, as support for it is gone in Python 2.7, thanks to `@michaeljoseph`_ (#201).
 
 Bug Fixes:
