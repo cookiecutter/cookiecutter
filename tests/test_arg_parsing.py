@@ -18,7 +18,7 @@ from cookiecutter import main
 def test_parse_cookiecutter_args():
     args = main.parse_cookiecutter_args(['project/'])
     assert args.input_dir == 'project/'
-    assert args.checkout == None
+    assert args.checkout is None
 
 
 def test_parse_cookiecutter_args_with_branch():
