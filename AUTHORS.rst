@@ -61,7 +61,6 @@ Contributors
 * Peter Inglesby (`@inglesp`_)
 * Ramiro Batista da Luz (`@ramiroluz`_)
 * Omer Katz (`@thedrow`_)
-* Raphael Pierzina (`@hackebrot`_)
 
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
@@ -111,4 +110,3 @@ Contributors
 .. _`@inglesp`: https://github.com/inglesp
 .. _`@ramiroluz`: https://github.com/ramiroluz
 .. _`@thedrow`: https://github.com/thedrow
-.. _`@hackebrot`: https://github.com/hackebrot
