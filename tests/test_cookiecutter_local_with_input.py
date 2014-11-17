@@ -54,7 +54,7 @@ def test_cookiecutter_input_extra_context(monkeypatch):
     )
     main.cookiecutter(
         'tests/fake-repo-pre',
-        no_input=True,
+        no_input=False,
         extra_context={'repo_name': 'fake-project-input-extra'}
     )
     assert os.path.isdir('fake-project-input-extra')
