@@ -25,7 +25,7 @@ def expansion_data():
     """
     Fixture for test_abbreviation_expansion providing several parameters for
     main.expand_abbreviations (input_dir, config_dict) as well as a
-    corresponding return value (exp_dir).
+    corresponding expected return value (exp_dir).
     """
     regular_data = (
         'foo',
