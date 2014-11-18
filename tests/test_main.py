@@ -114,10 +114,6 @@ class TestArgParsing(unittest.TestCase):
 
 class TestAbbreviationExpansion(unittest.TestCase):
 
-    def test_abbreviation_expansion(self):
-        input_dir = main.expand_abbreviations('foo', {'abbreviations': {'foo': 'bar'}})
-        self.assertEqual(input_dir, 'bar')
-
     def test_abbreviation_expansion_not_an_abbreviation(self):
         input_dir = main.expand_abbreviations('baz', {'abbreviations': {'foo': 'bar'}})
         self.assertEqual(input_dir, 'baz')
