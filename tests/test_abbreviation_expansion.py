@@ -69,3 +69,8 @@ def expansion_data():
 def test_abbreviation_expansion(input_dir, config_dict, exp_dir):
     expanded_input_dir = main.expand_abbreviations(input_dir, config_dict)
     assert expanded_input_dir == exp_dir
+
+
+def test_abbreviation_expansion_prefix_not_0_in_braces():
+    with pytest.raises(IndexError):
+        main.expand_abbreviations('xx:a', {'abbreviations': {'xx': '{1}'}})

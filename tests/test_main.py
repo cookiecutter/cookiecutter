@@ -112,17 +112,6 @@ class TestArgParsing(unittest.TestCase):
         self.assertEqual(args.checkout, 'develop')
 
 
-class TestAbbreviationExpansion(unittest.TestCase):
-
-    def test_abbreviation_expansion_prefix_not_0_in_braces(self):
-        self.assertRaises(
-            IndexError,
-            main.expand_abbreviations,
-            'xx:a',
-            {'abbreviations': {'xx': '{1}'}}
-        )
-
-
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
 
