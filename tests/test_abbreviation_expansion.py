@@ -21,13 +21,48 @@ def expansion_data():
     main.expand_abbreviations (input_dir, config_dict) as well as a
     corresponding return value (exp_dir).
     """
-    regular = (
+    regular_data = (
         'foo',
         {'abbreviations': {'foo': 'bar'}},
         'bar'
     )
 
-    yield regular
+    not_an_abbreviation_data = (
+        'baz',
+        {'abbreviations': {'foo': 'bar'}},
+        'baz'
+    )
+
+    prefix_data = (
+        'xx:a',
+        {'abbreviations': {'xx': '<{0}>'}},
+        '<a>'
+    )
+
+    builtin_data = (
+        'gh:a',
+        {},
+        'https://github.com/a.git'
+    )
+
+    override_builtin_data = (
+        'gh:a',
+        {'abbreviations': {'gh': '<{0}>'}},
+        '<a>'
+    )
+
+    prefix_ignores_suffix_data = (
+        'xx:a',
+        {'abbreviations': {'xx': '<>'}},
+        '<>'
+    )
+
+    yield regular_data
+    yield not_an_abbreviation_data
+    yield prefix_data
+    yield builtin_data
+    yield override_builtin_data
+    yield prefix_ignores_suffix_data
 
 
 @pytest.mark.parametrize('input_dir, config_dict, exp_dir', expansion_data())
