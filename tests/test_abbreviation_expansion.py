@@ -21,60 +21,46 @@ import pytest
 from cookiecutter import main
 
 
-def expansion_data():
-    """
-    Fixture for test_abbreviation_expansion providing several parameters for
-    main.expand_abbreviations (input_dir, config_dict) as well as a
-    corresponding expected return value (exp_dir).
-    """
-    regular_data = (
-        'foo',
-        {'abbreviations': {'foo': 'bar'}},
-        'bar'
+def test_abbreviation_expansion():
+    input_dir = main.expand_abbreviations(
+        'foo', {'abbreviations': {'foo': 'bar'}}
     )
+    assert input_dir == 'bar'
 
-    not_an_abbreviation_data = (
-        'baz',
-        {'abbreviations': {'foo': 'bar'}},
-        'baz'
+
+def test_abbreviation_expansion_not_an_abbreviation():
+    input_dir = main.expand_abbreviations(
+        'baz', {'abbreviations': {'foo': 'bar'}}
     )
+    assert input_dir == 'baz'
 
-    prefix_data = (
-        'xx:a',
-        {'abbreviations': {'xx': '<{0}>'}},
-        '<a>'
+
+def test_abbreviation_expansion_prefix():
+    input_dir = main.expand_abbreviations(
+        'xx:a', {'abbreviations': {'xx': '<{0}>'}}
     )
+    assert input_dir == '<a>'
 
-    builtin_data = (
-        'gh:a',
-        {},
-        'https://github.com/a.git'
+
+def test_abbreviation_expansion_builtin():
+    input_dir = main.expand_abbreviations(
+        'gh:a', {}
     )
+    assert input_dir == 'https://github.com/a.git'
 
-    override_builtin_data = (
-        'gh:a',
-        {'abbreviations': {'gh': '<{0}>'}},
-        '<a>'
+
+def test_abbreviation_expansion_override_builtin():
+    input_dir = main.expand_abbreviations(
+        'gh:a', {'abbreviations': {'gh': '<{0}>'}}
     )
+    assert input_dir == '<a>'
 
-    prefix_ignores_suffix_data = (
-        'xx:a',
-        {'abbreviations': {'xx': '<>'}},
-        '<>'
+
+def test_abbreviation_expansion_prefix_ignores_suffix():
+    input_dir = main.expand_abbreviations(
+        'xx:a', {'abbreviations': {'xx': '<>'}}
     )
-
-    yield regular_data
-    yield not_an_abbreviation_data
-    yield prefix_data
-    yield builtin_data
-    yield override_builtin_data
-    yield prefix_ignores_suffix_data
-
-
-@pytest.mark.parametrize('input_dir, config_dict, exp_dir', expansion_data())
-def test_abbreviation_expansion(input_dir, config_dict, exp_dir):
-    expanded_input_dir = main.expand_abbreviations(input_dir, config_dict)
-    assert expanded_input_dir == exp_dir
+    assert input_dir == '<>'
 
 
 def test_abbreviation_expansion_prefix_not_0_in_braces():
