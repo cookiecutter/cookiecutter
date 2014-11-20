@@ -7,6 +7,7 @@ test_cookiecutter_repo_arg
 
 Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterRepoArg.test_cookiecutter_git
+TestCookiecutterRepoArg.test_cookiecutter_mercurial
 """
 
 from __future__ import unicode_literals
@@ -48,3 +49,19 @@ def test_cookiecutter_git(monkeypatch):
     assert os.path.isdir('boilerplate')
     assert os.path.isfile('boilerplate/README.rst')
     assert os.path.exists('boilerplate/setup.py')
+
+
+@skipif_no_network
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_cookiecutter_mercurial(monkeypatch):
+    monkeypatch.setattr('cookiecutter.prompt.read_response', lambda x=u'': u'')
+
+    main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
+    clone_dir = os.path.join(
+        os.path.expanduser('~/.cookiecutters'),
+        'cookiecutter-trytonmodule'
+    )
+    assert os.path.exists(clone_dir)
+    assert os.path.isdir('module_name')
+    assert os.path.isfile('module_name/README')
+    assert os.path.exists('module_name/setup.py')
