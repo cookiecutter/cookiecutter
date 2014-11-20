@@ -162,16 +162,6 @@ class TestCookiecutterRepoArg(CookiecutterCleanSystemTestCase):
         super(TestCookiecutterRepoArg, self).tearDown()
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'')
-    def test_cookiecutter_git(self):
-        main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
-        logging.debug('Current dir is {0}'.format(os.getcwd()))
-        clone_dir = os.path.join(os.path.expanduser('~/.cookiecutters'), 'cookiecutter-pypackage')
-        self.assertTrue(os.path.exists(clone_dir))
-        self.assertTrue(os.path.isdir('boilerplate'))
-        self.assertTrue(os.path.isfile('boilerplate/README.rst'))
-        self.assertTrue(os.path.exists('boilerplate/setup.py'))
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'')
     def test_cookiecutter_mercurial(self):
         main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
         logging.debug('Current dir is {0}'.format(os.getcwd()))
