@@ -16,15 +16,16 @@ from cookiecutter import find
 
 
 def test_find_template():
-    template = find.find_template(repo_dir='tests/fake-repo-pre'.replace("/", os.sep))
+    repo_dir = os.path.join('tests', 'fake-repo-pre')
+    template = find.find_template(repo_dir=repo_dir)
 
-    test_dir = 'tests/fake-repo-pre/{{cookiecutter.repo_name}}'.replace("/", os.sep)
+    test_dir = os.path.join(repo_dir, '{{cookiecutter.repo_name}}')
     assert template == test_dir
 
-    test_dir = 'tests/fake-repo-pre/{{cookiecutter.repo_name }}'.replace("/", os.sep)
+    test_dir = os.path.join(repo_dir, '{{cookiecutter.repo_name }}')
     assert template != test_dir
 
-    test_dir = 'tests/fake-repo-pre/{{ cookiecutter.repo_name }}'.replace("/", os.sep)
+    test_dir = os.path.join(repo_dir, '{{ cookiecutter.repo_name }}')
     assert template != test_dir
 
 
