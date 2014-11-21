@@ -15,16 +15,17 @@ import unittest
 from cookiecutter import find
 
 
-class TestFindTemplate(unittest.TestCase):
+def test_find_template():
+    template = find.find_template(repo_dir='tests/fake-repo-pre'.replace("/", os.sep))
 
-    def test_find_template(self):
-        template = find.find_template(repo_dir='tests/fake-repo-pre'.replace("/", os.sep))
-        test_dir = 'tests/fake-repo-pre/{{cookiecutter.repo_name}}'.replace("/", os.sep)
-        self.assertEqual(template, test_dir)
-        test_dir = 'tests/fake-repo-pre/{{cookiecutter.repo_name }}'.replace("/", os.sep)
-        self.assertNotEqual(template, test_dir)
-        test_dir = 'tests/fake-repo-pre/{{ cookiecutter.repo_name }}'.replace("/", os.sep)
-        self.assertNotEqual(template, test_dir)
+    test_dir = 'tests/fake-repo-pre/{{cookiecutter.repo_name}}'.replace("/", os.sep)
+    assert template == test_dir
+
+    test_dir = 'tests/fake-repo-pre/{{cookiecutter.repo_name }}'.replace("/", os.sep)
+    assert template != test_dir
+
+    test_dir = 'tests/fake-repo-pre/{{ cookiecutter.repo_name }}'.replace("/", os.sep)
+    assert template != test_dir
 
 
 class TestFindTemplate2(unittest.TestCase):
