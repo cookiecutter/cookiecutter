@@ -8,7 +8,7 @@ test_compat
 Tests for `cookiecutter.compat` module.
 """
 
-from cookiecutter.compat import unittest, which
+from cookiecutter.compat import which
 
 
 def test_existing_command():
