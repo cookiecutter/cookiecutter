@@ -24,9 +24,3 @@ def test_find_template(repo_dir):
 
     test_dir = os.path.join(repo_dir, '{{cookiecutter.repo_name}}')
     assert template == test_dir
-
-    test_dir = os.path.join(repo_dir, '{{cookiecutter.repo_name }}')
-    assert template != test_dir
-
-    test_dir = os.path.join(repo_dir, '{{ cookiecutter.repo_name }}')
-    assert template != test_dir
