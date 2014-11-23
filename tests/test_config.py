@@ -18,19 +18,6 @@ from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfigur
 
 class TestGetConfig(unittest.TestCase):
 
-    def test_get_config(self):
-        """ Opening and reading config file """
-        conf = config.get_config('tests/test-config/valid-config.yaml')
-        expected_conf = {
-        	'cookiecutters_dir': '/home/example/some-path-to-templates',
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
-        }
-        self.assertEqual(conf, expected_conf)
-
     def test_get_config_does_not_exist(self):
         """
         Check that `exceptions.ConfigDoesNotExistException` is raised when
