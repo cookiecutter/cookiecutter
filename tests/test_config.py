@@ -18,17 +18,6 @@ from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfigur
 
 class TestGetConfig(unittest.TestCase):
 
-    def test_get_config_does_not_exist(self):
-        """
-        Check that `exceptions.ConfigDoesNotExistException` is raised when
-        attempting to get a non-existent config file.
-        """
-        self.assertRaises(
-            ConfigDoesNotExistException,
-            config.get_config,
-            'tests/test-config/this-does-not-exist.yaml'
-        )
-
     def test_invalid_config(self):
         """
         An invalid config file should raise an `InvalidConfiguration` exception.
