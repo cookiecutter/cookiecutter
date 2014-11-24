@@ -30,9 +30,7 @@ def back_up_rc(request, user_config_path):
     Back up an existing cookiecutter rc and restore it after the test.
     If ~/.cookiecutterrc is pre-existing, move it to a temp location
     """
-    user_config_path_backup = os.path.expanduser(
-        '~/.cookiecutterrc.backup'
-    )
+    user_config_path_backup = os.path.expanduser('~/.cookiecutterrc.backup')
 
     if os.path.exists(user_config_path):
         shutil.copy(user_config_path, user_config_path_backup)

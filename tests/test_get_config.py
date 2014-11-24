@@ -58,7 +58,6 @@ def test_get_config_with_defaults():
     """
     A config file that overrides 1 of 2 defaults
     """
-
     conf = config.get_config('tests/test-config/valid-partial-config.yaml')
     default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
     expected_conf = {
