@@ -7,6 +7,7 @@ test_get_user_config
 
 Tests formerly known from a unittest residing in test_config.py named
 TestGetUserConfig.test_get_user_config_valid
+TestGetUserConfig.test_get_user_config_invalid
 """
 
 import os
@@ -14,6 +15,7 @@ import shutil
 import pytest
 
 from cookiecutter import config
+from cookiecutter.exceptions import InvalidConfiguration
 
 
 @pytest.fixture(scope='module')
@@ -60,3 +62,12 @@ def test_get_user_config_valid(user_config_path):
         }
     }
     assert conf == expected_conf
+
+
+def test_get_user_config_invalid(user_config_path):
+    """
+    Get config from an invalid ~/.cookiecutterrc file
+    """
+    shutil.copy('tests/test-config/invalid-config.yaml', user_config_path)
+    with pytest.raises(InvalidConfiguration):
+        config.get_user_config()

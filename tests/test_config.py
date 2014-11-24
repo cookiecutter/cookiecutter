@@ -35,11 +35,6 @@ class TestGetUserConfig(unittest.TestCase):
             shutil.copy(self.user_config_path_backup, self.user_config_path)
             os.remove(self.user_config_path_backup)
 
-    def test_get_user_config_invalid(self):
-        """ Get config from an invalid ~/.cookiecutterrc file """
-        shutil.copy('tests/test-config/invalid-config.yaml', self.user_config_path)
-        self.assertRaises(InvalidConfiguration, config.get_user_config)
-
     def test_get_user_config_nonexistent(self):
         """ Get config from a nonexistent ~/.cookiecutterrc file """
         self.assertEqual(config.get_user_config(), config.DEFAULT_CONFIG)
