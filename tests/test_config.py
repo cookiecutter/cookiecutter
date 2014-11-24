@@ -35,20 +35,6 @@ class TestGetUserConfig(unittest.TestCase):
             shutil.copy(self.user_config_path_backup, self.user_config_path)
             os.remove(self.user_config_path_backup)
 
-    def test_get_user_config_valid(self):
-        """ Get config from a valid ~/.cookiecutterrc file """
-        shutil.copy('tests/test-config/valid-config.yaml', self.user_config_path)
-        conf = config.get_user_config()
-        expected_conf = {
-        	'cookiecutters_dir': '/home/example/some-path-to-templates',
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
-        }
-        self.assertEqual(conf, expected_conf)
-
     def test_get_user_config_invalid(self):
         """ Get config from an invalid ~/.cookiecutterrc file """
         shutil.copy('tests/test-config/invalid-config.yaml', self.user_config_path)
