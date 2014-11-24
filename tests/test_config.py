@@ -16,16 +16,6 @@ from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 
-class TestGetConfig(unittest.TestCase):
-
-    def test_invalid_config(self):
-        """
-        An invalid config file should raise an `InvalidConfiguration` exception.
-        """
-        self.assertRaises(InvalidConfiguration, config.get_config,
-                          "tests/test-config/invalid-config.yaml")
-
-
 class TestGetConfigWithDefaults(unittest.TestCase):
 
     def test_get_config_with_defaults(self):
