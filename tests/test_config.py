@@ -16,24 +16,6 @@ from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 
-class TestGetConfigWithDefaults(unittest.TestCase):
-
-    def test_get_config_with_defaults(self):
-        """ A config file that overrides 1 of 2 defaults """
-
-        conf = config.get_config('tests/test-config/valid-partial-config.yaml')
-        default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
-        expected_conf = {
-        	'cookiecutters_dir': default_cookiecutters_dir,
-        	'default_context': {
-        		"full_name": "Firstname Lastname",
-        		"email": "firstname.lastname@gmail.com",
-        		"github_username": "example"
-        	}
-        }
-        self.assertEqual(conf, expected_conf)
-
-
 class TestGetUserConfig(unittest.TestCase):
 
     def setUp(self):
