@@ -8,6 +8,7 @@ test_get_user_config
 Tests formerly known from a unittest residing in test_config.py named
 TestGetUserConfig.test_get_user_config_valid
 TestGetUserConfig.test_get_user_config_invalid
+TestGetUserConfig.test_get_user_config_nonexistent
 """
 
 import os
@@ -47,6 +48,7 @@ def back_up_rc(request, user_config_path):
     request.addfinalizer(restore_rc)
 
 
+@pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_valid(user_config_path):
     """
     Get config from a valid ~/.cookiecutterrc file
@@ -64,6 +66,7 @@ def test_get_user_config_valid(user_config_path):
     assert conf == expected_conf
 
 
+@pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_invalid(user_config_path):
     """
     Get config from an invalid ~/.cookiecutterrc file
@@ -71,3 +74,11 @@ def test_get_user_config_invalid(user_config_path):
     shutil.copy('tests/test-config/invalid-config.yaml', user_config_path)
     with pytest.raises(InvalidConfiguration):
         config.get_user_config()
+
+
+@pytest.mark.usefixtures('back_up_rc')
+def test_get_user_config_nonexistent():
+    """
+    Get config from a nonexistent ~/.cookiecutterrc file
+    """
+    assert config.get_user_config() == config.DEFAULT_CONFIG
