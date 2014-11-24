@@ -29,9 +29,9 @@ def test_get_config():
     expected_conf = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
         'default_context': {
-            "full_name": "Firstname Lastname",
-            "email": "firstname.lastname@gmail.com",
-            "github_username": "example"
+            'full_name': 'Firstname Lastname',
+            'email': 'firstname.lastname@gmail.com',
+            'github_username': 'example'
         }
     }
     assert conf == expected_conf
@@ -51,7 +51,7 @@ def test_invalid_config():
     An invalid config file should raise an `InvalidConfiguration` exception.
     """
     with pytest.raises(InvalidConfiguration):
-        config.get_config("tests/test-config/invalid-config.yaml")
+        config.get_config('tests/test-config/invalid-config.yaml')
 
 
 def test_get_config_with_defaults():
@@ -64,9 +64,9 @@ def test_get_config_with_defaults():
     expected_conf = {
         'cookiecutters_dir': default_cookiecutters_dir,
         'default_context': {
-            "full_name": "Firstname Lastname",
-            "email": "firstname.lastname@gmail.com",
-            "github_username": "example"
+            'full_name': 'Firstname Lastname',
+            'email': 'firstname.lastname@gmail.com',
+            'github_username': 'example'
         }
     }
     assert conf == expected_conf
