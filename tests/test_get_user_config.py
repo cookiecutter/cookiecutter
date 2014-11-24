@@ -6,6 +6,7 @@ test_get_user_config
 --------------------
 
 Tests formerly known from a unittest residing in test_config.py named
+TestGetUserConfig.test_get_user_config_valid
 """
 
 import os
@@ -45,15 +46,17 @@ def back_up_rc(request, user_config_path):
 
 
 def test_get_user_config_valid(user_config_path):
-    """ Get config from a valid ~/.cookiecutterrc file """
+    """
+    Get config from a valid ~/.cookiecutterrc file
+    """
     shutil.copy('tests/test-config/valid-config.yaml', user_config_path)
     conf = config.get_user_config()
     expected_conf = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
         'default_context': {
-            "full_name": "Firstname Lastname",
-            "email": "firstname.lastname@gmail.com",
-            "github_username": "example"
+            'full_name': 'Firstname Lastname',
+            'email': 'firstname.lastname@gmail.com',
+            'github_username': 'example'
         }
     }
     assert conf == expected_conf
