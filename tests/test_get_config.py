@@ -7,9 +7,13 @@ test_get_config
 
 Tests formerly known from a unittest residing in test_config.py named
 TestGetConfig.test_get_config
+TestGetConfig.test_get_config_does_not_exist
 """
 
+import pytest
+
 from cookiecutter import config
+from cookiecutter.exceptions import ConfigDoesNotExistException
 
 
 def test_get_config():
@@ -25,3 +29,12 @@ def test_get_config():
         }
     }
     assert conf == expected_conf
+
+
+def test_get_config_does_not_exist():
+    """
+    Check that `exceptions.ConfigDoesNotExistException` is raised when
+    attempting to get a non-existent config file.
+    """
+    with pytest.raises(ConfigDoesNotExistException):
+        config.get_config('tests/test-config/this-does-not-exist.yaml')
