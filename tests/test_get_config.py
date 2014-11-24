@@ -13,11 +13,14 @@ TestGetConfig.test_get_config_does_not_exist
 import pytest
 
 from cookiecutter import config
-from cookiecutter.exceptions import ConfigDoesNotExistException
+from cookiecutter.exceptions import (
+    ConfigDoesNotExistException, InvalidConfiguration
+)
 
 
 def test_get_config():
-    """Opening and reading config file
+    """
+    Opening and reading config file
     """
     conf = config.get_config('tests/test-config/valid-config.yaml')
     expected_conf = {
@@ -38,3 +41,11 @@ def test_get_config_does_not_exist():
     """
     with pytest.raises(ConfigDoesNotExistException):
         config.get_config('tests/test-config/this-does-not-exist.yaml')
+
+
+def test_invalid_config():
+    """
+    An invalid config file should raise an `InvalidConfiguration` exception.
+    """
+    with pytest.raises(InvalidConfiguration):
+        config.get_config("tests/test-config/invalid-config.yaml")
