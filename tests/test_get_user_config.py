@@ -36,14 +36,26 @@ def back_up_rc(request, user_config_path):
         shutil.copy(user_config_path, user_config_path_backup)
         os.remove(user_config_path)
 
-    def restore_rc():
+    def remove_test_rc():
         """
-        If it existed, restore ~/.cookiecutterrc
+        Remove the ~/.cookiecutterrc that has been created in the test.
+        """
+        if os.path.exists(user_config_path):
+            os.remove(user_config_path)
+
+    def restore_original_rc():
+        """
+        If it existed, restore the original ~/.cookiecutterrc
         """
         if os.path.exists(user_config_path_backup):
             shutil.copy(user_config_path_backup, user_config_path)
             os.remove(user_config_path_backup)
-    request.addfinalizer(restore_rc)
+
+    # According to the py.test source code finalizers are popped from an
+    # internal list that we populated via 'addfinalizer'. As a result the
+    # last-added finalizer function is executed first.
+    request.addfinalizer(restore_original_rc)
+    request.addfinalizer(remove_test_rc)
 
 
 @pytest.mark.usefixtures('back_up_rc')
