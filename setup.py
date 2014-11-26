@@ -36,11 +36,7 @@ class PyTest(Command):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
 
     def initialize_options(self):
-        self.pytest_args = [
-            'tests',
-            '--cov', 'cookiecutter',
-            '--cov-report', 'term-missing'
-        ]
+        self.pytest_args = []
 
     def finalize_options(self):
         pass
