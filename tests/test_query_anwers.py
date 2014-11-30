@@ -11,6 +11,8 @@ TestQueryAnswers.test_query_y
 
 import pytest
 
+from cookiecutter import prompt
+
 
 def test_query_y(monkeypatch):
     monkeypatch.setattr(
