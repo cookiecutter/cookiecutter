@@ -15,19 +15,14 @@ import pytest
 from cookiecutter import prompt
 
 
-def test_query_y(monkeypatch):
+@pytest.fixture(params=[u'y', u'ye'])
+def patch_read_response(request, monkeypatch):
     monkeypatch.setattr(
         'cookiecutter.prompt.read_response',
-        lambda x=u'': u'y'
+        lambda x=u'': request.param
     )
-    answer = prompt.query_yes_no("Blah?")
-    assert answer
 
 
-def test_query_ye(monkeypatch):
-    monkeypatch.setattr(
-        'cookiecutter.prompt.read_response',
-        lambda x=u'': u'y'
-    )
-    answer = prompt.query_yes_no("Blah?")
-    assert answer
+@pytest.mark.usefixtures('patch_read_response')
+def test_query():
+    assert prompt.query_yes_no("Blah?")
