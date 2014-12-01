@@ -67,11 +67,6 @@ class TestPrompt(unittest.TestCase):
 
 class TestQueryAnswers(unittest.TestCase):
 
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
-    def test_query_y(self):
-        answer = prompt.query_yes_no("Blah?")
-        self.assertTrue(answer)
-
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'ye')
     def test_query_ye(self):
         answer = prompt.query_yes_no("Blah?")
