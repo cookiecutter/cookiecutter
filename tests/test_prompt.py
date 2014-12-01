@@ -65,14 +65,6 @@ class TestPrompt(unittest.TestCase):
              "pkg_name": u"anewproject"})
 
 
-class TestQueryAnswers(unittest.TestCase):
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
-    def test_query_n(self):
-        answer = prompt.query_yes_no("Blah?")
-        self.assertFalse(answer)
-
-
 class TestQueryDefaults(unittest.TestCase):
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
