@@ -105,7 +105,18 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
         prompt_and_delete_repo(repo_dir, no_input=no_input)
 
     if repo_type in ['git', 'hg']:
-        subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
+        try:
+            # if you don't use check_output, you get it on stderr no matter;
+            #  - might as well use check_output, and choose your control:
+            # subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
+            ## check_output for git doesn't seem to ever return anything insightful;
+            ret = subprocess.check_output([repo_type, 'clone', repo_url], cwd=clone_to_dir, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            print "Error: the following failed (returned {d}):\n  {s}" \
+                  .format(d=e.returncode, s=' '.join(e.cmd))
+            ## only captured in check_output calls:
+            #print "  {s}".format(s="\n  ".join(e.output.splitlines()))
+            sys.exit(-1)
         if checkout is not None:
             subprocess.check_call([repo_type, 'checkout', checkout],
                                   cwd=repo_dir)
