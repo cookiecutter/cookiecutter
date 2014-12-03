@@ -15,6 +15,8 @@ TestQueryDefaults.test_query_y_none_default
 TestQueryDefaults.test_query_n_none_default
 TestQueryDefaults.test_query_no_default
 TestQueryDefaults.test_query_bad_default
+
+TestPrompt.test_prompt_for_config_simple
 """
 
 import platform
@@ -78,3 +80,15 @@ class TestQueryDefaults(object):
         )
         with pytest.raises(ValueError):
             prompt.query_yes_no("Blah?", default='yn')
+
+
+class TestPrompt(object):
+    def test_prompt_for_config_simple(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'Audrey Roy'
+        )
+        context = {"cookiecutter": {"full_name": "Your Name"}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {"full_name": u"Audrey Roy"}
