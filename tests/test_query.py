@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-test_query_anwers
------------------
+test_query
+----------
 
 Tests formerly known from a unittest residing in test_prompt.py named
 TestQueryAnswers.test_query_y
