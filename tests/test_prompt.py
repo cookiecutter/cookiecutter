@@ -67,11 +67,6 @@ class TestPrompt(unittest.TestCase):
 
 class TestQueryDefaults(unittest.TestCase):
 
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
-    def test_query_y_none_default(self):
-        answer = prompt.query_yes_no("Blah?", default=None)
-        self.assertTrue(answer)
-
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
     def test_query_n_none_default(self):
         answer = prompt.query_yes_no("Blah?", default=None)
