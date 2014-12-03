@@ -12,9 +12,16 @@ TestQueryAnswers.test_query_yes
 TestQueryAnswers.test_query_n
 """
 
+import platform
 import pytest
 
 from cookiecutter import prompt
+
+
+@pytest.fixture(autouse=True)
+def patch_readline_on_win(monkeypatch):
+    if 'windows' in platform.platform().lower():
+        monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
 
 
 @pytest.fixture(params=[u'y', u'ye', u'yes'])
