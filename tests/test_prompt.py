@@ -63,10 +63,3 @@ class TestPrompt(unittest.TestCase):
         cookiecutter_dict = prompt.prompt_for_config(context)
         self.assertEqual(cookiecutter_dict, {"project_name": u"A New Project",
              "pkg_name": u"anewproject"})
-
-
-class TestQueryDefaults(unittest.TestCase):
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'junk')
-    def test_query_bad_default(self):
-        self.assertRaises(ValueError, prompt.query_yes_no, "Blah?", default='yn')

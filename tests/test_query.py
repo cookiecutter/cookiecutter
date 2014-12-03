@@ -14,6 +14,7 @@ TestQueryAnswers.test_query_n
 TestQueryDefaults.test_query_y_none_default
 TestQueryDefaults.test_query_n_none_default
 TestQueryDefaults.test_query_no_default
+TestQueryDefaults.test_query_bad_default
 """
 
 import platform
@@ -69,3 +70,11 @@ class TestQueryDefaults(object):
             lambda x=u'': u''
         )
         assert not prompt.query_yes_no("Blah?", default='no')
+
+    def test_query_bad_default(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'junk'
+        )
+        with pytest.raises(ValueError):
+            prompt.query_yes_no("Blah?", default='yn')
