@@ -17,6 +17,7 @@ TestQueryDefaults.test_query_no_default
 TestQueryDefaults.test_query_bad_default
 
 TestPrompt.test_prompt_for_config_simple
+TestPrompt.test_prompt_for_config_unicode
 """
 
 import platform
@@ -92,3 +93,14 @@ class TestPrompt(object):
 
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {"full_name": u"Audrey Roy"}
+
+
+    def test_prompt_for_config_unicode(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'Pizzä ïs Gööd'
+        )
+        context = {"cookiecutter": {"full_name": "Your Name"}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {"full_name": u"Pizzä ïs Gööd"}
