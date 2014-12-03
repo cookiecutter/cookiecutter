@@ -12,6 +12,7 @@ TestQueryAnswers.test_query_yes
 TestQueryAnswers.test_query_n
 
 TestQueryDefaults.test_query_y_none_default
+TestQueryDefaults.test_query_n_none_default
 """
 
 import platform
@@ -53,3 +54,10 @@ class TestQueryDefaults(object):
             lambda x=u'': u'y'
         )
         assert prompt.query_yes_no("Blah?", default=None)
+
+    def test_query_n_none_default(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'n'
+        )
+        assert not prompt.query_yes_no("Blah?", default=None)
