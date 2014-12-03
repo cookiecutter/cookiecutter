@@ -24,22 +24,21 @@ def patch_readline_on_win(monkeypatch):
         monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
 
 
-@pytest.fixture(params=[u'y', u'ye', u'yes'])
-def patch_read_response(request, monkeypatch):
-    monkeypatch.setattr(
-        'cookiecutter.prompt.read_response',
-        lambda x=u'': request.param
-    )
+class TestQueryAnswers(object):
+    @pytest.fixture(params=[u'y', u'ye', u'yes'])
+    def patch_read_response(self, request, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': request.param
+        )
 
+    @pytest.mark.usefixtures('patch_read_response')
+    def test_query(self):
+        assert prompt.query_yes_no("Blah?")
 
-@pytest.mark.usefixtures('patch_read_response')
-def test_query():
-    assert prompt.query_yes_no("Blah?")
-
-
-def test_query_n(monkeypatch):
-    monkeypatch.setattr(
-        'cookiecutter.prompt.read_response',
-        lambda x=u'': u'n'
-    )
-    assert not prompt.query_yes_no("Blah?")
+    def test_query_n(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'n'
+        )
+        assert not prompt.query_yes_no("Blah?")
