@@ -25,13 +25,6 @@ if 'windows' in platform.platform().lower():
 
 class TestPrompt(unittest.TestCase):
 
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'Pizzä ïs Gööd')
-    def test_unicode_prompt_for_config_unicode(self):
-        context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
-
-        cookiecutter_dict = prompt.prompt_for_config(context)
-        self.assertEqual(cookiecutter_dict, {"full_name": u"Pizzä ïs Gööd"})
-
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
     def test_unicode_prompt_for_default_config_unicode(self):
         context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
