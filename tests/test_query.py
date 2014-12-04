@@ -5,6 +5,7 @@
 test_query
 ----------
 
+Tests for `cookiecutter.prompt` module.
 Tests formerly known from a unittest residing in test_prompt.py named
 TestQueryAnswers.test_query_y
 TestQueryAnswers.test_query_ye
@@ -20,11 +21,13 @@ TestPrompt.test_prompt_for_config_simple
 TestPrompt.test_prompt_for_config_unicode
 TestPrompt.test_unicode_prompt_for_config_unicode
 TestPrompt.test_unicode_prompt_for_default_config_unicode
+TestPrompt.test_unicode_prompt_for_templated_config
 """
 
 import platform
 import pytest
 
+from cookiecutter.compat import OrderedDict
 from cookiecutter import prompt
 
 
@@ -125,3 +128,24 @@ class TestPrompt(object):
 
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {"full_name": u"Řekni či napiš své jméno"}
+
+    def test_unicode_prompt_for_templated_config(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'\n'
+        )
+        context = {"cookiecutter": OrderedDict([
+            (
+                "project_name",
+                u"A New Project"
+            ), (
+                "pkg_name",
+                u"{{ cookiecutter.project_name|lower|replace(' ', '') }}"
+            )
+        ])}
+
+        exp_cookiecutter_dict = {
+            "project_name": u"A New Project", "pkg_name": u"anewproject"
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == exp_cookiecutter_dict
