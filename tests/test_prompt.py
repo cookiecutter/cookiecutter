@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-test_query
-----------
+test_prompt
+-----------
 
 Tests for `cookiecutter.prompt` module.
-Tests formerly known from a unittest residing in test_prompt.py named
 TestQueryAnswers.test_query_y
 TestQueryAnswers.test_query_ye
 TestQueryAnswers.test_query_yes
