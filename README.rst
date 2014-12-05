@@ -152,6 +152,7 @@ Python
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
+* 'cookiecutter-django-essentials'_: A Django Project template based on @pydanny's cookiecutter Django that includes model versioning, markdown support and a testsuite for included code.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
 * `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
@@ -206,6 +207,11 @@ Berkshelf-Vagrant
 
 * `slim-berkshelf-vagrant`_: A simple cookiecutter template with sane cookbook defaults for common vagrant/berkshelf cookbooks.
 
+Ansible Vagrant
+~~~~~~~~~~~~~~~
+
+* `cookiecutter-vansible`_: A cookiecutter template to provision a Vagrant VM with Python, Ruby, Node.js and PostgreSQL.
+
 
 HTML
 ~~~~
@@ -218,6 +224,7 @@ HTML
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
+.. _`cookiecutter-django-essentials`: https://github.com/wldcordeiro/cookiecutter-django-essentials
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-cms`: https://github.com/palazzem/cookiecutter-django-cms
 .. _`cookiecutter-djangocms-plugin`: https://github.com/mishbahr/cookiecutter-djangocms-plugin
@@ -239,6 +246,7 @@ HTML
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 .. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
+.. _`cookiecutter-vansible`: https://github.com/wldcordeiro/cookiecutter-vansible
 .. _`cookiecutter-avr`: https://github.com/solarnz/cookiecutter-avr
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
