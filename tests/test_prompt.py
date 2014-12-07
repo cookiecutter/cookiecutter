@@ -6,6 +6,12 @@ test_prompt
 -----------
 
 Tests for `cookiecutter.prompt` module.
+TestPrompt.test_prompt_for_config_simple
+TestPrompt.test_prompt_for_config_unicode
+TestPrompt.test_unicode_prompt_for_config_unicode
+TestPrompt.test_unicode_prompt_for_default_config_unicode
+TestPrompt.test_unicode_prompt_for_templated_config
+
 TestQueryAnswers.test_query_y
 TestQueryAnswers.test_query_ye
 TestQueryAnswers.test_query_yes
@@ -15,12 +21,6 @@ TestQueryDefaults.test_query_y_none_default
 TestQueryDefaults.test_query_n_none_default
 TestQueryDefaults.test_query_no_default
 TestQueryDefaults.test_query_bad_default
-
-TestPrompt.test_prompt_for_config_simple
-TestPrompt.test_prompt_for_config_unicode
-TestPrompt.test_unicode_prompt_for_config_unicode
-TestPrompt.test_unicode_prompt_for_default_config_unicode
-TestPrompt.test_unicode_prompt_for_templated_config
 """
 
 import platform
@@ -34,57 +34,6 @@ from cookiecutter import prompt
 def patch_readline_on_win(monkeypatch):
     if 'windows' in platform.platform().lower():
         monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
-
-
-class TestQueryAnswers(object):
-    @pytest.fixture(params=[u'y', u'ye', u'yes'])
-    def patch_read_response(self, request, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': request.param
-        )
-
-    @pytest.mark.usefixtures('patch_read_response')
-    def test_query(self):
-        assert prompt.query_yes_no("Blah?")
-
-    def test_query_n(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'n'
-        )
-        assert not prompt.query_yes_no("Blah?")
-
-
-class TestQueryDefaults(object):
-    def test_query_y_none_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'y'
-        )
-        assert prompt.query_yes_no("Blah?", default=None)
-
-    def test_query_n_none_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'n'
-        )
-        assert not prompt.query_yes_no("Blah?", default=None)
-
-    def test_query_no_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u''
-        )
-        assert not prompt.query_yes_no("Blah?", default='no')
-
-    def test_query_bad_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'junk'
-        )
-        with pytest.raises(ValueError):
-            prompt.query_yes_no("Blah?", default='yn')
 
 
 class TestPrompt(object):
@@ -148,3 +97,54 @@ class TestPrompt(object):
         }
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == exp_cookiecutter_dict
+
+
+class TestQueryAnswers(object):
+    @pytest.fixture(params=[u'y', u'ye', u'yes'])
+    def patch_read_response(self, request, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': request.param
+        )
+
+    @pytest.mark.usefixtures('patch_read_response')
+    def test_query(self):
+        assert prompt.query_yes_no("Blah?")
+
+    def test_query_n(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'n'
+        )
+        assert not prompt.query_yes_no("Blah?")
+
+
+class TestQueryDefaults(object):
+    def test_query_y_none_default(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'y'
+        )
+        assert prompt.query_yes_no("Blah?", default=None)
+
+    def test_query_n_none_default(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'n'
+        )
+        assert not prompt.query_yes_no("Blah?", default=None)
+
+    def test_query_no_default(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u''
+        )
+        assert not prompt.query_yes_no("Blah?", default='no')
+
+    def test_query_bad_default(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'junk'
+        )
+        with pytest.raises(ValueError):
+            prompt.query_yes_no("Blah?", default='yn')
