@@ -9,10 +9,43 @@ Functions for prompting the user for project info.
 """
 
 from __future__ import unicode_literals
+from collections import namedtuple
 import sys
 
 from .compat import iteritems, read_response
 from jinja2.environment import Environment
+
+
+ContextEntry = namedtuple('ContextEntry', 'key default prompt type_')
+
+
+def get_context_entry(key, value):
+    """Normalizes a context entry from different context versions to a
+    consistent format.
+
+    :param key: the context key
+    :param value: either a string, or a dict represeting a context entry
+    :returns: a :class:`ContextEntry`
+    """
+    if isinstance(value, dict):
+        return ContextEntry(
+            key,
+            value.get('default', ''),
+            value.get('prompt', key),
+            value.get('type'))
+
+    return ContextEntry(key, value, key, None)
+
+
+def get_value(entry, value, default):
+    """Return a context value for a context_entry. User submitted values
+    are treated differently based on their type.
+    """
+    value = value if value != '' else default
+    if entry.type_ == 'boolean':
+        return value.lower() in ('y', 'yes', 'true', 'on', '1')
+
+    return value
 
 
 def prompt_for_config(context, no_input=False):
@@ -26,17 +59,21 @@ def prompt_for_config(context, no_input=False):
     env = Environment()
 
     for key, raw in iteritems(context['cookiecutter']):
-        val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+        context_entry = get_context_entry(key, raw)
+        value = (env.from_string(context_entry.default)
+                    .render(cookiecutter=cookiecutter_dict))
 
         if not no_input:
-            prompt = '{0} (default is "{1}")? '.format(key, val)
+            prompt = '{entry.prompt} (default is "{default}")? '.format(
+                entry=context_entry,
+                default=value)
 
-            new_val = read_response(prompt).strip()
+            value = get_value(
+                context_entry,
+                read_response(prompt).strip(),
+                value)
 
-            if new_val != '':
-                val = new_val
-
-        cookiecutter_dict[key] = val
+        cookiecutter_dict[key] = value
     return cookiecutter_dict
 
 
