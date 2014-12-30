@@ -17,15 +17,51 @@ from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
+import yaml
 
 from .compat import json, OrderedDict
-from .exceptions import NonTemplatedInputDirException
+from .exceptions import NonTemplatedInputDirException, CookiecutterException
 from .find import find_template
 from .utils import make_sure_path_exists, work_in
 from .hooks import run_hook
 
 
-def generate_context(context_file='cookiecutter.json', default_context=None,
+def get_context_file(filename=None, repo_dir='.'):
+    if filename:
+        return filename
+
+    for file in ('cookiecutter.json', 'cookiecutter.yaml'):
+        filename = os.path.join(repo_dir, file)
+        if os.path.exists(filename):
+            return filename
+
+    raise CookiecutterException(
+        "No context file found in {0}.".format(repo_dir))
+
+
+def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
+    class OrderedLoader(Loader):
+        pass
+
+    def construct_mapping(loader, node):
+        loader.flatten_mapping(node)
+        return object_pairs_hook(loader.construct_pairs(node))
+    OrderedLoader.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+        construct_mapping)
+    return yaml.load(stream, OrderedLoader)
+
+
+def get_loader(filename):
+    _, ext = os.path.splitext(filename)
+    if ext == '.yaml':
+        return ordered_load
+
+    return lambda fh: json.load(fh, object_pairs_hook=OrderedDict)
+
+
+def generate_context(context_file,
+                     default_context=None,
                      extra_context=None):
     """
     Generates the context for a Cookiecutter project template.
@@ -36,16 +72,13 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
+    logging.debug('context_file is {0}'.format(context_file))
+    stem, _ = os.path.splitext(os.path.basename(context_file))
 
-    context = {}
+    with open(context_file) as fh:
+        obj = get_loader(context_file)(fh)
 
-    file_handle = open(context_file)
-    obj = json.load(file_handle, object_pairs_hook=OrderedDict)
-
-    # Add the Python object to the context dictionary
-    file_name = os.path.split(context_file)[1]
-    file_stem = file_name.split('.')[0]
-    context[file_stem] = obj
+    context = {stem: obj}
 
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available

@@ -20,7 +20,7 @@ import sys
 from . import __version__
 from .config import get_user_config
 from .prompt import prompt_for_config
-from .generate import generate_context, generate_files
+from .generate import generate_context, generate_files, get_context_file
 from .vcs import clone
 
 logger = logging.getLogger(__name__)
@@ -86,11 +86,8 @@ def cookiecutter(input_dir, checkout=None, no_input=False, extra_context=None):
         # cookiecutters_dir
         repo_dir = input_dir
 
-    context_file = os.path.join(repo_dir, 'cookiecutter.json')
-    logging.debug('context_file is {0}'.format(context_file))
-
     context = generate_context(
-        context_file=context_file,
+        get_context_file(repo_dir=repo_dir),
         default_context=config_dict['default_context'],
         extra_context=extra_context,
     )

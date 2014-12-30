@@ -16,6 +16,7 @@ from __future__ import unicode_literals
 import pytest
 
 from cookiecutter import generate
+from cookiecutter.compat import OrderedDict
 
 
 def context_data():
@@ -59,10 +60,20 @@ def context_data():
         }
     )
 
+    context_from_yaml = (
+        {
+            'context_file': 'tests/test-generate-context/test.yaml',
+        },
+        {
+            'test': OrderedDict([(1, 2), ('some_key', 'some_val')])
+        }
+    )
+
     yield context
     yield context_with_default
     yield context_with_extra
     yield context_with_default_and_extra
+    yield context_from_yaml
 
 
 @pytest.mark.usefixtures('clean_system')
