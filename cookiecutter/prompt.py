@@ -60,20 +60,19 @@ def prompt_for_config(context, no_input=False):
 
     for key, raw in iteritems(context['cookiecutter']):
         context_entry = get_context_entry(key, raw)
-        value = (env.from_string(context_entry.default)
-                    .render(cookiecutter=cookiecutter_dict))
+        default = (env.from_string(context_entry.default)
+                   .render(cookiecutter=cookiecutter_dict))
 
         if not no_input:
             prompt = '{entry.prompt} (default is "{default}")? '.format(
                 entry=context_entry,
-                default=value)
+                default=default)
 
-            value = get_value(
-                context_entry,
-                read_response(prompt).strip(),
-                value)
+            value = read_response(prompt).strip()
+        else:
+            value = ''
 
-        cookiecutter_dict[key] = value
+        cookiecutter_dict[key] = get_value(context_entry, value, default)
     return cookiecutter_dict
 
 

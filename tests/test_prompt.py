@@ -96,6 +96,27 @@ class TestPrompt(unittest.TestCase):
         })
 
 
+class TestPromptNoInput(unittest.TestCase):
+
+    def test_prompt_no_input(self):
+        orig_context = {"cookiecutter": {"project_name": u"A New Project"}}
+        context = prompt.prompt_for_config(orig_context, no_input=True)
+        self.assertEqual(context, orig_context['cookiecutter'])
+
+    def test_prompt_no_input_with_rich_context_type(self):
+        context = {'cookiecutter': OrderedDict([
+            (
+                 'include_tests', {
+                    'default': u'yes',
+                    'prompt':  u'Include some test files?',
+                    'type': 'boolean',
+                },
+            ),
+        ])}
+        context = prompt.prompt_for_config(context, no_input=True)
+        self.assertEqual(context, {'include_tests': True})
+
+
 class TestQueryAnswers(unittest.TestCase):
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
