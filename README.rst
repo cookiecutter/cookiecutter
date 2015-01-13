@@ -111,7 +111,7 @@ Did someone say features?
 
 * Cross-platform support for `~/.cookiecutterrc` files:
 
-    .. code-block:: guess
+    .. code-block:: yaml
 
         default_context:
             full_name: "Audrey Roy"

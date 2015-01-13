@@ -61,7 +61,7 @@ Bug Fixes:
 
 * Newlines at the end of files are no longer stripped, thanks to `@treyhunner`_ (#183).
 * Cloning prompt suppressed by respecting the `no_input` flag, thanks to `@trustrachel`_ (#285)
-* With Python 3, input is no longer converted to bytes, thanks to `@uranusjr `_ (#98).
+* With Python 3, input is no longer converted to bytes, thanks to `@uranusjr`_ (#98).
 
 Other Changes:
 
@@ -89,6 +89,7 @@ Other Changes:
 .. _`@schacki`: https://github.com/schacki
 .. _`@ryanolson`: https://github.com/ryanolson
 .. _`@Natim`: https://github.com/Natim
+.. _`@dinopetrone`: https://github.com/dinopetrone
 
 0.7.2 (2014-08-05)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -260,8 +261,6 @@ Other changes:
 .. _`@s-m-i-t-a`: https://github.com/s-m-i-t-a/
 .. _`@sloria`: https://github.com/sloria/
 .. _`@alex`: https://github.com/alex/
-.. _`@pydanny`: https://github.com/pydanny/
-.. _`@freakboy3742`: https://github.com/freakboy3742/
 .. _`@es128`: https://github.com/es128/
 .. _`@rolo`: https://github.com/rolo/
 .. _`@oubiga`: https://github.com/oubiga/
