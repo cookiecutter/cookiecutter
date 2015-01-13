@@ -12,10 +12,10 @@ import warnings
 from .compat import OLD_PY2
 
 
-__version__ = '0.8.0'
+__version__ = '0.9.0'
 
 if OLD_PY2:
     warnings.warn(
-        'Python 2.6 support will be removed in 1.0.0',
-        PendingDeprecationWarning
+        'Python 2.6 support has been removed as of 1.0.0',
+        DeprecationWarning
     )
