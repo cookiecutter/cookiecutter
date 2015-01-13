@@ -9,10 +9,6 @@ if PY3:  # pragma: no cover
     iteritems = lambda d: iter(d.items())
     from unittest.mock import patch
     from io import StringIO
-    import unittest
-
-    import json
-    from collections import OrderedDict
 
     def read_response(prompt=''):
         """
@@ -33,15 +29,6 @@ else:  # pragma: no cover
     iteritems = lambda d: d.iteritems()
     from mock import patch
     from cStringIO import StringIO
-
-    if OLD_PY2:
-        from ordereddict import OrderedDict
-        import simplejson as json
-        import unittest2 as unittest
-    else:
-        import json
-        from collections import OrderedDict
-        import unittest
 
     def read_response(prompt=''):
         """
@@ -144,4 +131,4 @@ else:  # Forced testing
                         return name
         return None
 
-_hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest, which)
+_hush_pyflakes = (patch, StringIO, which)
