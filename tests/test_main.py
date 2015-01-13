@@ -10,8 +10,9 @@ Tests for `cookiecutter.main` module.
 
 import logging
 import os
+import unittest
 
-from cookiecutter.compat import patch, unittest
+from cookiecutter.compat import patch
 from cookiecutter import main, utils
 from tests import CookiecutterCleanSystemTestCase
 

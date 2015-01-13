@@ -8,10 +8,12 @@ test_prompt
 Tests for `cookiecutter.prompt` module.
 """
 
+from collections import OrderedDict
 import platform
 import sys
+import unittest
 
-from cookiecutter.compat import patch, unittest, OrderedDict
+from cookiecutter.compat import patch
 from cookiecutter import prompt
 
 if 'windows' in platform.platform().lower():
