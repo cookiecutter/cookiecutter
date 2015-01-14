@@ -248,6 +248,12 @@ HTML
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 
+Scala
+~~~~
+
+* `cookiecutter-scala-spark`_: A cookiecutter template for Apache Spark applications written in Scala.
+.. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
+
 Similar projects
 ----------------
 
