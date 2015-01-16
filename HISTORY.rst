@@ -8,11 +8,21 @@ History
 
 The goals of this release was to formally remove support for Python 2.6 and continue the move to using py.test.
 
+Features:
+
 * Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322).
 * Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
 * Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
 * Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
 
+Other Changes:
+
+* Added more Cookiecutters to the list:
+
+  * `cookiecutter-scala-spark`_ by `@jpzk`_
+  
+.. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
+.. _`@jpzk`: https://github.com/jpzk
 
 0.9.0 (2015-01-13)
 ~~~~~~~~~~~~~~~~~~~
