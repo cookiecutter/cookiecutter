@@ -131,18 +131,10 @@ else:  # Forced testing
                         return name
         return None
 
-try:
-    isinstance("", basestring)
 
-    def isstr(s):
-        """Determine if an object is a string in Python 2."""
-        return isinstance(s, basestring)
-
-except NameError:
-
-    def isstr(s):
-        """Determine if an object is a string in Python 3."""
-        return isinstance(s, str)
+def isstr(obj):
+    """Determine if an object is a string."""
+    return isinstance(obj, str if PY3 else basestring)  # NOQA
 
 
 _hush_pyflakes = (patch, StringIO, which)
