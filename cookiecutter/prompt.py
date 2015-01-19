@@ -11,7 +11,7 @@ Functions for prompting the user for project info.
 from __future__ import unicode_literals
 import sys
 
-from .compat import iteritems, read_response
+from .compat import iteritems, read_response, isstr
 from jinja2.environment import Environment
 
 
@@ -26,7 +26,8 @@ def prompt_for_config(context, no_input=False):
     env = Environment()
 
     for key, raw in iteritems(context['cookiecutter']):
-        val = env.from_string(str(raw)).render(cookiecutter=cookiecutter_dict)
+        raw = raw if isstr(raw) else str(raw)
+        val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
 
         if not no_input:
             prompt = '{0} (default is "{1}")? '.format(key, val)
