@@ -14,6 +14,7 @@ Features:
 * Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
 * Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
 * Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
+* Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
 
 Other Changes:
 
