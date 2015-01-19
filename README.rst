@@ -14,8 +14,8 @@ Cookiecutter
 .. image:: https://pypip.in/d/cookiecutter/badge.png
         :target: https://crate.io/packages/cookiecutter?version=latest
 
-.. image:: https://coveralls.io/repos/audreyr/cookiecutter/badge.png?branch=master
-        :target: https://coveralls.io/r/audreyr/cookiecutter?branch=master
+.. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
+        :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
 
 .. image:: https://badges.gitter.im/Join Chat.svg
         :target: https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
