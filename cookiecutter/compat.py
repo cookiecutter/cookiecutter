@@ -67,4 +67,17 @@ else:  # pragma: no cover
         enc = sys.stdin.encoding or sys.getdefaultencoding()
         return raw_input(prompt).decode(enc)
 
+    try:
+        isinstance("", basestring)
+
+        def isstr(s):
+            """Determine if an object is a string in Python 2."""
+            return isinstance(s, basestring)
+
+    except NameError:
+
+        def isstr(s):
+            """Determine if an object is a string in Python 3."""
+            return isinstance(s, str)
+
 _hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest)
