@@ -15,6 +15,6 @@ install:
     - pip install tox
 
 after_success:
-    # Report coverage results to coveralls.io
-    - pip install coveralls
-    - coveralls
+    # Report coverage results to codecov.io
+    - pip install codecov
+    - codecov
