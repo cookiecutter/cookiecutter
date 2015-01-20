@@ -66,6 +66,58 @@ class TestPrompt(unittest.TestCase):
         self.assertEqual(cookiecutter_dict, {"project_name": u"A New Project",
              "pkg_name": u"anewproject"})
 
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
+    def test_prompt_for_config_with_dict_context_entry(self):
+        context = {'cookiecutter': OrderedDict([
+            (
+                'project_name', {
+                    'default': u'A New Project',
+                    'prompt': u'Your project name',
+                },
+            ),
+            (
+                'include_extras', {
+                    'default': u'no',
+                    'prompt':  u'Include extra things?',
+                    'type': 'boolean',
+                },
+            ),
+            (
+                 'include_tests', {
+                    'default': u'yes',
+                    'prompt':  u'Include some test files?',
+                    'type': 'boolean',
+                },
+            ),
+        ])}
+        context = prompt.prompt_for_config(context)
+        self.assertEqual(context, {
+            'project_name': u'A New Project',
+            'include_extras': False,
+            'include_tests': True,
+        })
+
+
+class TestPromptNoInput(unittest.TestCase):
+
+    def test_prompt_no_input(self):
+        orig_context = {"cookiecutter": {"project_name": u"A New Project"}}
+        context = prompt.prompt_for_config(orig_context, no_input=True)
+        self.assertEqual(context, orig_context['cookiecutter'])
+
+    def test_prompt_no_input_with_rich_context_type(self):
+        context = {'cookiecutter': OrderedDict([
+            (
+                 'include_tests', {
+                    'default': u'yes',
+                    'prompt':  u'Include some test files?',
+                    'type': 'boolean',
+                },
+            ),
+        ])}
+        context = prompt.prompt_for_config(context, no_input=True)
+        self.assertEqual(context, {'include_tests': True})
+
 
 class TestQueryAnswers(unittest.TestCase):
 
