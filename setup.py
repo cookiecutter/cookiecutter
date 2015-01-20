@@ -15,12 +15,11 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = ['binaryornot>=0.2.0', 'jinja2>=2.4', 'PyYAML>=3.10']
+requirements = ['binaryornot>=0.2.0', 'jinja2>=2.4', 'PyYAML>=3.10', 'click<4.0']
 test_requirements = []
 
 # Add Python 2.6-specific dependencies
 if sys.version_info[:2] < (2, 7):
-    requirements.append('argparse')
     requirements.append('ordereddict')
     requirements.append('simplejson')
     test_requirements.append('unittest2')
@@ -47,7 +46,7 @@ setup(
     package_dir={'cookiecutter': 'cookiecutter'},
     entry_points={
         'console_scripts': [
-            'cookiecutter = cookiecutter.main:main',
+            'cookiecutter = cookiecutter.cli:main',
         ]
     },
     include_package_data=True,
