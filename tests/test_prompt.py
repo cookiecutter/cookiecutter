@@ -66,6 +66,13 @@ class TestPrompt(unittest.TestCase):
         self.assertEqual(cookiecutter_dict, {"project_name": u"A New Project",
              "pkg_name": u"anewproject"})
 
+    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'2')
+    def test_prompt_for_config_nonstring(self):
+        context = {"cookiecutter": {"python_major_version": 3}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        self.assertEqual(cookiecutter_dict, {"python_major_version": u"2"})
+
 
 class TestQueryAnswers(unittest.TestCase):
 
