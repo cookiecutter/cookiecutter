@@ -3,6 +3,14 @@
 History
 -------
 
+0.9.1 (2015-01-20)
+~~~~~~~~~~~~~~~~~~
+
+* Handle non-strings in JSON, thanks to `@jacebrowning`_ (#370, #368).
+
+.. _`@jacebrowning`: https://github.com/jacebrowning
+
+
 0.9.0 (2015-01-12)
 ~~~~~~~~~~~~~~~~~~
 

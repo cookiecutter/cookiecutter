@@ -1,3 +1,4 @@
+import os
 import sys
 
 PY3 = sys.version_info[0] == 3
@@ -141,8 +142,8 @@ else:  # Forced testing
                         return name
         return None
 
-def isstr(obj):
+def is_string(obj):
     """Determine if an object is a string."""
-    return isinstance(obj, str if PY3 else basestring)  # NOQA
+    return isinstance(obj, str if PY3 else basestring)
 
 _hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest)
