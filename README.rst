@@ -220,6 +220,7 @@ HTML
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
+.. _`cookiecutter-django-herokuapp`: https://github.com/dulaccc/cookiecutter-django-herokuapp
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-cms`: https://github.com/palazzem/cookiecutter-django-cms
 .. _`cookiecutter-djangocms-plugin`: https://github.com/mishbahr/cookiecutter-djangocms-plugin
