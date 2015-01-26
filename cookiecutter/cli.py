@@ -11,10 +11,18 @@ Main `cookiecutter` CLI.
 from __future__ import unicode_literals
 
 import os
+import os.path
 import sys
 import logging
 
 import click
+
+if __name__ == "__main__":
+    # resolve symlink if any
+    current_filename = os.path.realpath(__file__)
+    # insert parent path in sys.path
+    sys.path.insert(0, os.path.join(os.path.dirname(current_filename), ".."))
+
 
 from cookiecutter import __version__
 from cookiecutter.main import cookiecutter
@@ -27,7 +35,7 @@ def print_version(context, param, value):
         return
     click.echo('Cookiecutter %s from %s (Python %s)' % (
         __version__,
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
         sys.version[:3]
     ))
     context.exit()
@@ -68,3 +76,7 @@ def main(template, no_input, checkout, verbose):
         )
 
     cookiecutter(template, checkout, no_input)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from click.testing import CliRunner
 
@@ -23,3 +24,9 @@ def test_cli_verbose():
     result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-v'])
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
+
+
+def test_shell_execution():
+    errlvl = subprocess.call(["python", os.path.join("cookiecutter", "cli.py"),
+                              "--version"])
+    assert errlvl == 0
