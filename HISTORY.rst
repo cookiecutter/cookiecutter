@@ -18,10 +18,13 @@ Features:
 
 Other Changes:
 
+* Updated to Jinja 2.7 or higher in order to control trailing new lines in templates, thanks to `@sfermigier`_ (#356).
+
 * Added more Cookiecutters to the list:
 
   * `cookiecutter-scala-spark`_ by `@jpzk`_
-  
+
+.. _`@sfermigier`: https://github.com/sfermigier
 .. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
 .. _`@jpzk`: https://github.com/jpzk
 
