@@ -13,12 +13,13 @@ library rather than a script.
 
 from __future__ import unicode_literals
 import logging
-import os
 
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
+from .parsers import find_cfg_file
+
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +84,8 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
         # cookiecutters_dir
         repo_dir = template
 
-    context_file = os.path.join(repo_dir, 'cookiecutter.json')
+    context_file = find_cfg_file(repo_dir)
+
     logging.debug('context_file is {0}'.format(context_file))
 
     context = generate_context(
