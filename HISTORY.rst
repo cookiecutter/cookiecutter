@@ -23,7 +23,9 @@ Other Changes:
 * Added more Cookiecutters to the list:
 
   * `cookiecutter-scala-spark`_ by `@jpzk`_
+  * `cookiecutter-atari2600`_ by `@joeyjoejoejr`_
 
+.. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
 .. _`@sfermigier`: https://github.com/sfermigier
 .. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
 .. _`@jpzk`: https://github.com/jpzk
