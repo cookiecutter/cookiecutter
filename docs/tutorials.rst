@@ -13,7 +13,6 @@ Create Your Very Own Cookiecutter
 
 * :doc:`tutorial2` by `@audreyr`_
 
-
 * `Project Templates Made Easy`_ by `@pydanny`_
 
 * Cookiedozer Tutorials by `@hackebrot`_
