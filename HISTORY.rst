@@ -24,7 +24,10 @@ Other Changes:
 
   * `cookiecutter-scala-spark`_ by `@jpzk`_
   * `cookiecutter-atari2600`_ by `@joeyjoejoejr`_
+  * `cookiecutter-bottle`_ by `@avelino`_
 
+.. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
+.. _`@avelino`: https://github.com/avelino
 .. _`@joeyjoejoejr`: https://github.com/joeyjoejoejr
 .. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
 .. _`@sfermigier`: https://github.com/sfermigier
