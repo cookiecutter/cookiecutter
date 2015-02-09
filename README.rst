@@ -153,6 +153,7 @@ Python
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
+* `cookiecutter-django-herokuapp`_: A Django 1.7+ template optimized for Python 3 on Heroku.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
 * `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
