@@ -19,6 +19,7 @@ Features:
 Other Changes:
 
 * Updated to Jinja 2.7 or higher in order to control trailing new lines in templates, thanks to `@sfermigier`_ (#356).
+* Tweaked flake8 to ignore e731, thanks to `@michaeljoseph`_ (#390)
 
 * Added more Cookiecutters to the list:
 
