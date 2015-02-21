@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
-from cookiecutter import main
+from cookiecutter import cli
 from docutils import nodes
 from docutils.parsers import rst
 from docutils.statemachine import ViewList
@@ -19,7 +19,7 @@ class CcCommandLineOptions(rst.Directive):
         return [bookmark_line, "", line, "", " %s" % opt_help, ""]
 
     def process_actions(self):
-        parser = main._get_parser()
+        parser = cli._get_parser()
         for action in parser._actions:
             if not action.option_strings:
                 continue

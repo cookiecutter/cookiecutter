@@ -251,14 +251,16 @@ HTML
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 
 Scala
-~~~~
+~~~~~
 
 * `cookiecutter-scala-spark`_: A cookiecutter template for Apache Spark applications written in Scala.
+
 .. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
 
 6502 Assembly
 ~~~~~~~~~~~~~
 * `cookiecutter-atari2600`_: A cookiecutter template for Atari2600 projects.
+
 .. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
 
 Similar projects
