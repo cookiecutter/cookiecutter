@@ -83,8 +83,8 @@ else:  # Forced testing
         # Additionally check that `file` is not a directory, as on Windows
         # directories pass the os.access check.
         def _access_check(fn, mode):
-            return (os.path.exists(fn) and os.access(fn, mode)
-                    and not os.path.isdir(fn))
+            return (os.path.exists(fn) and os.access(fn, mode) and
+                    not os.path.isdir(fn))
 
         # If we're given a path with a directory part, look it up directly
         # rather than referring to PATH directories. This includes checking
