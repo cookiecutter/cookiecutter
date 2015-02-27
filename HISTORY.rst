@@ -382,5 +382,5 @@ Bumped to "Development Status :: 3 - Alpha".
 Roadmap
 -------
 
-https://github.com/audreyr/cookiecutter/issues/milestones
+https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
 
