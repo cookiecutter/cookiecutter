@@ -15,6 +15,7 @@ Features:
 * Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
 * Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
 * Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
+* Made JSON parsing errors easier to debug, thanks to `@rsyring`_ and `@mark0978`_ (#355, #358, #388).
 
 Other Changes:
 
@@ -28,6 +29,8 @@ Other Changes:
   * `cookiecutter-atari2600`_ by `@joeyjoejoejr`_
   * `cookiecutter-bottle`_ by `@avelino`_
 
+.. _`@rsyring`: https://github.com/rsyring
+.. _`@mark0978`: https://github.com/mark0978
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`@avelino`: https://github.com/avelino
 .. _`@joeyjoejoejr`: https://github.com/joeyjoejoejr
