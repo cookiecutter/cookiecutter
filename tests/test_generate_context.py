@@ -14,8 +14,9 @@ TestGenerateContext.test_generate_context_with_default_and_extra
 
 from __future__ import unicode_literals
 import pytest
-
+import re
 from cookiecutter import generate
+from cookiecutter.exceptions import ContextDecodingException
 
 
 def context_data():
@@ -73,3 +74,16 @@ def test_generate_context(input_params, expected_context):
     according expected context.
     """
     assert generate.generate_context(**input_params) == expected_context
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_generate_context_with_json_decoding_error():
+    with pytest.raises(ContextDecodingException) as excinfo:
+        generate.generate_context('tests/test-generate-context/invalid-syntax.json')
+    # original message from json module should be included
+    assert re.search('Expecting \'{0,1}:\'{0,1} delimiter: line 1 column (19|20) \(char 19\)',
+                     str(excinfo.value))
+    # File name should be included too...for testing purposes, just test the last part of the file.
+    # If we wanted to test the absolute path, we'd have to do some additional work in the test which
+    # doesn't seem that needed at this point.
+    assert 'tests/test-generate-context/invalid-syntax.json' in str(excinfo.value)

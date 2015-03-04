@@ -20,7 +20,7 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
-from .exceptions import NonTemplatedInputDirException
+from .exceptions import NonTemplatedInputDirException, ContextDecodingException
 from .find import find_template
 from .utils import make_sure_path_exists, work_in
 from .hooks import run_hook
@@ -41,7 +41,17 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     context = {}
 
     file_handle = open(context_file)
-    obj = json.load(file_handle, object_pairs_hook=OrderedDict)
+    try:
+        obj = json.load(file_handle, object_pairs_hook=OrderedDict)
+    except ValueError as e:
+        # JSON decoding error.  Let's throw a new exception that is more
+        # friendly for the developer or user.
+        full_fpath = os.path.abspath(context_file)
+        json_exc_message = str(e)
+        our_exc_message = (
+            'JSON decoding error while loading "{0}".  Decoding'
+            ' error details: "{1}"'.format(full_fpath, json_exc_message))
+        raise ContextDecodingException(our_exc_message)
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
