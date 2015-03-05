@@ -52,6 +52,8 @@ def test_cli():
     result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input'])
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Fake Project**' in f.read()
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -59,6 +61,8 @@ def test_cli_verbose():
     result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-v'])
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Fake Project**' in f.read()
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -82,7 +86,8 @@ def test_cli_replay(mocker):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH
+        config_file=config.USER_CONFIG_PATH,
+        extra_context=None
     )
 
 
@@ -117,7 +122,8 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH
+        config_file=config.USER_CONFIG_PATH,
+        extra_context=None
     )
 
 
@@ -151,7 +157,8 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         replay=True,
         overwrite_if_exists=True,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH
+        config_file=config.USER_CONFIG_PATH,
+        extra_context=None
     )
 
 
@@ -206,7 +213,8 @@ def test_cli_output_dir(mocker, output_dir_flag, output_dir):
         replay=False,
         overwrite_if_exists=False,
         output_dir=output_dir,
-        config_file=config.USER_CONFIG_PATH
+        config_file=config.USER_CONFIG_PATH,
+        extra_context=None
     )
 
 
@@ -246,7 +254,8 @@ def test_user_config(mocker, user_config_path):
         replay=False,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=user_config_path
+        config_file=user_config_path,
+        extra_context=None
     )
 
 
@@ -271,7 +280,8 @@ def test_default_user_config_overwrite(mocker, user_config_path):
         replay=False,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=None
+        config_file=None,
+        extra_context=None
     )
 
 
@@ -294,7 +304,8 @@ def test_default_user_config(mocker):
         replay=False,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=None
+        config_file=None,
+        extra_context=None
     )
 
 
@@ -343,3 +354,22 @@ def test_echo_unknown_extension_error(tmpdir):
     assert result.exit_code == 1
 
     assert 'Unable to load extension: ' in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_extra_context():
+    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-v',
+                                  'project_name=Awesomez'])
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Awesomez**' in f.read()
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_extra_context_invalid_format():
+    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-v',
+                                  'ExtraContextWithNoEqualsSoInvalid'])
+    assert result.exit_code == 2
+    assert 'Error: Invalid value for "extra_context"' in result.output
+    assert 'should contain items of form key=value' in result.output
