@@ -25,53 +25,6 @@ except KeyError:
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
-class TestCookiecutterLocalNoInput(CookiecutterCleanSystemTestCase):
-
-    def test_cookiecutter(self):
-        main.cookiecutter('tests/fake-repo-pre/', no_input=True)
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isdir('fake-project'))
-        self.assertTrue(os.path.isfile('fake-project/README.rst'))
-        self.assertFalse(os.path.exists('fake-project/json/'))
-
-    def test_cookiecutter_no_slash(self):
-        main.cookiecutter('tests/fake-repo-pre', no_input=True)
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isdir('fake-project'))
-        self.assertTrue(os.path.isfile('fake-project/README.rst'))
-        self.assertFalse(os.path.exists('fake-project/json/'))
-
-    def test_cookiecutter_no_input_extra_context(self):
-        """ `Call cookiecutter()` with `no_input=True` and `extra_context` """
-        main.cookiecutter(
-            'tests/fake-repo-pre',
-            no_input=True,
-            extra_context={'repo_name': 'fake-project-extra'}
-        )
-        self.assertTrue(os.path.isdir('fake-project-extra'))
-
-    def test_cookiecutter_templated_context(self):
-        """
-        `Call cookiecutter()` with `no_input=True` and templates in the
-        cookiecutter.json file
-        """
-        main.cookiecutter(
-            'tests/fake-repo-tmpl',
-            no_input=True
-        )
-        self.assertTrue(os.path.isdir('fake-project-templated'))
-
-    def tearDown(self):
-        if os.path.isdir('fake-project'):
-            utils.rmtree('fake-project')
-        if os.path.isdir('fake-project-extra'):
-            utils.rmtree('fake-project-extra')
-        if os.path.isdir('fake-project-templated'):
-            utils.rmtree('fake-project-templated')
-
-
 class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
 
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
