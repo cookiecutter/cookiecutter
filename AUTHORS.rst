@@ -64,7 +64,9 @@ Contributors
 * lord63 (`@lord63`_)
 * Randy Syring (`@rsyring`_)
 * Mark Jones (`@mark0978`_)
+* Marc Abramowitz (`@msabramo`_)
 
+.. _`@msabramo`: https://github.com/msabramo
 .. _`@mark0978`: https://github.com/mark0978
 .. _`@rsyring`: https://github.com/rsyring
 .. _`@vincentbernat`: https://github.com/vincentbernat
