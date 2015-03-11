@@ -62,3 +62,9 @@ class VCSNotInstalled(CookiecutterException):
     """
     Raised if the version control system (git or hg) is not installed.
     """
+
+
+class ContextDecodingException(CookiecutterException):
+    """
+    Raised when a project's JSON context file can not be decoded.
+    """

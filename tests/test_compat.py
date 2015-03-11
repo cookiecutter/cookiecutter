@@ -8,7 +8,8 @@ test_compat
 Tests for `cookiecutter.compat` module.
 """
 
-from cookiecutter.compat import unittest, which
+import unittest
+from cookiecutter.compat import which
 
 
 class TestWhich(unittest.TestCase):

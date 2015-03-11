@@ -3,7 +3,46 @@
 History
 -------
 
-0.9.0 (Development)
+1.0.0 (Development)
+~~~~~~~~~~~~~~~~~~~~~
+
+The goals of this release was to formally remove support for Python 2.6 and continue the move to using py.test.
+
+Features:
+
+* Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322).
+* Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
+* Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
+* Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
+* Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
+* Made JSON parsing errors easier to debug, thanks to `@rsyring`_ and `@mark0978`_ (#355, #358, #388).
+
+Other Changes:
+
+* Updated to Jinja 2.7 or higher in order to control trailing new lines in templates, thanks to `@sfermigier`_ (#356).
+* Switch to using Click for command-line options, thanks to `@michaeljoseph`_ (#391, #393).
+* Tweaked flake8 to ignore e731, thanks to `@michaeljoseph`_ (#390).
+* Fixed failing Windows tests and corrected AppVeyor badge link thanks to `@msabramo`_ (#403).
+
+.. _`@msabramo`: https://github.com/msabramo
+
+* Added more Cookiecutters to the list:
+
+  * `cookiecutter-scala-spark`_ by `@jpzk`_
+  * `cookiecutter-atari2600`_ by `@joeyjoejoejr`_
+  * `cookiecutter-bottle`_ by `@avelino`_
+
+.. _`@rsyring`: https://github.com/rsyring
+.. _`@mark0978`: https://github.com/mark0978
+.. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
+.. _`@avelino`: https://github.com/avelino
+.. _`@joeyjoejoejr`: https://github.com/joeyjoejoejr
+.. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
+.. _`@sfermigier`: https://github.com/sfermigier
+.. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
+.. _`@jpzk`: https://github.com/jpzk
+
+0.9.0 (2015-01-13)
 ~~~~~~~~~~~~~~~~~~~
 
 The goals of this release were to add the ability to Jinja2ify the `cookiecutter.json` default values, and formally launch support for Python 3.4.
@@ -13,8 +52,6 @@ Features:
 * Python 3.4 is now a first class citizen, thanks to everyone.
 * `cookiecutter.json` values are now rendered Jinja2 templates, thanks to @bollwyvl (#291).
 * Move to `py.test`, thanks to `@pfmoore`_ (#319) and `@ramiroluz`_ (#310).
-* Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322).
-* Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
 * Add `PendingDeprecation` warning for users of Python 2.6, as support for it is gone in Python 2.7, thanks to `@michaeljoseph`_ (#201).
 
 Bug Fixes:
@@ -28,7 +65,6 @@ Other changes:
 * Added ReadTheDocs badge, thanks to `@michaeljoseph`_.
 * Added AppVeyor badge, thanks to `@pydanny`_
 * Documentation and PyPI trove classifier updates, thanks to `@thedrow`_ (#323 and #324)
-* Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
 
 .. _`gitter`: https://gitter.im/audreyr/cookiecutter
 .. _`@inglesp`: https://github.com/inglesp
@@ -54,7 +90,7 @@ Bug Fixes:
 
 * Newlines at the end of files are no longer stripped, thanks to `@treyhunner`_ (#183).
 * Cloning prompt suppressed by respecting the `no_input` flag, thanks to `@trustrachel`_ (#285)
-* With Python 3, input is no longer converted to bytes, thanks to `@uranusjr `_ (#98).
+* With Python 3, input is no longer converted to bytes, thanks to `@uranusjr`_ (#98).
 
 Other Changes:
 
@@ -82,6 +118,7 @@ Other Changes:
 .. _`@schacki`: https://github.com/schacki
 .. _`@ryanolson`: https://github.com/ryanolson
 .. _`@Natim`: https://github.com/Natim
+.. _`@dinopetrone`: https://github.com/dinopetrone
 
 0.7.2 (2014-08-05)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -253,8 +290,6 @@ Other changes:
 .. _`@s-m-i-t-a`: https://github.com/s-m-i-t-a/
 .. _`@sloria`: https://github.com/sloria/
 .. _`@alex`: https://github.com/alex/
-.. _`@pydanny`: https://github.com/pydanny/
-.. _`@freakboy3742`: https://github.com/freakboy3742/
 .. _`@es128`: https://github.com/es128/
 .. _`@rolo`: https://github.com/rolo/
 .. _`@oubiga`: https://github.com/oubiga/
@@ -353,5 +388,5 @@ Bumped to "Development Status :: 3 - Alpha".
 Roadmap
 -------
 
-https://github.com/audreyr/cookiecutter/issues/milestones
+https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
 

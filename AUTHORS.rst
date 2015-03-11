@@ -61,7 +61,14 @@ Contributors
 * Peter Inglesby (`@inglesp`_)
 * Ramiro Batista da Luz (`@ramiroluz`_)
 * Omer Katz (`@thedrow`_)
+* lord63 (`@lord63`_)
+* Randy Syring (`@rsyring`_)
+* Mark Jones (`@mark0978`_)
+* Marc Abramowitz (`@msabramo`_)
 
+.. _`@msabramo`: https://github.com/msabramo
+.. _`@mark0978`: https://github.com/mark0978
+.. _`@rsyring`: https://github.com/rsyring
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -110,3 +117,4 @@ Contributors
 .. _`@inglesp`: https://github.com/inglesp
 .. _`@ramiroluz`: https://github.com/ramiroluz
 .. _`@thedrow`: https://github.com/thedrow
+.. _`@lord63`: https://github.com/lord63
