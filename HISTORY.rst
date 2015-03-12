@@ -31,7 +31,10 @@ Other Changes:
   * `cookiecutter-scala-spark`_ by `@jpzk`_
   * `cookiecutter-atari2600`_ by `@joeyjoejoejr`_
   * `cookiecutter-bottle`_ by `@avelino`_
+  * `cookiecutter-latex-article`_ by `@Kreger51`_
 
+.. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
+.. _`@Kreger51`: https://github.com/Kreger51
 .. _`@rsyring`: https://github.com/rsyring
 .. _`@mark0978`: https://github.com/mark0978
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
