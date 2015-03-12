@@ -200,6 +200,7 @@ LaTeX/XeTeX
 ~~~~~~~~~~~
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
+* `cookiecutter-latex-article`_: A LaTeX template geared towards academic use.
 
 
 Berkshelf-Vagrant
@@ -238,6 +239,7 @@ HTML
 .. _`docopt`: http://docopt.org/
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
+.. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 .. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
