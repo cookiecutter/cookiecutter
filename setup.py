@@ -4,9 +4,9 @@ import os
 import sys
 
 try:
-    from setuptools import setup
+    from setuptools import setup, Command
 except ImportError:
-    from distutils.core import setup
+    from distutils.core import setup, Command
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -16,7 +16,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = ['binaryornot>=0.2.0', 'jinja2>=2.7', 'PyYAML>=3.10', 'click<4.0']
-test_requirements = []
+test_requirements = ['pytest']
 
 # Add Python 2.6-specific dependencies
 if sys.version_info[:2] < (2, 7):
@@ -29,6 +29,22 @@ if sys.version < '3':
     requirements.append('mock')
 
 # There are no Python 3-specific dependencies to add
+
+
+class PyTest(Command):
+    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
+
+    def initialize_options(self):
+        self.pytest_args = []
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import pytest
+        errno = pytest.main(self.pytest_args)
+        sys.exit(errno)
+
 
 setup(
     name='cookiecutter',
@@ -71,6 +87,7 @@ setup(
     ],
     keywords='cookiecutter, Python, projects, project templates, Jinja2, \
         skeleton, scaffolding, project directory, setup.py, package, packaging',
+    cmdclass = {'test': PyTest},
     test_suite='tests',
     tests_require=test_requirements
 )
