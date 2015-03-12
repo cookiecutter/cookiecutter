@@ -13,15 +13,16 @@ Features:
 * Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322).
 * Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
 * Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
-* Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
-* Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
-* Made JSON parsing errors easier to debug, thanks to `@rsyring`_ and `@mark0978`_ (#355, #358, #388).
-* Large expansions to the tutorials thansk to `@hackebrot`_ (#384)
+* Large expansions to the tutorials thanks to `@hackebrot`_ (#384)
+* Switch to using Click for command-line options, thanks to `@michaeljoseph`_ (#391, #393).
 
 Other Changes:
 
+
+* Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
+* Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
+* Made JSON parsing errors easier to debug, thanks to `@rsyring`_ and `@mark0978`_ (#355, #358, #388).
 * Updated to Jinja 2.7 or higher in order to control trailing new lines in templates, thanks to `@sfermigier`_ (#356).
-* Switch to using Click for command-line options, thanks to `@michaeljoseph`_ (#391, #393).
 * Tweaked flake8 to ignore e731, thanks to `@michaeljoseph`_ (#390).
 * Fixed failing Windows tests and corrected AppVeyor badge link thanks to `@msabramo`_ (#403).
 
@@ -33,7 +34,10 @@ Other Changes:
   * `cookiecutter-atari2600`_ by `@joeyjoejoejr`_
   * `cookiecutter-bottle`_ by `@avelino`_
   * `cookiecutter-latex-article`_ by `@Kreger51`_
+  * `cookiecutter-django-rest-framework`_ by `@jpadilla`_
 
+.. _`jpadilla`: https://github.com/jpadilla
+.. _``: https://github.com/jpadilla/cookiecutter-django-rest-framework
 .. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
 .. _`@Kreger51`: https://github.com/Kreger51
 .. _`@rsyring`: https://github.com/rsyring
