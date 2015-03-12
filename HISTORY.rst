@@ -16,6 +16,7 @@ Features:
 * Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
 * Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
 * Made JSON parsing errors easier to debug, thanks to `@rsyring`_ and `@mark0978`_ (#355, #358, #388).
+* Large expansions to the tutorials thansk to `@hackebrot`_ (#384)
 
 Other Changes:
 
