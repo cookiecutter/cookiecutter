@@ -144,6 +144,13 @@ Here is a list of **cookiecutters** (aka Cookiecutter project templates) for you
 
 Make your own, then submit a pull request adding yours to this list!
 
+Cookie Jars
+~~~~~~~~~~~
+
+Other lists of cookiecutters, or projects that assemble them via git submodules.
+
+* `Springerle`_: Springerle cookiecutter collection, mostly for Python and Java. This is the repository comprised of git submodules pointing to various cookiecutter releases, for easy installation and updates.
+
 Python
 ~~~~~~
 
@@ -249,6 +256,7 @@ HTML
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
+.. _`Springerle`: https://github.com/Springerle/cookie-jar
 
 Scala
 ~~~~~
