@@ -36,8 +36,8 @@ Other Changes:
   * `cookiecutter-latex-article`_ by `@Kreger51`_
   * `cookiecutter-django-rest-framework`_ by `@jpadilla`_
 
-.. _`jpadilla`: https://github.com/jpadilla
-.. _``: https://github.com/jpadilla/cookiecutter-django-rest-framework
+.. _`@jpadilla`: https://github.com/jpadilla
+.. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
 .. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
 .. _`@Kreger51`: https://github.com/Kreger51
 .. _`@rsyring`: https://github.com/rsyring
