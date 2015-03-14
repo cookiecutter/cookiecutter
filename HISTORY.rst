@@ -35,7 +35,9 @@ Other Changes:
   * `cookiecutter-bottle`_ by `@avelino`_
   * `cookiecutter-latex-article`_ by `@Kreger51`_
   * `cookiecutter-django-rest-framework`_ by `@jpadilla`_
+  * `cookiedozer`_ by `@hackebrot`_
 
+.. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
 .. _`@jpadilla`: https://github.com/jpadilla
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
 .. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
