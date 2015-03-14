@@ -163,6 +163,7 @@ Python
 * `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4.
 * `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
+* `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
 * `cookiecutter-pypackage-minimal`_: A mimimal Python package template.
 * `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
@@ -230,6 +231,7 @@ HTML
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
 .. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
+.. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
 .. _`cookiecutter-pypackage-minimal`: https://github.com/borntyping/cookiecutter-pypackage-minimal
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
