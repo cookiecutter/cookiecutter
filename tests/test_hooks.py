@@ -11,7 +11,6 @@ Tests for `cookiecutter.hooks` module.
 import sys
 import os
 import stat
-import unittest
 
 from cookiecutter import hooks, utils
 
@@ -164,6 +163,3 @@ class TestExternalHooks(object):
 
             hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
-
-if __name__ == '__main__':
-    unittest.main()
