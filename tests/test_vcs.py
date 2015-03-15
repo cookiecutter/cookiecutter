@@ -12,16 +12,9 @@ import locale
 import os
 import pytest
 import subprocess
-import unittest
 
 from cookiecutter import exceptions, utils, vcs
 from tests.skipif_markers import skipif_no_network
-
-try:
-    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
-except KeyError:
-    no_network = False
-
 
 encoding = locale.getdefaultlocale()[1]
 
@@ -99,7 +92,3 @@ def test_vcs_not_installed(monkeypatch):
     )
     with pytest.raises(exceptions.VCSNotInstalled):
         vcs.clone("http://norepotypespecified.com")
-
-
-if __name__ == '__main__':
-    unittest.main()
