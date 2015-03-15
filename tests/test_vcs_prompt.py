@@ -41,3 +41,13 @@ def test_git_clone_overwrite(monkeypatch):
     )
     assert repo_dir == 'cookiecutter-pypackage'
     assert os.path.isfile('cookiecutter-pypackage/README.rst')
+
+
+@skipif_no_network
+def test_git_clone_overwrite_with_no_prompt():
+    repo_dir = vcs.clone(
+        'https://github.com/audreyr/cookiecutter-pypackage.git',
+        no_input=True
+    )
+    assert repo_dir == 'cookiecutter-pypackage'
+    assert os.path.isfile('cookiecutter-pypackage/README.rst')
