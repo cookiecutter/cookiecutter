@@ -24,15 +24,16 @@ def make_readonly(path):
     os.chmod(path, mode & ~stat.S_IWRITE)
 
 
-class TestUtils(unittest.TestCase):
 
-    def test_rmtree(self):
-        os.mkdir('foo')
-        with open('foo/bar', "w") as f:
-            f.write("Test data")
-        make_readonly('foo/bar')
-        utils.rmtree('foo')
-        self.assertFalse(os.path.exists('foo'))
+def test_rmtree():
+    os.mkdir('foo')
+    with open('foo/bar', "w") as f:
+        f.write("Test data")
+    make_readonly('foo/bar')
+    utils.rmtree('foo')
+    assert not os.path.exists('foo')
+
+class TestUtils(unittest.TestCase):
 
     def test_make_sure_path_exists(self):
         if sys.platform.startswith('win'):
