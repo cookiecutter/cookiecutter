@@ -192,17 +192,17 @@ Other Changes:
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
 
-.. _`@michaeljoseph`: https://github.com/michaeljoseph
-.. _`@iknite`: https://github.com/iknite
-.. _`@borntyping`: https://github.com/borntyping
 .. _`@Paspartout`: https://github.com/Paspartout
+.. _`@audreyr`: https://github.com/audreyr
+.. _`@borntyping`: https://github.com/borntyping
+.. _`@hackebrot`: https://github.com/hackebrot
+.. _`@iknite`: https://github.com/iknite
+.. _`@ionelmc`: https://github.com/ionelmc
+.. _`@michaeljoseph`: https://github.com/michaeljoseph
 .. _`@pfmoore`: https://github.com/pfmoore
 .. _`@pydanny`: https://github.com/pydanny
-.. _`@audreyr`: https://github.com/audreyr
-.. _`@uranusjr`: https://github.com/uranusjr
 .. _`@saxix`: https://github.com/saxix
-.. _`@hackebrot`: https://github.com/hackebrot
-.. _`@ionelmc`: https://github.com/ionelmc
+.. _`@uranusjr`: https://github.com/uranusjr
 
 
 
