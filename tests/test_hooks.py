@@ -67,7 +67,7 @@ class TestFindHooks(object):
         utils.rmtree(self.repo_path)
 
     def test_find_hook(self):
-        """Finds the specified hook"""
+        """Finds the specified hook."""
 
         with utils.work_in(self.repo_path):
             expected = {
@@ -79,9 +79,10 @@ class TestFindHooks(object):
             assert expected == hooks.find_hooks()
 
     def test_no_hooks(self):
-        """find_hooks should return None if the hook could not be found. """
+        """find_hooks should return None if the hook could not be found."""
+
         with utils.work_in('tests/fake-repo'):
-            self.assertEqual({}, hooks.find_hooks())
+            assert {} == hooks.find_hooks()
 
 
 class TestExternalHooks(unittest.TestCase):
