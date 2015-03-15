@@ -112,7 +112,7 @@ class TestExternalHooks(object):
     def test_run_script(self):
         """Execute a hook script, independently of project generation"""
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
-        self.assertTrue(os.path.isfile('shell_post.txt'))
+        assert os.path.isfile('shell_post.txt')
 
     def test_run_script_cwd(self):
         """Change directory before running hook"""
@@ -120,8 +120,8 @@ class TestExternalHooks(object):
             os.path.join(self.hooks_path, self.post_hook),
             'tests'
         )
-        self.assertTrue(os.path.isfile('tests/shell_post.txt'))
-        self.assertFalse('tests' in os.getcwd())
+        assert os.path.isfile('tests/shell_post.txt')
+        assert 'tests' not in os.getcwd()
 
     def test_run_script_with_context(self):
         """Execute a hook script, passing a context"""
@@ -152,18 +152,18 @@ class TestExternalHooks(object):
                     'file': 'context_post.txt'
                 }
             })
-        self.assertTrue(os.path.isfile('tests/context_post.txt'))
-        self.assertFalse('tests' in os.getcwd())
+        assert os.path.isfile('tests/context_post.txt')
+        assert 'tests' not in os.getcwd()
 
     def test_run_hook(self):
         """Execute hook from specified template in specified output directory"""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
             hooks.run_hook('pre_gen_project', tests_dir, {})
-            self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'python_pre.txt')))
+            assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
 
             hooks.run_hook('post_gen_project', tests_dir, {})
-            self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
+            assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
 
 if __name__ == '__main__':
     unittest.main()
