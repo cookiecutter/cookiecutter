@@ -56,14 +56,14 @@ def make_test_repo(name):
     return post
 
 
-class TestFindHooks(unittest.TestCase):
+class TestFindHooks(object):
 
     repo_path = 'tests/test-hooks'
 
-    def setUp(self):
+    def setup_method(self, method):
         self.post_hook = make_test_repo(self.repo_path)
 
-    def tearDown(self):
+    def teardown_method(self, method):
         utils.rmtree(self.repo_path)
 
     def test_find_hook(self):
