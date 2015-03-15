@@ -60,7 +60,7 @@ And if you want to specify a branch you can do that with::
 Keeping your cookiecutters organized
 ------------------------------------
 
-As of the upcoming Cookiecutter 0.7.0 release:
+As of the Cookiecutter 0.7.0 release:
 
 * Whenever you generate a project with a cookiecutter, the resulting project
   is output to your current directory.
