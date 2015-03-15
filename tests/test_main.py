@@ -9,7 +9,6 @@ Tests for `cookiecutter.main` module.
 """
 
 import logging
-import os
 import unittest
 
 from cookiecutter import main
