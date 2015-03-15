@@ -16,6 +16,7 @@ from cookiecutter import hooks, utils
 
 
 def make_test_repo(name):
+    """Helper function which is called in the test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
     os.mkdir(name)
