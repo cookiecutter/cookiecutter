@@ -106,14 +106,6 @@ class TestVCSPrompt(unittest.TestCase):
             utils.rmtree('cookiecutter-trytonmodule')
         os.mkdir('cookiecutter-trytonmodule/')
 
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
-    def test_git_clone_overwrite(self):
-        repo_dir = vcs.clone(
-            'https://github.com/audreyr/cookiecutter-pypackage.git'
-        )
-        self.assertEqual(repo_dir, 'cookiecutter-pypackage')
-        self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
-
     def test_git_clone_overwrite_with_no_prompt(self):
         repo_dir = vcs.clone(
             'https://github.com/audreyr/cookiecutter-pypackage.git',

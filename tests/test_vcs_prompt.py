@@ -9,10 +9,11 @@ test_vcs_prompt
 import os
 import pytest
 
-from cookiecutter import utils
+from cookiecutter import utils, vcs
+from tests.skipif_markers import skipif_no_network
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def clean_cookiecutter_dirs(request):
     if os.path.isdir('cookiecutter-pypackage'):
         utils.rmtree('cookiecutter-pypackage')
@@ -27,3 +28,16 @@ def clean_cookiecutter_dirs(request):
         if os.path.isdir('cookiecutter-trytonmodule'):
             utils.rmtree('cookiecutter-trytonmodule')
     request.addfinalizer(remove_cookiecutter_dirs)
+
+
+@skipif_no_network
+def test_git_clone_overwrite(monkeypatch):
+    monkeypatch.setattr(
+        'cookiecutter.prompt.read_response',
+        lambda x=u'': u'y'
+    )
+    repo_dir = vcs.clone(
+        'https://github.com/audreyr/cookiecutter-pypackage.git'
+    )
+    assert repo_dir == 'cookiecutter-pypackage'
+    assert os.path.isfile('cookiecutter-pypackage/README.rst')
