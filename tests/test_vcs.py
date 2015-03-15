@@ -79,17 +79,19 @@ def test_git_clone_custom_dir():
         utils.rmtree('tests/custom_dir1')
 
 
+@skipif_no_network
+def test_hg_clone():
+    repo_dir = vcs.clone(
+        'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
+    )
+    assert repo_dir == 'cookiecutter-trytonmodule'
+    assert os.path.isfile('cookiecutter-trytonmodule/README.rst')
+    if os.path.isdir('cookiecutter-trytonmodule'):
+        utils.rmtree('cookiecutter-trytonmodule')
+
+
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCS(unittest.TestCase):
-
-    def test_hg_clone(self):
-        repo_dir = vcs.clone(
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
-        )
-        self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
-        self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
-        if os.path.isdir('cookiecutter-trytonmodule'):
-            utils.rmtree('cookiecutter-trytonmodule')
 
     @patch('cookiecutter.vcs.identify_repo', lambda x: u'stringthatisntashellcommand')
     def test_vcs_not_installed(self):
