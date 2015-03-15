@@ -15,6 +15,7 @@ import unittest
 
 from cookiecutter.compat import patch
 from cookiecutter import exceptions, utils, vcs
+from tests.skipif_markers import skipif_no_network
 
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
@@ -24,18 +25,21 @@ except KeyError:
 
 encoding = locale.getdefaultlocale()[1]
 
+@skipif_no_network
+def test_git_clone():
+    repo_dir = vcs.clone(
+        'https://github.com/audreyr/cookiecutter-pypackage.git'
+    )
+
+    assert repo_dir == 'cookiecutter-pypackage'
+    assert os.path.isfile('cookiecutter-pypackage/README.rst')
+
+    if os.path.isdir('cookiecutter-pypackage'):
+        utils.rmtree('cookiecutter-pypackage')
+
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCS(unittest.TestCase):
-
-    def test_git_clone(self):
-        repo_dir = vcs.clone(
-            'https://github.com/audreyr/cookiecutter-pypackage.git'
-        )
-        self.assertEqual(repo_dir, 'cookiecutter-pypackage')
-        self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
-        if os.path.isdir('cookiecutter-pypackage'):
-            utils.rmtree('cookiecutter-pypackage')
 
     def test_git_clone_checkout(self):
         repo_dir = vcs.clone(
