@@ -85,15 +85,15 @@ class TestFindHooks(object):
             assert {} == hooks.find_hooks()
 
 
-class TestExternalHooks(unittest.TestCase):
+class TestExternalHooks(object):
 
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
-    def setUp(self):
+    def setup_method(self, method):
         self.post_hook = make_test_repo(self.repo_path)
 
-    def tearDown(self):
+    def teardown_method(self, method):
         utils.rmtree(self.repo_path)
 
         if os.path.exists('python_pre.txt'):
