@@ -14,11 +14,6 @@ import unittest
 
 from cookiecutter import main
 
-try:
-    no_network = os.environ[u'DISABLE_NETWORK_TESTS']
-except KeyError:
-    no_network = False
-
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
