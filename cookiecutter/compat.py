@@ -9,10 +9,6 @@ if PY3:  # pragma: no cover
     iteritems = lambda d: iter(d.items())
     from unittest.mock import patch
     from io import StringIO
-    import unittest
-
-    import json
-    from collections import OrderedDict
 
     def read_response(prompt=''):
         """
@@ -33,15 +29,6 @@ else:  # pragma: no cover
     iteritems = lambda d: d.iteritems()
     from mock import patch
     from cStringIO import StringIO
-
-    if OLD_PY2:
-        from ordereddict import OrderedDict
-        import simplejson as json
-        import unittest2 as unittest
-    else:
-        import json
-        from collections import OrderedDict
-        import unittest
 
     def read_response(prompt=''):
         """
@@ -96,8 +83,8 @@ else:  # Forced testing
         # Additionally check that `file` is not a directory, as on Windows
         # directories pass the os.access check.
         def _access_check(fn, mode):
-            return (os.path.exists(fn) and os.access(fn, mode)
-                    and not os.path.isdir(fn))
+            return (os.path.exists(fn) and os.access(fn, mode) and
+                    not os.path.isdir(fn))
 
         # If we're given a path with a directory part, look it up directly
         # rather than referring to PATH directories. This includes checking
@@ -144,4 +131,10 @@ else:  # Forced testing
                         return name
         return None
 
-_hush_pyflakes = (patch, StringIO, json, OrderedDict, unittest, which)
+
+def is_string(obj):
+    """Determine if an object is a string."""
+    return isinstance(obj, str if PY3 else basestring)
+
+
+_hush_pyflakes = (patch, StringIO, which)

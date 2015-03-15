@@ -1,30 +1,29 @@
 # -*- coding: utf-8 -*-
-import sys
-from cookiecutter import main
+from cookiecutter import cli
+
+import click
+
 from docutils import nodes
 from docutils.parsers import rst
 from docutils.statemachine import ViewList
 
 
 class CcCommandLineOptions(rst.Directive):
-    def _format_action(self, action):
-        bookmark_line = ".. _`%s`:" % action.dest
-        line = ".. option:: "
-        line += ", ".join(action.option_strings)
-        opt_help = action.help.replace('%default', str(action.default))
-
-        # fix paths with sys.prefix
-        opt_help = opt_help.replace(sys.prefix, "<sys.prefix>")
-
-        return [bookmark_line, "", line, "", " %s" % opt_help, ""]
+    def _format_option(self, option):
+        return [
+            ".. _`%s`:" % option.name,
+            "",
+            ".. option:: " + ", ".join(option.opts),
+            "",
+            option.help,
+            ""
+        ]
 
     def process_actions(self):
-        parser = main._get_parser()
-        for action in parser._actions:
-            if not action.option_strings:
-                continue
-            for line in self._format_action(action):
-                self.view_list.append(line, "")
+        for option in cli.main.params:
+            if isinstance(option, click.core.Option):
+                for line in self._format_option(option):
+                    self.view_list.append(line, "")
 
     def run(self):
         node = nodes.paragraph()
