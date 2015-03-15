@@ -9,7 +9,6 @@ Tests for `cookiecutter.vcs` module.
 """
 
 import locale
-import logging
 import os
 import subprocess
 import unittest
@@ -23,8 +22,6 @@ except KeyError:
     no_network = False
 
 
-# Log debug and above to console
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 encoding = locale.getdefaultlocale()[1]
 
 
