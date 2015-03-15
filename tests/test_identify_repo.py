@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-test_identify_repo.py
----------------------
+test_identify_repo
+------------------
 """
 
 import pytest
