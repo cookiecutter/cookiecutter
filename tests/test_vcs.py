@@ -16,7 +16,7 @@ import subprocess
 from cookiecutter import exceptions, utils, vcs
 from tests.skipif_markers import skipif_no_network
 
-encoding = locale.getdefaultlocale()[1]
+ENCODING = locale.getdefaultlocale()[1]
 
 
 @skipif_no_network
@@ -48,7 +48,7 @@ def test_git_clone_checkout():
         stdout=subprocess.PIPE
     )
     symbolic_ref = proc.communicate()[0]
-    branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
+    branch = symbolic_ref.decode(ENCODING).strip().split('/')[-1]
     assert 'console-script' == branch
 
     if os.path.isdir(git_dir):
@@ -57,15 +57,15 @@ def test_git_clone_checkout():
 
 @skipif_no_network
 def test_git_clone_custom_dir():
-    os.makedirs("tests/custom_dir1/custom_dir2/")
+    os.makedirs('tests/custom_dir1/custom_dir2/')
     repo_dir = vcs.clone(
         repo_url='https://github.com/audreyr/cookiecutter-pypackage.git',
         checkout=None,
-        clone_to_dir="tests/custom_dir1/custom_dir2/"
+        clone_to_dir='tests/custom_dir1/custom_dir2/'
     )
-    with utils.work_in("tests/custom_dir1/custom_dir2/"):
+    with utils.work_in('tests/custom_dir1/custom_dir2/'):
         test_dir = 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage'
-        assert repo_dir == test_dir.replace("/", os.sep)
+        assert repo_dir == test_dir.replace('/', os.sep)
         assert os.path.isfile('cookiecutter-pypackage/README.rst')
         if os.path.isdir('cookiecutter-pypackage'):
             utils.rmtree('cookiecutter-pypackage')
@@ -91,4 +91,4 @@ def test_vcs_not_installed(monkeypatch):
         lambda x: u'stringthatisntashellcommand'
     )
     with pytest.raises(exceptions.VCSNotInstalled):
-        vcs.clone("http://norepotypespecified.com")
+        vcs.clone('http://norepotypespecified.com')
