@@ -106,14 +106,6 @@ class TestVCSPrompt(unittest.TestCase):
             utils.rmtree('cookiecutter-trytonmodule')
         os.mkdir('cookiecutter-trytonmodule/')
 
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
-    def test_hg_clone_overwrite(self):
-        repo_dir = vcs.clone(
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
-        )
-        self.assertEqual(repo_dir, 'cookiecutter-trytonmodule')
-        self.assertTrue(os.path.isfile('cookiecutter-trytonmodule/README.rst'))
-
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
     def test_hg_clone_cancel(self):
         self.assertRaises(

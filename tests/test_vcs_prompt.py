@@ -62,3 +62,16 @@ def test_git_clone_cancel(monkeypatch):
 
     with pytest.raises(SystemExit):
         vcs.clone('https://github.com/audreyr/cookiecutter-pypackage.git')
+
+
+@skipif_no_network
+def test_hg_clone_overwrite(monkeypatch):
+    monkeypatch.setattr(
+        'cookiecutter.prompt.read_response',
+        lambda x=u'': u'y'
+    )
+    repo_dir = vcs.clone(
+        'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
+    )
+    assert repo_dir == 'cookiecutter-trytonmodule'
+    assert os.path.isfile('cookiecutter-trytonmodule/README.rst')
