@@ -38,29 +38,31 @@ def test_git_clone():
         utils.rmtree('cookiecutter-pypackage')
 
 
+@skipif_no_network
+def test_git_clone_checkout():
+    repo_dir = vcs.clone(
+        'https://github.com/audreyr/cookiecutter-pypackage.git',
+        'console-script'
+    )
+    git_dir = 'cookiecutter-pypackage'
+    assert repo_dir == git_dir
+    assert os.path.isfile(os.path.join('cookiecutter-pypackage', 'README.rst'))
+
+    proc = subprocess.Popen(
+        ['git', 'symbolic-ref', 'HEAD'],
+        cwd=git_dir,
+        stdout=subprocess.PIPE
+    )
+    symbolic_ref = proc.communicate()[0]
+    branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
+    assert 'console-script' == branch
+
+    if os.path.isdir(git_dir):
+        utils.rmtree(git_dir)
+
+
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCS(unittest.TestCase):
-
-    def test_git_clone_checkout(self):
-        repo_dir = vcs.clone(
-            'https://github.com/audreyr/cookiecutter-pypackage.git',
-            'console-script'
-        )
-        git_dir = 'cookiecutter-pypackage'
-        self.assertEqual(repo_dir, git_dir)
-        self.assertTrue(os.path.isfile(os.path.join('cookiecutter-pypackage', 'README.rst')))
-
-        proc = subprocess.Popen(
-            ['git', 'symbolic-ref', 'HEAD'],
-            cwd=git_dir,
-            stdout=subprocess.PIPE
-        )
-        symbolic_ref = proc.communicate()[0]
-        branch = symbolic_ref.decode(encoding).strip().split('/')[-1]
-        self.assertEqual('console-script', branch)
-
-        if os.path.isdir(git_dir):
-            utils.rmtree(git_dir)
 
     def test_git_clone_custom_dir(self):
         os.makedirs("tests/custom_dir1/custom_dir2/")
