@@ -75,3 +75,14 @@ def test_hg_clone_overwrite(monkeypatch):
     )
     assert repo_dir == 'cookiecutter-trytonmodule'
     assert os.path.isfile('cookiecutter-trytonmodule/README.rst')
+
+
+@skipif_no_network
+def test_hg_clone_cancel(monkeypatch):
+    monkeypatch.setattr(
+        'cookiecutter.prompt.read_response',
+        lambda x=u'': u'n'
+    )
+
+    with pytest.raises(SystemExit):
+        vcs.clone('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')

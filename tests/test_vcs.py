@@ -95,31 +95,5 @@ class TestVCS(unittest.TestCase):
         )
 
 
-@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
-class TestVCSPrompt(unittest.TestCase):
-
-    def setUp(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            utils.rmtree('cookiecutter-pypackage')
-        os.mkdir('cookiecutter-pypackage/')
-        if os.path.isdir('cookiecutter-trytonmodule'):
-            utils.rmtree('cookiecutter-trytonmodule')
-        os.mkdir('cookiecutter-trytonmodule/')
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
-    def test_hg_clone_cancel(self):
-        self.assertRaises(
-            SystemExit,
-            vcs.clone,
-            'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
-        )
-
-    def tearDown(self):
-        if os.path.isdir('cookiecutter-pypackage'):
-            utils.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('cookiecutter-trytonmodule'):
-            utils.rmtree('cookiecutter-trytonmodule')
-
-
 if __name__ == '__main__':
     unittest.main()
