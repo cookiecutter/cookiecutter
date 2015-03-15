@@ -153,18 +153,5 @@ class TestVCSPrompt(unittest.TestCase):
             utils.rmtree('cookiecutter-trytonmodule')
 
 
-class TestIsVCSInstalled(unittest.TestCase):
-
-    def test_existing_repo_type(self):
-        self.assertTrue(
-            vcs.is_vcs_installed("git"),
-        )
-
-    def test_non_existing_repo_type(self):
-        self.assertFalse(
-            vcs.is_vcs_installed("stringthatisntashellcommand")
-        )
-
-
 if __name__ == '__main__':
     unittest.main()
