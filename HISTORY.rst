@@ -197,6 +197,7 @@ Other Changes:
 .. _`@borntyping`: https://github.com/borntyping
 .. _`@Paspartout`: https://github.com/Paspartout
 .. _`@pfmoore`: https://github.com/pfmoore
+.. _`@pydanny`: https://github.com/pydanny
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@uranusjr`: https://github.com/uranusjr
 .. _`@saxix`: https://github.com/saxix
