@@ -12,6 +12,7 @@ import os
 import sys
 import stat
 import unittest
+import pytest
 
 from cookiecutter import utils
 
@@ -49,26 +50,26 @@ def test_make_sure_path_exists():
     utils.rmtree('tests/blah/')
     utils.rmtree('tests/trailingslash/')
 
-class TestUtils(unittest.TestCase):
 
-    def test_workin(self):
-        cwd = os.getcwd()
-        ch_to = 'tests/files'
+def test_workin():
+    cwd = os.getcwd()
+    ch_to = 'tests/files'
 
-        class TestException(Exception):
-            pass
+    class TestException(Exception):
+        pass
 
-        def test_work_in():
-            with utils.work_in(ch_to):
-                test_dir = os.path.join(cwd, ch_to).replace("/", os.sep)
-                self.assertEqual(test_dir, os.getcwd())
-                raise TestException()
+    def test_work_in():
+        with utils.work_in(ch_to):
+            test_dir = os.path.join(cwd, ch_to).replace("/", os.sep)
+            assert test_dir == os.getcwd()
+            raise TestException()
 
-        # Make sure we return to the correct folder
-        self.assertEqual(cwd, os.getcwd())
+    # Make sure we return to the correct folder
+    assert cwd == os.getcwd()
 
-        # Make sure that exceptions are still bubbled up
-        self.assertRaises(TestException, test_work_in)
+    # Make sure that exceptions are still bubbled up
+    with pytest.raises(TestException):
+        test_work_in()
 
 
 if __name__ == '__main__':
