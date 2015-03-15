@@ -68,11 +68,15 @@ class TestFindHooks(object):
 
     def test_find_hook(self):
         """Finds the specified hook"""
+
         with utils.work_in(self.repo_path):
-            self.assertEqual({
+            expected = {
                 'pre_gen_project': os.path.abspath('hooks/pre_gen_project.py'),
-                'post_gen_project': os.path.abspath(os.path.join('hooks', self.post_hook)),
-            }, hooks.find_hooks())
+                'post_gen_project': os.path.abspath(
+                    os.path.join('hooks', self.post_hook)
+                ),
+            }
+            assert expected == hooks.find_hooks()
 
     def test_no_hooks(self):
         """find_hooks should return None if the hook could not be found. """
