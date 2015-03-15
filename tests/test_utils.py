@@ -9,10 +9,9 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
-import sys
-import stat
-import unittest
 import pytest
+import stat
+import sys
 
 from cookiecutter import utils
 
@@ -23,7 +22,6 @@ def make_readonly(path):
     """
     mode = os.stat(path).st_mode
     os.chmod(path, mode & ~stat.S_IWRITE)
-
 
 
 def test_rmtree():
@@ -70,7 +68,3 @@ def test_workin():
     # Make sure that exceptions are still bubbled up
     with pytest.raises(TestException):
         test_work_in()
-
-
-if __name__ == '__main__':
-    unittest.main()
