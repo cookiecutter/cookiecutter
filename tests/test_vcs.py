@@ -29,7 +29,6 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 encoding = locale.getdefaultlocale()[1]
 
 
-
 def test_identify_git_github():
     repo_url = "https://github.com/audreyr/cookiecutter-pypackage.git"
     assert vcs.identify_repo(repo_url) == "git"
@@ -41,7 +40,9 @@ def test_identify_git_github_no_extension():
 
 
 def test_identify_git_gitorious():
-    repo_url = "git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
+    repo_url = (
+        "git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
+    )
     assert vcs.identify_repo(repo_url) == "git"
 
 
