@@ -25,34 +25,6 @@ except KeyError:
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
-class TestCookiecutterLocalWithInput(CookiecutterCleanSystemTestCase):
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
-    def test_cookiecutter_local_with_input(self):
-        main.cookiecutter('tests/fake-repo-pre/', no_input=False)
-        self.assertTrue(os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}'))
-        self.assertFalse(os.path.isdir('tests/fake-repo-pre/fake-project'))
-        self.assertTrue(os.path.isdir('fake-project'))
-        self.assertTrue(os.path.isfile('fake-project/README.rst'))
-        self.assertFalse(os.path.exists('fake-project/json/'))
-
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'\n')
-    def test_cookiecutter_input_extra_context(self):
-        """ `Call cookiecutter()` with `no_input=False` and `extra_context` """
-        main.cookiecutter(
-            'tests/fake-repo-pre',
-            no_input=True,
-            extra_context={'repo_name': 'fake-project-input-extra'}
-        )
-        self.assertTrue(os.path.isdir('fake-project-input-extra'))
-
-    def tearDown(self):
-        if os.path.isdir('fake-project'):
-            utils.rmtree('fake-project')
-        if os.path.isdir('fake-project-input-extra'):
-            utils.rmtree('fake-project-input-extra')
-
-
 class TestAbbreviationExpansion(unittest.TestCase):
 
     def test_abbreviation_expansion(self):
