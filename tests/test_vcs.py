@@ -11,7 +11,6 @@ Tests for `cookiecutter.vcs` module.
 import locale
 import logging
 import os
-import pytest
 import subprocess
 import unittest
 
@@ -27,34 +26,6 @@ except KeyError:
 # Log debug and above to console
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 encoding = locale.getdefaultlocale()[1]
-
-
-def test_identify_git_github():
-    repo_url = "https://github.com/audreyr/cookiecutter-pypackage.git"
-    assert vcs.identify_repo(repo_url) == "git"
-
-
-def test_identify_git_github_no_extension():
-    repo_url = "https://github.com/audreyr/cookiecutter-pypackage"
-    assert vcs.identify_repo(repo_url) == "git"
-
-
-def test_identify_git_gitorious():
-    repo_url = (
-        "git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
-    )
-    assert vcs.identify_repo(repo_url) == "git"
-
-
-def test_identify_hg_mercurial():
-    repo_url = "https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket"
-    assert vcs.identify_repo(repo_url) == "hg"
-
-
-def test_unknown_repo_type():
-    repo_url = "http://norepotypespecified.com"
-    with pytest.raises(exceptions.UnknownRepoType):
-        vcs.identify_repo(repo_url)
 
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
