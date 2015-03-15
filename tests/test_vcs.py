@@ -14,7 +14,6 @@ import pytest
 import subprocess
 import unittest
 
-from cookiecutter.compat import patch
 from cookiecutter import exceptions, utils, vcs
 from tests.skipif_markers import skipif_no_network
 
@@ -25,6 +24,7 @@ except KeyError:
 
 
 encoding = locale.getdefaultlocale()[1]
+
 
 @skipif_no_network
 def test_git_clone():
@@ -89,6 +89,7 @@ def test_hg_clone():
     assert os.path.isfile('cookiecutter-trytonmodule/README.rst')
     if os.path.isdir('cookiecutter-trytonmodule'):
         utils.rmtree('cookiecutter-trytonmodule')
+
 
 @skipif_no_network
 def test_vcs_not_installed(monkeypatch):
