@@ -10,6 +10,7 @@ Tests for `cookiecutter.vcs` module.
 
 import locale
 import os
+import pytest
 import subprocess
 import unittest
 
@@ -89,17 +90,14 @@ def test_hg_clone():
     if os.path.isdir('cookiecutter-trytonmodule'):
         utils.rmtree('cookiecutter-trytonmodule')
 
-
-@unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
-class TestVCS(unittest.TestCase):
-
-    @patch('cookiecutter.vcs.identify_repo', lambda x: u'stringthatisntashellcommand')
-    def test_vcs_not_installed(self):
-        self.assertRaises(
-            exceptions.VCSNotInstalled,
-            vcs.clone,
-            "http://norepotypespecified.com"
-        )
+@skipif_no_network
+def test_vcs_not_installed(monkeypatch):
+    monkeypatch.setattr(
+        'cookiecutter.vcs.identify_repo',
+        lambda x: u'stringthatisntashellcommand'
+    )
+    with pytest.raises(exceptions.VCSNotInstalled):
+        vcs.clone("http://norepotypespecified.com")
 
 
 if __name__ == '__main__':
