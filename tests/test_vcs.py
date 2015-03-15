@@ -106,14 +106,6 @@ class TestVCSPrompt(unittest.TestCase):
             utils.rmtree('cookiecutter-trytonmodule')
         os.mkdir('cookiecutter-trytonmodule/')
 
-    @patch('cookiecutter.prompt.read_response', lambda x=u'': u'n')
-    def test_git_clone_cancel(self):
-        self.assertRaises(
-            SystemExit,
-            vcs.clone,
-            'https://github.com/audreyr/cookiecutter-pypackage.git'
-        )
-
     @patch('cookiecutter.prompt.read_response', lambda x=u'': u'y')
     def test_hg_clone_overwrite(self):
         repo_dir = vcs.clone(
