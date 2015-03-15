@@ -61,24 +61,26 @@ def test_git_clone_checkout():
         utils.rmtree(git_dir)
 
 
+@skipif_no_network
+def test_git_clone_custom_dir():
+    os.makedirs("tests/custom_dir1/custom_dir2/")
+    repo_dir = vcs.clone(
+        repo_url='https://github.com/audreyr/cookiecutter-pypackage.git',
+        checkout=None,
+        clone_to_dir="tests/custom_dir1/custom_dir2/"
+    )
+    with utils.work_in("tests/custom_dir1/custom_dir2/"):
+        test_dir = 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage'
+        assert repo_dir == test_dir.replace("/", os.sep)
+        assert os.path.isfile('cookiecutter-pypackage/README.rst')
+        if os.path.isdir('cookiecutter-pypackage'):
+            utils.rmtree('cookiecutter-pypackage')
+    if os.path.isdir('tests/custom_dir1'):
+        utils.rmtree('tests/custom_dir1')
+
+
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
 class TestVCS(unittest.TestCase):
-
-    def test_git_clone_custom_dir(self):
-        os.makedirs("tests/custom_dir1/custom_dir2/")
-        repo_dir = vcs.clone(
-            repo_url='https://github.com/audreyr/cookiecutter-pypackage.git',
-            checkout=None,
-            clone_to_dir="tests/custom_dir1/custom_dir2/"
-        )
-        with utils.work_in("tests/custom_dir1/custom_dir2/"):
-            test_dir = 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage'.replace("/", os.sep)
-            self.assertEqual(repo_dir, test_dir)
-            self.assertTrue(os.path.isfile('cookiecutter-pypackage/README.rst'))
-            if os.path.isdir('cookiecutter-pypackage'):
-                utils.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('tests/custom_dir1'):
-            utils.rmtree('tests/custom_dir1')
 
     def test_hg_clone(self):
         repo_dir = vcs.clone(
