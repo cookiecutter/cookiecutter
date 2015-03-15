@@ -27,14 +27,14 @@ lint:
 	flake8 cookiecutter tests
 
 test:
-	py.test
+	python setup.py test
 
 test-all:
 	tox
 
 
 coverage:
-	coverage run --source cookiecutter -m py.test
+	coverage run --source cookiecutter setup.py test
 	coverage report -m
 	coverage html
 	open htmlcov/index.html

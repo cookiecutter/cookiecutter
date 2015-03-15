@@ -10,7 +10,7 @@ Contains testing helpers.
 
 import os
 import shutil
-from cookiecutter.compat import unittest
+import unittest
 from cookiecutter import utils
 
 

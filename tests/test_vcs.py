@@ -12,8 +12,9 @@ import locale
 import logging
 import os
 import subprocess
+import unittest
 
-from cookiecutter.compat import patch, unittest
+from cookiecutter.compat import patch
 from cookiecutter import exceptions, utils, vcs
 
 try:

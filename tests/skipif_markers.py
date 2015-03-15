@@ -30,7 +30,10 @@ else:
 # which condition matches. Using a unified message for now
 # travis_reason = 'Works locally with tox but fails on Travis.'
 # no_network_reason = 'Needs a network connection to GitHub.'
-reason = 'Fails on Travis or else there is no network connection to GitHub'
+reason = (
+    'Fails on Travis or else there is no network connection to '
+    'GitHub/Bitbucket.'
+)
 
 skipif_travis = pytest.mark.skipif(travis, reason=reason)
 skipif_no_network = pytest.mark.skipif(no_network, reason=reason)
