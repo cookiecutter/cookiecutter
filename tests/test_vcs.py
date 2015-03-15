@@ -11,6 +11,7 @@ Tests for `cookiecutter.vcs` module.
 import locale
 import logging
 import os
+import pytest
 import subprocess
 import unittest
 
@@ -28,31 +29,31 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 encoding = locale.getdefaultlocale()[1]
 
 
-class TestIdentifyRepo(unittest.TestCase):
 
-    def test_identify_git_github(self):
-        repo_url = "https://github.com/audreyr/cookiecutter-pypackage.git"
-        self.assertEqual(vcs.identify_repo(repo_url), "git")
+def test_identify_git_github():
+    repo_url = "https://github.com/audreyr/cookiecutter-pypackage.git"
+    assert vcs.identify_repo(repo_url) == "git"
 
-    def test_identify_git_github_no_extension(self):
-        repo_url = "https://github.com/audreyr/cookiecutter-pypackage"
-        self.assertEqual(vcs.identify_repo(repo_url), "git")
 
-    def test_identify_git_gitorious(self):
-        repo_url = "git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
-        self.assertEqual(vcs.identify_repo(repo_url), "git")
+def test_identify_git_github_no_extension():
+    repo_url = "https://github.com/audreyr/cookiecutter-pypackage"
+    assert vcs.identify_repo(repo_url) == "git"
 
-    def test_identify_hg_mercurial(self):
-        repo_url = "https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket"
-        self.assertEqual(vcs.identify_repo(repo_url), "hg")
 
-    def test_unknown_repo_type(self):
-        repo_url = "http://norepotypespecified.com"
-        self.assertRaises(
-            exceptions.UnknownRepoType,
-            vcs.identify_repo,
-            repo_url
-        )
+def test_identify_git_gitorious():
+    repo_url = "git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git"
+    assert vcs.identify_repo(repo_url) == "git"
+
+
+def test_identify_hg_mercurial():
+    repo_url = "https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket"
+    assert vcs.identify_repo(repo_url) == "hg"
+
+
+def test_unknown_repo_type():
+    repo_url = "http://norepotypespecified.com"
+    with pytest.raises(exceptions.UnknownRepoType):
+        vcs.identify_repo(repo_url)
 
 
 @unittest.skipIf(condition=no_network, reason='Needs a network connection to GitHub/Bitbucket.')
