@@ -12,9 +12,7 @@ import logging
 import os
 import unittest
 
-from cookiecutter.compat import patch
-from cookiecutter import main, utils
-from tests import CookiecutterCleanSystemTestCase
+from cookiecutter import main
 
 try:
     no_network = os.environ[u'DISABLE_NETWORK_TESTS']
