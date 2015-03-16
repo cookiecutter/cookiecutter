@@ -88,7 +88,7 @@ def test_hg_clone():
 def test_vcs_not_installed(monkeypatch):
     monkeypatch.setattr(
         'cookiecutter.vcs.identify_repo',
-        lambda x: u'stringthatisntashellcommand'
+        lambda x: (u'stringthatisntashellcommand', u'anotherstring'),
     )
     with pytest.raises(exceptions.VCSNotInstalled):
         vcs.clone('http://norepotypespecified.com')
