@@ -48,17 +48,25 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
 def identify_repo(repo_url):
     """
     Determines if `repo_url` should be treated as a URL to a git or hg repo.
+    Repos can be identified prepeding "hg+" or "git+" to repo URL.
 
     :param repo_url: Repo URL of unknown type.
-    :returns: "git", "hg", or None.
+    :returns: ("git", repo_url), ("hg", repo_url), or None.
     """
-
-    if 'git' in repo_url:
-        return 'git'
-    elif 'bitbucket' in repo_url:
-        return 'hg'
+    repo_url_values = repo_url.split('+')
+    if len(repo_url_values) == 2:
+        repo_type = repo_url_values[0]
+        if repo_type in ["git", "hg"]:
+            return repo_type, repo_url_values[1]
+        else:
+            raise UnknownRepoType
     else:
-        raise UnknownRepoType
+        if "git" in repo_url:
+            return "git", repo_url
+        elif "bitbucket" in repo_url:
+            return "hg", repo_url
+        else:
+            raise UnknownRepoType
 
 
 def is_vcs_installed(repo_type):
@@ -86,7 +94,7 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
     make_sure_path_exists(clone_to_dir)
 
     # identify the repo_type
-    repo_type = identify_repo(repo_url)
+    repo_type, repo_url = identify_repo(repo_url)
 
     # check that the appropriate VCS for the repo_type is installed
     if not is_vcs_installed(repo_type):
