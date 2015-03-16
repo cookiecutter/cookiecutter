@@ -3,8 +3,8 @@
 History
 -------
 
-1.0.0 (Development)
-~~~~~~~~~~~~~~~~~~~~~
+1.0.0 (2015-01-13) Chocolate Chip
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goals of this release was to formally remove support for Python 2.6 and continue the move to using py.test.
 
@@ -38,7 +38,7 @@ Other Changes:
   * `cookiecutter-django-rest-framework`_ by `@jpadilla`_
   * `cookiedozer`_ by `@hackebrot`_
 
-.. _`marctc`: https://github.com/marctc
+.. _`@marctc`: https://github.com/marctc
 .. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
 .. _`@jpadilla`: https://github.com/jpadilla
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework

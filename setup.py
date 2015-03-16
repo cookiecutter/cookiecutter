@@ -8,8 +8,16 @@ try:
 except ImportError:
     from distutils.core import setup, Command
 
+version = "1.0.0"
+
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
+    os.system('python setup.py bdist_wheel upload')
+    sys.exit()
+
+if sys.argv[-1] == 'tag':
+    os.system("git tag -a %s -m 'version %s'" % (version, version))
+    os.system("git push --tags")
     sys.exit()
 
 readme = open('README.rst').read()
@@ -30,6 +38,11 @@ if sys.version < '3':
 
 # There are no Python 3-specific dependencies to add
 
+long_description = readme + '\n\n' + history
+
+if sys.argv[-1] == 'readme':
+    print(long_description)
+    sys.exit()
 
 class PyTest(Command):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
@@ -48,11 +61,11 @@ class PyTest(Command):
 
 setup(
     name='cookiecutter',
-    version='0.9.1',
+    version=version,
     description=('A command-line utility that creates projects from project '
                  'templates, e.g. creating a Python package project from a Python '
                  'package project template.'),
-    long_description=readme + '\n\n' + history,
+    long_description=long_description,
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
     url='https://github.com/audreyr/cookiecutter',
