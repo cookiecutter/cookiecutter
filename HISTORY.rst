@@ -10,7 +10,7 @@ The goals of this release was to formally remove support for Python 2.6 and cont
 
 Features:
 
-* Lay the foundation for `py.test` fixtures and convert `test_generate.py` and `test_examples.py`, thanks to `@hackebrot`_ (#322, #332, #334, #336, #337, #338, #340, #341, #343, #345, #347, #351, #412, #413, #414).
+* Convert the unittest suite to py.test for the sake of comprehensibility, thanks to `@hackebrot`_ (#322, #332, #334, #336, #337, #338, #340, #341, #343, #345, #347, #351, #412, #413, #414).
 * Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
 * Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
 * Large expansions to the tutorials thanks to `@hackebrot`_ (#384)
