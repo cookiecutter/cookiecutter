@@ -15,9 +15,9 @@ Features:
 * Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
 * Large expansions to the tutorials thanks to `@hackebrot`_ (#384)
 * Switch to using Click for command-line options, thanks to `@michaeljoseph`_ (#391, #393).
+* Added support for working with private repos, thanks to `@marctc`_ (#265).
 
 Other Changes:
-
 
 * Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
 * Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
@@ -37,6 +37,7 @@ Other Changes:
   * `cookiecutter-django-rest-framework`_ by `@jpadilla`_
   * `cookiedozer`_ by `@hackebrot`_
 
+.. _`marctc`: https://github.com/marctc
 .. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
 .. _`@jpadilla`: https://github.com/jpadilla
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
