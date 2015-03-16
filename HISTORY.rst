@@ -16,6 +16,7 @@ Features:
 * Large expansions to the tutorials thanks to `@hackebrot`_ (#384)
 * Switch to using Click for command-line options, thanks to `@michaeljoseph`_ (#391, #393).
 * Added support for working with private repos, thanks to `@marctc`_ (#265).
+* Wheel configuration thanks to `@michaeljoseph`_ (#118).
 
 Other Changes:
 
