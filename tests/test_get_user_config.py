@@ -18,6 +18,16 @@ import pytest
 from cookiecutter import config
 from cookiecutter.exceptions import InvalidConfiguration
 
+VALID_CONFIG_PATH = 'tests/test-config/valid-config.yaml'
+VALID_CONFIG = {
+    'cookiecutters_dir': '/home/example/some-path-to-templates',
+    'default_context': {
+        'full_name': 'Firstname Lastname',
+        'email': 'firstname.lastname@gmail.com',
+        'github_username': 'example'
+    }
+}
+
 
 @pytest.fixture(scope='module')
 def user_config_path():
@@ -63,17 +73,28 @@ def test_get_user_config_valid(user_config_path):
     """
     Get config from a valid ~/.cookiecutterrc file
     """
-    shutil.copy('tests/test-config/valid-config.yaml', user_config_path)
+    shutil.copy(VALID_CONFIG_PATH, user_config_path)
     conf = config.get_user_config()
-    expected_conf = {
-        'cookiecutters_dir': '/home/example/some-path-to-templates',
-        'default_context': {
-            'full_name': 'Firstname Lastname',
-            'email': 'firstname.lastname@gmail.com',
-            'github_username': 'example'
-        }
-    }
-    assert conf == expected_conf
+    assert conf == VALID_CONFIG
+
+
+def test_get_user_config_from_path():
+    """
+    Get config from a valid ~/.cookiecutterrc file directly
+    """
+    conf = config.get_user_config(VALID_CONFIG_PATH)
+    assert conf == VALID_CONFIG
+
+
+@pytest.mark.usefixtures('back_up_rc')
+def test_get_user_config_no_rc(user_config_path):
+    """
+    Do NOT get config from a valid ~/.cookiecutterrc file
+    """
+    shutil.copy(VALID_CONFIG_PATH, user_config_path)
+    for rc_file in (None, '', 'this-will-not-ever-exist'):
+        conf = config.get_user_config(rc_file)
+        assert conf == config.DEFAULT_CONFIG
 
 
 @pytest.mark.usefixtures('back_up_rc')
