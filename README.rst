@@ -172,6 +172,7 @@ Python
 * `Python-iOS-template`_: A template to create a Python project that will run on iOS devices.
 * `Python-Android-template`_: A template to create a Python project that will run on Android devices.
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
+* `py-generic-project`_: A basic Python setuptools project, which can be (later on) augmented with various optional accessories, like a Click CLI stub. Supports autoenv, Invoke, Pylint, pytest, and Travis CI out of the box.
 
 C
 ~~
@@ -255,6 +256,7 @@ HTML
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
+.. _`py-generic-project`: https://github.com/Springerle/py-generic-project
 
 Scala
 ~~~~~
