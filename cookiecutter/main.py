@@ -52,7 +52,8 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None, rc_file=USER_CONFIG_PATH):
+def cookiecutter(template, checkout=None, no_input=False, extra_context=None,
+                 rc_file=USER_CONFIG_PATH):
     """
     API equivalent to using Cookiecutter at the command line.
 
