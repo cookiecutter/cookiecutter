@@ -242,8 +242,7 @@ def generate_files(repo_dir, context=None, output_dir='.'):
             # recursively
             dirs[:] = render_dirs
             for d in dirs:
-                in_dir = os.path.join(root, d)
-                unrendered_dir = os.path.join(project_dir, in_dir)
+                unrendered_dir = os.path.join(project_dir, root, d)
                 render_and_create_dir(unrendered_dir, context, output_dir)
 
             for f in files:
