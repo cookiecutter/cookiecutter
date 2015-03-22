@@ -1,3 +1,18 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+test_generate_copy_without_render
+---------------------------------
+"""
+
+from __future__ import unicode_literals
+import os
+import shutil
+
+from cookiecutter import generate
+
+
 def test_generate_copy_without_render_extensions():
     generate.generate_files(
         context={
