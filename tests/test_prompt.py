@@ -160,4 +160,3 @@ class TestQueryDefaults(object):
         )
         with pytest.raises(ValueError):
             prompt.query_yes_no('Blah?', default='yn')
-
