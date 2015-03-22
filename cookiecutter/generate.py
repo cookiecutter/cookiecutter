@@ -38,7 +38,7 @@ def copy_without_render(path, context):
     """
     try:
         for dont_render in context['cookiecutter']['_copy_without_render']:
-            if fnmatch.fnmatch(path, os.path.relpath(dont_render)):
+            if fnmatch.fnmatch(path, dont_render):
                 return True
     except KeyError:
         return False
@@ -224,7 +224,7 @@ def generate_files(repo_dir, context=None, output_dir='.'):
                 # We check the full path, because that's how it can be
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
-                if copy_without_render(os.path.relpath(d_), context):
+                if copy_without_render(d_, context):
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
