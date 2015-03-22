@@ -25,7 +25,7 @@ def remove_test_dir(request):
     request.addfinalizer(fin_remove_test_dir)
 
 
-@pytest.mark.usefixtures('remove_test_dir')
+@pytest.mark.usefixtures('clean_system', 'remove_test_dir')
 def test_generate_copy_without_render_extensions():
     generate.generate_files(
         context={
