@@ -8,9 +8,21 @@ test_generate_copy_without_render
 
 from __future__ import unicode_literals
 import os
+import pytest
 import shutil
 
 from cookiecutter import generate
+
+
+@pytest.fixture(scope='function')
+def remove_test_dir(request):
+    """
+    Remove the folder that is created by the test.
+    """
+    def fin_remove_test_dir():
+        if os.path.exists('test_copy_without_render'):
+            utils.rmtree('test_copy_without_render')
+    request.addfinalizer(fin_remove_test_dir)
 
 
 def test_generate_copy_without_render_extensions():
