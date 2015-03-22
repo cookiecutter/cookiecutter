@@ -9,7 +9,6 @@ test_generate_copy_without_render
 from __future__ import unicode_literals
 import os
 import pytest
-import shutil
 
 from cookiecutter import generate
 from cookiecutter import utils
@@ -62,6 +61,3 @@ def test_generate_copy_without_render_extensions():
 
     with open("test_copy_without_render/rendered/not_rendered.yml") as f:
         assert "{{cookiecutter.render_test}}" in f.read()
-
-    if os.path.exists('test_copy_without_render'):
-        shutil.rmtree('test_copy_without_render')
