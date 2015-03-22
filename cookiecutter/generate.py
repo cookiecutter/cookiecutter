@@ -37,7 +37,7 @@ def copy_without_render(path, context):
     :param context: cookiecutter context.
     """
     try:
-        for dont_render in context["cookiecutter"]["_copy_without_render"]:
+        for dont_render in context['cookiecutter']['_copy_without_render']:
             if fnmatch.fnmatch(path, os.path.relpath(dont_render)):
                 return True
     except KeyError:
@@ -233,8 +233,8 @@ def generate_files(repo_dir, context=None, output_dir='.'):
                 indir = os.path.normpath(os.path.join(root, copy_dir))
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 logging.debug(
-                    "Copying dir {0} to {1} without rendering"
-                    "".format(indir, outdir)
+                    'Copying dir {0} to {1} without rendering'
+                    ''.format(indir, outdir)
                 )
                 shutil.copytree(indir, outdir)
 
@@ -253,8 +253,8 @@ def generate_files(repo_dir, context=None, output_dir='.'):
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
                     logging.debug(
-                        "Copying file {0} to {1} without rendering"
-                        "".format(infile, outfile)
+                        'Copying file {0} to {1} without rendering'
+                        ''.format(infile, outfile)
                     )
                     shutil.copyfile(infile, outfile)
                     shutil.copymode(infile, outfile)
