@@ -15,7 +15,6 @@ import json
 import logging
 import os
 import shutil
-import sys
 
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import Environment
@@ -234,7 +233,8 @@ def generate_files(repo_dir, context=None, output_dir='.'):
                 indir = os.path.normpath(os.path.join(root, copy_dir))
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 logging.debug(
-                    "Copying dir {0} to {1} without rendering".format(indir, outdir)
+                    "Copying dir {0} to {1} without rendering"
+                    "".format(indir, outdir)
                 )
                 shutil.copytree(indir, outdir)
 
@@ -242,16 +242,19 @@ def generate_files(repo_dir, context=None, output_dir='.'):
             # recursively
             dirs[:] = render_dirs
             for d in dirs:
-                unrendered_dir = os.path.join(project_dir, os.path.join(root, d))
+                in_dir = os.path.join(root, d)
+                unrendered_dir = os.path.join(project_dir, in_dir)
                 render_and_create_dir(unrendered_dir, context, output_dir)
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
                 if copy_without_render(infile, context):
                     outfile_tmpl = Template(infile)
-                    outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
+                    outfile_rendered = outfile_tmpl.render(**context)
+                    outfile = os.path.join(project_dir, outfile_rendered)
                     logging.debug(
-                        "Copying file {0} to {1} without rendering".format(infile, outfile)
+                        "Copying file {0} to {1} without rendering"
+                        "".format(infile, outfile)
                     )
                     shutil.copyfile(infile, outfile)
                     shutil.copymode(infile, outfile)
