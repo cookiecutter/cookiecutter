@@ -1,4 +1,4 @@
-def test_generate_copy_without_render_extensions(self):
+def test_generate_copy_without_render_extensions():
     generate.generate_files(
         context={
             'cookiecutter': {
@@ -13,28 +13,26 @@ def test_generate_copy_without_render_extensions(self):
         repo_dir='tests/test-generate-copy-without-render'
     )
 
-    self.assertIn("{{cookiecutter.repo_name}}-not-rendered",
-                  os.listdir("test_copy_without_render"))
-    self.assertIn("test_copy_without_render-rendered",
-                  os.listdir("test_copy_without_render"))
+    assert "{{cookiecutter.repo_name}}-not-rendered" in os.listdir("test_copy_without_render")
+    assert "test_copy_without_render-rendered" in os.listdir("test_copy_without_render")
 
     with open("test_copy_without_render/README.txt") as f:
-        self.assertIn("{{cookiecutter.render_test}}", f.read())
+        assert "{{cookiecutter.render_test}}" in f.read()
 
     with open("test_copy_without_render/README.rst") as f:
-        self.assertIn("I have been rendered!", f.read())
+        assert "I have been rendered!" in f.read()
 
     with open("test_copy_without_render/test_copy_without_render-rendered/README.txt") as f:
-        self.assertIn("{{cookiecutter.render_test}}", f.read())
+        assert "{{cookiecutter.render_test}}" in f.read()
 
     with open("test_copy_without_render/test_copy_without_render-rendered/README.rst") as f:
-        self.assertIn("I have been rendered", f.read())
+        assert "I have been rendered" in f.read()
 
     with open("test_copy_without_render/{{cookiecutter.repo_name}}-not-rendered/README.rst") as f:
-        self.assertIn("{{cookiecutter.render_test}}", f.read())
+        assert "{{cookiecutter.render_test}}" in f.read()
 
     with open("test_copy_without_render/rendered/not_rendered.yml") as f:
-        self.assertIn("{{cookiecutter.render_test}}", f.read())
+        assert "{{cookiecutter.render_test}}" in f.read()
 
     if os.path.exists('test_copy_without_render'):
         shutil.rmtree('test_copy_without_render')
