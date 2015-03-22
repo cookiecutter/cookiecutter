@@ -12,6 +12,7 @@ import pytest
 import shutil
 
 from cookiecutter import generate
+from cookiecutter import utils
 
 
 @pytest.fixture(scope='function')
