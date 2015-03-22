@@ -99,6 +99,17 @@ class TestPrompt(object):
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == exp_cookiecutter_dict
 
+    def test_dont_prompt_for_private_context_var(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x: pytest.fail(
+                'Should not try to read a response for private context var'
+            )
+        )
+        context = {"cookiecutter": {"_copy_without_render": ["*.html"]}}
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {"_copy_without_render": ["*.html"]}
+
 
 class TestQueryAnswers(object):
     @pytest.fixture(params=[u'y', u'ye', u'yes'])
