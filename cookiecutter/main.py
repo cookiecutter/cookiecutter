@@ -14,12 +14,14 @@ library rather than a script.
 from __future__ import unicode_literals
 import logging
 import os
+from datetime import datetime
 
 from . import __version__ as cookiecutter_version
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
+from .compat import PY3
 
 logger = logging.getLogger(__name__)
 
@@ -101,11 +103,15 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None,
     context['cookiecutter'] = prompt_for_config(context, no_input)
 
     # Add some system values, especially for use by hook scripts
+    now = datetime.now()
     context.update(extra_globals or {})
     context.update(dict(
         version=cookiecutter_version,
         repo_dir=repo_dir,
         context_file=context_file,
+        current_year=now.year,
+        current_date=now.ctime(),
+        current_date_iso=now.isoformat(b' ' if not PY3 else u' '),
     ))
 
     # Create project from local context and project template.
