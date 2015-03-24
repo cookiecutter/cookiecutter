@@ -15,6 +15,7 @@ from __future__ import unicode_literals
 import logging
 import os
 
+from . import __version__ as cookiecutter_version
 from .config import get_user_config
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
@@ -95,6 +96,13 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     # prompt the user to manually configure at the command line.
     # except when 'no-input' flag is set
     context['cookiecutter'] = prompt_for_config(context, no_input)
+
+    # Add some system values, especially for use by hook scripts
+    context.update(dict(
+        version=cookiecutter_version,
+        repo_dir=repo_dir,
+        context_file=context_file,
+    ))
 
     # Create project from local context and project template.
     generate_files(
