@@ -67,4 +67,7 @@ def main(template, no_input, checkout, verbose):
             level=logging.INFO
         )
 
-    cookiecutter(template, checkout, no_input)
+    cookiecutter(template, checkout, no_input, extra_globals=dict(
+        checkout=checkout,
+        verbose=verbose,
+    ))

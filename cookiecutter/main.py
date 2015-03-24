@@ -53,7 +53,7 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(template, checkout=None, no_input=False, extra_context=None, extra_globals=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -63,6 +63,8 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param extra_globals: A dictionary of values added to the Jinja2 context,
+        e.g. custom filters.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -98,6 +100,7 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     context['cookiecutter'] = prompt_for_config(context, no_input)
 
     # Add some system values, especially for use by hook scripts
+    context.update(extra_globals or {})
     context.update(dict(
         version=cookiecutter_version,
         repo_dir=repo_dir,
