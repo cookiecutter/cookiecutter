@@ -26,6 +26,10 @@ def prompt_for_config(context, no_input=False):
     env = Environment()
 
     for key, raw in iteritems(context['cookiecutter']):
+        if key.startswith('_'):
+            cookiecutter_dict[key] = raw
+            continue
+
         raw = raw if is_string(raw) else str(raw)
         val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
 

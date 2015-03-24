@@ -43,61 +43,72 @@ class TestPrompt(object):
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'Audrey Roy'
         )
-        context = {"cookiecutter": {"full_name": "Your Name"}}
+        context = {'cookiecutter': {'full_name': 'Your Name'}}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
-        assert cookiecutter_dict == {"full_name": u"Audrey Roy"}
+        assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
 
     def test_prompt_for_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'Pizzä ïs Gööd'
         )
-        context = {"cookiecutter": {"full_name": "Your Name"}}
+        context = {'cookiecutter': {'full_name': 'Your Name'}}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
-        assert cookiecutter_dict == {"full_name": u"Pizzä ïs Gööd"}
+        assert cookiecutter_dict == {'full_name': u'Pizzä ïs Gööd'}
 
     def test_unicode_prompt_for_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'Pizzä ïs Gööd'
         )
-        context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
+        context = {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
-        assert cookiecutter_dict == {"full_name": u"Pizzä ïs Gööd"}
+        assert cookiecutter_dict == {'full_name': u'Pizzä ïs Gööd'}
 
     def test_unicode_prompt_for_default_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'\n'
         )
-        context = {"cookiecutter": {"full_name": u"Řekni či napiš své jméno"}}
+        context = {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
-        assert cookiecutter_dict == {"full_name": u"Řekni či napiš své jméno"}
+        assert cookiecutter_dict == {'full_name': u'Řekni či napiš své jméno'}
 
     def test_unicode_prompt_for_templated_config(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'\n'
         )
-        context = {"cookiecutter": OrderedDict([
+        context = {'cookiecutter': OrderedDict([
             (
-                "project_name",
-                u"A New Project"
+                'project_name',
+                u'A New Project'
             ), (
-                "pkg_name",
-                u"{{ cookiecutter.project_name|lower|replace(' ', '') }}"
+                'pkg_name',
+                u'{{ cookiecutter.project_name|lower|replace(" ", "") }}'
             )
         ])}
 
         exp_cookiecutter_dict = {
-            "project_name": u"A New Project", "pkg_name": u"anewproject"
+            'project_name': u'A New Project', 'pkg_name': u'anewproject'
         }
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == exp_cookiecutter_dict
+
+    def test_dont_prompt_for_private_context_var(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x: pytest.fail(
+                'Should not try to read a response for private context var'
+            )
+        )
+        context = {'cookiecutter': {'_copy_without_render': ['*.html']}}
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
 
 
 class TestQueryAnswers(object):
@@ -110,14 +121,14 @@ class TestQueryAnswers(object):
 
     @pytest.mark.usefixtures('patch_read_response')
     def test_query(self):
-        assert prompt.query_yes_no("Blah?")
+        assert prompt.query_yes_no('Blah?')
 
     def test_query_n(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'n'
         )
-        assert not prompt.query_yes_no("Blah?")
+        assert not prompt.query_yes_no('Blah?')
 
 
 class TestQueryDefaults(object):
@@ -126,21 +137,21 @@ class TestQueryDefaults(object):
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'y'
         )
-        assert prompt.query_yes_no("Blah?", default=None)
+        assert prompt.query_yes_no('Blah?', default=None)
 
     def test_query_n_none_default(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
             lambda x=u'': u'n'
         )
-        assert not prompt.query_yes_no("Blah?", default=None)
+        assert not prompt.query_yes_no('Blah?', default=None)
 
     def test_query_no_default(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
             lambda x=u'': u''
         )
-        assert not prompt.query_yes_no("Blah?", default='no')
+        assert not prompt.query_yes_no('Blah?', default='no')
 
     def test_query_bad_default(self, monkeypatch):
         monkeypatch.setattr(
@@ -148,5 +159,4 @@ class TestQueryDefaults(object):
             lambda x=u'': u'junk'
         )
         with pytest.raises(ValueError):
-            prompt.query_yes_no("Blah?", default='yn')
-
+            prompt.query_yes_no('Blah?', default='yn')
