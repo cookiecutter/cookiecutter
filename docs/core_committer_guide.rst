@@ -153,7 +153,7 @@ When you're processing the first change after a release, create boilerplate foll
                       
     .. _`@contributor`: https://github.com/contributor
 
-Process: Accepting template Pull Requests
+Process: Accepting Template Pull Requests
 -----------------------------------------
 
 #. Run the template to generate the project.
@@ -161,7 +161,7 @@ Process: Accepting template Pull Requests
 #. Merge the template in.
 #. Update the history file.
 
-.. note:: Adding a template doesn't give you authors credit.
+.. note:: Adding a template doesn't give authors credit.
 
 
 Process: Generating CONTRIBUTING.rst
