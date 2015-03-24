@@ -65,7 +65,11 @@ Contributors
 * Randy Syring (`@rsyring`_)
 * Mark Jones (`@mark0978`_)
 * Marc Abramowitz (`@msabramo`_)
+* Lucian Ursu (`@LucianU`_)
+* Osvaldo Santana Neto (`@osantana`_)
 
+.. _`@LucianU`: https://github.com/LucianU
+.. _`@osantana`: https://github.com/osantana
 .. _`@msabramo`: https://github.com/msabramo
 .. _`@mark0978`: https://github.com/mark0978
 .. _`@rsyring`: https://github.com/rsyring

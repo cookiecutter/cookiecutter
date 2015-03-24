@@ -3,7 +3,20 @@
 History
 -------
 
-1.0.0 (2015-01-13) Chocolate Chip
+1.1.0 (2015-??-??)
+~~~~~~~~~~~~~~~~~~
+
+The goals of this release is to add extra content via the command-line and copy without render.
+
+Features:
+
+* Added **copy without render** feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems(#132, #184, #425).
+
+.. _`@osantana`: https://github.com/osantana
+.. _`@LucianU`: https://github.com/LucianU
+
+
+1.0.0 (2015-03-13) Chocolate Chip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goals of this release was to formally remove support for Python 2.6 and continue the move to using py.test.
