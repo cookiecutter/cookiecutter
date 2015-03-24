@@ -10,7 +10,11 @@ The goals of this release is to add extra content via the command-line and `copy
 
 Features:
 
-* Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems(#132, #184, #425).
+* Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems (#132, #184, #425).
+
+Other Changes:
+
+* Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
 
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
