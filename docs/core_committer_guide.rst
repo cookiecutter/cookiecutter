@@ -159,7 +159,9 @@ Process: Accepting template Pull Requests
 #. Run the template to generate the project.
 #. Attempt to start/use the rendered project.
 #. Merge the template in.
-#. Update the history file (adding a template doesn't give you authors credit).
+#. Update the history file.
+
+.. note:: Adding a template doesn't give you authors credit.
 
 
 Process: Generating CONTRIBUTING.rst
