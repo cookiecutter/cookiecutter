@@ -22,11 +22,20 @@ Or, if you are using conda:
 
     $ conda install -c https://conda.binstar.org/pydanny cookiecutter
 
-Or, if you are using Homebrew (Mac OS X only):
+Alternate installations
+-----------------------
+
+Homebrew (Mac OS X only):
 
 .. code-block:: bash
 
     $ brew install cookiecutter
+
+Pipsi (Linux/OSX only):
+
+.. code-block:: bash
+
+    $ pipsi install cookiecutter
 
 Upgrading from 0.6.4 to 0.7.0 or greater
 -----------------------------------------
