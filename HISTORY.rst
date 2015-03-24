@@ -6,12 +6,14 @@ History
 1.1.0 (2015-??-??)
 ~~~~~~~~~~~~~~~~~~
 
-The goals of this release is to add extra content via the command-line and copy without render.
+The goals of this release is to add extra content via the command-line and `copy without render`_.
 
 Features:
 
-* Added **copy without render** feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems(#132, #184, #425).
+* Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems(#132, #184, #425).
 
+
+.. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
 .. _`@LucianU`: https://github.com/LucianU
 

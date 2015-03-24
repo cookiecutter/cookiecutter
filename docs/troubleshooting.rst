@@ -27,17 +27,11 @@ Or this::
 
 See http://jinja.pocoo.org/docs/templates/#escaping for more info.
 
-You can also use the `_copy_without_render` key in your `cookiecutter.json`
-file, which accepts Unix shell-style wildcards::
+You can also use the `copy_without_render`_ key in your `cookiecutter.json`
+file to escape entire files and directories.
 
-    {
-        "repo_name": "sample",
-        "_copy_without_render": [
-            "*.html",
-            "*not_rendered_dir",
-            "rendered_dir/not_rendered_file.ini"
-        ]
-    }
+.. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
+
 
 Other common issues
 -------------------
