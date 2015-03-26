@@ -26,12 +26,6 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 requirements = ['binaryornot>=0.2.0', 'jinja2>=2.7', 'PyYAML>=3.10', 'click<4.0']
 test_requirements = ['pytest']
 
-# Add Python 2.6-specific dependencies
-if sys.version_info[:2] < (2, 7):
-    requirements.append('ordereddict')
-    requirements.append('simplejson')
-    test_requirements.append('unittest2')
-
 # Add Python 2.6 and 2.7-specific dependencies
 if sys.version < '3':
     requirements.append('mock')
