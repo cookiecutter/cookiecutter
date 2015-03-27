@@ -107,8 +107,8 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None,
     context.update(extra_globals or {})
     context.update(dict(
         version=cookiecutter_version,
-        repo_dir=repo_dir,
-        context_file=context_file,
+        repo_dir=os.path.abspath(repo_dir),
+        context_file=os.path.abspath(context_file),
         current_year=now.year,
         current_date=now.ctime(),
         current_date_iso=now.isoformat(b' ' if not PY3 else u' '),
