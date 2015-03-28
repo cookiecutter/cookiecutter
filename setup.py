@@ -46,6 +46,7 @@ if sys.argv[-1] == 'readme':
     print(long_description)
     sys.exit()
 
+
 class PyTest(Command):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
 
@@ -65,8 +66,8 @@ setup(
     name='cookiecutter',
     version=version,
     description=('A command-line utility that creates projects from project '
-                 'templates, e.g. creating a Python package project from a Python '
-                 'package project template.'),
+                 'templates, e.g. creating a Python package project from a '
+                 'Python package project template.'),
     long_description=long_description,
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
@@ -100,8 +101,11 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',
     ],
-    keywords='cookiecutter, Python, projects, project templates, Jinja2, \
-        skeleton, scaffolding, project directory, setup.py, package, packaging',
+    keywords=(
+        'cookiecutter, Python, projects, project templates, Jinja2, '
+        'skeleton, scaffolding, project directory, setup.py, package, '
+        'packaging'
+    ),
     cmdclass = {'test': PyTest},
     test_suite='tests',
     tests_require=test_requirements
