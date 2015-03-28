@@ -23,8 +23,16 @@ if sys.argv[-1] == 'tag':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = ['binaryornot>=0.2.0', 'jinja2>=2.7', 'PyYAML>=3.10', 'click<4.0']
-test_requirements = ['pytest']
+requirements = [
+    'binaryornot>=0.2.0',
+    'jinja2>=2.7',
+    'PyYAML>=3.10',
+    'click<4.0'
+]
+
+test_requirements = [
+    'pytest'
+]
 
 # Add Python 2.7-specific dependencies
 if sys.version < '3':
