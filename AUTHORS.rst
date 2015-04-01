@@ -2,15 +2,15 @@
 Credits
 =======
 
-Development Lead
-----------------
+Development Leads
+-----------------
 
-* Audrey Roy <audreyr@gmail.com>
+* Audrey Roy Greenfeld (`@audreyr`_)
+* Daniel Roy Greenfeld (`@pydanny`_)
 
 Core Committers
 ---------------
 
-* Daniel Greenfeld (`@pydanny`_)
 * Michael Joseph (`@michaeljoseph`_)
 * Paul Moore (`@pfmoore`_)
 * Raphael Pierzina (`@hackebrot`_)
