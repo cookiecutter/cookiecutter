@@ -13,6 +13,7 @@ Core Committers
 * Daniel Greenfeld (`@pydanny`_)
 * Michael Joseph (`@michaeljoseph`_)
 * Paul Moore (`@pfmoore`_)
+* Raphael Pierzina (`@hackebrot`_)
 
 Contributors
 ------------
@@ -42,7 +43,6 @@ Contributors
 * Dave Dash (`@davedash`_)
 * Johan Charpentier (`@cyberj`_)
 * Éric Araujo (`@merwok`_)
-* Raphael Pierzina (`@hackebrot`_)
 * saxix (`@saxix`_)
 * Tzu-ping Chung (`@uranusjr`_)
 * Caleb Hattingh (`@cjrh`_)

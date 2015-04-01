@@ -316,8 +316,8 @@ Similar projects
 Community
 ---------
 
-The core committer team is `@audreyr`_, `@pydanny`_, `@michaeljoseph`_, and
-`@pfmoore`_. We
+The core committer team is `@audreyr`_, `@pydanny`_, `@michaeljoseph`_,
+`@pfmoore`_, and `@hackebrot`_. We
 welcome you and invite you to participate.
 
 Stuck? Try one of the following:
@@ -383,3 +383,4 @@ Waiting for a response to an issue/question?
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
 .. _`@pfmoore`: https://github.com/pfmoore
+.. _`@hackebrot`: https://github.com/hackebrot
