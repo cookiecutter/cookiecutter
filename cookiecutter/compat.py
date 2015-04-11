@@ -1,14 +1,16 @@
+from builtins import input
+from io import StringIO
 import os
 import sys
+
+from future.utils import iteritems
+from past.builtins import basestring
 
 PY3 = sys.version_info[0] == 3
 OLD_PY2 = sys.version_info[:2] < (2, 7)
 
 if PY3:  # pragma: no cover
-    input_str = 'builtins.input'
-    iteritems = lambda d: iter(d.items())
     from unittest.mock import patch
-    from io import StringIO
 
     def read_response(prompt=''):
         """
@@ -23,12 +25,7 @@ if PY3:  # pragma: no cover
         return input(prompt)
 
 else:  # pragma: no cover
-    from __builtin__ import raw_input
-    input = raw_input
-    input_str = '__builtin__.raw_input'
-    iteritems = lambda d: d.iteritems()
     from mock import patch
-    from cStringIO import StringIO
 
     def read_response(prompt=''):
         """
@@ -134,7 +131,7 @@ else:  # Forced testing
 
 def is_string(obj):
     """Determine if an object is a string."""
-    return isinstance(obj, str if PY3 else basestring)
+    return isinstance(obj, basestring)
 
 
-_hush_pyflakes = (patch, StringIO, which)
+_hush_pyflakes = (iteritems, patch, StringIO, which)
