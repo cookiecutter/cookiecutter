@@ -20,6 +20,7 @@ Coding Standards
 * PEP8
 * Functions over classes except in tests
 * Quotes via http://stackoverflow.com/a/56190/5549
+
   * Use double quotes around strings that are used for interpolation or that are natural language messages
   * Use single quotes for small symbol-like strings (but break the rules if the strings contain quotes)
   * Use triple double quotes for docstrings and raw string literals for regular expressions even if they aren't needed.
