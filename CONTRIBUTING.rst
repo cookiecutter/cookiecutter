@@ -143,7 +143,29 @@ Coding Standards
 
 * PEP8
 * Functions over classes except in tests
-* Prefer single quotes (unless inconvenient) http://stackoverflow.com/a/56190/5549
+* Quotes via http://stackoverflow.com/a/56190/5549
+
+  * Use double quotes around strings that are used for interpolation or that are natural language messages
+  * Use single quotes for small symbol-like strings (but break the rules if the strings contain quotes)
+  * Use triple double quotes for docstrings and raw string literals for regular expressions even if they aren't needed.
+  * Example:
+
+    .. code-block:: python
+
+        LIGHT_MESSAGES = {
+            'English': "There are %(number_of_lights)s lights.",
+            'Pirate':  "Arr! Thar be %(number_of_lights)s lights."
+        }
+
+        def lights_message(language, number_of_lights):
+            """Return a language-appropriate string reporting the light count."""
+            return LIGHT_MESSAGES[language] % locals()
+
+        def is_pirate(message):
+            """Return True if the given message sounds piratical."""
+            return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
+
+  * Write new code in Python 3.
 
 Testing
 -------
@@ -327,6 +349,43 @@ Milestone size:
 
 * If a milestone contains too much, move some to the next milestone.
 * Err on the side of more frequent patch releases.
+
+Process: Pull Request merging and HISTORY.rst maintenance
+---------------------------------------------------------
+
+If you merge a pull request, you're responsible for updating `AUTHORS.rst` and `HISTORY.rst`
+
+When you're processing the first change after a release, create boilerplate following the existing pattern:
+
+    x.y.z (Development)
+    ~~~~~~~~~~~~~~~~~~~
+
+    The goals of this release are TODO: release summary of features
+
+    Features:
+
+    * Feature description, thanks to @contributor (#PR).
+
+    Bug Fixes:
+
+    * Bug fix description, thanks to @contributor (#PR).
+
+    Other changes:
+
+    * Description of the change, thanks to @contributor (#PR). 
+                      
+    .. _`@contributor`: https://github.com/contributor
+
+Process: Accepting Template Pull Requests
+-----------------------------------------
+
+#. Run the template to generate the project.
+#. Attempt to start/use the rendered project.
+#. Merge the template in.
+#. Update the history file.
+
+.. note:: Adding a template doesn't give authors credit.
+
 
 Process: Generating CONTRIBUTING.rst
 -------------------------------------
