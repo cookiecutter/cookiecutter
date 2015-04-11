@@ -10,6 +10,11 @@ PY3 = sys.version_info[0] == 3
 OLD_PY2 = sys.version_info[:2] < (2, 7)
 
 
+def is_string(obj):
+    """Determine if an object is a string."""
+    return isinstance(obj, basestring)
+
+
 def read_response(prompt=''):
     """
     Prompt the user for a response.
@@ -95,11 +100,5 @@ else:  # Forced testing
                     if _access_check(name, mode):
                         return name
         return None
-
-
-def is_string(obj):
-    """Determine if an object is a string."""
-    return isinstance(obj, basestring)
-
 
 _hush_pyflakes = (iteritems, StringIO, which)
