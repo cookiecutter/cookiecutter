@@ -21,13 +21,6 @@ def read_response(prompt=''):
     """
     return input(prompt)
 
-if PY3:  # pragma: no cover
-    from unittest.mock import patch
-
-
-else:  # pragma: no cover
-    from mock import patch
-
 
 if PY3:  # Forced testing
 
@@ -109,4 +102,4 @@ def is_string(obj):
     return isinstance(obj, basestring)
 
 
-_hush_pyflakes = (iteritems, patch, StringIO, which)
+_hush_pyflakes = (iteritems, StringIO, which)
