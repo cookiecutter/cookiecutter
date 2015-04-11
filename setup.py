@@ -24,6 +24,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = [
+    'future>=0.14.3',
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'PyYAML>=3.10',
