@@ -27,6 +27,9 @@ DEFAULT_CONFIG = {
     'default_context': {}
 }
 
+# TODO: test on windows...
+USER_CONFIG_PATH = '~/.cookiecutterrc'
+
 
 def get_config(config_path):
     """
@@ -50,15 +53,15 @@ def get_config(config_path):
     return config_dict
 
 
-def get_user_config():
+def get_user_config(rc_file=USER_CONFIG_PATH):
     """
-    Retrieve config from the user's ~/.cookiecutterrc, if it exists.
-    Otherwise, return None.
+    Retrieve config from the given path, if it exists.
+    Otherwise, return a deep copy of the defaults.
+
+    :param rc_file: Path to the user configuration file
     """
-
-    # TODO: test on windows...
-    USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
-
-    if os.path.exists(USER_CONFIG_PATH):
-        return get_config(USER_CONFIG_PATH)
-    return copy.copy(DEFAULT_CONFIG)
+    rc_file = os.path.expanduser(rc_file or '')
+    if rc_file and os.path.exists(rc_file):
+        return get_config(rc_file)
+    else:
+        return copy.copy(DEFAULT_CONFIG)

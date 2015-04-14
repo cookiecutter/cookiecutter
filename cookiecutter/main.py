@@ -17,7 +17,7 @@ import os
 from datetime import datetime
 
 from . import __version__ as cookiecutter_version
-from .config import get_user_config
+from .config import get_user_config, USER_CONFIG_PATH
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
@@ -56,7 +56,7 @@ def expand_abbreviations(template, config_dict):
 
 
 def cookiecutter(template, checkout=None, no_input=False, extra_context=None,
-                 extra_globals=None):
+                 extra_globals=None, rc_file=USER_CONFIG_PATH):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -68,11 +68,12 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None,
         and user configuration.
     :param extra_globals: A dictionary of values added to the Jinja2 context,
         e.g. custom filters.
+    :param rc_file: Path to the user configuration file
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
-    config_dict = get_user_config()
+    config_dict = get_user_config(rc_file)
 
     template = expand_abbreviations(template, config_dict)
 
