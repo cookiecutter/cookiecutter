@@ -64,7 +64,7 @@ def test_should_not_invoke_read_response(monkeypatch):
 def test_should_render_choices(monkeypatch):
     monkeypatch.setattr(
         'cookiecutter.prompt.read_choice',
-        lambda p, o: u'anewproject'
+        lambda prompt, options: options[1]
     )
     monkeypatch.setattr(
         'cookiecutter.prompt.read_response',
