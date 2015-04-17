@@ -12,6 +12,7 @@ from collections import OrderedDict
 import platform
 
 import pytest
+from jinja2.environment import Environment
 
 from cookiecutter import prompt
 
@@ -88,3 +89,15 @@ def test_should_render_choices(monkeypatch):
     }
     cookiecutter_dict = prompt.prompt_for_config(context)
     assert cookiecutter_dict == exp_cookiecutter_dict
+
+
+def test_should_return_first_option_if_no_input(monkeypatch):
+    env = Environment()
+    key = 'orientation'
+    options = ['landscape', 'portrait', 'all']
+    cookiecutter_dict = {key: options}
+
+    val = prompt.prompt_choice_for_config(
+        cookiecutter_dict, env, key, options, no_input=True
+    )
+    assert val == 'landscape'
