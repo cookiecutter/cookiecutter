@@ -86,8 +86,7 @@ def prompt_for_config(context, no_input=False):
             )
         else:
             # We are dealing with a regular variable
-            raw = raw if is_string(raw) else str(raw)
-            val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+            val = _render_variable(env, raw, cookiecutter_dict)
 
             if not no_input:
                 prompt = '{0} (default is "{1}")? '.format(key, val)
