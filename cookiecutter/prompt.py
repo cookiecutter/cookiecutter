@@ -45,7 +45,7 @@ def read_choice(variable_name, options):
         'Choose from {}:'.format(', '.join(choices))
     ))
 
-    user_choice = click.prompt(prompt, type=click.Choice(choices))
+    user_choice = click.prompt(prompt, type=click.Choice(choices), default='1')
     return choice_map[user_choice]
 
 
