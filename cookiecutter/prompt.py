@@ -10,9 +10,29 @@ Functions for prompting the user for project info.
 
 from __future__ import unicode_literals
 import sys
+from collections import OrderedDict
+
+import click
 
 from .compat import iteritems, read_response, is_string
 from jinja2.environment import Environment
+
+
+def read_choice(variable_name, options):
+    choice_map = OrderedDict(
+        (str(i), value) for i, value in enumerate(options, 1)
+    )
+    choices = choice_map.keys()
+
+    choice_lines = ['    {} - {}'.format(*c) for c in choice_map.items()]
+    prompt = '\n'.join((
+        'Select {}:'.format(variable_name),
+        '\n'.join(choice_lines),
+        'Choose from {}!'.format(', '.join(choices))
+    ))
+
+    user_choice = click.prompt(prompt, type=click.Choice(choices))
+    return choice_map[user_choice]
 
 
 def prompt_for_config(context, no_input=False):

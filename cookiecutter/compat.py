@@ -2,7 +2,6 @@ import click
 import os
 import sys
 
-from collections import OrderedDict
 
 PY3 = sys.version_info[0] == 3
 OLD_PY2 = sys.version_info[:2] < (2, 7)
@@ -10,23 +9,6 @@ OLD_PY2 = sys.version_info[:2] < (2, 7)
 
 def read_response(prompt=''):
     return click.prompt(prompt, default='')
-
-
-def read_choice(variable_name, options):
-    choice_map = OrderedDict(
-        (str(i), value) for i, value in enumerate(options, 1)
-    )
-    choices = choice_map.keys()
-
-    choice_lines = ['    {} - {}'.format(*c) for c in choice_map.items()]
-    prompt = '\n'.join((
-        'Select {}:'.format(variable_name),
-        '\n'.join(choice_lines),
-        'Choose from {}!'.format(', '.join(choices))
-    ))
-
-    user_choice = click.prompt(prompt, type=click.Choice(choices))
-    return choice_map[user_choice]
 
 
 if PY3:  # pragma: no cover
