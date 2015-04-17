@@ -14,8 +14,16 @@ from collections import OrderedDict
 
 import click
 
-from .compat import iteritems, read_response, is_string
+from .compat import iteritems, is_string
 from jinja2.environment import Environment
+
+
+def read_response(prompt=''):
+    """Prompt the user and return the entered value or an empty string.
+
+    :param str prompt: Text to display to the user
+    """
+    return click.prompt(prompt, default='')
 
 
 def read_choice(variable_name, options):
