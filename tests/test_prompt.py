@@ -162,7 +162,7 @@ class TestQueryDefaults(object):
             prompt.query_yes_no('Blah?', default='yn')
 
 
-class TestQueryChoice(object):
+class TestPromptChoice(object):
     def test_should_invoke_read_choice(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_response',
@@ -186,7 +186,7 @@ class TestQueryChoice(object):
     def test_should_not_invoke_read_response(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_choice',
-            lambda _, _: pytest.fail(
+            lambda p, o: pytest.fail(
                 'Should not call read_choice to query non list variable'
             )
         )
@@ -202,7 +202,11 @@ class TestQueryChoice(object):
     def test_should_render_choices(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_choice',
-            lambda _, _: u'anewproject'
+            lambda p, o: u'anewproject'
+        )
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'\n'
         )
         context = {'cookiecutter': OrderedDict([
             (
