@@ -55,6 +55,9 @@ def _render_variable(env, raw, cookiecutter_dict):
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
+    """Prompt the user which option to choose from the given. Each of the
+    possible choices is rendered beforehand.
+    """
     rendered_options = [
         _render_variable(env, raw, cookiecutter_dict) for raw in options
     ]
