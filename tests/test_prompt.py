@@ -160,3 +160,25 @@ class TestQueryDefaults(object):
         )
         with pytest.raises(ValueError):
             prompt.query_yes_no('Blah?', default='yn')
+
+
+class TestQueryChoice(object):
+    def test_should_invoke_read_choice(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda _: pytest.fail(
+                'Should not call read_response to query a choice'
+            )
+        )
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_choice',
+            lambda prompt, options: 'all'
+        )
+        context = {
+            'cookiecutter': {
+                'orientation': ['landscape', 'portrait', 'all']
+            }
+        }
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {'orientation': 'all'}
