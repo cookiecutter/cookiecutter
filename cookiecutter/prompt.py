@@ -42,7 +42,7 @@ def read_choice(variable_name, options):
     prompt = '\n'.join((
         'Select {}:'.format(variable_name),
         '\n'.join(choice_lines),
-        'Choose from {}!'.format(', '.join(choices))
+        'Choose from {}:'.format(', '.join(choices))
     ))
 
     user_choice = click.prompt(prompt, type=click.Choice(choices))
