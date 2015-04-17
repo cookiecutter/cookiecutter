@@ -186,7 +186,7 @@ class TestQueryChoice(object):
     def test_should_not_invoke_read_response(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_choice',
-            lambda _: pytest.fail(
+            lambda _, _: pytest.fail(
                 'Should not call read_choice to query non list variable'
             )
         )
@@ -198,3 +198,28 @@ class TestQueryChoice(object):
 
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
+
+    def test_should_render_choices(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_choice',
+            lambda _, _: u'anewproject'
+        )
+        context = {'cookiecutter': OrderedDict([
+            (
+                'project_name',
+                u'A New Project'
+            ), (
+                'pkg_name',
+                [
+                    u'foo',
+                    u'{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                    u'bar'
+                ]
+            )
+        ])}
+
+        exp_cookiecutter_dict = {
+            'project_name': u'A New Project', 'pkg_name': u'anewproject'
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == exp_cookiecutter_dict
