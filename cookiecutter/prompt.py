@@ -19,6 +19,12 @@ from jinja2.environment import Environment
 
 
 def read_choice(variable_name, options):
+    """Prompt the user to choose from several options for the given variable.
+
+    :param str variable_name: Variable as specified in the context
+    :param list options: Sequence of options that are available to select from
+    :return: Exactly one item of ``options`` that has been chosen by the user
+    """
     choice_map = OrderedDict(
         (str(i), value) for i, value in enumerate(options, 1)
     )
