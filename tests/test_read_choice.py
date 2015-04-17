@@ -26,7 +26,7 @@ def test_read_choice(monkeypatch, user_choice, expected_value):
     def _monkey_prompt(prompt, type=None):
         assert prompt == EXPECTED_PROMPT
         assert isinstance(type, click.Choice)
-        assert type.choices == ['1', '2', '3', '4']
+        assert list(type.choices) == ['1', '2', '3', '4']
         return str(user_choice)
     monkeypatch.setattr('click.prompt', _monkey_prompt)
 
