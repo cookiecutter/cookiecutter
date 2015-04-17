@@ -182,3 +182,19 @@ class TestQueryChoice(object):
 
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'orientation': 'all'}
+
+    def test_should_not_invoke_read_response(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_choice',
+            lambda _: pytest.fail(
+                'Should not call read_choice to query non list variable'
+            )
+        )
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_response',
+            lambda x=u'': u'Audrey Roy'
+        )
+        context = {'cookiecutter': {'full_name': 'Your Name'}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
