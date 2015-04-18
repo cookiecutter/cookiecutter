@@ -9,7 +9,7 @@ from cookiecutter.prompt import read_choice
 OPTIONS = ['hello', 'world', 'foo', 'bar']
 
 
-EXPECTED_PROMPT = """Select varname:
+EXPECTED_PROMPT = """Select varname (default is "1"):
     1 - hello
     2 - world
     3 - foo

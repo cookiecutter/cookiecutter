@@ -37,15 +37,18 @@ def read_choice(variable_name, options):
         (str(i), value) for i, value in enumerate(options, 1)
     )
     choices = choice_map.keys()
+    default = '1'
 
     choice_lines = ['    {} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join((
-        'Select {}:'.format(variable_name),
+        'Select {} (default is "{}"):'.format(variable_name, default),
         '\n'.join(choice_lines),
         'Choose from {}:'.format(', '.join(choices))
     ))
 
-    user_choice = click.prompt(prompt, type=click.Choice(choices), default='1')
+    user_choice = click.prompt(
+        prompt, type=click.Choice(choices), default=default
+    )
     return choice_map[user_choice]
 
 
