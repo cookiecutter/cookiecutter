@@ -23,7 +23,10 @@ def patch_readline_on_win(monkeypatch):
         monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
 
 
-def test_should_invoke_read_choice(monkeypatch):
+def test_should_not_invoke_read_response(monkeypatch):
+    """Test that ``read_response`` is not called when running
+    ``prompt_for_config`` and the context only holds a list variable.
+    """
     monkeypatch.setattr(
         'cookiecutter.prompt.read_response',
         lambda _: pytest.fail(
@@ -44,7 +47,10 @@ def test_should_invoke_read_choice(monkeypatch):
     assert cookiecutter_dict == {'orientation': 'all'}
 
 
-def test_should_not_invoke_read_response(monkeypatch):
+def test_should_not_invoke_read_choice(monkeypatch):
+    """Test that ``read_choice`` is not called when running
+    ``prompt_for_config`` and the context does not hold a list variable.
+    """
     monkeypatch.setattr(
         'cookiecutter.prompt.read_choice',
         lambda p, o: pytest.fail(
@@ -62,6 +68,11 @@ def test_should_not_invoke_read_response(monkeypatch):
 
 
 def test_should_render_choices(monkeypatch):
+    """Test that templated variable are still being rendered as we go even
+    when they are part of a choice variable. The ``monkeypatch`` version of
+    ``read_choice`` simply returns the second option so we can verify that it
+    has been rendered just as we do with regular variables.
+    """
     monkeypatch.setattr(
         'cookiecutter.prompt.read_choice',
         lambda prompt, options: options[1]
@@ -92,6 +103,10 @@ def test_should_render_choices(monkeypatch):
 
 
 def test_should_return_first_option_if_no_input(monkeypatch):
+    """Test that ``prompt_choice_for_config`` returns the very first option
+    when ``no_input`` is True. This pretty much mimics the behaviour of
+    the default value in ``read_choice``.
+    """
     env = Environment()
     key = 'orientation'
     options = ['landscape', 'portrait', 'all']
