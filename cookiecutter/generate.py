@@ -115,7 +115,13 @@ def generate_file(project_dir, infile, context, env):
 
     # Render the path to the output file (not including the root project dir)
     outfile_tmpl = Template(infile)
+
     outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
+    file_name_is_empty = os.path.isdir(outfile)
+    if file_name_is_empty:
+        logging.debug('The resulting file name is empty: {0}'.format(outfile))
+        return
+
     logging.debug('outfile is {0}'.format(outfile))
 
     # Just copy over binary files. Don't render.

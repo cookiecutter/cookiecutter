@@ -54,6 +54,32 @@ def test_generate_file(env):
         assert generated_text == 'Testing cheese'
 
 
+@pytest.mark.usefixtures('remove_cheese_file')
+def test_generate_file_with_false_condition(env):
+    infile = 'tests/files/{% if generate_file == "y" %}cheese.txt{% endif %}'
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context={'generate_file': 'n'},
+        env=env
+    )
+    assert not os.path.exists('tests/files/cheese.txt')
+
+
+@pytest.mark.usefixtures('remove_cheese_file')
+def test_generate_file_with_true_conditional(env):
+    infile = 'tests/files/{% if generate_file == "y" %}cheese.txt{% endif %}'
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context={'generate_file': 'y'},
+        env=env
+    )
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
+        generated_text = f.read()
+        assert generated_text == 'Testing that generate_file was y'
+
 @pytest.fixture
 def expected_msg():
     msg = (
