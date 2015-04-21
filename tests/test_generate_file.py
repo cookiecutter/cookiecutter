@@ -56,7 +56,7 @@ def test_generate_file(env):
 
 @pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_with_false_condition(env):
-    infile = 'tests/files/{% if generate_file == "y" %}cheese.txt{% endif %}'
+    infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
     generate.generate_file(
         project_dir=".",
         infile=infile,
@@ -68,7 +68,7 @@ def test_generate_file_with_false_condition(env):
 
 @pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_with_true_conditional(env):
-    infile = 'tests/files/{% if generate_file == "y" %}cheese.txt{% endif %}'
+    infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
     generate.generate_file(
         project_dir=".",
         infile=infile,
