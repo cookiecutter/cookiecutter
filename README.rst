@@ -41,7 +41,7 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.6, 2.7, 3.3, 3.4, and PyPy. *(But you don't have to know/write Python
+* Works with Python 2.7, 3.3, 3.4, and PyPy. *(But you don't have to know/write Python
   code to use Cookiecutter.)*
 
 * Project templates can be in any programming language or markup format:
