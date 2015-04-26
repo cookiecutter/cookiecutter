@@ -8,12 +8,18 @@ test_compat
 Tests for `cookiecutter.compat` module.
 """
 
+import os
+
 from cookiecutter.compat import which
 
 
 def test_existing_command():
-    assert which('date')
+    cmd = which('date')
+    assert cmd
+    assert os.path.exists(cmd)
+    assert os.access(cmd, os.F_OK | os.X_OK)
+    assert not os.path.isdir(cmd)
 
 
 def test_non_existing_command():
-    assert not which('stringthatisntashellcommand')
+    assert which('stringthatisntashellcommand') is None
