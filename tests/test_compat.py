@@ -12,7 +12,7 @@ from cookiecutter.compat import which
 
 
 def test_existing_command():
-    assert which('cookiecutter')
+    assert which('date')
 
 
 def test_non_existing_command():
