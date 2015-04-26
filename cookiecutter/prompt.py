@@ -10,9 +10,64 @@ Functions for prompting the user for project info.
 
 from __future__ import unicode_literals
 import sys
+from collections import OrderedDict
 
-from .compat import iteritems, read_response, is_string
+import click
+
+from .compat import iteritems, is_string
 from jinja2.environment import Environment
+
+
+def read_response(prompt=''):
+    """Prompt the user and return the entered value or an empty string.
+
+    :param str prompt: Text to display to the user
+    """
+    return click.prompt(prompt, default='')
+
+
+def read_choice(variable_name, options):
+    """Prompt the user to choose from several options for the given variable.
+
+    :param str variable_name: Variable as specified in the context
+    :param list options: Sequence of options that are available to select from
+    :return: Exactly one item of ``options`` that has been chosen by the user
+    """
+    choice_map = OrderedDict(
+        (str(i), value) for i, value in enumerate(options, 1)
+    )
+    choices = choice_map.keys()
+    default = '1'
+
+    choice_lines = ['    {} - {}'.format(*c) for c in choice_map.items()]
+    prompt = '\n'.join((
+        'Select {} (default is "{}"):'.format(variable_name, default),
+        '\n'.join(choice_lines),
+        'Choose from {}:'.format(', '.join(choices))
+    ))
+
+    user_choice = click.prompt(
+        prompt, type=click.Choice(choices), default=default
+    )
+    return choice_map[user_choice]
+
+
+def _render_variable(env, raw, cookiecutter_dict):
+    raw = raw if is_string(raw) else str(raw)
+    return env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+
+
+def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
+    """Prompt the user which option to choose from the given. Each of the
+    possible choices is rendered beforehand.
+    """
+    rendered_options = [
+        _render_variable(env, raw, cookiecutter_dict) for raw in options
+    ]
+
+    if no_input:
+        return rendered_options[0]
+    return read_choice(key, rendered_options)
 
 
 def prompt_for_config(context, no_input=False):
@@ -30,16 +85,22 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = raw
             continue
 
-        raw = raw if is_string(raw) else str(raw)
-        val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+        if isinstance(raw, list):
+            # We are dealing with a choice variable
+            val = prompt_choice_for_config(
+                cookiecutter_dict, env, key, raw, no_input
+            )
+        else:
+            # We are dealing with a regular variable
+            val = _render_variable(env, raw, cookiecutter_dict)
 
-        if not no_input:
-            prompt = '{0} (default is "{1}")? '.format(key, val)
+            if not no_input:
+                prompt = '{0} (default is "{1}")? '.format(key, val)
 
-            new_val = read_response(prompt).strip()
+                new_val = read_response(prompt).strip()
 
-            if new_val != '':
-                val = new_val
+                if new_val != '':
+                    val = new_val
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict
