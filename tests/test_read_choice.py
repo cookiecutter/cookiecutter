@@ -33,11 +33,7 @@ def test_read_choice(monkeypatch, user_choice, expected_value):
     assert read_choice('varname', OPTIONS) == expected_value
 
 
-@pytest.fixture(autouse=True)
-def patch_readline(monkeypatch):
-    monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
-
-
 def test_default(monkeypatch):
     """Make sure that the default is properly set for click.prompt."""
+    monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
     assert read_choice('varname', OPTIONS) == OPTIONS[0]
