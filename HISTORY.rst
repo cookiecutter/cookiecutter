@@ -15,6 +15,7 @@ Features:
 Other Changes:
 
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
+* The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
 
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
