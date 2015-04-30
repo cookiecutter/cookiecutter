@@ -24,6 +24,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = [
+    'future>=0.14.3',
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'PyYAML>=3.10',
@@ -33,12 +34,6 @@ requirements = [
 test_requirements = [
     'pytest'
 ]
-
-# Add Python 2.7-specific dependencies
-if sys.version < '3':
-    requirements.append('mock')
-
-# There are no Python 3-specific dependencies to add
 
 long_description = readme + '\n\n' + history
 

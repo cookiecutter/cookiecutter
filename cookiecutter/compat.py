@@ -1,60 +1,30 @@
+from builtins import input
+from io import StringIO
 import os
 import sys
+
+from future.utils import iteritems
+from past.builtins import basestring
 
 PY3 = sys.version_info[0] == 3
 OLD_PY2 = sys.version_info[:2] < (2, 7)
 
-if PY3:  # pragma: no cover
-    input_str = 'builtins.input'
-    iteritems = lambda d: iter(d.items())
-    from unittest.mock import patch
-    from io import StringIO
 
-    def read_response(prompt=''):
-        """
-        Prompt the user for a response.
+def is_string(obj):
+    """Determine if an object is a string."""
+    return isinstance(obj, basestring)
 
-        Prints the given prompt (which should be a Unicode string),
-        and returns the text entered by the user as a Unicode string.
 
-        :param prompt: A Unicode string that is presented to the user.
-        """
-        # The Python 3 input function does exactly what we want
-        return input(prompt)
+def read_response(prompt=''):
+    """
+    Prompt the user for a response.
 
-else:  # pragma: no cover
-    from __builtin__ import raw_input
-    input = raw_input
-    input_str = '__builtin__.raw_input'
-    iteritems = lambda d: d.iteritems()
-    from mock import patch
-    from cStringIO import StringIO
+    Prints the given prompt (which should be a Unicode string),
+    and returns the text entered by the user as a Unicode string.
 
-    def read_response(prompt=''):
-        """
-        Prompt the user for a response.
-
-        Prints the given prompt (which should be a Unicode string),
-        and returns the text entered by the user as a Unicode string.
-
-        :param prompt: A Unicode string that is presented to the user.
-        """
-        # For Python 2, raw_input takes a byte string argument for the prompt.
-        # This must be encoded using the encoding used by sys.stdout.
-        # The result is a byte string encoding using sys.stdin.encoding.
-        # However, if the program is not being run interactively, sys.stdout
-        # and sys.stdin may not have encoding attributes.
-        # In that case we don't print a prompt (stdin/out isn't interactive,
-        # so prompting is pointless), and we assume the returned data is
-        # encoded using sys.getdefaultencoding(). This may not be right,
-        # but it's likely the best we can do.
-        # Isn't Python 2 encoding support wonderful? :-)
-        if sys.stdout.encoding:
-            prompt = prompt.encode(sys.stdout.encoding)
-        else:
-            prompt = ''
-        enc = sys.stdin.encoding or sys.getdefaultencoding()
-        return raw_input(prompt).decode(enc)
+    :param prompt: A Unicode string that is presented to the user.
+    """
+    return input(prompt)
 
 
 if PY3:  # Forced testing
@@ -131,10 +101,4 @@ else:  # Forced testing
                         return name
         return None
 
-
-def is_string(obj):
-    """Determine if an object is a string."""
-    return isinstance(obj, str if PY3 else basestring)
-
-
-_hush_pyflakes = (patch, StringIO, which)
+_hush_pyflakes = (iteritems, StringIO, which)
