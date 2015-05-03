@@ -21,8 +21,15 @@ def read_response(prompt=''):
     """Prompt the user and return the entered value or an empty string.
 
     :param str prompt: Text to display to the user
+
+    Note: Please see http://click.pocoo.org/4/api/#click.prompt
     """
-    return click.prompt(prompt, default='')
+    return click.prompt(
+        prompt,
+        default='',  # use an empty string if no input happens.
+        prompt_suffix='',  # do not add a suffix to the prompt.
+        show_default=False,  # hides the default value in the prompt.
+    )
 
 
 def prompt_for_config(context, no_input=False):
