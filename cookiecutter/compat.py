@@ -6,10 +6,6 @@ PY3 = sys.version_info[0] == 3
 OLD_PY2 = sys.version_info[:2] < (2, 7)
 
 
-def read_response(prompt=''):
-    return click.prompt(prompt, default='')
-
-
 if PY3:  # pragma: no cover
     input_str = 'builtins.input'
     iteritems = lambda d: iter(d.items())
