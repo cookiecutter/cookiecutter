@@ -28,7 +28,7 @@ def read_response(prompt=''):
         prompt,
         default='',  # use an empty string if no input happens.
         prompt_suffix='',  # do not add a suffix to the prompt.
-        show_default=False,  # hides the default value in the prompt.
+        show_default=False,  # prompt is supposed to mention the default value
     )
 
 
