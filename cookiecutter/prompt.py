@@ -11,8 +11,27 @@ Functions for prompting the user for project info.
 from __future__ import unicode_literals
 import sys
 
-from .compat import iteritems, read_response, is_string
+import click
+
+from .compat import iteritems, is_string
 from jinja2.environment import Environment
+
+
+def read_response(prompt=''):
+    """Prompt the user and return the entered value or an empty string.
+
+    :param str prompt: Text to display to the user
+    """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # default: use an empty string if no input happens
+    # prompt_suffix: do not add a suffix to the prompt
+    # show_default: the prompt is expected to mention the default itself
+    return click.prompt(
+        prompt,
+        default='',
+        prompt_suffix='',
+        show_default=False,
+    )
 
 
 def prompt_for_config(context, no_input=False):
