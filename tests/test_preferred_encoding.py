@@ -6,6 +6,7 @@ import pytest
 
 from cookiecutter.compat import PY3
 
+
 @pytest.mark.skipif(not PY3, reason='Only necessary on Python3')
 def test_not_ascii():
     """Make sure that the systems preferred encoding is not `ascii`.
