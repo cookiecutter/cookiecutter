@@ -27,6 +27,22 @@ def read_user_variable(var_name, default_value):
     return click.prompt(var_name, default=default_value)
 
 
+def read_user_yes_no(question, default_value):
+    """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
+
+    Note:
+      Possible choices are 'true', '1', 'yes', 'y' or 'false', '0', 'no', 'n'
+
+    :param str question: Question to the user
+    :param default_value: Value that will be returned if no input happens
+    """
+    return click.prompt(
+        question,
+        default=default_value,
+        type=click.BOOL
+    )
+
+
 def read_response(prompt=''):
     """Prompt the user and return the entered value or an empty string.
 
