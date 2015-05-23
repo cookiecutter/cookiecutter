@@ -40,8 +40,8 @@ def patch_readline_on_win(monkeypatch):
 class TestPrompt(object):
     def test_prompt_for_config_simple(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'Audrey Roy'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: u'Audrey Roy'
         )
         context = {'cookiecutter': {'full_name': 'Your Name'}}
 
@@ -50,8 +50,8 @@ class TestPrompt(object):
 
     def test_prompt_for_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'Pizzä ïs Gööd'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: u'Pizzä ïs Gööd'
         )
         context = {'cookiecutter': {'full_name': 'Your Name'}}
 
@@ -60,8 +60,8 @@ class TestPrompt(object):
 
     def test_unicode_prompt_for_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'Pizzä ïs Gööd'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: u'Pizzä ïs Gööd'
         )
         context = {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}}
 
@@ -70,8 +70,8 @@ class TestPrompt(object):
 
     def test_unicode_prompt_for_default_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'\n'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: default
         )
         context = {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}}
 
@@ -80,8 +80,8 @@ class TestPrompt(object):
 
     def test_unicode_prompt_for_templated_config(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'\n'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: default
         )
         context = {'cookiecutter': OrderedDict([
             (
@@ -101,8 +101,8 @@ class TestPrompt(object):
 
     def test_dont_prompt_for_private_context_var(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x: pytest.fail(
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: pytest.fail(
                 'Should not try to read a response for private context var'
             )
         )
