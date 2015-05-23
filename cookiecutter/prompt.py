@@ -17,6 +17,16 @@ from .compat import iteritems, is_string
 from jinja2.environment import Environment
 
 
+def read_user_variable(var_name, default_value):
+    """Prompt the user for the given variable and return the entered value
+    or the given default.
+
+    :param str var_name: Variable of the context to query the user
+    :param default_value: Value that will be returned if no input happens
+    """
+    return click.prompt(var_name, default=default_value)
+
+
 def read_response(prompt=''):
     """Prompt the user and return the entered value or an empty string.
 
