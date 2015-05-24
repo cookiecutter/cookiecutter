@@ -31,3 +31,13 @@ def test_click_invocation(mocker, user_choice, expected_value):
         type=click.Choice(OPTIONS),
         default='1'
     )
+
+
+@pytest.fixture(params=[1, True, False, None, [], {}])
+def invalid_options(request):
+    return ['foo', 'bar', request.param]
+
+
+def test_raise_on_non_str_options(invalid_options):
+    with pytest.raises(TypeError):
+        read_user_choice('foo', invalid_options)
