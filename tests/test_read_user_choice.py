@@ -13,7 +13,7 @@ EXPECTED_PROMPT = """Select varname:
 2 - world
 3 - foo
 4 - bar
-Choose from 1, 2, 3, 4!"""
+Choose from 1, 2, 3, 4"""
 
 
 @pytest.mark.parametrize('user_choice, expected_value', enumerate(OPTIONS, 1))
