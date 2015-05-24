@@ -9,7 +9,6 @@ Functions for prompting the user for project info.
 """
 
 from __future__ import unicode_literals
-import sys
 
 import click
 
