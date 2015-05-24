@@ -9,6 +9,7 @@ Functions for prompting the user for project info.
 """
 
 from __future__ import unicode_literals
+from collections import OrderedDict
 
 import click
 
@@ -42,6 +43,44 @@ def read_user_yes_no(question, default_value):
         default=default_value,
         type=click.BOOL
     )
+
+
+def read_user_choice(var_name, options):
+    """Prompt the user to choose from several options for the given variable.
+
+    The first item will be returned if no input happens.
+
+    :param str var_name: Variable as specified in the context
+    :param list options: Sequence of options that are available to select from
+    :return: Exactly one item of ``options`` that has been chosen by the user
+    """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
+    if not isinstance(options, list):
+        raise TypeError
+
+    if not options:
+        raise ValueError
+
+    if not all(isinstance(opt, str) for opt in options):
+        raise TypeError
+
+    choice_map = OrderedDict(
+        (str(i), value) for i, value in enumerate(options, 1)
+    )
+    choices = choice_map.keys()
+    default = '1'
+
+    choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
+    prompt = '\n'.join((
+        'Select {}:'.format(var_name),
+        '\n'.join(choice_lines),
+        'Choose from {}'.format(', '.join(choices))
+    ))
+
+    user_choice = click.prompt(
+        prompt, type=click.Choice(choices), default=default
+    )
+    return choice_map[user_choice]
 
 
 def prompt_for_config(context, no_input=False):
