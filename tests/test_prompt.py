@@ -6,21 +6,6 @@ test_prompt
 -----------
 
 Tests for `cookiecutter.prompt` module.
-TestPrompt.test_prompt_for_config_simple
-TestPrompt.test_prompt_for_config_unicode
-TestPrompt.test_unicode_prompt_for_config_unicode
-TestPrompt.test_unicode_prompt_for_default_config_unicode
-TestPrompt.test_unicode_prompt_for_templated_config
-
-TestQueryAnswers.test_query_y
-TestQueryAnswers.test_query_ye
-TestQueryAnswers.test_query_yes
-TestQueryAnswers.test_query_n
-
-TestQueryDefaults.test_query_y_none_default
-TestQueryDefaults.test_query_n_none_default
-TestQueryDefaults.test_query_no_default
-TestQueryDefaults.test_query_bad_default
 """
 
 from collections import OrderedDict
@@ -111,7 +96,7 @@ class TestPrompt(object):
         assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
 
 
-class TestQueryChoice(object):
+class TestReadUserChoice(object):
     def test_should_invoke_read_user_choice(self, mocker):
         read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
         read_choice.return_value = 'all'
