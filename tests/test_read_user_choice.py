@@ -3,7 +3,7 @@
 import click
 import pytest
 
-from cookiecutter.compat import read_user_choice
+from cookiecutter.prompt import read_user_choice
 
 OPTIONS = ['hello', 'world', 'foo', 'bar']
 
