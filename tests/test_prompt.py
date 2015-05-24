@@ -126,10 +126,10 @@ class TestQueryChoice(object):
         }
 
         cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
-        assert cookiecutter_dict == {'orientation': 'all'}
-        assert not read_variable.called
 
+        assert not read_variable.called
         read_choice.assert_called_once_with('orientation', CHOICES)
+        assert cookiecutter_dict == {'orientation': 'all'}
 
     def test_should_not_invoke_read_user_variable(self, mocker):
         read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
@@ -140,10 +140,10 @@ class TestQueryChoice(object):
         CONTEXT = {'cookiecutter': {'full_name': 'Your Name'}}
 
         cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
-        assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
-        assert not read_choice.called
 
+        assert not read_choice.called
         read_variable.assert_called_once_with('full_name', 'Your Name')
+        assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
 
     def test_should_render_choices(self, mocker):
         read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
@@ -176,7 +176,7 @@ class TestQueryChoice(object):
             'project_name': u'A New Project', 'pkg_name': u'anewproject'
         }
         cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
-        assert cookiecutter_dict == EXP_COOKIECUTTER_DICT
 
         read_variable.assert_called_once_with('project_name', u'A New Project')
         read_choice.assert_called_once_with('pkg_name', RENDERED_CHOICES)
+        assert cookiecutter_dict == EXP_COOKIECUTTER_DICT
