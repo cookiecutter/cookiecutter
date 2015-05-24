@@ -33,8 +33,8 @@ def clean_cookiecutter_dirs(request):
 @skipif_no_network
 def test_git_clone_overwrite(monkeypatch):
     monkeypatch.setattr(
-        'cookiecutter.prompt.read_response',
-        lambda x=u'': u'y'
+        'cookiecutter.vcs.read_user_yes_no',
+        lambda question, default: True
     )
     repo_dir = vcs.clone(
         'https://github.com/audreyr/cookiecutter-pypackage.git'
@@ -56,8 +56,8 @@ def test_git_clone_overwrite_with_no_prompt():
 @skipif_no_network
 def test_git_clone_cancel(monkeypatch):
     monkeypatch.setattr(
-        'cookiecutter.prompt.read_response',
-        lambda x=u'': u'n'
+        'cookiecutter.vcs.read_user_yes_no',
+        lambda question, default: False
     )
 
     with pytest.raises(SystemExit):
@@ -67,8 +67,8 @@ def test_git_clone_cancel(monkeypatch):
 @skipif_no_network
 def test_hg_clone_overwrite(monkeypatch):
     monkeypatch.setattr(
-        'cookiecutter.prompt.read_response',
-        lambda x=u'': u'y'
+        'cookiecutter.vcs.read_user_yes_no',
+        lambda question, default: True
     )
     repo_dir = vcs.clone(
         'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
@@ -80,8 +80,8 @@ def test_hg_clone_overwrite(monkeypatch):
 @skipif_no_network
 def test_hg_clone_cancel(monkeypatch):
     monkeypatch.setattr(
-        'cookiecutter.prompt.read_response',
-        lambda x=u'': u'n'
+        'cookiecutter.vcs.read_user_yes_no',
+        lambda question, default: False
     )
 
     with pytest.raises(SystemExit):
