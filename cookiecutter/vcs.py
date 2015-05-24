@@ -16,7 +16,7 @@ import sys
 
 from .compat import which
 from .exceptions import UnknownRepoType, VCSNotInstalled
-from .prompt import query_yes_no
+from .prompt import read_user_yes_no
 from .utils import make_sure_path_exists, rmtree
 
 
@@ -33,11 +33,12 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
     if no_input:
         ok_to_delete = True
     else:
-        ok_to_delete = query_yes_no(
+        question = (
             "You've cloned {0} before. "
-            'Is it okay to delete and re-clone it?'.format(repo_dir),
-            default='yes'
-        )
+            'Is it okay to delete and re-clone it?'
+        ).format(repo_dir)
+
+        ok_to_delete = read_user_yes_no(question, 'yes')
 
     if ok_to_delete:
         rmtree(repo_dir)
