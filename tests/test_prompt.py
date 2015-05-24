@@ -130,3 +130,17 @@ class TestQueryChoice(object):
         assert not read_variable.called
 
         read_choice.assert_called_once_with('orientation', CHOICES)
+
+    def test_should_not_invoke_read_user_variable(self, mocker):
+        read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_variable.return_value = u'Audrey Roy'
+
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+
+        CONTEXT = {'cookiecutter': {'full_name': 'Your Name'}}
+
+        cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
+        assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
+        assert not read_choice.called
+
+        read_variable.assert_called_once_with('full_name', 'Your Name')
