@@ -88,6 +88,19 @@ def _render_variable(env, raw, cookiecutter_dict):
     return env.from_string(raw).render(cookiecutter=cookiecutter_dict)
 
 
+def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
+    """Prompt the user which option to choose from the given. Each of the
+    possible choices is rendered beforehand.
+    """
+    rendered_options = [
+        _render_variable(env, raw, cookiecutter_dict) for raw in options
+    ]
+
+    if no_input:
+        return rendered_options[0]
+    return read_user_choice(key, rendered_options)
+
+
 def prompt_for_config(context, no_input=False):
     """
     Prompts the user to enter new config, using context as a source for the
@@ -103,10 +116,17 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = raw
             continue
 
-        val = _render_variable(env, raw, cookiecutter_dict)
+        if isinstance(raw, list):
+            # We are dealing with a choice variable
+            val = prompt_choice_for_config(
+                cookiecutter_dict, env, key, raw, no_input
+            )
+        else:
+            # We are dealing with a regular variable
+            val = _render_variable(env, raw, cookiecutter_dict)
 
-        if not no_input:
-            val = read_user_variable(key, val)
+            if not no_input:
+                val = read_user_variable(key, val)
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict
