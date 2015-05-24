@@ -83,6 +83,11 @@ def read_user_choice(var_name, options):
     return choice_map[user_choice]
 
 
+def _render_variable(env, raw, cookiecutter_dict):
+    raw = raw if is_string(raw) else str(raw)
+    return env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+
+
 def prompt_for_config(context, no_input=False):
     """
     Prompts the user to enter new config, using context as a source for the
@@ -98,8 +103,7 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = raw
             continue
 
-        raw = raw if is_string(raw) else str(raw)
-        val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+        val = _render_variable(env, raw, cookiecutter_dict)
 
         if not no_input:
             val = read_user_variable(key, val)
