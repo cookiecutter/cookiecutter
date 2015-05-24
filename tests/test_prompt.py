@@ -144,3 +144,39 @@ class TestQueryChoice(object):
         assert not read_choice.called
 
         read_variable.assert_called_once_with('full_name', 'Your Name')
+
+    def test_should_render_choices(self, mocker):
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_choice.return_value = u'anewproject'
+
+        read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_variable.return_value = u'A New Project'
+
+        RENDERED_CHOICES = [
+            u'foo',
+            u'anewproject',
+            u'bar'
+        ]
+
+        CONTEXT = {'cookiecutter': OrderedDict([
+            (
+                'project_name',
+                u'A New Project'
+            ), (
+                'pkg_name',
+                [
+                    u'foo',
+                    u'{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                    u'bar'
+                ]
+            )
+        ])}
+
+        EXP_COOKIECUTTER_DICT = {
+            'project_name': u'A New Project', 'pkg_name': u'anewproject'
+        }
+        cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
+        assert cookiecutter_dict == EXP_COOKIECUTTER_DICT
+
+        read_variable.assert_called_once_with('project_name', u'A New Project')
+        read_choice.assert_called_once_with('pkg_name', RENDERED_CHOICES)
