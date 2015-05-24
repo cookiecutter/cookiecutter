@@ -109,3 +109,24 @@ class TestPrompt(object):
         context = {'cookiecutter': {'_copy_without_render': ['*.html']}}
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
+
+
+class TestQueryChoice(object):
+    def test_should_invoke_read_user_choice(self, mocker):
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_choice.return_value = 'all'
+
+        read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+
+        CHOICES = ['landscape', 'portrait', 'all']
+        CONTEXT = {
+            'cookiecutter': {
+                'orientation': CHOICES
+            }
+        }
+
+        cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
+        assert cookiecutter_dict == {'orientation': 'all'}
+        assert not read_variable.called
+
+        read_choice.assert_called_once_with('orientation', CHOICES)
