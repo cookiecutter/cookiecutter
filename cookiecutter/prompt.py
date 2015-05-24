@@ -24,6 +24,7 @@ def read_user_variable(var_name, default_value):
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
     return click.prompt(var_name, default=default_value)
 
 
@@ -36,27 +37,11 @@ def read_user_yes_no(question, default_value):
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
     return click.prompt(
         question,
         default=default_value,
         type=click.BOOL
-    )
-
-
-def read_response(prompt=''):
-    """Prompt the user and return the entered value or an empty string.
-
-    :param str prompt: Text to display to the user
-    """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
-    # default: use an empty string if no input happens
-    # prompt_suffix: do not add a suffix to the prompt
-    # show_default: the prompt is expected to mention the default itself
-    return click.prompt(
-        prompt,
-        default='',
-        prompt_suffix='',
-        show_default=False,
     )
 
 
