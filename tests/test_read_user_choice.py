@@ -22,7 +22,7 @@ def test_click_invocation(mocker, user_choice, expected_value):
     choice.return_value = click.Choice(OPTIONS)
 
     prompt = mocker.patch('click.prompt')
-    prompt.return_value = str(user_choice)
+    prompt.return_value = '{}'.format(user_choice)
 
     assert read_user_choice('varname', OPTIONS) == expected_value
 
@@ -38,7 +38,7 @@ def invalid_options(request):
     return ['foo', 'bar', request.param]
 
 
-def test_raise_on_non_str_options(invalid_options):
+def test_raise_on_non_string_options(invalid_options):
     with pytest.raises(TypeError):
         read_user_choice('foo', invalid_options)
 
