@@ -98,6 +98,11 @@ class TestPrompt(object):
 
 class TestReadUserChoice(object):
     def test_should_invoke_read_user_choice(self, mocker):
+        prompt_choice = mocker.patch(
+            'cookiecutter.prompt.prompt_choice_for_config',
+            wraps=prompt.prompt_choice_for_config
+        )
+
         read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
         read_choice.return_value = 'all'
 
@@ -113,6 +118,7 @@ class TestReadUserChoice(object):
         cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
 
         assert not read_variable.called
+        assert prompt_choice.called
         read_choice.assert_called_once_with('orientation', CHOICES)
         assert cookiecutter_dict == {'orientation': 'all'}
 
