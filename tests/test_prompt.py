@@ -14,6 +14,7 @@ import platform
 import pytest
 
 from cookiecutter import prompt
+from jinja2.environment import Environment
 
 
 @pytest.fixture(autouse=True)
@@ -176,3 +177,49 @@ class TestReadUserChoice(object):
         read_variable.assert_called_once_with('project_name', u'A New Project')
         read_choice.assert_called_once_with('pkg_name', RENDERED_CHOICES)
         assert cookiecutter_dict == EXP_COOKIECUTTER_DICT
+
+
+class TestPromptChoiceForConfig(object):
+    @pytest.fixture
+    def choices(self):
+        return ['landscape', 'portrait', 'all']
+
+    @pytest.fixture
+    def context(self, choices):
+        return {
+            'cookiecutter': {
+                'orientation': choices
+            }
+        }
+
+    def test_should_return_first_option_if_no_input(
+            self, mocker, choices, context):
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+
+        expected_choice = choices[0]
+
+        actual_choice = prompt.prompt_choice_for_config(
+            context,
+            Environment(),
+            'orientation',
+            choices,
+            True  # Suppress user input
+        )
+        assert not read_choice.called
+        assert expected_choice == actual_choice
+
+    def test_should_read_userchoice(self, mocker, choices, context):
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_choice.return_value = 'all'
+
+        expected_choice = 'all'
+
+        actual_choice = prompt.prompt_choice_for_config(
+            context,
+            Environment(),
+            'orientation',
+            choices,
+            False  # Ask the user for input
+        )
+        read_choice.assert_called_once_with('orientation', choices)
+        assert expected_choice == actual_choice
