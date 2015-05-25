@@ -126,12 +126,17 @@ class TestReadUserChoice(object):
         read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
         read_variable.return_value = u'Audrey Roy'
 
+        prompt_choice = mocker.patch(
+            'cookiecutter.prompt.prompt_choice_for_config'
+        )
+
         read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
 
         CONTEXT = {'cookiecutter': {'full_name': 'Your Name'}}
 
         cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
 
+        assert not prompt_choice.called
         assert not read_choice.called
         read_variable.assert_called_once_with('full_name', 'Your Name')
         assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
