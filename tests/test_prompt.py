@@ -13,8 +13,31 @@ import platform
 
 import pytest
 
-from cookiecutter import prompt
+from cookiecutter import prompt, compat
 from jinja2.environment import Environment
+
+
+@pytest.mark.parametrize('raw_var, rendered_var', [
+    (1, '1'),
+    (True, 'True'),
+    ('foo', 'foo'),
+    ('{{cookiecutter.project}}', 'foobar')
+])
+def test_convert_to_str(mocker, raw_var, rendered_var):
+    env = Environment()
+    from_string = mocker.patch(
+        'cookiecutter.prompt.Environment.from_string',
+        wraps=env.from_string
+    )
+    context = {'project': 'foobar'}
+
+    result = prompt.render_variable(env, raw_var, context)
+    assert result == rendered_var
+
+    # Make sure that non str variables are conerted beforehand
+    if not compat.is_string(raw_var):
+        raw_var = str(raw_var)
+    from_string.assert_called_once_with(raw_var)
 
 
 @pytest.fixture(autouse=True)

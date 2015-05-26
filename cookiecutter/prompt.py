@@ -80,10 +80,12 @@ def read_user_choice(var_name, options):
     return choice_map[user_choice]
 
 
-def _render_variable(env, raw, cookiecutter_dict):
+def render_variable(env, raw, cookiecutter_dict):
     if not is_string(raw):
         raw = str(raw)
-    return env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+    template = env.from_string(raw)
+    rendered_template = template.render(cookiecutter=cookiecutter_dict)
+    return rendered_template
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
@@ -91,7 +93,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
     possible choices is rendered beforehand.
     """
     rendered_options = [
-        _render_variable(env, raw, cookiecutter_dict) for raw in options
+        render_variable(env, raw, cookiecutter_dict) for raw in options
     ]
 
     if no_input:
@@ -121,7 +123,7 @@ def prompt_for_config(context, no_input=False):
             )
         else:
             # We are dealing with a regular variable
-            val = _render_variable(env, raw, cookiecutter_dict)
+            val = render_variable(env, raw, cookiecutter_dict)
 
             if not no_input:
                 val = read_user_variable(key, val)
