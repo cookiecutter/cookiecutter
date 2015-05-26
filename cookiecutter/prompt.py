@@ -61,9 +61,6 @@ def read_user_choice(var_name, options):
     if not options:
         raise ValueError
 
-    if not all(is_string(opt) for opt in options):
-        raise TypeError
-
     choice_map = OrderedDict(
         ('{}'.format(i), value) for i, value in enumerate(options, 1)
     )

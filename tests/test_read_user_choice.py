@@ -33,16 +33,6 @@ def test_click_invocation(mocker, user_choice, expected_value):
     )
 
 
-@pytest.fixture(params=[1, True, False, None, [], {}])
-def invalid_options(request):
-    return ['foo', 'bar', request.param]
-
-
-def test_raise_on_non_string_options(invalid_options):
-    with pytest.raises(TypeError):
-        read_user_choice('foo', invalid_options)
-
-
 def test_raise_if_options_is_not_a_non_empty_list():
     with pytest.raises(TypeError):
         read_user_choice('foo', 'NOT A LIST')
