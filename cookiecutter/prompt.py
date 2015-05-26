@@ -81,7 +81,8 @@ def read_user_choice(var_name, options):
 
 
 def _render_variable(env, raw, cookiecutter_dict):
-    raw = raw if is_string(raw) else str(raw)
+    if not is_string(raw):
+        raw = str(raw)
     return env.from_string(raw).render(cookiecutter=cookiecutter_dict)
 
 
