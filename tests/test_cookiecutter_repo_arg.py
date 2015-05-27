@@ -38,8 +38,10 @@ def remove_additional_folders(request):
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_cookiecutter_git(monkeypatch):
-    monkeypatch.setattr('cookiecutter.prompt.read_response', lambda x=u'': u'')
-
+    monkeypatch.setattr(
+        'cookiecutter.prompt.read_user_variable',
+        lambda var, default: default
+    )
     main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
     clone_dir = os.path.join(
         os.path.expanduser('~/.cookiecutters'),
@@ -54,7 +56,10 @@ def test_cookiecutter_git(monkeypatch):
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_cookiecutter_mercurial(monkeypatch):
-    monkeypatch.setattr('cookiecutter.prompt.read_response', lambda x=u'': u'')
+    monkeypatch.setattr(
+        'cookiecutter.prompt.read_user_variable',
+        lambda var, default: default
+    )
 
     main.cookiecutter('https://bitbucket.org/pokoli/cookiecutter-trytonmodule')
     clone_dir = os.path.join(

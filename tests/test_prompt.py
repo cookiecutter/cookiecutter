@@ -6,21 +6,6 @@ test_prompt
 -----------
 
 Tests for `cookiecutter.prompt` module.
-TestPrompt.test_prompt_for_config_simple
-TestPrompt.test_prompt_for_config_unicode
-TestPrompt.test_unicode_prompt_for_config_unicode
-TestPrompt.test_unicode_prompt_for_default_config_unicode
-TestPrompt.test_unicode_prompt_for_templated_config
-
-TestQueryAnswers.test_query_y
-TestQueryAnswers.test_query_ye
-TestQueryAnswers.test_query_yes
-TestQueryAnswers.test_query_n
-
-TestQueryDefaults.test_query_y_none_default
-TestQueryDefaults.test_query_n_none_default
-TestQueryDefaults.test_query_no_default
-TestQueryDefaults.test_query_bad_default
 """
 
 from collections import OrderedDict
@@ -28,7 +13,31 @@ import platform
 
 import pytest
 
-from cookiecutter import prompt
+from cookiecutter import prompt, compat
+from jinja2.environment import Environment
+
+
+@pytest.mark.parametrize('raw_var, rendered_var', [
+    (1, '1'),
+    (True, 'True'),
+    ('foo', 'foo'),
+    ('{{cookiecutter.project}}', 'foobar')
+])
+def test_convert_to_str(mocker, raw_var, rendered_var):
+    env = Environment()
+    from_string = mocker.patch(
+        'cookiecutter.prompt.Environment.from_string',
+        wraps=env.from_string
+    )
+    context = {'project': 'foobar'}
+
+    result = prompt.render_variable(env, raw_var, context)
+    assert result == rendered_var
+
+    # Make sure that non str variables are conerted beforehand
+    if not compat.is_string(raw_var):
+        raw_var = str(raw_var)
+    from_string.assert_called_once_with(raw_var)
 
 
 @pytest.fixture(autouse=True)
@@ -40,8 +49,8 @@ def patch_readline_on_win(monkeypatch):
 class TestPrompt(object):
     def test_prompt_for_config_simple(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'Audrey Roy'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: u'Audrey Roy'
         )
         context = {'cookiecutter': {'full_name': 'Your Name'}}
 
@@ -50,8 +59,8 @@ class TestPrompt(object):
 
     def test_prompt_for_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'Pizzä ïs Gööd'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: u'Pizzä ïs Gööd'
         )
         context = {'cookiecutter': {'full_name': 'Your Name'}}
 
@@ -60,8 +69,8 @@ class TestPrompt(object):
 
     def test_unicode_prompt_for_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'Pizzä ïs Gööd'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: u'Pizzä ïs Gööd'
         )
         context = {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}}
 
@@ -70,8 +79,8 @@ class TestPrompt(object):
 
     def test_unicode_prompt_for_default_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'\n'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: default
         )
         context = {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}}
 
@@ -80,8 +89,8 @@ class TestPrompt(object):
 
     def test_unicode_prompt_for_templated_config(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'\n'
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: default
         )
         context = {'cookiecutter': OrderedDict([
             (
@@ -101,8 +110,8 @@ class TestPrompt(object):
 
     def test_dont_prompt_for_private_context_var(self, monkeypatch):
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x: pytest.fail(
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: pytest.fail(
                 'Should not try to read a response for private context var'
             )
         )
@@ -111,52 +120,129 @@ class TestPrompt(object):
         assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
 
 
-class TestQueryAnswers(object):
-    @pytest.fixture(params=[u'y', u'ye', u'yes'])
-    def patch_read_response(self, request, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': request.param
+class TestReadUserChoice(object):
+    def test_should_invoke_read_user_choice(self, mocker):
+        prompt_choice = mocker.patch(
+            'cookiecutter.prompt.prompt_choice_for_config',
+            wraps=prompt.prompt_choice_for_config
         )
 
-    @pytest.mark.usefixtures('patch_read_response')
-    def test_query(self):
-        assert prompt.query_yes_no('Blah?')
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_choice.return_value = 'all'
 
-    def test_query_n(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'n'
+        read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+
+        CHOICES = ['landscape', 'portrait', 'all']
+        CONTEXT = {
+            'cookiecutter': {
+                'orientation': CHOICES
+            }
+        }
+
+        cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
+
+        assert not read_variable.called
+        assert prompt_choice.called
+        read_choice.assert_called_once_with('orientation', CHOICES)
+        assert cookiecutter_dict == {'orientation': 'all'}
+
+    def test_should_not_invoke_read_user_variable(self, mocker):
+        read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_variable.return_value = u'Audrey Roy'
+
+        prompt_choice = mocker.patch(
+            'cookiecutter.prompt.prompt_choice_for_config'
         )
-        assert not prompt.query_yes_no('Blah?')
+
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+
+        CONTEXT = {'cookiecutter': {'full_name': 'Your Name'}}
+
+        cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
+
+        assert not prompt_choice.called
+        assert not read_choice.called
+        read_variable.assert_called_once_with('full_name', 'Your Name')
+        assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
+
+    def test_should_render_choices(self, mocker):
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_choice.return_value = u'anewproject'
+
+        read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_variable.return_value = u'A New Project'
+
+        RENDERED_CHOICES = [
+            u'foo',
+            u'anewproject',
+            u'bar'
+        ]
+
+        CONTEXT = {'cookiecutter': OrderedDict([
+            (
+                'project_name',
+                u'A New Project'
+            ), (
+                'pkg_name',
+                [
+                    u'foo',
+                    u'{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                    u'bar'
+                ]
+            )
+        ])}
+
+        EXP_COOKIECUTTER_DICT = {
+            'project_name': u'A New Project', 'pkg_name': u'anewproject'
+        }
+        cookiecutter_dict = prompt.prompt_for_config(CONTEXT)
+
+        read_variable.assert_called_once_with('project_name', u'A New Project')
+        read_choice.assert_called_once_with('pkg_name', RENDERED_CHOICES)
+        assert cookiecutter_dict == EXP_COOKIECUTTER_DICT
 
 
-class TestQueryDefaults(object):
-    def test_query_y_none_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'y'
+class TestPromptChoiceForConfig(object):
+    @pytest.fixture
+    def choices(self):
+        return ['landscape', 'portrait', 'all']
+
+    @pytest.fixture
+    def context(self, choices):
+        return {
+            'cookiecutter': {
+                'orientation': choices
+            }
+        }
+
+    def test_should_return_first_option_if_no_input(
+            self, mocker, choices, context):
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+
+        expected_choice = choices[0]
+
+        actual_choice = prompt.prompt_choice_for_config(
+            context,
+            Environment(),
+            'orientation',
+            choices,
+            True  # Suppress user input
         )
-        assert prompt.query_yes_no('Blah?', default=None)
+        assert not read_choice.called
+        assert expected_choice == actual_choice
 
-    def test_query_n_none_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'n'
-        )
-        assert not prompt.query_yes_no('Blah?', default=None)
+    def test_should_read_userchoice(self, mocker, choices, context):
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_choice.return_value = 'all'
 
-    def test_query_no_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u''
-        )
-        assert not prompt.query_yes_no('Blah?', default='no')
+        expected_choice = 'all'
 
-    def test_query_bad_default(self, monkeypatch):
-        monkeypatch.setattr(
-            'cookiecutter.prompt.read_response',
-            lambda x=u'': u'junk'
+        actual_choice = prompt.prompt_choice_for_config(
+            context,
+            Environment(),
+            'orientation',
+            choices,
+            False  # Ask the user for input
         )
-        with pytest.raises(ValueError):
-            prompt.query_yes_no('Blah?', default='yn')
+        read_choice.assert_called_once_with('orientation', choices)
+        assert expected_choice == actual_choice
