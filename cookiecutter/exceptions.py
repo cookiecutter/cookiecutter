@@ -68,3 +68,9 @@ class ContextDecodingException(CookiecutterException):
     """
     Raised when a project's JSON context file can not be decoded.
     """
+
+
+class ParsingError(SyntaxError):
+    """
+    Raised when a config file encounter a parsing issue.
+    """
