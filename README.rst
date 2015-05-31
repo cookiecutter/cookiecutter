@@ -189,6 +189,11 @@ Common Lisp
 
 * `cookiecutter-cl-project`_: A template for Common Lisp project with bootstrap script and Slime integration.
 
+Debian
+~~~~~~
+
+* `dh-virtualenv-mold`_:  Add easy Debianization to any existing Python project. Allows to create a self-contained Python virtualenv wrapped into a Debian package (an "omnibus" package).
+
 JS
 ~~
 
@@ -255,6 +260,7 @@ HTML
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
+.. _`dh-virtualenv-mold`: https://github.com/Springerle/dh-virtualenv-mold
 
 Scala
 ~~~~~
