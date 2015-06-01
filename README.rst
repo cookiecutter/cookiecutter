@@ -150,6 +150,7 @@ Python
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
+* `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
@@ -220,6 +221,7 @@ HTML
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
+.. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
