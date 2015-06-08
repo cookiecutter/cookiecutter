@@ -45,3 +45,4 @@ htmlcov/
 
 # Local env
 .envs
+.venv

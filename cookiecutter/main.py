@@ -15,7 +15,7 @@ from __future__ import unicode_literals
 import logging
 import os
 
-from .config import get_user_config
+from .config import get_user_config, USER_CONFIG_PATH
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
@@ -52,7 +52,8 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(template, checkout=None, no_input=False, extra_context=None,
+                 rc_file=USER_CONFIG_PATH):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -62,11 +63,12 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param rc_file: Path to the user configuration file
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
-    config_dict = get_user_config()
+    config_dict = get_user_config(rc_file)
 
     template = expand_abbreviations(template, config_dict)
 
