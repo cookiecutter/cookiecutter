@@ -21,6 +21,11 @@ from cookiecutter.main import cookiecutter
 
 logger = logging.getLogger(__name__)
 
+# The `click` custom context settings
+CONTEXT_SETTINGS = dict(
+    help_option_names=['-h', '--help'],
+)
+
 
 def print_version(context, param, value):
     if not value or context.resilient_parsing:
@@ -33,7 +38,7 @@ def print_version(context, param, value):
     context.exit()
 
 
-@click.command()
+@click.command(context_settings=CONTEXT_SETTINGS)
 @click.argument('template')
 @click.option(
     '--no-input', is_flag=True,
