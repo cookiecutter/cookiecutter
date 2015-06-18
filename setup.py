@@ -8,7 +8,7 @@ try:
 except ImportError:
     from distutils.core import setup, Command
 
-version = "1.0.0"
+version = "1.0.1"
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -62,7 +62,7 @@ class PyTest(Command):
         sys.exit(errno)
 
 
-setup(
+project = dict(
     name='cookiecutter',
     version=version,
     description=('A command-line utility that creates projects from project '
@@ -110,3 +110,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements
 )
+
+if __name__ == '__main__':
+    setup(**project)

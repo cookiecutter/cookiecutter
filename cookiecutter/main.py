@@ -14,11 +14,14 @@ library rather than a script.
 from __future__ import unicode_literals
 import logging
 import os
+from datetime import datetime
 
-from .config import get_user_config
+from . import __version__ as cookiecutter_version
+from .config import get_user_config, USER_CONFIG_PATH
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
+from .compat import PY3
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +55,8 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(template, checkout=None, no_input=False, extra_context=None,
+                 extra_globals=None, rc_file=USER_CONFIG_PATH):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -62,11 +66,14 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param extra_globals: A dictionary of values added to the Jinja2 context,
+        e.g. custom filters.
+    :param rc_file: Path to the user configuration file
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
-    config_dict = get_user_config()
+    config_dict = get_user_config(rc_file)
 
     template = expand_abbreviations(template, config_dict)
 
@@ -95,6 +102,18 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     # prompt the user to manually configure at the command line.
     # except when 'no-input' flag is set
     context['cookiecutter'] = prompt_for_config(context, no_input)
+
+    # Add some system values, especially for use by hook scripts
+    now = datetime.now()
+    context.update(extra_globals or {})
+    context.update(dict(
+        version=cookiecutter_version,
+        repo_dir=os.path.abspath(repo_dir),
+        context_file=os.path.abspath(context_file),
+        current_year=now.year,
+        current_date=now.ctime(),
+        current_date_iso=now.isoformat(b' ' if not PY3 else u' '),
+    ))
 
     # Create project from local context and project template.
     generate_files(

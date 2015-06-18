@@ -68,6 +68,14 @@ Possible settings are:
   The `gh` (github) and `bb` (bitbucket) abbreviations shown above are actually
   built in, and can be used without defining them yourself.
 
+The default location ``~/.cookiecutterrc`` can be changed by using the
+``--rc-file`` command line option (1.1.0+). Passing an empty value will prevent
+the loading of user settings altogether and use the defaults instead. This is
+useful when writing integration tests for your own cookiecutters, since then
+you have no interference from the user account you run them in. Also, if you
+work with many different profiles under one user account (like in a CI server),
+the ability to load a specific one can come in handy.
+
 Calling Cookiecutter Functions From Python
 ------------------------------------------
 
