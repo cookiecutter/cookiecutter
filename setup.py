@@ -59,7 +59,7 @@ class PyTest(Command):
         sys.exit(errno)
 
 
-setup(
+project = dict(
     name='cookiecutter',
     version=version,
     description=('A command-line utility that creates projects from project '
@@ -104,3 +104,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements
 )
+
+if __name__ == '__main__':
+    setup(**project)
