@@ -10,6 +10,7 @@ Functions for prompting the user for project info.
 
 from __future__ import unicode_literals
 from collections import OrderedDict
+import datetime
 
 import click
 
@@ -108,7 +109,9 @@ def prompt_for_config(context, no_input=False):
 
     :param no_input: Prompt the user at command line for manual configuration?
     """
-    cookiecutter_dict = {}
+    cookiecutter_dict = {
+        '_now': datetime.datetime.today()
+    }
     env = Environment()
 
     for key, raw in iteritems(context['cookiecutter']):
