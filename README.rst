@@ -172,6 +172,7 @@ Python
 * `Python-iOS-template`_: A template to create a Python project that will run on iOS devices.
 * `Python-Android-template`_: A template to create a Python project that will run on Android devices.
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
+* `cookiecutter-tryton`_: A template for creating tryton modules.
 
 C
 ~~
@@ -255,6 +256,7 @@ HTML
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
+.. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
 
 Scala
 ~~~~~
