@@ -146,22 +146,13 @@ Make your own, then submit a pull request adding yours to this list!
 
 Python
 ~~~~~~
-
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
-* `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
-* `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
-* `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
-* `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
-* `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
-* `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
-* `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4.
-* `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
 * `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
 * `cookiecutter-pypackage-minimal`_: A mimimal Python package template.
@@ -172,6 +163,18 @@ Python
 * `Python-iOS-template`_: A template to create a Python project that will run on iOS devices.
 * `Python-Android-template`_: A template to create a Python project that will run on Android devices.
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
+
+Python-Django
+^^^^^^^^^^^^^
+
+* `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
+* `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
+* `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
+* `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
+* `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
+* `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
+* `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4
+* `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 
 C
 ~~
