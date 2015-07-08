@@ -313,6 +313,7 @@ Similar projects
 .. _`scaffolt`: https://github.com/paulmillr/scaffolt
 .. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
 .. _`Cog`: https://bitbucket.org/ned/cog
+.. _`Skaffold`: https://github.com/christabor/Skaffold
 
 
 Community
