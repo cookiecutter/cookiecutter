@@ -300,6 +300,8 @@ Similar projects
 
 * `Cog`_ python-based code generation toolkit developed by Ned Batchelder
 
+* `Skaffold`_ python and json config based django/MVC generator, with some add-ons and integrations.
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
