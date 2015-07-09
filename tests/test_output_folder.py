@@ -15,6 +15,7 @@ import pytest
 
 from cookiecutter import generate
 from cookiecutter import utils
+from cookiecutter import exceptions
 
 
 @pytest.fixture(scope='function')
@@ -50,3 +51,19 @@ It is 2014."""
 
     assert os.path.isdir('output_folder/im_a.dir')
     assert os.path.isfile('output_folder/im_a.dir/im_a.file.py')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_output_folder')
+def test_exception_when_output_folder_exists():
+    context = generate.generate_context(
+        context_file='tests/test-output-folder/cookiecutter.json'
+    )
+    output_folder = context['cookiecutter']['test_name']
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    with pytest.raises(exceptions.OutputDirExistsException):
+        generate.generate_files(
+            context=context,
+            repo_dir='tests/test-output-folder'
+        )
