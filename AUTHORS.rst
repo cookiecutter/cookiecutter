@@ -67,6 +67,7 @@ Contributors
 * Marc Abramowitz (`@msabramo`_)
 * Lucian Ursu (`@LucianU`_)
 * Osvaldo Santana Neto (`@osantana`_)
+* Matthias84 (`@Matthias84`_)
 
 .. _`@LucianU`: https://github.com/LucianU
 .. _`@osantana`: https://github.com/osantana
@@ -122,3 +123,4 @@ Contributors
 .. _`@ramiroluz`: https://github.com/ramiroluz
 .. _`@thedrow`: https://github.com/thedrow
 .. _`@lord63`: https://github.com/lord63
+.. _`@Matthias84`: https://github.com/Matthias84
