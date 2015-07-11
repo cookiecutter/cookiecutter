@@ -149,6 +149,7 @@ Python
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
+* `flask-ptc`_ : A Flask project template with i18n, Docker, Bower and Celery support out of the box. Bootstrap 3, OAuth, data migration and documentation (full description `flask-project-template`_).
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
@@ -258,6 +259,9 @@ HTML
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
+.. _`flask-ptc`: https://github.com/xen/flask-ptc
+.. _`flask-project-template`: https://github.com/xen/flask-project-template
+
 
 Scala
 ~~~~~
