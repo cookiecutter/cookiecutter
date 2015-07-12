@@ -68,7 +68,9 @@ Contributors
 * Lucian Ursu (`@LucianU`_)
 * Osvaldo Santana Neto (`@osantana`_)
 * Matthias84 (`@Matthias84`_)
+* Simeon Visser (`@svisser`_)
 
+.. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
 .. _`@osantana`: https://github.com/osantana
 .. _`@msabramo`: https://github.com/msabramo

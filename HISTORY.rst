@@ -16,11 +16,13 @@ Other Changes:
 
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
 * The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
+* Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
 
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
 .. _`@LucianU`: https://github.com/LucianU
+.. _`@svisser`: https://github.com/svisser
 
 
 1.0.0 (2015-03-13) Chocolate Chip
