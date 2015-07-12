@@ -27,7 +27,7 @@ requirements = [
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'PyYAML>=3.10',
-    'click<4.0'
+    'click<5.0'
 ]
 
 test_requirements = [
