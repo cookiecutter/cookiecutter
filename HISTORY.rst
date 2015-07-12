@@ -14,6 +14,7 @@ Features:
 
 Other Changes:
 
+* Descriptions of PEP8 specifications and milestone management, thanks to `@michaeljoseph`_ (#440).
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
 * The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
 * Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
