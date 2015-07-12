@@ -3,7 +3,7 @@ Cookiecutter
 =============
 
 .. image:: https://badge.fury.io/py/cookiecutter.png
-    :target: http://badge.fury.io/py/cookiecutter
+        :target: http://badge.fury.io/py/cookiecutter
 
 .. image:: https://travis-ci.org/audreyr/cookiecutter.png?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
@@ -23,6 +23,10 @@ Cookiecutter
 .. image:: https://readthedocs.org/projects/cookiecutter/badge/?version=latest
         :target: https://readthedocs.org/projects/cookiecutter/?badge=latest
         :alt: Documentation Status
+
+.. image:: https://landscape.io/github/audreyr/cookiecutter/master/landscape.svg?style=flat
+        :target: https://landscape.io/github/audreyr/cookiecutter/master
+        :alt: Code Health
 
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
