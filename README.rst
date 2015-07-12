@@ -192,6 +192,13 @@ C++
 
 * `BoilerplatePP`_: A simple cmake template with unit testing for projects written in C++.
 
+C#
+~~
+
+* `cookiecutter-csharp-objc-binding`_: A template for generating a C# binding project for binding an Objective-C static library.
+
+.. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
+  
 Common Lisp
 ~~~~~~~~~~~
 
