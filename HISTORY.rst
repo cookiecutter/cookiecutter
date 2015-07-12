@@ -14,6 +14,7 @@ Features:
 
 Other Changes:
 
+* Updated click requirement to 4.0, thanks to `@pydanny`_ (#473).
 * Added landscape.io flair, thanks to `@michaeljoseph`_ (#439).
 * Descriptions of PEP8 specifications and milestone management, thanks to `@michaeljoseph`_ (#440).
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
