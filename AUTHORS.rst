@@ -69,6 +69,7 @@ Contributors
 * Osvaldo Santana Neto (`@osantana`_)
 * Matthias84 (`@Matthias84`_)
 * Simeon Visser (`@svisser`_)
+* Guruprasad (`@lgp171188`_)
 
 .. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
@@ -126,3 +127,4 @@ Contributors
 .. _`@thedrow`: https://github.com/thedrow
 .. _`@lord63`: https://github.com/lord63
 .. _`@Matthias84`: https://github.com/Matthias84
+.. _`@lgp171188`: https://github.com/lgp171188
