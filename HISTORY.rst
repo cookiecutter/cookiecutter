@@ -11,6 +11,7 @@ The goals of this release is to add extra content via the command-line and `copy
 Features:
 
 * Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems (#132, #184, #425).
+* Abort template rendering if the project output directory already exists, thanks to `@lgp171188`_ (#470, #471).
 
 Other Changes:
 
@@ -26,6 +27,7 @@ Other Changes:
 .. _`@osantana`: https://github.com/osantana
 .. _`@LucianU`: https://github.com/LucianU
 .. _`@svisser`: https://github.com/svisser
+.. _`@lgp171188`: https://github.com/lgp171188
 
 
 1.0.0 (2015-03-13) Chocolate Chip
