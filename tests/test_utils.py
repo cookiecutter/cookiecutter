@@ -9,74 +9,62 @@ Tests for `cookiecutter.utils` module.
 """
 
 import os
-import io
-import sys
+import pytest
 import stat
-import unittest
+import sys
 
 from cookiecutter import utils
 
 
 def make_readonly(path):
+    """Helper function that is called in the tests to change the access
+    permissions of the given file.
+    """
     mode = os.stat(path).st_mode
     os.chmod(path, mode & ~stat.S_IWRITE)
 
 
-class TestUtils(unittest.TestCase):
-
-    def test_rmtree(self):
-        os.mkdir('foo')
-        with open('foo/bar', "w") as f:
-            f.write("Test data")
-        make_readonly('foo/bar')
-        utils.rmtree('foo')
-        self.assertFalse(os.path.exists('foo'))
-
-    def test_make_sure_path_exists(self):
-        if sys.platform.startswith('win'):
-            existing_directory = os.path.abspath(os.curdir)
-            uncreatable_directory = 'a*b'
-        else:
-            existing_directory = '/usr/'
-            uncreatable_directory = '/this-dir-does-not-exist-and-cant-be-created/'
-
-        self.assertTrue(utils.make_sure_path_exists(existing_directory))
-        self.assertTrue(utils.make_sure_path_exists('tests/blah'))
-        self.assertTrue(utils.make_sure_path_exists('tests/trailingslash/'))
-        self.assertFalse(utils.make_sure_path_exists(uncreatable_directory))
-        utils.rmtree('tests/blah/')
-        utils.rmtree('tests/trailingslash/')
-
-    def test_unicode_open(self):
-        """ Test that io.open(filename, mode, encoding='utf-8') works as we expect. """
-
-        unicode_text = u"""Polish: Ą Ł Ż
-Chinese: 倀 倁 倂 倃 倄 倅 倆 倇 倈
-Musical Notes: ♬ ♫ ♯"""
-
-        with io.open('tests/files/unicode.txt', encoding='utf-8') as f:
-            opened_text = f.read()
-            self.assertEqual(unicode_text, opened_text)
-
-    def test_workin(self):
-        cwd = os.getcwd()
-        ch_to = 'tests/files'
-
-        class TestException(Exception):
-            pass
-
-        def test_work_in():
-            with utils.work_in(ch_to):
-                test_dir = os.path.join(cwd, ch_to).replace("/", os.sep)
-                self.assertEqual(test_dir, os.getcwd())
-                raise TestException()
-
-        # Make sure we return to the correct folder
-        self.assertEqual(cwd, os.getcwd())
-
-        # Make sure that exceptions are still bubbled up
-        self.assertRaises(TestException, test_work_in)
+def test_rmtree():
+    os.mkdir('foo')
+    with open('foo/bar', "w") as f:
+        f.write("Test data")
+    make_readonly('foo/bar')
+    utils.rmtree('foo')
+    assert not os.path.exists('foo')
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_make_sure_path_exists():
+    if sys.platform.startswith('win'):
+        existing_directory = os.path.abspath(os.curdir)
+        uncreatable_directory = 'a*b'
+    else:
+        existing_directory = '/usr/'
+        uncreatable_directory = '/this-doesnt-exist-and-cant-be-created/'
+
+    assert utils.make_sure_path_exists(existing_directory)
+    assert utils.make_sure_path_exists('tests/blah')
+    assert utils.make_sure_path_exists('tests/trailingslash/')
+    assert not utils.make_sure_path_exists(uncreatable_directory)
+    utils.rmtree('tests/blah/')
+    utils.rmtree('tests/trailingslash/')
+
+
+def test_workin():
+    cwd = os.getcwd()
+    ch_to = 'tests/files'
+
+    class TestException(Exception):
+        pass
+
+    def test_work_in():
+        with utils.work_in(ch_to):
+            test_dir = os.path.join(cwd, ch_to).replace("/", os.sep)
+            assert test_dir == os.getcwd()
+            raise TestException()
+
+    # Make sure we return to the correct folder
+    assert cwd == os.getcwd()
+
+    # Make sure that exceptions are still bubbled up
+    with pytest.raises(TestException):
+        test_work_in()

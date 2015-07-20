@@ -79,7 +79,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'cookiecutter'
-copyright = u'2013, Audrey Roy'
+copyright = u'2013-2015, Audrey Roy'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -292,7 +292,7 @@ texinfo_documents = [
 epub_title = u'cookiecutter'
 epub_author = u'Audrey Roy'
 epub_publisher = u'Audrey Roy'
-epub_copyright = u'2013, Audrey Roy'
+epub_copyright = u'2013-2015, Audrey Roy'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

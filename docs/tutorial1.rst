@@ -1,6 +1,6 @@
-========================================
-Tutorial 1: Getting to Know Cookiecutter
-========================================
+=============================
+Getting to Know Cookiecutter
+=============================
 
 .. note:: Before you begin, please install Cookiecutter 0.7.0 or higher.
    Instructions are in :doc:`installation`.

@@ -57,10 +57,19 @@ And if you want to specify a branch you can do that with::
 
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git --checkout develop
 
+Works with private repos
+------------------------
+
+If you want to work repos that are not hosted in github or bitbucket you can indicate explicitly the
+type of repo that you want to use prepending `hg+` or `git+` to repo url::
+
+    $ cookiecutter hg+https://example.com/repo
+
+
 Keeping your cookiecutters organized
 ------------------------------------
 
-As of the upcoming Cookiecutter 0.7.0 release:
+As of the Cookiecutter 0.7.0 release:
 
 * Whenever you generate a project with a cookiecutter, the resulting project
   is output to your current directory.

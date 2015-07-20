@@ -3,19 +3,30 @@ Cookiecutter
 =============
 
 .. image:: https://badge.fury.io/py/cookiecutter.png
-    :target: http://badge.fury.io/py/cookiecutter
+        :target: http://badge.fury.io/py/cookiecutter
 
 .. image:: https://travis-ci.org/audreyr/cookiecutter.png?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
 
+.. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
+        :target: https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master
+
 .. image:: https://pypip.in/d/cookiecutter/badge.png
         :target: https://crate.io/packages/cookiecutter?version=latest
 
-.. image:: https://coveralls.io/repos/audreyr/cookiecutter/badge.png?branch=master
-        :target: https://coveralls.io/r/audreyr/cookiecutter?branch=master
+.. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
+        :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
 
 .. image:: https://badges.gitter.im/Join Chat.svg
         :target: https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
+.. image:: https://readthedocs.org/projects/cookiecutter/badge/?version=latest
+        :target: https://readthedocs.org/projects/cookiecutter/?badge=latest
+        :alt: Documentation Status
+
+.. image:: https://landscape.io/github/audreyr/cookiecutter/master/landscape.svg?style=flat
+        :target: https://landscape.io/github/audreyr/cookiecutter/master
+        :alt: Code Health
 
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
@@ -34,7 +45,7 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.6, 2.7, 3.3, and PyPy. *(But you don't have to know/write Python
+* Works with Python 2.7, 3.3, 3.4, and PyPy. *(But you don't have to know/write Python
   code to use Cookiecutter.)*
 
 * Project templates can be in any programming language or markup format:
@@ -49,6 +60,8 @@ Did someone say features?
         # You'll be prompted to enter values.
         # Then it'll create your Python package in the current working directory,
         # based on those values.
+        $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
+        # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
         $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
 * Can also use it at the command line with a local template:
@@ -102,7 +115,7 @@ Did someone say features?
 
 * Cross-platform support for `~/.cookiecutterrc` files:
 
-    .. code-block:: guess
+    .. code-block:: yaml
 
         default_context:
             full_name: "Audrey Roy"
@@ -137,22 +150,16 @@ Make your own, then submit a pull request adding yours to this list!
 
 Python
 ~~~~~~
-
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
-* `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
-* `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
-* `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
-* `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
-* `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
+* `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
+* `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
-* `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
-* `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4.
-* `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
+* `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
 * `cookiecutter-pypackage-minimal`_: A mimimal Python package template.
 * `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
@@ -160,6 +167,20 @@ Python
 * `cookiecutter-pyvanguard`_: A template for cutting edge Python development. `Invoke`_, pytest, bumpversion, and Python 2/3 compatability.
 * `Python-iOS-template`_: A template to create a Python project that will run on iOS devices.
 * `Python-Android-template`_: A template to create a Python project that will run on Android devices.
+* `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
+* `cookiecutter-tryton`_: A template for creating tryton modules.
+
+Python-Django
+^^^^^^^^^^^^^
+
+* `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
+* `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 3, customizable users app, starter templates, and working user registration.
+* `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
+* `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
+* `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
+* `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
+* `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4
+* `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 
 C
 ~~
@@ -172,6 +193,13 @@ C++
 
 * `BoilerplatePP`_: A simple cmake template with unit testing for projects written in C++.
 
+C#
+~~
+
+* `cookiecutter-csharp-objc-binding`_: A template for generating a C# binding project for binding an Objective-C static library.
+
+.. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
+  
 Common Lisp
 ~~~~~~~~~~~
 
@@ -190,6 +218,9 @@ LaTeX/XeTeX
 ~~~~~~~~~~~
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
+
+* `cookiecutter-latex-article`_: A LaTeX template geared towards academic use.
+
 * `cookiecutter-beamer`_: A template for a LaTeX Beamer presentation.
 
 
@@ -208,6 +239,8 @@ HTML
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
+.. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
+.. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
@@ -218,6 +251,7 @@ HTML
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
 .. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
+.. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
 .. _`cookiecutter-pypackage-minimal`: https://github.com/borntyping/cookiecutter-pypackage-minimal
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`bootstrap.c`: https://github.com/vincentbernat/bootstrap.c
@@ -228,6 +262,7 @@ HTML
 .. _`docopt`: http://docopt.org/
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
+.. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 .. _`slim-berkshelf-vagrant`: https://github.com/mahmoudimus/cookiecutter-slim-berkshelf-vagrant
@@ -239,7 +274,23 @@ HTML
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
-.. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer/
+.. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
+.. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
+.. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
+
+
+Scala
+~~~~~
+
+* `cookiecutter-scala-spark`_: A cookiecutter template for Apache Spark applications written in Scala.
+
+.. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
+
+6502 Assembly
+~~~~~~~~~~~~~
+* `cookiecutter-atari2600`_: A cookiecutter template for Atari2600 projects.
+
+.. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
 
 Similar projects
 ----------------
@@ -272,6 +323,8 @@ Similar projects
 
 * `Cog`_ python-based code generation toolkit developed by Ned Batchelder
 
+* `Skaffold`_ python and json config based django/MVC generator, with some add-ons and integrations.
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
@@ -283,13 +336,14 @@ Similar projects
 .. _`scaffolt`: https://github.com/paulmillr/scaffolt
 .. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
 .. _`Cog`: https://bitbucket.org/ned/cog
+.. _`Skaffold`: https://github.com/christabor/Skaffold
 
 
 Community
 ---------
 
-The core committer team is `@audreyr`_, `@pydanny`_, `@michaeljoseph`_, and
-`@pfmoore`_. We
+The core committer team is `@audreyr`_, `@pydanny`_, `@michaeljoseph`_,
+`@pfmoore`_, and `@hackebrot`_. We
 welcome you and invite you to participate.
 
 Stuck? Try one of the following:
@@ -355,3 +409,4 @@ Waiting for a response to an issue/question?
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
 .. _`@pfmoore`: https://github.com/pfmoore
+.. _`@hackebrot`: https://github.com/hackebrot

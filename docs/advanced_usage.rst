@@ -176,6 +176,21 @@ Or, if the user gives `Yet Another New Project`, the values will be:
 * `yet-another-new-project`
 * `yetanothernewproject`
 
+Copy without Render
+-------------------
+
+*New in Cookiecutter 1.1*
+
+To avoid rendering directories and files of a cookiecutter mould, the `_copy_without_render` key can be used in the `cookiecutter.json`. The value of this key accepts a list of Unix shell-style wildcards::
+
+    {
+        "repo_name": "sample",
+        "_copy_without_render": [
+            "*.html",
+            "*not_rendered_dir",
+            "rendered_dir/not_rendered_file.ini"
+        ]
+    }
 
 .. _command_line_options:
 

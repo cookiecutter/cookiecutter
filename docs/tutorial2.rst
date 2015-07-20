@@ -1,6 +1,6 @@
-==============================================
-Tutorial 2: Create a Cookiecutter From Scratch
-==============================================
+==================================
+Create a Cookiecutter From Scratch
+==================================
 
 Step 1: Name Your Cookiecutter
 ------------------------------

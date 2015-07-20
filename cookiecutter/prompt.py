@@ -9,10 +9,96 @@ Functions for prompting the user for project info.
 """
 
 from __future__ import unicode_literals
-import sys
+from collections import OrderedDict
 
-from .compat import iteritems, read_response
+import click
+
+from .compat import iteritems, is_string
 from jinja2.environment import Environment
+
+
+def read_user_variable(var_name, default_value):
+    """Prompt the user for the given variable and return the entered value
+    or the given default.
+
+    :param str var_name: Variable of the context to query the user
+    :param default_value: Value that will be returned if no input happens
+    """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
+    return click.prompt(var_name, default=default_value)
+
+
+def read_user_yes_no(question, default_value):
+    """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
+
+    Note:
+      Possible choices are 'true', '1', 'yes', 'y' or 'false', '0', 'no', 'n'
+
+    :param str question: Question to the user
+    :param default_value: Value that will be returned if no input happens
+    """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
+    return click.prompt(
+        question,
+        default=default_value,
+        type=click.BOOL
+    )
+
+
+def read_user_choice(var_name, options):
+    """Prompt the user to choose from several options for the given variable.
+
+    The first item will be returned if no input happens.
+
+    :param str var_name: Variable as specified in the context
+    :param list options: Sequence of options that are available to select from
+    :return: Exactly one item of ``options`` that has been chosen by the user
+    """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
+    if not isinstance(options, list):
+        raise TypeError
+
+    if not options:
+        raise ValueError
+
+    choice_map = OrderedDict(
+        ('{}'.format(i), value) for i, value in enumerate(options, 1)
+    )
+    choices = choice_map.keys()
+    default = '1'
+
+    choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
+    prompt = '\n'.join((
+        'Select {}:'.format(var_name),
+        '\n'.join(choice_lines),
+        'Choose from {}'.format(', '.join(choices))
+    ))
+
+    user_choice = click.prompt(
+        prompt, type=click.Choice(choices), default=default
+    )
+    return choice_map[user_choice]
+
+
+def render_variable(env, raw, cookiecutter_dict):
+    if not is_string(raw):
+        raw = str(raw)
+    template = env.from_string(raw)
+    rendered_template = template.render(cookiecutter=cookiecutter_dict)
+    return rendered_template
+
+
+def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
+    """Prompt the user which option to choose from the given. Each of the
+    possible choices is rendered beforehand.
+    """
+    rendered_options = [
+        render_variable(env, raw, cookiecutter_dict) for raw in options
+    ]
+
+    if no_input:
+        return rendered_options[0]
+    return read_user_choice(key, rendered_options)
 
 
 def prompt_for_config(context, no_input=False):
@@ -26,54 +112,21 @@ def prompt_for_config(context, no_input=False):
     env = Environment()
 
     for key, raw in iteritems(context['cookiecutter']):
-        val = env.from_string(raw).render(cookiecutter=cookiecutter_dict)
+        if key.startswith('_'):
+            cookiecutter_dict[key] = raw
+            continue
 
-        if not no_input:
-            prompt = "{0} (default is \"{1}\")? ".format(key, val)
+        if isinstance(raw, list):
+            # We are dealing with a choice variable
+            val = prompt_choice_for_config(
+                cookiecutter_dict, env, key, raw, no_input
+            )
+        else:
+            # We are dealing with a regular variable
+            val = render_variable(env, raw, cookiecutter_dict)
 
-            new_val = read_response(prompt).strip()
-
-            if new_val != '':
-                val = new_val
+            if not no_input:
+                val = read_user_variable(key, val)
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict
-
-
-def query_yes_no(question, default="yes"):
-    """
-    Ask a yes/no question via `read_response()` and return their answer.
-
-    :param question: A string that is presented to the user.
-    :param default: The presumed answer if the user just hits <Enter>.
-        It must be "yes" (the default), "no" or None (meaning
-        an answer is required of the user).
-
-    The "answer" return value is one of "yes" or "no".
-
-    Adapted from
-    http://stackoverflow.com/questions/3041986/python-command-line-yes-no-input
-    http://code.activestate.com/recipes/577058/
-
-    """
-    valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
-    if default is None:
-        prompt = " [y/n] "
-    elif default == "yes":
-        prompt = " [Y/n] "
-    elif default == "no":
-        prompt = " [y/N] "
-    else:
-        raise ValueError("invalid default answer: '%s'" % default)
-
-    while True:
-        sys.stdout.write(question + prompt)
-        choice = read_response().lower()
-
-        if default is not None and choice == '':
-            return valid[default]
-        elif choice in valid:
-            return valid[choice]
-        else:
-            sys.stdout.write("Please respond with 'yes' or 'no' "
-                             "(or 'y' or 'n').\n")

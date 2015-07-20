@@ -11,12 +11,12 @@ Tests for `cookiecutter.hooks` module.
 import sys
 import os
 import stat
-import unittest
 
 from cookiecutter import hooks, utils
 
 
 def make_test_repo(name):
+    """Helper function which is called in the test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
     os.mkdir(name)
@@ -56,39 +56,44 @@ def make_test_repo(name):
     return post
 
 
-class TestFindHooks(unittest.TestCase):
+class TestFindHooks(object):
 
     repo_path = 'tests/test-hooks'
 
-    def setUp(self):
+    def setup_method(self, method):
         self.post_hook = make_test_repo(self.repo_path)
 
-    def tearDown(self):
+    def teardown_method(self, method):
         utils.rmtree(self.repo_path)
 
     def test_find_hook(self):
-        """Finds the specified hook"""
+        """Finds the specified hook."""
+
         with utils.work_in(self.repo_path):
-            self.assertEqual({
+            expected = {
                 'pre_gen_project': os.path.abspath('hooks/pre_gen_project.py'),
-                'post_gen_project': os.path.abspath(os.path.join('hooks', self.post_hook)),
-            }, hooks.find_hooks())
+                'post_gen_project': os.path.abspath(
+                    os.path.join('hooks', self.post_hook)
+                ),
+            }
+            assert expected == hooks.find_hooks()
 
     def test_no_hooks(self):
-        """find_hooks should return None if the hook could not be found. """
+        """find_hooks should return None if the hook could not be found."""
+
         with utils.work_in('tests/fake-repo'):
-            self.assertEqual({}, hooks.find_hooks())
+            assert {} == hooks.find_hooks()
 
 
-class TestExternalHooks(unittest.TestCase):
+class TestExternalHooks(object):
 
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
-    def setUp(self):
+    def setup_method(self, method):
         self.post_hook = make_test_repo(self.repo_path)
 
-    def tearDown(self):
+    def teardown_method(self, method):
         utils.rmtree(self.repo_path)
 
         if os.path.exists('python_pre.txt'):
@@ -107,7 +112,7 @@ class TestExternalHooks(unittest.TestCase):
     def test_run_script(self):
         """Execute a hook script, independently of project generation"""
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
-        self.assertTrue(os.path.isfile('shell_post.txt'))
+        assert os.path.isfile('shell_post.txt')
 
     def test_run_script_cwd(self):
         """Change directory before running hook"""
@@ -115,8 +120,8 @@ class TestExternalHooks(unittest.TestCase):
             os.path.join(self.hooks_path, self.post_hook),
             'tests'
         )
-        self.assertTrue(os.path.isfile('tests/shell_post.txt'))
-        self.assertFalse('tests' in os.getcwd())
+        assert os.path.isfile('tests/shell_post.txt')
+        assert 'tests' not in os.getcwd()
 
     def test_run_script_with_context(self):
         """Execute a hook script, passing a context"""
@@ -147,18 +152,17 @@ class TestExternalHooks(unittest.TestCase):
                     'file': 'context_post.txt'
                 }
             })
-        self.assertTrue(os.path.isfile('tests/context_post.txt'))
-        self.assertFalse('tests' in os.getcwd())
+        assert os.path.isfile('tests/context_post.txt')
+        assert 'tests' not in os.getcwd()
 
     def test_run_hook(self):
-        """Execute hook from specified template in specified output directory"""
+        """Execute hook from specified template in specified output
+        directory.
+        """
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
             hooks.run_hook('pre_gen_project', tests_dir, {})
-            self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'python_pre.txt')))
+            assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
 
             hooks.run_hook('post_gen_project', tests_dir, {})
-            self.assertTrue(os.path.isfile(os.path.join(tests_dir, 'shell_post.txt')))
-
-if __name__ == '__main__':
-    unittest.main()
+            assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))

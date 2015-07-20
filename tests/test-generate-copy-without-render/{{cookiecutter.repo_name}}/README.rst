@@ -2,4 +2,4 @@
 Fake Project
 ============
 
-Blah!!!!
+{{cookiecutter.render_test}}

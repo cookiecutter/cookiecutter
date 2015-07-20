@@ -2,17 +2,18 @@
 Credits
 =======
 
-Development Lead
-----------------
+Development Leads
+-----------------
 
-* Audrey Roy <audreyr@gmail.com>
+* Audrey Roy Greenfeld (`@audreyr`_)
+* Daniel Roy Greenfeld (`@pydanny`_)
 
 Core Committers
 ---------------
 
-* Daniel Greenfeld (`@pydanny`_)
 * Michael Joseph (`@michaeljoseph`_)
 * Paul Moore (`@pfmoore`_)
+* Raphael Pierzina (`@hackebrot`_)
 
 Contributors
 ------------
@@ -42,7 +43,6 @@ Contributors
 * Dave Dash (`@davedash`_)
 * Johan Charpentier (`@cyberj`_)
 * Éric Araujo (`@merwok`_)
-* Raphael Pierzina (`@hackebrot`_)
 * saxix (`@saxix`_)
 * Tzu-ping Chung (`@uranusjr`_)
 * Caleb Hattingh (`@cjrh`_)
@@ -59,7 +59,24 @@ Contributors
 * Rémy Hubscher (`@Natim`_)
 * Dino Petron3 (`@dinopetrone`_)
 * Peter Inglesby (`@inglesp`_)
+* Ramiro Batista da Luz (`@ramiroluz`_)
+* Omer Katz (`@thedrow`_)
+* lord63 (`@lord63`_)
+* Randy Syring (`@rsyring`_)
+* Mark Jones (`@mark0978`_)
+* Marc Abramowitz (`@msabramo`_)
+* Lucian Ursu (`@LucianU`_)
+* Osvaldo Santana Neto (`@osantana`_)
+* Matthias84 (`@Matthias84`_)
+* Simeon Visser (`@svisser`_)
+* Guruprasad (`@lgp171188`_)
 
+.. _`@svisser`: https://github.com/svisser
+.. _`@LucianU`: https://github.com/LucianU
+.. _`@osantana`: https://github.com/osantana
+.. _`@msabramo`: https://github.com/msabramo
+.. _`@mark0978`: https://github.com/mark0978
+.. _`@rsyring`: https://github.com/rsyring
 .. _`@vincentbernat`: https://github.com/vincentbernat
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
@@ -106,3 +123,8 @@ Contributors
 .. _`@Natim`: https://github.com/Natim
 .. _`@dinopetrone`: https://github.com/dinopetrone
 .. _`@inglesp`: https://github.com/inglesp
+.. _`@ramiroluz`: https://github.com/ramiroluz
+.. _`@thedrow`: https://github.com/thedrow
+.. _`@lord63`: https://github.com/lord63
+.. _`@Matthias84`: https://github.com/Matthias84
+.. _`@lgp171188`: https://github.com/lgp171188

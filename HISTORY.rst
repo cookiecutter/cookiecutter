@@ -3,23 +3,113 @@
 History
 -------
 
-0.9.0 (???)
-~~~~~~~~~~~~~~~~
+1.1.0 (2015-??-??)
+~~~~~~~~~~~~~~~~~~
 
-The goals of this release is to add the ability to skip rendering of specified directories, Jinja2ify the `cookiecutter.json` default values, and formally launch support for Python 3.4.
+The goals of this release is to add extra content via the command-line and `copy without render`_.
+
+Features:
+
+* Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems (#132, #184, #425).
+* Abort template rendering if the project output directory already exists, thanks to `@lgp171188`_ (#470, #471).
+
+Other Changes:
+
+* Updated click requirement to 4.0, thanks to `@pydanny`_ (#473).
+* Added landscape.io flair, thanks to `@michaeljoseph`_ (#439).
+* Descriptions of PEP8 specifications and milestone management, thanks to `@michaeljoseph`_ (#440).
+* Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
+* The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
+* Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
+
+
+.. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
+.. _`@osantana`: https://github.com/osantana
+.. _`@LucianU`: https://github.com/LucianU
+.. _`@svisser`: https://github.com/svisser
+.. _`@lgp171188`: https://github.com/lgp171188
+
+
+1.0.0 (2015-03-13) Chocolate Chip
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The goals of this release was to formally remove support for Python 2.6 and continue the move to using py.test.
+
+Features:
+
+* Convert the unittest suite to py.test for the sake of comprehensibility, thanks to `@hackebrot`_ (#322, #332, #334, #336, #337, #338, #340, #341, #343, #345, #347, #351, #412, #413, #414).
+* Generate pytest coverage, thanks to `@michaeljoseph`_ (#326).
+* Documenting of Pull Request merging and HISTORY.rst maintenance, thanks to `@michaeljoseph`_ (#330).
+* Large expansions to the tutorials thanks to `@hackebrot`_ (#384)
+* Switch to using Click for command-line options, thanks to `@michaeljoseph`_ (#391, #393).
+* Added support for working with private repos, thanks to `@marctc`_ (#265).
+* Wheel configuration thanks to `@michaeljoseph`_ (#118).
+
+Other Changes:
+
+* Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
+* Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
+* Made JSON parsing errors easier to debug, thanks to `@rsyring`_ and `@mark0978`_ (#355, #358, #388).
+* Updated to Jinja 2.7 or higher in order to control trailing new lines in templates, thanks to `@sfermigier`_ (#356).
+* Tweaked flake8 to ignore e731, thanks to `@michaeljoseph`_ (#390).
+* Fixed failing Windows tests and corrected AppVeyor badge link thanks to `@msabramo`_ (#403).
+
+.. _`@msabramo`: https://github.com/msabramo
+
+* Added more Cookiecutters to the list:
+
+  * `cookiecutter-scala-spark`_ by `@jpzk`_
+  * `cookiecutter-atari2600`_ by `@joeyjoejoejr`_
+  * `cookiecutter-bottle`_ by `@avelino`_
+  * `cookiecutter-latex-article`_ by `@Kreger51`_
+  * `cookiecutter-django-rest-framework`_ by `@jpadilla`_
+  * `cookiedozer`_ by `@hackebrot`_
+
+.. _`@marctc`: https://github.com/marctc
+.. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
+.. _`@jpadilla`: https://github.com/jpadilla
+.. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
+.. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
+.. _`@Kreger51`: https://github.com/Kreger51
+.. _`@rsyring`: https://github.com/rsyring
+.. _`@mark0978`: https://github.com/mark0978
+.. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
+.. _`@avelino`: https://github.com/avelino
+.. _`@joeyjoejoejr`: https://github.com/joeyjoejoejr
+.. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
+.. _`@sfermigier`: https://github.com/sfermigier
+.. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
+.. _`@jpzk`: https://github.com/jpzk
+
+0.9.0 (2015-01-13)
+~~~~~~~~~~~~~~~~~~~
+
+The goals of this release were to add the ability to Jinja2ify the `cookiecutter.json` default values, and formally launch support for Python 3.4.
 
 Features:
 
 * Python 3.4 is now a first class citizen, thanks to everyone.
+* `cookiecutter.json` values are now rendered Jinja2 templates, thanks to @bollwyvl (#291).
+* Move to `py.test`, thanks to `@pfmoore`_ (#319) and `@ramiroluz`_ (#310).
+* Add `PendingDeprecation` warning for users of Python 2.6, as support for it is gone in Python 2.7, thanks to `@michaeljoseph`_ (#201).
 
 Bug Fixes:
 
-* `cookiecutter.json` values are now rendered jinja2 templates, thanks to @bollwyvl (#291).
-* Corrected typo in `Makefile`, thanks to @inglesp  (#297).
+* Corrected typo in `Makefile`, thanks to `@inglesp`_ (#297).
+* Raise an exception when users don't have `git` or `hg` installed, thanks to `@pydanny`_ (#303).
 
 Other changes:
 
-* Creation of gitter account for logged chat, thanks to `@michaeljoseph`_.
+* Creation of `gitter`_ account for logged chat, thanks to `@michaeljoseph`_.
+* Added ReadTheDocs badge, thanks to `@michaeljoseph`_.
+* Added AppVeyor badge, thanks to `@pydanny`_
+* Documentation and PyPI trove classifier updates, thanks to `@thedrow`_ (#323 and #324)
+
+.. _`gitter`: https://gitter.im/audreyr/cookiecutter
+.. _`@inglesp`: https://github.com/inglesp
+.. _`@ramiroluz`: https://github.com/ramiroluz
+.. _`@thedrow`: https://github.com/thedrow
+.. _`@hackebrot`: https://github.com/hackebrot
 
 0.8.0 (2014-10-30)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,7 +129,7 @@ Bug Fixes:
 
 * Newlines at the end of files are no longer stripped, thanks to `@treyhunner`_ (#183).
 * Cloning prompt suppressed by respecting the `no_input` flag, thanks to `@trustrachel`_ (#285)
-* With Python 3, input is no longer converted to bytes, thanks to `@uranusjr `_ (#98).
+* With Python 3, input is no longer converted to bytes, thanks to `@uranusjr`_ (#98).
 
 Other Changes:
 
@@ -67,6 +157,7 @@ Other Changes:
 .. _`@schacki`: https://github.com/schacki
 .. _`@ryanolson`: https://github.com/ryanolson
 .. _`@Natim`: https://github.com/Natim
+.. _`@dinopetrone`: https://github.com/dinopetrone
 
 0.7.2 (2014-08-05)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,16 +221,17 @@ Other Changes:
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
 
-.. _`@michaeljoseph`: https://github.com/michaeljoseph
-.. _`@iknite`: https://github.com/iknite
-.. _`@borntyping`: https://github.com/borntyping
 .. _`@Paspartout`: https://github.com/Paspartout
-.. _`@pfmoore`: https://github.com/pfmoore
 .. _`@audreyr`: https://github.com/audreyr
-.. _`@uranusjr`: https://github.com/uranusjr
-.. _`@saxix`: https://github.com/saxix
+.. _`@borntyping`: https://github.com/borntyping
 .. _`@hackebrot`: https://github.com/hackebrot
+.. _`@iknite`: https://github.com/iknite
 .. _`@ionelmc`: https://github.com/ionelmc
+.. _`@michaeljoseph`: https://github.com/michaeljoseph
+.. _`@pfmoore`: https://github.com/pfmoore
+.. _`@pydanny`: https://github.com/pydanny
+.. _`@saxix`: https://github.com/saxix
+.. _`@uranusjr`: https://github.com/uranusjr
 
 
 
@@ -238,8 +330,6 @@ Other changes:
 .. _`@s-m-i-t-a`: https://github.com/s-m-i-t-a/
 .. _`@sloria`: https://github.com/sloria/
 .. _`@alex`: https://github.com/alex/
-.. _`@pydanny`: https://github.com/pydanny/
-.. _`@freakboy3742`: https://github.com/freakboy3742/
 .. _`@es128`: https://github.com/es128/
 .. _`@rolo`: https://github.com/rolo/
 .. _`@oubiga`: https://github.com/oubiga/
@@ -338,5 +428,5 @@ Bumped to "Development Status :: 3 - Alpha".
 Roadmap
 -------
 
-https://github.com/audreyr/cookiecutter/issues/milestones
+https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
 

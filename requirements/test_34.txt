@@ -1,3 +1,0 @@
-# Requirements for testing Cookiecutter on Python 3.3.
-
--r base_test.txt

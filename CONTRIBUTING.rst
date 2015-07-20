@@ -12,7 +12,7 @@ little bit helps, and credit will always be given.
    types_of_contributions
    contributor_setup
    contributor_guidelines
-   contributor_tips
+   contributor_testing
    core_committer_guide
 
 Types of Contributions
@@ -55,10 +55,16 @@ Implement Features
 Look through the GitHub issues for features. Anything tagged with "enhancement"
 is open to whoever wants to implement it.
 
+Please do not combine multiple feature enhancements into a single pull request.
+
+Note: this project is a bit conservative, so new features might not get into core.
+If possible, it's best to try and implement feature ideas as separate projects
+outside of the core codebase.
+
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-Cookiecutter could always use more documentation, whether as part of the 
+Cookiecutter could always use more documentation, whether as part of the
 official Cookiecutter docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
@@ -128,17 +134,41 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, 3.3, and PyPy. Check
-   https://travis-ci.org/audreyr/cookiecutter/pull_requests and make sure that
-   the tests pass for all supported Python versions.
+3. The pull request should work for Python 2.6, 2.7, 3.3, and PyPy on Appveyor and Travis CI.
+4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and 
+   https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
 Coding Standards
 ~~~~~~~~~~~~~~~~
 
-TODO
+* PEP8
+* Functions over classes except in tests
+* Quotes via http://stackoverflow.com/a/56190/5549
+
+  * Use double quotes around strings that are used for interpolation or that are natural language messages
+  * Use single quotes for small symbol-like strings (but break the rules if the strings contain quotes)
+  * Use triple double quotes for docstrings and raw string literals for regular expressions even if they aren't needed.
+  * Example:
+
+    .. code-block:: python
+
+        LIGHT_MESSAGES = {
+            'English': "There are %(number_of_lights)s lights.",
+            'Pirate':  "Arr! Thar be %(number_of_lights)s lights."
+        }
+
+        def lights_message(language, number_of_lights):
+            """Return a language-appropriate string reporting the light count."""
+            return LIGHT_MESSAGES[language] % locals()
+
+        def is_pirate(message):
+            """Return True if the given message sounds piratical."""
+            return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
+
+  * Write new code in Python 3.
 
-Tips
-----
+Testing
+-------
 
 To run a particular test::
 
@@ -148,6 +178,39 @@ To run a subset of tests::
 
     $ python -m unittest tests.test_find
 
+Testing with py.test
+--------------------
+
+To run a particular test class with py.test::
+
+    $ py.test -k TestGetConfig
+
+To run some tests with names matching a string expression::
+
+    $ py.test -k generate
+
+Will run all tests matching "generate", test_generate_files for example.
+
+To run just one method::
+
+    $ py.test -k TestGetConfig::test_get_config
+
+
+To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox.::
+
+    $ tox
+
+This configuration file setup the pytest-cov plugin and it is an additional
+dependency. It generate a coverage report after the tests.
+
+It is possible to tests with some versions of python, to do this the command
+is::
+
+    $ tox -e py27,py34,pypy
+
+Will run py.test with the python2.7, python3.4 and pypy interpreters, for
+example.
+
 Troubleshooting for Contributors
 ---------------------------------
 
@@ -156,6 +219,7 @@ Python 3.3 tests fail locally
 
 Try upgrading Tox to the latest version. I noticed that they were failing
 locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
+
 
 Core Committer Guide
 ====================
@@ -196,7 +260,7 @@ Being extendable by people with different ideas for Jinja2-based project templat
 * Entirely function-based
 * Aim for statelessness
 * Lets anyone write more opinionated tools
-    
+
 Freedom for Cookiecutter users to build and extend.
 
 * No officially-maintained cookiecutter templates, only ones by individuals
@@ -207,7 +271,7 @@ Fast and Focused
 
 Cookiecutter is designed to do one thing, and do that one thing very well.
 
-* Cover the use cases that @audreyr needs, and as little as possible beyond that :)
+* Cover the use cases that the core committers need, and as little as possible beyond that :)
 * Generates project templates from the command-line or API, nothing more
 * Minimize internal line of code (LOC) count
 * Ultra-fast project generation for high performance downstream tools
@@ -225,7 +289,7 @@ Stable
 * No pull requests will be accepted that drop test coverage on any platform, including Windows
 * Conservative decisions patterned after CPython's conservative decisions with stability in mind
 * Stable APIs that tool builders can rely on
-* New features require a +1 from @audreyr
+* New features require a +1 from 3 core committers
 
 VCS-Hosted Templates
 ~~~~~~~~~~~~~~~~~~~~~
@@ -268,10 +332,14 @@ Then either fix it or mark as please-help.
 
 For other issues: encourage friendly discussion, moderate debate, offer your thoughts.
 
-New features require a +1 from @audreyr.
+New features require a +1 from 2 other core committers (besides yourself).
 
 Process: Roadmap
 -----------------
+
+The roadmap is https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
+
+Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
 
 How to number milestones:
 
@@ -282,14 +350,89 @@ Milestone size:
 * If a milestone contains too much, move some to the next milestone.
 * Err on the side of more frequent patch releases.
 
+Process: Pull Request merging and HISTORY.rst maintenance
+---------------------------------------------------------
+
+If you merge a pull request, you're responsible for updating `AUTHORS.rst` and `HISTORY.rst`
+
+When you're processing the first change after a release, create boilerplate following the existing pattern:
+
+    x.y.z (Development)
+    ~~~~~~~~~~~~~~~~~~~
+
+    The goals of this release are TODO: release summary of features
+
+    Features:
+
+    * Feature description, thanks to @contributor (#PR).
+
+    Bug Fixes:
+
+    * Bug fix description, thanks to @contributor (#PR).
+
+    Other changes:
+
+    * Description of the change, thanks to @contributor (#PR). 
+                      
+    .. _`@contributor`: https://github.com/contributor
+
+Process: Accepting Template Pull Requests
+-----------------------------------------
+
+#. Run the template to generate the project.
+#. Attempt to start/use the rendered project.
+#. Merge the template in.
+#. Update the history file.
+
+.. note:: Adding a template doesn't give authors credit.
+
+
+Process: Generating CONTRIBUTING.rst
+-------------------------------------
+
+From the `cookiecutter` project root::
+
+    $ make contributing
+
+This will generate the following message::
+
+    rm CONTRIBUTING.rst
+    touch CONTRIBUTING.rst
+    cat docs/contributing.rst >> CONTRIBUTING.rst
+    echo "\r\r" >> CONTRIBUTING.rst
+    cat docs/types_of_contributions.rst >> CONTRIBUTING.rst
+    echo "\r\r" >> CONTRIBUTING.rst
+    cat docs/contributor_setup.rst >> CONTRIBUTING.rst
+    echo "\r\r" >> CONTRIBUTING.rst
+    cat docs/contributor_guidelines.rst >> CONTRIBUTING.rst
+    echo "\r\r" >> CONTRIBUTING.rst
+    cat docs/contributor_tips.rst >> CONTRIBUTING.rst
+    echo "\r\r" >> CONTRIBUTING.rst
+    cat docs/core_committer_guide.rst >> CONTRIBUTING.rst
+    echo "\r\rAutogenerated from the docs via \`make contributing\`" >> CONTRIBUTING.rst
+    echo "WARNING: Don't forget to replace any :ref: statements with literal names"
+    WARNING: Don't forget to replace any :ref: statements with literal names
+
+Process: Your own code changes
+-------------------------------
+
+All code changes, regardless of who does them, need to be reviewed and merged by someone else.
+This rule applies to all the core committers.
+
+Exceptions:
+
+* Minor corrections and fixes to pull requests submitted by others.
+* While making a formal release, the release manager can make necessary, appropriate changes.
+* Small documentation changes that reinforce existing subject matter. Most commonly being, but not limited to spelling and grammar corrections.
+
 Responsibilities
 -----------------
 
-#. Give priority to bug fixes over new features. This includes fixes for the Windows tests that broke at some point.
 #. Ensure cross-platform compatibility for every change that's accepted. Windows, Mac, Debian & Ubuntu Linux.
 #. Ensure that code that goes into core meets all requirements in this checklist: https://gist.github.com/audreyr/4feef90445b9680475f2
 #. Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 #. Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
+#. Keep feature versions as small as possible, preferably one new feature per version.
 #. Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the Python Community Code of Conduct (https://www.python.org/psf/codeofconduct/).
 
 Becoming a Core Committer
@@ -298,7 +441,7 @@ Becoming a Core Committer
 Contributors may be given core commit privileges. Preference will be given to those with:
 
 A. Past contributions to Cookiecutter and other open-source projects. Contributions to Cookiecutter include both code (both accepted and pending) and friendly participation in the issue tracker. Quantity and quality are considered.
-B. A coding style that @audreyr finds simple, minimal, and clean.
+B. A coding style that the other core committers find simple, minimal, and clean.
 C. Access to resources for cross-platform development and testing.
 D. Time to devote to the project regularly.
 Autogenerated from the docs via `make contributing`
