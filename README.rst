@@ -218,7 +218,10 @@ LaTeX/XeTeX
 ~~~~~~~~~~~
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
+
 * `cookiecutter-latex-article`_: A LaTeX template geared towards academic use.
+
+* `cookiecutter-beamer`_: A template for a LaTeX Beamer presentation.
 
 
 Berkshelf-Vagrant
@@ -273,6 +276,8 @@ HTML
 .. _`Invoke`: http://invoke.readthedocs.org/en/latest/
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
 .. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
+.. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
+
 
 Scala
 ~~~~~
