@@ -21,7 +21,9 @@ Other Changes:
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
 * The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
 * Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
+* Added more cookiecutter templates to the mix:
 
+  * LaTeX Beamer (#307)
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
@@ -53,9 +55,6 @@ Other Changes:
 * Updated to Jinja 2.7 or higher in order to control trailing new lines in templates, thanks to `@sfermigier`_ (#356).
 * Tweaked flake8 to ignore e731, thanks to `@michaeljoseph`_ (#390).
 * Fixed failing Windows tests and corrected AppVeyor badge link thanks to `@msabramo`_ (#403).
-
-.. _`@msabramo`: https://github.com/msabramo
-
 * Added more Cookiecutters to the list:
 
   * `cookiecutter-scala-spark`_ by `@jpzk`_
@@ -65,6 +64,7 @@ Other Changes:
   * `cookiecutter-django-rest-framework`_ by `@jpadilla`_
   * `cookiedozer`_ by `@hackebrot`_
 
+.. _`@msabramo`: https://github.com/msabramo
 .. _`@marctc`: https://github.com/marctc
 .. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
 .. _`@jpadilla`: https://github.com/jpadilla
