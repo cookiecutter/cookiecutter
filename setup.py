@@ -33,10 +33,6 @@ requirements = [
     'click<5.0'
 ]
 
-test_requirements = [
-    'pytest'
-]
-
 long_description = readme + '\n\n' + history
 
 if sys.argv[-1] == 'readme':
