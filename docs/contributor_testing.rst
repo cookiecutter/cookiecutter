@@ -1,30 +1,19 @@
-Testing
--------
+Testing with tox
+----------------
 
-To run a particular test::
+To run a particular test class with tox::
 
-    $ python -m unittest tests.test_find.TestFind.test_find_template
-
-To run a subset of tests::
-
-    $ python -m unittest tests.test_find
-
-Testing with py.test
---------------------
-
-To run a particular test class with py.test::
-
-    $ py.test -k TestGetConfig
+    $ tox -e py "-k TestGetConfig"
 
 To run some tests with names matching a string expression::
 
-    $ py.test -k generate
+    $ tox -e py "-k generate"
 
 Will run all tests matching "generate", test_generate_files for example.
 
 To run just one method::
 
-    $ py.test -k TestGetConfig::test_get_config
+    $ tox -e py "-k TestGetConfig::test_get_config"
 
 
 To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox.::
