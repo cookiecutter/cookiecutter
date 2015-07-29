@@ -50,21 +50,6 @@ if sys.argv[-1] == 'readme':
     sys.exit()
 
 
-class PyTest(Command):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
-
-    def initialize_options(self):
-        self.pytest_args = []
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import pytest
-        errno = pytest.main(self.pytest_args)
-        sys.exit(errno)
-
-
 setup(
     name='cookiecutter',
     version=version,
@@ -109,7 +94,4 @@ setup(
         'skeleton, scaffolding, project directory, setup.py, package, '
         'packaging'
     ),
-    cmdclass = {'test': PyTest},
-    test_suite='tests',
-    tests_require=test_requirements
 )
