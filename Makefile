@@ -34,9 +34,7 @@ test-all:
 
 
 coverage:
-	coverage run --source cookiecutter setup.py test
-	coverage report -m
-	coverage html
+	tox -e cov-report
 	open htmlcov/index.html
 
 docs:
