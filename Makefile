@@ -27,7 +27,7 @@ lint:
 	flake8 cookiecutter tests
 
 test:
-	python setup.py test
+	tox -e py
 
 test-all:
 	tox
