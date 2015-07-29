@@ -1,6 +1,10 @@
 Testing with tox
 ----------------
 
+Tox uses py.test under the hood, hence it supports the same syntax for selecting tests.
+
+For further information please consult the `pytest usage docs`_.
+
 To run a particular test class with tox::
 
     $ tox -e py '-k TestFindHooks'
@@ -40,3 +44,4 @@ Python 3.3 tests fail locally
 Try upgrading Tox to the latest version. I noticed that they were failing
 locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
 
+.. _`pytest usage docs`: https://pytest.org/latest/usage.html#specifying-tests-selecting-tests
