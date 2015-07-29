@@ -37,12 +37,6 @@ test_requirements = [
     'pytest'
 ]
 
-# Add Python 2.7-specific dependencies
-if sys.version < '3':
-    requirements.append('mock')
-
-# There are no Python 3-specific dependencies to add
-
 long_description = readme + '\n\n' + history
 
 if sys.argv[-1] == 'readme':
