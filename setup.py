@@ -4,9 +4,9 @@ import os
 import sys
 
 try:
-    from setuptools import setup, Command
+    from setuptools import setup
 except ImportError:
-    from distutils.core import setup, Command
+    from distutils.core import setup
 
 version = "1.0.0"
 
