@@ -3,17 +3,17 @@ Testing with tox
 
 To run a particular test class with tox::
 
-    $ tox -e py "-k TestGetConfig"
+    $ tox -e py '-k TestFindHooks'
 
 To run some tests with names matching a string expression::
 
-    $ tox -e py "-k generate"
+    $ tox -e py '-k generate'
 
 Will run all tests matching "generate", test_generate_files for example.
 
 To run just one method::
 
-    $ tox -e py "-k TestGetConfig::test_get_config"
+    $ tox -e py '-k "TestFindHooks and test_find_hook"'
 
 
 To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox.::
