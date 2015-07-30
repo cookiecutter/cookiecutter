@@ -23,13 +23,16 @@ Other Changes:
 * Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
 * Added more cookiecutter templates to the mix:
 
-  * LaTeX Beamer (#307)
+  * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
 .. _`@LucianU`: https://github.com/LucianU
 .. _`@svisser`: https://github.com/svisser
 .. _`@lgp171188`: https://github.com/lgp171188
+
+.. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
+.. _`@luismartingil`: https://github.com/luismartingil
 
 
 1.0.0 (2015-03-13) Chocolate Chip
