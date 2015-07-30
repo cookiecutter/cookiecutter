@@ -115,3 +115,18 @@ def test_vcs_not_installed(monkeypatch):
 ])
 def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
     assert vcs.identify_repo(repo_url) == (exp_repo_type, exp_repo_url)
+
+
+@pytest.fixture(params=[
+    "foo+git",  # uses explicit identifier with 'git' in the wrong place
+    "foo+hg",  # uses explicit identifier with 'hg' in the wrong place
+    "foo+bar",  # uses explicit identifier with neither 'git' nor 'hg'
+    "foobar"  # no identifier but neither 'git' nor 'bitbucket' in url
+])
+def unknown_repo_type_url(request):
+    return request.param
+
+
+def test_identify_raise_on_unknown_repo(unknown_repo_type_url):
+    with pytest.raises(exceptions.UnknownRepoType):
+        vcs.identify_repo(unknown_repo_type_url)
