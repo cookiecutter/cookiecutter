@@ -37,7 +37,7 @@ coverage:
 	coverage run --source cookiecutter setup.py test
 	coverage report -m
 	coverage html
-	open htmlcov/index.html
+	python -c "import webbrowser as wb; wb.open('htmlcov/index.html')"
 
 docs:
 	rm -f docs/cookiecutter.rst
@@ -46,7 +46,7 @@ docs:
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	make contributing
-	open docs/_build/html/index.html
+	python -c "import webbrowser as wb; wb.open('docs/_build/html/index.html')"
 
 release: clean
 	python setup.py sdist bdist_wheel upload
