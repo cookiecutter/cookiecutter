@@ -27,12 +27,6 @@ if PY3:  # Forced testing
 
 else:  # Forced testing
 
-    def is_exe(program):
-        """
-        Returns whether or not a file is an executable.
-        """
-        return os.path.isfile(program) and os.access(program, os.X_OK)
-
     def which(cmd, mode=os.F_OK | os.X_OK, path=None):
         """Given a command, mode, and a PATH string, return the path which
         conforms to the given mode on the PATH, or None if there is no such
