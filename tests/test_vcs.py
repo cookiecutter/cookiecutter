@@ -92,3 +92,26 @@ def test_vcs_not_installed(monkeypatch):
     )
     with pytest.raises(exceptions.VCSNotInstalled):
         vcs.clone('http://norepotypespecified.com')
+
+
+@pytest.mark.parametrize('repo_url, exp_repo_type, exp_repo_url', [
+    (
+        "git+https://github.com/pytest-dev/cookiecutter-pytest-plugin.git",
+        "git",
+        "https://github.com/pytest-dev/cookiecutter-pytest-plugin.git"
+    ), (
+        "hg+https://bitbucket.org/foo/bar.hg",
+        "hg",
+        "https://bitbucket.org/foo/bar.hg"
+    ), (
+        "https://github.com/pytest-dev/cookiecutter-pytest-plugin.git",
+        "git",
+        "https://github.com/pytest-dev/cookiecutter-pytest-plugin.git"
+    ), (
+        "https://bitbucket.org/foo/bar.hg",
+        "hg",
+        "https://bitbucket.org/foo/bar.hg"
+    )
+])
+def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
+    assert vcs.identify_repo(repo_url) == (exp_repo_type, exp_repo_url)
