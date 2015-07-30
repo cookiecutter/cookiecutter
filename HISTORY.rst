@@ -24,6 +24,7 @@ Other Changes:
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
+  * `cookiecutter-pytest-plugin`_ by `@pytest-dev`_ and `@hackebrot`_ (#481)
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
@@ -33,6 +34,8 @@ Other Changes:
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
+.. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
+.. _`@pytest-dev`: https://github.com/pytest-dev
 
 
 1.0.0 (2015-03-13) Chocolate Chip
