@@ -22,9 +22,14 @@ Now you can make your changes locally.
 
 5. When you're done making changes, check that your changes pass the tests and flake8::
 
-    $ flake8 cookiecutter tests
     $ pip install tox
     $ tox
+
+Please note that tox runs flake8 automatically, since we have a test environment for it.
+
+If you feel like running only the flake8 environment, please use the following command::
+
+    $ tox -e flake8
 
 6. Commit your changes and push your branch to GitHub::
 
