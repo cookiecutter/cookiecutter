@@ -169,6 +169,7 @@ Python
 * `Python-Android-template`_: A template to create a Python project that will run on Android devices.
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
 * `cookiecutter-tryton`_: A template for creating tryton modules.
+* `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring `pytest`_ plugins that help you to write better programs.
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -277,6 +278,8 @@ HTML
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
 .. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
+.. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
+.. _`pytest`: http://pytest.org/latest/
 
 
 Scala
