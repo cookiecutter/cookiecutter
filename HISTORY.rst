@@ -21,10 +21,14 @@ Other Changes:
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
 * The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
 * Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
+* Removed deprecated and fully extraneous `compat.is_exe()` function, thanks to `@hackebrot`_ (#485).
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
   * `cookiecutter-pytest-plugin`_ by `@pytest-dev`_ and `@hackebrot`_ (#481)
+  * cookiecutter-csharp-objc-bindin
+  * cookiecutter-flask-foundation
+  * cookiecutter-tryton
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
@@ -307,7 +311,7 @@ New features:
 Bug fixes:
 
 * Unicode issues with prompts and answers are fixed, thanks to `@s-m-i-t-a`_.
-* The test suite now runs on Windows, which was a major effort. Thanks to 
+* The test suite now runs on Windows, which was a major effort. Thanks to
   `@pydanny`_, who collaborated on this with me.
 
 Other changes:
@@ -435,4 +439,3 @@ Roadmap
 -------
 
 https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
-
