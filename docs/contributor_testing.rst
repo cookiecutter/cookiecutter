@@ -1,30 +1,23 @@
-Testing
--------
+Testing with tox
+----------------
 
-To run a particular test::
+Tox uses py.test under the hood, hence it supports the same syntax for selecting tests.
 
-    $ python -m unittest tests.test_find.TestFind.test_find_template
+For further information please consult the `pytest usage docs`_.
 
-To run a subset of tests::
+To run a particular test class with tox::
 
-    $ python -m unittest tests.test_find
-
-Testing with py.test
---------------------
-
-To run a particular test class with py.test::
-
-    $ py.test -k TestGetConfig
+    $ tox -e py '-k TestFindHooks'
 
 To run some tests with names matching a string expression::
 
-    $ py.test -k generate
+    $ tox -e py '-k generate'
 
 Will run all tests matching "generate", test_generate_files for example.
 
 To run just one method::
 
-    $ py.test -k TestGetConfig::test_get_config
+    $ tox -e py '-k "TestFindHooks and test_find_hook"'
 
 
 To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox.::
@@ -51,3 +44,4 @@ Python 3.3 tests fail locally
 Try upgrading Tox to the latest version. I noticed that they were failing
 locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
 
+.. _`pytest usage docs`: https://pytest.org/latest/usage.html#specifying-tests-selecting-tests

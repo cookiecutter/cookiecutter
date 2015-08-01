@@ -4,9 +4,9 @@ import os
 import sys
 
 try:
-    from setuptools import setup, Command
+    from setuptools import setup
 except ImportError:
-    from distutils.core import setup, Command
+    from distutils.core import setup
 
 version = "1.0.0"
 
@@ -33,36 +33,11 @@ requirements = [
     'click<5.0'
 ]
 
-test_requirements = [
-    'pytest'
-]
-
-# Add Python 2.7-specific dependencies
-if sys.version < '3':
-    requirements.append('mock')
-
-# There are no Python 3-specific dependencies to add
-
 long_description = readme + '\n\n' + history
 
 if sys.argv[-1] == 'readme':
     print(long_description)
     sys.exit()
-
-
-class PyTest(Command):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
-
-    def initialize_options(self):
-        self.pytest_args = []
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import pytest
-        errno = pytest.main(self.pytest_args)
-        sys.exit(errno)
 
 
 setup(
@@ -109,7 +84,4 @@ setup(
         'skeleton, scaffolding, project directory, setup.py, package, '
         'packaging'
     ),
-    cmdclass = {'test': PyTest},
-    test_suite='tests',
-    tests_require=test_requirements
 )
