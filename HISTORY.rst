@@ -12,6 +12,7 @@ Features:
 
 * Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems (#132, #184, #425).
 * Abort template rendering if the project output directory already exists, thanks to `@lgp171188`_ (#470, #471).
+* Remove test command in favor of tox, thanks to `@hackebrot` (#480).
 
 Other Changes:
 
@@ -22,6 +23,7 @@ Other Changes:
 * The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
 * Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
 * Removed deprecated and fully extraneous `compat.is_exe()` function, thanks to `@hackebrot`_ (#485).
+* Disabled sudo in .travis, thanks to `@hackebrot`_ (#482).
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
