@@ -1,5 +1,6 @@
 # Config file for automatic testing at travis-ci.org
 
+sudo: false
 language: python
 python: 2.7
 env:
