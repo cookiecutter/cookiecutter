@@ -44,3 +44,13 @@ def test_dump_value_error_if_no_template_name(context):
 def test_dump_type_error_if_not_dict_context(template_name):
     with pytest.raises(TypeError):
         replay.dump(template_name, 'not_a_dict')
+
+
+def test_dump_make_sure_dir_exists(mocker, template_name, context):
+    mock_ensure = mocker.patch(
+        'cookiecutter.replay.make_sure_path_exists',
+        return_value=True
+    )
+    replay.dump(template_name, context)
+
+    mock_ensure.assert_called_once_with(template_name)
