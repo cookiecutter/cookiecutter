@@ -13,7 +13,8 @@ from cookiecutter import replay
 from cookiecutter.config import get_user_config
 
 
-def test_get_user_config():
+def test_get_user_config(mocker):
+    mocker.patch('os.path.exists', return_value=False)
     config_dict = get_user_config()
     assert 'replay_dir' in config_dict
 
