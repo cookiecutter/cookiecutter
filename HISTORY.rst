@@ -13,6 +13,7 @@ Features:
 * Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems (#132, #184, #425).
 * Abort template rendering if the project output directory already exists, thanks to `@lgp171188`_ (#470, #471).
 * Remove test command in favor of tox, thanks to `@hackebrot`_ (#480).
+* Allow cookiecutter invocation, even without installing it, via ``python -m cookiecutter.cli``, thanks to  `@vincentbernat`_ (#449).
 
 Other Changes:
 
