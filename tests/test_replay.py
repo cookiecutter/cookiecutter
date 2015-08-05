@@ -13,13 +13,17 @@ from cookiecutter import replay
 from cookiecutter.config import get_user_config
 
 
-def test_get_user_config(mocker):
+@pytest.fixture
+def replay_dir():
+    return os.path.expanduser('~/.cookiecutter_replay/')
+
+
+def test_get_user_config(mocker, replay_dir):
     mocker.patch('os.path.exists', return_value=False)
     config_dict = get_user_config()
     assert 'replay_dir' in config_dict
 
-    expected_dir = os.path.expanduser('~/.cookiecutter_replay/')
-    assert config_dict['replay_dir'] == expected_dir
+    assert config_dict['replay_dir'] == replay_dir
 
 
 @pytest.fixture
@@ -47,11 +51,11 @@ def test_dump_type_error_if_not_dict_context(template_name):
         replay.dump(template_name, 'not_a_dict')
 
 
-def test_dump_make_sure_dir_exists(mocker, template_name, context):
+def test_dump_make_sure_dir_exists(mocker, template_name, context, replay_dir):
     mock_ensure = mocker.patch(
         'cookiecutter.replay.make_sure_path_exists',
         return_value=True
     )
     replay.dump(template_name, context)
 
-    mock_ensure.assert_called_once_with(template_name)
+    mock_ensure.assert_called_once_with(replay_dir)
