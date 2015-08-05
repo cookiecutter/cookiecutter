@@ -11,6 +11,7 @@ using the entry point set up for the package.
 import os
 import pytest
 import subprocess
+import sys
 
 from cookiecutter import utils
 
@@ -37,12 +38,15 @@ def project_dir(request):
     return rendered_dir
 
 
-def test_should_invoke_main(project_dir):
+def test_should_invoke_main(monkeypatch, project_dir):
+    monkeypatch.setenv('PYTHONPATH', '.')
+
     subprocess.check_call([
-        'python',
+        sys.executable,
         '-m',
         'cookiecutter.cli',
         'tests/fake-repo-tmpl',
         '--no-input'
     ])
+
     assert os.path.isdir(project_dir)
