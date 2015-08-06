@@ -35,7 +35,7 @@ def print_version(context, param, value):
 
 
 @click.command()
-@click.version_option()
+@click.version_option(None, '-V', '--version')
 @click.argument('template')
 @click.option(
     '--no-input', is_flag=True,
