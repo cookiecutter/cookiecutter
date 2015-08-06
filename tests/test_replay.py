@@ -10,7 +10,7 @@ import os
 import pytest
 
 
-from cookiecutter import replay
+from cookiecutter import replay, utils
 from cookiecutter.config import get_user_config
 
 
@@ -52,6 +52,15 @@ def test_dump_type_error_if_not_dict_context(template_name):
         replay.dump(template_name, 'not_a_dict')
 
 
+@pytest.fixture
+def cleanup_replay_dir(request, replay_dir):
+    def remove_dir():
+        if os.path.isdir(replay_dir):
+            utils.rmtree(replay_dir)
+    request.addfinalizer(remove_dir)
+
+
+@pytest.mark.usefixtures('cleanup_replay_dir')
 def test_raise_if_replay_dir_creation_fails(
         mocker, template_name, context, replay_dir):
     mock_ensure = mocker.patch(
@@ -64,6 +73,7 @@ def test_raise_if_replay_dir_creation_fails(
     mock_ensure.assert_called_once_with(replay_dir)
 
 
+@pytest.mark.usefixtures('cleanup_replay_dir')
 def test_run_json_dump(
         mocker, template_name, context, replay_dir):
     spy_ensure = mocker.spy(
