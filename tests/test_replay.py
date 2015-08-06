@@ -51,11 +51,13 @@ def test_dump_type_error_if_not_dict_context(template_name):
         replay.dump(template_name, 'not_a_dict')
 
 
-def test_dump_make_sure_dir_exists(mocker, template_name, context, replay_dir):
+def test_raise_if_replay_dir_creation_fails(
+        mocker, template_name, context, replay_dir):
     mock_ensure = mocker.patch(
         'cookiecutter.replay.make_sure_path_exists',
-        return_value=True
+        return_value=False
     )
-    replay.dump(template_name, context)
+    with pytest.raises(IOError):
+        replay.dump(template_name, context)
 
     mock_ensure.assert_called_once_with(replay_dir)
