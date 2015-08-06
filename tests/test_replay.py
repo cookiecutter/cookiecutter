@@ -69,10 +69,12 @@ def test_run_json_dump(
     spy_ensure = mocker.spy(
         'cookiecutter.replay.make_sure_path_exists',
     )
+    spy_json_dump = mocker.spy('json.dump')
 
     replay.dump(template_name, context)
 
     spy_ensure.assert_called_once_with(replay_dir)
+    assert spy_json_dump.called == 1
 
     replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
     replay_file = os.path.join(replay_dir, template_name)
