@@ -32,17 +32,6 @@ def version_msg():
     return message.format(location, python_version)
 
 
-def print_version(context, param, value):
-    if not value or context.resilient_parsing:
-        return
-    click.echo('Cookiecutter %s from %s (Python %s)' % (
-        __version__,
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        sys.version[:3]
-    ))
-    context.exit()
-
-
 @click.command()
 @click.version_option(__version__, '-V', '--version', message=version_msg())
 @click.argument('template')
