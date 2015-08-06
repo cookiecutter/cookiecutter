@@ -37,6 +37,7 @@ def print_version(context, param, value):
 
 
 @click.command()
+@click.version_option()
 @click.argument('template')
 @click.option(
     '--no-input', is_flag=True,
@@ -46,11 +47,6 @@ def print_version(context, param, value):
 @click.option(
     '-c', '--checkout',
     help='branch, tag or commit to checkout after git clone',
-)
-@click.option(
-    '-V', '--version',
-    is_flag=True, help='Show version information and exit.',
-    callback=print_version, expose_value=False, is_eager=True,
 )
 @click.option(
     '-v', '--verbose',
