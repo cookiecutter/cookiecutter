@@ -5,6 +5,7 @@ test_replay
 -----------
 """
 
+import json
 import os
 import pytest
 
@@ -61,3 +62,21 @@ def test_raise_if_replay_dir_creation_fails(
         replay.dump(template_name, context)
 
     mock_ensure.assert_called_once_with(replay_dir)
+
+
+def test_run_json_dump(
+        mocker, template_name, context, replay_dir):
+    spy_ensure = mocker.spy(
+        'cookiecutter.replay.make_sure_path_exists',
+    )
+
+    replay.dump(template_name, context)
+
+    spy_ensure.assert_called_once_with(replay_dir)
+
+    replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
+    replay_file = os.path.join(replay_dir, template_name)
+
+    with open(replay_file, 'r') as f:
+        dumped_context = json.load(f)
+        assert dumped_context == context
