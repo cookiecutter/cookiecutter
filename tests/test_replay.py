@@ -68,7 +68,7 @@ def cleanup_replay_dir(request, replay_dir):
 
 
 @pytest.mark.usefixtures('cleanup_replay_dir')
-def test_raise_if_replay_dir_creation_fails(
+def test_dump_ioerror_if_replay_dir_creation_fails(
         mocker, template_name, context, replay_dir):
     """Test that replay.dump raises when the replay_dir cannot be created."""
     mock_ensure = mocker.patch(
@@ -82,7 +82,7 @@ def test_raise_if_replay_dir_creation_fails(
 
 
 @pytest.mark.usefixtures('cleanup_replay_dir')
-def test_run_json_dump(
+def test_dump_run_json_dump(
         mocker, template_name, context, replay_dir):
     """Test that replay.dump runs json.dump under the hood and that the context
     is correctly written to the expected file in the replay_dir.
