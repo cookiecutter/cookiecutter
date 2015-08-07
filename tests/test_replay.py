@@ -109,3 +109,9 @@ def test_run_json_dump(
     with open(replay_file, 'r') as f:
         dumped_context = json.load(f)
         assert dumped_context == context
+
+
+def test_load_value_error_if_no_template_name(context):
+    """Test that replay.load raises if the tempate_name is not a valid str."""
+    with pytest.raises(ValueError):
+        replay.load(None)
