@@ -22,7 +22,7 @@ from cookiecutter.exceptions import OutputDirExistsException
 logger = logging.getLogger(__name__)
 
 
-@click.command()
+@click.command('cookiecutter')
 @click.version_option(__version__, '-V', '--version')
 @click.argument('template')
 @click.option(
