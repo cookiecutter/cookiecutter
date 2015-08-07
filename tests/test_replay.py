@@ -103,7 +103,6 @@ def test_dump_run_json_dump(
     assert spy_json_dump.called == 1
     assert mock_get_user_config.called == 1
 
-    replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
     replay_file = os.path.join(replay_dir, template_name)
 
     with open(replay_file, 'r') as f:
