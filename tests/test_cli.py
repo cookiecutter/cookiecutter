@@ -30,8 +30,13 @@ def make_fake_project_dir(request):
         os.makedirs('fake-project')
 
 
-def test_cli_version():
-    result = runner.invoke(main, ['-V'])
+@pytest.fixture(params=['-V', '--version'])
+def version_cli_flag(request):
+    return request.param
+
+
+def test_cli_version(version_cli_flag):
+    result = runner.invoke(main, [version_cli_flag])
     assert result.exit_code == 0
     assert result.output.startswith('Cookiecutter')
 
