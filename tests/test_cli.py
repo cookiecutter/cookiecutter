@@ -39,7 +39,7 @@ def test_cli_version(version_cli_flag):
     result = runner.invoke(main, [version_cli_flag])
     assert result.exit_code == 0
 
-    exp_message = 'cookiecutter, version {}'.format(__version__)
+    exp_message = 'cookiecutter, version {}\n'.format(__version__)
     assert result.output == exp_message
 
 
