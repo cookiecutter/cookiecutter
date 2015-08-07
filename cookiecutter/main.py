@@ -14,6 +14,7 @@ library rather than a script.
 from __future__ import unicode_literals
 import logging
 import os
+import re
 
 from .config import get_user_config
 from .prompt import prompt_for_config
@@ -26,6 +27,12 @@ builtin_abbreviations = {
     'gh': 'https://github.com/{0}.git',
     'bb': 'https://bitbucket.org/{0}',
 }
+REPO_REGEX = '((git|ssh|http(s)?)|(\w+@[\w\.]+))(:(//)?).*'
+
+
+def is_repo_url(value):
+    """Return True if value is a repository URL."""
+    return bool(re.match(REPO_REGEX, value))
 
 
 def expand_abbreviations(template, config_dict):
@@ -70,8 +77,7 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
 
     template = expand_abbreviations(template, config_dict)
 
-    # TODO: find a better way to tell if it's a repo URL
-    if 'git@' in template or 'https://' in template:
+    if is_repo_url(template):
         repo_dir = clone(
             repo_url=template,
             checkout=checkout,
