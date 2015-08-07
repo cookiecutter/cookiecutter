@@ -2,8 +2,8 @@
 Cookiecutter
 =============
 
-.. image:: https://badge.fury.io/py/cookiecutter.png
-        :target: http://badge.fury.io/py/cookiecutter
+.. image:: https://img.shields.io/pypi/v/cookiecutter.svg
+        :target: https://pypi.python.org/pypi/cookiecutter/1.0.0
 
 .. image:: https://travis-ci.org/audreyr/cookiecutter.png?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
@@ -11,8 +11,8 @@ Cookiecutter
 .. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
         :target: https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master
 
-.. image:: https://pypip.in/d/cookiecutter/badge.png
-        :target: https://crate.io/packages/cookiecutter?version=latest
+.. image:: https://img.shields.io/crates/d/cookiecutter.svg
+        :target: https://pypi.python.org/pypi/cookiecutter/1.0.0
 
 .. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
         :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
@@ -200,7 +200,7 @@ C#
 * `cookiecutter-csharp-objc-binding`_: A template for generating a C# binding project for binding an Objective-C static library.
 
 .. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
-  
+
 Common Lisp
 ~~~~~~~~~~~
 
