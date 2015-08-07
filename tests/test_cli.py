@@ -3,8 +3,9 @@ import pytest
 
 from click.testing import CliRunner
 
-from cookiecutter.cli import main
+from cookiecutter import __version__
 from cookiecutter import utils
+from cookiecutter.cli import main
 
 runner = CliRunner()
 
@@ -37,7 +38,9 @@ def version_cli_flag(request):
 def test_cli_version(version_cli_flag):
     result = runner.invoke(main, [version_cli_flag])
     assert result.exit_code == 0
-    assert result.output.startswith('Cookiecutter')
+
+    exp_message = 'cookiecutter, version {}'.format(__version__)
+    assert result.output == exp_message
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
