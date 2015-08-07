@@ -25,6 +25,7 @@ Other Changes:
 * Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
 * Removed deprecated and fully extraneous `compat.is_exe()` function, thanks to `@hackebrot`_ (#485).
 * Disabled sudo in .travis, thanks to `@hackebrot`_ (#482).
+* Switched to shields.io for problematic badges, thanks to `@pydanny`_ (#491).
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
