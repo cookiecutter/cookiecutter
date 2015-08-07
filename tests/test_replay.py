@@ -110,7 +110,30 @@ def test_dump_run_json_dump(
         assert dumped_context == context
 
 
-def test_load_value_error_if_no_template_name(context):
+def test_load_value_error_if_no_template_name():
     """Test that replay.load raises if the tempate_name is not a valid str."""
     with pytest.raises(ValueError):
         replay.load(None)
+
+
+@pytest.fixture
+def template_name_load():
+    """Fixture to return a valid template_name for the load test."""
+    return 'cookiedozer_load'
+
+
+def test_load_run_json_load(mocker, replay_dir, template_name_load, context):
+    """Test that replay.load runs json.load under the hood and that the context
+    is correctly loaded from the file in replay_dir.
+    """
+    mock_get_user_config = mocker.patch(
+        'cookiecutter.config.get_user_config',
+        return_value=replay_dir
+    )
+    spy_json_load = mocker.spy('json.load')
+
+    loaded_context = replay.load(template_name_load)
+
+    assert mock_get_user_config.called == 1
+    assert spy_json_load.called == 1
+    assert context == loaded_context
