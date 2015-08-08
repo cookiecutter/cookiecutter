@@ -55,3 +55,24 @@ def test_cli_verbose():
     result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-v'])
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
+
+
+def test_cli_replay(mocker):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--replay',
+        '-v'
+    ])
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_once_called_with(
+        template_path,
+        None,
+        False,
+        True
+    )
