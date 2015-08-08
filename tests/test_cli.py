@@ -76,3 +76,32 @@ def test_cli_replay(mocker):
         False,
         True
     )
+
+
+def test_cli_exit_on_noinput_and_replay(capsys, mocker):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--no-input',
+        '--replay',
+        '-v'
+    ])
+
+    mock_cookiecutter.assert_once_called_with(
+        template_path,
+        None,
+        True,
+        True
+    )
+
+    assert result.exit_code == 1
+
+    out, err = capsys.readouterr()
+    expected_error_msg = (
+        "You can not use both --no-input and --replay at the same time!"
+    )
+    assert expected_error_msg in out
