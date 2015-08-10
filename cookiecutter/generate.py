@@ -152,7 +152,8 @@ def generate_file(project_dir, infile, context, env):
     shutil.copymode(infile, outfile)
 
 
-def render_and_create_dir(dirname, context, output_dir, fail_if_exists=False):
+def render_and_create_dir(dirname, context, output_dir,
+                          overwrite_if_exists=False):
     """
     Renders the name of a directory, creates the directory, and
     returns its path.
@@ -168,7 +169,11 @@ def render_and_create_dir(dirname, context, output_dir, fail_if_exists=False):
         os.path.join(output_dir, rendered_dirname)
     )
 
-    if fail_if_exists:
+    if overwrite_if_exists:
+        if os.path.exists(dir_to_create):
+            logging.debug('Output directory {} already exists,'
+                          ' overwriting it'.format(dir_to_create))
+    else:
         if os.path.exists(dir_to_create):
             msg = 'Error: "{}" directory already exists'.format(dir_to_create)
             raise OutputDirExistsException(msg)
@@ -187,13 +192,16 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def generate_files(repo_dir, context=None, output_dir='.'):
+def generate_files(repo_dir, context=None, output_dir='.',
+                   overwrite_if_exists=False):
     """
     Renders the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
     :param context: Dict for populating the template's variables.
     :param output_dir: Where to output the generated project dir into.
+    :param overwrite_if_exists: Overwrite the contents of the output directory
+        if it exists
     """
 
     template_dir = find_template(repo_dir)
@@ -205,7 +213,7 @@ def generate_files(repo_dir, context=None, output_dir='.'):
     project_dir = render_and_create_dir(unrendered_dir,
                                         context,
                                         output_dir,
-                                        fail_if_exists=True)
+                                        overwrite_if_exists)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
@@ -256,7 +264,8 @@ def generate_files(repo_dir, context=None, output_dir='.'):
             dirs[:] = render_dirs
             for d in dirs:
                 unrendered_dir = os.path.join(project_dir, root, d)
-                render_and_create_dir(unrendered_dir, context, output_dir)
+                render_and_create_dir(unrendered_dir, context, output_dir,
+                                      overwrite_if_exists)
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))

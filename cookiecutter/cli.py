@@ -44,6 +44,10 @@ def print_version(context, param, value):
          'file content',
 )
 @click.option(
+    '-f', '--overwrite-if-exists', is_flag=True,
+    help='Overwrite the contents of output directory if it already exists',
+)
+@click.option(
     '-c', '--checkout',
     help='branch, tag or commit to checkout after git clone',
 )
@@ -61,7 +65,7 @@ def print_version(context, param, value):
     help='Do not prompt for parameters and only use information entered '
          'previously',
 )
-def main(template, no_input, checkout, verbose, replay):
+def main(template, no_input, checkout, verbose, replay, overwrite_if_exists):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
@@ -76,7 +80,7 @@ def main(template, no_input, checkout, verbose, replay):
         )
 
     try:
-        cookiecutter(template, checkout, no_input, replay=replay)
+        cookiecutter(template, checkout, no_input, replay=replay, overwrite_if_exists=overwrite_if_exists)
     except (OutputDirExistsException, InvalidModeException) as e:
         click.echo(e)
         sys.exit(1)

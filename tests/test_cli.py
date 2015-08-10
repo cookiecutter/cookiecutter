@@ -76,7 +76,8 @@ def test_cli_replay(mocker):
         template_path,
         None,
         False,
-        replay=True
+        replay=True,
+        overwrite_if_exists=False,
     )
 
 
@@ -107,5 +108,25 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         template_path,
         None,
         True,
-        replay=True
+        replay=True,
+        overwrite_if_exists=False,
     )
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_overwrite_if_exists_when_output_dir_does_not_exist():
+    if os.path.isdir('fake-project'):
+        utils.rmtree('fake-project')
+
+    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-f'])
+
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+
+
+@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
+def test_cli_overwrite_if_exists_when_output_dir_exists():
+    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-f'])
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+
