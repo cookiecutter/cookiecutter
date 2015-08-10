@@ -170,6 +170,7 @@ Python
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
 * `cookiecutter-tryton`_: A template for creating tryton modules.
 * `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring `pytest`_ plugins that help you to write better programs.
+* `cookiecutter-tapioca`_: A Template for building `tapioca-wrapper`_ based web API wrappers (clients).
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -280,6 +281,8 @@ HTML
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`pytest`: http://pytest.org/latest/
+.. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
+.. _`tapioca-wrapper`: https://github.com/vintasoftware/tapioca-wrapper
 
 
 Scala
