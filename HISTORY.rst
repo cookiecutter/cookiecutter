@@ -31,7 +31,7 @@ Other Changes:
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
   * `cookiecutter-pytest-plugin`_ by `@pytest-dev`_ and `@hackebrot`_ (#481)
   * `cookiecutter-csharp-objc-binding`_ by `@SandyChapman`_ (#460)
-  * cookiecutter-flask-foundation
+  * `cookiecutter-flask-foundation`_ by `@JackStouffer`_ (#457)
   * cookiecutter-tryton
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
@@ -40,12 +40,14 @@ Other Changes:
 .. _`@svisser`: https://github.com/svisser
 .. _`@lgp171188`: https://github.com/lgp171188
 .. _`@SandyChapman`: https://github.com/SandyChapman
+.. _`@JackStouffer`: https://github.com/JackStouffer
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`@pytest-dev`: https://github.com/pytest-dev
 .. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
+.. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 
 
 1.0.0 (2015-03-13) Chocolate Chip
