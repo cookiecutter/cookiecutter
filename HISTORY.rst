@@ -33,6 +33,7 @@ Other Changes:
   * `cookiecutter-csharp-objc-binding`_ by `@SandyChapman`_ (#460)
   * `cookiecutter-flask-foundation`_ by `@JackStouffer`_ (#457)
   * `cookiecutter-tryton`_ by `@fulfilio`_ (#465)
+  * `cookiecutter-tapioca`_ by `@vintasoftware`_ (#496)
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
@@ -42,6 +43,7 @@ Other Changes:
 .. _`@SandyChapman`: https://github.com/SandyChapman
 .. _`@JackStouffer`: https://github.com/JackStouffer
 .. _`@fulfilio`: https://github.com/fulfilio
+.. _`@vintasoftware`: https://github.com/vintasoftware
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
@@ -50,6 +52,7 @@ Other Changes:
 .. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 .. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
+.. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 
 
 1.0.0 (2015-03-13) Chocolate Chip
