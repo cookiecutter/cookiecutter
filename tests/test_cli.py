@@ -4,6 +4,7 @@ import pytest
 from click.testing import CliRunner
 
 from cookiecutter.cli import main
+from cookiecutter.main import cookiecutter
 from cookiecutter import utils
 
 runner = CliRunner()
@@ -57,6 +58,7 @@ def test_cli_verbose():
     assert os.path.isdir('fake-project')
 
 
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_replay(mocker):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter'
@@ -70,17 +72,19 @@ def test_cli_replay(mocker):
     ])
 
     assert result.exit_code == 0
-    mock_cookiecutter.assert_once_called_with(
+    mock_cookiecutter.assert_called_once_with(
         template_path,
         None,
         False,
-        True
+        replay=True
     )
 
 
-def test_cli_exit_on_noinput_and_replay(capsys, mocker):
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_exit_on_noinput_and_replay(mocker):
     mock_cookiecutter = mocker.patch(
-        'cookiecutter.cli.cookiecutter'
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter
     )
 
     template_path = 'tests/fake-repo-pre/'
@@ -91,17 +95,16 @@ def test_cli_exit_on_noinput_and_replay(capsys, mocker):
         '-v'
     ])
 
-    mock_cookiecutter.assert_once_called_with(
-        template_path,
-        None,
-        True,
-        True
-    )
-
     assert result.exit_code == 1
 
-    out, err = capsys.readouterr()
     expected_error_msg = (
         "You can not use both --no-input and --replay at the same time!"
     )
-    assert expected_error_msg in out
+    assert expected_error_msg in result.output
+
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        True,
+        replay=True
+    )
