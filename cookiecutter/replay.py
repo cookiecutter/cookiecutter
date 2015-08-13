@@ -7,6 +7,9 @@ cookiecutter.replay
 
 from __future__ import unicode_literals
 
+import json
+import os
+
 from .compat import is_string
 from .config import get_user_config
 from .utils import make_sure_path_exists
@@ -23,3 +26,8 @@ def dump(template_name, context):
 
     if not make_sure_path_exists(replay_dir):
         raise IOError('Unable to create replay dir at {}'.format(replay_dir))
+
+    replay_file = os.path.join(replay_dir, template_name)
+
+    with open(replay_file, 'w') as outfile:
+        json.dump(context, outfile)
