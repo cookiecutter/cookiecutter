@@ -87,10 +87,7 @@ def test_dump_run_json_dump(
     """Test that replay.dump runs json.dump under the hood and that the context
     is correctly written to the expected file in the replay_dir.
     """
-    mock_ensure = mocker.patch(
-        'cookiecutter.replay.make_sure_path_exists',
-        side_effect=utils.make_sure_path_exists
-    )
+    spy_ensure = mocker.spy(replay, 'make_sure_path_exists')
     spy_json_dump = mocker.spy(json, 'dump')
 
     mock_get_user_config = mocker.patch(
@@ -100,7 +97,7 @@ def test_dump_run_json_dump(
 
     replay.dump(template_name, context)
 
-    mock_ensure.assert_called_once_with(replay_dir)
+    spy_ensure.assert_called_once_with(replay_dir)
     assert spy_json_dump.call_count == 1
     assert mock_get_user_config.call_count == 1
 
