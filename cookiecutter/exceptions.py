@@ -74,3 +74,10 @@ class OutputDirExistsException(CookiecutterException):
     """
     Raised when the output directory of the project exists already.
     """
+
+
+class InvalidModeException(CookiecutterException):
+    """
+    Raised when cookiecutter is called with both `no_input==True` and
+    `replay==True` at the same time.
+    """

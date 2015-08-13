@@ -16,6 +16,7 @@ import logging
 import os
 
 from .config import get_user_config
+from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
@@ -52,7 +53,9 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(
+        template,
+        checkout=None, no_input=False, extra_context=None, replay=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -63,6 +66,11 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
     """
+    if no_input and replay:
+        err_msg = (
+            "You can not use both --no-input and --replay at the same time!"
+        )
+        raise InvalidModeException(err_msg)
 
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used

@@ -18,7 +18,9 @@ import click
 
 from cookiecutter import __version__
 from cookiecutter.main import cookiecutter
-from cookiecutter.exceptions import OutputDirExistsException
+from cookiecutter.exceptions import (
+    OutputDirExistsException, InvalidModeException
+)
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +56,12 @@ def print_version(context, param, value):
     '-v', '--verbose',
     is_flag=True, help='Print debug information', default=False
 )
-def main(template, no_input, checkout, verbose):
+@click.option(
+    '--replay', is_flag=True,
+    help='Do not prompt for parameters and only use information entered '
+         'previously',
+)
+def main(template, no_input, checkout, verbose, replay):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
@@ -69,8 +76,8 @@ def main(template, no_input, checkout, verbose):
         )
 
     try:
-        cookiecutter(template, checkout, no_input)
-    except OutputDirExistsException as e:
+        cookiecutter(template, checkout, no_input, replay=replay)
+    except (OutputDirExistsException, InvalidModeException) as e:
         click.echo(e)
         sys.exit(1)
 
