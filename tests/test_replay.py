@@ -46,9 +46,9 @@ def context():
     }
 
 
-def test_dump_value_error_if_no_template_name(context):
+def test_dump_type_error_if_no_template_name(context):
     """Test that replay.dump raises if the tempate_name is not a valid str."""
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         replay.dump(None, context)
 
 
