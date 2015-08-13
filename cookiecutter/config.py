@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
+    'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
     'default_context': {}
 }
 
