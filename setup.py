@@ -2,6 +2,8 @@
 
 import os
 import sys
+from pip.download import PipSession
+from pip.req import parse_requirements
 
 try:
     from setuptools import setup
@@ -26,12 +28,8 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
-requirements = [
-    'binaryornot>=0.2.0',
-    'jinja2>=2.7',
-    'PyYAML>=3.10',
-    'click<5.0'
-]
+install_reqs = parse_requirements("./requirement.txt", session=PipSession())
+install_requires = [str(ir.req) for ir in install_reqs]
 
 long_description = readme + '\n\n' + history
 
@@ -60,7 +58,7 @@ setup(
         ]
     },
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=install_requires,
     license='BSD',
     zip_safe=False,
     classifiers=[
