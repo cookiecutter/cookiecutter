@@ -27,6 +27,9 @@ def dump(template_name, context):
     if not isinstance(context, dict):
         raise TypeError('Context is required to be of type dict')
 
+    if not 'cookiecutter' in context:
+        raise ValueError('Context is required to contain a cookiecutter key')
+
     replay_dir = get_user_config()['replay_dir']
 
     if not make_sure_path_exists(replay_dir):
@@ -46,4 +49,9 @@ def load(template_name):
     replay_file = get_file_name(replay_dir, template_name)
 
     with open(replay_file, 'r') as infile:
-        return json.load(infile)
+        context = json.load(infile)
+
+    if not 'cookiecutter' in context:
+        raise ValueError('Context is required to contain a cookiecutter key')
+
+    return context
