@@ -66,9 +66,10 @@ def cookiecutter(
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
     """
-    if no_input and replay:
+    if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
-            "You can not use both --no-input and --replay at the same time!"
+            "You can not use both replay and no_input or extra_context "
+            "at the same time."
         )
         raise InvalidModeException(err_msg)
 
