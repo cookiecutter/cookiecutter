@@ -67,6 +67,7 @@ def test_get_user_config_valid(user_config_path):
     conf = config.get_user_config()
     expected_conf = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
+        'replay_dir': '/home/example/some-path-to-replay-files',
         'default_context': {
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
