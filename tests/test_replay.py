@@ -5,28 +5,47 @@ test_replay
 -----------
 """
 
-import json
 import os
 import pytest
 
 
-from cookiecutter import replay, utils
-from cookiecutter.config import get_user_config
+from cookiecutter import replay, config
 
 
 @pytest.fixture
-def replay_dir():
+def replay_test_dir():
+    return 'tests/test-replay/'
+
+
+@pytest.fixture
+def mock_user_config(mocker, replay_test_dir):
+    user_config = config.DEFAULT_CONFIG
+    user_config.update({'replay_dir': replay_test_dir})
+
+    return mocker.patch(
+        'cookiecutter.replay.get_user_config', return_value=user_config
+    )
+
+
+@pytest.fixture
+def expected_replay_dir():
     """Fixture to return the expected replay directory."""
     return os.path.expanduser('~/.cookiecutter_replay/')
 
 
-def test_get_user_config(mocker, replay_dir):
+def test_get_user_config(mocker, expected_replay_dir):
     """Test that get_user_config holds the correct replay_dir."""
     mocker.patch('os.path.exists', return_value=False)
-    config_dict = get_user_config()
-    assert 'replay_dir' in config_dict
 
-    assert config_dict['replay_dir'] == replay_dir
+    config_dict = config.get_user_config()
+
+    assert 'replay_dir' in config_dict
+    assert config_dict['replay_dir'] == expected_replay_dir
+
+
+def test_get_replay_file_name():
+    """Make sure that replay.get_file_name generates a valid json file path."""
+    assert replay.get_file_name('foo', 'bar') == 'foo/bar.json'
 
 
 @pytest.fixture
@@ -59,79 +78,77 @@ def test_dump_type_error_if_not_dict_context(template_name):
 
 
 @pytest.fixture
-def cleanup_replay_dir(request, replay_dir):
-    """Fixture to remove the replay_dir that is created by replay.dump."""
-    def remove_dir():
-        if os.path.isdir(replay_dir):
-            utils.rmtree(replay_dir)
-    request.addfinalizer(remove_dir)
-
-
-@pytest.mark.usefixtures('cleanup_replay_dir')
-def test_dump_ioerror_if_replay_dir_creation_fails(
-        mocker, template_name, context, replay_dir):
-    """Test that replay.dump raises when the replay_dir cannot be created."""
-    mock_ensure = mocker.patch(
+def mock_ensure_failure(mocker):
+    return mocker.patch(
         'cookiecutter.replay.make_sure_path_exists',
         return_value=False
     )
-    with pytest.raises(IOError):
-        replay.dump(template_name, context)
-
-    mock_ensure.assert_called_once_with(replay_dir)
-
-
-@pytest.mark.usefixtures('cleanup_replay_dir')
-def test_dump_run_json_dump(
-        mocker, template_name, context, replay_dir):
-    """Test that replay.dump runs json.dump under the hood and that the context
-    is correctly written to the expected file in the replay_dir.
-    """
-    spy_ensure = mocker.spy(replay, 'make_sure_path_exists')
-    spy_json_dump = mocker.spy(json, 'dump')
-
-    mock_get_user_config = mocker.patch(
-        'cookiecutter.replay.get_user_config',
-        return_value={'replay_dir': replay_dir}
-    )
-
-    replay.dump(template_name, context)
-
-    spy_ensure.assert_called_once_with(replay_dir)
-    assert spy_json_dump.call_count == 1
-    assert mock_get_user_config.call_count == 1
-
-    replay_file = os.path.join(replay_dir, template_name)
-
-    with open(replay_file, 'r') as f:
-        dumped_context = json.load(f)
-        assert dumped_context == context
-
-
-def test_load_value_error_if_no_template_name():
-    """Test that replay.load raises if the tempate_name is not a valid str."""
-    with pytest.raises(ValueError):
-        replay.load(None)
 
 
 @pytest.fixture
-def template_name_load():
-    """Fixture to return a valid template_name for the load test."""
-    return 'cookiedozer_load'
+def mock_ensure_success(mocker):
+    return mocker.patch(
+        'cookiecutter.replay.make_sure_path_exists',
+        return_value=True
+    )
 
 
-def test_load_run_json_load(mocker, replay_dir, template_name_load, context):
+def test_dump_ioerror_if_replay_dir_creation_fails(
+        mock_ensure_failure, mock_user_config, replay_test_dir):
+    """Test that replay.dump raises when the replay_dir cannot be created."""
+
+    with pytest.raises(IOError):
+        replay.dump('foo', {'hello': 'world'})
+
+    mock_ensure_failure.assert_called_once_with(replay_test_dir)
+
+
+def test_dump_run_json_dump(mocker, mock_ensure_success, mock_user_config,
+                            template_name, context, replay_test_dir):
+    """Test that replay.dump runs json.dump under the hood and that the context
+    is correctly written to the expected file in the replay_dir.
+    """
+    spy_get_replay_file = mocker.spy(replay, 'get_file_name')
+
+    mock_json_dump = mocker.patch('json.dump')
+
+    replay.dump(template_name, context)
+
+    assert mock_user_config.call_count == 1
+    mock_ensure_success.assert_called_once_with(replay_test_dir)
+    spy_get_replay_file.assert_called_once_with(replay_test_dir, template_name)
+
+    replay_file = replay.get_file_name(replay_test_dir, template_name)
+
+    assert mock_json_dump.call_count == 1
+    (dumped_context, outfile_handler), kwargs = mock_json_dump.call_args
+    assert outfile_handler.name == replay_file
+    assert dumped_context == context
+
+
+def test_load_type_error_if_no_template_name():
+    """Test that replay.load raises if the tempate_name is not a valid str."""
+    with pytest.raises(TypeError):
+        replay.load(None)
+
+
+def test_load_run_json_load(mocker, mock_user_config, template_name,
+                            context, replay_test_dir):
     """Test that replay.load runs json.load under the hood and that the context
     is correctly loaded from the file in replay_dir.
     """
-    mock_get_user_config = mocker.patch(
-        'cookiecutter.config.get_user_config',
-        return_value=replay_dir
-    )
-    spy_json_load = mocker.spy('json.load')
+    spy_get_replay_file = mocker.spy(replay, 'get_file_name')
 
-    loaded_context = replay.load(template_name_load)
+    mock_json_load = mocker.patch('json.load', return_value=context)
 
-    assert mock_get_user_config.called == 1
-    assert spy_json_load.called == 1
-    assert context == loaded_context
+    loaded_context = replay.load(template_name)
+
+    assert mock_user_config.call_count == 1
+    spy_get_replay_file.assert_called_once_with(replay_test_dir, template_name)
+
+    replay_file = replay.get_file_name(replay_test_dir, template_name)
+
+    assert mock_json_load.call_count == 1
+    (infile_handler,), kwargs = mock_json_load.call_args
+    assert infile_handler.name == replay_file
+    assert loaded_context == context
