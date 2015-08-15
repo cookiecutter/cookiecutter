@@ -5,7 +5,6 @@ test_replay
 -----------
 """
 
-import os
 import pytest
 
 
@@ -25,22 +24,6 @@ def mock_user_config(mocker, replay_test_dir):
     return mocker.patch(
         'cookiecutter.replay.get_user_config', return_value=user_config
     )
-
-
-@pytest.fixture
-def expected_replay_dir():
-    """Fixture to return the expected replay directory."""
-    return os.path.expanduser('~/.cookiecutter_replay/')
-
-
-def test_get_user_config(mocker, expected_replay_dir):
-    """Test that get_user_config holds the correct replay_dir."""
-    mocker.patch('os.path.exists', return_value=False)
-
-    config_dict = config.get_user_config()
-
-    assert 'replay_dir' in config_dict
-    assert config_dict['replay_dir'] == expected_replay_dir
 
 
 def test_get_replay_file_name():
