@@ -57,12 +57,14 @@ def test_invalid_config():
 
 def test_get_config_with_defaults():
     """
-    A config file that overrides 1 of 2 defaults
+    A config file that overrides 1 of 3 defaults
     """
     conf = config.get_config('tests/test-config/valid-partial-config.yaml')
     default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
+    default_replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
     expected_conf = {
         'cookiecutters_dir': default_cookiecutters_dir,
+        'replay_dir': default_replay_dir,
         'default_context': {
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
