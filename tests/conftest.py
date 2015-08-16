@@ -14,6 +14,41 @@ import shutil
 from cookiecutter import utils
 
 
+def backup_dir(original_dir, backup_dir):
+    # If the default original_dir is pre-existing, move it to a temp location
+    if not os.path.isdir(original_dir):
+        return False
+
+    # Remove existing backups before backing up. If they exist, they're stale.
+    if os.path.isdir(backup_dir):
+        utils.rmtree(backup_dir)
+
+    shutil.copytree(original_dir, backup_dir)
+    return True
+
+
+def restore_backup_dir(original_dir, backup_dir, original_dir_found):
+    # Carefully delete the created original_dir only in certain
+    # conditions.
+    original_dir_is_dir = os.path.isdir(original_dir)
+    if original_dir_found:
+        # Delete the created original_dir as long as a backup
+        # exists
+        if original_dir_is_dir and os.path.isdir(backup_dir):
+            utils.rmtree(original_dir)
+    else:
+        # Delete the created original_dir.
+        # There's no backup because it never existed
+        if original_dir_is_dir:
+            utils.rmtree(original_dir)
+
+    # Restore the user's default original_dir contents
+    if os.path.isdir(backup_dir):
+        shutil.copytree(backup_dir, original_dir)
+    if os.path.isdir(original_dir):
+        utils.rmtree(backup_dir)
+
+
 @pytest.fixture(scope='function')
 def clean_system(request):
     """
@@ -31,16 +66,22 @@ def clean_system(request):
 
     * Back up the `~/.cookiecutterrc` config file to `~/.cookiecutterrc.backup`
     * Back up the `~/.cookiecutters/` dir to `~/.cookiecutters.backup/`
+    * Back up the `~/.cookiecutter_replay/` dir to
+      `~/.cookiecutter_replay.backup/`
     * Starts off a test case with no pre-existing `~/.cookiecutterrc` or
-      `~/.cookiecutters/`
+      `~/.cookiecutters/` or `~/.cookiecutter_replay/`
 
     During teardown:
 
     * Delete `~/.cookiecutters/` only if a backup is present at
       `~/.cookiecutters.backup/`
+    * Delete `~/.cookiecutter_replay/` only if a backup is present at
+      `~/.cookiecutter_replay.backup/`
     * Restore the `~/.cookiecutterrc` config file from
       `~/.cookiecutterrc.backup`
     * Restore the `~/.cookiecutters/` dir from `~/.cookiecutters.backup/`
+    * Restore the `~/.cookiecutter_replay/` dir from
+      `~/.cookiecutter_replay.backup/`
 
     """
 
@@ -60,17 +101,19 @@ def clean_system(request):
     # temp location
     cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
     cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
-    if os.path.isdir(cookiecutters_dir):
-        cookiecutters_dir_found = True
+    cookiecutters_dir_found = backup_dir(
+        cookiecutters_dir, cookiecutters_dir_backup
+    )
 
-        # Remove existing backups before backing up. If they exist, they're
-        # stale.
-        if os.path.isdir(cookiecutters_dir_backup):
-            utils.rmtree(cookiecutters_dir_backup)
-
-        shutil.copytree(cookiecutters_dir, cookiecutters_dir_backup)
-    else:
-        cookiecutters_dir_found = False
+    # If the default cookiecutter_replay_dir is pre-existing, move it to a
+    # temp location
+    cookiecutter_replay_dir = os.path.expanduser('~/.cookiecutter_replay')
+    cookiecutter_replay_dir_backup = os.path.expanduser(
+        '~/.cookiecutter_replay.backup'
+    )
+    cookiecutter_replay_dir_found = backup_dir(
+        cookiecutter_replay_dir, cookiecutter_replay_dir_backup
+    )
 
     def restore_backup():
         # If it existed, restore ~/.cookiecutterrc
@@ -81,22 +124,18 @@ def clean_system(request):
 
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.
-        cookie_dir_is_dir = os.path.isdir(cookiecutters_dir)
-        if cookiecutters_dir_found:
-            # Delete the created ~/.cookiecutters dir as long as a backup
-            # exists
-            if cookie_dir_is_dir and os.path.isdir(cookiecutters_dir_backup):
-                utils.rmtree(cookiecutters_dir)
-        else:
-            # Delete the created ~/.cookiecutters dir.
-            # There's no backup because it never existed
-            if cookie_dir_is_dir:
-                utils.rmtree(cookiecutters_dir)
+        restore_backup_dir(
+            cookiecutters_dir,
+            cookiecutters_dir_backup,
+            cookiecutters_dir_found
+        )
 
-        # Restore the user's default cookiecutters_dir contents
-        if os.path.isdir(cookiecutters_dir_backup):
-            shutil.copytree(cookiecutters_dir_backup, cookiecutters_dir)
-        if os.path.isdir(cookiecutters_dir):
-            utils.rmtree(cookiecutters_dir_backup)
+        # Carefully delete the created ~/.cookiecutter_replay dir only in
+        # certain conditions.
+        restore_backup_dir(
+            cookiecutter_replay_dir,
+            cookiecutter_replay_dir_backup,
+            cookiecutter_replay_dir_found
+        )
 
     request.addfinalizer(restore_backup)
