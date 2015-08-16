@@ -39,6 +39,12 @@ def test_value_error_if_key_missing_in_context(mocker):
         replay.load('invalid_replay')
 
 
+def test_io_error_if_no_replay_file(mocker, mock_user_config):
+    """Test that replay.load raises if it cannot find a replay file."""
+    with pytest.raises(IOError):
+        replay.load('no_replay')
+
+
 def test_run_json_load(mocker, mock_user_config, template_name,
                        context, replay_test_dir, replay_file):
     """Test that replay.load runs json.load under the hood and that the context
