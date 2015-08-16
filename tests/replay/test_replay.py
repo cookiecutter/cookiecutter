@@ -5,6 +5,7 @@ test_replay
 -----------
 """
 
+import os
 import pytest
 
 from cookiecutter import replay, main, exceptions
@@ -12,7 +13,8 @@ from cookiecutter import replay, main, exceptions
 
 def test_get_replay_file_name():
     """Make sure that replay.get_file_name generates a valid json file path."""
-    assert replay.get_file_name('foo', 'bar') == 'foo/bar.json'
+    exp_replay_file_name = os.path.join('foo', 'bar.json')
+    assert replay.get_file_name('foo', 'bar') == exp_replay_file_name
 
 
 @pytest.fixture(params=[
