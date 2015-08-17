@@ -12,8 +12,10 @@ library rather than a script.
 """
 
 from __future__ import unicode_literals
+import argparse
 import logging
 import os
+import sys
 
 from .config import get_user_config
 from .prompt import prompt_for_config
@@ -21,6 +23,7 @@ from .generate import generate_context, generate_files
 from .vcs import clone
 
 logger = logging.getLogger(__name__)
+
 
 builtin_abbreviations = {
     'gh': 'https://github.com/{0}.git',
@@ -52,7 +55,7 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(template, checkout=None, no_input=False, extra_context=None, output_dir='.'):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -62,6 +65,8 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param output_dir: If specified output the project to specified directory.
+        Defaults to current directory.
     """
 
     # Get user config from ~/.cookiecutterrc or equivalent
@@ -99,5 +104,54 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     # Create project from local context and project template.
     generate_files(
         repo_dir=repo_dir,
-        context=context
+        context=context,
+        output_dir=output_dir
     )
+
+
+def parse_cookiecutter_args(args):
+    """ Parse the command-line arguments to Cookiecutter. """
+
+    parser = argparse.ArgumentParser(
+        description='Create a project from a Cookiecutter project template.'
+    )
+    parser.add_argument(
+        '--no-input',
+        action="store_true",
+        help='Do not prompt for parameters and only use cookiecutter.json '
+             'file content')
+    parser.add_argument(
+        'input_dir',
+        help='Cookiecutter project dir, e.g. cookiecutter-pypackage/'
+    )
+    parser.add_argument(
+        '-c', '--checkout',
+        help='branch, tag or commit to checkout after git clone'
+    )
+    parser.add_argument(
+        '-v', '--verbose',
+        help='Print debug information',
+        action='store_true', default=False
+    )
+    return parser.parse_args(args)
+
+
+def main():
+    """ Entry point for the package, as defined in setup.py. """
+
+    args = parse_cookiecutter_args(sys.argv[1:])
+
+    if args.verbose:
+        logging.basicConfig(format='%(levelname)s %(filename)s: %(message)s', level=logging.DEBUG)
+    else:
+        # Log info and above to console
+        logging.basicConfig(
+            format='%(levelname)s: %(message)s',
+            level=logging.INFO
+        )
+
+    cookiecutter(args.input_dir, args.checkout, args.no_input)
+
+
+if __name__ == '__main__':
+    main()
