@@ -40,7 +40,7 @@ REPO_REGEX = """
 
 def is_repo_url(value):
     """Return True if value is a repository URL."""
-    return bool(re.match(REPO_REGEX, value, re.X))
+    return bool(re.match(REPO_REGEX, value, re.VERBOSE))
 
 
 def expand_abbreviations(template, config_dict):
