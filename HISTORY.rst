@@ -34,6 +34,7 @@ Other Changes:
   * `cookiecutter-flask-foundation`_ by `@JackStouffer`_ (#457)
   * `cookiecutter-tryton`_ by `@fulfilio`_ (#465)
   * `cookiecutter-tapioca`_ by `@vintasoftware`_ (#496)
+  * `cookiecutter-sublime-text-3-plugin`_ by `@kkujawinski`_ (#500)
 
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
@@ -44,6 +45,7 @@ Other Changes:
 .. _`@JackStouffer`: https://github.com/JackStouffer
 .. _`@fulfilio`: https://github.com/fulfilio
 .. _`@vintasoftware`: https://github.com/vintasoftware
+.. _`@kkujawinski`: https://github.com/kkujawinski
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
@@ -53,6 +55,7 @@ Other Changes:
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 .. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
+.. _`cookiecutter-sublime-text-3-plugin`: https://github.com/kkujawinski/cookiecutter-sublime-text-3-plugin
 
 
 1.0.0 (2015-03-13) Chocolate Chip
