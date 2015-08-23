@@ -70,6 +70,7 @@ Contributors
 * Matthias84 (`@Matthias84`_)
 * Simeon Visser (`@svisser`_)
 * Guruprasad (`@lgp171188`_)
+* Charles-Axel Dein (`@charlax`_)
 
 .. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
@@ -128,3 +129,4 @@ Contributors
 .. _`@lord63`: https://github.com/lord63
 .. _`@Matthias84`: https://github.com/Matthias84
 .. _`@lgp171188`: https://github.com/lgp171188
+.. _`@charlax`: https://github.com/charlax
