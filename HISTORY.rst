@@ -14,6 +14,7 @@ Features:
 * Abort template rendering if the project output directory already exists, thanks to `@lgp171188`_ (#470, #471).
 * Remove test command in favor of tox, thanks to `@hackebrot`_ (#480).
 * Allow cookiecutter invocation, even without installing it, via ``python -m cookiecutter.cli``, thanks to  `@vincentbernat`_ and `@hackebrot`_ (#449, #487).
+* Improve the type detection handler for online and offline repositories, thanks to `@charlax`_ (#490).
 
 Other Changes:
 
@@ -46,6 +47,7 @@ Other Changes:
 .. _`@fulfilio`: https://github.com/fulfilio
 .. _`@vintasoftware`: https://github.com/vintasoftware
 .. _`@kkujawinski`: https://github.com/kkujawinski
+.. _`@charlax`: https://github.com/charlax
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
