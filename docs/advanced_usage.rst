@@ -225,6 +225,15 @@ Pass the according option on the CLI::
 
     cookiecutter --replay gh:hackebrot/cookiedozer
 
+
+Or use the Python API::
+
+    from cookiecutter.main import cookiecutter
+    cookiecutter('gh:hackebrot/cookiedozer', replay=True)
+
+
+This feature is comes in handy if, for instance, you want to create a new project from an updated template.
+
 .. _command_line_options:
 
 Command Line Options
