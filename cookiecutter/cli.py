@@ -10,7 +10,6 @@ Main `cookiecutter` CLI.
 
 from __future__ import unicode_literals
 
-import os
 import sys
 import logging
 
@@ -23,18 +22,8 @@ from cookiecutter.exceptions import OutputDirExistsException
 logger = logging.getLogger(__name__)
 
 
-def print_version(context, param, value):
-    if not value or context.resilient_parsing:
-        return
-    click.echo('Cookiecutter %s from %s (Python %s)' % (
-        __version__,
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        sys.version[:3]
-    ))
-    context.exit()
-
-
-@click.command()
+@click.command('cookiecutter')
+@click.version_option(__version__, '-V', '--version')
 @click.argument('template')
 @click.option(
     '--no-input', is_flag=True,
@@ -44,11 +33,6 @@ def print_version(context, param, value):
 @click.option(
     '-c', '--checkout',
     help='branch, tag or commit to checkout after git clone',
-)
-@click.option(
-    '-V', '--version',
-    is_flag=True, help='Show version information and exit.',
-    callback=print_version, expose_value=False, is_eager=True,
 )
 @click.option(
     '-v', '--verbose',
