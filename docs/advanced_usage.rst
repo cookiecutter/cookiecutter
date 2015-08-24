@@ -218,6 +218,13 @@ Example for a replay file (which was created via ``cookiecutter gh:hackebrot/coo
             "year": "2015"
         }
     }
+
+To fetch this context data without being prompted on the command line you can use either of the following methods.
+
+Pass the according option on the CLI::
+
+    cookiecutter --replay gh:hackebrot/cookiedozer
+
 .. _command_line_options:
 
 Command Line Options
