@@ -76,6 +76,14 @@ cookiecutter.prompt module
     :undoc-members:
     :show-inheritance:
 
+cookiecutter.replay module
+--------------------------
+
+.. automodule:: cookiecutter.replay
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 cookiecutter.utils module
 -------------------------
 

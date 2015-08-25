@@ -17,9 +17,11 @@ import os
 import re
 
 from .config import get_user_config
+from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
+from .replay import dump, load
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +69,9 @@ def expand_abbreviations(template, config_dict):
     return template
 
 
-def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
+def cookiecutter(
+        template,
+        checkout=None, no_input=False, extra_context=None, replay=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -78,6 +82,12 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
     """
+    if replay and ((no_input is not False) or (extra_context is not None)):
+        err_msg = (
+            "You can not use both replay and no_input or extra_context "
+            "at the same time."
+        )
+        raise InvalidModeException(err_msg)
 
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
@@ -97,18 +107,25 @@ def cookiecutter(template, checkout=None, no_input=False, extra_context=None):
         # cookiecutters_dir
         repo_dir = template
 
-    context_file = os.path.join(repo_dir, 'cookiecutter.json')
-    logging.debug('context_file is {0}'.format(context_file))
+    template_name = os.path.basename(template)
 
-    context = generate_context(
-        context_file=context_file,
-        default_context=config_dict['default_context'],
-        extra_context=extra_context,
-    )
+    if replay:
+        context = load(template_name)
+    else:
+        context_file = os.path.join(repo_dir, 'cookiecutter.json')
+        logging.debug('context_file is {0}'.format(context_file))
 
-    # prompt the user to manually configure at the command line.
-    # except when 'no-input' flag is set
-    context['cookiecutter'] = prompt_for_config(context, no_input)
+        context = generate_context(
+            context_file=context_file,
+            default_context=config_dict['default_context'],
+            extra_context=extra_context,
+        )
+
+        # prompt the user to manually configure at the command line.
+        # except when 'no-input' flag is set
+        context['cookiecutter'] = prompt_for_config(context, no_input)
+
+        dump(template_name, context)
 
     # Create project from local context and project template.
     generate_files(

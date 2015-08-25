@@ -38,6 +38,7 @@ def project_dir(request):
     return rendered_dir
 
 
+@pytest.mark.usefixtures('clean_system')
 def test_should_invoke_main(monkeypatch, project_dir):
     monkeypatch.setenv('PYTHONPATH', '.')
 

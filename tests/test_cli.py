@@ -4,6 +4,7 @@ import pytest
 from click.testing import CliRunner
 
 from cookiecutter.cli import main
+from cookiecutter.main import cookiecutter
 from cookiecutter import utils
 
 runner = CliRunner()
@@ -55,3 +56,56 @@ def test_cli_verbose():
     result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-v'])
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_replay(mocker):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--replay',
+        '-v'
+    ])
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=True
+    )
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_exit_on_noinput_and_replay(mocker):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--no-input',
+        '--replay',
+        '-v'
+    ])
+
+    assert result.exit_code == 1
+
+    expected_error_msg = (
+        "You can not use both replay and no_input or extra_context "
+        "at the same time."
+    )
+    assert expected_error_msg in result.output
+
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        True,
+        replay=True
+    )

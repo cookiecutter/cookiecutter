@@ -3,3 +3,4 @@ default_context:
     email: "firstname.lastname@gmail.com"
     github_username: "example"
 cookiecutters_dir: "/home/example/some-path-to-templates"
+replay_dir: "/home/example/some-path-to-replay-files"
