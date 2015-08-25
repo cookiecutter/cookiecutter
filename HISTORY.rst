@@ -15,6 +15,7 @@ Features:
 * Remove test command in favor of tox, thanks to `@hackebrot`_ (#480).
 * Allow cookiecutter invocation, even without installing it, via ``python -m cookiecutter.cli``, thanks to  `@vincentbernat`_ and `@hackebrot`_ (#449, #487).
 * Improve the type detection handler for online and offline repositories, thanks to `@charlax`_ (#490).
+* Add replay feature, thanks to `@hackebrot`_ (#501).
 
 Other Changes:
 
