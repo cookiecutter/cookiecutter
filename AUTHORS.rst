@@ -71,6 +71,7 @@ Contributors
 * Simeon Visser (`@svisser`_)
 * Guruprasad (`@lgp171188`_)
 * Charles-Axel Dein (`@charlax`_)
+* Diego Garcia (`@drgarcia1986`_)
 
 .. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
@@ -130,3 +131,4 @@ Contributors
 .. _`@Matthias84`: https://github.com/Matthias84
 .. _`@lgp171188`: https://github.com/lgp171188
 .. _`@charlax`: https://github.com/charlax
+.. _`@drgarcia1986`: https://github.com/drgarcia1986
