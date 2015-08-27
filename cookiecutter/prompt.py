@@ -8,7 +8,6 @@ cookiecutter.prompt
 Functions for prompting the user for project info.
 """
 
-from __future__ import unicode_literals
 from collections import OrderedDict
 
 import click
@@ -62,16 +61,16 @@ def read_user_choice(var_name, options):
         raise ValueError
 
     choice_map = OrderedDict(
-        ('{}'.format(i), value) for i, value in enumerate(options, 1)
+        (u'{}'.format(i), value) for i, value in enumerate(options, 1)
     )
     choices = choice_map.keys()
-    default = '1'
+    default = u'1'
 
-    choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
-    prompt = '\n'.join((
-        'Select {}:'.format(var_name),
-        '\n'.join(choice_lines),
-        'Choose from {}'.format(', '.join(choices))
+    choice_lines = [u'{} - {}'.format(*c) for c in choice_map.items()]
+    prompt = u'\n'.join((
+        u'Select {}:'.format(var_name),
+        u'\n'.join(choice_lines),
+        u'Choose from {}'.format(u', '.join(choices))
     ))
 
     user_choice = click.prompt(
@@ -111,8 +110,8 @@ def prompt_for_config(context, no_input=False):
     cookiecutter_dict = {}
     env = Environment()
 
-    for key, raw in iteritems(context['cookiecutter']):
-        if key.startswith('_'):
+    for key, raw in iteritems(context[u'cookiecutter']):
+        if key.startswith(u'_'):
             cookiecutter_dict[key] = raw
             continue
 
