@@ -171,6 +171,7 @@ Python
 * `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring `pytest`_ plugins that help you to write better programs.
 * `cookiecutter-tapioca`_: A Template for building `tapioca-wrapper`_ based web API wrappers (clients).
 * `cookiecutter-sublime-text-3-plugin`_: Sublime Text 3 plugin template with custom settings, commands, key bindings and main menu.
+* `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -285,7 +286,7 @@ HTML
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 .. _`tapioca-wrapper`: https://github.com/vintasoftware/tapioca-wrapper
 .. _`cookiecutter-sublime-text-3-plugin`: https://github.com/kkujawinski/cookiecutter-sublime-text-3-plugin
-
+.. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
 
 Scala
 ~~~~~
