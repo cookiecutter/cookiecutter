@@ -16,7 +16,7 @@ import logging
 import os
 import shutil
 
-from jinja2 import FileSystemLoader, Template
+from jinja2 import FileSystemLoader, Template, StrictUndefined
 from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
@@ -222,7 +222,7 @@ def generate_files(repo_dir, context=None, output_dir='.'):
         run_hook('pre_gen_project', project_dir, context)
 
     with work_in(template_dir):
-        env = Environment(keep_trailing_newline=True)
+        env = Environment(keep_trailing_newline=True, undefined=StrictUndefined)
         env.loader = FileSystemLoader('.')
 
         for root, dirs, files in os.walk('.'):
