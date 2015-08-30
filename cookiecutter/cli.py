@@ -80,7 +80,8 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists):
         )
 
     try:
-        cookiecutter(template, checkout, no_input, replay=replay, overwrite_if_exists=overwrite_if_exists)
+        cookiecutter(template, checkout, no_input, replay=replay,
+                     overwrite_if_exists=overwrite_if_exists)
     except (OutputDirExistsException, InvalidModeException) as e:
         click.echo(e)
         sys.exit(1)
