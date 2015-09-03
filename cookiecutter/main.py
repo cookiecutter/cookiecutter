@@ -70,8 +70,8 @@ def expand_abbreviations(template, config_dict):
 
 
 def cookiecutter(
-        template,
-        checkout=None, no_input=False, extra_context=None, replay=False):
+        template, checkout=None, no_input=False, extra_context=None,
+        replay=False, overwrite_if_exists=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -81,11 +81,14 @@ def cookiecutter(
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param: overwrite_if_exists: Overwrite the contents of output directory
+        if it exists
     """
-    if replay and ((no_input is not False) or (extra_context is not None)):
+    if replay and ((no_input is not False) or (extra_context is not None) or
+                   (overwrite_if_exists is not False)):
         err_msg = (
-            "You can not use both replay and no_input or extra_context "
-            "at the same time."
+            "You can not use replay with no_input, extra_context"
+            " or overwrite_if_exists"
         )
         raise InvalidModeException(err_msg)
 
@@ -130,5 +133,6 @@ def cookiecutter(
     # Create project from local context and project template.
     generate_files(
         repo_dir=repo_dir,
-        context=context
+        context=context,
+        overwrite_if_exists=overwrite_if_exists
     )
