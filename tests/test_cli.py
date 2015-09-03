@@ -76,7 +76,8 @@ def test_cli_replay(mocker):
         template_path,
         None,
         False,
-        replay=True
+        replay=True,
+        overwrite_if_exists=False
     )
 
 
@@ -98,14 +99,66 @@ def test_cli_exit_on_noinput_and_replay(mocker):
     assert result.exit_code == 1
 
     expected_error_msg = (
-        "You can not use both replay and no_input or extra_context "
-        "at the same time."
+        "You can not use replay with no_input, extra_context or"
+        " overwrite_if_exists"
     )
+
     assert expected_error_msg in result.output
 
     mock_cookiecutter.assert_called_once_with(
         template_path,
         None,
         True,
-        replay=True
+        replay=True,
+        overwrite_if_exists=False
     )
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_exit_on_overwrite_if_exists_and_replay(mocker):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--replay',
+        '-v',
+        '-f',
+    ])
+
+    assert result.exit_code == 1
+
+    expected_error_msg = (
+        "You can not use replay with no_input, extra_context or"
+        " overwrite_if_exists"
+    )
+
+    assert expected_error_msg in result.output
+
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=True,
+        overwrite_if_exists=True
+    )
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_overwrite_if_exists_when_output_dir_does_not_exist():
+    if os.path.isdir('fake-project'):
+        utils.rmtree('fake-project')
+
+    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-f'])
+
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+
+
+@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
+def test_cli_overwrite_if_exists_when_output_dir_exists():
+    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-f'])
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
