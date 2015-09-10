@@ -14,7 +14,8 @@ import os
 import subprocess
 import sys
 
-from .compat import which
+from whichcraft import which
+
 from .exceptions import UnknownRepoType, VCSNotInstalled
 from .prompt import read_user_yes_no
 from .utils import make_sure_path_exists, rmtree
