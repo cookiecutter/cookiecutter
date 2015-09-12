@@ -29,7 +29,7 @@ Other Changes:
 * Disabled sudo in .travis, thanks to `@hackebrot`_ (#482).
 * Switched to shields.io for problematic badges, thanks to `@pydanny`_ (#491).
 * Added whichcraft and removed ``compat.which()``, thanks to `@pydanny`_ (#511).
-* Changed to export tox environment variables to codecov, thanks to `maiksensi`_ (#508).
+* Changed to export tox environment variables to codecov, thanks to `@maiksensi`_ (#508).
 * Moved to using click version command, thanks to `@hackebrot`_ (#489).
 * Added more cookiecutter templates to the mix:
 
@@ -42,7 +42,7 @@ Other Changes:
   * `cookiecutter-sublime-text-3-plugin`_ by `@kkujawinski`_ (#500)
   * `cookiecutter-muffin`_ by `@drgarcia1986`_ (#494)
 
-.. _`maiksensi`: https://github.com/maiksensi
+.. _`@maiksensi`: https://github.com/maiksensi
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
 .. _`@LucianU`: https://github.com/LucianU
