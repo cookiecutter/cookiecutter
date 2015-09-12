@@ -72,7 +72,9 @@ Contributors
 * Guruprasad (`@lgp171188`_)
 * Charles-Axel Dein (`@charlax`_)
 * Diego Garcia (`@drgarcia1986`_)
+* maiksensi (`@maiksensi_`)
 
+.. _`@maiksensi_`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
 .. _`@osantana`: https://github.com/osantana
@@ -117,7 +119,7 @@ Contributors
 .. _`@emonty`: https://github.com/emonty
 .. _`@schacki`: https://github.com/schacki
 .. _`@ryanolson`: https://github.com/ryanolson
-.. _`@treyhunner`: https://github.com/treyhunner 
+.. _`@treyhunner`: https://github.com/treyhunner
 .. _`@freakboy3742`: https://github.com/freakboy3742
 .. _`@mishbahr`: https://github.com/mishbahr
 .. _`@robinandeer`: https://github.com/robinandeer
