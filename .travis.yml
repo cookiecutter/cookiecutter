@@ -17,5 +17,6 @@ install:
 
 after_success:
     # Report coverage results to codecov.io
+    # and export tox environment variables
     - pip install codecov
-    - codecov
+    - codecov -e TOX_ENV
