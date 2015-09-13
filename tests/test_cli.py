@@ -99,8 +99,8 @@ def test_cli_exit_on_noinput_and_replay(mocker):
     assert result.exit_code == 1
 
     expected_error_msg = (
-        "You can not use replay with no_input, extra_context or"
-        " overwrite_if_exists"
+        "You can not use both replay and no_input or extra_context "
+        "at the same time."
     )
 
     assert expected_error_msg in result.output
@@ -128,14 +128,7 @@ def test_cli_exit_on_overwrite_if_exists_and_replay(mocker):
         '-f',
     ])
 
-    assert result.exit_code == 1
-
-    expected_error_msg = (
-        "You can not use replay with no_input, extra_context or"
-        " overwrite_if_exists"
-    )
-
-    assert expected_error_msg in result.output
+    assert result.exit_code == 0
 
     mock_cookiecutter.assert_called_once_with(
         template_path,

@@ -84,11 +84,10 @@ def cookiecutter(
     :param: overwrite_if_exists: Overwrite the contents of output directory
         if it exists
     """
-    if replay and ((no_input is not False) or (extra_context is not None) or
-                   (overwrite_if_exists is not False)):
+    if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
-            "You can not use replay with no_input, extra_context"
-            " or overwrite_if_exists"
+            "You can not use both replay and no_input or extra_context "
+            "at the same time."
         )
         raise InvalidModeException(err_msg)
 
