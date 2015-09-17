@@ -81,3 +81,9 @@ class InvalidModeException(CookiecutterException):
     Raised when cookiecutter is called with both `no_input==True` and
     `replay==True` at the same time.
     """
+
+
+class ValidationException(CookiecutterException):
+    """
+    Raised when some input to a prompt does not pass validation
+    """
