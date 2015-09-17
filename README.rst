@@ -217,6 +217,7 @@ JS
 * `cookiecutter-jswidget`_: A project template for creating a generic front-end,
   non-jQuery JS widget packaged for multiple JS packaging systems.
 * `cookiecutter-component`_: A template for a Component JS package.
+* `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
 
 LaTeX/XeTeX
 ~~~~~~~~~~~
@@ -262,6 +263,7 @@ HTML
 .. _`BoilerplatePP`: https://github.com/Paspartout/BoilerplatePP
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
+.. _`cookiecutter-tampermonkey`: https://github.com/christabor/cookiecutter-tampermonkey
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
 .. _`docopt`: http://docopt.org/
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
