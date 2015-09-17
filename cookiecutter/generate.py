@@ -202,7 +202,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     :param repo_dir: Project template input directory.
     :param context: Dict for populating the template's variables.
     :param output_dir: Where to output the generated project dir into.
-    :param overwrite_if_exists: Overwrite teh contents of the output directory
+    :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists
     """
 
