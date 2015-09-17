@@ -23,11 +23,8 @@ def remove_fake_project_dir(request):
 
 @pytest.fixture
 def make_fake_project_dir(request):
-    """
-    Create the fake project directory created during the tests.
-    """
-    if not os.path.isdir('fake-project'):
-        os.makedirs('fake-project')
+    """Create a fake project to be overwritten in the according tests."""
+    os.makedirs('fake-project')
 
 
 @pytest.fixture(params=['-V', '--version'])
