@@ -23,11 +23,8 @@ def remove_fake_project_dir(request):
 
 @pytest.fixture
 def make_fake_project_dir(request):
-    """
-    Create the fake project directory created during the tests.
-    """
-    if not os.path.isdir('fake-project'):
-        os.makedirs('fake-project')
+    """Create a fake project to be overwritten in the according tests."""
+    os.makedirs('fake-project')
 
 
 @pytest.fixture(params=['-V', '--version'])
@@ -81,7 +78,8 @@ def test_cli_replay(mocker):
         template_path,
         None,
         False,
-        replay=True
+        replay=True,
+        overwrite_if_exists=False
     )
 
 
@@ -106,11 +104,66 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         "You can not use both replay and no_input or extra_context "
         "at the same time."
     )
+
     assert expected_error_msg in result.output
 
     mock_cookiecutter.assert_called_once_with(
         template_path,
         None,
         True,
-        replay=True
+        replay=True,
+        overwrite_if_exists=False
     )
+
+
+@pytest.fixture(params=['-f', '--overwrite-if-exists'])
+def overwrite_cli_flag(request):
+    return request.param
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
+        mocker, overwrite_cli_flag):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--replay',
+        '-v',
+        overwrite_cli_flag,
+    ])
+
+    assert result.exit_code == 0
+
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=True,
+        overwrite_if_exists=True
+    )
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
+        overwrite_cli_flag):
+    result = runner.invoke(main, [
+        'tests/fake-repo-pre/', '--no-input', overwrite_cli_flag
+    ])
+
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+
+
+@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
+def test_cli_overwrite_if_exists_when_output_dir_exists(overwrite_cli_flag):
+    result = runner.invoke(main, [
+        'tests/fake-repo-pre/', '--no-input', overwrite_cli_flag
+    ])
+
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
