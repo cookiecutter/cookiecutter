@@ -116,8 +116,14 @@ def test_cli_exit_on_noinput_and_replay(mocker):
     )
 
 
+@pytest.fixture(params=['-f', '--overwrite-if-exists'])
+def overwrite_cli_flag(request):
+    return request.param
+
+
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_run_cookiecutter_on_overwrite_if_exists_and_replay(mocker):
+def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
+        mocker, overwrite_cli_flag):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter',
         side_effect=cookiecutter
@@ -128,7 +134,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(mocker):
         template_path,
         '--replay',
         '-v',
-        '-f',
+        overwrite_cli_flag,
     ])
 
     assert result.exit_code == 0
@@ -143,16 +149,21 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(mocker):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_overwrite_if_exists_when_output_dir_does_not_exist():
-    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-f'])
+def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
+        overwrite_cli_flag):
+    result = runner.invoke(main, [
+        'tests/fake-repo-pre/', '--no-input', overwrite_cli_flag
+    ])
 
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
-def test_cli_overwrite_if_exists_when_output_dir_exists():
-    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-f'])
+def test_cli_overwrite_if_exists_when_output_dir_exists(overwrite_cli_flag):
+    result = runner.invoke(main, [
+        'tests/fake-repo-pre/', '--no-input', overwrite_cli_flag
+    ])
 
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
