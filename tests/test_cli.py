@@ -118,8 +118,9 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         overwrite_if_exists=False
     )
 
+
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_exit_on_overwrite_if_exists_and_replay(mocker):
+def test_run_cookiecutter_on_overwrite_if_exists_and_replay(mocker):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter',
         side_effect=cookiecutter
