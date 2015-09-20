@@ -212,6 +212,7 @@ Common Lisp
 JS
 ~~
 
+* `cookiecutter-es6-boilerplate`_: A cookiecutter for front end projects in ES6.
 * `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
   Boilerplate.
 * `cookiecutter-jswidget`_: A project template for creating a generic front-end,
@@ -240,6 +241,8 @@ HTML
 * `cookiecutter-complexity`_: A cookiecutter for a Complexity static site with Bootstrap 3.
 * `cookiecutter-tumblr-theme`_: A cookiecutter for a Tumblr theme project with GruntJS as concatination tool.
 
+
+.. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
