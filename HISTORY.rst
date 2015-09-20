@@ -17,10 +17,11 @@ Features:
 * Allow cookiecutter invocation, even without installing it, via ``python -m cookiecutter.cli``, thanks to  `@vincentbernat`_ and `@hackebrot`_ (#449, #487).
 * Improve the type detection handler for online and offline repositories, thanks to `@charlax`_ (#490).
 * Add replay feature, thanks to `@hackebrot`_ (#501).
+* Added official Python 3.5 support, thanks to `@pydanny`_.
 
 Other Changes:
 
-* Updated click requirement to 4.0, thanks to `@pydanny`_ (#473).
+* Updated click requirement to < 6.0, thanks to `@pydanny`_ (#473).
 * Added landscape.io flair, thanks to `@michaeljoseph`_ (#439).
 * Descriptions of PEP8 specifications and milestone management, thanks to `@michaeljoseph`_ (#440).
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
