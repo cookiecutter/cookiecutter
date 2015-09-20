@@ -72,9 +72,9 @@ Contributors
 * Guruprasad (`@lgp171188`_)
 * Charles-Axel Dein (`@charlax`_)
 * Diego Garcia (`@drgarcia1986`_)
-* maiksensi (`@maiksensi_`)
+* maiksensi (`@maiksensi`_)
 
-.. _`@maiksensi_`: https://github.com/maiksensi
+.. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
 .. _`@osantana`: https://github.com/osantana

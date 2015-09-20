@@ -12,14 +12,16 @@ Features:
 
 * Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems (#132, #184, #425).
 * Abort template rendering if the project output directory already exists, thanks to `@lgp171188`_ (#470, #471).
+* Add a flag to overwrite existing output directory, thanks to `@lgp171188`_ for the implementation (#495) and `@schacki`_, `@ionelmc`_, `@pydanny`_ and `@hackebrot`_ for submitting issues and code reviews (#475, #493).
 * Remove test command in favor of tox, thanks to `@hackebrot`_ (#480).
 * Allow cookiecutter invocation, even without installing it, via ``python -m cookiecutter.cli``, thanks to  `@vincentbernat`_ and `@hackebrot`_ (#449, #487).
 * Improve the type detection handler for online and offline repositories, thanks to `@charlax`_ (#490).
 * Add replay feature, thanks to `@hackebrot`_ (#501).
+* Added official Python 3.5 support, thanks to `@pydanny`_.
 
 Other Changes:
 
-* Updated click requirement to 4.0, thanks to `@pydanny`_ (#473).
+* Updated click requirement to < 6.0, thanks to `@pydanny`_ (#473).
 * Added landscape.io flair, thanks to `@michaeljoseph`_ (#439).
 * Descriptions of PEP8 specifications and milestone management, thanks to `@michaeljoseph`_ (#440).
 * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).

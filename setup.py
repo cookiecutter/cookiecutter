@@ -30,7 +30,7 @@ requirements = [
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'PyYAML>=3.10',
-    'click<5.0',
+    'click>=5.0',
     'whichcraft>=0.1.1'
 ]
 
@@ -76,6 +76,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',

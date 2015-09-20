@@ -34,6 +34,12 @@ from cookiecutter import exceptions
 from cookiecutter import utils
 
 
+@pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])
+def test_ensure_dir_is_templated_raises(invalid_dirname):
+    with pytest.raises(exceptions.NonTemplatedInputDirException):
+        generate.ensure_dir_is_templated(invalid_dirname)
+
+
 @pytest.fixture(scope='function')
 def remove_additional_folders(request):
     """
