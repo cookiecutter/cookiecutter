@@ -410,6 +410,13 @@ Waiting for a response to an issue/question?
 * Need a fix/feature/release/help urgently, and can't wait? `@audreyr`_ is
   available for hire for consultation or custom development.
 
+Code of Conduct
+---------------
+
+Everyone interacting in the Cookiecutter project's codebases, issue trackers, chat
+rooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.
+
+.. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
