@@ -1,18 +1,15 @@
+# What Python version is installed where:
+# http://www.appveyor.com/docs/installed-software#python
+
 environment:
   matrix:
     - PYTHON: "C:\\Python27"
-      PYTHON_VERSION: "2.7.8"
-      PYTHON_ARCH: "32"
       TOX_ENV: "py27"
 
     - PYTHON: "C:\\Python33"
-      PYTHON_VERSION: "3.3.5"
-      PYTHON_ARCH: "32"
       TOX_ENV: "py33"
 
     - PYTHON: "C:\\Python34"
-      PYTHON_VERSION: "3.4.1"
-      PYTHON_ARCH: "32"
       TOX_ENV: "py34"
 
 
