@@ -14,7 +14,8 @@ environment:
 
 
 init:
-  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+  - "%PYTHON%/python -V"
+  - "%PYTHON%/python -c \"import struct;print( 8 * struct.calcsize(\'P\'))\""
 
 install:
   - "appveyor/setup_build_env.cmd"
