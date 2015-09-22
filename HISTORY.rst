@@ -33,6 +33,7 @@ Other Changes:
 * Added whichcraft and removed ``compat.which()``, thanks to `@pydanny`_ (#511).
 * Changed to export tox environment variables to codecov, thanks to `@maiksensi`_ (#508).
 * Moved to using click version command, thanks to `@hackebrot`_ (#489).
+* Don't use unicode_literals to please click, thanks to `@vincentbernat` (#503).
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
@@ -43,6 +44,8 @@ Other Changes:
   * `cookiecutter-tapioca`_ by `@vintasoftware`_ (#496)
   * `cookiecutter-sublime-text-3-plugin`_ by `@kkujawinski`_ (#500)
   * `cookiecutter-muffin`_ by `@drgarcia1986`_ (#494)
+  * `cookiecutter-django-rest`_ by `@agconti`_ (#520)
+  * `cookiecutter-es6-boilerplate`_ by `@agconti`_ (#521)
 
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
@@ -57,6 +60,7 @@ Other Changes:
 .. _`@kkujawinski`: https://github.com/kkujawinski
 .. _`@charlax`: https://github.com/charlax
 .. _`@drgarcia1986`: https://github.com/drgarcia1986
+.. _`@agconti`: https://github.com/agconti
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
@@ -68,6 +72,8 @@ Other Changes:
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 .. _`cookiecutter-sublime-text-3-plugin`: https://github.com/kkujawinski/cookiecutter-sublime-text-3-plugin
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
+.. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
+.. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 
 1.0.0 (2015-03-13) Chocolate Chip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
