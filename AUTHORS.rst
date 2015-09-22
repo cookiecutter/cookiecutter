@@ -73,6 +73,7 @@ Contributors
 * Charles-Axel Dein (`@charlax`_)
 * Diego Garcia (`@drgarcia1986`_)
 * maiksensi (`@maiksensi`_)
+* Andrew Conti (`@agconti`_)
 
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
@@ -134,3 +135,4 @@ Contributors
 .. _`@lgp171188`: https://github.com/lgp171188
 .. _`@charlax`: https://github.com/charlax
 .. _`@drgarcia1986`: https://github.com/drgarcia1986
+.. _`@agconti`: https://github.com/agconti
