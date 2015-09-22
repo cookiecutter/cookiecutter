@@ -8,8 +8,6 @@ cookiecutter.cli
 Main `cookiecutter` CLI.
 """
 
-from __future__ import unicode_literals
-
 import os
 import sys
 import logging
@@ -28,46 +26,46 @@ logger = logging.getLogger(__name__)
 def version_msg():
     python_version = sys.version[:3]
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    message = 'Cookiecutter %(version)s from {} (Python {})'
+    message = u'Cookiecutter %(version)s from {} (Python {})'
     return message.format(location, python_version)
 
 
 @click.command()
-@click.version_option(__version__, '-V', '--version', message=version_msg())
-@click.argument('template')
+@click.version_option(__version__, u'-V', u'--version', message=version_msg())
+@click.argument(u'template')
 @click.option(
-    '--no-input', is_flag=True,
-    help='Do not prompt for parameters and only use cookiecutter.json '
-         'file content',
+    u'--no-input', is_flag=True,
+    help=u'Do not prompt for parameters and only use cookiecutter.json '
+         u'file content',
 )
 @click.option(
-    '-c', '--checkout',
-    help='branch, tag or commit to checkout after git clone',
+    u'-c', u'--checkout',
+    help=u'branch, tag or commit to checkout after git clone',
 )
 @click.option(
     '-v', '--verbose',
     is_flag=True, help='Print debug information', default=False
 )
 @click.option(
-    '--replay', is_flag=True,
-    help='Do not prompt for parameters and only use information entered '
-         'previously',
+    u'--replay', is_flag=True,
+    help=u'Do not prompt for parameters and only use information entered '
+         u'previously',
 )
 @click.option(
-    '-f', '--overwrite-if-exists', is_flag=True,
-    help='Overwrite the contents of the output directory if it already exists'
+    u'-f', u'--overwrite-if-exists', is_flag=True,
+    help=u'Overwrite the contents of the output directory if it already exists'
 )
 def main(template, no_input, checkout, verbose, replay, overwrite_if_exists):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
-            format='%(levelname)s %(filename)s: %(message)s',
+            format=u'%(levelname)s %(filename)s: %(message)s',
             level=logging.DEBUG
         )
     else:
         # Log info and above to console
         logging.basicConfig(
-            format='%(levelname)s: %(message)s',
+            format=u'%(levelname)s: %(message)s',
             level=logging.INFO
         )
 
