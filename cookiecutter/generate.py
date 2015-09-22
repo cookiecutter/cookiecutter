@@ -21,6 +21,8 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 from binaryornot.check import is_binary
 
+from .option import option_from_context
+from .compat import iteritems, text_type
 from .exceptions import (
     NonTemplatedInputDirException,
     ContextDecodingException,
@@ -50,6 +52,20 @@ def copy_without_render(path, context):
     return False
 
 
+def merge_context(context, raw_context):
+    for key, value in iteritems(raw_context):
+        # If an option already exists at that key in the context, and its
+        # value is a string, update the options default value.
+        # This is the old behaviour from before options.
+        if key in context and isinstance(value, text_type):
+            context[key].default = value
+
+        # Otherwise, add or replace the current option with a new option
+        else:
+            context[key] = option_from_context(key, value)
+    return context
+
+
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      extra_context=None):
     """
@@ -77,17 +93,15 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
             ' error details: "{1}"'.format(full_fpath, json_exc_message))
         raise ContextDecodingException(our_exc_message)
 
+    options = OrderedDict()
+    for new_context in [obj, default_context, extra_context]:
+        if new_context:
+            options = merge_context(options, new_context)
+
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
-    context[file_stem] = obj
-
-    # Overwrite context variable defaults with the default context from the
-    # user's global config, if available
-    if default_context:
-        obj.update(default_context)
-    if extra_context:
-        obj.update(extra_context)
+    context[file_stem] = options
 
     logging.debug('Context generated is {0}'.format(context))
     return context
