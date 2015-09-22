@@ -33,7 +33,7 @@ Other Changes:
 * Added whichcraft and removed ``compat.which()``, thanks to `@pydanny`_ (#511).
 * Changed to export tox environment variables to codecov, thanks to `@maiksensi`_ (#508).
 * Moved to using click version command, thanks to `@hackebrot`_ (#489).
-* Don't use unicode_literals to please click, thanks to `@vincentbernat` (#503).
+* Don't use unicode_literals to please click, thanks to `@vincentbernat`_ (#503).
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
