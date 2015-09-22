@@ -13,8 +13,6 @@ environment:
       TOX_ENV: "py34"
 
     - PYTHON: "C:\\Python35"
-      PYTHON_VERSION: "3.5.0"
-      PYTHON_ARCH: "32"
       TOX_ENV: "py35"
 
 
