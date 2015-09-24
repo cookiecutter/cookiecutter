@@ -12,6 +12,9 @@ environment:
     - PYTHON: "C:\\Python34"
       TOX_ENV: "py34"
 
+    - PYTHON: "C:\\Python35"
+      TOX_ENV: "py35"
+
 
 init:
   - "%PYTHON%/python -V"
