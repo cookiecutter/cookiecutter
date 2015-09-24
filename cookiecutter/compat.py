@@ -10,8 +10,3 @@ if PY3:  # pragma: no cover
 
 else:  # pragma: no cover
     iteritems = lambda d: d.iteritems()
-
-
-def is_string(obj):
-    """Determine if an object is a string."""
-    return isinstance(obj, str if PY3 else basestring)

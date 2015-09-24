@@ -12,8 +12,9 @@ from collections import OrderedDict
 import platform
 
 import pytest
+from past.builtins import basestring
 
-from cookiecutter import prompt, compat
+from cookiecutter import prompt
 from jinja2.environment import Environment
 
 
@@ -35,7 +36,7 @@ def test_convert_to_str(mocker, raw_var, rendered_var):
     assert result == rendered_var
 
     # Make sure that non str variables are conerted beforehand
-    if not compat.is_string(raw_var):
+    if not isinstance(raw_var, basestring):
         raw_var = str(raw_var)
     from_string.assert_called_once_with(raw_var)
 

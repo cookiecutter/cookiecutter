@@ -11,8 +11,9 @@ Functions for prompting the user for project info.
 from collections import OrderedDict
 
 import click
+from past.builtins import basestring
 
-from .compat import iteritems, is_string
+from .compat import iteritems
 from jinja2.environment import Environment
 
 
@@ -80,7 +81,7 @@ def read_user_choice(var_name, options):
 
 
 def render_variable(env, raw, cookiecutter_dict):
-    if not is_string(raw):
+    if not isinstance(raw, basestring):
         raw = str(raw)
     template = env.from_string(raw)
     rendered_template = template.render(cookiecutter=cookiecutter_dict)
