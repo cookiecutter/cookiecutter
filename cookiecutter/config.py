@@ -41,9 +41,12 @@ def get_config(config_path):
     with io.open(config_path, encoding='utf-8') as file_handle:
         try:
             yaml_dict = yaml.safe_load(file_handle)
-        except yaml.scanner.ScannerError:
+        except yaml.scanner.ScannerError as e:
             raise InvalidConfiguration(
-                '{0} is no a valid YAML file'.format(config_path))
+                '{0} is not a valid YAML file: line {1}: {2}'.format(
+                    config_path,
+                    e.problem_mark.line,
+                    e.problem))
 
     config_dict = copy.copy(DEFAULT_CONFIG)
     config_dict.update(yaml_dict)
