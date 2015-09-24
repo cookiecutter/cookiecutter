@@ -7,7 +7,6 @@ OLD_PY2 = sys.version_info[:2] < (2, 7)
 if PY3:  # pragma: no cover
     input_str = 'builtins.input'
     iteritems = lambda d: iter(d.items())
-    from io import StringIO
 
 
 else:  # pragma: no cover
@@ -15,12 +14,8 @@ else:  # pragma: no cover
     input = raw_input
     input_str = '__builtin__.raw_input'
     iteritems = lambda d: d.iteritems()
-    from cStringIO import StringIO
 
 
 def is_string(obj):
     """Determine if an object is a string."""
     return isinstance(obj, str if PY3 else basestring)
-
-
-_hush_pyflakes = (StringIO)
