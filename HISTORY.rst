@@ -17,7 +17,7 @@ Features:
 * Allow cookiecutter invocation, even without installing it, via ``python -m cookiecutter.cli``, thanks to  `@vincentbernat`_ and `@hackebrot`_ (#449, #487).
 * Improve the type detection handler for online and offline repositories, thanks to `@charlax`_ (#490).
 * Add replay feature, thanks to `@hackebrot`_ (#501).
-* Added official Python 3.5 support, thanks to `@pydanny`_.
+* Added official Python 3.5 support, thanks to `@pydanny`_ and `@hackebrot`_ (#522).
 
 Other Changes:
 
