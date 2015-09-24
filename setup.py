@@ -27,6 +27,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
 requirements = [
+    'future>=0.15.2',
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'PyYAML>=3.10',
