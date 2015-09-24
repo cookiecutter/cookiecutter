@@ -13,7 +13,7 @@ from collections import OrderedDict
 import click
 from past.builtins import basestring
 
-from .compat import iteritems
+from future.utils import iteritems
 from jinja2.environment import Environment
 
 
