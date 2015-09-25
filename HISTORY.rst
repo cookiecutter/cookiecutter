@@ -17,6 +17,7 @@ Features:
 * Allow cookiecutter invocation, even without installing it, via ``python -m cookiecutter.cli``, thanks to  `@vincentbernat`_ and `@hackebrot`_ (#449, #487).
 * Improve the type detection handler for online and offline repositories, thanks to `@charlax`_ (#490).
 * Add replay feature, thanks to `@hackebrot`_ (#501).
+* Be more precise when raising an error for an invalid user config file, thanks to `@vaab`_ and `@hackebrot`_ (#378, #528).
 * Added official Python 3.5 support, thanks to `@pydanny`_ and `@hackebrot`_ (#522).
 
 Other Changes:
@@ -61,6 +62,7 @@ Other Changes:
 .. _`@charlax`: https://github.com/charlax
 .. _`@drgarcia1986`: https://github.com/drgarcia1986
 .. _`@agconti`: https://github.com/agconti
+.. _`@vaab`: https://github.com/vaab
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
