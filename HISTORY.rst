@@ -47,6 +47,7 @@ Other Changes:
   * `cookiecutter-muffin`_ by `@drgarcia1986`_ (#494)
   * `cookiecutter-django-rest`_ by `@agconti`_ (#520)
   * `cookiecutter-es6-boilerplate`_ by `@agconti`_ (#521)
+  * `cookiecutter-tampermonkey`_ by `@christabor`_ (#516)
 
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
@@ -63,6 +64,7 @@ Other Changes:
 .. _`@drgarcia1986`: https://github.com/drgarcia1986
 .. _`@agconti`: https://github.com/agconti
 .. _`@vaab`: https://github.com/vaab
+.. _`@christabor`: https://github.com/christabor
 
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 .. _`@luismartingil`: https://github.com/luismartingil
@@ -76,6 +78,7 @@ Other Changes:
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
+.. _`cookiecutter-tampermonkey`: https://github.com/christabor/cookiecutter-tampermonkey
 
 1.0.0 (2015-03-13) Chocolate Chip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
