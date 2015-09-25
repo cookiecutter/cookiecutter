@@ -51,8 +51,14 @@ def test_invalid_config():
     """
     An invalid config file should raise an `InvalidConfiguration` exception.
     """
-    with pytest.raises(InvalidConfiguration):
+    with pytest.raises(InvalidConfiguration) as excinfo:
         config.get_config('tests/test-config/invalid-config.yaml')
+
+    expected_error_msg = (
+        'tests/test-config/invalid-config.yaml is not a valid YAML file: '
+        'line 1: mapping values are not allowed here'
+    )
+    assert str(excinfo.value) == expected_error_msg
 
 
 def test_get_config_with_defaults():
