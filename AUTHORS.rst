@@ -74,6 +74,7 @@ Contributors
 * Diego Garcia (`@drgarcia1986`_)
 * maiksensi (`@maiksensi`_)
 * Andrew Conti (`@agconti`_)
+* Valentin Lab (`@vaab`_)
 
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
@@ -136,3 +137,4 @@ Contributors
 .. _`@charlax`: https://github.com/charlax
 .. _`@drgarcia1986`: https://github.com/drgarcia1986
 .. _`@agconti`: https://github.com/agconti
+.. _`@vaab`: https://github.com/vaab
