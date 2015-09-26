@@ -71,7 +71,7 @@ def expand_abbreviations(template, config_dict):
 
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
-        replay=False, overwrite_if_exists=False):
+        replay=False, overwrite_if_exists=False, output_dir='.'):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -83,6 +83,7 @@ def cookiecutter(
         and user configuration.
     :param: overwrite_if_exists: Overwrite the contents of output directory
         if it exists
+    :param output_dir: Where to output the generated project dir into.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -133,5 +134,6 @@ def cookiecutter(
     generate_files(
         repo_dir=repo_dir,
         context=context,
-        overwrite_if_exists=overwrite_if_exists
+        overwrite_if_exists=overwrite_if_exists,
+        output_dir=output_dir
     )
