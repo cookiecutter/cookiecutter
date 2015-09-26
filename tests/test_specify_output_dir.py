@@ -20,12 +20,12 @@ def context():
 
 @pytest.fixture
 def output_dir(tmpdir):
-    return tmpdir.mkdir('output')
+    return str(tmpdir.mkdir('output'))
 
 
 @pytest.fixture
 def template(tmpdir):
-    return tmpdir.mkdir('template')
+    return str(tmpdir.mkdir('template'))
 
 
 @pytest.fixture(autouse=True)
@@ -49,8 +49,9 @@ def test_api_invocation(mocker, template, output_dir, context):
     main.cookiecutter(template, output_dir=output_dir)
 
     mock_gen_files.assert_called_once_with(
-        template,
-        context,
+        repo_dir=template,
+        context=context,
+        overwrite_if_exists=False,
         output_dir=output_dir
     )
 
@@ -61,7 +62,8 @@ def test_default_output_dir(mocker, template, context):
     main.cookiecutter(template)
 
     mock_gen_files.assert_called_once_with(
-        template,
-        context,
+        repo_dir=template,
+        context=context,
+        overwrite_if_exists=False,
         output_dir='.'
     )
