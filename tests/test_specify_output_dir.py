@@ -53,3 +53,15 @@ def test_api_invocation(mocker, template, output_dir, context):
         context,
         output_dir=output_dir
     )
+
+
+def test_default_output_dir(mocker, template, context):
+    mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
+
+    main.cookiecutter(template)
+
+    mock_gen_files.assert_called_once_with(
+        template,
+        context,
+        output_dir='.'
+    )
