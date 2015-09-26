@@ -55,7 +55,12 @@ def version_msg():
     u'-f', u'--overwrite-if-exists', is_flag=True,
     help=u'Overwrite the contents of the output directory if it already exists'
 )
-def main(template, no_input, checkout, verbose, replay, overwrite_if_exists):
+@click.option(
+    u'-o', u'--output-dir', default='.', type=click.Path(),
+    help=u'Where to output the generated project dir into'
+)
+def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
+         output_dir):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
@@ -70,8 +75,12 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists):
         )
 
     try:
-        cookiecutter(template, checkout, no_input, replay=replay,
-                     overwrite_if_exists=overwrite_if_exists)
+        cookiecutter(
+            template, checkout, no_input,
+            replay=replay,
+            overwrite_if_exists=overwrite_if_exists,
+            output_dir=output_dir
+        )
     except (OutputDirExistsException, InvalidModeException) as e:
         click.echo(e)
         sys.exit(1)
