@@ -32,9 +32,9 @@ builtin_abbreviations = {
 
 REPO_REGEX = """
 (
-(\w+:(//)?)          # something like git:// ssh:// etc.
- |                   # or
- (\w+@[\w\.]+)       # something like user@...
+((git|ssh|https|http):(//)?)    # something like git:// ssh:// etc.
+ |                              # or
+ (\w+@[\w\.]+)                  # something like user@...
 )
 .*
 """
