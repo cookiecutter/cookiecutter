@@ -186,6 +186,7 @@ Python-Django
 * `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4
 * `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
+* `cookiecutter-wagtail`_ : A cookiecutter template for `Wagtail`_ CMS based sites.
 
 C
 ~~
@@ -293,6 +294,8 @@ HTML
 .. _`tapioca-wrapper`: https://github.com/vintasoftware/tapioca-wrapper
 .. _`cookiecutter-sublime-text-3-plugin`: https://github.com/kkujawinski/cookiecutter-sublime-text-3-plugin
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
+.. _`cookiecutter-wagtail`: https://github.com/torchbox/cookiecutter-wagtail
+.. _`Wagtail`: https://github.com/torchbox/wagtail
 
 Scala
 ~~~~~
