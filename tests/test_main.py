@@ -11,3 +11,9 @@ def test_is_repo_url():
 
     assert is_repo_url('/audreyr/cookiecutter.git') is False
     assert is_repo_url('/home/audreyr/cookiecutter') is False
+
+    appveyor_temp_dir = (
+        'c:\\users\\appveyor\\appdata\\local\\temp\\1\\pytest-0\\'
+        'test_default_output_dir0\\template'
+    )
+    assert is_repo_url(appveyor_temp_dir) is False
