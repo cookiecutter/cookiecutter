@@ -3,8 +3,8 @@
 History
 -------
 
-1.1.0 (2015-09-26)
-~~~~~~~~~~~~~~~~~~~~~~~~
+1.1.0 (2015-09-26) Snickerdoodle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goals of this release is to add extra content via the command-line and `copy without render`_.
 
