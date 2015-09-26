@@ -3,7 +3,7 @@
 History
 -------
 
-1.1.0 (2015-10-03) ???
+1.2.0 (2015-10-03) ???
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal of this release is to add extra content as a command-line argument.
@@ -11,6 +11,8 @@ The goal of this release is to add extra content as a command-line argument.
 
 1.1.0 (2015-09-26) Snickerdoodle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The goals of this release were `copy without render` and a few additional command-line options such as `--overwrite-if-exists`, `—replay`, and `output-dir`.
 
 Features:
 
