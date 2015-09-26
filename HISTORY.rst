@@ -3,14 +3,15 @@
 History
 -------
 
-1.1.0 (2015-??-??)
-~~~~~~~~~~~~~~~~~~
+1.1.0 (2015-09-26)
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goals of this release is to add extra content via the command-line and `copy without render`_.
 
 Features:
 
 * Added `copy without render`_ feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to `@osantana`_ and `@LucianU`_ for their innovation, as well as `@hackebrot`_ for fixing the Windows problems (#132, #184, #425).
+* Added `specify output directory`, thanks to `tony` and `@hackebrot`_ (#531, #452),
 * Abort template rendering if the project output directory already exists, thanks to `@lgp171188`_ (#470, #471).
 * Add a flag to overwrite existing output directory, thanks to `@lgp171188`_ for the implementation (#495) and `@schacki`_, `@ionelmc`_, `@pydanny`_ and `@hackebrot`_ for submitting issues and code reviews (#475, #493).
 * Remove test command in favor of tox, thanks to `@hackebrot`_ (#480).
@@ -32,9 +33,13 @@ Other Changes:
 * Disabled sudo in .travis, thanks to `@hackebrot`_ (#482).
 * Switched to shields.io for problematic badges, thanks to `@pydanny`_ (#491).
 * Added whichcraft and removed ``compat.which()``, thanks to `@pydanny`_ (#511).
-* Changed to export tox environment variables to codecov, thanks to `@maiksensi`_ (#508).
+* Changed to export tox environment variables to codecov, thanks to `@maiksensi`_. (#508).
 * Moved to using click version command, thanks to `@hackebrot`_ (#489).
 * Don't use unicode_literals to please click, thanks to `@vincentbernat`_ (#503).
+* Remove warning for Python 2.6 from __init__.py, thanks to `@hackebrot`_.
+* Removed `compat.py` module, thanks to `@hackebrot`_.
+* Added `future` to requirements, thanks to `@hackebrot`_.
+* Fixed problem where expanduser does not resolve "~" correctly on windows 10 using tox, thanks to `@maiksensi`_. (#527)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-beamer`_ by `@luismartingil`_ (#307)
