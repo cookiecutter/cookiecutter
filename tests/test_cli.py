@@ -167,3 +167,36 @@ def test_cli_overwrite_if_exists_when_output_dir_exists(overwrite_cli_flag):
 
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
+
+
+@pytest.fixture(params=['-o', '--output-dir'])
+def output_dir_flag(request):
+    return request.param
+
+
+@pytest.fixture
+def output_dir(tmpdir):
+    return str(tmpdir.mkdir('output'))
+
+
+def test_cli_output_dir(mocker, output_dir_flag, output_dir):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        output_dir_flag,
+        output_dir
+    ])
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir=output_dir
+    )
