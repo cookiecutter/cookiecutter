@@ -3,8 +3,9 @@
 import locale
 import codecs
 import pytest
+import sys
 
-from cookiecutter.compat import PY3
+PY3 = sys.version_info[0] == 3
 
 
 @pytest.mark.skipif(not PY3, reason='Only necessary on Python3')

@@ -9,8 +9,8 @@ from __future__ import unicode_literals
 
 import json
 import os
+from past.builtins import basestring
 
-from .compat import is_string
 from .config import get_user_config
 from .utils import make_sure_path_exists
 
@@ -21,7 +21,7 @@ def get_file_name(replay_dir, template_name):
 
 
 def dump(template_name, context):
-    if not is_string(template_name):
+    if not isinstance(template_name, basestring):
         raise TypeError('Template name is required to be of type str')
 
     if not isinstance(context, dict):
@@ -42,7 +42,7 @@ def dump(template_name, context):
 
 
 def load(template_name):
-    if not is_string(template_name):
+    if not isinstance(template_name, basestring):
         raise TypeError('Template name is required to be of type str')
 
     replay_dir = get_user_config()['replay_dir']
