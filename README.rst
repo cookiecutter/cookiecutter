@@ -381,9 +381,9 @@ Development on Cookiecutter is community-driven:
 * Everyone is invited to contribute. Read the `contributing instructions`_,
   then get started.
 
-Connect with other Cookiecutter contributors and users in IRC:
+Connect with other Cookiecutter contributors and users on `Gitter`_:
 
-* #cookiecutter on irc.freenode.net (note: due to work and commitments,
+* https://gitter.im/audreyr/cookiecutter (note: due to work and commitments,
   a core committer might not always be available)
 
 Encouragement is unbelievably motivating. If you want more work done on
