@@ -3,7 +3,7 @@ Cookiecutter
 =============
 
 .. image:: https://img.shields.io/pypi/v/cookiecutter.svg
-        :target: https://pypi.python.org/pypi/cookiecutter/1.0.0
+        :target: https://pypi.python.org/pypi/cookiecutter
 
 .. image:: https://travis-ci.org/audreyr/cookiecutter.png?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
@@ -12,7 +12,7 @@ Cookiecutter
         :target: https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master
 
 .. image:: https://img.shields.io/pypi/dm/cookiecutter.svg
-        :target: https://pypi.python.org/pypi/cookiecutter/1.0.0
+        :target: https://pypi.python.org/pypi/cookiecutter
 
 .. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
         :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
