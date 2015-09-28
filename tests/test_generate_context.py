@@ -16,6 +16,8 @@ from __future__ import unicode_literals
 import pytest
 import os
 import re
+from collections import OrderedDict
+
 from cookiecutter import generate
 from cookiecutter.exceptions import ContextDecodingException
 
@@ -97,3 +99,48 @@ def test_generate_context_with_json_decoding_error():
         ['tests', 'test-generate-context', 'invalid-syntax.json']
     )
     assert path in str(excinfo.value)
+
+
+@pytest.fixture
+def default_context():
+    return {
+        'not_in_template': 'foobar',
+        'project_name': 'Kivy Project',
+        'orientation': 'landscape'
+    }
+
+
+@pytest.fixture
+def extra_context():
+    return {
+        'also_not_in_template': 'foobar2',
+        'github_username': 'hackebrot',
+    }
+
+
+@pytest.fixture
+def context_file():
+    return 'tests/test-generate-context/choices_template.json'
+
+
+def test_choices(context_file, default_context, extra_context):
+    """Make sure that the default for list variables is based on the user
+    config and the list as such is not changed to a single value.
+    """
+    expected_context = {
+        "choices_template": OrderedDict([
+            ("full_name", "Raphael Pierzina"),
+            ("github_username", "hackebrot"),
+            ("project_name", "Kivy Project"),
+            ("repo_name", "{{cookiecutter.project_name|lower"),
+            ("orientation", ["landscape", "all", "portrait"]),
+            ("not_in_template", "foobar"),
+            ("also_not_in_template", "foobar2"),
+        ])
+    }
+
+    generated_context = generate.generate_context(
+        context_file, default_context, extra_context
+    )
+
+    assert generated_context == expected_context
