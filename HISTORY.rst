@@ -8,6 +8,14 @@ History
 
 The goal of this release is to add extra content as a command-line argument.
 
+Features:
+
+* ???
+
+Other Changes:
+
+* Enable py35 support on Travis by using Python 3.5 as base Python (@maiksensi_ / #540)
+
 
 1.1.0 (2015-09-26) Snickerdoodle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
