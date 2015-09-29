@@ -171,3 +171,14 @@ def test_apply_overwrites_sets_non_list_value(template_context):
     )
 
     assert template_context['repo_name'] == 'foobar'
+
+
+def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite(
+        template_context):
+
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'orientation': 'foobar'}
+    )
+
+    assert template_context['orientation'] == ['all', 'landscape', 'portrait']
