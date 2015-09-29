@@ -16,6 +16,8 @@ from __future__ import unicode_literals
 import pytest
 import os
 import re
+from collections import OrderedDict
+
 from cookiecutter import generate
 from cookiecutter.exceptions import ContextDecodingException
 
@@ -97,3 +99,94 @@ def test_generate_context_with_json_decoding_error():
         ['tests', 'test-generate-context', 'invalid-syntax.json']
     )
     assert path in str(excinfo.value)
+
+
+@pytest.fixture
+def default_context():
+    return {
+        'not_in_template': 'foobar',
+        'project_name': 'Kivy Project',
+        'orientation': 'landscape'
+    }
+
+
+@pytest.fixture
+def extra_context():
+    return {
+        'also_not_in_template': 'foobar2',
+        'github_username': 'hackebrot',
+    }
+
+
+@pytest.fixture
+def context_file():
+    return 'tests/test-generate-context/choices_template.json'
+
+
+def test_choices(context_file, default_context, extra_context):
+    """Make sure that the default for list variables is based on the user
+    config and the list as such is not changed to a single value.
+    """
+    expected_context = {
+        'choices_template': OrderedDict([
+            ('full_name', 'Raphael Pierzina'),
+            ('github_username', 'hackebrot'),
+            ('project_name', 'Kivy Project'),
+            ('repo_name', '{{cookiecutter.project_name|lower'),
+            ('orientation', ['landscape', 'all', 'portrait']),
+        ])
+    }
+
+    generated_context = generate.generate_context(
+        context_file, default_context, extra_context
+    )
+
+    assert generated_context == expected_context
+
+
+@pytest.fixture
+def template_context():
+    return OrderedDict([
+        ('full_name', 'Raphael Pierzina'),
+        ('github_username', 'hackebrot'),
+        ('project_name', 'Kivy Project'),
+        ('repo_name', '{{cookiecutter.project_name|lower'),
+        ('orientation', ['all', 'landscape', 'portrait']),
+    ])
+
+
+def test_apply_overwrites_does_include_unused_variables(template_context):
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'not in template': 'foobar'}
+    )
+
+    assert 'not in template' not in template_context
+
+
+def test_apply_overwrites_sets_non_list_value(template_context):
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'repo_name': 'foobar'}
+    )
+
+    assert template_context['repo_name'] == 'foobar'
+
+
+def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite(
+        template_context):
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'orientation': 'foobar'}
+    )
+
+    assert template_context['orientation'] == ['all', 'landscape', 'portrait']
+
+
+def test_apply_overwrites_sets_default_for_choice_variable(template_context):
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'orientation': 'landscape'}
+    )
+
+    assert template_context['orientation'] == ['landscape', 'all', 'portrait']
