@@ -13,7 +13,6 @@ TestGenerateContext.test_generate_context_with_default_and_extra
 """
 
 from __future__ import unicode_literals
-import copy
 import pytest
 import os
 import re
@@ -157,14 +156,12 @@ def template_context():
 
 
 def test_apply_overwrites_does_include_unused_variables(template_context):
-    before = copy.deepcopy(template_context)
-
     generate.apply_overwrites_to_context(
         template_context,
         {'not in template': 'foobar'}
     )
 
-    assert template_context == before
+    assert 'not in template' not in template_context
 
 
 def test_apply_overwrites_sets_non_list_value(template_context):
