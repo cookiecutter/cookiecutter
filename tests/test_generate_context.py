@@ -13,6 +13,7 @@ TestGenerateContext.test_generate_context_with_default_and_extra
 """
 
 from __future__ import unicode_literals
+import copy
 import pytest
 import os
 import re
@@ -142,3 +143,25 @@ def test_choices(context_file, default_context, extra_context):
     )
 
     assert generated_context == expected_context
+
+
+@pytest.fixture
+def template_context():
+    return OrderedDict([
+        ("full_name", "Raphael Pierzina"),
+        ("github_username", "hackebrot"),
+        ("project_name", "Kivy Project"),
+        ("repo_name", "{{cookiecutter.project_name|lower"),
+        ("orientation", ["all", "landscape", "portrait"]),
+    ])
+
+
+def test_apply_overwrites_does_include_unused_variables(template_context):
+    before = copy.deepcopy(template_context)
+
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'not in template': 'foobar'}
+    )
+
+    assert template_context == before
