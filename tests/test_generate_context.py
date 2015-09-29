@@ -132,7 +132,7 @@ def test_choices(context_file, default_context, extra_context):
             ('full_name', 'Raphael Pierzina'),
             ('github_username', 'hackebrot'),
             ('project_name', 'Kivy Project'),
-            ('repo_name', '{{cookiecutter.project_name|lower'),
+            ('repo_name', '{{cookiecutter.project_name|lower}}'),
             ('orientation', ['landscape', 'all', 'portrait']),
         ])
     }
@@ -150,7 +150,7 @@ def template_context():
         ('full_name', 'Raphael Pierzina'),
         ('github_username', 'hackebrot'),
         ('project_name', 'Kivy Project'),
-        ('repo_name', '{{cookiecutter.project_name|lower'),
+        ('repo_name', '{{cookiecutter.project_name|lower}}'),
         ('orientation', ['all', 'landscape', 'portrait']),
     ])
 
