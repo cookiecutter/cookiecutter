@@ -50,6 +50,29 @@ def copy_without_render(path, context):
     return False
 
 
+def apply_overwrites_to_context(context, overwrite_context):
+    for variable, overwrite in overwrite_context.items():
+        if variable not in context:
+            # Albeit not relevant for the template, set this variable to
+            # resemble ``dict.update()``
+            context[variable] = overwrite
+            continue
+
+        context_value = context[variable]
+
+        if isinstance(context_value, list):
+            # We are dealing with a choice variable
+            if overwrite in context_value:
+                # This overwrite is actually valid for the given context
+                # Let's set it as default (by definition first item in list)
+                # see ``cookiecutter.prompt.prompt_choice_for_config``
+                context_value.remove(overwrite)
+                context_value.insert(0, overwrite)
+        else:
+            # Simply overwrite the value for this variable
+            context[variable] = overwrite
+
+
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      extra_context=None):
     """
@@ -85,9 +108,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
     if default_context:
-        obj.update(default_context)
+        apply_overwrites_to_context(obj, default_context)
     if extra_context:
-        obj.update(extra_context)
+        apply_overwrites_to_context(obj, extra_context)
 
     logging.debug('Context generated is {0}'.format(context))
     return context
