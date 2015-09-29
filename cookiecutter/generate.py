@@ -53,9 +53,7 @@ def copy_without_render(path, context):
 def apply_overwrites_to_context(context, overwrite_context):
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
-            # Albeit not relevant for the template, set this variable to
-            # resemble ``dict.update()``
-            context[variable] = overwrite
+            # Do not include variables which are not used in the template
             continue
 
         context_value = context[variable]

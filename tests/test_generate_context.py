@@ -134,8 +134,6 @@ def test_choices(context_file, default_context, extra_context):
             ("project_name", "Kivy Project"),
             ("repo_name", "{{cookiecutter.project_name|lower"),
             ("orientation", ["landscape", "all", "portrait"]),
-            ("not_in_template", "foobar"),
-            ("also_not_in_template", "foobar2"),
         ])
     }
 
