@@ -51,6 +51,7 @@ def copy_without_render(path, context):
 
 
 def apply_overwrites_to_context(context, overwrite_context):
+    """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
             # Do not include variables which are not used in the template
