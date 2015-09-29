@@ -175,10 +175,18 @@ def test_apply_overwrites_sets_non_list_value(template_context):
 
 def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite(
         template_context):
-
     generate.apply_overwrites_to_context(
         template_context,
         {'orientation': 'foobar'}
     )
 
     assert template_context['orientation'] == ['all', 'landscape', 'portrait']
+
+
+def test_apply_overwrites_sets_default_for_choice_variable(template_context):
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'orientation': 'landscape'}
+    )
+
+    assert template_context['orientation'] == ['landscape', 'all', 'portrait']
