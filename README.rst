@@ -371,7 +371,7 @@ Stuck? Try one of the following:
 * You are strongly encouraged to `file an issue`_ about the problem, even if
   it's just "I can't get it to work on this cookiecutter" with a link to your
   cookiecutter. Don't worry about naming/pinpointing the issue properly.
-* Ask for help in #cookiecutter if you must (but please try one of the other
+* Ask for help on `Gitter`_ if you must (but please try one of the other
   options first, so that others can benefit from the discussion)
 
 Development on Cookiecutter is community-driven:
@@ -381,9 +381,9 @@ Development on Cookiecutter is community-driven:
 * Everyone is invited to contribute. Read the `contributing instructions`_,
   then get started.
 
-Connect with other Cookiecutter contributors and users in IRC:
+Connect with other Cookiecutter contributors and users on `Gitter`_:
 
-* #cookiecutter on irc.freenode.net (note: due to work and commitments,
+* https://gitter.im/audreyr/cookiecutter (note: due to work and commitments,
   a core committer might not always be available)
 
 Encouragement is unbelievably motivating. If you want more work done on
@@ -435,3 +435,4 @@ rooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
 .. _`@pfmoore`: https://github.com/pfmoore
 .. _`@hackebrot`: https://github.com/hackebrot
+.. _`Gitter`: https://gitter.im/audreyr/cookiecutter
