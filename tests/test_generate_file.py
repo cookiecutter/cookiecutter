@@ -80,6 +80,7 @@ def test_generate_file_with_true_conditional(env):
         generated_text = f.read()
         assert generated_text == 'Testing that generate_file was y'
 
+
 @pytest.fixture
 def expected_msg():
     msg = (
