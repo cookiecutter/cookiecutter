@@ -126,7 +126,10 @@ def prompt_for_config(context, no_input=False):
             val = render_variable(env, raw, cookiecutter_dict)
 
             if not no_input:
-                val = read_user_variable(key, val)
+                if isinstance(raw, bool):
+                    val = read_user_yes_no(key, val)
+                else:
+                    val = read_user_variable(key, val)
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict

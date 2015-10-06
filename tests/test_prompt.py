@@ -212,7 +212,16 @@ class TestPromptChoiceForConfig(object):
     def context(self, choices):
         return {
             'cookiecutter': {
-                'orientation': choices
+                'orientation': choices,
+                'is_alive': True,
+            }
+        }
+
+    @pytest.fixture
+    def bool_context(self, choices):
+        return {
+            'cookiecutter': {
+                'is_alive': True,
             }
         }
 
@@ -247,3 +256,32 @@ class TestPromptChoiceForConfig(object):
         )
         read_choice.assert_called_once_with('orientation', choices)
         assert expected_choice == actual_choice
+
+    def test_should_read_yes_no(self, mocker, bool_context):
+        key = 'is_alive'
+        expected_bool = False
+
+        read_bool = mocker.patch('cookiecutter.prompt.read_user_yes_no')
+        read_bool.return_value = expected_bool
+
+        config = prompt.prompt_for_config(
+            bool_context,
+            False  # Ask the user for input
+        )
+        read_bool.assert_called_once_with(key, 'True')
+        assert config[key] == expected_bool
+
+    def test_should_read_yes_no_false(self, mocker, bool_context):
+        key = 'is_alive'
+        expected_bool = True
+
+        read_bool = mocker.patch('cookiecutter.prompt.read_user_yes_no')
+        read_bool.return_value = expected_bool
+
+        bool_context['cookiecutter'][key] = False
+        config = prompt.prompt_for_config(
+            bool_context,
+            False  # Ask the user for input
+        )
+        read_bool.assert_called_once_with(key, 'False')
+        assert config[key] == expected_bool
