@@ -14,8 +14,8 @@ Features:
 
 Other Changes:
 
-* Enable py35 support on Travis by using Python 3.5 as base Python (@maiksensi_ / #540)
-* If a filename is empty, do not generate. Log instead (@iljabauer_ / #444)
+* Enable py35 support on Travis by using Python 3.5 as base Python (`@maiksensi`_ / #540)
+* If a filename is empty, do not generate. Log instead (`@iljabauer`_ / #444)
 
 .. _`@iljabauer`: https://github.com/iljabauer
 
