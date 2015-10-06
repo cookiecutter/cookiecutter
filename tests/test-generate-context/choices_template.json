@@ -3,5 +3,6 @@
     "github_username": "hackebrot",
     "project_name": "Kivy Project",
     "repo_name": "{{cookiecutter.project_name|lower}}",
-    "orientation": ["all", "landscape", "portrait"]
+    "orientation": ["all", "landscape", "portrait"],
+    "is_alive": true
 }

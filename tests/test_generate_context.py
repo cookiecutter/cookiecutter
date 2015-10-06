@@ -106,7 +106,8 @@ def default_context():
     return {
         'not_in_template': 'foobar',
         'project_name': 'Kivy Project',
-        'orientation': 'landscape'
+        'orientation': 'landscape',
+        'is_alive': False,
     }
 
 
@@ -134,6 +135,7 @@ def test_choices(context_file, default_context, extra_context):
             ('project_name', 'Kivy Project'),
             ('repo_name', '{{cookiecutter.project_name|lower}}'),
             ('orientation', ['landscape', 'all', 'portrait']),
+            ('is_alive', False),
         ])
     }
 
@@ -152,6 +154,7 @@ def template_context():
         ('project_name', 'Kivy Project'),
         ('repo_name', '{{cookiecutter.project_name|lower}}'),
         ('orientation', ['all', 'landscape', 'portrait']),
+        ('is_alive', True),
     ])
 
 
