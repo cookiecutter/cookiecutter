@@ -104,7 +104,8 @@ Did someone say features?
             "project_short_description": "Refreshingly simple static site generator.",
             "release_date": "2013-07-10",
             "year": "2013",
-            "version": "0.1.1"
+            "version": "0.1.1",
+            "some_boolean": true
         }
 
 * Unless you suppress it with `--no-input`, you are prompted for input:

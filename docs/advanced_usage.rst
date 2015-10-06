@@ -179,6 +179,24 @@ Or, if the user gives `Yet Another New Project`, the values will be:
 * `yet-another-new-project`
 * `yetanothernewproject`
 
+
+booleans in cookiecutter.json
+-----------------------------
+
+If you have a boolean value in your `cookiecutter.json`, the input overriding
+the default will also be converted to a boolean. For example, given this
+config:
+
+.. code-block:: json
+
+    {
+        "some_bool_val": true
+    }
+
+If you override the default with the string `"false"`, it will be converted
+to the boolean `False`.
+
+
 Copy without Render
 -------------------
 
