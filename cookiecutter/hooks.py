@@ -19,11 +19,13 @@ from jinja2 import Template
 
 from cookiecutter import utils
 
+
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
     # TODO: other hooks should be listed here
 ]
+EXIT_SUCCESS = 0
 
 
 def find_hooks():
@@ -67,7 +69,7 @@ def run_script(script_path, cwd='.'):
         shell=run_thru_shell,
         cwd=cwd
     )
-    proc.wait()
+    return proc.wait()
 
 
 def run_script_with_context(script_path, cwd, context):
@@ -89,7 +91,7 @@ def run_script_with_context(script_path, cwd, context):
     ) as temp:
         temp.write(Template(contents).render(**context))
 
-    run_script(temp.name, cwd)
+    return run_script(temp.name, cwd)
 
 
 def run_hook(hook_name, project_dir, context):
@@ -103,5 +105,5 @@ def run_hook(hook_name, project_dir, context):
     script = find_hooks().get(hook_name)
     if script is None:
         logging.debug('No hooks found')
-        return
+        return EXIT_SUCCESS
     return run_script_with_context(script, project_dir, context)

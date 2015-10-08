@@ -28,7 +28,7 @@ from .exceptions import (
 )
 from .find import find_template
 from .utils import make_sure_path_exists, work_in
-from .hooks import run_hook
+from .hooks import run_hook, EXIT_SUCCESS
 
 
 def copy_without_render(path, context):
@@ -257,7 +257,10 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
     # run pre-gen hook from repo_dir
     with work_in(repo_dir):
-        run_hook('pre_gen_project', project_dir, context)
+        if run_hook('pre_gen_project', project_dir, context) != EXIT_SUCCESS:
+            logging.error("Stopping generation because pre_gen_project"
+                          " hook script didn't exit sucessfully")
+            return
 
     with work_in(template_dir):
         env = Environment(keep_trailing_newline=True)
