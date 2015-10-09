@@ -26,6 +26,7 @@ from .replay import dump, load
 logger = logging.getLogger(__name__)
 
 builtin_abbreviations = {
+    'ssh@gh': 'git@github.com:{0}.git',
     'gh': 'https://github.com/{0}.git',
     'bb': 'https://bitbucket.org/{0}',
 }
