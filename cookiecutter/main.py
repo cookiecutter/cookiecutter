@@ -131,7 +131,7 @@ def cookiecutter(
         dump(template_name, context)
 
     # Create project from local context and project template.
-    generate_files(
+    return generate_files(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
