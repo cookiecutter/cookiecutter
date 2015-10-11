@@ -159,7 +159,9 @@ def test_return_rendered_project_dir():
         repo_dir=os.path.abspath('tests/test-generate-files'),
         output_dir='tests/custom_output_dir'
     )
-    assert project_dir == 'tests/custom_output_dir/inputpizzä/'
+    assert project_dir == os.path.abspath(
+        'tests/custom_output_dir/inputpizzä/'
+    )
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
