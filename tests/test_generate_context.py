@@ -101,13 +101,69 @@ def test_generate_context_with_json_decoding_error():
     assert path in str(excinfo.value)
 
 
+def bool_context_data():
+    context = (
+        {
+            'context_file': 'tests/test-generate-context/test-bool.json'
+        },
+        {
+            'test-bool': {'default_true': True, 'default_false': False}
+        }
+    )
+
+    context_with_default = (
+        {
+            'context_file': 'tests/test-generate-context/test-bool.json',
+            'default_context': {'default_true': False}
+        },
+        {
+            'test-bool': {'default_true': False, 'default_false': False}
+        }
+    )
+
+    context_with_extra = (
+        {
+            'context_file': 'tests/test-generate-context/test-bool.json',
+            'extra_context': {'default_true': True}
+        },
+        {
+            'test-bool': {'default_true': True, 'default_false': False}
+        }
+    )
+
+    context_with_default_and_extra = (
+        {
+            'context_file': 'tests/test-generate-context/test-bool.json',
+            'default_context': {'default_true': False},
+            'extra_context': {'default_false': True}
+        },
+        {
+            'test-bool': {'default_true': False, 'default_false': True}
+        }
+    )
+
+    yield context
+    yield context_with_default
+    yield context_with_extra
+    yield context_with_default_and_extra
+
+
+@pytest.mark.usefixtures('clean_system')
+@pytest.mark.parametrize('input_params, expected_context', bool_context_data())
+def test_generate_bool_context(input_params, expected_context):
+    """
+    Test the generated context for several input parameters against the
+    according expected context.
+    """
+    assert generate.generate_context(**input_params) == expected_context
+
+
 @pytest.fixture
 def default_context():
     return {
         'not_in_template': 'foobar',
         'project_name': 'Kivy Project',
         'orientation': 'landscape',
-        'is_alive': False,
     }
 
 
@@ -135,7 +191,6 @@ def test_choices(context_file, default_context, extra_context):
             ('project_name', 'Kivy Project'),
             ('repo_name', '{{cookiecutter.project_name|lower}}'),
             ('orientation', ['landscape', 'all', 'portrait']),
-            ('is_alive', False),
         ])
     }
 
@@ -154,7 +209,6 @@ def template_context():
         ('project_name', 'Kivy Project'),
         ('repo_name', '{{cookiecutter.project_name|lower}}'),
         ('orientation', ['all', 'landscape', 'portrait']),
-        ('is_alive', True),
     ])
 
 
