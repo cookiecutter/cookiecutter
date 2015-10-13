@@ -163,7 +163,7 @@ def default_context():
     return {
         'not_in_template': 'foobar',
         'project_name': 'Kivy Project',
-        'orientation': 'landscape',
+        'orientation': 'landscape'
     }
 
 
