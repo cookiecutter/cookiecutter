@@ -32,7 +32,8 @@ requirements = [
     'jinja2>=2.7',
     'PyYAML>=3.10',
     'click>=5.0',
-    'whichcraft>=0.1.1'
+    'whichcraft>=0.1.1',
+    'virtualenv>=13.1.2'
 ]
 
 long_description = readme + '\n\n' + history

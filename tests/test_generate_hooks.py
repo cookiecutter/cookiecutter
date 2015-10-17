@@ -60,6 +60,7 @@ def test_run_python_hooks():
     )
     assert os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt')
     assert os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt')
+    assert os.path.exists('tests/test-pyhooks/inputpyhooks/venv/bin/python')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
@@ -72,6 +73,7 @@ def test_run_python_hooks_cwd():
     )
     assert os.path.exists('inputpyhooks/python_pre.txt')
     assert os.path.exists('inputpyhooks/python_post.txt')
+    assert os.path.exists('inputpyhooks/venv/bin/python')
 
 
 def make_test_repo(name):
