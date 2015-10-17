@@ -18,6 +18,7 @@ import tempfile
 from jinja2 import Template
 
 from cookiecutter import utils
+from .exceptions import FailedHookException
 
 
 _HOOKS = [
@@ -69,7 +70,10 @@ def run_script(script_path, cwd='.'):
         shell=run_thru_shell,
         cwd=cwd
     )
-    return proc.wait()
+    exit_status = proc.wait()
+    if exit_status != EXIT_SUCCESS:
+        raise FailedHookException(
+            "Hook script failed (exit status: %d)" % exit_status)
 
 
 def run_script_with_context(script_path, cwd, context):
@@ -91,7 +95,7 @@ def run_script_with_context(script_path, cwd, context):
     ) as temp:
         temp.write(Template(contents).render(**context))
 
-    return run_script(temp.name, cwd)
+    run_script(temp.name, cwd)
 
 
 def run_hook(hook_name, project_dir, context):
@@ -105,5 +109,5 @@ def run_hook(hook_name, project_dir, context):
     script = find_hooks().get(hook_name)
     if script is None:
         logging.debug('No hooks found')
-        return EXIT_SUCCESS
-    return run_script_with_context(script, project_dir, context)
+        return
+    run_script_with_context(script, project_dir, context)
