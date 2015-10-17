@@ -30,6 +30,8 @@ def remove_additional_dirs(request):
                 utils.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
             utils.rmtree('boilerplate')
+        if os.path.isdir('python_boilerplate'):
+            utils.rmtree('python_boilerplate')
     request.addfinalizer(fin_remove_additional_dirs)
 
 
@@ -64,4 +66,4 @@ def test_cookiecutter_pypackage_git():
     # Just skip all the prompts
     proc.communicate(input=b'\n\n\n\n\n\n\n\n\n\n\n\n')
 
-    assert os.path.isfile('boilerplate/README.rst')
+    assert os.path.isfile('python_boilerplate/README.rst')
