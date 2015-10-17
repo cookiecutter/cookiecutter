@@ -16,8 +16,11 @@ Other Changes:
 
 * Enable py35 support on Travis by using Python 3.5 as base Python (`@maiksensi`_ / #540)
 * If a filename is empty, do not generate. Log instead (`@iljabauer`_ / #444)
+* Fix tests as per last changes in `cookiecutter-pypackage`_, thanks to `@eliasdorneles`_ (#555).
 
+.. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@iljabauer`: https://github.com/iljabauer
+.. _`@eliasdorneles`: https://github.com/eliasdorneles
 
 1.1.0 (2015-09-26) Snickerdoodle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
