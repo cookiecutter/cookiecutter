@@ -37,11 +37,7 @@ def remove_additional_folders(request):
 
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_cookiecutter_git(monkeypatch):
-    monkeypatch.setattr(
-        'cookiecutter.prompt.read_user_variable',
-        lambda var, default: default
-    )
+def test_cookiecutter_git():
     main.cookiecutter(
         'https://github.com/audreyr/cookiecutter-pypackage.git',
         no_input=True
