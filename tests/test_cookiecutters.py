@@ -25,12 +25,10 @@ def remove_additional_dirs(request):
     Remove special directories which are creating during the tests.
     """
     def fin_remove_additional_dirs():
-        if os.path.isdir('cookiecutter-pypackage'):
-            utils.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('cookiecutter-jquery'):
-            utils.rmtree('cookiecutter-jquery')
-        if os.path.isdir('boilerplate'):
-            utils.rmtree('boilerplate')
+        for path in ('cookiecutter-pypackage', 'cookiecutter-jquery',
+                     'python_boilerplate', 'boilerplate'):
+            if os.path.isdir(path):
+                utils.rmtree(path)
     request.addfinalizer(fin_remove_additional_dirs)
 
 
@@ -39,7 +37,7 @@ def bake_data():
         'git clone https://github.com/audreyr/cookiecutter-pypackage.git',
         'cookiecutter --no-input cookiecutter-pypackage/',
         'cookiecutter-pypackage',
-        'boilerplate/README.rst'
+        'python_boilerplate/README.rst'
     )
 
     jquery_data = (

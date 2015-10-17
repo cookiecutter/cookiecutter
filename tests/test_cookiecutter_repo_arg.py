@@ -26,8 +26,8 @@ def remove_additional_folders(request):
     def fin_remove_additional_folders():
         if os.path.isdir('cookiecutter-pypackage'):
             utils.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('boilerplate'):
-            utils.rmtree('boilerplate')
+        if os.path.isdir('python_boilerplate'):
+            utils.rmtree('python_boilerplate')
         if os.path.isdir('cookiecutter-trytonmodule'):
             utils.rmtree('cookiecutter-trytonmodule')
         if os.path.isdir('module_name'):
@@ -37,20 +37,19 @@ def remove_additional_folders(request):
 
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_cookiecutter_git(monkeypatch):
-    monkeypatch.setattr(
-        'cookiecutter.prompt.read_user_variable',
-        lambda var, default: default
+def test_cookiecutter_git():
+    main.cookiecutter(
+        'https://github.com/audreyr/cookiecutter-pypackage.git',
+        no_input=True
     )
-    main.cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
     clone_dir = os.path.join(
         os.path.expanduser('~/.cookiecutters'),
         'cookiecutter-pypackage'
     )
     assert os.path.exists(clone_dir)
-    assert os.path.isdir('boilerplate')
-    assert os.path.isfile('boilerplate/README.rst')
-    assert os.path.exists('boilerplate/setup.py')
+    assert os.path.isdir('python_boilerplate')
+    assert os.path.isfile('python_boilerplate/README.rst')
+    assert os.path.exists('python_boilerplate/setup.py')
 
 
 @skipif_no_network
