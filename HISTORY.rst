@@ -45,6 +45,7 @@ Features:
 * Add replay feature, thanks to `@hackebrot`_ (#501).
 * Be more precise when raising an error for an invalid user config file, thanks to `@vaab`_ and `@hackebrot`_ (#378, #528).
 * Added official Python 3.5 support, thanks to `@pydanny`_ and `@hackebrot`_ (#522).
+* Added support for *choice* variables and switch to click style prompts, thanks to `@hackebrot`_ (#441, #455).
 
 Other Changes:
 
