@@ -15,6 +15,10 @@ New Feature:
 
 * Returns rendered project dir, thanks to `@hackebrot`_ (#553)
 
+Bug Fixes:
+
+* Factor in *choice* variables (as introduced in 1.1.0) when using a user config or extra context, thanks to `@ionelmc`_ and `@hackebrot`_ (#536, #542).
+
 Other Changes:
 
 * Enable py35 support on Travis by using Python 3.5 as base Python (`@maiksensi`_ / #540)
