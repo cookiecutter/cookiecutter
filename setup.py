@@ -30,7 +30,7 @@ requirements = [
     'future>=0.15.2',
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
-    'PyYAML>=3.10',
+    'ruamel.yaml>=0.10.12',
     'click>=5.0',
     'whichcraft>=0.1.1'
 ]
