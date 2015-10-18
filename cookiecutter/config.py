@@ -14,7 +14,10 @@ import logging
 import os
 import io
 
-import yaml
+try:
+    import ruamel.yaml as yaml
+except ImportError:
+    import yaml
 
 from .exceptions import ConfigDoesNotExistException
 from .exceptions import InvalidConfiguration
