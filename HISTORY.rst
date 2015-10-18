@@ -3,7 +3,7 @@
 History
 -------
 
-1.2.0 (2015-10-18) Zimtsterne
+1.2.1 (2015-10-18) Zimtsterne
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Zimtsterne are cinnamon star cookies*
@@ -27,6 +27,8 @@ Other Changes:
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@iljabauer`: https://github.com/iljabauer
 .. _`@eliasdorneles`: https://github.com/eliasdorneles
+
+*Why 1.2.1 instead of 1.2.0? There was a problem in the distribution that we pushed to PyPI. Since you can't replace previous files uploaded to PyPI, we deleted the files on PyPI and released 1.2.1.*
 
 
 1.1.0 (2015-09-26) Snickerdoodle
