@@ -3,24 +3,30 @@
 History
 -------
 
-1.2.0 (2015-10-03) ???
+1.3.0 (2015-10-03) ???
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal of this release is to add extra content as a command-line argument.
 
-Features:
+1.2 (2015-10-18) Name TBD
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* ???
+New Feature:
+
+* Returns rendered project dir, thanks to `@hackebrot`_ (#553)
 
 Other Changes:
 
 * Enable py35 support on Travis by using Python 3.5 as base Python (`@maiksensi`_ / #540)
 * If a filename is empty, do not generate. Log instead (`@iljabauer`_ / #444)
 * Fix tests as per last changes in `cookiecutter-pypackage`_, thanks to `@eliasdorneles`_ (#555).
+* Removed deprecated cookiecutter-pylibrary-minimal from the list, thanks to `@ionelmc`_ (#556)
+* Moved to using `rualmel.yaml` instead of `PyYAML`, thanks to `@pydanny`_ (#557)
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`@iljabauer`: https://github.com/iljabauer
 .. _`@eliasdorneles`: https://github.com/eliasdorneles
+
 
 1.1.0 (2015-09-26) Snickerdoodle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
