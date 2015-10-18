@@ -264,7 +264,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
             shutil.rmtree(project_dir, ignore_errors=True)
             logging.error("Stopping generation because pre_gen_project"
                           " hook script didn't exit sucessfully")
-            return
+            raise
 
     with work_in(template_dir):
         env = Environment(keep_trailing_newline=True)
