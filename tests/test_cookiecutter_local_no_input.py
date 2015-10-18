@@ -74,3 +74,10 @@ def test_cookiecutter_templated_context():
         no_input=True
     )
     assert os.path.isdir('fake-project-templated')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+def test_cookiecutter_no_input_return_project_dir():
+    """Call `cookiecutter()` with `no_input=True`."""
+    project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
+    assert project_dir == os.path.abspath('fake-project')

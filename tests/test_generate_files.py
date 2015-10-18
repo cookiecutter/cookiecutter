@@ -150,6 +150,21 @@ def test_generate_files_output_dir():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_return_rendered_project_dir():
+    os.mkdir('tests/custom_output_dir')
+    project_dir = generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files'),
+        output_dir='tests/custom_output_dir'
+    )
+    assert project_dir == os.path.abspath(
+        'tests/custom_output_dir/inputpizzä/'
+    )
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_permissions():
     """
     simple.txt and script.sh should retain their respective 0o644 and
