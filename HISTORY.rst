@@ -8,6 +8,16 @@ History
 
 The goal of this release is to add extra content as a command-line argument.
 
+Other Changes:
+
+* Added more cookiecutter templates to the mix:
+
+  * `cookiecutter-octoprint-plugin`_ by `@foosel`_ (#560)
+
+.. _`@foosel`: https://github.com/foosel
+
+.. _`cookiecutter-octoprint-plugin`: https://github.com/OctoPrint/cookiecutter-octoprint-plugin
+
 
 1.2.1 (2015-10-18) Zimtsterne
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
