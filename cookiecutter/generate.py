@@ -28,7 +28,7 @@ from .exceptions import (
     OutputDirExistsException
 )
 from .find import find_template
-from .utils import make_sure_path_exists, work_in
+from .utils import make_sure_path_exists, work_in, rmtree
 from .hooks import run_hook
 
 
@@ -223,6 +223,20 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
+def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
+    """
+    Run hook from repo directory, cleaning up project directory if hook fails
+    """
+    with work_in(repo_dir):
+        try:
+            run_hook('pre_gen_project', project_dir, context)
+        except FailedHookException:
+            rmtree(project_dir)
+            logging.error("Stopping generation because %s"
+                          " hook script didn't exit sucessfully" % hook_name)
+            raise
+
+
 def generate_files(repo_dir, context=None, output_dir='.',
                    overwrite_if_exists=False):
     """
@@ -256,15 +270,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     project_dir = os.path.abspath(project_dir)
     logging.debug('project_dir is {0}'.format(project_dir))
 
-    # run pre-gen hook from repo_dir
-    with work_in(repo_dir):
-        try:
-            run_hook('pre_gen_project', project_dir, context)
-        except FailedHookException:
-            shutil.rmtree(project_dir, ignore_errors=True)
-            logging.error("Stopping generation because pre_gen_project"
-                          " hook script didn't exit sucessfully")
-            raise
+    _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context)
 
     with work_in(template_dir):
         env = Environment(keep_trailing_newline=True)
@@ -320,8 +326,6 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 logging.debug('f is {0}'.format(f))
                 generate_file(project_dir, infile, context, env)
 
-    # run post-gen hook from repo_dir
-    with work_in(repo_dir):
-        run_hook('post_gen_project', project_dir, context)
+    _run_hook_from_repo_dir(repo_dir, 'post_gen_project', project_dir, context)
 
     return project_dir
