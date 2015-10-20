@@ -229,7 +229,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
     """
     with work_in(repo_dir):
         try:
-            run_hook('pre_gen_project', project_dir, context)
+            run_hook(hook_name, project_dir, context)
         except FailedHookException:
             rmtree(project_dir)
             logging.error("Stopping generation because %s"
