@@ -171,6 +171,7 @@ Python
 * `cookiecutter-tapioca`_: A Template for building `tapioca-wrapper`_ based web API wrappers (clients).
 * `cookiecutter-sublime-text-3-plugin`_: Sublime Text 3 plugin template with custom settings, commands, key bindings and main menu.
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
+* `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -294,6 +295,8 @@ HTML
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
 .. _`cookiecutter-wagtail`: https://github.com/torchbox/cookiecutter-wagtail
 .. _`Wagtail`: https://github.com/torchbox/wagtail
+.. _`cookiecutter-octoprint-plugin`: https://github.com/OctoPrint/cookiecutter-octoprint-plugin
+.. _`OctoPrint`: https://github.com/foosel/OctoPrint
 
 Scala
 ~~~~~
