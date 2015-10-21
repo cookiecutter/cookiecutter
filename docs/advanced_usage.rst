@@ -44,10 +44,13 @@ Example: Validating template variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here is an example of script that validates a template variable
-before generating the project, to be used as ``hooks/pre_gen_project.py``::
+before generating the project, to be used as ``hooks/pre_gen_project.py``:
 
+.. code-block:: python
 
-    import re, sys
+    import re
+    import sys
+
 
     MODULE_REGEX = r'^[_a-zA-Z][_a-zA-Z0-9]+$'
 
