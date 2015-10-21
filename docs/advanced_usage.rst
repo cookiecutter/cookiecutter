@@ -36,9 +36,9 @@ on Windows) can be a quicker alternative.
 
 .. note::
     Make sure your hook scripts work in a robust manner. If a hook script fails
-    (that is, if it finishes with an exit status that is not ``0``), the
-    project generation will stop and the generated directory will be cleaned
-    up.
+    (that is, `if it finishes with a nonzero exit status
+    <https://docs.python.org/2/library/sys.html#sys.exit>`_), the project
+    generation will stop and the generated directory will be cleaned up.
 
 Example: Validating template variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
