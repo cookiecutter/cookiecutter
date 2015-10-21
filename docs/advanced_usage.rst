@@ -35,10 +35,30 @@ template to only be run on a single platform, a shell script (or `.bat` file
 on Windows) can be a quicker alternative.
 
 .. note::
-    Make sure your hook scripts work in a robust manner.  If a hook script
-    fails (that is, if it finishes with an exit status that is not one of
-    success), the project generation will stop and the generated directory will
-    be cleaned up.
+    Make sure your hook scripts work in a robust manner. If a hook script fails
+    (that is, if it finishes with an exit status that is not ``0``), the
+    project generation will stop and the generated directory will be cleaned
+    up.
+
+Example: Validating template variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here is an example of script that validates a template variable
+before generating the project, to be used as ``hooks/pre_gen_project.py``::
+
+
+    import re, sys
+
+    MODULE_REGEX = r'^[_a-zA-Z][_a-zA-Z0-9]+$'
+
+    module_name = '{{ cookiecutter.module_name }}'
+
+    if not re.match(MODULE_REGEX, module_name):
+        print('ERROR: %s is not a valid Python module name!' % module_name)
+
+        # exits with status 1 to indicate failure
+        sys.exit(1)
+
 
 User Config (0.7.0+)
 ----------------------
