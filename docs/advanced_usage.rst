@@ -34,6 +34,12 @@ hooks, as these can be run on any platform. However, if you intend for your
 template to only be run on a single platform, a shell script (or `.bat` file
 on Windows) can be a quicker alternative.
 
+.. note::
+    Make sure your hook scripts work in a robust manner.  If a hook script
+    fails (that is, if it finishes with an exit status that is not one of
+    success), the project generation will stop and the generated directory will
+    be cleaned up.
+
 User Config (0.7.0+)
 ----------------------
 
