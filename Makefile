@@ -1,4 +1,15 @@
 .PHONY: clean-pyc clean-build docs
+define BROWSER_PYSCRIPT
+import os, webbrowser, sys
+try:
+	from urllib import pathname2url
+except:
+	from urllib.request import pathname2url
+
+webbrowser.open("file://" + pathname2url(os.path.abspath(sys.argv[1])))
+endef
+export BROWSER_PYSCRIPT
+BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 help:
 	@echo "clean-build - remove build artifacts"
@@ -35,7 +46,7 @@ test-all:
 
 coverage:
 	tox -e cov-report
-	open htmlcov/index.html
+	$(BROWSER) htmlcov/index.html
 
 docs:
 	rm -f docs/cookiecutter.rst
@@ -44,7 +55,10 @@ docs:
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	make contributing
-	open docs/_build/html/index.html
+	$(BROWSER) docs/_build/html/index.html
+
+servedocs: docs
+	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
 release: clean
 	python setup.py sdist bdist_wheel upload

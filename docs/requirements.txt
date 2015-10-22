@@ -1,0 +1,2 @@
+watchdog==0.8.3
+sphinx-rtd-theme==0.1.9
