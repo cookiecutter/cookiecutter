@@ -75,6 +75,13 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
         )
 
     try:
+
+        # If you _need_ to support a local template in a directory
+        # called 'help', use a qualified path to the directory.
+        if template == u'help':
+            click.echo(click.get_current_context().get_help())
+            sys.exit(0)
+
         cookiecutter(
             template, checkout, no_input,
             replay=replay,
