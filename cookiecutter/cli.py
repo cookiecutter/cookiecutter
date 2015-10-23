@@ -30,7 +30,7 @@ def version_msg():
     return message.format(location, python_version)
 
 
-@click.command()
+@click.command(context_settings=dict(help_option_names=[u'-h', u'--help']))
 @click.version_option(__version__, u'-V', u'--version', message=version_msg())
 @click.argument(u'template')
 @click.option(
