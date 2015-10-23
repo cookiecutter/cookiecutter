@@ -10,7 +10,8 @@ The goal of this release is to add extra content as a command-line argument.
 
 Other Changes:
 
-* Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles `_ (#562)
+* Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ (#562)
+* Added additional help entrypoints, thanks to `@michaeljoseph`_ (#563, #492)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-octoprint-plugin`_ by `@foosel`_ (#560)
