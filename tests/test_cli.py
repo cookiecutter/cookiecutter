@@ -203,3 +203,14 @@ def test_cli_output_dir(mocker, output_dir_flag, output_dir):
         overwrite_if_exists=False,
         output_dir=output_dir
     )
+
+
+@pytest.fixture(params=['-h', '--help', 'help'])
+def help_cli_flag(request):
+    return request.param
+
+
+def test_cli_help(help_cli_flag):
+    result = runner.invoke(main, [help_cli_flag])
+    assert result.exit_code == 0
+    assert result.output.startswith('Usage')
