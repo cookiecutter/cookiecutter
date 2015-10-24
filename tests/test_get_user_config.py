@@ -93,3 +93,31 @@ def test_get_user_config_nonexistent():
     Get config from a nonexistent ~/.cookiecutterrc file
     """
     assert config.get_user_config() == config.DEFAULT_CONFIG
+
+
+@pytest.fixture
+def custom_user_config():
+    return {
+        'cookiecutters_dir': '/foo/bar/some-path-to-templates',
+        'replay_dir': '/foo/bar/some-path-to-replay-files',
+        'default_context': {
+            'full_name': 'Cookiemonster',
+            'github_username': 'hackebrot'
+        },
+        'abbreviations': {
+            'cookiedozer': 'https://github.com/hackebrot/cookiedozer.git',
+        }
+    }
+
+
+@pytest.fixture
+def custom_user_config_path(tmpdir, custom_user_config):
+    user_config_file = tmpdir.join('user_config')
+
+    user_config_file.write(config.yaml.dump(custom_user_config))
+    return str(user_config_file)
+
+
+def test_specify_config_path(custom_user_config_path, custom_user_config):
+    user_config = config.get_user_config(custom_user_config_path)
+    assert user_config == custom_user_config
