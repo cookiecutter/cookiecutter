@@ -96,7 +96,7 @@ def test_get_user_config_nonexistent():
 
 
 @pytest.fixture
-def custom_user_config():
+def custom_config():
     return {
         'cookiecutters_dir': '/foo/bar/some-path-to-templates',
         'replay_dir': '/foo/bar/some-path-to-replay-files',
@@ -111,17 +111,21 @@ def custom_user_config():
 
 
 @pytest.fixture
-def custom_user_config_path(tmpdir, custom_user_config):
+def custom_config_path(tmpdir, custom_config):
     user_config_file = tmpdir.join('user_config')
 
-    user_config_file.write(config.yaml.dump(custom_user_config))
+    user_config_file.write(config.yaml.dump(custom_config))
     return str(user_config_file)
 
 
-def test_specify_config_path(custom_user_config_path, custom_user_config):
-    user_config = config.get_user_config(custom_user_config_path)
-    assert user_config == custom_user_config
+def test_specify_config_path(mocker, custom_config_path, custom_config):
+    spy_get_config = mocker.spy(config, 'get_config')
+
+    user_config = config.get_user_config(custom_config_path)
+    spy_get_config.assert_called_once_with(custom_config_path)
+
+    assert user_config == custom_config
 
 
 def test_default_config_path(user_config_path):
-    assert config.DEFAULT_CONFIG_FILE == user_config_path
+    assert config.USER_CONFIG_PATH == user_config_path
