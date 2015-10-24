@@ -129,3 +129,11 @@ def test_specify_config_path(mocker, custom_config_path, custom_config):
 
 def test_default_config_path(user_config_path):
     assert config.USER_CONFIG_PATH == user_config_path
+
+
+def test_default_config_from_env_variable(
+        monkeypatch, custom_config_path, custom_config):
+    monkeypatch.setenv('COOKIECUTTER_CONFIG', custom_config_path)
+
+    user_config = config.get_user_config()
+    assert user_config == custom_config
