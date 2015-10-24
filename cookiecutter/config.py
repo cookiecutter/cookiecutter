@@ -68,6 +68,11 @@ def get_user_config(config_path=None):
     if config_path:
         return get_config(config_path)
 
-    if os.path.exists(USER_CONFIG_PATH):
-        return get_config(USER_CONFIG_PATH)
+    default_config_path = os.environ.get(
+        'COOKIECUTTER_CONFIG',
+        USER_CONFIG_PATH
+    )
+
+    if os.path.exists(default_config_path):
+        return get_config(default_config_path)
     return copy.copy(DEFAULT_CONFIG)
