@@ -121,3 +121,7 @@ def custom_user_config_path(tmpdir, custom_user_config):
 def test_specify_config_path(custom_user_config_path, custom_user_config):
     user_config = config.get_user_config(custom_user_config_path)
     assert user_config == custom_user_config
+
+
+def test_default_config_path(user_config_path):
+    assert config.DEFAULT_CONFIG_FILE == user_config_path
