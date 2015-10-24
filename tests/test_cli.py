@@ -214,3 +214,32 @@ def test_cli_help(help_cli_flag):
     result = runner.invoke(main, [help_cli_flag])
     assert result.exit_code == 0
     assert result.output.startswith('Usage')
+
+
+@pytest.fixture
+def user_config_path(tmpdir):
+    return str(tmpdir.join('tests/config.yaml'))
+
+
+def test_user_config(mocker, user_config_path):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--config',
+        user_config_path
+    ])
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir='.',
+        config_file=user_config_path
+    )
