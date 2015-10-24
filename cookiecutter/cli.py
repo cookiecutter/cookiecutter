@@ -59,8 +59,9 @@ def version_msg():
     u'-o', u'--output-dir', default='.', type=click.Path(),
     help=u'Where to output the generated project dir into'
 )
+@click.option(u'--config', type=click.Path(), help=u'User configuration file')
 def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
-         output_dir):
+         output_dir, config):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
@@ -86,7 +87,8 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
             template, checkout, no_input,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
-            output_dir=output_dir
+            output_dir=output_dir,
+            config_file=config
         )
     except (OutputDirExistsException,
             InvalidModeException, FailedHookException) as e:

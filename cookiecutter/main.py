@@ -71,7 +71,8 @@ def expand_abbreviations(template, config_dict):
 
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
-        replay=False, overwrite_if_exists=False, output_dir='.'):
+        replay=False, overwrite_if_exists=False, output_dir='.',
+        config_file=None):
     """
     API equivalent to using Cookiecutter at the command line.
 

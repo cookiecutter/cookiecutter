@@ -80,7 +80,8 @@ def test_cli_replay(mocker):
         False,
         replay=True,
         overwrite_if_exists=False,
-        output_dir='.'
+        output_dir='.',
+        config_file=None
     )
 
 
@@ -114,7 +115,8 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         True,
         replay=True,
         overwrite_if_exists=False,
-        output_dir='.'
+        output_dir='.',
+        config_file=None
     )
 
 
@@ -147,7 +149,8 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         False,
         replay=True,
         overwrite_if_exists=True,
-        output_dir='.'
+        output_dir='.',
+        config_file=None
     )
 
 
@@ -201,7 +204,8 @@ def test_cli_output_dir(mocker, output_dir_flag, output_dir):
         False,
         replay=False,
         overwrite_if_exists=False,
-        output_dir=output_dir
+        output_dir=output_dir,
+        config_file=None
     )
 
 
