@@ -95,7 +95,7 @@ def cookiecutter(
 
     # Get user config from ~/.cookiecutterrc or equivalent
     # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
-    config_dict = get_user_config()
+    config_dict = get_user_config(config_file=config_file)
 
     template = expand_abbreviations(template, config_dict)
 

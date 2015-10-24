@@ -60,13 +60,13 @@ def get_config(config_path):
     return config_dict
 
 
-def get_user_config(config_path=None):
+def get_user_config(config_file=None):
     """Retrieve the config from the given file or from the user's
     ~/.cookiecutterrc, if it exists. Otherwise return the defaults.
     """
 
-    if config_path:
-        return get_config(config_path)
+    if config_file:
+        return get_config(config_file)
 
     default_config_path = os.environ.get(
         'COOKIECUTTER_CONFIG',
