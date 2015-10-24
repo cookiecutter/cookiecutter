@@ -66,8 +66,19 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
 User Config (0.7.0+)
 ----------------------
 
-If you use Cookiecutter a lot, you'll find it useful to have a
-`.cookiecutterrc` file in your home directory like this:
+If you use Cookiecutter a lot, you'll find it useful to have a user config
+file. By default Cookiecutter tries to read setting from a `.cookiecutterrc`
+file in your home directory.
+
+From version 1.3.0 you can also specify a config file on the command line via ``--config``::
+
+    $ cookiecutter --config /home/audreyr/my-custom-config.yaml cookiecutter-pypackage
+
+Or you can set the ``COOKIECUTTER_CONFIG`` environment variable::
+
+    $ export COOKIECUTTER_CONFIG=/home/audreyr/my-custom-config.yaml
+
+Example user config:
 
 .. code-block:: yaml
 
