@@ -25,6 +25,9 @@ from .exceptions import InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 
+# TODO: test on windows...
+USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+
 DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
     'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
@@ -57,14 +60,13 @@ def get_config(config_path):
     return config_dict
 
 
-def get_user_config():
-    """
-    Retrieve config from the user's ~/.cookiecutterrc, if it exists.
-    Otherwise, return None.
+def get_user_config(config_path=None):
+    """Retrieve the config from the given file or from the user's
+    ~/.cookiecutterrc, if it exists. Otherwise return the defaults.
     """
 
-    # TODO: test on windows...
-    USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+    if config_path:
+        return get_config(config_path)
 
     if os.path.exists(USER_CONFIG_PATH):
         return get_config(USER_CONFIG_PATH)
