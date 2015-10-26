@@ -15,10 +15,13 @@ Other Changes:
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-octoprint-plugin`_ by `@foosel`_ (#560)
+  * `wagtail-cookiecutter-foundation`_ by `@chrisdev`_, et al. (#566)
 
 .. _`@foosel`: https://github.com/foosel
+.. _`@chrisdev`: https://github.com/chrisdev
 
 .. _`cookiecutter-octoprint-plugin`: https://github.com/OctoPrint/cookiecutter-octoprint-plugin
+.. _`wagtail-cookiecutter-foundation`: https://github.com/chrisdev/wagtail-cookiecutter-foundation
 
 
 1.2.1 (2015-10-18) Zimtsterne
