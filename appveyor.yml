@@ -6,19 +6,31 @@ environment:
     - PYTHON: "C:\\Python27"
       TOX_ENV: "py27"
 
+    - PYTHON: "C:\\Python27-x64"
+      TOX_ENV: "py27"
+
     - PYTHON: "C:\\Python33"
+      TOX_ENV: "py33"
+
+    - PYTHON: "C:\\Python33-x64"
       TOX_ENV: "py33"
 
     - PYTHON: "C:\\Python34"
       TOX_ENV: "py34"
 
+    - PYTHON: "C:\\Python34-x64"
+      TOX_ENV: "py34"
+
     - PYTHON: "C:\\Python35"
+      TOX_ENV: "py35"
+
+    - PYTHON: "C:\\Python35-x64"
       TOX_ENV: "py35"
 
 
 init:
   - "%PYTHON%/python -V"
-  - "%PYTHON%/python -c \"import struct;print( 8 * struct.calcsize(\'P\'))\""
+  - "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 install:
   - "%PYTHON%/Scripts/easy_install -U pip"
