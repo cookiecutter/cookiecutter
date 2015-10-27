@@ -17,15 +17,15 @@ from future.utils import iteritems
 from jinja2.environment import Environment
 
 
-def read_user_variable(var_name, default_value):
-    """Prompt the user for the given variable and return the entered value
+def read_user_variable(text, default_value):
+    """Prompt the user with the given text and return the entered value
     or the given default.
 
-    :param str var_name: Variable of the context to query the user
+    :param str text: Text to query the user with
     :param default_value: Value that will be returned if no input happens
     """
     # Please see http://click.pocoo.org/4/api/#click.prompt
-    return click.prompt(var_name, default=default_value)
+    return click.prompt(text, default=default_value)
 
 
 def read_user_yes_no(question, default_value):
@@ -45,12 +45,12 @@ def read_user_yes_no(question, default_value):
     )
 
 
-def read_user_choice(var_name, options):
-    """Prompt the user to choose from several options for the given variable.
+def read_user_choice(text, options):
+    """Prompt the user to choose from several options
 
     The first item will be returned if no input happens.
 
-    :param str var_name: Variable as specified in the context
+    :param str text: Text to query the user with
     :param list options: Sequence of options that are available to select from
     :return: Exactly one item of ``options`` that has been chosen by the user
     """
@@ -69,7 +69,7 @@ def read_user_choice(var_name, options):
 
     choice_lines = [u'{} - {}'.format(*c) for c in choice_map.items()]
     prompt = u'\n'.join((
-        u'Select {}:'.format(var_name),
+        u'{}:'.format(text),
         u'\n'.join(choice_lines),
         u'Choose from {}'.format(u', '.join(choices))
     ))
@@ -88,7 +88,7 @@ def render_variable(env, raw, cookiecutter_dict):
     return rendered_template
 
 
-def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
+def prompt_choice_for_config(cookiecutter_dict, env, prompt, options, no_input):
     """Prompt the user which option to choose from the given. Each of the
     possible choices is rendered beforehand.
     """
@@ -98,7 +98,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
     if no_input:
         return rendered_options[0]
-    return read_user_choice(key, rendered_options)
+    return read_user_choice(prompt, rendered_options)
 
 
 def prompt_for_config(context, no_input=False):
@@ -118,15 +118,23 @@ def prompt_for_config(context, no_input=False):
 
         if isinstance(raw, list):
             # We are dealing with a choice variable
+            try:
+                prompt = context[u'cookiecutter']['_prompt'][key]
+            except KeyError:
+                prompt = u'Select {}'.format(key)
             val = prompt_choice_for_config(
-                cookiecutter_dict, env, key, raw, no_input
+                cookiecutter_dict, env, prompt, raw, no_input
             )
         else:
             # We are dealing with a regular variable
             val = render_variable(env, raw, cookiecutter_dict)
 
             if not no_input:
-                val = read_user_variable(key, val)
+                try:
+                    prompt = context[u'cookiecutter']['_prompt'][key]
+                except KeyError:
+                    prompt = key
+                val = read_user_variable(prompt, val)
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict
