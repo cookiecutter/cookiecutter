@@ -103,6 +103,8 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
         msg = "'{0}' is not installed.".format(repo_type)
         raise VCSNotInstalled(msg)
 
+    if repo_url.endswith('/'):
+        repo_url = repo_url[:-1]
     tail = os.path.split(repo_url)[1]
     if repo_type == 'git':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir,
