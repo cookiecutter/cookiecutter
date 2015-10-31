@@ -26,14 +26,10 @@ except KeyError:
 else:
     no_network = True
 
-# For some reason pytest incorrectly uses the first reason text regardless of
-# which condition matches. Using a unified message for now
-# travis_reason = 'Works locally with tox but fails on Travis.'
-# no_network_reason = 'Needs a network connection to GitHub.'
-reason = (
-    'Fails on Travis or else there is no network connection to '
-    'GitHub/Bitbucket.'
+skipif_travis = pytest.mark.skipif(
+    travis, reason='Works locally with tox but fails on Travis.'
 )
 
-skipif_travis = pytest.mark.skipif(travis, reason=reason)
-skipif_no_network = pytest.mark.skipif(no_network, reason=reason)
+skipif_no_network = pytest.mark.skipif(
+    no_network, reason='Needs a network connection to GitHub/Bitbucket.'
+)
