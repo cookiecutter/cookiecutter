@@ -48,4 +48,8 @@ def loads(config_str):
     config = {}
     config.update(find_simple(config_str))
     config.update(find_nested(config_str))
+
+    if config_str and not config:
+        raise ValueError('Unable to find valid config values')
+
     return config
