@@ -14,13 +14,9 @@ import logging
 import os
 import io
 
-try:
-    import ruamel.yaml as yaml
-except ImportError:
-    import yaml
-
 from .exceptions import ConfigDoesNotExistException
 from .exceptions import InvalidConfiguration
+from . import config_parser
 
 
 logger = logging.getLogger(__name__)
@@ -43,16 +39,14 @@ def get_config(config_path):
     logger.debug('config_path is {0}'.format(config_path))
     with io.open(config_path, encoding='utf-8') as file_handle:
         try:
-            yaml_dict = yaml.safe_load(file_handle)
-        except yaml.scanner.ScannerError as e:
+            user_dict = config_parser.loads(file_handle.read())
+        except Exception as err:
             raise InvalidConfiguration(
-                '{0} is not a valid YAML file: line {1}: {2}'.format(
-                    config_path,
-                    e.problem_mark.line,
-                    e.problem))
+                '{} is not a valid config file: {}'.format(config_path, err)
+            )
 
     config_dict = copy.copy(DEFAULT_CONFIG)
-    config_dict.update(yaml_dict)
+    config_dict.update(user_dict)
 
     return config_dict
 
