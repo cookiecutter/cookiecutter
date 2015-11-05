@@ -12,6 +12,10 @@ Other Changes:
 
 * Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ (#562)
 * Added additional help entrypoints, thanks to `@michaeljoseph`_ (#563, #492)
+* Added Two Scoops Academy to the README, thanks to `@hackebrot`_ (#576)
+* Now handling trailing slash on URL, thanks to `@ramiroluz`_ (#573, #546)
+* Support for testing x86 and x86-64 architectures on appveyor, thanks to `@maiksensi`_ (#567)
+* Made tests work without installing Cookiecutter, thanks to `@vincentbernat`_ (#550)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-octoprint-plugin`_ by `@foosel`_ (#560)
