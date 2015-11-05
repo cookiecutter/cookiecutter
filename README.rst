@@ -418,6 +418,17 @@ Waiting for a response to an issue/question?
 * Need a fix/feature/release/help urgently, and can't wait? `@audreyr`_ is
   available for hire for consultation or custom development.
 
+Support This Project
+--------------------
+
+This project is maintained by volunteers. Support their efforts by spreading the word about:
+
+.. image:: https://s3.amazonaws.com/tsacademy/images/tsa-logo-250x60-transparent-01.png
+   :name: Two Scoops Academy
+   :align: center
+   :alt: Two Scoops Academy
+   :target: http://www.twoscoops.academy/
+
 Code of Conduct
 ---------------
 
