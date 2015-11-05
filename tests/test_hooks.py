@@ -11,8 +11,9 @@ Tests for `cookiecutter.hooks` module.
 import sys
 import os
 import stat
+import pytest
 
-from cookiecutter import hooks, utils
+from cookiecutter import hooks, utils, exceptions
 
 
 def make_test_repo(name):
@@ -166,3 +167,16 @@ class TestExternalHooks(object):
 
             hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
+
+    def test_run_failing_hook(self):
+        hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
+        tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
+
+        with open(hook_path, 'w') as f:
+            f.write("#!/usr/bin/env python\n")
+            f.write("import sys; sys.exit(1)\n")
+
+        with utils.work_in(self.repo_path):
+            with pytest.raises(exceptions.FailedHookException) as excinfo:
+                hooks.run_hook('pre_gen_project', tests_dir, {})
+            assert 'Hook script failed' in str(excinfo.value)

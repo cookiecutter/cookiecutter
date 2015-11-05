@@ -17,7 +17,7 @@ import click
 from cookiecutter import __version__
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
-    OutputDirExistsException, InvalidModeException
+    OutputDirExistsException, InvalidModeException, FailedHookException
 )
 
 logger = logging.getLogger(__name__)
@@ -88,9 +88,11 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
             overwrite_if_exists=overwrite_if_exists,
             output_dir=output_dir
         )
-    except (OutputDirExistsException, InvalidModeException) as e:
+    except (OutputDirExistsException,
+            InvalidModeException, FailedHookException) as e:
         click.echo(e)
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
