@@ -25,7 +25,6 @@ from .exceptions import InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 
-# TODO: test on windows...
 USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
 
 DEFAULT_CONFIG = {
