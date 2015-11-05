@@ -33,6 +33,19 @@ def test_git_clone():
 
 
 @skipif_no_network
+def test_git_clone_with_trailing_slash():
+    repo_dir = vcs.clone(
+        'https://github.com/audreyr/cookiecutter-pypackage/'
+    )
+
+    assert repo_dir == 'cookiecutter-pypackage'
+    assert os.path.isfile('cookiecutter-pypackage/README.rst')
+
+    if os.path.isdir('cookiecutter-pypackage'):
+        utils.rmtree('cookiecutter-pypackage')
+
+
+@skipif_no_network
 def test_git_clone_checkout():
     repo_dir = vcs.clone(
         'https://github.com/audreyr/cookiecutter-pypackage.git',
