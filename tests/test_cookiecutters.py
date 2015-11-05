@@ -12,6 +12,7 @@ TestJQuery.test_cookiecutter_jquery
 
 from __future__ import unicode_literals
 import os
+import sys
 import subprocess
 import pytest
 
@@ -35,14 +36,16 @@ def remove_additional_dirs(request):
 def bake_data():
     pypackage_data = (
         'git clone https://github.com/audreyr/cookiecutter-pypackage.git',
-        'cookiecutter --no-input cookiecutter-pypackage/',
+        '{0} -m cookiecutter.cli --no-input cookiecutter-pypackage/'.format(
+            sys.executable),
         'cookiecutter-pypackage',
         'python_boilerplate/README.rst'
     )
 
     jquery_data = (
         'git clone https://github.com/audreyr/cookiecutter-jquery.git',
-        'cookiecutter --no-input cookiecutter-jquery/',
+        '{0} -m cookiecutter.cli --no-input cookiecutter-jquery/'.format(
+            sys.executable),
         'cookiecutter-jquery',
         'boilerplate/README.md'
     )

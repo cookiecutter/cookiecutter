@@ -12,6 +12,7 @@ TestExamplesRepoArg.test_cookiecutter_pypackage_git
 
 from __future__ import unicode_literals
 import os
+import sys
 import subprocess
 import pytest
 
@@ -41,7 +42,8 @@ def remove_additional_dirs(request):
 def test_git_branch():
     pypackage_git = 'https://github.com/audreyr/cookiecutter-pypackage.git'
     proc = subprocess.Popen(
-        'cookiecutter -c console-script {0}'.format(pypackage_git),
+        '{0} -m cookiecutter.cli -c console-script {1}'.format(sys.executable,
+                                                               pypackage_git),
         stdin=subprocess.PIPE,
         shell=True
     )
@@ -58,7 +60,8 @@ def test_git_branch():
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_pypackage_git():
     proc = subprocess.Popen(
-        'cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git',
+        '{0} -m cookiecutter.cli https://github.com/audreyr/'
+        'cookiecutter-pypackage.git'.format(sys.executable),
         stdin=subprocess.PIPE,
         shell=True
     )
