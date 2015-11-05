@@ -8,6 +8,10 @@ History
 
 The goal of this release is to add extra content as a command-line argument.
 
+New Feature:
+
+* Abort project generation if ``pre_gen_project`` or ``post_gen_project`` hook scripts fail, thanks to `@eliasdorneles`_ (#464, #549)
+
 Other Changes:
 
 * Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ (#562)
