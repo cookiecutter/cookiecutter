@@ -78,6 +78,10 @@ Or you can set the ``COOKIECUTTER_CONFIG`` environment variable::
 
     $ export COOKIECUTTER_CONFIG=/home/audreyr/my-custom-config.yaml
 
+If you wish to stick to the built-in config and not load any user config file at all,
+use the cli option ``--default-config`` instead. Preventing Cookiecutter from loading
+user settings is crucial for writing integration tests in an isolated environment.
+
 Example user config:
 
 .. code-block:: yaml
