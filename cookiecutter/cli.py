@@ -15,6 +15,7 @@ import logging
 import click
 
 from cookiecutter import __version__
+from cookiecutter.config import USER_CONFIG_PATH
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException, InvalidModeException, FailedHookException
@@ -59,7 +60,10 @@ def version_msg():
     u'-o', u'--output-dir', default='.', type=click.Path(),
     help=u'Where to output the generated project dir into'
 )
-@click.option(u'--config', type=click.Path(), help=u'User configuration file')
+@click.option(
+    u'--config', type=click.Path(), default=USER_CONFIG_PATH,
+    help=u'User configuration file'
+)
 def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
          output_dir, config):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
