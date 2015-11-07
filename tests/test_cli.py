@@ -233,7 +233,7 @@ def test_user_config(mocker, user_config_path):
     template_path = 'tests/fake-repo-pre/'
     result = runner.invoke(main, [
         template_path,
-        '--config',
+        '--config-file',
         user_config_path
     ])
 
