@@ -59,19 +59,30 @@ def get_config(config_path):
     return config_dict
 
 
-def get_user_config(config_file=None):
-    """Retrieve the config from the given file or from the user's
-    ~/.cookiecutterrc, if it exists. Otherwise return the defaults.
+def get_user_config(config_file=USER_CONFIG_PATH):
+    """Retrieve the config from a file or return the defaults if None is
+    passed. If an environment variable `COOKIECUTTER_CONFIG` is set up, try
+    to load its value. Otherwise fall back to a default file or config.
     """
+    # Do NOT load a config. Return defaults instead.
+    if config_file is None:
+        return copy.copy(DEFAULT_CONFIG)
 
-    if config_file:
+    # Load the given config file
+    if config_file and config_file is not USER_CONFIG_PATH:
         return get_config(config_file)
 
-    default_config_path = os.environ.get(
-        'COOKIECUTTER_CONFIG',
-        USER_CONFIG_PATH
-    )
-
-    if os.path.exists(default_config_path):
-        return get_config(default_config_path)
-    return copy.copy(DEFAULT_CONFIG)
+    try:
+        # Does the user set up a config environment variable?
+        env_config_file = os.environ['COOKIECUTTER_CONFIG']
+    except KeyError:
+        # Load an optional user config if it exists
+        # otherwise return the defaults
+        if os.path.exists(USER_CONFIG_PATH):
+            return get_config(USER_CONFIG_PATH)
+        else:
+            return copy.copy(DEFAULT_CONFIG)
+    else:
+        # There is a config environment variable. Try to load it.
+        # Do not check for existence, so invalid file paths raise an error.
+        return get_config(env_config_file)
