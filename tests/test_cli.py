@@ -5,7 +5,7 @@ from click.testing import CliRunner
 
 from cookiecutter.cli import main
 from cookiecutter.main import cookiecutter
-from cookiecutter import utils
+from cookiecutter import utils, config
 
 runner = CliRunner()
 
@@ -81,7 +81,7 @@ def test_cli_replay(mocker):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=None
+        config_file=config.USER_CONFIG_PATH
     )
 
 
@@ -116,7 +116,7 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=None
+        config_file=config.USER_CONFIG_PATH
     )
 
 
@@ -150,7 +150,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         replay=True,
         overwrite_if_exists=True,
         output_dir='.',
-        config_file=None
+        config_file=config.USER_CONFIG_PATH
     )
 
 
@@ -205,7 +205,7 @@ def test_cli_output_dir(mocker, output_dir_flag, output_dir):
         replay=False,
         overwrite_if_exists=False,
         output_dir=output_dir,
-        config_file=None
+        config_file=config.USER_CONFIG_PATH
     )
 
 
