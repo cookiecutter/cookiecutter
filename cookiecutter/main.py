@@ -16,7 +16,7 @@ import logging
 import os
 import re
 
-from .config import get_user_config
+from .config import get_user_config, USER_CONFIG_PATH
 from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
@@ -72,7 +72,7 @@ def expand_abbreviations(template, config_dict):
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None):
+        config_file=USER_CONFIG_PATH):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -85,6 +85,7 @@ def cookiecutter(
     :param: overwrite_if_exists: Overwrite the contents of output directory
         if it exists
     :param output_dir: Where to output the generated project dir into.
+    :param config_file: User configuration file path.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
