@@ -12,6 +12,12 @@ New Feature:
 
 * Abort project generation if ``pre_gen_project`` or ``post_gen_project`` hook scripts fail, thanks to `@eliasdorneles`_ (#464, #549)
 
+Bug Fixes:
+
+* Fixed conditional dependencies for wheels in setup.py, thanks to `@hackebrot`_ (#557, #568)
+* Reverted skipif markers to use correct reasons (bug fixed in pytest), thanks to `@hackebrot`_ #574
+
+
 Other Changes:
 
 * Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ (#562)
@@ -20,6 +26,8 @@ Other Changes:
 * Now handling trailing slash on URL, thanks to `@ramiroluz`_ (#573, #546)
 * Support for testing x86 and x86-64 architectures on appveyor, thanks to `@maiksensi`_ (#567)
 * Made tests work without installing Cookiecutter, thanks to `@vincentbernat`_ (#550)
+* Encoded the result of the hook template to utf8, thanks to `@ionelmc`_ (#577. #578)
+* Added test for _run_hook_from_repo_dir, thanks to `@hackebrot`_ (#579, #580)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-octoprint-plugin`_ by `@foosel`_ (#560)
