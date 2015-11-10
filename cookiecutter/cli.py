@@ -15,6 +15,7 @@ import logging
 import click
 
 from cookiecutter import __version__
+from cookiecutter.config import USER_CONFIG_PATH
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException, InvalidModeException, FailedHookException
@@ -59,8 +60,16 @@ def version_msg():
     u'-o', u'--output-dir', default='.', type=click.Path(),
     help=u'Where to output the generated project dir into'
 )
+@click.option(
+    u'--config-file', type=click.Path(), default=USER_CONFIG_PATH,
+    help=u'User configuration file'
+)
+@click.option(
+    u'--default-config', is_flag=True,
+    help=u'Do not load a config file. Use the defaults instead'
+)
 def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
-         output_dir):
+         output_dir, config_file, default_config):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
@@ -75,18 +84,20 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
         )
 
     try:
-
         # If you _need_ to support a local template in a directory
         # called 'help', use a qualified path to the directory.
         if template == u'help':
             click.echo(click.get_current_context().get_help())
             sys.exit(0)
 
+        user_config = None if default_config else config_file
+
         cookiecutter(
             template, checkout, no_input,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
-            output_dir=output_dir
+            output_dir=output_dir,
+            config_file=user_config
         )
     except (OutputDirExistsException,
             InvalidModeException, FailedHookException) as e:

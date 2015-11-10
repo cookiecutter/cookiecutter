@@ -93,3 +93,56 @@ def test_get_user_config_nonexistent():
     Get config from a nonexistent ~/.cookiecutterrc file
     """
     assert config.get_user_config() == config.DEFAULT_CONFIG
+
+
+@pytest.fixture
+def custom_config():
+    return {
+        'cookiecutters_dir': '/foo/bar/some-path-to-templates',
+        'replay_dir': '/foo/bar/some-path-to-replay-files',
+        'default_context': {
+            'full_name': 'Cookiemonster',
+            'github_username': 'hackebrot'
+        },
+        'abbreviations': {
+            'cookiedozer': 'https://github.com/hackebrot/cookiedozer.git',
+        }
+    }
+
+
+@pytest.fixture
+def custom_config_path(tmpdir, custom_config):
+    user_config_file = tmpdir.join('user_config')
+
+    user_config_file.write(config.yaml.dump(custom_config))
+    return str(user_config_file)
+
+
+def test_specify_config_path(mocker, custom_config_path, custom_config):
+    spy_get_config = mocker.spy(config, 'get_config')
+
+    user_config = config.get_user_config(custom_config_path)
+    spy_get_config.assert_called_once_with(custom_config_path)
+
+    assert user_config == custom_config
+
+
+def test_default_config_path(user_config_path):
+    assert config.USER_CONFIG_PATH == user_config_path
+
+
+def test_default_config_from_env_variable(
+        monkeypatch, custom_config_path, custom_config):
+    monkeypatch.setenv('COOKIECUTTER_CONFIG', custom_config_path)
+
+    user_config = config.get_user_config()
+    assert user_config == custom_config
+
+
+def test_force_default_config(mocker):
+    spy_get_config = mocker.spy(config, 'get_config')
+
+    user_config = config.get_user_config(None)
+
+    assert user_config == config.DEFAULT_CONFIG
+    assert not spy_get_config.called

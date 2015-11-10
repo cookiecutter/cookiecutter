@@ -5,7 +5,7 @@ from click.testing import CliRunner
 
 from cookiecutter.cli import main
 from cookiecutter.main import cookiecutter
-from cookiecutter import utils
+from cookiecutter import utils, config
 
 runner = CliRunner()
 
@@ -80,7 +80,8 @@ def test_cli_replay(mocker):
         False,
         replay=True,
         overwrite_if_exists=False,
-        output_dir='.'
+        output_dir='.',
+        config_file=config.USER_CONFIG_PATH
     )
 
 
@@ -114,7 +115,8 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         True,
         replay=True,
         overwrite_if_exists=False,
-        output_dir='.'
+        output_dir='.',
+        config_file=config.USER_CONFIG_PATH
     )
 
 
@@ -147,7 +149,8 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         False,
         replay=True,
         overwrite_if_exists=True,
-        output_dir='.'
+        output_dir='.',
+        config_file=config.USER_CONFIG_PATH
     )
 
 
@@ -201,7 +204,8 @@ def test_cli_output_dir(mocker, output_dir_flag, output_dir):
         False,
         replay=False,
         overwrite_if_exists=False,
-        output_dir=output_dir
+        output_dir=output_dir,
+        config_file=config.USER_CONFIG_PATH
     )
 
 
@@ -214,3 +218,80 @@ def test_cli_help(help_cli_flag):
     result = runner.invoke(main, [help_cli_flag])
     assert result.exit_code == 0
     assert result.output.startswith('Usage')
+
+
+@pytest.fixture
+def user_config_path(tmpdir):
+    return str(tmpdir.join('tests/config.yaml'))
+
+
+def test_user_config(mocker, user_config_path):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--config-file',
+        user_config_path
+    ])
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir='.',
+        config_file=user_config_path
+    )
+
+
+def test_default_user_config_overwrite(mocker, user_config_path):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--config-file',
+        user_config_path,
+        '--default-config'
+    ])
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir='.',
+        config_file=None
+    )
+
+
+def test_default_user_config(mocker):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = runner.invoke(main, [
+        template_path,
+        '--default-config'
+    ])
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir='.',
+        config_file=None
+    )
