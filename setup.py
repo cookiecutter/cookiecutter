@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import platform
 import sys
 
 try:
@@ -35,14 +34,6 @@ requirements = [
     'whichcraft>=0.1.1'
 ]
 
-# Use PyYAML for 2.7 on Windows, ruamel.yaml everywhere else
-PY2 = sys.version_info[0] == 2
-windows = platform.system().lower().startswith('windows')
-if PY2 and windows:
-    requirements.append('PyYAML>=3.10')
-else:
-    requirements.append('ruamel.yaml>=0.10.12')
-
 long_description = readme + '\n\n' + history
 
 if sys.argv[-1] == 'readme':
@@ -71,6 +62,14 @@ setup(
     },
     include_package_data=True,
     install_requires=requirements,
+    extras_require={
+        ':sys_platform=="win32" and python_version=="2.7"': [
+            'PyYAML>=3.10'
+        ],
+        ':sys_platform!="win32" or python_version!="2.7"': [
+            'ruamel.yaml>=0.10.12'
+        ]
+    },
     license='BSD',
     zip_safe=False,
     classifiers=[
