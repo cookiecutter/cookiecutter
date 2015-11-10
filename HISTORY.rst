@@ -3,7 +3,7 @@
 History
 -------
 
-1.3.0 (2015-11-??) ???
+1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal of this release is to extend the user config feature and to make hook execution more robust.
