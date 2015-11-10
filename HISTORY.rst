@@ -22,7 +22,7 @@ Bug Fixes:
 
 Other Changes:
 
-* Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ and `@hackbrot`_ (#562, #583)
+* Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ and `@hackebrot`_ (#562, #583)
 * Added additional help entrypoints, thanks to `@michaeljoseph`_ (#563, #492)
 * Added Two Scoops Academy to the README, thanks to `@hackebrot`_ (#576)
 * Now handling trailing slash on URL, thanks to `@ramiroluz`_ (#573, #546)
