@@ -51,6 +51,14 @@ Cookiecutter could always use more documentation, whether as part of the
 official Cookiecutter docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
+If you want to review your changes on the documentation locally, you can do::
+
+    pip install -r docs/requirements.txt
+    make servedocs
+
+This will compile the documentation, open it in your browser and start
+watching the files for changes, recompiling as you save.
+
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
