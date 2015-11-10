@@ -12,14 +12,6 @@ cookiecutter.cli module
     :undoc-members:
     :show-inheritance:
 
-cookiecutter.compat module
---------------------------
-
-.. automodule:: cookiecutter.compat
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 cookiecutter.config module
 --------------------------
 
