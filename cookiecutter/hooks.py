@@ -90,10 +90,11 @@ def run_script_with_context(script_path, cwd, context):
 
     with tempfile.NamedTemporaryFile(
         delete=False,
-        mode='w',
+        mode='wb',
         suffix=extension
     ) as temp:
-        temp.write(Template(contents).render(**context))
+        output = Template(contents).render(**context)
+        temp.write(output.encode('utf-8'))
 
     run_script(temp.name, cwd)
 
