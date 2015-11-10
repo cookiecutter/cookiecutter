@@ -8,7 +8,7 @@ History
 
 The goal of this release is to extend the user config feature and to make hook execution more robust.
 
-New Feature:
+New Features:
 
 * Abort project generation if ``pre_gen_project`` or ``post_gen_project`` hook scripts fail, thanks to `@eliasdorneles`_ (#464, #549)
 * Extend user config capabilities with additional cli options ``--config-file``
