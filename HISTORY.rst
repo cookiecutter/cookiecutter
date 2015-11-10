@@ -11,11 +11,13 @@ The goal of this release is to add extra content as a command-line argument.
 New Feature:
 
 * Abort project generation if ``pre_gen_project`` or ``post_gen_project`` hook scripts fail, thanks to `@eliasdorneles`_ (#464, #549)
+* Extend user config capabilities with additional cli options ``--config-file`` 
+  and ``--default-config`` and environment variable ``COOKIECUTTER_CONFIG``, thanks to `@jhermann`_, `@pfmoore`_, and `@hackebrot`_ (#258, #424, #565)
 
 Bug Fixes:
 
 * Fixed conditional dependencies for wheels in setup.py, thanks to `@hackebrot`_ (#557, #568)
-* Reverted skipif markers to use correct reasons (bug fixed in pytest), thanks to `@hackebrot`_ #574
+* Reverted skipif markers to use correct reasons (bug fixed in pytest), thanks to `@hackebrot`_ (#574)
 
 
 Other Changes:
@@ -36,6 +38,7 @@ Other Changes:
 
 .. _`@foosel`: https://github.com/foosel
 .. _`@chrisdev`: https://github.com/chrisdev
+.. _`@jhermann`: https://github.com/jhermann
 
 .. _`cookiecutter-octoprint-plugin`: https://github.com/OctoPrint/cookiecutter-octoprint-plugin
 .. _`wagtail-cookiecutter-foundation`: https://github.com/chrisdev/wagtail-cookiecutter-foundation
