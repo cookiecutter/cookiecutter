@@ -6,12 +6,12 @@ History
 1.3.0 (2015-11-??) ???
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The goal of this release is to add extra content as a command-line argument.
+The goal of this release is to extend the user config feature and to make hook execution more robust.
 
 New Feature:
 
 * Abort project generation if ``pre_gen_project`` or ``post_gen_project`` hook scripts fail, thanks to `@eliasdorneles`_ (#464, #549)
-* Extend user config capabilities with additional cli options ``--config-file`` 
+* Extend user config capabilities with additional cli options ``--config-file``
   and ``--default-config`` and environment variable ``COOKIECUTTER_CONFIG``, thanks to `@jhermann`_, `@pfmoore`_, and `@hackebrot`_ (#258, #424, #565)
 
 Bug Fixes:
