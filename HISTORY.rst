@@ -20,7 +20,7 @@ Bug Fixes:
 
 Other Changes:
 
-* Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ (#562)
+* Improved path and documentation for rendering the Sphinx documentation, thanks to `@eliasdorneles`_ and `@hackbrot`_ (#562, #583)
 * Added additional help entrypoints, thanks to `@michaeljoseph`_ (#563, #492)
 * Added Two Scoops Academy to the README, thanks to `@hackebrot`_ (#576)
 * Now handling trailing slash on URL, thanks to `@ramiroluz`_ (#573, #546)
@@ -28,6 +28,7 @@ Other Changes:
 * Made tests work without installing Cookiecutter, thanks to `@vincentbernat`_ (#550)
 * Encoded the result of the hook template to utf8, thanks to `@ionelmc`_ (#577. #578)
 * Added test for _run_hook_from_repo_dir, thanks to `@hackebrot`_ (#579, #580)
+* Implemented bumpversion, thanks to `@hackbrot`_ (#582)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-octoprint-plugin`_ by `@foosel`_ (#560)
