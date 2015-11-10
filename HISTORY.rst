@@ -30,7 +30,7 @@ Other Changes:
 * Made tests work without installing Cookiecutter, thanks to `@vincentbernat`_ (#550)
 * Encoded the result of the hook template to utf8, thanks to `@ionelmc`_ (#577. #578)
 * Added test for _run_hook_from_repo_dir, thanks to `@hackebrot`_ (#579, #580)
-* Implemented bumpversion, thanks to `@hackbrot`_ (#582)
+* Implemented bumpversion, thanks to `@hackebrot`_ (#582)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-octoprint-plugin`_ by `@foosel`_ (#560)
