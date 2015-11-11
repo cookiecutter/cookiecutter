@@ -81,6 +81,8 @@ def read_user_choice(var_name, options):
 
 
 def render_variable(env, raw, cookiecutter_dict):
+    if raw is None:
+        return None
     if not isinstance(raw, basestring):
         raw = str(raw)
     template = env.from_string(raw)
