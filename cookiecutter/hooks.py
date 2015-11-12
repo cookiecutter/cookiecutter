@@ -46,7 +46,12 @@ def find_hooks():
     for f in os.listdir(hooks_dir):
         basename = os.path.splitext(os.path.basename(f))[0]
         if basename in _HOOKS:
-            r[basename] = os.path.abspath(os.path.join(hooks_dir, f))
+            file_name = os.path.abspath(os.path.join(hooks_dir, f))
+
+            if basename in r:
+                r[basename].append(file_name)
+            else:
+                r[basename] = [file_name]
     return r
 
 
@@ -111,4 +116,6 @@ def run_hook(hook_name, project_dir, context):
     if script is None:
         logging.debug('No hooks found')
         return
-    run_script_with_context(script, project_dir, context)
+
+    for script_file in script:
+        run_script_with_context(script_file, project_dir, context)
