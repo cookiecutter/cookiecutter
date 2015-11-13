@@ -1,7 +1,5 @@
 import pytest
 
-from cookiecutter import config
-
 
 @pytest.fixture
 def context():
@@ -22,10 +20,5 @@ def replay_test_dir():
 
 
 @pytest.fixture
-def mock_user_config(mocker, replay_test_dir):
-    user_config = config.DEFAULT_CONFIG
-    user_config.update({'replay_dir': replay_test_dir})
-
-    return mocker.patch(
-        'cookiecutter.replay.get_user_config', return_value=user_config
-    )
+def mock_user_config(mocker):
+    return mocker.patch('cookiecutter.main.get_user_config')
