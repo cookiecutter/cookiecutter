@@ -16,16 +16,17 @@ import logging
 import os
 import shutil
 
-from jinja2 import FileSystemLoader, Template
+from jinja2 import FileSystemLoader, Template, StrictUndefined
 from jinja2.environment import Environment
-from jinja2.exceptions import TemplateSyntaxError
+from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from binaryornot.check import is_binary
 
 from .exceptions import (
     NonTemplatedInputDirException,
     ContextDecodingException,
     FailedHookException,
-    OutputDirExistsException
+    OutputDirExistsException,
+    OutputDirUndefinedVariableException
 )
 from .find import find_template
 from .utils import make_sure_path_exists, work_in, rmtree
@@ -141,9 +142,15 @@ def generate_file(project_dir, infile, context, env):
     logging.debug('Generating file {0}'.format(infile))
 
     # Render the path to the output file (not including the root project dir)
-    outfile_tmpl = Template(infile)
+    outfile_tmpl = Template(infile, undefined=StrictUndefined)
 
-    outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
+    try:
+        outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
+    except UndefinedError:
+        raise OutputDirUndefinedVariableException(
+            "Path '{}' contains an undefined variable.".format(infile)
+        )
+
     file_name_is_empty = os.path.isdir(outfile)
     if file_name_is_empty:
         logging.debug('The resulting file name is empty: {0}'.format(outfile))
