@@ -19,6 +19,7 @@ from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 
 from cookiecutter import generate
+from cookiecutter.exceptions import OutputDirUndefinedVariableException
 
 
 @pytest.fixture(scope='function')
@@ -106,3 +107,13 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg):
         pytest.fail('Unexpected exception thrown: {0}'.format(exception))
     else:
         pytest.fail('TemplateSyntaxError not thrown')
+
+
+def test_generate_file_with_undefined_variable_in_path(env):
+    with pytest.raises(OutputDirUndefinedVariableException):
+        generate.generate_file(
+            project_dir=".",
+            infile='tests/files/{{not_defined}}/test.txt',
+            context={},
+            env=env
+        )
