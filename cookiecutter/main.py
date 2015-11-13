@@ -115,7 +115,7 @@ def cookiecutter(
     template_name = os.path.basename(template)
 
     if replay:
-        context = load(template_name)
+        context = load(config_dict['replay_dir'], template_name)
     else:
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logging.debug('context_file is {0}'.format(context_file))
@@ -130,7 +130,7 @@ def cookiecutter(
         # except when 'no-input' flag is set
         context['cookiecutter'] = prompt_for_config(context, no_input)
 
-        dump(template_name, context)
+        dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
     return generate_files(
