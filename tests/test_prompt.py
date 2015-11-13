@@ -41,6 +41,8 @@ def test_convert_to_str(mocker, raw_var, rendered_var):
         if not isinstance(raw_var, basestring):
             raw_var = str(raw_var)
         from_string.assert_called_once_with(raw_var)
+    else:
+        assert not from_string.called
 
 
 @pytest.fixture(autouse=True)
