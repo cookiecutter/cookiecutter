@@ -30,19 +30,18 @@ builtin_abbreviations = {
     'bb': 'https://bitbucket.org/{0}',
 }
 
-REPO_REGEX = """
-(
-((git|ssh|https|http):(//)?)    # something like git:// ssh:// etc.
- |                              # or
- (\w+@[\w\.]+)                  # something like user@...
+REPO_REGEX = re.compile(r"""
+(?x)
+((((git|hg)\+)?(git|ssh|https?):(//)?)  # something like git:// ssh:// etc.
+ |                                      # or
+ (\w+@[\w\.]+)                          # something like user@...
 )
-.*
-"""
+""")
 
 
 def is_repo_url(value):
     """Return True if value is a repository URL."""
-    return bool(re.match(REPO_REGEX, value, re.VERBOSE))
+    return bool(REPO_REGEX.match(value))
 
 
 def expand_abbreviations(template, config_dict):
