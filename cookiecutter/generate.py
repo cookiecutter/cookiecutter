@@ -52,13 +52,14 @@ def copy_without_render(path, context):
     return False
 
 
-def apply_overwrites_to_context(context, overwrite_context):
+def apply_overwrites_to_context(context, overwrite_context, known_only=False):
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
-            # Add a new entry to the context dict for values that are not
-            # declared in context but required in the template itself
-            context[variable] = overwrite
+            if not known_only:
+                # Add a new entry to the context dict for values that are not
+                # declared in context but required in the template itself
+                context[variable] = overwrite
             continue
 
         context_value = context[variable]
