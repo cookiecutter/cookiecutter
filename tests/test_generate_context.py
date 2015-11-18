@@ -157,13 +157,13 @@ def template_context():
     ])
 
 
-def test_apply_overwrites_does_include_unused_variables(template_context):
+def test_apply_overwrites_does_include_unknown_variables(template_context):
     generate.apply_overwrites_to_context(
         template_context,
         {'not in template': 'foobar'}
     )
 
-    assert 'not in template' not in template_context
+    assert 'not in template' in template_context
 
 
 def test_apply_overwrites_sets_non_list_value(template_context):
