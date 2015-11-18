@@ -112,9 +112,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
     if default_context:
-        apply_overwrites_to_context(obj, default_context)
+        apply_overwrites_to_context(obj, default_context, known_only=True)
     if extra_context:
-        apply_overwrites_to_context(obj, extra_context)
+        apply_overwrites_to_context(obj, extra_context, known_only=False)
 
     logging.debug('Context generated is {0}'.format(context))
     return context
