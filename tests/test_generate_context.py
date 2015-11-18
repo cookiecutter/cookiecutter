@@ -166,6 +166,17 @@ def test_apply_overwrites_does_include_unknown_variables(template_context):
     assert 'not in template' in template_context
 
 
+def test_apply_overwrites_does_not_include_unknown_variables_if_option_is_set(
+        template_context):
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'not in template': 'foobar'},
+        known_only=True
+    )
+
+    assert 'not in template' not in template_context
+
+
 def test_apply_overwrites_sets_non_list_value(template_context):
     generate.apply_overwrites_to_context(
         template_context,
