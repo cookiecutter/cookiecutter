@@ -128,12 +128,14 @@ def test_choices(context_file, default_context, extra_context):
     config and the list as such is not changed to a single value.
     """
     expected_context = {
-        'choices_template': OrderedDict([
-            ('full_name', 'Raphael Pierzina'),
-            ('github_username', 'hackebrot'),
-            ('project_name', 'Kivy Project'),
-            ('repo_name', '{{cookiecutter.project_name|lower}}'),
-            ('orientation', ['landscape', 'all', 'portrait']),
+        "choices_template": OrderedDict([
+            ("full_name", "Raphael Pierzina"),
+            ("github_username", "hackebrot"),
+            ("project_name", "Kivy Project"),
+            ("repo_name", "{{cookiecutter.project_name|lower}}"),
+            ("orientation", ["landscape", "all", "portrait"]),
+            ("not_in_template", "foobar"),
+            ("also_not_in_template", "foobar2"),
         ])
     }
 
