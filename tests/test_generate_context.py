@@ -63,10 +63,21 @@ def context_data():
         }
     )
 
+    context_with_unknown_extra = (
+        {
+            'context_file': 'tests/test-generate-context/test.json',
+            'extra_context': {'1': 4, 'not in json': 'foobar'},
+        },
+        {
+            'test': {'1': 4, 'some_key': 'some_val', 'not in json': 'foobar'}
+        }
+    )
+
     yield context
     yield context_with_default
     yield context_with_extra
     yield context_with_default_and_extra
+    yield context_with_unknown_extra
 
 
 @pytest.mark.usefixtures('clean_system')
