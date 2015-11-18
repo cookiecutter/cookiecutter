@@ -56,8 +56,8 @@ def apply_overwrites_to_context(context, overwrite_context):
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
-            # Albeit not relevant for the template, set this variable to
-            # resemble ``dict.update()``
+            # Add a new entry to the context dict for values that are not
+            # declared in context but required in the template itself
             context[variable] = overwrite
             continue
 
