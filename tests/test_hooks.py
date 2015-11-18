@@ -72,7 +72,9 @@ class TestFindHooks(object):
 
         with utils.work_in(self.repo_path):
             expected = {
-                'pre_gen_project': [os.path.abspath('hooks/pre_gen_project.py')],
+                'pre_gen_project': [os.path.abspath(
+                    'hooks/pre_gen_project.py'
+                )],
                 'post_gen_project': [os.path.abspath(
                     os.path.join('hooks', self.post_hook)
                 )],
