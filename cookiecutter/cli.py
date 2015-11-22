@@ -18,7 +18,10 @@ from cookiecutter import __version__
 from cookiecutter.config import USER_CONFIG_PATH
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
-    OutputDirExistsException, InvalidModeException, FailedHookException
+    OutputDirExistsException,
+    InvalidModeException,
+    FailedHookException,
+    UndefinedVariableInTemplate
 )
 
 logger = logging.getLogger(__name__)
@@ -100,7 +103,9 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
             config_file=user_config
         )
     except (OutputDirExistsException,
-            InvalidModeException, FailedHookException) as e:
+            InvalidModeException,
+            FailedHookException,
+            UndefinedVariableInTemplate) as e:
         click.echo(e)
         sys.exit(1)
 
