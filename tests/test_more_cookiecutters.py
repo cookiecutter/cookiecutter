@@ -17,7 +17,9 @@ import subprocess
 import pytest
 
 from cookiecutter import config, utils
-from tests.skipif_markers import skipif_travis, skipif_no_network
+from tests.skipif_markers import (
+    skipif_travis, skipif_appveyor, skipif_no_network
+)
 
 
 @pytest.fixture(scope='function')
@@ -37,6 +39,7 @@ def remove_additional_dirs(request):
 
 
 @skipif_travis
+@skipif_appveyor
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_git_branch():
@@ -56,6 +59,7 @@ def test_git_branch():
 
 
 @skipif_travis
+@skipif_appveyor
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_pypackage_git():
