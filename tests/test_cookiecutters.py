@@ -17,7 +17,9 @@ import subprocess
 import pytest
 
 from cookiecutter import utils
-from tests.skipif_markers import skipif_travis, skipif_no_network
+from tests.skipif_markers import (
+    skipif_travis, skipif_appveyor, skipif_no_network
+)
 
 
 @pytest.fixture(scope='function')
@@ -55,6 +57,7 @@ def bake_data():
 
 
 @skipif_travis
+@skipif_appveyor
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 @pytest.mark.parametrize('git_cmd, bake_cmd, out_dir, readme', bake_data())
