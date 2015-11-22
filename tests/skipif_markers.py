@@ -13,21 +13,21 @@ import os
 
 
 try:
-    os.environ[u'TRAVIS']
+    os.environ['TRAVIS']
 except KeyError:
     travis = False
 else:
     travis = True
 
 try:
-    os.environ[u'APPVEYOR']
+    os.environ['APPVEYOR']
 except KeyError:
     appveyor = False
 else:
     appveyor = True
 
 try:
-    os.environ[u'DISABLE_NETWORK_TESTS']
+    os.environ['DISABLE_NETWORK_TESTS']
 except KeyError:
     no_network = False
 else:
