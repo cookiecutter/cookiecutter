@@ -22,9 +22,9 @@ else:
 try:
     os.environ[u'APPVEYOR']
 except KeyError:
-    travis = False
+    appveyor = False
 else:
-    travis = True
+    appveyor = True
 
 try:
     os.environ[u'DISABLE_NETWORK_TESTS']
