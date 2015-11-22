@@ -1,2 +1,2 @@
-{{cookiecutter.repo_name}}
-==========================
+{{cookiecutter.repo_dir}}
+=========================
