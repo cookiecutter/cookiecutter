@@ -204,3 +204,40 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
 
     with pytest.raises(exceptions.VCSNotInstalled):
         vcs.clone(repo_url, clone_to_dir=clone_dir)
+
+
+def test_clone_should_invoke_git(mocker, clone_dir):
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=True
+    )
+
+    mock_subprocess = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_call',
+        autospec=True,
+    )
+
+    repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
+
+    expected_repo_dir = os.path.normpath(
+        os.path.join(clone_dir, 'cookiecutter-pytest-plugin')
+    )
+
+    branch = 'foobar'
+
+    repo_dir = vcs.clone(
+        repo_url,
+        checkout=branch,
+        clone_to_dir=clone_dir,
+        no_input=True
+    )
+
+    assert repo_dir == expected_repo_dir
+
+    mock_subprocess.assert_any_call(
+        ['git', 'clone', repo_url], cwd=clone_dir
+    )
+    mock_subprocess.assert_any_call(
+        ['git', 'checkout', branch], cwd=expected_repo_dir
+    )
