@@ -143,3 +143,17 @@ def unknown_repo_type_url(request):
 def test_identify_raise_on_unknown_repo(unknown_repo_type_url):
     with pytest.raises(exceptions.UnknownRepoType):
         vcs.identify_repo(unknown_repo_type_url)
+
+
+def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
+    mock_read_user = mocker.patch(
+        'cookiecutter.vcs.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    vcs.prompt_and_delete_repo(str(repo_dir))
+
+    assert mock_read_user.called
+    assert not repo_dir.exists()
