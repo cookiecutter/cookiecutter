@@ -266,8 +266,11 @@ def test_raise_undefined_variable_dir_name(tmpdir, undefined_context):
             context=undefined_context
         )
     error = err.value
-    msg = "Unable to create directory 'testproject/{{cookiecutter.foobar}}'"
+
+    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    msg = "Unable to create directory '{}'".format(directory)
     assert msg == error.message
+
     assert error.context == undefined_context
 
     assert not output_dir.join('testproject').exists()
