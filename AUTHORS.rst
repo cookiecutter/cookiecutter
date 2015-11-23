@@ -77,7 +77,7 @@ Contributors
 * Valentin Lab (`@vaab`_)
 * Ilja Bauer (`@iljabauer`_)
 * Elias Dorneles (`@eliasdorneles`_)
-* (Matias Saguir)`@mativs`_)
+* Matias Saguir (`@mativs`_)
 
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
@@ -143,3 +143,4 @@ Contributors
 .. _`@vaab`: https://github.com/vaab
 .. _`@iljabauer`: https://github.com/iljabauer
 .. _`@eliasdorneles`: https://github.com/eliasdorneles
+.. _`@mativs`: https://github.com/mativs
