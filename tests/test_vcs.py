@@ -172,3 +172,17 @@ def test_prompt_should_ask_and_keep_repo_dir(mocker, tmpdir):
 
     assert mock_read_user.called
     assert repo_dir.exists()
+
+
+def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
+    mock_read_user = mocker.patch(
+        'cookiecutter.vcs.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    vcs.prompt_and_delete_repo(str(repo_dir), no_input=True)
+
+    assert not mock_read_user.called
+    assert not repo_dir.exists()
