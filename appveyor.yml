@@ -29,6 +29,7 @@ environment:
 
 
 init:
+  - "git config --system http.sslcainfo \"C:\\Program Files\\Git\\mingw64\\ssl\\certs\\ca-bundle.crt\""
   - "%PYTHON%/python -V"
   - "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
