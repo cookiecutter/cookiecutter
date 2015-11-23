@@ -188,13 +188,17 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
     assert not repo_dir.exists()
 
 
-def test_clone_should_raise_if_vcs_not_installed(mocker, tmpdir):
+@pytest.fixture
+def clone_dir(tmpdir):
+    return str(tmpdir.mkdir('clone_dir'))
+
+
+def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
     mocker.patch(
         'cookiecutter.vcs.which',
         autospec=True,
         return_value=''
     )
-    clone_dir = str(tmpdir.mkdir('clone_dir'))
 
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
