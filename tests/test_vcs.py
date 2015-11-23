@@ -241,3 +241,31 @@ def test_clone_should_invoke_git(
     mock_subprocess.assert_any_call(
         [repo_type, 'checkout', branch], cwd=expected_repo_dir
     )
+
+
+def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=True
+    )
+    mocker.patch(
+        'cookiecutter.vcs.read_user_yes_no',
+        return_value=False,
+        autospec=True
+    )
+    mock_subprocess = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_call',
+        autospec=True,
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    # Create repo_dir to trigger prompt_and_delete_repo
+    clone_to_dir.mkdir('cookiecutter-pytest-plugin')
+
+    repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
+
+    with pytest.raises(SystemExit):
+        vcs.clone(repo_url, clone_to_dir=str(clone_to_dir))
+    assert not mock_subprocess.called
