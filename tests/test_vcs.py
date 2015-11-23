@@ -206,7 +206,12 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
         vcs.clone(repo_url, clone_to_dir=clone_dir)
 
 
-def test_clone_should_invoke_git(mocker, clone_dir):
+@pytest.mark.parametrize('repo_type, repo_url, repo_name', [
+    ('git', 'https://github.com/hello/world.git', 'world'),
+    ('hg', 'https://bitbucket.org/foo/bar', 'bar'),
+])
+def test_clone_should_invoke_git(
+        mocker, clone_dir, repo_type, repo_url, repo_name):
     mocker.patch(
         'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
@@ -217,12 +222,7 @@ def test_clone_should_invoke_git(mocker, clone_dir):
         'cookiecutter.vcs.subprocess.check_call',
         autospec=True,
     )
-
-    repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
-
-    expected_repo_dir = os.path.normpath(
-        os.path.join(clone_dir, 'cookiecutter-pytest-plugin')
-    )
+    expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
 
     branch = 'foobar'
 
@@ -236,8 +236,8 @@ def test_clone_should_invoke_git(mocker, clone_dir):
     assert repo_dir == expected_repo_dir
 
     mock_subprocess.assert_any_call(
-        ['git', 'clone', repo_url], cwd=clone_dir
+        [repo_type, 'clone', repo_url], cwd=clone_dir
     )
     mock_subprocess.assert_any_call(
-        ['git', 'checkout', branch], cwd=expected_repo_dir
+        [repo_type, 'checkout', branch], cwd=expected_repo_dir
     )
