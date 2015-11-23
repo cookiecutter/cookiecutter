@@ -269,3 +269,26 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
     with pytest.raises(SystemExit):
         vcs.clone(repo_url, clone_to_dir=str(clone_to_dir))
     assert not mock_subprocess.called
+
+
+def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=True
+    )
+
+    mock_subprocess = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_call',
+        autospec=True,
+    )
+
+    vcs.clone(
+        'https://github.com/foo/bar/',
+        clone_to_dir=clone_dir,
+        no_input=True
+    )
+
+    mock_subprocess.assert_called_once_with(
+        ['git', 'clone', 'https://github.com/foo/bar'], cwd=clone_dir
+    )
