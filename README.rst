@@ -181,7 +181,6 @@ Python-Django
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
-* `cookiecutter-djangocms-plugin`_: A template to get started with custom plugins for django-cms
 * `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
 * `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4
 * `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
@@ -256,7 +255,6 @@ HTML
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-cms`: https://github.com/palazzem/cookiecutter-django-cms
-.. _`cookiecutter-djangocms-plugin`: https://github.com/mishbahr/cookiecutter-djangocms-plugin
 .. _`cookiecutter-django-crud`: https://github.com/wildfish/cookiecutter-django-crud
 .. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django

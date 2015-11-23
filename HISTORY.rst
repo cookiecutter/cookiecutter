@@ -8,10 +8,14 @@ History
 
 The goal of this release is to solve problems with version 1.3.0.
 
+Other Changes:
+
+* Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593).
+
 Bug Fixes:
 
 * Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
-
+* Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
 
 1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,7 +110,7 @@ Other Changes:
 * Updated click requirement to < 6.0, thanks to `@pydanny`_ (#473).
 * Added landscape.io flair, thanks to `@michaeljoseph`_ (#439).
 * Descriptions of PEP8 specifications and milestone management, thanks to `@michaeljoseph`_ (#440).
-* Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
+  * Added alternate installation options in the documentation, thanks to `@pydanny`_  (#117, #315).
 * The test of the `which()` function now tests against the `date` command, thanks to `@vincentbernat`_ (#446)
 * Ensure file handles in setup.py are closed using with statement, thanks to `@svisser`_ (#280).
 * Removed deprecated and fully extraneous `compat.is_exe()` function, thanks to `@hackebrot`_ (#485).
@@ -369,6 +373,7 @@ Other Changes:
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@saxix`: https://github.com/saxix
 .. _`@uranusjr`: https://github.com/uranusjr
+.. _`@mativs`: https://github.com/mativs
 
 
 

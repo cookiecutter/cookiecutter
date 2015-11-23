@@ -77,6 +77,7 @@ Contributors
 * Valentin Lab (`@vaab`_)
 * Ilja Bauer (`@iljabauer`_)
 * Elias Dorneles (`@eliasdorneles`_)
+* (Matias Saguir)`@mativs`_)
 
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
