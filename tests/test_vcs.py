@@ -186,3 +186,17 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
 
     assert not mock_read_user.called
     assert not repo_dir.exists()
+
+
+def test_clone_should_raise_if_vcs_not_installed(mocker, tmpdir):
+    mocker.patch(
+        'cookiecutter.vcs.which',
+        autospec=True,
+        return_value=''
+    )
+    clone_dir = str(tmpdir.mkdir('clone_dir'))
+
+    repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
+
+    with pytest.raises(exceptions.VCSNotInstalled):
+        vcs.clone(repo_url, clone_to_dir=clone_dir)
