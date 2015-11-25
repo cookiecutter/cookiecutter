@@ -76,6 +76,12 @@ class OutputDirExistsException(CookiecutterException):
     """
 
 
+class OutputDirUndefinedVariableException(CookiecutterException):
+    """
+    Raised when a path contains an undefined template variable
+    """
+
+
 class InvalidModeException(CookiecutterException):
     """
     Raised when cookiecutter is called with both `no_input==True` and
