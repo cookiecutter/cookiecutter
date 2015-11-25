@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from jinja2.exceptions import UndefinedError
+
 from cookiecutter import exceptions
 
 
 def test_undefined_variable_to_str():
     undefined_var_error = exceptions.UndefinedVariableInTemplate(
         'Beautiful is better than ugly',
-        exceptions.CookiecutterException('Errors should never pass silently'),
+        UndefinedError('Errors should never pass silently'),
         {'cookiecutter': {'foo': 'bar'}}
     )
 
