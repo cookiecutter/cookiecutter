@@ -11,6 +11,7 @@ Main `cookiecutter` CLI.
 import os
 import sys
 import logging
+import json
 
 import click
 
@@ -104,9 +105,19 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
         )
     except (OutputDirExistsException,
             InvalidModeException,
-            FailedHookException,
-            UndefinedVariableInTemplate) as e:
+            FailedHookException) as e:
         click.echo(e)
+        sys.exit(1)
+    except UndefinedVariableInTemplate as undefined_err:
+        click.echo('{}'.format(undefined_err.message))
+        click.echo('Error message: {}'.format(undefined_err.error.message))
+
+        context_str = json.dumps(
+            undefined_err.context,
+            indent=4,
+            sort_keys=True
+        )
+        click.echo('Context: {}'.format(context_str))
         sys.exit(1)
 
 
