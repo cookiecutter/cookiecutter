@@ -62,7 +62,8 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
         # exits with status 1 to indicate failure
         sys.exit(1)
 
-
+.. _user-config:
+	
 User Config (0.7.0+)
 ----------------------
 
@@ -289,4 +290,69 @@ Command Line Options
 
 .. cc-command-line-options::
 
+Choice Variables (1.1+)
+-----------------------
 
+Choice variables provide different choices when creating a project. Depending on an user's choice
+the template renders things differently.
+
+Basic Usage
+~~~~~~~~~~~
+
+For example, if you provide the follwing choice variable in your ``cookiecutter.json``::
+
+   {
+       "license": ["MIT", "BSD-3", "GNU GPL v3.0", "Apache Software License 2.0"]
+   }
+
+you'd get the following choices when running Cookiecutter::
+
+   Select license:
+   1 - MIT
+   2 - BSD-3
+   3 - GNU GPL v3.0
+   4 - Apache Software License 2.0
+   Choose from 1, 2, 3, 4 [1]:		
+
+Depending on an user's choice, a different license is rendered by Cookiecutter. 
+
+The above ``license`` choice variable creates ``cookiecutter.license``, which
+can be used like this::
+
+  {%- if cookiecutter.license == "MIT" -%}
+  # Possible license content here
+  
+  {%- elif cookiecutter.license == "BSD-3" -%}
+  # More possible license content here
+
+Cookiecutter is using `Jinja2 conditional expressions <http://jinja.pocoo.org/docs/dev/templates/#expressions>`_ to determine the correct license.
+
+Overwriting Default Choice Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Choice Variables can we overwritten using a :ref:`user-config` file.
+
+For example, if you use the following choice variable in ``cookiecutter.json``::
+
+   {
+       "license": ["MIT", "BSD-3", "GNU GPL v3.0", "Apache Software License 2.0"]
+   }
+
+setting the default ``license`` agreement to *Apache Software License 2.0* can be done using a ``.cookiecutterrc``:
+
+.. code-block:: yaml
+
+   default_context:       
+       license: "Apache Software License 2.0"  
+
+resulting in a changed prompt::
+
+  Select license:
+  1 - Apache Software License 2.0
+  2 - MIT
+  3 - BSD-3
+  4 - GNU GPL v3.0
+  Choose from 1, 2, 3, 4 [1]:
+
+.. note::
+   Notice how the first (default) value in the choice list changed from ``1 - MIT`` to ``1 - Apache Software License 2.0``.
