@@ -290,6 +290,8 @@ Command Line Options
 
 .. cc-command-line-options::
 
+.. _choice-variables:
+   
 Choice Variables (1.1+)
 -----------------------
 
@@ -298,6 +300,8 @@ the template renders things differently.
 
 Basic Usage
 ~~~~~~~~~~~
+
+Choice variables are regular key / value pairs, but with the value being a list of strings.
 
 For example, if you provide the follwing choice variable in your ``cookiecutter.json``::
 
@@ -325,27 +329,38 @@ can be used like this::
   {%- elif cookiecutter.license == "BSD-3" -%}
   # More possible license content here
 
-Cookiecutter is using `Jinja2 conditional expressions <http://jinja.pocoo.org/docs/dev/templates/#expressions>`_ to determine the correct license.
+Cookiecutter is using `Jinja2's if conditional expression <http://jinja.pocoo.org/docs/dev/templates/#if>`_ to determine the correct license.
 
+The created choice variable is still a regular Cookiecutter variable and can be used as::
+
+  License
+  -------
+
+  Distributed under the terms of the `{{cookiecutter.license}}`_ license,
+  
 Overwriting Default Choice Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Choice Variables can we overwritten using a :ref:`user-config` file.
+Choice Variables are overwritable using a :ref:`user-config` file.
 
-For example, if you use the following choice variable in ``cookiecutter.json``::
+For example, a choice variable can be created in ``cookiecutter.json`` by using a list as value::
 
    {
        "license": ["MIT", "BSD-3", "GNU GPL v3.0", "Apache Software License 2.0"]
    }
 
-setting the default ``license`` agreement to *Apache Software License 2.0* can be done using a ``.cookiecutterrc``:
+By default, the first entry in the values list serves as default value in the prompt.
+
+The default value can be overwritten in ``.cookiecutterrc``.
+
+Setting the default ``license`` agreement to *Apache Software License 2.0* can be done using:
 
 .. code-block:: yaml
 
    default_context:       
        license: "Apache Software License 2.0"  
 
-resulting in a changed prompt::
+The resulting prompt changes and looks like::
 
   Select license:
   1 - Apache Software License 2.0
