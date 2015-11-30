@@ -370,4 +370,4 @@ The resulting prompt changes and looks like::
   Choose from 1, 2, 3, 4 [1]:
 
 .. note::
-   Notice how the first (default) value in the choice list changed from ``1 - MIT`` to ``1 - Apache Software License 2.0``.
+   As you can see the order of the options changed from ``1 - MIT`` to ``1 - Apache Software License 2.0``. **Cookiecutter** takes the first value in the list as the default.
