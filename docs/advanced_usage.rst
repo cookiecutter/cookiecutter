@@ -351,8 +351,6 @@ For example, a choice variable can be created in ``cookiecutter.json`` by using 
 
 By default, the first entry in the values list serves as default value in the prompt.
 
-The default value can be overwritten in ``.cookiecutterrc``.
-
 Setting the default ``license`` agreement to *Apache Software License 2.0* can be done using:
 
 .. code-block:: yaml
@@ -360,6 +358,8 @@ Setting the default ``license`` agreement to *Apache Software License 2.0* can b
    default_context:       
        license: "Apache Software License 2.0"  
 
+in the :ref:`user-config` file. 
+       
 The resulting prompt changes and looks like::
 
   Select license:
