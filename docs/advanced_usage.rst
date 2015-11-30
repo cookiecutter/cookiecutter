@@ -331,7 +331,7 @@ can be used like this::
 
 Cookiecutter is using `Jinja2's if conditional expression <http://jinja.pocoo.org/docs/dev/templates/#if>`_ to determine the correct license.
 
-The created choice variable is still a regular Cookiecutter variable and can be used as::
+The created choice variable is still a regular Cookiecutter variable and can be used like this::
 
   License
   -------
