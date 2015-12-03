@@ -82,7 +82,7 @@ Contributors
 * macrotim (`@macrotim`_)
 
 
-.. _`@maiksensi`: https://github.com/johtso
+.. _`@johtso`: https://github.com/johtso
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
