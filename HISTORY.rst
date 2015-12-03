@@ -12,6 +12,7 @@ Other Changes:
 
 * Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593)
 * Fixed docs/usage.rst, thanks to `@macrotim`_ (#604)
+* Update .gitignore to latest Python.gitignore, thanks to `@audreyr`_
 
 Bug Fixes:
 
