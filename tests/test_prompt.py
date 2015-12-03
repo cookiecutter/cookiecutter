@@ -22,7 +22,8 @@ from jinja2.environment import Environment
     (1, '1'),
     (True, 'True'),
     ('foo', 'foo'),
-    ('{{cookiecutter.project}}', 'foobar')
+    ('{{cookiecutter.project}}', 'foobar'),
+    (None, None),
 ])
 def test_convert_to_str(mocker, raw_var, rendered_var):
     env = Environment()
@@ -35,10 +36,13 @@ def test_convert_to_str(mocker, raw_var, rendered_var):
     result = prompt.render_variable(env, raw_var, context)
     assert result == rendered_var
 
-    # Make sure that non str variables are conerted beforehand
-    if not isinstance(raw_var, basestring):
-        raw_var = str(raw_var)
-    from_string.assert_called_once_with(raw_var)
+    # Make sure that non None non str variables are conerted beforehand
+    if raw_var is not None:
+        if not isinstance(raw_var, basestring):
+            raw_var = str(raw_var)
+        from_string.assert_called_once_with(raw_var)
+    else:
+        assert not from_string.called
 
 
 @pytest.fixture(autouse=True)
