@@ -3,7 +3,7 @@
 History
 -------
 
-1.3.1 (2015-??-??) ??
+1.4.0 (2015-12-??) ??
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal of this release is to solve problems with version 1.3.0.
@@ -14,6 +14,7 @@ Other Changes:
 
 Bug Fixes:
 
+* Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
 * Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
 * Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
 

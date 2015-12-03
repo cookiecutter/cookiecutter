@@ -78,7 +78,11 @@ Contributors
 * Ilja Bauer (`@iljabauer`_)
 * Elias Dorneles (`@eliasdorneles`_)
 * Matias Saguir (`@mativs`_)
+* Johannes (`@johtso`_)
 
+Allow setting parameters with no defaults
+
+.. _`@maiksensi`: https://github.com/johtso
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
 .. _`@LucianU`: https://github.com/LucianU
