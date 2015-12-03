@@ -79,8 +79,8 @@ Contributors
 * Elias Dorneles (`@eliasdorneles`_)
 * Matias Saguir (`@mativs`_)
 * Johannes (`@johtso`_)
+* macrotim (`@macrotim`_)
 
-Allow setting parameters with no defaults
 
 .. _`@maiksensi`: https://github.com/johtso
 .. _`@maiksensi`: https://github.com/maiksensi
@@ -148,3 +148,4 @@ Allow setting parameters with no defaults
 .. _`@iljabauer`: https://github.com/iljabauer
 .. _`@eliasdorneles`: https://github.com/eliasdorneles
 .. _`@mativs`: https://github.com/mativs
+.. _`@macrotim`: https://github.com/macrotim

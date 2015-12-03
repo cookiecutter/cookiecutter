@@ -10,13 +10,17 @@ The goal of this release is to solve problems with version 1.3.0.
 
 Other Changes:
 
-* Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593).
+* Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593)
+* Fixed docs/usage.rst, thanks to `@macrotim`_ (#604)
 
 Bug Fixes:
 
 * Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
 * Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
 * Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
+
+.. _`@macrotim`: https://github.com/macrotim
+
 
 1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
