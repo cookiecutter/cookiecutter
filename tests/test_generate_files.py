@@ -212,3 +212,82 @@ def test_generate_files_permissions():
     )
     input_script_file_mode = os.stat(input_script_file).st_mode & 0o777
     assert tests_script_file_mode == input_script_file_mode
+
+
+@pytest.fixture
+def undefined_context():
+    return {
+        'cookiecutter': {
+            'project_slug': 'testproject',
+            'github_username': 'hackebrot'
+        }
+    }
+
+
+def test_raise_undefined_variable_file_name(tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/file-name/',
+            output_dir=str(output_dir),
+            context=undefined_context
+        )
+    error = err.value
+    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert error.context == undefined_context
+
+    assert not output_dir.join('testproject').exists()
+
+
+def test_raise_undefined_variable_file_content(tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/file-content/',
+            output_dir=str(output_dir),
+            context=undefined_context
+        )
+    error = err.value
+    assert "Unable to create file 'README.rst'" == error.message
+    assert error.context == undefined_context
+
+    assert not output_dir.join('testproject').exists()
+
+
+def test_raise_undefined_variable_dir_name(tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/dir-name/',
+            output_dir=str(output_dir),
+            context=undefined_context
+        )
+    error = err.value
+
+    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    msg = "Unable to create directory '{}'".format(directory)
+    assert msg == error.message
+
+    assert error.context == undefined_context
+
+    assert not output_dir.join('testproject').exists()
+
+
+def test_raise_undefined_variable_project_dir(tmpdir):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/dir-name/',
+            output_dir=str(output_dir),
+            context={}
+        )
+    error = err.value
+    msg = "Unable to create project directory '{{cookiecutter.project_slug}}'"
+    assert msg == error.message
+    assert error.context == {}
+
+    assert not output_dir.join('testproject').exists()
