@@ -92,12 +92,7 @@ def render_variable(env, raw, cookiecutter_dict):
         raw = str(raw)
     template = env.from_string(raw)
 
-    try:
-        rendered_template = template.render(cookiecutter=cookiecutter_dict)
-    except UndefinedError as err:
-        msg = "Unable to render variable '{}'".format(raw)
-        raise UndefinedVariableInTemplate(msg, err, cookiecutter_dict)
-
+    rendered_template = template.render(cookiecutter=cookiecutter_dict)
     return rendered_template
 
 
@@ -129,17 +124,21 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = raw
             continue
 
-        if isinstance(raw, list):
-            # We are dealing with a choice variable
-            val = prompt_choice_for_config(
-                cookiecutter_dict, env, key, raw, no_input
-            )
-        else:
-            # We are dealing with a regular variable
-            val = render_variable(env, raw, cookiecutter_dict)
+        try:
+            if isinstance(raw, list):
+                # We are dealing with a choice variable
+                val = prompt_choice_for_config(
+                    cookiecutter_dict, env, key, raw, no_input
+                )
+            else:
+                # We are dealing with a regular variable
+                val = render_variable(env, raw, cookiecutter_dict)
 
-            if not no_input:
-                val = read_user_variable(key, val)
+                if not no_input:
+                    val = read_user_variable(key, val)
+        except UndefinedError as err:
+            msg = "Unable to render variable '{}'".format(key)
+            raise UndefinedVariableInTemplate(msg, err, context)
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict

@@ -264,5 +264,20 @@ def test_undefined_variable_in_cookiecutter_dict():
         prompt.prompt_for_config(context, no_input=True)
 
     error = err.value
-    assert error.message == "Unable to render variable '{{cookiecutter.nope}}'"
-    assert error.context == {'hello': 'world'}
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context
+
+
+def test_undefined_variable_in_cookiecutter_dict_with_choices():
+    context = {
+        'cookiecutter': {
+            'hello': 'world',
+            'foo': ['123', '{{cookiecutter.nope}}', '456']
+        }
+    }
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        prompt.prompt_for_config(context, no_input=True)
+
+    error = err.value
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context
