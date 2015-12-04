@@ -14,7 +14,12 @@ import click
 from past.builtins import basestring
 
 from future.utils import iteritems
+
+from jinja2 import StrictUndefined
 from jinja2.environment import Environment
+from jinja2.exceptions import UndefinedError
+
+from .exceptions import UndefinedVariableInTemplate
 
 
 def read_user_variable(var_name, default_value):
@@ -86,7 +91,13 @@ def render_variable(env, raw, cookiecutter_dict):
     if not isinstance(raw, basestring):
         raw = str(raw)
     template = env.from_string(raw)
-    rendered_template = template.render(cookiecutter=cookiecutter_dict)
+
+    try:
+        rendered_template = template.render(cookiecutter=cookiecutter_dict)
+    except UndefinedError as err:
+        msg = "Unable to render variable '{}'".format(raw)
+        raise UndefinedVariableInTemplate(msg, err, cookiecutter_dict)
+
     return rendered_template
 
 
@@ -111,7 +122,7 @@ def prompt_for_config(context, no_input=False):
     :param no_input: Prompt the user at command line for manual configuration?
     """
     cookiecutter_dict = {}
-    env = Environment()
+    env = Environment(undefined=StrictUndefined)
 
     for key, raw in iteritems(context[u'cookiecutter']):
         if key.startswith(u'_'):
