@@ -6,13 +6,18 @@ History
 1.4.0 (2015-12-??) ??
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The goal of this release is to solve problems with version 1.3.0.
+The goal of this release is changing to a strict Jinja2 environment, paving the way to more awesome in the future.
+
+New Feature:
+
+* Now raises an error if Cookiecutter tries to render a template that contains an undefined variable. Makes generation more robust and secure (#586). Work done by `@hackebrot`_ (#111, #586, #592)
 
 Other Changes:
 
 * Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593)
 * Fixed docs/usage.rst, thanks to `@macrotim`_ (#604)
 * Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to `@audreyr`_
+* Use open context manager to read context_file in generate() function, thanks to `@hackebrot`_ (#607, #608)
 
 Bug Fixes:
 
