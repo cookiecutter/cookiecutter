@@ -88,9 +88,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     context = {}
 
-    file_handle = open(context_file)
     try:
-        obj = json.load(file_handle, object_pairs_hook=OrderedDict)
+        with open(context_file) as file_handle:
+            obj = json.load(file_handle, object_pairs_hook=OrderedDict)
     except ValueError as e:
         # JSON decoding error.  Let's throw a new exception that is more
         # friendly for the developer or user.
