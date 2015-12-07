@@ -11,6 +11,7 @@ The goal of this release is changing to a strict Jinja2 environment, paving the 
 New Feature:
 
 * Now raises an error if Cookiecutter tries to render a template that contains an undefined variable. Makes generation more robust and secure (#586). Work done by `@hackebrot`_ (#111, #586, #592)
+* Uses strict Jinja2 env in prompt, thanks to `@hackebrot`_ (#598, #613)
 
 Other Changes:
 
@@ -18,6 +19,7 @@ Other Changes:
 * Fixed docs/usage.rst, thanks to `@macrotim`_ (#604)
 * Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to `@audreyr`_
 * Use open context manager to read context_file in generate() function, thanks to `@hackebrot`_ (#607, #608)
+* Added documentation for choice variables, thanks to `@maiksensi`_ (#611)
 
 Bug Fixes:
 
