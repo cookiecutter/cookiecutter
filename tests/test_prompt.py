@@ -14,7 +14,7 @@ import platform
 import pytest
 from past.builtins import basestring
 
-from cookiecutter import prompt
+from cookiecutter import prompt, exceptions
 from jinja2.environment import Environment
 
 
@@ -251,3 +251,33 @@ class TestPromptChoiceForConfig(object):
         )
         read_choice.assert_called_once_with('orientation', choices)
         assert expected_choice == actual_choice
+
+
+def test_undefined_variable_in_cookiecutter_dict():
+    context = {
+        'cookiecutter': {
+            'hello': 'world',
+            'foo': '{{cookiecutter.nope}}'
+        }
+    }
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        prompt.prompt_for_config(context, no_input=True)
+
+    error = err.value
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context
+
+
+def test_undefined_variable_in_cookiecutter_dict_with_choices():
+    context = {
+        'cookiecutter': {
+            'hello': 'world',
+            'foo': ['123', '{{cookiecutter.nope}}', '456']
+        }
+    }
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        prompt.prompt_for_config(context, no_input=True)
+
+    error = err.value
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context
