@@ -21,6 +21,7 @@ Other Changes:
 * Use open context manager to read context_file in generate() function, thanks to `@hackebrot`_ (#607, #608)
 * Added documentation for choice variables, thanks to `@maiksensi`_ (#611)
 * Set up Scrutinizer to check code quality, thanks to `@audreyr`_
+* Drop distutils support in setup.py, thanks to `@hackebrot`_ (#606, #609)
 
 Bug Fixes:
 
