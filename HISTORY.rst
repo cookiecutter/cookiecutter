@@ -22,6 +22,7 @@ Other Changes:
 * Added documentation for choice variables, thanks to `@maiksensi`_ (#611)
 * Set up Scrutinizer to check code quality, thanks to `@audreyr`_
 * Drop distutils support in setup.py, thanks to `@hackebrot`_ (#606, #609)
+* Change cookiecutter-pypackage-minimal link, thanks to @kragniz (#614)
 
 Bug Fixes:
 
