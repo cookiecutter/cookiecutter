@@ -23,7 +23,10 @@ Other Changes:
 * Set up Scrutinizer to check code quality, thanks to `@audreyr`_
 * Drop distutils support in setup.py, thanks to `@hackebrot`_ (#606, #609)
 * Change cookiecutter-pypackage-minimal link, thanks to @kragniz (#614)
+* Added more cookiecutter templates to the mix:
 
+  * `cookiecutter-python`_ by `@flyondrag`_ (#616)
+  
 Bug Fixes:
 
 * Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
@@ -31,6 +34,7 @@ Bug Fixes:
 * Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
 
 .. _`@macrotim`: https://github.com/macrotim
+.. _`@flyondrag`: https://github.com/flyondrag
 
 
 1.3.0 (2015-11-10) Pumpkin Spice
