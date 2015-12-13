@@ -20,6 +20,7 @@ Other Changes:
 * Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to `@audreyr`_
 * Use open context manager to read context_file in generate() function, thanks to `@hackebrot`_ (#607, #608)
 * Added documentation for choice variables, thanks to `@maiksensi`_ (#611)
+* Set up Scrutinizer to check code quality, thanks to `@audreyr`_
 
 Bug Fixes:
 

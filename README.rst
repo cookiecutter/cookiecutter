@@ -28,6 +28,10 @@ Cookiecutter
         :target: https://landscape.io/github/audreyr/cookiecutter/master
         :alt: Code Health
 
+.. image:: https://img.shields.io/scrutinizer/g/audreyr/cookiecutter.svg
+        :target: https://scrutinizer-ci.com/g/audreyr/cookiecutter/?branch=master
+        :alt: Scrutinizer Code Quality
+
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
 
