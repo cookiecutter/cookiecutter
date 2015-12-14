@@ -28,7 +28,8 @@ requirements = [
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'click>=5.0',
-    'whichcraft>=0.1.1'
+    'whichcraft>=0.1.1',
+    'virtualenv>=13.1.2'
 ]
 
 long_description = readme + '\n\n' + history

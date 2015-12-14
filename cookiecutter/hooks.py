@@ -14,6 +14,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import virtualenv
 
 from jinja2 import Template
 
@@ -27,6 +28,23 @@ _HOOKS = [
     # TODO: other hooks should be listed here
 ]
 EXIT_SUCCESS = 0
+
+
+def setup_virtualenv(cwd='.', edit_mode=False):
+    """
+    Provide a way for templates to set up virtualenv automatically. Called
+    with the virtualenv path, which will usually be the template output
+    directory. If the edit_mode flag is True, will also run setup.py develop
+    to leave the project in edit mode.
+    """
+    virtualenv.create_environment(cwd)
+    if edit_mode:
+        proc = subprocess.Popen(
+            ['bin/python', 'setup.py', 'develop'],
+            shell=sys.platform.startswith('win'),
+            cwd=cwd
+        )
+        proc.wait()
 
 
 def find_hooks():
