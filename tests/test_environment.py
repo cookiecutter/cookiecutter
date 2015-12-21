@@ -8,7 +8,9 @@ from cookiecutter.exceptions import UnknownExtension
 
 def test_env_should_raise_for_unknown_extension():
     context = {
-        '_extensions': ['foobar']
+        'cookiecutter': {
+            '_extensions': ['foobar']
+        }
     }
 
     with pytest.raises(UnknownExtension) as err:
