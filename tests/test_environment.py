@@ -12,6 +12,6 @@ def test_env_should_raise_for_unknown_extension():
     }
 
     with pytest.raises(UnknownExtension) as err:
-        StrictEnvironment(context, keep_trailing_newline=True)
+        StrictEnvironment(context=context, keep_trailing_newline=True)
 
     assert 'Unable to load extension: No module named foobar' in str(err.value)
