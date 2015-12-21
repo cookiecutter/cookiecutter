@@ -16,8 +16,8 @@ import logging
 import os
 import shutil
 
-from jinja2 import FileSystemLoader, StrictUndefined
-from jinja2.environment import Environment
+from jinja2 import FileSystemLoader
+from cookiecutter.environment import StrictEnvironment
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from binaryornot.check import is_binary
 
@@ -256,9 +256,9 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
-    env = Environment(
+    env = StrictEnvironment(
+        context=context,
         keep_trailing_newline=True,
-        undefined=StrictUndefined
     )
     try:
         project_dir = render_and_create_dir(

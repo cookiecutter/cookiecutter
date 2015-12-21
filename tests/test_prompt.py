@@ -14,8 +14,7 @@ import platform
 import pytest
 from past.builtins import basestring
 
-from cookiecutter import prompt, exceptions
-from jinja2.environment import Environment
+from cookiecutter import prompt, exceptions, environment
 
 
 @pytest.mark.parametrize('raw_var, rendered_var', [
@@ -26,9 +25,9 @@ from jinja2.environment import Environment
     (None, None),
 ])
 def test_convert_to_str(mocker, raw_var, rendered_var):
-    env = Environment()
+    env = environment.StrictEnvironment()
     from_string = mocker.patch(
-        'cookiecutter.prompt.Environment.from_string',
+        'cookiecutter.prompt.StrictEnvironment.from_string',
         wraps=env.from_string
     )
     context = {'project': 'foobar'}
@@ -228,7 +227,7 @@ class TestPromptChoiceForConfig(object):
 
         actual_choice = prompt.prompt_choice_for_config(
             context,
-            Environment(),
+            environment.StrictEnvironment(),
             'orientation',
             choices,
             True  # Suppress user input
@@ -244,7 +243,7 @@ class TestPromptChoiceForConfig(object):
 
         actual_choice = prompt.prompt_choice_for_config(
             context,
-            Environment(),
+            environment.StrictEnvironment(),
             'orientation',
             choices,
             False  # Ask the user for input
