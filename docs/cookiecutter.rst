@@ -20,6 +20,14 @@ cookiecutter.config module
     :undoc-members:
     :show-inheritance:
 
+cookiecutter.environment module
+-------------------------------
+
+.. automodule:: cookiecutter.environment
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 cookiecutter.exceptions module
 ------------------------------
 
