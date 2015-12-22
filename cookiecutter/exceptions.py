@@ -107,5 +107,4 @@ class UndefinedVariableInTemplate(CookiecutterException):
 
 
 class UnknownExtension(CookiecutterException):
-    """Raised when an extension cannot be imported from an import environent.
-    """
+    """Raised when an environment is unable to import a required extension."""
