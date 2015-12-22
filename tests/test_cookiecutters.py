@@ -51,10 +51,7 @@ def bake_data():
     )
 
     yield pypackage_data
-
-    # TODO: Remove xfail as soon as PR has been accepted
-    # https://github.com/audreyr/cookiecutter-jquery/pull/2
-    yield pytest.mark.xfail(jquery_data, reason='Undefined variable')
+    yield jquery_data
 
 
 @skipif_travis
