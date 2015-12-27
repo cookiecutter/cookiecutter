@@ -11,20 +11,13 @@ Contains pytest skipif markers to be used in the suite.
 import pytest
 import os
 
+from cookiecutter import vcs
 
-try:
-    os.environ[u'TRAVIS']
-except KeyError:
-    travis = False
-else:
-    travis = True
 
-try:
-    os.environ[u'DISABLE_NETWORK_TESTS']
-except KeyError:
-    no_network = False
-else:
-    no_network = True
+travis = not not os.environ.get(u'TRAVIS', False)
+no_network = not not os.environ.get(u'DISABLE_NETWORK_TESTS', False)
+no_hg = vcs.is_vcs_installed('hg'),
+
 
 skipif_travis = pytest.mark.skipif(
     travis, reason='Works locally with tox but fails on Travis.'
@@ -32,4 +25,8 @@ skipif_travis = pytest.mark.skipif(
 
 skipif_no_network = pytest.mark.skipif(
     no_network, reason='Needs a network connection to GitHub/Bitbucket.'
+)
+
+skipif_no_hg = pytest.mark.skipif(
+    no_hg, reason='"hg" is not installed"'
 )

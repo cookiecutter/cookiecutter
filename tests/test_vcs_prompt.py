@@ -10,7 +10,7 @@ import os
 import pytest
 
 from cookiecutter import utils, vcs
-from tests.skipif_markers import skipif_no_network
+from tests.skipif_markers import skipif_no_network, skipif_no_hg
 
 
 @pytest.fixture(autouse=True)
@@ -64,6 +64,7 @@ def test_git_clone_cancel(monkeypatch):
         vcs.clone('https://github.com/audreyr/cookiecutter-pypackage.git')
 
 
+@skipif_no_hg
 @skipif_no_network
 def test_hg_clone_overwrite(monkeypatch):
     monkeypatch.setattr(
@@ -77,6 +78,7 @@ def test_hg_clone_overwrite(monkeypatch):
     assert os.path.isfile('cookiecutter-trytonmodule/README.rst')
 
 
+@skipif_no_hg
 @skipif_no_network
 def test_hg_clone_cancel(monkeypatch):
     monkeypatch.setattr(

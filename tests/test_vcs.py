@@ -14,7 +14,7 @@ import pytest
 import subprocess
 
 from cookiecutter import exceptions, utils, vcs
-from tests.skipif_markers import skipif_no_network
+from tests.skipif_markers import skipif_no_network, skipif_no_hg
 
 ENCODING = locale.getdefaultlocale()[1]
 
@@ -86,6 +86,7 @@ def test_git_clone_custom_dir():
         utils.rmtree('tests/custom_dir1')
 
 
+@skipif_no_hg
 @skipif_no_network
 def test_hg_clone():
     repo_dir = vcs.clone(

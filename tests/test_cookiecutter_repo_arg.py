@@ -15,7 +15,7 @@ import os
 import pytest
 
 from cookiecutter import main, utils
-from tests.skipif_markers import skipif_no_network
+from tests.skipif_markers import skipif_no_network, skipif_no_hg
 
 
 @pytest.fixture(scope='function')
@@ -52,6 +52,7 @@ def test_cookiecutter_git():
     assert os.path.exists('python_boilerplate/setup.py')
 
 
+@skipif_no_hg
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_cookiecutter_mercurial(monkeypatch):

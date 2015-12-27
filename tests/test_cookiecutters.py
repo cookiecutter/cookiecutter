@@ -17,7 +17,7 @@ import subprocess
 import pytest
 
 from cookiecutter import utils
-from tests.skipif_markers import skipif_travis, skipif_no_network
+from tests.skipif_markers import skipif_travis, skipif_no_network, skipif_no_hg
 
 
 @pytest.fixture(scope='function')
@@ -57,6 +57,7 @@ def bake_data():
     yield pytest.mark.xfail(jquery_data, reason='Undefined variable')
 
 
+@skipif_no_hg
 @skipif_travis
 @skipif_no_network
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
