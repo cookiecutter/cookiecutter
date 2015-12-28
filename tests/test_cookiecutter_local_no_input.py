@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """
 test_cookiecutter_local_no_input
 --------------------------------
@@ -18,7 +19,10 @@ from cookiecutter import main
 from tests.utils import dir_tests
 
 
-@pytest.fixture(params=[dir_tests('fake-repo-pre/')])
+@pytest.fixture(params=[
+    dir_tests('fake-repo-pre'),
+    dir_tests('fake-repo-pre2')
+])
 def bake(request, tmpdir):
     """
     Run cookiecutter with the given input_dir path.

@@ -24,22 +24,22 @@ def test_should_raise_error_without_template_arg(capfd):
     exp_message = 'Error: Missing argument "template".'
     assert exp_message in err
 
+#
+# @pytest.fixture
+# def project_dir(request):
+#     """Remove the rendered project directory created by the test."""
+#     from cookiecutter import utils
+#     rendered_dir = 'fake-project-templated'
+#
+#     def remove_generated_project():
+#         if os.path.isdir(rendered_dir):
+#             utils.rmtree(rendered_dir)
+#     request.addfinalizer(remove_generated_project)
+#
+#     return rendered_dir
 
-@pytest.fixture
-def project_dir(request):
-    """Remove the rendered project directory created by the test."""
-    from cookiecutter import utils
-    rendered_dir = 'fake-project-templated'
 
-    def remove_generated_project():
-        if os.path.isdir(rendered_dir):
-            utils.rmtree(rendered_dir)
-    request.addfinalizer(remove_generated_project)
-
-    return rendered_dir
-
-
-def test_should_invoke_main(monkeypatch, project_dir):
+def test_should_invoke_main(monkeypatch):
     monkeypatch.setenv('PYTHONPATH', dir_tests('..'))
 
     subprocess.check_call([
@@ -50,4 +50,4 @@ def test_should_invoke_main(monkeypatch, project_dir):
         '--no-input'
     ])
 
-    assert os.path.isdir(project_dir)
+    assert os.path.isdir('fake-project-templated')

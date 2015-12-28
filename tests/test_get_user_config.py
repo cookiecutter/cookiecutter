@@ -26,7 +26,6 @@ def user_config_path():
     return os.path.expanduser('~/.cookiecutterrc')
 
 
-# @pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_valid(user_config_path):
     """
     Get config from a valid ~/.cookiecutterrc file
@@ -45,7 +44,6 @@ def test_get_user_config_valid(user_config_path):
     assert conf == expected_conf
 
 
-# @pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_invalid(user_config_path):
     """
     Get config from an invalid ~/.cookiecutterrc file
@@ -55,7 +53,6 @@ def test_get_user_config_invalid(user_config_path):
         config.get_user_config()
 
 
-# @pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_nonexistent():
     """
     Get config from a nonexistent ~/.cookiecutterrc file

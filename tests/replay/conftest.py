@@ -1,5 +1,7 @@
 import pytest
 
+from tests.utils import dir_tests
+
 
 @pytest.fixture
 def context():
@@ -16,7 +18,7 @@ def context():
 
 @pytest.fixture
 def replay_test_dir():
-    return 'tests/test-replay/'
+    return dir_tests('test-replay/')
 
 
 @pytest.fixture

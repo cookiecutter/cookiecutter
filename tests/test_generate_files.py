@@ -14,14 +14,10 @@ TestGenerateFiles.test_generate_files_absolute_path
 TestGenerateFiles.test_generate_files_output_dir
 TestGenerateFiles.test_generate_files_permissions
 
-Use the global test_setup fixture and run additional teardown code to remove
-some special folders.
+Use the global global_setup fixture.
 
 For a better understanding - order of fixture calls:
-test_setup setup code
-remove_additional_folders setup code
-remove_additional_folders teardown code
-test_setup teardown code
+global_setup setup code
 """
 
 from __future__ import unicode_literals

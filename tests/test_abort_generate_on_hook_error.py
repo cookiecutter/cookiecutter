@@ -2,12 +2,10 @@
 
 import pytest
 
-from cookiecutter import generate
-from cookiecutter import exceptions
+from cookiecutter import generate, exceptions
 from tests.utils import dir_tests
 
 
-@pytest.mark.usefixtures('test_setup')
 def test_pre_gen_hook(tmpdir):
     context = {
         'cookiecutter': {
@@ -27,7 +25,6 @@ def test_pre_gen_hook(tmpdir):
     assert not tmpdir.join('foobar').isdir()
 
 
-@pytest.mark.usefixtures('test_setup')
 def test_post_gen_hook(tmpdir):
     context = {
         'cookiecutter': {

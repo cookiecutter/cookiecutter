@@ -9,25 +9,14 @@ test_vcs_prompt
 import os
 import pytest
 
-from cookiecutter import utils, vcs
+from cookiecutter import vcs
 from tests.skipif_markers import skipif_no_network, skipif_no_hg
 
 
 @pytest.fixture(autouse=True)
-def clean_cookiecutter_dirs(request):
-    if os.path.isdir('cookiecutter-pypackage'):
-        utils.rmtree('cookiecutter-pypackage')
-    os.mkdir('cookiecutter-pypackage/')
-    if os.path.isdir('cookiecutter-trytonmodule'):
-        utils.rmtree('cookiecutter-trytonmodule')
-    os.mkdir('cookiecutter-trytonmodule/')
-
-    def remove_cookiecutter_dirs():
-        if os.path.isdir('cookiecutter-pypackage'):
-            utils.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('cookiecutter-trytonmodule'):
-            utils.rmtree('cookiecutter-trytonmodule')
-    request.addfinalizer(remove_cookiecutter_dirs)
+def setup(tmpdir):
+    tmpdir.mkdir('cookiecutter-pypackage/')
+    tmpdir.mkdir('cookiecutter-trytonmodule/')
 
 
 @skipif_no_network

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """
 conftest
 --------
@@ -12,7 +13,7 @@ import pytest
 
 
 @pytest.fixture(scope='function', autouse=True)
-def test_setup(tmpdir, monkeypatch):
+def global_setup(tmpdir, monkeypatch):
     home = tmpdir.mkdir('home')
     monkeypatch.setenv('HOME', home)
 
