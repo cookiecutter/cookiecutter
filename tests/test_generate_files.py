@@ -123,7 +123,9 @@ def test_generate_files_output_dir(tmpdir):
         repo_dir=os.path.abspath(dir_tests('test-generate-files')),
         output_dir=str(tmpdir.join('custom_output_dir'))
     )
-    unicode_file_name = str(tmpdir.join(u'custom_output_dir/inputpizzä/simple.txt'))
+    unicode_file_name = str(tmpdir.join(
+        u'custom_output_dir/inputpizzä/simple.txt'
+    ))
     assert os.path.isfile(unicode_file_name)
 
 

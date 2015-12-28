@@ -7,11 +7,10 @@ test_generate_copy_without_render
 """
 
 from __future__ import unicode_literals
+
 import os
-import pytest
 
 from cookiecutter import generate
-from cookiecutter import utils
 from tests.utils import dir_tests
 
 

@@ -11,9 +11,9 @@ TestGetUserConfig.test_get_user_config_invalid
 TestGetUserConfig.test_get_user_config_nonexistent
 """
 
-import os
 import shutil
 
+import os
 import pytest
 
 from cookiecutter import config
@@ -99,7 +99,9 @@ def test_default_config_path(user_config_path):
     assert config.get_user_config_path() == user_config_path
 
 
-def test_default_config_from_env_variable(monkeypatch, custom_config_path, custom_config):
+def test_default_config_from_env_variable(
+        monkeypatch, custom_config_path, custom_config):
+
     monkeypatch.setenv('COOKIECUTTER_CONFIG', custom_config_path)
 
     user_config = config.get_user_config()
@@ -107,7 +109,7 @@ def test_default_config_from_env_variable(monkeypatch, custom_config_path, custo
 
 
 def test_force_default_config(mocker):
-    spy_get_config = mocker.spy(config, 'get_config')
+    spy_get_config = mocker.spy(config, u'get_config')
 
     user_config = config.get_user_config(None)
 

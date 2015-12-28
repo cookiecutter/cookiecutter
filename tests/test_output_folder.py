@@ -10,14 +10,12 @@ TestOutputFolder.test_output_folder
 """
 
 from __future__ import unicode_literals
+
 import os
 import pytest
 
-from cookiecutter import generate
-from cookiecutter import utils
-from cookiecutter import exceptions
+from cookiecutter import exceptions, generate
 from tests.utils import dir_tests
-
 
 
 def test_output_folder():

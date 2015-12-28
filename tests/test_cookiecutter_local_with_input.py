@@ -11,9 +11,8 @@ TestCookiecutterLocalWithInput.test_cookiecutter_input_extra_context
 """
 
 import os
-import pytest
 
-from cookiecutter import main, utils
+from cookiecutter import main
 from tests.utils import dir_tests
 
 

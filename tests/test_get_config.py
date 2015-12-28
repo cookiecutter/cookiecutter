@@ -16,9 +16,8 @@ import os
 import pytest
 
 from cookiecutter import config
-from cookiecutter.exceptions import (
-    ConfigDoesNotExistException, InvalidConfiguration
-)
+from cookiecutter.exceptions import (ConfigDoesNotExistException,
+                                     InvalidConfiguration)
 from tests.utils import dir_tests
 
 
@@ -66,7 +65,9 @@ def test_get_config_with_defaults():
     """
     A config file that overrides 1 of 3 defaults
     """
-    conf = config.get_config(dir_tests('test-config/valid-partial-config.yaml'))
+    conf = config.get_config(
+        dir_tests('test-config/valid-partial-config.yaml')
+    )
     default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
     default_replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
     expected_conf = {

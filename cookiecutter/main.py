@@ -12,16 +12,18 @@ library rather than a script.
 """
 
 from __future__ import unicode_literals
+
 import logging
+
 import os
 import re
 
 from .config import get_user_config, get_user_config_path
 from .exceptions import InvalidModeException
-from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
-from .vcs import clone
+from .prompt import prompt_for_config
 from .replay import dump, load
+from .vcs import clone
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +100,8 @@ def cookiecutter(
         raise InvalidModeException(err_msg)
 
     # Get user config from ~/.cookiecutterrc or equivalent
-    # If no config file, sensible defaults from config.get_default_config() are used
+    # If no config file,
+    #   sensible defaults from config.get_default_config() are used
     config_dict = get_user_config(config_file=config_file)
 
     template = expand_abbreviations(template, config_dict)

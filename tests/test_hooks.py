@@ -9,11 +9,12 @@ Tests for `cookiecutter.hooks` module.
 """
 
 import sys
-import os
-import stat
-import pytest
 
-from cookiecutter import hooks, utils, exceptions
+import os
+import pytest
+import stat
+
+from cookiecutter import hooks, utils
 
 
 def make_test_repo(name):
@@ -56,9 +57,9 @@ def make_test_repo(name):
 
     return post
 
+
 @pytest.mark.xfail
 class TestFindHooks(object):
-
     repo_path = 'tests/test-hooks'
 
     def setup_method(self, method):
@@ -76,7 +77,7 @@ class TestFindHooks(object):
                 'pre_gen_project': os.path.abspath('hooks/pre_gen_project.py'),
                 'post_gen_project': os.path.abspath(
                     os.path.join('hooks', self.post_hook)
-                ),
+                )
             }
             assert expected == hooks.find_hooks()
 
@@ -86,7 +87,6 @@ class TestFindHooks(object):
 
         with utils.work_in('tests/fake-repo'):
             assert {} == hooks.find_hooks()
-
 
 # class TestExternalHooks(object):
 #
@@ -150,7 +150,9 @@ class TestFindHooks(object):
 #                 fh.write("echo 'post generation hook';\n")
 #                 fh.write("touch 'shell_post.txt'\n")
 #                 fh.write("touch '{{cookiecutter.file}}'\n")
-#                 os.chmod(hook_path, os.stat(hook_path).st_mode | stat.S_IXUSR)
+#                 os.chmod(
+#                       hook_path, os.stat(hook_path).st_mode | stat.S_IXUSR
+#                   )
 #
 #         hooks.run_script_with_context(
 #             os.path.join(self.hooks_path, self.post_hook),

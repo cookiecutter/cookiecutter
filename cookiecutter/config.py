@@ -9,10 +9,12 @@ Global configuration handling
 """
 
 from __future__ import unicode_literals
+
 import copy
-import logging
-import os
 import io
+import logging
+
+import os
 
 try:
     import ruamel.yaml as yaml
@@ -22,11 +24,12 @@ except ImportError:
 from .exceptions import ConfigDoesNotExistException
 from .exceptions import InvalidConfiguration
 
-
 logger = logging.getLogger(__name__)
+
 
 def get_user_config_path():
     return os.path.expanduser('~/.cookiecutterrc')
+
 
 def get_default_config():
     return copy.copy({
@@ -68,7 +71,6 @@ def get_user_config(config_file=None):
     """
     if config_file is None:
         config_file = get_user_config_path()
-
 
     default_config = get_default_config()
     user_config_path = get_user_config_path()

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """
 test_cookiecutter_local_no_input
 --------------------------------
@@ -11,12 +10,13 @@ TestCookiecutterLocalNoInput.test_cookiecutter_no_slash
 TestCookiecutterLocalNoInput.test_cookiecutter_no_input_extra_context
 TestCookiecutterLocalNoInput.test_cookiecutter_templated_context
 """
+
 import os
 import pytest
+
 from cookiecutter import main
-
-
 from tests.utils import dir_tests
+
 
 @pytest.fixture(params=[dir_tests('fake-repo-pre/')])
 def bake(request, tmpdir):
@@ -56,16 +56,12 @@ def test_cookiecutter_templated_context():
     cookiecutter.json file
     """
 
-    main.cookiecutter(
-        dir_tests('fake-repo-tmpl'),
-        no_input=True
-    )
+    main.cookiecutter(dir_tests('fake-repo-tmpl'), no_input=True)
     assert os.path.isdir('fake-project-templated')
 
 
 def test_cookiecutter_no_input_return_project_dir():
     """Call `cookiecutter()` with `no_input=True`."""
-
 
     project_dir = main.cookiecutter(dir_tests('fake-repo-pre'), no_input=True)
     assert project_dir == os.path.abspath('fake-project')

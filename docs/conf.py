@@ -11,7 +11,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
+import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -22,7 +23,6 @@ import sys, os
 # dependencies (like readthedocs), mock out imports that cause sphinx to fail.
 # see: https://docs.readthedocs.org/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
 
-import sys
 
 class Mock(object):
     def __init__(self, *args, **kwargs):

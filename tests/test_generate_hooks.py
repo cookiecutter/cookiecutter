@@ -13,10 +13,11 @@ TestHooks.test_run_shell_hooks
 """
 
 from __future__ import unicode_literals
-import os
+
 import sys
+
+import os
 import stat
-import pytest
 
 from cookiecutter import generate
 from tests.utils import dir_tests
@@ -41,8 +42,10 @@ def test_run_python_hooks(tmpdir):
         repo_dir=dir_tests('test-pyhooks'),
         output_dir=str(tmpdir.join('test-pyhooks'))
     )
-    assert os.path.exists(str(tmpdir.join('test-pyhooks/inputpyhooks/python_pre.txt')))
-    assert os.path.exists(str(tmpdir.join('test-pyhooks/inputpyhooks/python_post.txt')))
+    pre_file = str(tmpdir.join('test-pyhooks/inputpyhooks/python_pre.txt'))
+    post_file = str(tmpdir.join('test-pyhooks/inputpyhooks/python_post.txt'))
+    assert os.path.exists(pre_file)
+    assert os.path.exists(post_file)
 
 
 def test_run_python_hooks_cwd():
@@ -107,7 +110,7 @@ def test_run_shell_hooks(tmpdir):
         repo_dir=str(tmpdir.join('test-shellhooks')),
         output_dir=str(tmpdir.join('test-shellhooks'))
     )
-    shell_pre_file = tmpdir.join('test-shellhooks/inputshellhooks/shell_pre.txt')
-    shell_post_file = tmpdir.join('test-shellhooks/inputshellhooks/shell_post.txt')
-    assert os.path.exists(str(shell_pre_file))
-    assert os.path.exists(str(shell_post_file))
+    pre_file = tmpdir.join('test-shellhooks/inputshellhooks/shell_pre.txt')
+    post_file = tmpdir.join('test-shellhooks/inputshellhooks/shell_post.txt')
+    assert os.path.exists(str(pre_file))
+    assert os.path.exists(str(post_file))

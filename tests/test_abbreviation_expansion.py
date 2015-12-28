@@ -16,9 +16,11 @@ TestAbbreviationExpansion.test_abbreviation_expansion_prefix_not_0_in_braces
 """
 
 from __future__ import unicode_literals
+
 import pytest
 
 from cookiecutter import main
+
 
 def test_abbreviation_expansion():
     input_dir = main.expand_abbreviations(
@@ -42,9 +44,7 @@ def test_abbreviation_expansion_prefix():
 
 
 def test_abbreviation_expansion_builtin():
-    input_dir = main.expand_abbreviations(
-        'gh:a', {}
-    )
+    input_dir = main.expand_abbreviations('gh:a', {})
     assert input_dir == 'https://github.com/a.git'
 
 
