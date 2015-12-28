@@ -1,3 +1,4 @@
+import functools
 import os
 import json
 import pytest
@@ -5,27 +6,46 @@ import pytest
 from click.testing import CliRunner
 
 from cookiecutter.cli import main
-from cookiecutter.main import cookiecutter
-from cookiecutter import utils, config
 
-runner = CliRunner()
+
+
+
+
+# @pytest.fixture
+# def remove_fake_project_dir(request):
+#     """
+#     Remove the fake project directory created during the tests.
+#     """
+#     def fin_remove_fake_project_dir():
+#         if os.path.isdir('fake-project'):
+#             utils.rmtree('fake-project')
+#     request.addfinalizer(fin_remove_fake_project_dir)
+#
+#
+# @pytest.fixture
+# def make_fake_project_dir(request):
+#     """Create a fake project to be overwritten in the according tests."""
+#     os.makedirs('fake-project')
+from tests.utils import dir_tests
 
 
 @pytest.fixture
-def remove_fake_project_dir(request):
-    """
-    Remove the fake project directory created during the tests.
-    """
-    def fin_remove_fake_project_dir():
-        if os.path.isdir('fake-project'):
-            utils.rmtree('fake-project')
-    request.addfinalizer(fin_remove_fake_project_dir)
+def user_config_path(tmpdir):
+    return str(tmpdir.join('home', '.cookiecutterrc'))
 
 
 @pytest.fixture
-def make_fake_project_dir(request):
-    """Create a fake project to be overwritten in the according tests."""
-    os.makedirs('fake-project')
+def fake_project(tmpdir):
+    os.chdir(str(tmpdir))
+    tmpdir.mkdir('fake-project')
+
+@pytest.fixture
+def runner(monkeypatch):
+    env_home = {'HOME': os.environ['HOME']}
+    _runner = CliRunner(env=env_home)
+    _invoke = functools.partial(_runner.invoke, env=env_home)
+    monkeypatch.setattr(_runner, 'invoke', _invoke)
+    return _runner
 
 
 @pytest.fixture(params=['-V', '--version'])
@@ -33,47 +53,42 @@ def version_cli_flag(request):
     return request.param
 
 
-def test_cli_version(version_cli_flag):
+def test_cli_version(version_cli_flag, runner):
     result = runner.invoke(main, [version_cli_flag])
     assert result.exit_code == 0
     assert result.output.startswith('Cookiecutter')
 
 
-@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
-def test_cli_error_on_existing_output_directory():
-    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input'])
+@pytest.mark.usefixtures('fake_project')
+def test_cli_error_on_existing_output_directory( runner):
+    result = runner.invoke(main, [dir_tests('fake-repo-pre'), '--no-input'])
     assert result.exit_code != 0
     expected_error_msg = 'Error: "fake-project" directory already exists\n'
     assert result.output == expected_error_msg
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli():
-    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input'])
+def test_cli( runner):
+    result = runner.invoke(main, [dir_tests('fake-repo-pre'), '--no-input'])
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_verbose():
-    result = runner.invoke(main, ['tests/fake-repo-pre/', '--no-input', '-v'])
+def test_cli_verbose( runner):
+    result = runner.invoke(main, [dir_tests('fake-repo-pre'), '--no-input', '-v'])
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
 
-
-@pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_replay(mocker):
+def test_cli_replay(mocker, runner, user_config_path):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter'
     )
 
-    template_path = 'tests/fake-repo-pre/'
+    template_path = dir_tests('fake-repo-pre')
     result = runner.invoke(main, [
         template_path,
         '--replay',
         '-v'
     ])
-
     assert result.exit_code == 0
     mock_cookiecutter.assert_called_once_with(
         template_path,
@@ -82,18 +97,19 @@ def test_cli_replay(mocker):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH
+        config_file=user_config_path
     )
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_exit_on_noinput_and_replay(mocker):
+def test_cli_exit_on_noinput_and_replay(mocker, runner, user_config_path):
+    from cookiecutter.main import cookiecutter
+
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter',
         side_effect=cookiecutter
     )
 
-    template_path = 'tests/fake-repo-pre/'
+    template_path = dir_tests('fake-repo-pre')
     result = runner.invoke(main, [
         template_path,
         '--no-input',
@@ -117,7 +133,7 @@ def test_cli_exit_on_noinput_and_replay(mocker):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH
+        config_file=user_config_path
     )
 
 
@@ -125,16 +141,20 @@ def test_cli_exit_on_noinput_and_replay(mocker):
 def overwrite_cli_flag(request):
     return request.param
 
-
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('fake_project')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
-        mocker, overwrite_cli_flag):
+        mocker, overwrite_cli_flag, runner, user_config_path, tmpdir):
+    from cookiecutter.main import cookiecutter
+
+    assert os.path.isdir(dir_tests('fake-repo-pre'))
+    assert os.path.isdir(str(tmpdir.join('fake-project')))
+
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter',
         side_effect=cookiecutter
     )
 
-    template_path = 'tests/fake-repo-pre/'
+    template_path = dir_tests('fake-repo-pre')
     result = runner.invoke(main, [
         template_path,
         '--replay',
@@ -151,29 +171,30 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         replay=True,
         overwrite_if_exists=True,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH
+        config_file=user_config_path
     )
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
-        overwrite_cli_flag):
+        overwrite_cli_flag, runner, tmpdir):
     result = runner.invoke(main, [
-        'tests/fake-repo-pre/', '--no-input', overwrite_cli_flag
+        dir_tests('fake-repo-pre'), '--no-input', overwrite_cli_flag
     ])
 
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
+    expected_output_dir = str(tmpdir.join('fake-project'))
+    assert os.path.isdir(expected_output_dir)
 
 
-@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
-def test_cli_overwrite_if_exists_when_output_dir_exists(overwrite_cli_flag):
+@pytest.mark.usefixtures('fake_project')
+def test_cli_overwrite_if_exists_when_output_dir_exists(overwrite_cli_flag, runner, tmpdir):
     result = runner.invoke(main, [
-        'tests/fake-repo-pre/', '--no-input', overwrite_cli_flag
+        dir_tests('fake-repo-pre'), '--no-input', overwrite_cli_flag
     ])
 
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
+    expected_output_dir = str(tmpdir.join('fake-project'))
+    assert os.path.isdir(expected_output_dir)
 
 
 @pytest.fixture(params=['-o', '--output-dir'])
@@ -186,12 +207,12 @@ def output_dir(tmpdir):
     return str(tmpdir.mkdir('output'))
 
 
-def test_cli_output_dir(mocker, output_dir_flag, output_dir):
+def test_cli_output_dir(mocker, output_dir_flag, output_dir, runner, user_config_path):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter'
     )
 
-    template_path = 'tests/fake-repo-pre/'
+    template_path = dir_tests('fake-repo-pre/')
     result = runner.invoke(main, [
         template_path,
         output_dir_flag,
@@ -206,7 +227,7 @@ def test_cli_output_dir(mocker, output_dir_flag, output_dir):
         replay=False,
         overwrite_if_exists=False,
         output_dir=output_dir,
-        config_file=config.USER_CONFIG_PATH
+        config_file=user_config_path
     )
 
 
@@ -215,27 +236,22 @@ def help_cli_flag(request):
     return request.param
 
 
-def test_cli_help(help_cli_flag):
+def test_cli_help(help_cli_flag, runner):
     result = runner.invoke(main, [help_cli_flag])
     assert result.exit_code == 0
     assert result.output.startswith('Usage')
 
 
-@pytest.fixture
-def user_config_path(tmpdir):
-    return str(tmpdir.join('tests/config.yaml'))
-
-
-def test_user_config(mocker, user_config_path):
+def test_user_config(mocker, runner):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter'
     )
 
-    template_path = 'tests/fake-repo-pre/'
+    template_path = dir_tests('fake-repo-pre/')
     result = runner.invoke(main, [
         template_path,
         '--config-file',
-        user_config_path
+        dir_tests('config.yaml')
     ])
 
     assert result.exit_code == 0
@@ -246,20 +262,20 @@ def test_user_config(mocker, user_config_path):
         replay=False,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=user_config_path
+        config_file=dir_tests('config.yaml')
     )
 
 
-def test_default_user_config_overwrite(mocker, user_config_path):
+def test_default_user_config_overwrite(mocker, runner):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter'
     )
 
-    template_path = 'tests/fake-repo-pre/'
+    template_path = dir_tests('fake-repo-pre/')
     result = runner.invoke(main, [
         template_path,
         '--config-file',
-        user_config_path,
+        dir_tests('config.yaml'),
         '--default-config'
     ])
 
@@ -275,12 +291,12 @@ def test_default_user_config_overwrite(mocker, user_config_path):
     )
 
 
-def test_default_user_config(mocker):
+def test_default_user_config(mocker, runner):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter'
     )
 
-    template_path = 'tests/fake-repo-pre/'
+    template_path = dir_tests('fake-repo-pre/')
     result = runner.invoke(main, [
         template_path,
         '--default-config'
@@ -298,9 +314,9 @@ def test_default_user_config(mocker):
     )
 
 
-def test_echo_undefined_variable_error(tmpdir):
+def test_echo_undefined_variable_error(tmpdir, runner):
     output_dir = str(tmpdir.mkdir('output'))
-    template_path = 'tests/undefined-variable/file-name/'
+    template_path = dir_tests('undefined-variable/file-name/')
 
     result = runner.invoke(main, [
         '--no-input',

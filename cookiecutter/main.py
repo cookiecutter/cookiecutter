@@ -16,7 +16,7 @@ import logging
 import os
 import re
 
-from .config import get_user_config, USER_CONFIG_PATH
+from .config import get_user_config, get_user_config_path
 from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
@@ -72,7 +72,7 @@ def expand_abbreviations(template, config_dict):
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=USER_CONFIG_PATH):
+        config_file=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -87,6 +87,9 @@ def cookiecutter(
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     """
+    if config_file is None:
+        config_file = get_user_config_path()
+
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
             "You can not use both replay and no_input or extra_context "
@@ -95,7 +98,7 @@ def cookiecutter(
         raise InvalidModeException(err_msg)
 
     # Get user config from ~/.cookiecutterrc or equivalent
-    # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
+    # If no config file, sensible defaults from config.get_default_config() are used
     config_dict = get_user_config(config_file=config_file)
 
     template = expand_abbreviations(template, config_dict)

@@ -16,27 +16,17 @@ import pytest
 from cookiecutter import generate
 from cookiecutter import utils
 from cookiecutter import exceptions
+from tests.utils import dir_tests
 
 
-@pytest.fixture(scope='function')
-def remove_output_folder(request):
-    """
-    Remove the output folder in case it exists on disk.
-    """
-    def finalizer_remove_output_folder():
-        if os.path.exists('output_folder'):
-            utils.rmtree('output_folder')
-    request.addfinalizer(finalizer_remove_output_folder)
 
-
-@pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_output_folder():
     context = generate.generate_context(
-        context_file='tests/test-output-folder/cookiecutter.json'
+        context_file=dir_tests('test-output-folder/cookiecutter.json')
     )
     generate.generate_files(
         context=context,
-        repo_dir='tests/test-output-folder'
+        repo_dir=dir_tests('test-output-folder')
     )
 
     something = """Hi!
@@ -53,10 +43,9 @@ It is 2014."""
     assert os.path.isfile('output_folder/im_a.dir/im_a.file.py')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_exception_when_output_folder_exists():
     context = generate.generate_context(
-        context_file='tests/test-output-folder/cookiecutter.json'
+        context_file=dir_tests('test-output-folder/cookiecutter.json')
     )
     output_folder = context['cookiecutter']['test_name']
 
@@ -65,5 +54,5 @@ def test_exception_when_output_folder_exists():
     with pytest.raises(exceptions.OutputDirExistsException):
         generate.generate_files(
             context=context,
-            repo_dir='tests/test-output-folder'
+            repo_dir=dir_tests('test-output-folder')
         )

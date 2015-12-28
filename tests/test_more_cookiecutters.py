@@ -26,7 +26,7 @@ def remove_additional_dirs(request):
     Remove special directories which are creating during the tests.
     """
     def fin_remove_additional_dirs():
-        with utils.work_in(config.DEFAULT_CONFIG['cookiecutters_dir']):
+        with utils.work_in(config.get_default_config()['cookiecutters_dir']):
             if os.path.isdir('cookiecutter-pypackage'):
                 utils.rmtree('cookiecutter-pypackage')
         if os.path.isdir('boilerplate'):
@@ -38,7 +38,7 @@ def remove_additional_dirs(request):
 
 @skipif_travis
 @skipif_no_network
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('test_setup', 'remove_additional_dirs')
 def test_git_branch():
     pypackage_git = 'https://github.com/audreyr/cookiecutter-pypackage.git'
     proc = subprocess.Popen(
@@ -57,7 +57,7 @@ def test_git_branch():
 
 @skipif_travis
 @skipif_no_network
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('test_setup', 'remove_additional_dirs')
 def test_cookiecutter_pypackage_git():
     proc = subprocess.Popen(
         '{0} -m cookiecutter.cli https://github.com/audreyr/'

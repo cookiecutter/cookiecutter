@@ -12,32 +12,14 @@ TestCookiecutterRepoArg.test_cookiecutter_mercurial
 
 from __future__ import unicode_literals
 import os
-import pytest
 
-from cookiecutter import main, utils
+
 from tests.skipif_markers import skipif_no_network, skipif_no_hg
 
 
-@pytest.fixture(scope='function')
-def remove_additional_folders(request):
-    """
-    Remove some special folders which are created by the tests.
-    """
-    def fin_remove_additional_folders():
-        if os.path.isdir('cookiecutter-pypackage'):
-            utils.rmtree('cookiecutter-pypackage')
-        if os.path.isdir('python_boilerplate'):
-            utils.rmtree('python_boilerplate')
-        if os.path.isdir('cookiecutter-trytonmodule'):
-            utils.rmtree('cookiecutter-trytonmodule')
-        if os.path.isdir('module_name'):
-            utils.rmtree('module_name')
-    request.addfinalizer(fin_remove_additional_folders)
-
-
 @skipif_no_network
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_cookiecutter_git():
+    from cookiecutter import main
     main.cookiecutter(
         'https://github.com/audreyr/cookiecutter-pypackage.git',
         no_input=True
@@ -54,8 +36,8 @@ def test_cookiecutter_git():
 
 @skipif_no_hg
 @skipif_no_network
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_cookiecutter_mercurial(monkeypatch):
+    from cookiecutter import main
     monkeypatch.setattr(
         'cookiecutter.prompt.read_user_variable',
         lambda var, default: default

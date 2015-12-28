@@ -19,13 +19,14 @@ from cookiecutter import config
 from cookiecutter.exceptions import (
     ConfigDoesNotExistException, InvalidConfiguration
 )
+from tests.utils import dir_tests
 
 
 def test_get_config():
     """
     Opening and reading config file
     """
-    conf = config.get_config('tests/test-config/valid-config.yaml')
+    conf = config.get_config(dir_tests('test-config/valid-config.yaml'))
     expected_conf = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
         'replay_dir': '/home/example/some-path-to-replay-files',
@@ -44,7 +45,7 @@ def test_get_config_does_not_exist():
     attempting to get a non-existent config file.
     """
     with pytest.raises(ConfigDoesNotExistException):
-        config.get_config('tests/test-config/this-does-not-exist.yaml')
+        config.get_config(dir_tests('test-config/this-does-not-exist.yaml'))
 
 
 def test_invalid_config():
@@ -52,12 +53,12 @@ def test_invalid_config():
     An invalid config file should raise an `InvalidConfiguration` exception.
     """
     with pytest.raises(InvalidConfiguration) as excinfo:
-        config.get_config('tests/test-config/invalid-config.yaml')
+        config.get_config(dir_tests('test-config/invalid-config.yaml'))
 
     expected_error_msg = (
-        'tests/test-config/invalid-config.yaml is not a valid YAML file: '
+        '%s is not a valid YAML file: '
         'line 1: mapping values are not allowed here'
-    )
+    ) % dir_tests('test-config/invalid-config.yaml')
     assert str(excinfo.value) == expected_error_msg
 
 
@@ -65,7 +66,7 @@ def test_get_config_with_defaults():
     """
     A config file that overrides 1 of 3 defaults
     """
-    conf = config.get_config('tests/test-config/valid-partial-config.yaml')
+    conf = config.get_config(dir_tests('test-config/valid-partial-config.yaml'))
     default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
     default_replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
     expected_conf = {

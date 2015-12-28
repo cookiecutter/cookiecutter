@@ -20,7 +20,6 @@ import pytest
 
 from cookiecutter import main
 
-
 def test_abbreviation_expansion():
     input_dir = main.expand_abbreviations(
         'foo', {'abbreviations': {'foo': 'bar'}}

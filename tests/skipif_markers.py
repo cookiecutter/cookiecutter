@@ -11,12 +11,12 @@ Contains pytest skipif markers to be used in the suite.
 import pytest
 import os
 
-from cookiecutter import vcs
+from whichcraft import which
 
 
 travis = not not os.environ.get(u'TRAVIS', False)
 no_network = not not os.environ.get(u'DISABLE_NETWORK_TESTS', False)
-no_hg = vcs.is_vcs_installed('hg'),
+no_hg = not not which('hg'),
 
 
 skipif_travis = pytest.mark.skipif(

@@ -16,21 +16,7 @@ import sys
 import subprocess
 import pytest
 
-from cookiecutter import utils
 from tests.skipif_markers import skipif_travis, skipif_no_network, skipif_no_hg
-
-
-@pytest.fixture(scope='function')
-def remove_additional_dirs(request):
-    """
-    Remove special directories which are creating during the tests.
-    """
-    def fin_remove_additional_dirs():
-        for path in ('cookiecutter-pypackage', 'cookiecutter-jquery',
-                     'python_boilerplate', 'boilerplate'):
-            if os.path.isdir(path):
-                utils.rmtree(path)
-    request.addfinalizer(fin_remove_additional_dirs)
 
 
 def bake_data():
@@ -60,7 +46,6 @@ def bake_data():
 @skipif_no_hg
 @skipif_travis
 @skipif_no_network
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 @pytest.mark.parametrize('git_cmd, bake_cmd, out_dir, readme', bake_data())
 def test_cookiecutters(git_cmd, bake_cmd, out_dir, readme):
     """

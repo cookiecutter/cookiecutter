@@ -14,6 +14,7 @@ import stat
 import sys
 
 from cookiecutter import utils
+from tests.utils import dir_tests
 
 
 def make_readonly(path):
@@ -51,7 +52,7 @@ def test_make_sure_path_exists():
 
 def test_workin():
     cwd = os.getcwd()
-    ch_to = 'tests/files'
+    ch_to = dir_tests('files')
 
     class TestException(Exception):
         pass

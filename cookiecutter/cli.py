@@ -16,7 +16,7 @@ import json
 import click
 
 from cookiecutter import __version__
-from cookiecutter.config import USER_CONFIG_PATH
+from cookiecutter.config import get_user_config_path
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException,
@@ -65,7 +65,7 @@ def version_msg():
     help=u'Where to output the generated project dir into'
 )
 @click.option(
-    u'--config-file', type=click.Path(), default=USER_CONFIG_PATH,
+    u'--config-file', type=click.Path(), default=None,
     help=u'User configuration file'
 )
 @click.option(
@@ -75,6 +75,9 @@ def version_msg():
 def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
          output_dir, config_file, default_config):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
+    if config_file is None:
+        config_file = get_user_config_path()
+
     if verbose:
         logging.basicConfig(
             format=u'%(levelname)s %(filename)s: %(message)s',

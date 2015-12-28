@@ -20,12 +20,13 @@ from collections import OrderedDict
 
 from cookiecutter import generate
 from cookiecutter.exceptions import ContextDecodingException
+from tests.utils import dir_tests
 
 
 def context_data():
     context = (
         {
-            'context_file': 'tests/test-generate-context/test.json'
+            'context_file': dir_tests('test-generate-context/test.json')
         },
         {
             'test': {'1': 2, 'some_key': 'some_val'}
@@ -34,7 +35,7 @@ def context_data():
 
     context_with_default = (
         {
-            'context_file': 'tests/test-generate-context/test.json',
+            'context_file': dir_tests('test-generate-context/test.json'),
             'default_context': {'1': 3}
         },
         {
@@ -44,7 +45,7 @@ def context_data():
 
     context_with_extra = (
         {
-            'context_file': 'tests/test-generate-context/test.json',
+            'context_file': dir_tests('test-generate-context/test.json'),
             'extra_context': {'1': 4},
         },
         {
@@ -54,7 +55,7 @@ def context_data():
 
     context_with_default_and_extra = (
         {
-            'context_file': 'tests/test-generate-context/test.json',
+            'context_file': dir_tests('test-generate-context/test.json'),
             'default_context': {'1': 3},
             'extra_context': {'1': 5},
         },
@@ -69,7 +70,6 @@ def context_data():
     yield context_with_default_and_extra
 
 
-@pytest.mark.usefixtures('clean_system')
 @pytest.mark.parametrize('input_params, expected_context', context_data())
 def test_generate_context(input_params, expected_context):
     """
@@ -79,11 +79,10 @@ def test_generate_context(input_params, expected_context):
     assert generate.generate_context(**input_params) == expected_context
 
 
-@pytest.mark.usefixtures('clean_system')
 def test_generate_context_with_json_decoding_error():
     with pytest.raises(ContextDecodingException) as excinfo:
         generate.generate_context(
-            'tests/test-generate-context/invalid-syntax.json'
+            dir_tests('test-generate-context/invalid-syntax.json')
         )
     # original message from json module should be included
     pattern = (
@@ -120,7 +119,7 @@ def extra_context():
 
 @pytest.fixture
 def context_file():
-    return 'tests/test-generate-context/choices_template.json'
+    return dir_tests('test-generate-context/choices_template.json')
 
 
 def test_choices(context_file, default_context, extra_context):

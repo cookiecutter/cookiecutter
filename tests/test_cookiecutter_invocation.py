@@ -13,12 +13,12 @@ import pytest
 import subprocess
 import sys
 
-from cookiecutter import utils
+from tests.utils import dir_tests
 
 
 def test_should_raise_error_without_template_arg(capfd):
     with pytest.raises(subprocess.CalledProcessError):
-        subprocess.check_call(['python', '-m', 'cookiecutter.cli'])
+        subprocess.check_call([sys.executable, '-m', 'cookiecutter.cli'])
 
     _, err = capfd.readouterr()
     exp_message = 'Error: Missing argument "template".'
@@ -28,6 +28,7 @@ def test_should_raise_error_without_template_arg(capfd):
 @pytest.fixture
 def project_dir(request):
     """Remove the rendered project directory created by the test."""
+    from cookiecutter import utils
     rendered_dir = 'fake-project-templated'
 
     def remove_generated_project():
@@ -38,15 +39,14 @@ def project_dir(request):
     return rendered_dir
 
 
-@pytest.mark.usefixtures('clean_system')
 def test_should_invoke_main(monkeypatch, project_dir):
-    monkeypatch.setenv('PYTHONPATH', '.')
+    monkeypatch.setenv('PYTHONPATH', dir_tests('..'))
 
     subprocess.check_call([
         sys.executable,
         '-m',
         'cookiecutter.cli',
-        'tests/fake-repo-tmpl',
+        dir_tests('fake-repo-tmpl'),
         '--no-input'
     ])
 

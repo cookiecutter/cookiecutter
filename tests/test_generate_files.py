@@ -14,14 +14,14 @@ TestGenerateFiles.test_generate_files_absolute_path
 TestGenerateFiles.test_generate_files_output_dir
 TestGenerateFiles.test_generate_files_permissions
 
-Use the global clean_system fixture and run additional teardown code to remove
+Use the global test_setup fixture and run additional teardown code to remove
 some special folders.
 
 For a better understanding - order of fixture calls:
-clean_system setup code
+test_setup setup code
 remove_additional_folders setup code
 remove_additional_folders teardown code
-clean_system teardown code
+test_setup teardown code
 """
 
 from __future__ import unicode_literals
@@ -32,6 +32,7 @@ import pytest
 from cookiecutter import generate
 from cookiecutter import exceptions
 from cookiecutter import utils
+from tests.utils import dir_tests
 
 
 @pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])
@@ -39,44 +40,42 @@ def test_ensure_dir_is_templated_raises(invalid_dirname):
     with pytest.raises(exceptions.NonTemplatedInputDirException):
         generate.ensure_dir_is_templated(invalid_dirname)
 
+#
+# @pytest.fixture(scope='function')
+# def remove_additional_folders(request):
+#     """
+#     Remove some special folders which are created by the tests.
+#     """
+#     def fin_remove_additional_folders():
+#         if os.path.exists('inputpizzä'):
+#             utils.rmtree('inputpizzä')
+#         if os.path.exists('inputgreen'):
+#             utils.rmtree('inputgreen')
+#         if os.path.exists('inputbinary_files'):
+#             utils.rmtree('inputbinary_files')
+#         if os.path.exists(dir_tests('custom_output_dir')):
+#             utils.rmtree(dir_tests('custom_output_dir'))
+#         if os.path.exists('inputpermissions'):
+#             utils.rmtree('inputpermissions')
+#     request.addfinalizer(fin_remove_additional_folders)
 
-@pytest.fixture(scope='function')
-def remove_additional_folders(request):
-    """
-    Remove some special folders which are created by the tests.
-    """
-    def fin_remove_additional_folders():
-        if os.path.exists('inputpizzä'):
-            utils.rmtree('inputpizzä')
-        if os.path.exists('inputgreen'):
-            utils.rmtree('inputgreen')
-        if os.path.exists('inputbinary_files'):
-            utils.rmtree('inputbinary_files')
-        if os.path.exists('tests/custom_output_dir'):
-            utils.rmtree('tests/custom_output_dir')
-        if os.path.exists('inputpermissions'):
-            utils.rmtree('inputpermissions')
-    request.addfinalizer(fin_remove_additional_folders)
 
-
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_nontemplated_exception():
     with pytest.raises(exceptions.NonTemplatedInputDirException):
         generate.generate_files(
             context={
                 'cookiecutter': {'food': 'pizza'}
             },
-            repo_dir='tests/test-generate-files-nontemplated'
+            repo_dir=dir_tests('test-generate-files-nontemplated')
         )
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files():
     generate.generate_files(
         context={
             'cookiecutter': {'food': 'pizzä'}
         },
-        repo_dir='tests/test-generate-files'
+        repo_dir=dir_tests('test-generate-files')
     )
 
     simple_file = 'inputpizzä/simple.txt'
@@ -86,13 +85,12 @@ def test_generate_files():
     assert simple_text == u'I eat pizzä'
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_with_trailing_newline():
     generate.generate_files(
         context={
             'cookiecutter': {'food': 'pizzä'}
         },
-        repo_dir='tests/test-generate-files'
+        repo_dir=dir_tests('test-generate-files')
     )
 
     newline_file = 'inputpizzä/simple-with-newline.txt'
@@ -103,13 +101,12 @@ def test_generate_files_with_trailing_newline():
     assert simple_text == u'I eat pizzä\n'
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_binaries():
     generate.generate_files(
         context={
             'cookiecutter': {'binary_test': 'binary_files'}
         },
-        repo_dir='tests/test-generate-binaries'
+        repo_dir=dir_tests('test-generate-binaries')
     )
 
     assert os.path.isfile('inputbinary_files/logo.png')
@@ -125,46 +122,40 @@ def test_generate_files_binaries():
     )
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_absolute_path():
     generate.generate_files(
         context={
             'cookiecutter': {'food': 'pizzä'}
         },
-        repo_dir=os.path.abspath('tests/test-generate-files')
+        repo_dir=os.path.abspath(dir_tests('test-generate-files'))
     )
     assert os.path.isfile('inputpizzä/simple.txt')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_generate_files_output_dir():
-    os.mkdir('tests/custom_output_dir')
+def test_generate_files_output_dir(tmpdir):
+    tmpdir.mkdir('custom_output_dir')
     generate.generate_files(
         context={
             'cookiecutter': {'food': 'pizzä'}
         },
-        repo_dir=os.path.abspath('tests/test-generate-files'),
-        output_dir='tests/custom_output_dir'
+        repo_dir=os.path.abspath(dir_tests('test-generate-files')),
+        output_dir=str(tmpdir.join('custom_output_dir'))
     )
-    assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
+    assert os.path.isfile(str(tmpdir.join('custom_output_dir/inputpizzä/simple.txt')))
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_return_rendered_project_dir():
-    os.mkdir('tests/custom_output_dir')
+def test_return_rendered_project_dir(tmpdir):
+    tmpdir.mkdir('custom_output_dir')
     project_dir = generate.generate_files(
         context={
             'cookiecutter': {'food': 'pizzä'}
         },
-        repo_dir=os.path.abspath('tests/test-generate-files'),
-        output_dir='tests/custom_output_dir'
+        repo_dir=os.path.abspath(dir_tests('test-generate-files')),
+        output_dir=str(tmpdir.join('custom_output_dir'))
     )
-    assert project_dir == os.path.abspath(
-        'tests/custom_output_dir/inputpizzä/'
-    )
+    assert project_dir == tmpdir.join('custom_output_dir', 'inputpizzä')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_permissions():
     """
     simple.txt and script.sh should retain their respective 0o644 and
@@ -174,14 +165,13 @@ def test_generate_files_permissions():
         context={
             'cookiecutter': {'permissions': 'permissions'}
         },
-        repo_dir='tests/test-generate-files-permissions'
+        repo_dir=dir_tests('test-generate-files-permissions')
     )
 
     assert os.path.isfile('inputpermissions/simple.txt')
 
     # simple.txt should still be 0o644
-    tests_simple_file = os.path.join(
-        'tests',
+    tests_simple_file = dir_tests(
         'test-generate-files-permissions',
         'input{{cookiecutter.permissions}}',
         'simple.txt'
@@ -198,8 +188,7 @@ def test_generate_files_permissions():
     assert os.path.isfile('inputpermissions/script.sh')
 
     # script.sh should still be 0o755
-    tests_script_file = os.path.join(
-        'tests',
+    tests_script_file = dir_tests(
         'test-generate-files-permissions',
         'input{{cookiecutter.permissions}}',
         'script.sh'
@@ -229,7 +218,7 @@ def test_raise_undefined_variable_file_name(tmpdir, undefined_context):
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
-            repo_dir='tests/undefined-variable/file-name/',
+            repo_dir=dir_tests('undefined-variable/file-name/'),
             output_dir=str(output_dir),
             context=undefined_context
         )
@@ -245,7 +234,7 @@ def test_raise_undefined_variable_file_content(tmpdir, undefined_context):
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
-            repo_dir='tests/undefined-variable/file-content/',
+            repo_dir=dir_tests('undefined-variable/file-content/'),
             output_dir=str(output_dir),
             context=undefined_context
         )
@@ -261,7 +250,7 @@ def test_raise_undefined_variable_dir_name(tmpdir, undefined_context):
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
-            repo_dir='tests/undefined-variable/dir-name/',
+            repo_dir=dir_tests('undefined-variable/dir-name/'),
             output_dir=str(output_dir),
             context=undefined_context
         )
@@ -281,7 +270,7 @@ def test_raise_undefined_variable_project_dir(tmpdir):
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
-            repo_dir='tests/undefined-variable/dir-name/',
+            repo_dir=dir_tests('undefined-variable/dir-name/'),
             output_dir=str(output_dir),
             context={}
         )

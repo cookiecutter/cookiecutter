@@ -12,11 +12,12 @@ import os
 import pytest
 
 from cookiecutter import find
+from tests.utils import dir_tests
 
 
 @pytest.fixture(params=['fake-repo-pre', 'fake-repo-pre2'])
 def repo_dir(request):
-    return os.path.join('tests', request.param)
+    return dir_tests(request.param)
 
 
 def test_find_template(repo_dir):
