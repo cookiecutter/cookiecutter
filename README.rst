@@ -156,12 +156,12 @@ Python
 ~~~~~~
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
-* `cookiecutter-pipproject_`: `@wdm0006`_'s minimal package for pip-installable projects
+* `cookiecutter-pipproject`_: `@wdm0006`_'s minimal package for pip-installable projects
 * `cookiecutter-python`_: The boilerplate Python project that aims to create
   facility for maintaining of the package easily. It considering tools for
   building, testing and distribution.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
-* `cookiecutter-flask2`_: A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
+* `cookiecutter-flask-2`_: A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
 * `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
@@ -262,7 +262,7 @@ HTML
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
-.. _`cookiecutter-_cookiecutter-flask2: https://github.com/wdm0006/cookiecutter-flask
+.. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
