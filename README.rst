@@ -229,6 +229,11 @@ JS
 * `cookiecutter-component`_: A template for a Component JS package.
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
 
+Kotlin
+~~~~~~
+
+* `cookiecutter-kotlin-gradle`_: A bare-bones template for Gradle-based Kotlin projects.
+
 LaTeX/XeTeX
 ~~~~~~~~~~~
 
@@ -253,6 +258,7 @@ HTML
 
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
+.. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
