@@ -141,6 +141,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, runner, user_config_path):
 def overwrite_cli_flag(request):
     return request.param
 
+@pytest.mark.xfail
 @pytest.mark.usefixtures('fake_project')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         mocker, overwrite_cli_flag, runner, user_config_path, tmpdir):

@@ -25,13 +25,14 @@ test_setup teardown code
 """
 
 from __future__ import unicode_literals
-import os
-import io
-import pytest
 
-from cookiecutter import generate
-from cookiecutter import exceptions
-from cookiecutter import utils
+import io
+
+import os
+import pytest
+from builtins import str
+
+from cookiecutter import generate, exceptions
 from tests.utils import dir_tests
 
 
@@ -39,25 +40,6 @@ from tests.utils import dir_tests
 def test_ensure_dir_is_templated_raises(invalid_dirname):
     with pytest.raises(exceptions.NonTemplatedInputDirException):
         generate.ensure_dir_is_templated(invalid_dirname)
-
-#
-# @pytest.fixture(scope='function')
-# def remove_additional_folders(request):
-#     """
-#     Remove some special folders which are created by the tests.
-#     """
-#     def fin_remove_additional_folders():
-#         if os.path.exists('inputpizzä'):
-#             utils.rmtree('inputpizzä')
-#         if os.path.exists('inputgreen'):
-#             utils.rmtree('inputgreen')
-#         if os.path.exists('inputbinary_files'):
-#             utils.rmtree('inputbinary_files')
-#         if os.path.exists(dir_tests('custom_output_dir')):
-#             utils.rmtree(dir_tests('custom_output_dir'))
-#         if os.path.exists('inputpermissions'):
-#             utils.rmtree('inputpermissions')
-#     request.addfinalizer(fin_remove_additional_folders)
 
 
 def test_generate_files_nontemplated_exception():
@@ -141,7 +123,8 @@ def test_generate_files_output_dir(tmpdir):
         repo_dir=os.path.abspath(dir_tests('test-generate-files')),
         output_dir=str(tmpdir.join('custom_output_dir'))
     )
-    assert os.path.isfile(str(tmpdir.join('custom_output_dir/inputpizzä/simple.txt')))
+    unicode_file_name = str(tmpdir.join(u'custom_output_dir/inputpizzä/simple.txt'))
+    assert os.path.isfile(unicode_file_name)
 
 
 def test_return_rendered_project_dir(tmpdir):

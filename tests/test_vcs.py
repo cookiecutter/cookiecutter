@@ -94,8 +94,6 @@ def test_hg_clone():
     )
     assert repo_dir == 'cookiecutter-trytonmodule'
     assert os.path.isfile('cookiecutter-trytonmodule/README.rst')
-    if os.path.isdir('cookiecutter-trytonmodule'):
-        utils.rmtree('cookiecutter-trytonmodule')
 
 
 @skipif_no_network
