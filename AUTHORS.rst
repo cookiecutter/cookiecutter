@@ -80,6 +80,7 @@ Contributors
 * Matias Saguir (`@mativs`_)
 * Johannes (`@johtso`_)
 * macrotim (`@macrotim`_)
+* Will McGinnis (`@wdm0006`_)
 
 
 .. _`@johtso`: https://github.com/johtso
@@ -149,3 +150,4 @@ Contributors
 .. _`@eliasdorneles`: https://github.com/eliasdorneles
 .. _`@mativs`: https://github.com/mativs
 .. _`@macrotim`: https://github.com/macrotim
+.. _`@wdm0006`: https://github.com/wdm0006

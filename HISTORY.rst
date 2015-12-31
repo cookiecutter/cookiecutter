@@ -26,6 +26,8 @@ Other Changes:
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-python`_ by `@flyondrag`_ (#616)
+  * `cookiecutter-pipproject`_ by `@wdm0006`_ (#624)
+  * `cookiecutter-flask-2`_ by `@wdm0006`_ (#624)
   
 Bug Fixes:
 
@@ -35,7 +37,10 @@ Bug Fixes:
 
 .. _`@macrotim`: https://github.com/macrotim
 .. _`@flyondrag`: https://github.com/flyondrag
+.. _`@wdm0006`: https://github.com/wdm0006
 
+.. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
+.. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 
 1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
