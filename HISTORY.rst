@@ -3,7 +3,7 @@
 History
 -------
 
-1.4.0 (2015-12-??) ??
+1.4.0 (2016-01-??) ??
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal of this release is changing to a strict Jinja2 environment, paving the way to more awesome in the future.
@@ -15,6 +15,8 @@ New Feature:
 
 Other Changes:
 
+* Set path before running tox, thanks to `@mailsensi`_. (#615, #620)
+* Removed xfail in test_cookiecutters, thanks to `@hackebrot`_. (#618)
 * Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593)
 * Fixed docs/usage.rst, thanks to `@macrotim`_ (#604)
 * Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to `@audreyr`_
@@ -28,7 +30,7 @@ Other Changes:
   * `cookiecutter-python`_ by `@flyondrag`_ (#616)
   * `cookiecutter-pipproject`_ by `@wdm0006`_ (#624)
   * `cookiecutter-flask-2`_ by `@wdm0006`_ (#624)
-  
+
 Bug Fixes:
 
 * Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
