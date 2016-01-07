@@ -12,6 +12,9 @@ New Feature:
 
 * Now raises an error if Cookiecutter tries to render a template that contains an undefined variable. Makes generation more robust and secure (#586). Work done by `@hackebrot`_ (#111, #586, #592)
 * Uses strict Jinja2 env in prompt, thanks to `@hackebrot`_ (#598, #613)
+* Switched from pyyaml/raumel.yaml libraries that were problematic across platforms to the pure Python poyo_ library, thanks to `@hackebrot`_ (#557, #569, #621)
+
+.. _poyo: https://pypi.python.org/pypi/poyo
 
 Other Changes:
 
