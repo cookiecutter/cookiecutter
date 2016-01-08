@@ -33,6 +33,7 @@ Other Changes:
   * `cookiecutter-python`_ by `@flyondrag`_ (#616)
   * `cookiecutter-pipproject`_ by `@wdm0006`_ (#624)
   * `cookiecutter-flask-2`_ by `@wdm0006`_ (#624)
+  * `cookiecutter-kotlin-gradle`_ by `@thomaslee`_ (#622)
 
 Bug Fixes:
 
@@ -43,7 +44,9 @@ Bug Fixes:
 .. _`@macrotim`: https://github.com/macrotim
 .. _`@flyondrag`: https://github.com/flyondrag
 .. _`@wdm0006`: https://github.com/wdm0006
+.. _`@thomaslee`: https://github.com/thomaslee
 
+.. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 
