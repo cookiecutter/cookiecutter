@@ -156,7 +156,7 @@ Python
 ~~~~~~
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
-* `cookiecutter-pipproject`_: `@wdm0006`_'s minimal package for pip-installable projects
+* `cookiecutter-pipproject`_: Minimal package for pip-installable projects
 * `cookiecutter-python`_: The boilerplate Python project that aims to create
   facility for maintaining of the package easily. It considering tools for
   building, testing and distribution.
