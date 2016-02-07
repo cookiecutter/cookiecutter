@@ -15,10 +15,10 @@ import os
 import pytest
 
 from jinja2 import FileSystemLoader
-from jinja2.environment import Environment
 from jinja2.exceptions import TemplateSyntaxError
 
 from cookiecutter import generate
+from cookiecutter.environment import StrictEnvironment
 
 
 @pytest.fixture(scope='function')
@@ -34,7 +34,7 @@ def remove_cheese_file(request):
 
 @pytest.fixture
 def env():
-    environment = Environment()
+    environment = StrictEnvironment()
     environment.loader = FileSystemLoader('.')
     return environment
 

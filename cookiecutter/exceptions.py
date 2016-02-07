@@ -104,3 +104,7 @@ class UndefinedVariableInTemplate(CookiecutterException):
             "Error message: {self.error.message}. "
             "Context: {self.context}"
         ).format(**locals())
+
+
+class UnknownExtension(CookiecutterException):
+    """Raised when an environment is unable to import a required extension."""

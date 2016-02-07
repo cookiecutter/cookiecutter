@@ -326,3 +326,20 @@ def test_echo_undefined_variable_error(tmpdir):
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
     assert context_str in result.output
+
+
+def test_echo_unknown_extension_error(tmpdir):
+    output_dir = str(tmpdir.mkdir('output'))
+    template_path = 'tests/test-extensions/'
+
+    result = runner.invoke(main, [
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
+    ])
+
+    assert result.exit_code == 1
+
+    assert 'Unable to load extension: ' in result.output

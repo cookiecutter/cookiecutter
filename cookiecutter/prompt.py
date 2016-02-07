@@ -15,11 +15,10 @@ from past.builtins import basestring
 
 from future.utils import iteritems
 
-from jinja2 import StrictUndefined
-from jinja2.environment import Environment
 from jinja2.exceptions import UndefinedError
 
 from .exceptions import UndefinedVariableInTemplate
+from .environment import StrictEnvironment
 
 
 def read_user_variable(var_name, default_value):
@@ -117,7 +116,7 @@ def prompt_for_config(context, no_input=False):
     :param no_input: Prompt the user at command line for manual configuration?
     """
     cookiecutter_dict = {}
-    env = Environment(undefined=StrictUndefined)
+    env = StrictEnvironment(context=context)
 
     for key, raw in iteritems(context[u'cookiecutter']):
         if key.startswith(u'_'):
