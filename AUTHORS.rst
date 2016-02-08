@@ -81,8 +81,9 @@ Contributors
 * Johannes (`@johtso`_)
 * macrotim (`@macrotim`_)
 * Will McGinnis (`@wdm0006`_)
+* Cédric Krier (`@cedk`_)
 
-
+.. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
 .. _`@maiksensi`: https://github.com/maiksensi
 .. _`@svisser`: https://github.com/svisser
