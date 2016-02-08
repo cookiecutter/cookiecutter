@@ -35,7 +35,7 @@ Other Changes:
   * `cookiecutter-pipproject`_ by `@wdm0006`_ (#624)
   * `cookiecutter-flask-2`_ by `@wdm0006`_ (#624)
   * `cookiecutter-kotlin-gradle`_ by `@thomaslee`_ (#622)
-  * `cookiecutter-tryton`_ by `@cedk` (#631)
+  * `cookiecutter-tryton`_ by `@cedk`_ (#631)
 
 Bug Fixes:
 
@@ -48,7 +48,10 @@ Bug Fixes:
 .. _`@wdm0006`: https://github.com/wdm0006
 .. _`@thomaslee`: https://github.com/thomaslee
 .. _`@kragniz`: https://github.com/kragniz
+.. _`@cedk`: https://github.com/cedk
+.. _`@johtso`: https://github.com/johtso
 
+.. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
