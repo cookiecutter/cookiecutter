@@ -13,14 +13,14 @@ New Feature:
 * Added support for Jinja2 extension support, thanks to `@hackebrot`_ (#617).
 * Now raises an error if Cookiecutter tries to render a template that contains an undefined variable. Makes generation more robust and secure (#586). Work done by `@hackebrot`_ (#111, #586, #592)
 * Uses strict Jinja2 env in prompt, thanks to `@hackebrot`_ (#598, #613)
-* Switched from pyyaml/raumel.yaml libraries that were problematic across platforms to the pure Python poyo_ library, thanks to `@hackebrot`_ (#557, #569, #621)
+* Switched from pyyaml/ruamel.yaml libraries that were problematic across platforms to the pure Python poyo_ library, thanks to `@hackebrot`_ (#557, #569, #621)
 
 .. _poyo: https://pypi.python.org/pypi/poyo
 
 Other Changes:
 
-* Set path before running tox, thanks to `@maiksensi`_. (#615, #620)
-* Removed xfail in test_cookiecutters, thanks to `@hackebrot`_. (#618)
+* Set path before running tox, thanks to `@maiksensi`_ (#615, #620)
+* Removed xfail in test_cookiecutters, thanks to `@hackebrot`_ (#618)
 * Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593)
 * Fixed docs/usage.rst, thanks to `@macrotim`_ (#604)
 * Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to `@audreyr`_
