@@ -28,7 +28,7 @@ Other Changes:
 * Added documentation for choice variables, thanks to `@maiksensi`_ (#611)
 * Set up Scrutinizer to check code quality, thanks to `@audreyr`_
 * Drop distutils support in setup.py, thanks to `@hackebrot`_ (#606, #609)
-* Change cookiecutter-pypackage-minimal link, thanks to @kragniz (#614)
+* Change cookiecutter-pypackage-minimal link, thanks to `@kragniz`_ (#614)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-python`_ by `@flyondrag`_ (#616)
@@ -47,6 +47,7 @@ Bug Fixes:
 .. _`@flyondrag`: https://github.com/flyondrag
 .. _`@wdm0006`: https://github.com/wdm0006
 .. _`@thomaslee`: https://github.com/thomaslee
+.. _`@kragniz`: https://github.com/kragniz
 
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
