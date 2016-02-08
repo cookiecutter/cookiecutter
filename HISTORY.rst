@@ -35,6 +35,7 @@ Other Changes:
   * `cookiecutter-pipproject`_ by `@wdm0006`_ (#624)
   * `cookiecutter-flask-2`_ by `@wdm0006`_ (#624)
   * `cookiecutter-kotlin-gradle`_ by `@thomaslee`_ (#622)
+  * `cookiecutter-tryton`_ by `@cedk` (#631)
 
 Bug Fixes:
 
