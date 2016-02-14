@@ -197,6 +197,7 @@ Python-Django
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
 * `cookiecutter-wagtail`_ : A cookiecutter template for `Wagtail`_ CMS based sites.
 * `wagtail-cookiecutter-foundation`_: A complete template for Wagtail CMS projects featuring Zurb Foundation 5, ansible provisioning and deployment , front-end dependency management with bower, modular apps to get your site up and running including photo_gallery, RSS feed etc.
+* `django-starter`_: A Cookiecutter template for automating the scaffolding of your next Django project.
 
 C
 ~~
@@ -317,6 +318,7 @@ HTML
 .. _`cookiecutter-octoprint-plugin`: https://github.com/OctoPrint/cookiecutter-octoprint-plugin
 .. _`OctoPrint`: https://github.com/foosel/OctoPrint
 .. _`wagtail-cookiecutter-foundation`: https://github.com/chrisdev/wagtail-cookiecutter-foundation
+.. _`django-starter`: https://github.com/tkjone/django-starter
 
 Scala
 ~~~~~
