@@ -31,6 +31,13 @@ DEFAULT_CONFIG = {
 }
 
 
+def _expand_path(path):
+    """Expand both environment variables and user home in the given path."""
+    path = os.path.expandvars(path)
+    path = os.path.expanduser(path)
+    return path
+
+
 def get_config(config_path):
     """
     Retrieve the config from the specified path, returning it as a config dict.
@@ -51,6 +58,12 @@ def get_config(config_path):
 
     config_dict = copy.copy(DEFAULT_CONFIG)
     config_dict.update(yaml_dict)
+
+    raw_replay_dir = config_dict['replay_dir']
+    config_dict['replay_dir'] = _expand_path(raw_replay_dir)
+
+    raw_cookies_dir = config_dict['cookiecutters_dir']
+    config_dict['cookiecutters_dir'] = _expand_path(raw_cookies_dir)
 
     return config_dict
 
