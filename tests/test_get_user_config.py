@@ -153,3 +153,13 @@ def test_expand_user_for_directories_in_config(monkeypatch):
     user_config = config.get_user_config(config_file)
     assert user_config['replay_dir'] == 'Users/bob/replay-files'
     assert user_config['cookiecutters_dir'] == 'Users/bob/templates'
+
+
+def test_expand_vars_for_directories_in_config(monkeypatch):
+    monkeypatch.setenv('COOKIES', 'Users/bob/cookies')
+
+    config_file = 'tests/test-config/config-expand-vars.yaml'
+
+    user_config = config.get_user_config(config_file)
+    assert user_config['replay_dir'] == 'Users/bob/cookies/replay-files'
+    assert user_config['cookiecutters_dir'] == 'Users/bob/cookies/templates'
