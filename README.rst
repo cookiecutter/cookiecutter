@@ -169,7 +169,7 @@ Python
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
 * `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
-* `cookiecutter-pypackage-minimal`_: A mimimal Python package template.
+* `cookiecutter-pypackage-minimal`_: A minimal Python package template.
 * `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
 * `cookiecutter-pyvanguard`_: A template for cutting edge Python development. `Invoke`_, pytest, bumpversion, and Python 2/3 compatability.
