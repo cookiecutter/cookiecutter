@@ -189,6 +189,7 @@ Python-Django
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 4, customizable users app, starter templates,  working user registration, celery setup, and much more.
 * `cookiecutter-django-rest`_: For creating REST apis for mobile and web applications.
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
+* `django-docker-bootstrap`_: Django development/production environment with docker, integrated with Postgres, NodeJS(React), Nginx, uWSGI.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
 * `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
@@ -319,6 +320,7 @@ HTML
 .. _`OctoPrint`: https://github.com/foosel/OctoPrint
 .. _`wagtail-cookiecutter-foundation`: https://github.com/chrisdev/wagtail-cookiecutter-foundation
 .. _`django-starter`: https://github.com/tkjone/django-starter
+.. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
 
 Scala
 ~~~~~
