@@ -29,6 +29,7 @@ Other Changes:
 * Set up Scrutinizer to check code quality, thanks to `@audreyr`_
 * Drop distutils support in setup.py, thanks to `@hackebrot`_ (#606, #609)
 * Change cookiecutter-pypackage-minimal link, thanks to `@kragniz`_ (#614)
+* Fix typo in one of the template's description, thanks to `@ryanfreckleton`_ (#643)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-python`_ by `@flyondrag`_ (#616)
@@ -49,6 +50,7 @@ Bug Fixes:
 .. _`@wdm0006`: https://github.com/wdm0006
 .. _`@thomaslee`: https://github.com/thomaslee
 .. _`@kragniz`: https://github.com/kragniz
+.. _`@ryanfreckleton`: https://github.com/ryanfreckleton
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
 
