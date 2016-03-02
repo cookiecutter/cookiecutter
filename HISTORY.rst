@@ -38,6 +38,7 @@ Other Changes:
   * `cookiecutter-kotlin-gradle`_ by `@thomaslee`_ (#622)
   * `cookiecutter-tryton`_ by `@cedk`_ (#631)
   * `django-starter`_ by `@tkjone`_ (#635)
+  * `django-docker-bootstrap`_ by `@legios89`_ (#636)
 
 Bug Fixes:
 
@@ -53,12 +54,14 @@ Bug Fixes:
 .. _`@ryanfreckleton`: https://github.com/ryanfreckleton
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
+.. _`@legios89`: https://github.com/legios89
 
 .. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 .. _`django-starter`: https://github.com/tkjone/django-starter
+.. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
 
 1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
