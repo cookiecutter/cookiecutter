@@ -248,6 +248,10 @@ LaTeX/XeTeX
 
 * `cookiecutter-beamer`_: A template for a LaTeX Beamer presentation.
 
+PHP
+~~~
+
+* `cookiecutter-mediawiki-extension`_: A template for MediaWiki extensions.
 
 Berkshelf-Vagrant
 ~~~~~~~~~~~~~~~~~
@@ -308,6 +312,7 @@ HTML
 .. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter
 .. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
+.. _`cookiecutter-mediawiki-extension`: https://github.com/JonasGroeger/cookiecutter-mediawiki-extension
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`pytest`: http://pytest.org/latest/
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
