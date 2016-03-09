@@ -141,3 +141,25 @@ def test_force_default_config(mocker):
 
     assert user_config == config.DEFAULT_CONFIG
     assert not spy_get_config.called
+
+
+def test_expand_user_for_directories_in_config(monkeypatch):
+    def _expanduser(path):
+        return path.replace('~', 'Users/bob')
+    monkeypatch.setattr('os.path.expanduser', _expanduser)
+
+    config_file = 'tests/test-config/config-expand-user.yaml'
+
+    user_config = config.get_user_config(config_file)
+    assert user_config['replay_dir'] == 'Users/bob/replay-files'
+    assert user_config['cookiecutters_dir'] == 'Users/bob/templates'
+
+
+def test_expand_vars_for_directories_in_config(monkeypatch):
+    monkeypatch.setenv('COOKIES', 'Users/bob/cookies')
+
+    config_file = 'tests/test-config/config-expand-vars.yaml'
+
+    user_config = config.get_user_config(config_file)
+    assert user_config['replay_dir'] == 'Users/bob/cookies/replay-files'
+    assert user_config['cookiecutters_dir'] == 'Users/bob/cookies/templates'
