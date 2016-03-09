@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import io
 import sys
 
 from setuptools import setup
@@ -17,10 +18,10 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-with open('README.rst') as readme_file:
+with io.open('README.rst', 'r', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with io.open('HISTORY.rst', 'r', encoding='utf-8') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
 requirements = [
