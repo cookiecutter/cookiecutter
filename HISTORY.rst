@@ -3,7 +3,7 @@
 History
 -------
 
-1.4.0 (2016-01-??) ??
+1.4.0 (2016-03-??) ??
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal of this release is changing to a strict Jinja2 environment, paving the way to more awesome in the future.
