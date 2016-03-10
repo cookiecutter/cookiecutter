@@ -14,6 +14,9 @@ New Feature:
 * Now raises an error if Cookiecutter tries to render a template that contains an undefined variable. Makes generation more robust and secure (#586). Work done by `@hackebrot`_ (#111, #586, #592)
 * Uses strict Jinja2 env in prompt, thanks to `@hackebrot`_ (#598, #613)
 * Switched from pyyaml/ruamel.yaml libraries that were problematic across platforms to the pure Python poyo_ library, thanks to `@hackebrot`_ (#557, #569, #621)
+* User config values for ``cookiecutters_dir`` and ``replay_dir`` now support
+  environment variable and user home expansion, thanks to `@nfarrar`_ for the
+  suggestion and `@hackebrot`_ for the PR (#640, #642)
 
 Bug Fixes:
 
@@ -61,6 +64,7 @@ Other Changes:
 .. _`@legios89`: https://github.com/legios89
 .. _`@0-wiz-0`: https://github.com/0-wiz-0
 .. _`@tkjone`: https://github.com/tkjone
+.. _`@nfarrar`: https://github.com/nfarrar
 
 .. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
