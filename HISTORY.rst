@@ -15,6 +15,12 @@ New Feature:
 * Uses strict Jinja2 env in prompt, thanks to `@hackebrot`_ (#598, #613)
 * Switched from pyyaml/ruamel.yaml libraries that were problematic across platforms to the pure Python poyo_ library, thanks to `@hackebrot`_ (#557, #569, #621)
 
+Bug Fixes:
+
+* Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
+* Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
+* Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
+
 .. _poyo: https://pypi.python.org/pypi/poyo
 
 Other Changes:
@@ -40,11 +46,6 @@ Other Changes:
   * `django-starter`_ by `@tkjone`_ (#635)
   * `django-docker-bootstrap`_ by `@legios89`_ (#636)
 
-Bug Fixes:
-
-* Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
-* Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
-* Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
 
 .. _`@macrotim`: https://github.com/macrotim
 .. _`@flyondrag`: https://github.com/flyondrag
