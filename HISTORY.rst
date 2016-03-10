@@ -8,7 +8,7 @@ History
 
 The goal of this release is changing to a strict Jinja2 environment, paving the way to more awesome in the future.
 
-New Feature:
+New Features:
 
 * Added support for Jinja2 extension support, thanks to `@hackebrot`_ (#617).
 * Now raises an error if Cookiecutter tries to render a template that contains an undefined variable. Makes generation more robust and secure (#586). Work done by `@hackebrot`_ (#111, #586, #592)
@@ -20,7 +20,7 @@ New Feature:
 
 Bug Fixes:
 
-* Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
+* Provided way to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
 * Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
 * Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
 * Open ``HISTORY.rst`` with ``utf-8`` encoding when reading the changelog,
