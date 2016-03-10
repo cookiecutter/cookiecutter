@@ -20,6 +20,9 @@ Bug Fixes:
 * Provided wat to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
 * Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
 * Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
+* Open ``HISTORY.rst`` with ``utf-8`` encoding when reading the changelog,
+  thanks to `@0-wiz-0`_ for submitting the issue and `@hackebrot`_ for the fix
+  (#638, #639)
 
 .. _poyo: https://pypi.python.org/pypi/poyo
 
@@ -56,6 +59,7 @@ Other Changes:
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
 .. _`@legios89`: https://github.com/legios89
+.. _`@0-wiz-0`: https://github.com/0-wiz-0
 .. _`@tkjone`: https://github.com/tkjone
 
 .. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
