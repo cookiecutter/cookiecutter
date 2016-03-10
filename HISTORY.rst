@@ -56,6 +56,7 @@ Other Changes:
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
 .. _`@legios89`: https://github.com/legios89
+.. _`@tkjone`: https://github.com/tkjone
 
 .. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
