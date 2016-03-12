@@ -82,6 +82,7 @@ Contributors
 * macrotim (`@macrotim`_)
 * Will McGinnis (`@wdm0006`_)
 * Cédric Krier (`@cedk`_)
+* Tim Osborn (`@ptim`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -152,3 +153,4 @@ Contributors
 .. _`@mativs`: https://github.com/mativs
 .. _`@macrotim`: https://github.com/macrotim
 .. _`@wdm0006`: https://github.com/wdm0006
+.. _`@ptim`: https://github.com/ptim
