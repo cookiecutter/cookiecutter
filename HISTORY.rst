@@ -42,6 +42,9 @@ Other Changes:
 * Drop distutils support in setup.py, thanks to `@hackebrot`_ (#606, #609)
 * Change cookiecutter-pypackage-minimal link, thanks to `@kragniz`_ (#614)
 * Fix typo in one of the template's description, thanks to `@ryanfreckleton`_ (#643)
+* Fix broken link to `_copy_without_render`_ in *troubleshooting.rst*, thanks
+  to `@ptim`_ (#647)
+
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-python`_ by `@flyondrag`_ (#616)
@@ -65,6 +68,7 @@ Other Changes:
 .. _`@0-wiz-0`: https://github.com/0-wiz-0
 .. _`@tkjone`: https://github.com/tkjone
 .. _`@nfarrar`: https://github.com/nfarrar
+.. _`@ptim`: https://github.com/ptim
 
 .. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
@@ -72,6 +76,8 @@ Other Changes:
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 .. _`django-starter`: https://github.com/tkjone/django-starter
 .. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
+
+.. _`_copy_without_render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 
 1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
