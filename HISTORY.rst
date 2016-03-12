@@ -54,6 +54,7 @@ Other Changes:
   * `cookiecutter-tryton`_ by `@cedk`_ (#631)
   * `django-starter`_ by `@tkjone`_ (#635)
   * `django-docker-bootstrap`_ by `@legios89`_ (#636)
+  * `cookiecutter-mediawiki-extension`_ by `@JonasGroeger`_ (#645)
 
 
 .. _`@macrotim`: https://github.com/macrotim
@@ -69,6 +70,7 @@ Other Changes:
 .. _`@tkjone`: https://github.com/tkjone
 .. _`@nfarrar`: https://github.com/nfarrar
 .. _`@ptim`: https://github.com/ptim
+.. _`@JonasGroeger`: https://github.com/JonasGroeger
 
 .. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
@@ -76,6 +78,7 @@ Other Changes:
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 .. _`django-starter`: https://github.com/tkjone/django-starter
 .. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
+.. _`cookiecutter-mediawiki-extension`: https://github.com/JonasGroeger/cookiecutter-mediawiki-extension
 
 .. _`_copy_without_render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 
