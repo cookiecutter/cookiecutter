@@ -1,7 +1,7 @@
 History
 -------
 
-0.1.0 ({% now 'utc', '%Y-%m-%d' %})
----------------------
+0.1.0 ({{cookiecutter.nope | foobar}})
+--------------------------------------
 
 First release on PyPI.
