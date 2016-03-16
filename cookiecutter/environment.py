@@ -15,9 +15,14 @@ class ExtensionLoaderMixin(object):
     def __init__(self, **kwargs):
         context = kwargs.pop('context', {})
 
+        default_extensions = [
+            'jinja2_time.TimeExtension',
+        ]
+        extensions = default_extensions + self._read_extensions(context)
+
         try:
             super(ExtensionLoaderMixin, self).__init__(
-                extensions=self._read_extensions(context),
+                extensions=extensions,
                 **kwargs
             )
         except ImportError as err:
