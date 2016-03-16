@@ -23,7 +23,8 @@ from cookiecutter.exceptions import (
     InvalidModeException,
     FailedHookException,
     UndefinedVariableInTemplate,
-    UnknownExtension
+    UnknownExtension,
+    RepositoryNotFound
 )
 
 logger = logging.getLogger(__name__)
@@ -107,7 +108,8 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
     except (OutputDirExistsException,
             InvalidModeException,
             FailedHookException,
-            UnknownExtension) as e:
+            UnknownExtension,
+            RepositoryNotFound) as e:
         click.echo(e)
         sys.exit(1)
     except UndefinedVariableInTemplate as undefined_err:

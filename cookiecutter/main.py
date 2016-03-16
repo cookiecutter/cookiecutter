@@ -17,7 +17,7 @@ import os
 import re
 
 from .config import get_user_config, USER_CONFIG_PATH
-from .exceptions import InvalidModeException
+from .exceptions import InvalidModeException, RepositoryNotFound
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
@@ -111,6 +111,11 @@ def cookiecutter(
         # If it's a local repo, no need to clone or copy to your
         # cookiecutters_dir
         repo_dir = template
+
+    if not os.path.isdir(repo_dir):
+        raise RepositoryNotFound(
+            'The repository {0} could not be located.'.format(template)
+        )
 
     template_name = os.path.basename(template)
 
