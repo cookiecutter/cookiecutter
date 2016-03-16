@@ -38,14 +38,13 @@ def test_main_does_not_invoke_dump_but_load(mocker):
     mock_replay_dump = mocker.patch('cookiecutter.main.dump')
     mock_replay_load = mocker.patch('cookiecutter.main.load')
 
-    with pytest.raises(exceptions.RepositoryNotFound):
-        main.cookiecutter('foobar', replay=True)
+    main.cookiecutter('tests/fake-repo-tmpl/', replay=True)
 
-        assert not mock_prompt.called
-        assert not mock_gen_context.called
-        assert not mock_replay_dump.called
-        assert mock_replay_load.called
-        assert mock_gen_files.called
+    assert not mock_prompt.called
+    assert not mock_gen_context.called
+    assert not mock_replay_dump.called
+    assert mock_replay_load.called
+    assert mock_gen_files.called
 
 
 def test_main_does_not_invoke_load_but_dump(mocker):
@@ -55,11 +54,10 @@ def test_main_does_not_invoke_load_but_dump(mocker):
     mock_replay_dump = mocker.patch('cookiecutter.main.dump')
     mock_replay_load = mocker.patch('cookiecutter.main.load')
 
-    with pytest.raises(exceptions.RepositoryNotFound):
-        main.cookiecutter('foobar', replay=False)
+    main.cookiecutter('tests/fake-repo-tmpl/', replay=False)
 
-        assert mock_prompt.called
-        assert mock_gen_context.called
-        assert mock_replay_dump.called
-        assert not mock_replay_load.called
-        assert mock_gen_files.called
+    assert mock_prompt.called
+    assert mock_gen_context.called
+    assert mock_replay_dump.called
+    assert not mock_replay_load.called
+    assert mock_gen_files.called
