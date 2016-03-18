@@ -9,6 +9,8 @@ from cookiecutter.main import is_repo_url, expand_abbreviations
     'gitolite@server:team/repo',
     'git@github.com:audreyr/cookiecutter.git',
     'https://github.com/audreyr/cookiecutter.git',
+    'git+https://private.com/gitrepo',
+    'hg+https://private.com/mercurialrepo',
     'https://bitbucket.org/pokoli/cookiecutter.hg',
 ])
 def remote_repo_url(request):
