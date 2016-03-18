@@ -17,6 +17,8 @@ New Features:
 * User config values for ``cookiecutters_dir`` and ``replay_dir`` now support
   environment variable and user home expansion, thanks to `@nfarrar`_ for the
   suggestion and `@hackebrot`_ for the PR (#640, #642)
+* Add `jinja2-time`_ as default extension for dates and times in templates via
+  ``{% now 'utc' %}``, thanks to `@hackebrot`_ (#653)
 
 Bug Fixes:
 
@@ -28,6 +30,7 @@ Bug Fixes:
   (#638, #639)
 
 .. _poyo: https://pypi.python.org/pypi/poyo
+.. _`jinja2-time`: https://pypi.python.org/pypi/jinja2-time
 
 Other Changes:
 
