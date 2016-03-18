@@ -1,6 +1,0 @@
-{
-    "project_slug": "Foobar",
-    "year": "{% now 'utc', '%Y' %}",
-    "_extensions": ["jinja2_time.TimeExtension"]
-}
-

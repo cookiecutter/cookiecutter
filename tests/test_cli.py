@@ -330,7 +330,7 @@ def test_echo_undefined_variable_error(tmpdir):
 
 def test_echo_unknown_extension_error(tmpdir):
     output_dir = str(tmpdir.mkdir('output'))
-    template_path = 'tests/test-extensions/'
+    template_path = 'tests/test-extensions/unknown/'
 
     result = runner.invoke(main, [
         '--no-input',
