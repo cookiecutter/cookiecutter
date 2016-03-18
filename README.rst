@@ -157,9 +157,6 @@ Python
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-pipproject`_: Minimal package for pip-installable projects
-* `cookiecutter-python`_: The boilerplate Python project that aims to create
-  facility for maintaining of the package easily. It considering tools for
-  building, testing and distribution.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-flask-2`_: A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
 * `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
@@ -270,7 +267,6 @@ HTML
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-.. _`cookiecutter-python`: https://github.com/flyondrag/cookiecutter-python
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
