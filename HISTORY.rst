@@ -28,9 +28,12 @@ Bug Fixes:
 * Open ``HISTORY.rst`` with ``utf-8`` encoding when reading the changelog,
   thanks to `@0-wiz-0`_ for submitting the issue and `@hackebrot`_ for the fix
   (#638, #639)
+* Fix repository indicators for `private repository`_ urls, thanks to
+  `@habnabit`_ for the fix (#595) and `@hackebrot`_ for the tests (#655)
 
 .. _poyo: https://pypi.python.org/pypi/poyo
 .. _`jinja2-time`: https://pypi.python.org/pypi/jinja2-time
+.. _`private repository`: http://cookiecutter.readthedocs.org/en/latest/usage.html#works-with-private-repos
 
 Other Changes:
 
@@ -74,6 +77,7 @@ Other Changes:
 .. _`@ptim`: https://github.com/ptim
 .. _`@JonasGroeger`: https://github.com/JonasGroeger
 .. _`@valerymelou`: https://github.com/valerymelou
+.. _`@habnabit`: https://github.com/habnabit
 
 .. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
