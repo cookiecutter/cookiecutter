@@ -204,7 +204,7 @@ Other Changes:
   * `cookiecutter-pytest-plugin`_ by `@pytest-dev`_ and `@hackebrot`_ (#481)
   * `cookiecutter-csharp-objc-binding`_ by `@SandyChapman`_ (#460)
   * `cookiecutter-flask-foundation`_ by `@JackStouffer`_ (#457)
-  * `cookiecutter-tryton`_ by `@fulfilio`_ (#465)
+  * `cookiecutter-tryton-fulfilio`_ by `@fulfilio`_ (#465)
   * `cookiecutter-tapioca`_ by `@vintasoftware`_ (#496)
   * `cookiecutter-sublime-text-3-plugin`_ by `@kkujawinski`_ (#500)
   * `cookiecutter-muffin`_ by `@drgarcia1986`_ (#494)
@@ -238,7 +238,7 @@ Other Changes:
 .. _`@pytest-dev`: https://github.com/pytest-dev
 .. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
-.. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
+.. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 .. _`cookiecutter-sublime-text-3-plugin`: https://github.com/kkujawinski/cookiecutter-sublime-text-3-plugin
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
@@ -432,7 +432,7 @@ Other Changes:
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _BoilerplatePP: https://github.com/Paspartout/BoilerplatePP
-.. _`cookiecutter-pypackage-minimal`: https://github.com/borntyping/cookiecutter-pypackage-minimal
+.. _`cookiecutter-pypackage-minimal`: https://github.com/kragniz/cookiecutter-pypackage-minimal
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
 
