@@ -3,10 +3,12 @@
 History
 -------
 
-1.4.0 (2016-03-??) ??
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.4.0 (2016-03-20) Shortbread
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The goal of this release is changing to a strict Jinja2 environment, paving the way to more awesome in the future.
+The goal of this release is changing to a strict Jinja2 environment, paving the
+way to more awesome in the future, as well as adding support for Jinja2
+extensions.
 
 New Features:
 
