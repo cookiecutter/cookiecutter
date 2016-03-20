@@ -6,7 +6,7 @@ import sys
 
 from setuptools import setup
 
-version = "1.3.0"
+version = "1.4.0"
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
