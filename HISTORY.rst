@@ -3,6 +3,17 @@
 History
 -------
 
+1.5.0 (2016-04-20) ???
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bug Fix:
+
+* Fix typo in the error logging text for when a hook did not exit successfully,
+  thanks to `@luzfcb`_ (#656)
+
+.. _`@luzfcb`: https://github.com/luzfcb
+
+
 1.4.0 (2016-03-20) Shortbread
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
