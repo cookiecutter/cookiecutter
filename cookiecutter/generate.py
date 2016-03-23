@@ -234,7 +234,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
         except FailedHookException:
             rmtree(project_dir)
             logging.error("Stopping generation because %s"
-                          " hook script didn't exit sucessfully" % hook_name)
+                          " hook script didn't exit successfully" % hook_name)
             raise
 
 
