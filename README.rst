@@ -179,6 +179,7 @@ Python
 * `cookiecutter-sublime-text-3-plugin`_: Sublime Text 3 plugin template with custom settings, commands, key bindings and main menu.
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
+* `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -324,6 +325,8 @@ HTML
 .. _`django-starter`: https://github.com/tkjone/django-starter
 .. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
 .. _`cookiecutter-django-gulp`: https://github.com/valerymelou/cookiecutter-django-gulp
+.. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
+.. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 
 Scala
 ~~~~~
