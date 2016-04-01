@@ -3,19 +3,113 @@
 History
 -------
 
-1.3.1 (2015-??-??) ??
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.5.0 (2016-04-20) ???
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The goal of this release is to solve problems with version 1.3.0.
+Bug Fix:
+
+* Fix typo in the error logging text for when a hook did not exit successfully,
+  thanks to `@luzfcb`_ (#656)
 
 Other Changes:
 
-* Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593).
+* Added more cookiecutter templates to the mix:
+
+  * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
+
+.. _`@luzfcb`: https://github.com/luzfcb
+.. _`@tokibito`: https://github.com/tokibito
+
+.. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
+
+1.4.0 (2016-03-20) Shortbread
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The goal of this release is changing to a strict Jinja2 environment, paving the
+way to more awesome in the future, as well as adding support for Jinja2
+extensions.
+
+New Features:
+
+* Added support for Jinja2 extension support, thanks to `@hackebrot`_ (#617).
+* Now raises an error if Cookiecutter tries to render a template that contains an undefined variable. Makes generation more robust and secure (#586). Work done by `@hackebrot`_ (#111, #586, #592)
+* Uses strict Jinja2 env in prompt, thanks to `@hackebrot`_ (#598, #613)
+* Switched from pyyaml/ruamel.yaml libraries that were problematic across platforms to the pure Python poyo_ library, thanks to `@hackebrot`_ (#557, #569, #621)
+* User config values for ``cookiecutters_dir`` and ``replay_dir`` now support
+  environment variable and user home expansion, thanks to `@nfarrar`_ for the
+  suggestion and `@hackebrot`_ for the PR (#640, #642)
+* Add `jinja2-time`_ as default extension for dates and times in templates via
+  ``{% now 'utc' %}``, thanks to `@hackebrot`_ (#653)
 
 Bug Fixes:
 
+* Provided way to define options that have no defaults, thanks to `@johtso`_ (#587, #588)
 * Make sure that ``replay.dump()`` and ``replay.load()`` use the correct user config, thanks to `@hackebrot`_ (#590, #594)
 * Added correct CA bundle for Git on Appveyor, thanks to `@maiksensi`_ (#599, #602)
+* Open ``HISTORY.rst`` with ``utf-8`` encoding when reading the changelog,
+  thanks to `@0-wiz-0`_ for submitting the issue and `@hackebrot`_ for the fix
+  (#638, #639)
+* Fix repository indicators for `private repository`_ urls, thanks to
+  `@habnabit`_ for the fix (#595) and `@hackebrot`_ for the tests (#655)
+
+.. _poyo: https://pypi.python.org/pypi/poyo
+.. _`jinja2-time`: https://pypi.python.org/pypi/jinja2-time
+.. _`private repository`: http://cookiecutter.readthedocs.org/en/latest/usage.html#works-with-private-repos
+
+Other Changes:
+
+* Set path before running tox, thanks to `@maiksensi`_ (#615, #620)
+* Removed xfail in test_cookiecutters, thanks to `@hackebrot`_ (#618)
+* Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593)
+* Fixed docs/usage.rst, thanks to `@macrotim`_ (#604)
+* Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to `@audreyr`_
+* Use open context manager to read context_file in generate() function, thanks to `@hackebrot`_ (#607, #608)
+* Added documentation for choice variables, thanks to `@maiksensi`_ (#611)
+* Set up Scrutinizer to check code quality, thanks to `@audreyr`_
+* Drop distutils support in setup.py, thanks to `@hackebrot`_ (#606, #609)
+* Change cookiecutter-pypackage-minimal link, thanks to `@kragniz`_ (#614)
+* Fix typo in one of the template's description, thanks to `@ryanfreckleton`_ (#643)
+* Fix broken link to `_copy_without_render`_ in *troubleshooting.rst*, thanks
+  to `@ptim`_ (#647)
+
+* Added more cookiecutter templates to the mix:
+
+  * `cookiecutter-pipproject`_ by `@wdm0006`_ (#624)
+  * `cookiecutter-flask-2`_ by `@wdm0006`_ (#624)
+  * `cookiecutter-kotlin-gradle`_ by `@thomaslee`_ (#622)
+  * `cookiecutter-tryton-fulfilio`_ by `@cedk`_ (#631)
+  * `django-starter`_ by `@tkjone`_ (#635)
+  * `django-docker-bootstrap`_ by `@legios89`_ (#636)
+  * `cookiecutter-mediawiki-extension`_ by `@JonasGroeger`_ (#645)
+  * `cookiecutter-django-gulp`_ by `@valerymelou`_ (#648)
+
+
+.. _`@macrotim`: https://github.com/macrotim
+.. _`@wdm0006`: https://github.com/wdm0006
+.. _`@thomaslee`: https://github.com/thomaslee
+.. _`@kragniz`: https://github.com/kragniz
+.. _`@ryanfreckleton`: https://github.com/ryanfreckleton
+.. _`@cedk`: https://github.com/cedk
+.. _`@johtso`: https://github.com/johtso
+.. _`@legios89`: https://github.com/legios89
+.. _`@0-wiz-0`: https://github.com/0-wiz-0
+.. _`@tkjone`: https://github.com/tkjone
+.. _`@nfarrar`: https://github.com/nfarrar
+.. _`@ptim`: https://github.com/ptim
+.. _`@JonasGroeger`: https://github.com/JonasGroeger
+.. _`@valerymelou`: https://github.com/valerymelou
+.. _`@habnabit`: https://github.com/habnabit
+
+.. _`cookiecutter-kotlin-gradle`: https://github.com/thomaslee/cookiecutter-kotlin-gradle
+.. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
+.. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
+.. _`django-starter`: https://github.com/tkjone/django-starter
+.. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
+.. _`cookiecutter-mediawiki-extension`: https://github.com/JonasGroeger/cookiecutter-mediawiki-extension
+.. _`cookiecutter-django-gulp`: https://github.com/valerymelou/cookiecutter-django-gulp
+.. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
+
+.. _`_copy_without_render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
 
 1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,7 +224,7 @@ Other Changes:
   * `cookiecutter-pytest-plugin`_ by `@pytest-dev`_ and `@hackebrot`_ (#481)
   * `cookiecutter-csharp-objc-binding`_ by `@SandyChapman`_ (#460)
   * `cookiecutter-flask-foundation`_ by `@JackStouffer`_ (#457)
-  * `cookiecutter-tryton`_ by `@fulfilio`_ (#465)
+  * `cookiecutter-tryton-fulfilio`_ by `@fulfilio`_ (#465)
   * `cookiecutter-tapioca`_ by `@vintasoftware`_ (#496)
   * `cookiecutter-sublime-text-3-plugin`_ by `@kkujawinski`_ (#500)
   * `cookiecutter-muffin`_ by `@drgarcia1986`_ (#494)
@@ -164,7 +258,7 @@ Other Changes:
 .. _`@pytest-dev`: https://github.com/pytest-dev
 .. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
-.. _`cookiecutter-tryton`: https://github.com/fulfilio/cookiecutter-tryton
+.. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 .. _`cookiecutter-sublime-text-3-plugin`: https://github.com/kkujawinski/cookiecutter-sublime-text-3-plugin
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
@@ -358,7 +452,7 @@ Other Changes:
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _BoilerplatePP: https://github.com/Paspartout/BoilerplatePP
-.. _`cookiecutter-pypackage-minimal`: https://github.com/borntyping/cookiecutter-pypackage-minimal
+.. _`cookiecutter-pypackage-minimal`: https://github.com/kragniz/cookiecutter-pypackage-minimal
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pylibrary-minimal`: https://github.com/ionelmc/cookiecutter-pylibrary-minimal
 

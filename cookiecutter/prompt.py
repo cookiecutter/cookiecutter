@@ -14,7 +14,11 @@ import click
 from past.builtins import basestring
 
 from future.utils import iteritems
-from jinja2.environment import Environment
+
+from jinja2.exceptions import UndefinedError
+
+from .exceptions import UndefinedVariableInTemplate
+from .environment import StrictEnvironment
 
 
 def read_user_variable(var_name, default_value):
@@ -81,9 +85,12 @@ def read_user_choice(var_name, options):
 
 
 def render_variable(env, raw, cookiecutter_dict):
+    if raw is None:
+        return None
     if not isinstance(raw, basestring):
         raw = str(raw)
     template = env.from_string(raw)
+
     rendered_template = template.render(cookiecutter=cookiecutter_dict)
     return rendered_template
 
@@ -109,24 +116,28 @@ def prompt_for_config(context, no_input=False):
     :param no_input: Prompt the user at command line for manual configuration?
     """
     cookiecutter_dict = {}
-    env = Environment()
+    env = StrictEnvironment(context=context)
 
     for key, raw in iteritems(context[u'cookiecutter']):
         if key.startswith(u'_'):
             cookiecutter_dict[key] = raw
             continue
 
-        if isinstance(raw, list):
-            # We are dealing with a choice variable
-            val = prompt_choice_for_config(
-                cookiecutter_dict, env, key, raw, no_input
-            )
-        else:
-            # We are dealing with a regular variable
-            val = render_variable(env, raw, cookiecutter_dict)
+        try:
+            if isinstance(raw, list):
+                # We are dealing with a choice variable
+                val = prompt_choice_for_config(
+                    cookiecutter_dict, env, key, raw, no_input
+                )
+            else:
+                # We are dealing with a regular variable
+                val = render_variable(env, raw, cookiecutter_dict)
 
-            if not no_input:
-                val = read_user_variable(key, val)
+                if not no_input:
+                    val = read_user_variable(key, val)
+        except UndefinedError as err:
+            msg = "Unable to render variable '{}'".format(key)
+            raise UndefinedVariableInTemplate(msg, err, context)
 
         cookiecutter_dict[key] = val
     return cookiecutter_dict

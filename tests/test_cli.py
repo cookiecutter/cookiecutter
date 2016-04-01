@@ -1,4 +1,5 @@
 import os
+import json
 import pytest
 
 from click.testing import CliRunner
@@ -295,3 +296,50 @@ def test_default_user_config(mocker):
         output_dir='.',
         config_file=None
     )
+
+
+def test_echo_undefined_variable_error(tmpdir):
+    output_dir = str(tmpdir.mkdir('output'))
+    template_path = 'tests/undefined-variable/file-name/'
+
+    result = runner.invoke(main, [
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
+    ])
+
+    assert result.exit_code == 1
+
+    error = "Unable to create file '{{cookiecutter.foobar}}'"
+    assert error in result.output
+
+    message = "Error message: 'dict object' has no attribute 'foobar'"
+    assert message in result.output
+
+    context = {
+        'cookiecutter': {
+            'github_username': 'hackebrot',
+            'project_slug': 'testproject'
+        }
+    }
+    context_str = json.dumps(context, indent=4, sort_keys=True)
+    assert context_str in result.output
+
+
+def test_echo_unknown_extension_error(tmpdir):
+    output_dir = str(tmpdir.mkdir('output'))
+    template_path = 'tests/test-extensions/unknown/'
+
+    result = runner.invoke(main, [
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
+    ])
+
+    assert result.exit_code == 1
+
+    assert 'Unable to load extension: ' in result.output

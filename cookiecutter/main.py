@@ -17,7 +17,7 @@ import os
 import re
 
 from .config import get_user_config, USER_CONFIG_PATH
-from .exceptions import InvalidModeException
+from .exceptions import InvalidModeException, RepositoryNotFound
 from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
@@ -30,19 +30,18 @@ builtin_abbreviations = {
     'bb': 'https://bitbucket.org/{0}',
 }
 
-REPO_REGEX = """
-(
-((git|ssh|https|http):(//)?)    # something like git:// ssh:// etc.
- |                              # or
- (\w+@[\w\.]+)                  # something like user@...
+REPO_REGEX = re.compile(r"""
+(?x)
+((((git|hg)\+)?(git|ssh|https?):(//)?)  # something like git:// ssh:// etc.
+ |                                      # or
+ (\w+@[\w\.]+)                          # something like user@...
 )
-.*
-"""
+""")
 
 
 def is_repo_url(value):
     """Return True if value is a repository URL."""
-    return bool(re.match(REPO_REGEX, value, re.VERBOSE))
+    return bool(REPO_REGEX.match(value))
 
 
 def expand_abbreviations(template, config_dict):
@@ -111,6 +110,11 @@ def cookiecutter(
         # If it's a local repo, no need to clone or copy to your
         # cookiecutters_dir
         repo_dir = template
+
+    if not os.path.isdir(repo_dir):
+        raise RepositoryNotFound(
+            'The repository {0} could not be located.'.format(template)
+        )
 
     template_name = os.path.basename(template)
 

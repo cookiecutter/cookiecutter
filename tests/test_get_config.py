@@ -55,10 +55,11 @@ def test_invalid_config():
         config.get_config('tests/test-config/invalid-config.yaml')
 
     expected_error_msg = (
-        'tests/test-config/invalid-config.yaml is not a valid YAML file: '
-        'line 1: mapping values are not allowed here'
+        'Unable to parse YAML file '
+        'tests/test-config/invalid-config.yaml. '
+        'Error: '
     )
-    assert str(excinfo.value) == expected_error_msg
+    assert expected_error_msg in str(excinfo.value)
 
 
 def test_get_config_with_defaults():

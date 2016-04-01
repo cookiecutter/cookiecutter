@@ -11,6 +11,7 @@ Main `cookiecutter` CLI.
 import os
 import sys
 import logging
+import json
 
 import click
 
@@ -18,7 +19,12 @@ from cookiecutter import __version__
 from cookiecutter.config import USER_CONFIG_PATH
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
-    OutputDirExistsException, InvalidModeException, FailedHookException
+    OutputDirExistsException,
+    InvalidModeException,
+    FailedHookException,
+    UndefinedVariableInTemplate,
+    UnknownExtension,
+    RepositoryNotFound
 )
 
 logger = logging.getLogger(__name__)
@@ -100,8 +106,22 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
             config_file=user_config
         )
     except (OutputDirExistsException,
-            InvalidModeException, FailedHookException) as e:
+            InvalidModeException,
+            FailedHookException,
+            UnknownExtension,
+            RepositoryNotFound) as e:
         click.echo(e)
+        sys.exit(1)
+    except UndefinedVariableInTemplate as undefined_err:
+        click.echo('{}'.format(undefined_err.message))
+        click.echo('Error message: {}'.format(undefined_err.error.message))
+
+        context_str = json.dumps(
+            undefined_err.context,
+            indent=4,
+            sort_keys=True
+        )
+        click.echo('Context: {}'.format(context_str))
         sys.exit(1)
 
 

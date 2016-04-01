@@ -14,20 +14,20 @@ import platform
 import pytest
 from past.builtins import basestring
 
-from cookiecutter import prompt
-from jinja2.environment import Environment
+from cookiecutter import prompt, exceptions, environment
 
 
 @pytest.mark.parametrize('raw_var, rendered_var', [
     (1, '1'),
     (True, 'True'),
     ('foo', 'foo'),
-    ('{{cookiecutter.project}}', 'foobar')
+    ('{{cookiecutter.project}}', 'foobar'),
+    (None, None),
 ])
 def test_convert_to_str(mocker, raw_var, rendered_var):
-    env = Environment()
+    env = environment.StrictEnvironment()
     from_string = mocker.patch(
-        'cookiecutter.prompt.Environment.from_string',
+        'cookiecutter.prompt.StrictEnvironment.from_string',
         wraps=env.from_string
     )
     context = {'project': 'foobar'}
@@ -35,10 +35,13 @@ def test_convert_to_str(mocker, raw_var, rendered_var):
     result = prompt.render_variable(env, raw_var, context)
     assert result == rendered_var
 
-    # Make sure that non str variables are conerted beforehand
-    if not isinstance(raw_var, basestring):
-        raw_var = str(raw_var)
-    from_string.assert_called_once_with(raw_var)
+    # Make sure that non None non str variables are conerted beforehand
+    if raw_var is not None:
+        if not isinstance(raw_var, basestring):
+            raw_var = str(raw_var)
+        from_string.assert_called_once_with(raw_var)
+    else:
+        assert not from_string.called
 
 
 @pytest.fixture(autouse=True)
@@ -224,7 +227,7 @@ class TestPromptChoiceForConfig(object):
 
         actual_choice = prompt.prompt_choice_for_config(
             context,
-            Environment(),
+            environment.StrictEnvironment(),
             'orientation',
             choices,
             True  # Suppress user input
@@ -240,10 +243,40 @@ class TestPromptChoiceForConfig(object):
 
         actual_choice = prompt.prompt_choice_for_config(
             context,
-            Environment(),
+            environment.StrictEnvironment(),
             'orientation',
             choices,
             False  # Ask the user for input
         )
         read_choice.assert_called_once_with('orientation', choices)
         assert expected_choice == actual_choice
+
+
+def test_undefined_variable_in_cookiecutter_dict():
+    context = {
+        'cookiecutter': {
+            'hello': 'world',
+            'foo': '{{cookiecutter.nope}}'
+        }
+    }
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        prompt.prompt_for_config(context, no_input=True)
+
+    error = err.value
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context
+
+
+def test_undefined_variable_in_cookiecutter_dict_with_choices():
+    context = {
+        'cookiecutter': {
+            'hello': 'world',
+            'foo': ['123', '{{cookiecutter.nope}}', '456']
+        }
+    }
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        prompt.prompt_for_config(context, no_input=True)
+
+    error = err.value
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context

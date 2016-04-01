@@ -87,3 +87,30 @@ class FailedHookException(CookiecutterException):
     """
     Raised when a hook script fails
     """
+
+
+class UndefinedVariableInTemplate(CookiecutterException):
+    """Raised when a template uses a variable which is not defined in the
+    context.
+    """
+    def __init__(self, message, error, context):
+        self.message = message
+        self.error = error
+        self.context = context
+
+    def __str__(self):
+        return (
+            "{self.message}. "
+            "Error message: {self.error.message}. "
+            "Context: {self.context}"
+        ).format(**locals())
+
+
+class UnknownExtension(CookiecutterException):
+    """Raised when an environment is unable to import a required extension."""
+
+
+class RepositoryNotFound(CookiecutterException):
+    """
+    Raised when the specified cookiecutter repository doesn't exist.
+    """

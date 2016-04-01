@@ -1,0 +1,4 @@
+{
+    "project_slug": "Foobar",
+    "year": "{% now 'utc', '%Y' %}"
+}

@@ -14,10 +14,7 @@ import logging
 import os
 import io
 
-try:
-    import ruamel.yaml as yaml
-except ImportError:
-    import yaml
+import poyo
 
 from .exceptions import ConfigDoesNotExistException
 from .exceptions import InvalidConfiguration
@@ -34,6 +31,13 @@ DEFAULT_CONFIG = {
 }
 
 
+def _expand_path(path):
+    """Expand both environment variables and user home in the given path."""
+    path = os.path.expandvars(path)
+    path = os.path.expanduser(path)
+    return path
+
+
 def get_config(config_path):
     """
     Retrieve the config from the specified path, returning it as a config dict.
@@ -45,16 +49,21 @@ def get_config(config_path):
     logger.debug('config_path is {0}'.format(config_path))
     with io.open(config_path, encoding='utf-8') as file_handle:
         try:
-            yaml_dict = yaml.safe_load(file_handle)
-        except yaml.scanner.ScannerError as e:
+            yaml_dict = poyo.parse_string(file_handle.read())
+        except poyo.exceptions.PoyoException as e:
             raise InvalidConfiguration(
-                '{0} is not a valid YAML file: line {1}: {2}'.format(
-                    config_path,
-                    e.problem_mark.line,
-                    e.problem))
+                'Unable to parse YAML file {}. Error: {}'
+                ''.format(config_path, e)
+            )
 
     config_dict = copy.copy(DEFAULT_CONFIG)
     config_dict.update(yaml_dict)
+
+    raw_replay_dir = config_dict['replay_dir']
+    config_dict['replay_dir'] = _expand_path(raw_replay_dir)
+
+    raw_cookies_dir = config_dict['cookiecutters_dir']
+    config_dict['cookiecutters_dir'] = _expand_path(raw_cookies_dir)
 
     return config_dict
 

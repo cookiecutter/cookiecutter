@@ -98,24 +98,19 @@ def test_get_user_config_nonexistent():
 @pytest.fixture
 def custom_config():
     return {
-        'cookiecutters_dir': '/foo/bar/some-path-to-templates',
-        'replay_dir': '/foo/bar/some-path-to-replay-files',
         'default_context': {
-            'full_name': 'Cookiemonster',
-            'github_username': 'hackebrot'
+            'full_name': 'Firstname Lastname',
+            'email': 'firstname.lastname@gmail.com',
+            'github_username': 'example',
         },
-        'abbreviations': {
-            'cookiedozer': 'https://github.com/hackebrot/cookiedozer.git',
-        }
+        'cookiecutters_dir': '/home/example/some-path-to-templates',
+        'replay_dir': '/home/example/some-path-to-replay-files'
     }
 
 
 @pytest.fixture
-def custom_config_path(tmpdir, custom_config):
-    user_config_file = tmpdir.join('user_config')
-
-    user_config_file.write(config.yaml.dump(custom_config))
-    return str(user_config_file)
+def custom_config_path(custom_config):
+    return 'tests/test-config/valid-config.yaml'
 
 
 def test_specify_config_path(mocker, custom_config_path, custom_config):
@@ -146,3 +141,25 @@ def test_force_default_config(mocker):
 
     assert user_config == config.DEFAULT_CONFIG
     assert not spy_get_config.called
+
+
+def test_expand_user_for_directories_in_config(monkeypatch):
+    def _expanduser(path):
+        return path.replace('~', 'Users/bob')
+    monkeypatch.setattr('os.path.expanduser', _expanduser)
+
+    config_file = 'tests/test-config/config-expand-user.yaml'
+
+    user_config = config.get_user_config(config_file)
+    assert user_config['replay_dir'] == 'Users/bob/replay-files'
+    assert user_config['cookiecutters_dir'] == 'Users/bob/templates'
+
+
+def test_expand_vars_for_directories_in_config(monkeypatch):
+    monkeypatch.setenv('COOKIES', 'Users/bob/cookies')
+
+    config_file = 'tests/test-config/config-expand-vars.yaml'
+
+    user_config = config.get_user_config(config_file)
+    assert user_config['replay_dir'] == 'Users/bob/cookies/replay-files'
+    assert user_config['cookiecutters_dir'] == 'Users/bob/cookies/templates'

@@ -16,16 +16,17 @@ import logging
 import os
 import shutil
 
-from jinja2 import FileSystemLoader, Template
-from jinja2.environment import Environment
-from jinja2.exceptions import TemplateSyntaxError
+from jinja2 import FileSystemLoader
+from cookiecutter.environment import StrictEnvironment
+from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from binaryornot.check import is_binary
 
 from .exceptions import (
     NonTemplatedInputDirException,
     ContextDecodingException,
     FailedHookException,
-    OutputDirExistsException
+    OutputDirExistsException,
+    UndefinedVariableInTemplate
 )
 from .find import find_template
 from .utils import make_sure_path_exists, work_in, rmtree
@@ -87,9 +88,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     context = {}
 
-    file_handle = open(context_file)
     try:
-        obj = json.load(file_handle, object_pairs_hook=OrderedDict)
+        with open(context_file) as file_handle:
+            obj = json.load(file_handle, object_pairs_hook=OrderedDict)
     except ValueError as e:
         # JSON decoding error.  Let's throw a new exception that is more
         # friendly for the developer or user.
@@ -141,7 +142,7 @@ def generate_file(project_dir, infile, context, env):
     logging.debug('Generating file {0}'.format(infile))
 
     # Render the path to the output file (not including the root project dir)
-    outfile_tmpl = Template(infile)
+    outfile_tmpl = env.from_string(infile)
 
     outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
     file_name_is_empty = os.path.isdir(outfile)
@@ -181,14 +182,14 @@ def generate_file(project_dir, infile, context, env):
     shutil.copymode(infile, outfile)
 
 
-def render_and_create_dir(dirname, context, output_dir,
+def render_and_create_dir(dirname, context, output_dir, environment,
                           overwrite_if_exists=False):
     """
     Renders the name of a directory, creates the directory, and
     returns its path.
     """
 
-    name_tmpl = Template(dirname)
+    name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
     logging.debug('Rendered dir {0} must exist in output_dir {1}'.format(
         rendered_dirname,
@@ -233,7 +234,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
         except FailedHookException:
             rmtree(project_dir)
             logging.error("Stopping generation because %s"
-                          " hook script didn't exit sucessfully" % hook_name)
+                          " hook script didn't exit successfully" % hook_name)
             raise
 
 
@@ -255,10 +256,21 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
-    project_dir = render_and_create_dir(unrendered_dir,
-                                        context,
-                                        output_dir,
-                                        overwrite_if_exists)
+    env = StrictEnvironment(
+        context=context,
+        keep_trailing_newline=True,
+    )
+    try:
+        project_dir = render_and_create_dir(
+            unrendered_dir,
+            context,
+            output_dir,
+            env,
+            overwrite_if_exists
+        )
+    except UndefinedError as err:
+        msg = "Unable to create project directory '{}'".format(unrendered_dir)
+        raise UndefinedVariableInTemplate(msg, err, context)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
@@ -273,7 +285,6 @@ def generate_files(repo_dir, context=None, output_dir='.',
     _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context)
 
     with work_in(template_dir):
-        env = Environment(keep_trailing_newline=True)
         env.loader = FileSystemLoader('.')
 
         for root, dirs, files in os.walk('.'):
@@ -307,13 +318,24 @@ def generate_files(repo_dir, context=None, output_dir='.',
             dirs[:] = render_dirs
             for d in dirs:
                 unrendered_dir = os.path.join(project_dir, root, d)
-                render_and_create_dir(unrendered_dir, context, output_dir,
-                                      overwrite_if_exists)
+                try:
+                    render_and_create_dir(
+                        unrendered_dir,
+                        context,
+                        output_dir,
+                        env,
+                        overwrite_if_exists
+                    )
+                except UndefinedError as err:
+                    rmtree(project_dir)
+                    _dir = os.path.relpath(unrendered_dir, output_dir)
+                    msg = "Unable to create directory '{}'".format(_dir)
+                    raise UndefinedVariableInTemplate(msg, err, context)
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
                 if copy_without_render(infile, context):
-                    outfile_tmpl = Template(infile)
+                    outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
                     logging.debug(
@@ -324,7 +346,12 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     shutil.copymode(infile, outfile)
                     continue
                 logging.debug('f is {0}'.format(f))
-                generate_file(project_dir, infile, context, env)
+                try:
+                    generate_file(project_dir, infile, context, env)
+                except UndefinedError as err:
+                    rmtree(project_dir)
+                    msg = "Unable to create file '{}'".format(infile)
+                    raise UndefinedVariableInTemplate(msg, err, context)
 
     _run_hook_from_repo_dir(repo_dir, 'post_gen_project', project_dir, context)
 

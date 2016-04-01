@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 
 import os
+import io
 import sys
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
-version = "1.3.0"
+version = "1.4.0"
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -20,10 +18,10 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-with open('README.rst') as readme_file:
+with io.open('README.rst', 'r', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with io.open('HISTORY.rst', 'r', encoding='utf-8') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
 requirements = [
@@ -31,7 +29,9 @@ requirements = [
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'click>=5.0',
-    'whichcraft>=0.1.1'
+    'whichcraft>=0.1.1',
+    'poyo>=0.1.0',
+    'jinja2-time>=0.1.0'
 ]
 
 long_description = readme + '\n\n' + history
@@ -62,14 +62,6 @@ setup(
     },
     include_package_data=True,
     install_requires=requirements,
-    extras_require={
-        ':sys_platform=="win32" and python_version=="2.7"': [
-            'PyYAML>=3.10'
-        ],
-        ':sys_platform!="win32" or python_version!="2.7"': [
-            'ruamel.yaml>=0.10.12'
-        ]
-    },
     license='BSD',
     zip_safe=False,
     classifiers=[
