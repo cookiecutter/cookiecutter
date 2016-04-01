@@ -53,6 +53,9 @@ def test_identify_raise_on_unknown_repo(unknown_repo_type_url):
 
 
 def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete_repo()`, if the user agrees to delete/reclone the
+    repo, the repo should be deleted.
+    """
     mock_read_user = mocker.patch(
         'cookiecutter.vcs.read_user_yes_no',
         return_value=True,
@@ -67,6 +70,9 @@ def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
 
 
 def test_prompt_should_ask_and_keep_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete_repo()`, if the user wants to keep their old
+    cloned template repo, it should not be deleted.
+    """
     mock_read_user = mocker.patch(
         'cookiecutter.vcs.read_user_yes_no',
         return_value=False,
@@ -82,6 +88,9 @@ def test_prompt_should_ask_and_keep_repo_dir(mocker, tmpdir):
 
 
 def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete_repo()`, if `no_input` is True, the call to
+    `vcs.read_user_yes_no()` should be suppressed.
+    """
     mock_read_user = mocker.patch(
         'cookiecutter.vcs.read_user_yes_no',
         return_value=True,
@@ -97,10 +106,16 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
 
 @pytest.fixture
 def clone_dir(tmpdir):
+    """Simulates creation of a directory called `clone_dir` inside of `tmpdir`.
+    Returns a str to said directory.
+    """
     return str(tmpdir.mkdir('clone_dir'))
 
 
 def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
+    """In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS
+    is installed.
+    """
     mocker.patch(
         'cookiecutter.vcs.which',
         autospec=True,
@@ -119,6 +134,13 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
 ])
 def test_clone_should_invoke_git(
         mocker, clone_dir, repo_type, repo_url, repo_name):
+    """When `clone()` is called with a git/hg repo, the corresponding VCS
+    command should be run via `subprocess.check_call()`.
+
+    This should take place:
+    * In the correct dir
+    * With the correct args.
+    """
     mocker.patch(
         'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
@@ -151,6 +173,9 @@ def test_clone_should_invoke_git(
 
 
 def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
+    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit
+    without cloning anything.
+    """
     mocker.patch(
         'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
@@ -179,6 +204,9 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
 
 
 def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
+    """In `clone()`, repo URL's trailing slash should be stripped if one is
+    present.
+    """
     mocker.patch(
         'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
