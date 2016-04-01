@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import json
 import os
 
 import pytest
 
 from cookiecutter.main import is_repo_url, expand_abbreviations, cookiecutter
+
+USER_CONFIG = u"""
+cookiecutters_dir: "{cookiecutters_dir}"
+replay_dir: "{replay_dir}"
+"""
 
 
 @pytest.fixture(params=[
@@ -66,14 +70,15 @@ def user_config_data(user_dir):
     return {
         'cookiecutters_dir': str(cookiecutters_dir),
         'replay_dir': str(replay_dir),
-        'default_context': {}
     }
 
 
 @pytest.fixture(scope='session')
 def user_config_file(user_dir, user_config_data):
     config_file = user_dir.join('config')
-    config_file.write(json.dumps(user_config_data))
+
+    config_text = USER_CONFIG.format(**user_config_data)
+    config_file.write(config_text)
     return str(config_file)
 
 
