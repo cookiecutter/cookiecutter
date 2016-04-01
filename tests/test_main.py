@@ -59,11 +59,19 @@ def test_expand_abbreviations():
 
 @pytest.fixture(scope='session')
 def user_dir(tmpdir_factory):
+    """Fixture that simulates the user's home directory"""
     return tmpdir_factory.mktemp('user_dir')
 
 
 @pytest.fixture(scope='session')
 def user_config_data(user_dir):
+    """Fixture that creates 2 Cookiecutter user config dirs in the user's home
+    directory:
+    * `cookiecutters_dir`
+    * `cookiecutter_replay`
+
+    :returns: Dict with name of both user config dirs
+    """
     cookiecutters_dir = user_dir.mkdir('cookiecutters')
     replay_dir = user_dir.mkdir('cookiecutter_replay')
 
@@ -75,6 +83,13 @@ def user_config_data(user_dir):
 
 @pytest.fixture(scope='session')
 def user_config_file(user_dir, user_config_data):
+    """Fixture that creates a config file called `config` in the user's home
+    directory, with YAML from `user_config_data`.
+
+    :param user_dir: Simulated user's home directory
+    :param user_config_data: Dict of config values
+    :returns: String of path to config file
+    """
     config_file = user_dir.join('config')
 
     config_text = USER_CONFIG.format(**user_config_data)
@@ -84,16 +99,26 @@ def user_config_file(user_dir, user_config_data):
 
 @pytest.fixture
 def template_url():
+    """URL to example Cookiecutter template on GitHub.
+
+    Note: when used, git clone is mocked.
+    """
     return 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
 
 @pytest.fixture
 def output_dir(tmpdir):
+    """Given a temporary dir, create an `output` subdirectory inside it and
+    return its path (not a str but a py.path instance).
+    """
     return tmpdir.mkdir('output')
 
 
 def test_cookiecutter_repository_url_should_clone(
         mocker, template_url, output_dir, user_config_file, user_config_data):
+    """`clone()` should be called with correct args when `cookiecutter()` is
+    called.
+    """
     mock_clone = mocker.patch(
         'cookiecutter.main.clone',
         return_value='tests/fake-repo-tmpl',
