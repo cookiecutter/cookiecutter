@@ -172,6 +172,7 @@ def test_clone_should_invoke_git(
     )
 
 
+@pytest.mark.raphael
 def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
     """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit
     without cloning anything.
@@ -182,8 +183,8 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
         return_value=True
     )
     mocker.patch(
-        'cookiecutter.vcs.read_user_yes_no',
-        return_value=False,
+        'cookiecutter.vcs.prompt_and_delete_repo',
+        side_effect=SystemExit,
         autospec=True
     )
     mock_subprocess = mocker.patch(
