@@ -13,14 +13,21 @@ import os
 
 
 try:
-    os.environ[u'TRAVIS']
+    os.environ['TRAVIS']
 except KeyError:
     travis = False
 else:
     travis = True
 
 try:
-    os.environ[u'DISABLE_NETWORK_TESTS']
+    os.environ['APPVEYOR']
+except KeyError:
+    appveyor = False
+else:
+    appveyor = True
+
+try:
+    os.environ['DISABLE_NETWORK_TESTS']
 except KeyError:
     no_network = False
 else:
@@ -28,6 +35,10 @@ else:
 
 skipif_travis = pytest.mark.skipif(
     travis, reason='Works locally with tox but fails on Travis.'
+)
+
+skipif_appveyor = pytest.mark.skipif(
+    appveyor, reason='Works locally with tox but fails on Appveyor.'
 )
 
 skipif_no_network = pytest.mark.skipif(
