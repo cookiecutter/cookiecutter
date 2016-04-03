@@ -16,11 +16,14 @@ Other Changes:
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
+  * `cookiecutter-reveal.js`_ by `@keimlink`_ (#660)
 
+.. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
 .. _`@tokibito`: https://github.com/tokibito
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
+.. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 
 1.4.0 (2016-03-20) Shortbread
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
