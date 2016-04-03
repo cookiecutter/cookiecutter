@@ -85,6 +85,7 @@ Contributors
 * Tim Osborn (`@ptim`_)
 * Aaron Gallagher (`@habnabit`_)
 * Fábio C. Barrionuevo da Luz (`@luzfcb`_)
+* mozillazg (`@mozillazg`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -158,3 +159,4 @@ Contributors
 .. _`@ptim`: https://github.com/ptim
 .. _`@habnabit`: https://github.com/habnabit
 .. _`@luzfcb`: https://github.com/luzfcb
+.. _`@mozillazg`: https://github.com/mozillazg
