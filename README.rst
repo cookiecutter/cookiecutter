@@ -180,6 +180,7 @@ Python
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
+* `Springerle/hovercraft-slides`_: A template for new `Hovercraft!`_ presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -329,6 +330,8 @@ HTML
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
+.. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
+.. _`Hovercraft!`: https://hovercraft.readthedocs.org/
 
 Scala
 ~~~~~
