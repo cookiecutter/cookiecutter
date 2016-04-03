@@ -13,6 +13,7 @@ Bug Fix:
 
 Other Changes:
 
+* Remove execute permissions on Python files, thanks to `@mozillazg`_ (#650)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -21,6 +22,7 @@ Other Changes:
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
 .. _`@tokibito`: https://github.com/tokibito
+.. _`@mozillazg`: https://github.com/mozillazg
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
