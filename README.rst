@@ -180,6 +180,7 @@ Python
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
+* `cookiecutter-template`_: A template to help in creating cookiecutter templates.
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -329,6 +330,7 @@ HTML
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
+.. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
 
 Scala
 ~~~~~
