@@ -263,6 +263,7 @@ HTML
 ~~~~
 
 * `cookiecutter-complexity`_: A cookiecutter for a Complexity static site with Bootstrap 3.
+* `cookiecutter-reveal.js`_: A cookiecutter template for reveal.js presentations.
 * `cookiecutter-tumblr-theme`_: A cookiecutter for a Tumblr theme project with GruntJS as concatination tool.
 
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -329,6 +330,7 @@ HTML
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
+.. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 
 Scala
 ~~~~~
