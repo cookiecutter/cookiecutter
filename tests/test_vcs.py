@@ -117,9 +117,9 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
     is installed.
     """
     mocker.patch(
-        'cookiecutter.vcs.which',
+        'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
-        return_value=''
+        return_value=False
     )
 
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
