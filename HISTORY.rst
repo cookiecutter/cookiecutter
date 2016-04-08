@@ -13,6 +13,8 @@ Bug Fix:
 
 Other Changes:
 
+* Remove external dependencies from tests, so that tests can be run w/o network
+  connection, thanks to `@hackebrot`_ (#603)
 * Remove execute permissions on Python files, thanks to `@mozillazg`_ (#650)
 * Added more cookiecutter templates to the mix:
 
