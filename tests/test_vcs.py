@@ -8,103 +8,10 @@ test_vcs
 Tests for `cookiecutter.vcs` module.
 """
 
-import locale
 import os
 import pytest
-import subprocess
 
-from cookiecutter import exceptions, utils, vcs
-from tests.skipif_markers import skipif_no_network
-
-ENCODING = locale.getdefaultlocale()[1]
-
-
-@skipif_no_network
-def test_git_clone():
-    repo_dir = vcs.clone(
-        'https://github.com/audreyr/cookiecutter-pypackage.git'
-    )
-
-    assert repo_dir == 'cookiecutter-pypackage'
-    assert os.path.isfile('cookiecutter-pypackage/README.rst')
-
-    if os.path.isdir('cookiecutter-pypackage'):
-        utils.rmtree('cookiecutter-pypackage')
-
-
-@skipif_no_network
-def test_git_clone_with_trailing_slash():
-    repo_dir = vcs.clone(
-        'https://github.com/audreyr/cookiecutter-pypackage/'
-    )
-
-    assert repo_dir == 'cookiecutter-pypackage'
-    assert os.path.isfile('cookiecutter-pypackage/README.rst')
-
-    if os.path.isdir('cookiecutter-pypackage'):
-        utils.rmtree('cookiecutter-pypackage')
-
-
-@skipif_no_network
-def test_git_clone_checkout():
-    repo_dir = vcs.clone(
-        'https://github.com/audreyr/cookiecutter-pypackage.git',
-        'console-script'
-    )
-    git_dir = 'cookiecutter-pypackage'
-    assert repo_dir == git_dir
-    assert os.path.isfile(os.path.join('cookiecutter-pypackage', 'README.rst'))
-
-    proc = subprocess.Popen(
-        ['git', 'symbolic-ref', 'HEAD'],
-        cwd=git_dir,
-        stdout=subprocess.PIPE
-    )
-    symbolic_ref = proc.communicate()[0]
-    branch = symbolic_ref.decode(ENCODING).strip().split('/')[-1]
-    assert 'console-script' == branch
-
-    if os.path.isdir(git_dir):
-        utils.rmtree(git_dir)
-
-
-@skipif_no_network
-def test_git_clone_custom_dir():
-    os.makedirs('tests/custom_dir1/custom_dir2/')
-    repo_dir = vcs.clone(
-        repo_url='https://github.com/audreyr/cookiecutter-pypackage.git',
-        checkout=None,
-        clone_to_dir='tests/custom_dir1/custom_dir2/'
-    )
-    with utils.work_in('tests/custom_dir1/custom_dir2/'):
-        test_dir = 'tests/custom_dir1/custom_dir2/cookiecutter-pypackage'
-        assert repo_dir == test_dir.replace('/', os.sep)
-        assert os.path.isfile('cookiecutter-pypackage/README.rst')
-        if os.path.isdir('cookiecutter-pypackage'):
-            utils.rmtree('cookiecutter-pypackage')
-    if os.path.isdir('tests/custom_dir1'):
-        utils.rmtree('tests/custom_dir1')
-
-
-@skipif_no_network
-def test_hg_clone():
-    repo_dir = vcs.clone(
-        'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
-    )
-    assert repo_dir == 'cookiecutter-trytonmodule'
-    assert os.path.isfile('cookiecutter-trytonmodule/README.rst')
-    if os.path.isdir('cookiecutter-trytonmodule'):
-        utils.rmtree('cookiecutter-trytonmodule')
-
-
-@skipif_no_network
-def test_vcs_not_installed(monkeypatch):
-    monkeypatch.setattr(
-        'cookiecutter.vcs.identify_repo',
-        lambda x: (u'stringthatisntashellcommand', u'anotherstring'),
-    )
-    with pytest.raises(exceptions.VCSNotInstalled):
-        vcs.clone('http://norepotypespecified.com')
+from cookiecutter import exceptions, vcs
 
 
 @pytest.mark.parametrize('repo_url, exp_repo_type, exp_repo_url', [
@@ -143,3 +50,195 @@ def unknown_repo_type_url(request):
 def test_identify_raise_on_unknown_repo(unknown_repo_type_url):
     with pytest.raises(exceptions.UnknownRepoType):
         vcs.identify_repo(unknown_repo_type_url)
+
+
+def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete_repo()`, if the user agrees to delete/reclone the
+    repo, the repo should be deleted.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.vcs.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    vcs.prompt_and_delete_repo(str(repo_dir))
+
+    assert mock_read_user.called
+    assert not repo_dir.exists()
+
+
+def test_prompt_should_ask_and_keep_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete_repo()`, if the user wants to keep their old
+    cloned template repo, it should not be deleted.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.vcs.read_user_yes_no',
+        return_value=False,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    with pytest.raises(SystemExit):
+        vcs.prompt_and_delete_repo(str(repo_dir))
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+
+
+def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete_repo()`, if `no_input` is True, the call to
+    `vcs.read_user_yes_no()` should be suppressed.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.vcs.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    vcs.prompt_and_delete_repo(str(repo_dir), no_input=True)
+
+    assert not mock_read_user.called
+    assert not repo_dir.exists()
+
+
+@pytest.fixture
+def clone_dir(tmpdir):
+    """Simulates creation of a directory called `clone_dir` inside of `tmpdir`.
+    Returns a str to said directory.
+    """
+    return str(tmpdir.mkdir('clone_dir'))
+
+
+def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
+    """In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS
+    is installed.
+    """
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=False
+    )
+
+    repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
+
+    with pytest.raises(exceptions.VCSNotInstalled):
+        vcs.clone(repo_url, clone_to_dir=clone_dir)
+
+
+@pytest.mark.parametrize('which_return, result', [
+    ('', False),
+    (None, False),
+    (False, False),
+    ('/usr/local/bin/git', True),
+])
+def test_is_vcs_installed(mocker, which_return, result):
+    mocker.patch(
+        'cookiecutter.vcs.which',
+        autospec=True,
+        return_value=which_return
+    )
+    assert vcs.is_vcs_installed('git') == result
+
+
+@pytest.mark.parametrize('repo_type, repo_url, repo_name', [
+    ('git', 'https://github.com/hello/world.git', 'world'),
+    ('hg', 'https://bitbucket.org/foo/bar', 'bar'),
+])
+def test_clone_should_invoke_git(
+        mocker, clone_dir, repo_type, repo_url, repo_name):
+    """When `clone()` is called with a git/hg repo, the corresponding VCS
+    command should be run via `subprocess.check_call()`.
+
+    This should take place:
+    * In the correct dir
+    * With the correct args.
+    """
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=True
+    )
+
+    mock_subprocess = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_call',
+        autospec=True,
+    )
+    expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
+
+    branch = 'foobar'
+
+    repo_dir = vcs.clone(
+        repo_url,
+        checkout=branch,
+        clone_to_dir=clone_dir,
+        no_input=True
+    )
+
+    assert repo_dir == expected_repo_dir
+
+    mock_subprocess.assert_any_call(
+        [repo_type, 'clone', repo_url], cwd=clone_dir
+    )
+    mock_subprocess.assert_any_call(
+        [repo_type, 'checkout', branch], cwd=expected_repo_dir
+    )
+
+
+def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
+    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit
+    without cloning anything.
+    """
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=True
+    )
+    mocker.patch(
+        'cookiecutter.vcs.prompt_and_delete_repo',
+        side_effect=SystemExit,
+        autospec=True
+    )
+    mock_subprocess = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_call',
+        autospec=True,
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    # Create repo_dir to trigger prompt_and_delete_repo
+    clone_to_dir.mkdir('cookiecutter-pytest-plugin')
+
+    repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
+
+    with pytest.raises(SystemExit):
+        vcs.clone(repo_url, clone_to_dir=str(clone_to_dir))
+    assert not mock_subprocess.called
+
+
+def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
+    """In `clone()`, repo URL's trailing slash should be stripped if one is
+    present.
+    """
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=True
+    )
+
+    mock_subprocess = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_call',
+        autospec=True,
+    )
+
+    vcs.clone(
+        'https://github.com/foo/bar/',
+        clone_to_dir=clone_dir,
+        no_input=True
+    )
+
+    mock_subprocess.assert_called_once_with(
+        ['git', 'clone', 'https://github.com/foo/bar'], cwd=clone_dir
+    )
