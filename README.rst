@@ -232,6 +232,7 @@ JS
   non-jQuery JS widget packaged for multiple JS packaging systems.
 * `cookiecutter-component`_: A template for a Component JS package.
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
+* `cookiecutter-es6-package`_: A template for writting node package using ES6 via babel.
 
 Kotlin
 ~~~~~~
@@ -329,6 +330,7 @@ HTML
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
+.. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
 
 Scala
 ~~~~~
