@@ -20,14 +20,17 @@ Other Changes:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
   * `cookiecutter-reveal.js`_ by `@keimlink`_ (#660)
+  * `cookiecutter-python-app`_ by `@mdklatt`_ (#659)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
 .. _`@tokibito`: https://github.com/tokibito
 .. _`@mozillazg`: https://github.com/mozillazg
+.. _`@mdklatt`: https://github.com/mdklatt
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
+.. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 
 1.4.0 (2016-03-20) Shortbread
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
