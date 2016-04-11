@@ -86,6 +86,7 @@ Contributors
 * Aaron Gallagher (`@habnabit`_)
 * Fábio C. Barrionuevo da Luz (`@luzfcb`_)
 * mozillazg (`@mozillazg`_)
+* Joachim Jablon (`@ewjoachim`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -160,3 +161,4 @@ Contributors
 .. _`@habnabit`: https://github.com/habnabit
 .. _`@luzfcb`: https://github.com/luzfcb
 .. _`@mozillazg`: https://github.com/mozillazg
+.. _`@ewjoachim`: https://github.com/ewjoachim
