@@ -48,6 +48,13 @@ after_test:
   - "%PYTHON%/python setup.py bdist_wheel"
   - ps: "ls dist"
 
+on_success:
+    # Report coverage results to codecov.io
+    # and export tox environment variables
+    - "%PYTHON%/Scripts/pip install codecov"
+    - set OS=WINDOWS
+    - "%PYTHON%/Scripts/codecov -e TOX_ENV OS"
+
 artifacts:
   - path: dist\*
 
