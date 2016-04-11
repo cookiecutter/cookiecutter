@@ -20,4 +20,4 @@ after_success:
     # Report coverage results to codecov.io
     # and export tox environment variables
     - pip install codecov
-    - codecov -e TOX_ENV
+    - codecov -e TOX_ENV,TRAVIS_OS_NAME

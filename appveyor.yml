@@ -52,7 +52,8 @@ on_success:
     # Report coverage results to codecov.io
     # and export tox environment variables
     - "%PYTHON%/Scripts/pip install codecov"
-    - "%PYTHON%/Scripts/codecov -e %TOX_ENV%"
+    - set OS=WINDOWS
+    - "%PYTHON%/Scripts/codecov -e TOX_ENV,OS"
 
 artifacts:
   - path: dist\*
