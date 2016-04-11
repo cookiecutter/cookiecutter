@@ -53,7 +53,7 @@ on_success:
     # and export tox environment variables
     - "%PYTHON%/Scripts/pip install codecov"
     - set OS=WINDOWS
-    - "%PYTHON%/Scripts/codecov -e TOX_ENV,OS"
+    - "%PYTHON%/Scripts/codecov -e TOX_ENV OS"
 
 artifacts:
   - path: dist\*
