@@ -16,6 +16,8 @@ Other Changes:
 * Remove external dependencies from tests, so that tests can be run w/o network
   connection, thanks to `@hackebrot`_ (#603)
 * Remove execute permissions on Python files, thanks to `@mozillazg`_ (#650)
+* Report code coverage info from AppVeyor build to codecov, thanks to
+  `@ewjoachim`_ (#670)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -27,6 +29,7 @@ Other Changes:
 .. _`@tokibito`: https://github.com/tokibito
 .. _`@mozillazg`: https://github.com/mozillazg
 .. _`@mdklatt`: https://github.com/mdklatt
+.. _`@ewjoachim`: https://github.com/ewjoachim
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
