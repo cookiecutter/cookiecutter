@@ -197,7 +197,7 @@ Python-Django
 * `wagtail-cookiecutter-foundation`_: A complete template for Wagtail CMS projects featuring Zurb Foundation 5, ansible provisioning and deployment , front-end dependency management with bower, modular apps to get your site up and running including photo_gallery, RSS feed etc.
 * `django-starter`_: A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
-* `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scrips, front end build system and more! 
+* `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more! 
 
 C
 ~~
