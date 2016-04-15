@@ -31,6 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 def version_msg():
+    """Returns the Cookiecutter version, location and Python powering it."""
     python_version = sys.version[:3]
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     message = u'Cookiecutter %(version)s from {} (Python {})'
