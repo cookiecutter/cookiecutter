@@ -148,7 +148,118 @@ Did someone say features?
 Available Cookiecutters
 -----------------------
 
-Here is a list of **cookiecutters** (aka Cookiecutter project templates) for you to use or fork.
+Making great cookies takes a lot of cookiecutters and contributors. We're so
+pleased that there are many Cookiecutter project templates to choose. We hope
+you find a cookiecutter that is just right for your needs.
+
+Cookiecutter Specials
+~~~~~~~~~~~~~~~~~~~~~
+
+These Cookiecutters are maintained by the cookiecutter team:
+
+
+
+Categories of Cookiecutters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`Python`_ | 
+`Python-Django`_ | 
+`C`_ | 
+`C++`_ | 
+`C#`_ | 
+`Common Lisp`_ | 
+`JS`_ | 
+`Kotlin`_ | 
+`LaTeX/XeTeX`_ | 
+`PHP`_ | 
+`Berkshelf-Vagrant`_ | 
+`HTML`_ | 
+`Scala`_ | 
+`6502 Assembly`_ | 
+`Similar Projects`_
+
+Community
+---------
+
+The core committer team is `@audreyr`_, `@pydanny`_, `@michaeljoseph`_,
+`@pfmoore`_, and `@hackebrot`_. We
+welcome you and invite you to participate.
+
+Stuck? Try one of the following:
+
+* See the `Troubleshooting`_ page.
+* Ask for help on `Stack Overflow`_.
+* You are strongly encouraged to `file an issue`_ about the problem, even if
+  it's just "I can't get it to work on this cookiecutter" with a link to your
+  cookiecutter. Don't worry about naming/pinpointing the issue properly.
+* Ask for help on `Gitter`_ if you must (but please try one of the other
+  options first, so that others can benefit from the discussion)
+
+Development on Cookiecutter is community-driven:
+
+* Huge thanks to all the `contributors`_ who have pitched in to help make
+  Cookiecutter an even better tool.
+* Everyone is invited to contribute. Read the `contributing instructions`_,
+  then get started.
+
+Connect with other Cookiecutter contributors and users on `Gitter`_:
+
+* https://gitter.im/audreyr/cookiecutter (note: due to work and commitments,
+  a core committer might not always be available)
+
+Encouragement is unbelievably motivating. If you want more work done on
+Cookiecutter, show support:
+
+* Thank a core committer for their efforts.
+* Star `Cookiecutter on GitHub`_.
+* Join the `Cookiecutter Gittip community`_.
+
+Got criticism or complaints?
+
+* `File an issue`_ so that Cookiecutter can be improved. Be friendly
+  and constructive about what could be better. Make detailed suggestions.
+* **Keep us in the loop so that we can help.** For example, if you are
+  discussing problems with Cookiecutter on a mailing list, `file an issue`_
+  where you link to the discussion thread and/or cc at least 1 core committer on
+  the email.
+* Be encouraging. A comment like "This function ought to be rewritten like
+  this" is much more likely to result in action than a comment like "Eww, look
+  how bad this function is."
+
+Waiting for a response to an issue/question?
+
+* Be patient and persistent. All issues are on the core committer team's radar and
+  will be considered thoughtfully, but we have a lot of issues to work through. If
+  urgent, it's fine to ping a core committer in the issue with a reminder.
+* Ask others to comment, discuss, review, etc.
+* Search the Cookiecutter repo for issues related to yours.
+* Need a fix/feature/release/help urgently, and can't wait? `@audreyr`_ is
+  available for hire for consultation or custom development.
+
+Support This Project
+--------------------
+
+This project is maintained by volunteers. Support their efforts by spreading the word about:
+
+.. image:: https://s3.amazonaws.com/tsacademy/images/tsa-logo-250x60-transparent-01.png
+   :name: Two Scoops Academy
+   :align: center
+   :alt: Two Scoops Academy
+   :target: http://www.twoscoops.academy/
+
+Code of Conduct
+---------------
+
+Everyone interacting in the Cookiecutter project's codebases, issue trackers, chat
+rooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.
+
+----
+
+A Pantry Full of Cookiecutters
+------------------------------
+
+Here is a list of **cookiecutters** (aka Cookiecutter project templates) for
+you to use or fork.
 
 Make your own, then submit a pull request adding yours to this list!
 
@@ -180,7 +291,7 @@ Python
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
-* `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment. 
+* `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -258,7 +369,6 @@ Berkshelf-Vagrant
 
 * `slim-berkshelf-vagrant`_: A simple cookiecutter template with sane cookbook defaults for common vagrant/berkshelf cookbooks.
 
-
 HTML
 ~~~~
 
@@ -332,6 +442,7 @@ HTML
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 
+
 Scala
 ~~~~~
 
@@ -339,11 +450,13 @@ Scala
 
 .. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
 
+
 6502 Assembly
 ~~~~~~~~~~~~~
 * `cookiecutter-atari2600`_: A cookiecutter template for Atari2600 projects.
 
 .. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
+
 
 Similar projects
 ----------------
@@ -390,82 +503,6 @@ Similar projects
 .. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
 .. _`Cog`: https://bitbucket.org/ned/cog
 .. _`Skaffold`: https://github.com/christabor/Skaffold
-
-
-Community
----------
-
-The core committer team is `@audreyr`_, `@pydanny`_, `@michaeljoseph`_,
-`@pfmoore`_, and `@hackebrot`_. We
-welcome you and invite you to participate.
-
-Stuck? Try one of the following:
-
-* See the `Troubleshooting`_ page.
-* Ask for help on `Stack Overflow`_.
-* You are strongly encouraged to `file an issue`_ about the problem, even if
-  it's just "I can't get it to work on this cookiecutter" with a link to your
-  cookiecutter. Don't worry about naming/pinpointing the issue properly.
-* Ask for help on `Gitter`_ if you must (but please try one of the other
-  options first, so that others can benefit from the discussion)
-
-Development on Cookiecutter is community-driven:
-
-* Huge thanks to all the `contributors`_ who have pitched in to help make
-  Cookiecutter an even better tool.
-* Everyone is invited to contribute. Read the `contributing instructions`_,
-  then get started.
-
-Connect with other Cookiecutter contributors and users on `Gitter`_:
-
-* https://gitter.im/audreyr/cookiecutter (note: due to work and commitments,
-  a core committer might not always be available)
-
-Encouragement is unbelievably motivating. If you want more work done on
-Cookiecutter, show support:
-
-* Thank a core committer for their efforts.
-* Star `Cookiecutter on GitHub`_.
-* Join the `Cookiecutter Gittip community`_.
-
-Got criticism or complaints?
-
-* `File an issue`_ so that Cookiecutter can be improved. Be friendly
-  and constructive about what could be better. Make detailed suggestions.
-* **Keep us in the loop so that we can help.** For example, if you are
-  discussing problems with Cookiecutter on a mailing list, `file an issue`_
-  where you link to the discussion thread and/or cc at least 1 core committer on
-  the email.
-* Be encouraging. A comment like "This function ought to be rewritten like
-  this" is much more likely to result in action than a comment like "Eww, look
-  how bad this function is."
-
-Waiting for a response to an issue/question?
-
-* Be patient and persistent. All issues are on the core committer team's radar and
-  will be considered thoughtfully, but we have a lot of issues to work through. If
-  urgent, it's fine to ping a core committer in the issue with a reminder.
-* Ask others to comment, discuss, review, etc.
-* Search the Cookiecutter repo for issues related to yours.
-* Need a fix/feature/release/help urgently, and can't wait? `@audreyr`_ is
-  available for hire for consultation or custom development.
-
-Support This Project
---------------------
-
-This project is maintained by volunteers. Support their efforts by spreading the word about:
-
-.. image:: https://s3.amazonaws.com/tsacademy/images/tsa-logo-250x60-transparent-01.png
-   :name: Two Scoops Academy
-   :align: center
-   :alt: Two Scoops Academy
-   :target: http://www.twoscoops.academy/
-
-Code of Conduct
----------------
-
-Everyone interacting in the Cookiecutter project's codebases, issue trackers, chat
-rooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.
 
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
 
