@@ -46,7 +46,9 @@ def validate_extra_context(ctx, param, value):
                 "'%s' doesn't match that form"
                 % (s,))
 
-    return value
+    # Convert tuple -- e.g.: (u'program_name=foobar', u'startsecs=66')
+    # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
+    return dict(s.split('=', 1) for s in value) or None
 
 
 @click.command(context_settings=dict(help_option_names=[u'-h', u'--help']))
@@ -101,13 +103,6 @@ def main(template, extra_context, no_input, checkout, verbose, replay,
             format=u'%(levelname)s: %(message)s',
             level=logging.INFO
         )
-
-    if extra_context:
-        # Convert tuple -- e.g.: (u'program_name=foobar', u'startsecs=66')
-        # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
-        extra_context = dict(s.split('=', 1) for s in extra_context)
-    else:
-        extra_context = None
 
     try:
         # If you _need_ to support a local template in a directory
