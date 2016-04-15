@@ -42,7 +42,7 @@ def validate_extra_context(ctx, param, value):
     for s in value:
         if '=' not in s:
             raise click.BadParameter(
-                "EXTRA_CONTEXT should contain items of form key=value; "
+                "EXTRA_CONTEXT should contain items of the form key=value; "
                 "'%s' doesn't match that form"
                 % (s,))
 
