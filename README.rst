@@ -332,7 +332,7 @@ HTML
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
-.. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2.js
+.. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2
 
 Scala
 ~~~~~
