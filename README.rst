@@ -149,15 +149,21 @@ Available Cookiecutters
 -----------------------
 
 Making great cookies takes a lot of cookiecutters and contributors. We're so
-pleased that there are many Cookiecutter project templates to choose. We hope
-you find a cookiecutter that is just right for your needs.
+pleased that there are many Cookiecutter project templates to choose from. We
+hope you find a cookiecutter that is just right for your needs.
 
 Cookiecutter Specials
 ~~~~~~~~~~~~~~~~~~~~~
 
 These Cookiecutters are maintained by the cookiecutter team:
 
-
+* `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
+  template.
+* `cookiecutter-django`_: A bleeding edge Django project template with
+  Bootstrap 4, customizable users app, starter templates, working user
+  registration, celery setup, and much more.
+* `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring
+  `pytest`_ plugins that help you to write better programs.
 
 Categories of Cookiecutters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -175,8 +181,12 @@ Categories of Cookiecutters
 `Berkshelf-Vagrant`_ | 
 `HTML`_ | 
 `Scala`_ | 
-`6502 Assembly`_ | 
-`Similar Projects`_
+`6502 Assembly`_ 
+
+If you don't find a cookiecutter that suits your needs here, please consider
+writing or suggesting one. We wish for our users to find a solution for their
+use cases, and we provide a list of other projects that we do not maintain for
+your convenience (please see the `Similar Projects`_ section).
 
 Community
 ---------
