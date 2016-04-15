@@ -180,7 +180,7 @@ Python
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
-* `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment. 
+* `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -233,6 +233,7 @@ JS
   non-jQuery JS widget packaged for multiple JS packaging systems.
 * `cookiecutter-component`_: A template for a Component JS package.
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
+* `cookiecutter-angular2`_: A template for modular angular2 with typescript apps.
 
 Kotlin
 ~~~~~~
@@ -331,6 +332,7 @@ HTML
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
+.. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2.js
 
 Scala
 ~~~~~
