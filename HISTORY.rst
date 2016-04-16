@@ -18,7 +18,9 @@ Other Changes:
 * Remove execute permissions on Python files, thanks to `@mozillazg`_ (#650)
 * Report code coverage info from AppVeyor build to codecov, thanks to
   `@ewjoachim`_ (#670)
-* Documented functions and methods lacking documentation, thanks to `@pydanny`_ (#673)  
+* Documented functions and methods lacking documentation, thanks to `@pydanny`_
+  (#673)  * Documented ``__init__`` methods for Environment objects, thanks to
+  `@pydanny`_ (#677)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
