@@ -13,6 +13,13 @@ class ExtensionLoaderMixin(object):
     the next parent class in line of the child.
     """
     def __init__(self, **kwargs):
+        """Initializes the Jinja2 Environment object while loading extensions.
+        Does the following:
+
+        1. Establishes default_extensions (currently just a Time feature)
+        2. Reads extensions set in the cookiecutter.json _extensions key.
+        3. Attempts to load the extensions. Provides useful error if fails.
+        """
         context = kwargs.pop('context', {})
 
         default_extensions = [
@@ -46,6 +53,8 @@ class StrictEnvironment(ExtensionLoaderMixin, Environment):
     which is not defined in the context used to render a template.
     """
     def __init__(self, **kwargs):
+        """Sets the standard Cookiecutter StrictEnvironment, while also
+        loading extensions defined in cookiecutter.json's _extensions key."""
         super(StrictEnvironment, self).__init__(
             undefined=StrictUndefined,
             **kwargs
