@@ -19,7 +19,8 @@ Other Changes:
 * Report code coverage info from AppVeyor build to codecov, thanks to
   `@ewjoachim`_ (#670)
 * Documented functions and methods lacking documentation, thanks to `@pydanny`_
-  (#673)  * Documented ``__init__`` methods for Environment objects, thanks to
+  (#673)
+* Documented ``__init__`` methods for Environment objects, thanks to
   `@pydanny`_ (#677)
 * Added more cookiecutter templates to the mix:
 
