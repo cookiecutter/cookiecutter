@@ -168,20 +168,20 @@ These Cookiecutters are maintained by the cookiecutter team:
 Categories of Cookiecutters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Python`_ | 
-`Python-Django`_ | 
-`C`_ | 
-`C++`_ | 
-`C#`_ | 
-`Common Lisp`_ | 
-`JS`_ | 
-`Kotlin`_ | 
-`LaTeX/XeTeX`_ | 
-`PHP`_ | 
-`Berkshelf-Vagrant`_ | 
-`HTML`_ | 
-`Scala`_ | 
-`6502 Assembly`_ 
+`Python`_ |
+`Python-Django`_ |
+`C`_ |
+`C++`_ |
+`C#`_ |
+`Common Lisp`_ |
+`JS`_ |
+`Kotlin`_ |
+`LaTeX/XeTeX`_ |
+`PHP`_ |
+`Berkshelf-Vagrant`_ |
+`HTML`_ |
+`Scala`_ |
+`6502 Assembly`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
 writing or suggesting one. We wish for our users to find a solution for their
@@ -316,6 +316,7 @@ Python-Django
 * `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4
 * `cookiecutter-django-paas`_: Django template ready to use in SAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
+* `cookiecutter-django-aws-eb`_: Get up and running with Django on AWS Elastic Beanstalk.
 * `cookiecutter-wagtail`_ : A cookiecutter template for `Wagtail`_ CMS based sites.
 * `wagtail-cookiecutter-foundation`_: A complete template for Wagtail CMS projects featuring Zurb Foundation 5, ansible provisioning and deployment , front-end dependency management with bower, modular apps to get your site up and running including photo_gallery, RSS feed etc.
 * `django-starter`_: A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
@@ -451,7 +452,7 @@ HTML
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
-
+.. _`cookiecutter-django-aws-eb:`: https://github.com/dolphinkiss/cookiecutter-django-aws-eb
 
 Scala
 ~~~~~
