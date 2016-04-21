@@ -140,7 +140,7 @@ Did someone say features?
 
     .. code-block:: bash
 
-        $ cookiecutter --no-input https://github.com/msabramo/cookiecutter-supervisor.git program_name=foobar startsecs=10
+        $ cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
 
 * Direct access to the Cookiecutter API allows for injection of extra context.
 
