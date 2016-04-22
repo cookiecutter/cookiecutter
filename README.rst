@@ -303,6 +303,7 @@ Python
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
 * `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
 
+
 Python-Django
 ^^^^^^^^^^^^^
 
@@ -322,6 +323,15 @@ Python-Django
 * `django-starter`_: A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
+
+
+Cookiecutter (Meta-templates for generating Cookiecutter project templates)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `cookiecutter-template`_: A template to help in creating cookiecutter templates.
+
+.. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
+
 
 C
 ~~
@@ -455,6 +465,7 @@ HTML
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 .. _`cookiecutter-django-aws-eb:`: https://github.com/dolphinkiss/cookiecutter-django-aws-eb
 .. _`wagtail-starter-kit`: https://github.com/tkjone/wagtail-starter-kit
+
 
 Scala
 ~~~~~
