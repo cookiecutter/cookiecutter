@@ -170,6 +170,7 @@ Categories of Cookiecutters
 
 `Python`_ |
 `Python-Django`_ |
+`Cookiecutter (meta)`_ |
 `C`_ |
 `C++`_ |
 `C#`_ |
@@ -275,6 +276,7 @@ Make your own, then submit a pull request adding yours to this list!
 
 Python
 ~~~~~~
+
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
   template.
 * `cookiecutter-pipproject`_: Minimal package for pip-installable projects
@@ -325,8 +327,10 @@ Python-Django
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
 
 
-Cookiecutter (Meta-templates for generating Cookiecutter project templates)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Cookiecutter (meta)
+~~~~~~~~~~~~~~~~~~~
+
+Meta-templates for generating Cookiecutter project templates.
 
 * `cookiecutter-template`_: A template to help in creating cookiecutter templates.
 
