@@ -343,6 +343,11 @@ C++
 ~~~
 
 * `BoilerplatePP`_: A simple cmake template with unit testing for projects written in C++.
+* `cookiecutter-dpf-effect`_: An audio plugin project template for the DISTRHO Plugin Framework (DPF)
+* `cookiecutter-dpf-audiotk`_: An audio plugin project template for the DISTRHO Plugin Framework (DPF) and the Audio Toolkit (ATK) DSP library
+
+.. _cookiecutter-dpf-effect: https://github.com/SpotlightKid/cookiecutter-dpf-effect
+.. _cookiecutter-dpf-audiotk: https://github.com/SpotlightKid/cookiecutter-dpf-audiotk
 
 C#
 ~~
