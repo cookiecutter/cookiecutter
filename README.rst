@@ -357,6 +357,9 @@ Python-Django
 * `django-starter`_: A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
+* `cc_django_ember_app`_: For creating applications whith Django and EmberJS
+* `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
+* `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture 
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -375,6 +378,9 @@ Python-Django
 .. _`django-starter`: https://github.com/tkjone/django-starter
 .. _`cookiecutter-django-gulp`: https://github.com/valerymelou/cookiecutter-django-gulp
 .. _`wagtail-starter-kit`: https://github.com/tkjone/wagtail-starter-kit
+.. _`cc_django_ember_app`_: https://bitbucket.org/levit_scs/cc_django_ember_app
+.. _`cc_project_app_drf`_: https://bitbucket.org/levit_scs/cc_project_app_drf
+.. _`cc_project_app_full_with_hooks`_: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
 
 
 Cookiecutter (meta)
