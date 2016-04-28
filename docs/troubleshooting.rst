@@ -30,7 +30,7 @@ See http://jinja.pocoo.org/docs/templates/#escaping for more info.
 You can also use the `_copy_without_render`_ key in your `cookiecutter.json`
 file to escape entire files and directories.
 
-.. _`_copy_without_render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
+.. _`_copy_without_render`: http://cookiecutter.readthedocs.io/en/latest/advanced_usage.html#copy-without-render
 
 
 Other common issues
