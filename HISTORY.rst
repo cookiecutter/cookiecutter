@@ -23,6 +23,7 @@ Other Changes:
 * Documented ``__init__`` methods for Environment objects, thanks to
   `@pydanny`_ (#677)
 * Updated whichcraft to 0.3.1, thanks to `@pydanny`_.
+* Updated documentation link to Read the Docs, thanks to `@natim`_ (#687)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
