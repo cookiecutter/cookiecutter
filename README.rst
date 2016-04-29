@@ -321,7 +321,7 @@ Python
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pyvanguard`: https://github.com/robinandeer/cookiecutter-pyvanguard
-.. _`Invoke`: http://invoke.readthedocs.org/en/latest/
+.. _`Invoke`: http://invoke.readthedocs.io/en/latest/
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter
@@ -555,7 +555,7 @@ Similar projects
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
-.. _`Troubleshooting`: http://cookiecutter.readthedocs.org/en/latest/troubleshooting.html
+.. _`Troubleshooting`: http://cookiecutter.readthedocs.io/en/latest/troubleshooting.html
 .. _`contributors`: https://github.com/audreyr/cookiecutter/blob/master/AUTHORS.rst
 .. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
 .. _`Stack Overflow`: http://stackoverflow.com/

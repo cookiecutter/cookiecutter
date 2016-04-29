@@ -72,7 +72,7 @@ Bug Fixes:
 
 .. _poyo: https://pypi.python.org/pypi/poyo
 .. _`jinja2-time`: https://pypi.python.org/pypi/jinja2-time
-.. _`private repository`: http://cookiecutter.readthedocs.org/en/latest/usage.html#works-with-private-repos
+.. _`private repository`: http://cookiecutter.readthedocs.io/en/latest/usage.html#works-with-private-repos
 
 Other Changes:
 
@@ -127,7 +127,7 @@ Other Changes:
 .. _`cookiecutter-django-gulp`: https://github.com/valerymelou/cookiecutter-django-gulp
 .. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 
-.. _`_copy_without_render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
+.. _`_copy_without_render`: http://cookiecutter.readthedocs.io/en/latest/advanced_usage.html#copy-without-render
 
 1.3.0 (2015-11-10) Pumpkin Spice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -252,7 +252,7 @@ Other Changes:
   * `cookiecutter-wagtail`_ by `@torchbox`_ (#533)
 
 .. _`@maiksensi`: https://github.com/maiksensi
-.. _`copy without render`: http://cookiecutter.readthedocs.org/en/latest/advanced_usage.html#copy-without-render
+.. _`copy without render`: http://cookiecutter.readthedocs.io/en/latest/advanced_usage.html#copy-without-render
 .. _`@osantana`: https://github.com/osantana
 .. _`@LucianU`: https://github.com/LucianU
 .. _`@svisser`: https://github.com/svisser
