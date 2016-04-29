@@ -304,6 +304,7 @@ Python
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
 * `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
+* `morepath-cookiecutter`_: Cookiecutter template for Morepath, the web microframework with superpowers.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -337,6 +338,8 @@ Python
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
+.. _`morepath-cookiecutter`: https://github.com/morepath/morepath-cookiecutter
+
 
 Python-Django
 ^^^^^^^^^^^^^
