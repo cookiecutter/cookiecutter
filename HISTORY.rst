@@ -29,7 +29,8 @@ Other Changes:
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
   * `cookiecutter-reveal.js`_ by `@keimlink`_ (#660)
   * `cookiecutter-python-app`_ by `@mdklatt`_ (#659)
-  * `morepath-cookiecutter`_ by `@href`_ (#6672)
+  * `morepath-cookiecutter`_ by `@href`_ (#672)
+  * `hovercraft-slides2`_ by `@jhermann`_ (#665)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -38,11 +39,14 @@ Other Changes:
 .. _`@mdklatt`: https://github.com/mdklatt
 .. _`@ewjoachim`: https://github.com/ewjoachim
 .. _`@href`: https://github.com/href
+.. _`@jhermann`: https://github.com/jhermann
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`morepath-cookiecutter`: https://github.com/morepath/morepath-cookiecutter
+.. _`hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
+
 
 1.4.0 (2016-03-20) Shortbread
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
