@@ -305,6 +305,7 @@ Python
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
 * `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
 * `morepath-cookiecutter`_: Cookiecutter template for Morepath, the web microframework with superpowers.
+* `Springerle/hovercraft-slides`_: A template for new `Hovercraft!`_ presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -492,7 +493,8 @@ HTML
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
-
+.. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
+.. _`Hovercraft!`: https://hovercraft.readthedocs.org/
 
 Scala
 ~~~~~
