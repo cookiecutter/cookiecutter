@@ -6,6 +6,11 @@ History
 1.5.0 (2016-04-20) ???
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+New Features:
+
+* Inject extra context with command-line arguments, thanks to `@msambro`_ and
+  `@michaeljoseph` (#666).
+
 Bug Fix:
 
 * Fix typo in the error logging text for when a hook did not exit successfully,
