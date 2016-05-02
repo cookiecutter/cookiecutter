@@ -136,6 +136,12 @@ Did someone say features?
 * Default context: specify key/value pairs that you want used as defaults
   whenever you generate a project
 
+* Inject extra context with command-line arguments:
+
+    .. code-block:: bash
+
+        $ cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
+
 * Direct access to the Cookiecutter API allows for injection of extra context.
 
 * Pre- and post-generate hooks: Python or shell scripts to run before or after

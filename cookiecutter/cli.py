@@ -38,9 +38,23 @@ def version_msg():
     return message.format(location, python_version)
 
 
+def validate_extra_context(ctx, param, value):
+    for s in value:
+        if '=' not in s:
+            raise click.BadParameter(
+                'EXTRA_CONTEXT should contain items of the form key=value; '
+                "'{}' doesn't match that form".format(s)
+            )
+
+    # Convert tuple -- e.g.: (u'program_name=foobar', u'startsecs=66')
+    # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
+    return dict(s.split('=', 1) for s in value) or None
+
+
 @click.command(context_settings=dict(help_option_names=[u'-h', u'--help']))
 @click.version_option(__version__, u'-V', u'--version', message=version_msg())
 @click.argument(u'template')
+@click.argument(u'extra_context', nargs=-1, callback=validate_extra_context)
 @click.option(
     u'--no-input', is_flag=True,
     help=u'Do not prompt for parameters and only use cookiecutter.json '
@@ -75,8 +89,8 @@ def version_msg():
     u'--default-config', is_flag=True,
     help=u'Do not load a config file. Use the defaults instead'
 )
-def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
-         output_dir, config_file, default_config):
+def main(template, extra_context, no_input, checkout, verbose, replay,
+         overwrite_if_exists, output_dir, config_file, default_config):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
@@ -101,6 +115,7 @@ def main(template, no_input, checkout, verbose, replay, overwrite_if_exists,
 
         cookiecutter(
             template, checkout, no_input,
+            extra_context=extra_context,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
             output_dir=output_dir,
