@@ -8,8 +8,8 @@ History
 
 New Features:
 
-* Inject extra context with command-line arguments, thanks to `@msambro`_ and
-  `@michaeljoseph` (#666).
+* Inject extra context with command-line arguments, thanks to `@msabramo`_ and
+  `@michaeljoseph`_ (#666).
 
 Bug Fix:
 
@@ -35,7 +35,7 @@ Other Changes:
   * `cookiecutter-reveal.js`_ by `@keimlink`_ (#660)
   * `cookiecutter-python-app`_ by `@mdklatt`_ (#659)
   * `morepath-cookiecutter`_ by `@href`_ (#672)
-  * `hovercraft-slides2`_ by `@jhermann`_ (#665)
+  * `hovercraft-slides`_ by `@jhermann`_ (#665)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
