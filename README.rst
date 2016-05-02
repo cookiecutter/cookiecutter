@@ -378,7 +378,7 @@ Python-Django
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
 .. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
-.. _`cookiecutter-django-aws-eb:`: https://github.com/dolphinkiss/cookiecutter-django-aws-eb
+.. _`cookiecutter-django-aws-eb`: https://github.com/dolphinkiss/cookiecutter-django-aws-eb
 .. _`cookiecutter-wagtail`: https://github.com/torchbox/cookiecutter-wagtail
 .. _`Wagtail`: https://github.com/torchbox/wagtail
 .. _`wagtail-cookiecutter-foundation`: https://github.com/chrisdev/wagtail-cookiecutter-foundation
