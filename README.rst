@@ -439,6 +439,7 @@ JS
 ~~
 
 * `cookiecutter-es6-boilerplate`_: A cookiecutter for front end projects in ES6.
+* `cookiecutter-webpack`_: A template for webpack 2 projects with hot reloading, babel es6 modules, and react.
 * `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
   Boilerplate.
 * `cookiecutter-jswidget`_: A project template for creating a generic front-end,
@@ -447,6 +448,7 @@ JS
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
+.. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
@@ -501,6 +503,7 @@ HTML
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
 .. _`Hovercraft!`: https://hovercraft.readthedocs.org/
+
 
 Scala
 ~~~~~
