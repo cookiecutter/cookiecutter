@@ -36,6 +36,8 @@ Other Changes:
   * `cookiecutter-python-app`_ by `@mdklatt`_ (#659)
   * `morepath-cookiecutter`_ by `@href`_ (#672)
   * `hovercraft-slides`_ by `@jhermann`_ (#665)
+  * `cookiecutter-es6-package`_ by `@ratson`_ (#667)  
+  * `cookiecutter-webpack`_ by `@hzdg`_ (#668)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -45,12 +47,16 @@ Other Changes:
 .. _`@ewjoachim`: https://github.com/ewjoachim
 .. _`@href`: https://github.com/href
 .. _`@jhermann`: https://github.com/jhermann
+.. _`@ratson`: https://github.com/ratson
+.. _`@hzdg`: https://github.com/hzdg
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`morepath-cookiecutter`: https://github.com/morepath/morepath-cookiecutter
 .. _`hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
+.. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
+.. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
 
 
 1.4.0 (2016-03-20) Shortbread
