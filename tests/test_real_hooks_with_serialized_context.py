@@ -120,3 +120,24 @@ class TestRealHooks(object):
                 context
             )
             assert actual == context
+
+    def test_run_script_with_context_runs_hook_in_place(self):
+        """
+        Execute a hook script in place, passing a serialized context object
+        """
+        hook = os.path.join(
+            self.repo_path,
+            'inplace',
+            'hooks',
+            'pre_gen_project.py'
+        )
+        context = {
+            "_no_hookcopy": "yes"
+        }
+        expected = {
+            "_no_hookcopy": "yes",
+            "inplace": hook
+        }
+        actual = hooks.run_script_with_context(hook, 'tests', context)
+
+        assert actual == expected

@@ -96,6 +96,13 @@ def run_script_with_context(script_path, cwd, context):
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
     """
+    if '_no_hookcopy' in context and re.match(
+        r'yes',
+        context['_no_hookcopy'],
+        re.I
+    ):
+        return run_script(script_path, cwd, context)
+
     _, extension = os.path.splitext(script_path)
 
     contents = io.open(script_path, 'r', encoding='utf-8').read()
