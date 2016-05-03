@@ -46,6 +46,9 @@ Sometimes, when using template variables in hook is not needed, it may be prefer
 To do this, you simply have to add the key ``_no_hookcopy`` with the value ``yes`` in your configuration cookiecutter.json, as shown in `Running hooks in place and consuming serialized context`_.
 
 .. note::
+  The value of the setting: ``_no_hookcopy`` is case insensitive ``YES`` works also. Only ``yes`` will disable hooks duplication. Every other values or the absence of the ``_no_hookcopy`` key will result in the default behaviour.
+
+.. note::
     Make sure your hook scripts work in a robust manner. If a hook script fails
     (that is, `if it finishes with a nonzero exit status
     <https://docs.python.org/3/library/sys.html#sys.exit>`_), the project
