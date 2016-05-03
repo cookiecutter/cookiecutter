@@ -34,6 +34,17 @@ hooks, as these can be run on any platform. However, if you intend for your
 template to only be run on a single platform, a shell script (or `.bat` file
 on Windows) can be a quicker alternative.
 
+By default, hooks are duplicated in a temporary file and the template is directly applied in this ephemeral file. This allows you to use template variables directly within your hook, as show in `Example: Validating template variables`_ below.
+
+Besides this, the cookiecutter context object is serialized and passed to your hook through the standard input stream. You may then want to modify some configuration settings and send them back to the main context by writing to the standard output stream.
+
+.. note::
+  JSON is currently used as serialization format by default.
+  Only the last JSON object sent through the standard output will be taken into account.
+
+Sometimes, when using template variables in hook is not needed, it may be preferable to run your real hook file in place.
+To do this, you simply have to add the key ``_no_hookcopy`` with the value ``yes`` in your configuration cookiecutter.json, as shown in `Running hooks in place and consuming serialized context`_.
+
 .. note::
     Make sure your hook scripts work in a robust manner. If a hook script fails
     (that is, `if it finishes with a nonzero exit status
@@ -404,3 +415,52 @@ running Cookiecutter on a template that requires custom Jinja2 extensions.
 .. _`Jinja2 extensions`: http://jinja2.readthedocs.io/en/latest/extensions.html#extensions
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
+
+.. _`running hooks in place`:
+
+Running hooks in place and consuming serialized context
+-------------------------------------------------------
+
+Disabling hook duplication
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+As explained in `Using Pre/Post-Generate Hooks (0.7.0+)`_, you can disable the default behaviour of hook duplication. This is interesting when you don't need to use template variables directly in your hook.
+
+To do so, a template author must specify this wish in ``cookiecutter.json`` as follows:
+
+.. code-block:: json
+
+    {
+        "_no_hookcopy": "yes"
+    }
+
+Using serialized context
+~~~~~~~~~~~~~~~~~~~~~~~~
+Given the ``cookiecutter.json``
+
+.. code-block:: json
+
+    {
+        "project_name": "Cookiecutter example project",
+        "project_slug": "{{ cookiecutter.project_name }}"
+    }
+
+Here follows an example on how to take advantage of the context serialization in ``hooks/pre_gen_project.py``
+
+.. code-block:: python
+
+  #!/usr/bin/env python
+  # -*- coding: utf-8 -*-
+  import sys
+  import json
+  import re
+  
+  # get the serialized context from the standard input
+  context = json.loads(sys.stdin.readlines()[0])
+  
+  # remove 'project' word used in project_name from project_slug
+  context['project_slug'] = re.sub(
+    r'project', '', context['project_slug'], 1, flags=re.I
+  )
+
+  # serialize the updated context and send this modification through the standard output 
+  print(json.dumps(context))
