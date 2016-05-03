@@ -446,6 +446,7 @@ JS
   non-jQuery JS widget packaged for multiple JS packaging systems.
 * `cookiecutter-component`_: A template for a Component JS package.
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
+* `cookiecutter-es6-package`_: A template for writting node package using ES6 via babel.
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
@@ -503,6 +504,7 @@ HTML
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
 .. _`Hovercraft!`: https://hovercraft.readthedocs.org/
+.. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
 
 
 Scala
