@@ -14,6 +14,8 @@ import os
 import subprocess
 import sys
 import tempfile
+import json
+import re
 
 from jinja2 import Template
 
@@ -50,7 +52,7 @@ def find_hooks():
     return r
 
 
-def run_script(script_path, cwd='.'):
+def run_script(script_path, cwd='.', context={}):
     """
     Executes a script from a working directory.
 
@@ -68,12 +70,22 @@ def run_script(script_path, cwd='.'):
     proc = subprocess.Popen(
         script_command,
         shell=run_thru_shell,
-        cwd=cwd
+        cwd=cwd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
     )
+    result = proc.communicate(json.dumps(context).encode())
+
     exit_status = proc.wait()
     if exit_status != EXIT_SUCCESS:
         raise FailedHookException(
             "Hook script failed (exit status: %d)" % exit_status)
+    try:
+        json_search = re.findall('(\{.*\})', result[0].decode())
+        return json.loads(json_search[-1]) if json_search else context
+    except ValueError:
+        return context
 
 
 def run_script_with_context(script_path, cwd, context):
@@ -96,7 +108,7 @@ def run_script_with_context(script_path, cwd, context):
         output = Template(contents).render(**context)
         temp.write(output.encode('utf-8'))
 
-    run_script(temp.name, cwd)
+    return run_script(temp.name, cwd, context)
 
 
 def run_hook(hook_name, project_dir, context):
@@ -110,5 +122,5 @@ def run_hook(hook_name, project_dir, context):
     script = find_hooks().get(hook_name)
     if script is None:
         logging.debug('No hooks found')
-        return
-    run_script_with_context(script, project_dir, context)
+        return context
+    return run_script_with_context(script, project_dir, context)

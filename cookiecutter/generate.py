@@ -230,7 +230,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
     """
     with work_in(repo_dir):
         try:
-            run_hook(hook_name, project_dir, context)
+            return run_hook(hook_name, project_dir, context)
         except FailedHookException:
             rmtree(project_dir)
             logging.error("Stopping generation because %s"
@@ -282,7 +282,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
     project_dir = os.path.abspath(project_dir)
     logging.debug('project_dir is {0}'.format(project_dir))
 
-    _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context)
+    context = _run_hook_from_repo_dir(
+        repo_dir, 'pre_gen_project', project_dir, context)
 
     with work_in(template_dir):
         env.loader = FileSystemLoader('.')
@@ -353,6 +354,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    _run_hook_from_repo_dir(repo_dir, 'post_gen_project', project_dir, context)
+    context = _run_hook_from_repo_dir(
+        repo_dir, 'post_gen_project', project_dir, context)
 
     return project_dir
