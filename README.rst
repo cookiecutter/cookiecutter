@@ -181,6 +181,7 @@ Categories of Cookiecutters
 `C++`_ |
 `C#`_ |
 `Common Lisp`_ |
+`Golang`_ |
 `JS`_ |
 `Kotlin`_ |
 `LaTeX/XeTeX`_ |
@@ -433,6 +434,14 @@ Common Lisp
 * `cookiecutter-cl-project`_: A template for Common Lisp project with bootstrap script and Slime integration.
 
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
+
+
+Golang
+~~~~~~
+
+* `beat-generator`_: A template to create your own beat to ship data to Elasticsearch.
+
+.. _`beat-generator`: https://github.com/elastic/beat-generator
 
 
 JS
