@@ -13,6 +13,7 @@ from collections import OrderedDict
 
 from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
+from jinja2._compat import string_types
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from .environment import StrictEnvironment
@@ -245,14 +246,17 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
 
 
 def generate_files(repo_dir, context=None, output_dir='.',
-                   overwrite_if_exists=False):
-    """Render the templates and saves them to files.
+                   overwrite_if_exists=False, extra_templates=None):
+    """
+    Renders the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
     :param context: Dict for populating the template's variables.
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param extra_templates: list of extra template directories to add to jinja2
+        searchpath.
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
@@ -297,9 +301,16 @@ def generate_files(repo_dir, context=None, output_dir='.',
         context,
         delete_project_on_failure
     )
+    templates = ['.']
+
+    # Configure jinja templates searchpath
+    if extra_templates is not None:
+        if isinstance(extra_templates, string_types):
+            extra_templates = [extra_templates]
+        templates.extend(extra_templates)
 
     with work_in(template_dir):
-        env.loader = FileSystemLoader('.')
+        env.loader = FileSystemLoader(templates)
 
         for root, dirs, files in os.walk('.'):
             # We must separate the two types of dirs into different lists.
