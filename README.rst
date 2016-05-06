@@ -310,6 +310,7 @@ Python
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
 * `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
+<<<<<<< HEAD
 * `morepath-cookiecutter`_: Cookiecutter template for Morepath, the web microframework with superpowers.
 * `Springerle/hovercraft-slides`_: A template for new `Hovercraft!`_ presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
 
@@ -347,6 +348,8 @@ Python
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`morepath-cookiecutter`: https://github.com/morepath/morepath-cookiecutter
 
+=======
+>>>>>>> 04022a795e45f9c2a214d501ca6ddfec1b9fc3fc
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -447,7 +450,8 @@ JS
   non-jQuery JS widget packaged for multiple JS packaging systems.
 * `cookiecutter-component`_: A template for a Component JS package.
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
-* `cookiecutter-es6-package`_: A template for writting node package using ES6 via babel.
+* `cookiecutter-es6-package`_: A template for writing node packages using ES6 via babel.
+* `cookiecutter-angular2`_: A template for modular angular2 with typescript apps.
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
@@ -455,6 +459,8 @@ JS
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 .. _`cookiecutter-tampermonkey`: https://github.com/christabor/cookiecutter-tampermonkey
+.. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
+.. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2
 
 
 Kotlin
@@ -505,7 +511,6 @@ HTML
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
 .. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
 .. _`Hovercraft!`: https://hovercraft.readthedocs.org/
-.. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
 
 
 Scala
