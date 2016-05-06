@@ -173,7 +173,8 @@ def generate_file(project_dir, infile, context, env):
 
         logger.debug('Writing contents to file {}'.format(outfile))
 
-        with io.open(outfile, 'w', encoding='utf-8') as fh:
+        # note: newline='' ensures newlines are not converted
+        with io.open(outfile, 'w', encoding='utf-8', newline='') as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file

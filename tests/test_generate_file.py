@@ -29,6 +29,10 @@ def remove_cheese_file(request):
     def fin_remove_cheese_file():
         if os.path.exists('tests/files/cheese.txt'):
             os.remove('tests/files/cheese.txt')
+        if os.path.exists('tests/files/cheese_lf_newlines.txt'):
+            os.remove('tests/files/cheese_lf_newlines.txt')
+        if os.path.exists('tests/files/cheese_crlf_newlines.txt'):
+            os.remove('tests/files/cheese_crlf_newlines.txt')
     request.addfinalizer(fin_remove_cheese_file)
 
 
@@ -122,3 +126,40 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg):
         pytest.fail('Unexpected exception thrown: {0}'.format(exception))
     else:
         pytest.fail('TemplateSyntaxError not thrown')
+
+
+@pytest.mark.usefixtures('remove_cheese_file')
+def test_generate_file_does_not_translate_lf_newlines_to_crlf(env):
+    infile = 'tests/files/{{generate_file}}_lf_newlines.txt'
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context={'generate_file': 'cheese'},
+        env=env
+    )
+    # this generated file should not have a CRLF line ending
+    gf = 'tests/files/cheese_lf_newlines.txt'
+    for line in open(gf):
+        msg = 'Missing LF line ending for generated file: {gf}'
+        assert line.endswith('\n'), msg.format(**locals())
+        msg = 'Incorrect CRLF line ending for generated file: {gf}'
+        assert not line.endswith('\r\n'), msg.format(**locals())
+
+
+@pytest.mark.usefixtures('remove_cheese_file')
+def test_generate_file_does_translate_crlf_newlines_to_lf(env):
+    infile = 'tests/files/{{generate_file}}_crlf_newlines.txt'
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context={'generate_file': 'cheese'},
+        env=env
+    )
+
+    # this generated file should not have a CRLF line ending
+    gf = 'tests/files/cheese_crlf_newlines.txt'
+    for line in open(gf):
+        msg = 'Missing LF line ending for generated file: {gf}'
+        assert line.endswith('\n'), msg.format(**locals())
+        msg = 'Incorrect CRLF line ending for generated file: {gf}'
+        assert not line.endswith('\r\n'), msg.format(**locals())

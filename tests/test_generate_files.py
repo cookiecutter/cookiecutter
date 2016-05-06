@@ -53,6 +53,8 @@ def remove_additional_folders(request):
             utils.rmtree('inputbinary_files')
         if os.path.exists('tests/custom_output_dir'):
             utils.rmtree('tests/custom_output_dir')
+        if os.path.exists('tests/line-end-output'):
+            utils.rmtree('tests/line-end-output')
         if os.path.exists('inputpermissions'):
             utils.rmtree('inputpermissions')
     request.addfinalizer(fin_remove_additional_folders)
@@ -211,6 +213,33 @@ def test_generate_files_permissions():
     )
     input_script_file_mode = os.stat(input_script_file).st_mode & 0o777
     assert tests_script_file_mode == input_script_file_mode
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_does_not_change_line_endings():
+    context = generate.generate_context(
+        context_file='tests/test-generate-files-line-end/cookiecutter.json'
+    )
+
+    generate.generate_files(
+        context=context,
+        repo_dir='tests/test-generate-files-line-end',
+        output_dir='tests/line-end-output',
+    )
+
+    generated_files = [
+        'tests/line-end-output/output_folder/something.txt',
+        'tests/line-end-output/output_folder/folder/in_folder.txt',
+        'tests/line-end-output/output_folder/im_a.dir/im_a.file.py',
+    ]
+
+    # these generated files should not have a CRLF line ending
+    for gf in generated_files:
+        for line in open(gf):
+            msg = 'Missing LF line ending for generated file: {gf}'
+            assert line.endswith('\n'), msg.format(**locals())
+            msg = 'Incorrect CRLF line ending for generated file: {gf}'
+            assert not line.endswith('\r\n'), msg.format(**locals())
 
 
 @pytest.fixture
