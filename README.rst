@@ -310,7 +310,6 @@ Python
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
 * `cookiecutter-funkload-friendly`_: Cookiecutter template for a `funkload-friendly`_ project.
 * `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
-<<<<<<< HEAD
 * `morepath-cookiecutter`_: Cookiecutter template for Morepath, the web microframework with superpowers.
 * `Springerle/hovercraft-slides`_: A template for new `Hovercraft!`_ presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
 
@@ -347,9 +346,9 @@ Python
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`morepath-cookiecutter`: https://github.com/morepath/morepath-cookiecutter
+.. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
+.. _`Hovercraft!`: https://hovercraft.readthedocs.org/
 
-=======
->>>>>>> 04022a795e45f9c2a214d501ca6ddfec1b9fc3fc
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -516,8 +515,6 @@ HTML
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
-.. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
-.. _`Hovercraft!`: https://hovercraft.readthedocs.org/
 
 
 Scala
