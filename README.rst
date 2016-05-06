@@ -367,6 +367,7 @@ Python-Django
 * `django-starter`_: A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
+* `cookiecutter-django-herokuapp`_: A Django 1.7+ template optimized for Python 3 on Heroku.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -385,7 +386,7 @@ Python-Django
 .. _`django-starter`: https://github.com/tkjone/django-starter
 .. _`cookiecutter-django-gulp`: https://github.com/valerymelou/cookiecutter-django-gulp
 .. _`wagtail-starter-kit`: https://github.com/tkjone/wagtail-starter-kit
-
+.. _`cookiecutter-django-herokuapp`: https://github.com/dulaccc/cookiecutter-django-herokuapp
 
 Cookiecutter (meta)
 ~~~~~~~~~~~~~~~~~~~
