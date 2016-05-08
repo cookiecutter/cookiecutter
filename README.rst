@@ -332,7 +332,7 @@ Python
 .. _`Invoke`: http://invoke.readthedocs.io/en/latest/
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
-.. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter
+.. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter-tryton
 .. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`pytest`: http://pytest.org/latest/
