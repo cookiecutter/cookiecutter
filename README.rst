@@ -370,7 +370,7 @@ Python-Django
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
 * `cookiecutter-django-herokuapp`_: A Django 1.7+ template optimized for Python 3 on Heroku.
-* `cc_django_ember_app`_: For creating applications whith Django and EmberJS
+* `cc_django_ember_app`_: For creating applications with Django and EmberJS
 * `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
 * `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
 
@@ -392,9 +392,9 @@ Python-Django
 .. _`cookiecutter-django-gulp`: https://github.com/valerymelou/cookiecutter-django-gulp
 .. _`wagtail-starter-kit`: https://github.com/tkjone/wagtail-starter-kit
 .. _`cookiecutter-django-herokuapp`: https://github.com/dulaccc/cookiecutter-django-herokuapp
-.. _`cc_django_ember_app`_: https://bitbucket.org/levit_scs/cc_django_ember_app
-.. _`cc_project_app_drf`_: https://bitbucket.org/levit_scs/cc_project_app_drf
-.. _`cc_project_app_full_with_hooks`_: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
+.. _`cc_django_ember_app`: https://bitbucket.org/levit_scs/cc_django_ember_app
+.. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
+.. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
 
 
 Cookiecutter (meta)
