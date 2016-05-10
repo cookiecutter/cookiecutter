@@ -255,8 +255,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
-    :param extra_templates: list of extra template directories to add to the
-        jinja2 searchpath.
+    :param extra_templates: path to the templates as string, or if multiple
+        directories are needed as a list, to add to the jinja2 searchpath.
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
