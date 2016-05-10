@@ -336,19 +336,19 @@ def test_raise_undefined_variable_project_dir(tmpdir):
     assert not output_dir.join('testproject').exists()
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_external_templates():
-    os.mkdir('tests/custom_output_dir')
-    project_dir = generate.generate_files(
+def test_external_templates(tmpdir):
+    output_dir = generate.generate_files(
         context={
             'cookiecutter': {'food': 'pizzä'}
         },
         repo_dir=os.path.abspath('tests/test-generate-external-template'),
-        output_dir='tests/custom_output_dir',
+        output_dir=str(tmpdir.mkdir('output')),
         extra_templates=os.path.abspath(
             'tests/test-generate-external-template'
         )
     )
-    assert project_dir == os.path.abspath(
-        'tests/custom_output_dir/inputpizzä/'
-    )
+    with io.open(
+        os.path.join(output_dir, 'extra-template.txt'),
+        'rt', encoding='utf-8'
+    ) as f:
+        assert f.readline() == u'I eat pizzä\n'
