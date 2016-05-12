@@ -188,7 +188,8 @@ Categories of Cookiecutters
 `Berkshelf-Vagrant`_ |
 `HTML`_ |
 `Scala`_ |
-`6502 Assembly`_
+`6502 Assembly`_ |
+`Data Science`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
 writing or suggesting one. We wish for our users to find a solution for their
@@ -532,7 +533,7 @@ Scala
 .. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
 
 Data Science
-~~~~~
+~~~~~~~~~~~~
 
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.
 
