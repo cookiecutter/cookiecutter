@@ -531,6 +531,12 @@ Scala
 
 .. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
 
+Data Science
+~~~~~
+
+* `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.
+
+.. _`cookiecutter-data-science`: http://drivendata.github.io/cookiecutter-data-science/
 
 Similar projects
 ----------------
