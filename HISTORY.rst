@@ -29,6 +29,11 @@ Other Changes:
   `@pydanny`_ (#677)
 * Updated whichcraft to 0.3.1, thanks to `@pydanny`_.
 * Updated documentation link to Read the Docs, thanks to `@natim`_ (#687)
+* Moved cookiecutter templates and added category links, thanks to
+  `@willingc`_ (#674)
+* Added Github Issue Template, thanks to `@luzfcb`_ (#700)
+* Added ``ssh`` repository examples, thanks to `@pokoli`_ (#702)
+
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -38,6 +43,18 @@ Other Changes:
   * `hovercraft-slides`_ by `@jhermann`_ (#665)
   * `cookiecutter-es6-package`_ by `@ratson`_ (#667)  
   * `cookiecutter-webpack`_ by `@hzdg`_ (#668)
+  * `cookiecutter-django-herokuapp`_ by `@dulaccc`_ (#374) 
+  * `cookiecutter-django-aws-eb`_ by `@peterlauri`_ (#626)
+  * `wagtail-starter-kit`_ by `@tkjone`_ (#658)
+  * `cookiecutter-dpf-effect`_ by `@SpotlightKid`_ (#663)
+  * `cookiecutter-dpf-audiotk`_ by `@SpotlightKid`_ (#663)
+  * `cookiecutter-template`_ by `@eviweb`_ (#664)
+  * `cookiecutter-angular2`_ by `@matheuspoleza`_ (#675)
+  * `cookiecutter-data-science`_ by `@pjbull`_ (#680)
+  * `cc_django_ember_app`_ by `@nanuxbe`_ (#686)
+  * `cc_project_app_drf`_ by `@nanuxbe`_ (#686)
+  * `cc_project_app_full_with_hooks`_ by `@nanuxbe`_ (#686)
+  * `beat-generator`_ by `@ruflin`_ (#695) 
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -49,6 +66,15 @@ Other Changes:
 .. _`@jhermann`: https://github.com/jhermann
 .. _`@ratson`: https://github.com/ratson
 .. _`@hzdg`: https://github.com/hzdg
+.. _`@dulaccc`: :https://github.com/dulaccc
+.. _`@peterlauri`: https://github.com/peterlauri
+.. _`@SpotlightKid`: https://github.com/SpotlightKid
+.. _`@eviweb`: https://github.com/eviweb
+.. _`@willingc`: https://github.com/willingc
+.. _`@matheuspoleza`: https://github.com/matheuspoleza
+.. _`@pjbull`: https://github.com/pjbull
+.. _`@nanuxbe`: https://github.com/nanuxbe
+.. _`@ruflin`: https://github.com/ruflin
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
@@ -57,6 +83,18 @@ Other Changes:
 .. _`hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
 .. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
+.. _`cookiecutter-django-herokuapp`: https://github.com/dulaccc/cookiecutter-django-herokuapp
+.. _`cookiecutter-django-aws-eb`: https://github.com/dolphinkiss/cookiecutter-django-aws-eb
+.. _`wagtail-starter-kit`: https://github.com/tkjone/wagtail-starter-kit
+.. _`cookiecutter-dpf-effect`: https://github.com/SpotlightKid/cookiecutter-dpf-effect
+.. _`cookiecutter-dpf-audiotk`: https://github.com/SpotlightKid/cookiecutter-dpf-audiotk
+.. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
+.. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2
+.. _`cookiecutter-data-science`: http://drivendata.github.io/cookiecutter-data-science/
+.. _`cc_django_ember_app`: https://bitbucket.org/levit_scs/cc_django_ember_app
+.. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
+.. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
+.. _`beat-generator`: https://github.com/elastic/beat-generator
 
 
 1.4.0 (2016-03-20) Shortbread
