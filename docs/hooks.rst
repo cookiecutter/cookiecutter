@@ -93,6 +93,9 @@ To do so, a template author must specify this wish in ``cookiecutter.json`` as f
         "_run_hook_in_place": "true"
     }
 
+.. note::
+    It is important to note that you **cannot** use template variables in hook scripts if you enable the *running in place* behaviour. If you need context information you **have to** use the serialized context.
+
 Using serialized context
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Given the ``cookiecutter.json``
@@ -124,3 +127,17 @@ Here follows an example on how to take advantage of the context serialization in
 
   # serialize the updated context and send this modification through the standard output 
   print(json.dumps(context))
+
+Locating the template directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+One of the main advantage of the *running in place* behaviour is that you can easily access your template directory from your hooks.
+
+.. code-block:: python
+
+  #!/usr/bin/env python
+  # -*- coding: utf-8 -*-
+  import os
+
+  template_dir = os.path.dirname(os.path.dirname(__file__))
+
+  # then do your stuff using template_dir
