@@ -132,10 +132,10 @@ class TestRealHooks(object):
             'pre_gen_project.py'
         )
         context = {
-            "_no_hookcopy": "yes"
+            "_run_hook_in_place": True
         }
         expected = {
-            "_no_hookcopy": "yes",
+            "_run_hook_in_place": True,
             "inplace": hook
         }
         actual = hooks.run_script_with_context(hook, 'tests', context)

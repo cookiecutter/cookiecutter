@@ -43,10 +43,10 @@ Besides this, the cookiecutter context object is serialized and passed to your h
   Only the last JSON object sent through the standard output will be taken into account.
 
 Sometimes, when using template variables in hook is not needed, it may be preferable to run your real hook file in place.
-To do this, you simply have to add the key ``_no_hookcopy`` with the value ``yes`` in your configuration cookiecutter.json, as shown in `Running hooks in place and consuming serialized context`_.
+To do this, you simply have to add the key ``_run_hook_in_place`` with the value ``true`` in your configuration cookiecutter.json, as shown in `Running hooks in place and consuming serialized context`_.
 
 .. note::
-  The value of the setting: ``_no_hookcopy`` is case insensitive ``YES`` works also. Only ``yes`` will disable hooks duplication. Every other values or the absence of the ``_no_hookcopy`` key will result in the default behaviour.
+  Only the value: ``true`` will run hooks in place and then disable hooks duplication. Every other values or the absence of the ``_run_hook_in_place`` key will result in the default behaviour.
 
 .. note::
     Make sure your hook scripts work in a robust manner. If a hook script fails
@@ -433,7 +433,7 @@ To do so, a template author must specify this wish in ``cookiecutter.json`` as f
 .. code-block:: json
 
     {
-        "_no_hookcopy": "yes"
+        "_run_hook_in_place": "true"
     }
 
 Using serialized context
