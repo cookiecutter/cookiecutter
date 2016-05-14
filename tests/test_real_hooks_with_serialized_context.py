@@ -18,24 +18,7 @@ class TestRealHooks(object):
         'tests/test-real-hooks-with-serialized-context')
     hooks_path = repo_path + '/hooks'
 
-    def test_run_script_with_context(self):
-        """
-        Execute a hook script, passing a serialized context object and
-        getting the context not updated
-        """
-
-        context = {
-            "my_key": "my_val"
-        }
-        actual = hooks.run_script(
-            os.path.join(
-                self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
-            context=context
-        )
-
-        assert actual == context
-
-    def test_run_script_get_updated_context(self):
+    def test_run_script_with_context_get_updated_context(self):
         """
         Execute a hook script, passing a serialized context object and
         getting the context updated
@@ -46,14 +29,15 @@ class TestRealHooks(object):
         expected = {
             "my_key": "my_val_updated"
         }
-        actual = hooks.run_script(
+        actual = hooks.run_script_with_context(
             os.path.join(
                 self.repo_path,
                 'update_context',
                 'hooks',
                 'pre_gen_project.py'
             ),
-            context=context
+            'tests',
+            context
         )
 
         assert actual == expected

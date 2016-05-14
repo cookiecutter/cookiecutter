@@ -52,66 +52,26 @@ def find_hooks():
     return r
 
 
-def run_script(script_path, cwd='.', context={}):
-    """
-    Executes a script from a working directory.
-
-    :param script_path: Absolute path to the script to run.
-    :param cwd: The directory to run the script from.
-    """
-    run_thru_shell = sys.platform.startswith('win')
-    if script_path.endswith('.py'):
-        script_command = [sys.executable, script_path]
-    else:
-        script_command = [script_path]
-
-    utils.make_executable(script_path)
-
-    proc = subprocess.Popen(
-        script_command,
-        shell=run_thru_shell,
-        cwd=cwd,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    result = proc.communicate(json.dumps(context).encode())
-
-    exit_status = proc.wait()
-    if exit_status != EXIT_SUCCESS:
-        raise FailedHookException(
-            "Hook script failed (exit status: %d)" % exit_status)
-    try:
-        json_search = re.findall('(\{.*\})', result[0].decode())
-        return json.loads(json_search[-1]) if json_search else context
-    except ValueError:
-        return context
-
-
 def run_script_with_context(script_path, cwd, context):
     """
-    Executes a script after rendering with it Jinja.
+    Executes a script either after rendering with it Jinja or in place without
+    template rendering.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
     """
     if '_run_hook_in_place' in context and context['_run_hook_in_place']:
-        return run_script(script_path, cwd, context)
+        script = script_path
+    else:
+        script = __create_renderable_hook(script_path, context)
 
-    _, extension = os.path.splitext(script_path)
-
-    contents = io.open(script_path, 'r', encoding='utf-8').read()
-
-    with tempfile.NamedTemporaryFile(
-        delete=False,
-        mode='wb',
-        suffix=extension
-    ) as temp:
-        output = Template(contents).render(**context)
-        temp.write(output.encode('utf-8'))
-
-    return run_script(temp.name, cwd, context)
+    try:
+        result = __do_run_script(script, cwd, json.dumps(context).encode())
+        json_search = re.findall('(\{.*\})', result[0].decode())
+        return json.loads(json_search[-1]) if json_search else context
+    except ValueError:
+        return context
 
 
 def run_hook(hook_name, project_dir, context):
@@ -127,3 +87,68 @@ def run_hook(hook_name, project_dir, context):
         logging.debug('No hooks found')
         return context
     return run_script_with_context(script, project_dir, context)
+
+
+def __create_renderable_hook(script_path, context):
+    """
+    Create a renderable hook by copying the real hook and applying the template
+
+    :param script_path: Absolute path to the base hook.
+    :param context: Cookiecutter project template context.
+    """
+    _, extension = os.path.splitext(script_path)
+    contents = io.open(script_path, 'r', encoding='utf-8').read()
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        mode='wb',
+        suffix=extension
+    ) as temp:
+        output = Template(contents).render(**context)
+        temp.write(output.encode('utf-8'))
+    return temp.name
+
+
+def __get_script_command(script_path):
+    """
+    Get the executable command of a given script
+
+    :param script_path: Absolute path to the script to run.
+    """
+    if script_path.endswith('.py'):
+        script_command = [sys.executable, script_path]
+    else:
+        script_command = [script_path]
+
+    utils.make_executable(script_path)
+
+    return script_command
+
+
+def __do_run_script(script_path, cwd, serialized_context):
+    """
+    Executes a script wrinting the given serialized context to its standard
+    input stream.
+
+    :param script_path: Absolute path to the script to run.
+    :param cwd: The directory to run the script from.
+    :param serialized_context: Serialized Cookiecutter project template
+                               context.
+    """
+    run_thru_shell = sys.platform.startswith('win')
+
+    proc = subprocess.Popen(
+        __get_script_command(script_path),
+        shell=run_thru_shell,
+        cwd=cwd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+    result = proc.communicate(serialized_context)
+
+    exit_status = proc.wait()
+    if exit_status != EXIT_SUCCESS:
+        raise FailedHookException(
+            "Hook script failed (exit status: %d)" % exit_status)
+
+    return result
