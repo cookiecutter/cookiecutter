@@ -34,12 +34,12 @@ hooks, as these can be run on any platform. However, if you intend for your
 template to only be run on a single platform, a shell script (or `.bat` file
 on Windows) can be a quicker alternative.
 
-By default, hooks are duplicated in a temporary file and the template is directly applied in this ephemeral file. This allows you to use template variables directly within your hook, as show in `Example: Validating template variables`_ below.
+By default, hooks are duplicated in a temporary file and the template is directly applied in this ephemeral file. This allows you to use template variables directly within your hook, as shown in `Example: Validating template variables`_ below.
 
-Besides this, the cookiecutter context object is serialized and passed to your hook through the standard input stream. You may then want to modify some configuration settings and send them back to the main context by writing to the standard output stream.
+The cookiecutter context object is serialized and passed to your hook through the standard input stream. You can then modify some configuration settings and send them back to the main context by writing to the standard output stream.
 
 .. note::
-  JSON is currently used as serialization format by default.
+  JSON is currently used as the serialization format by default.
   Only the last JSON object sent through the standard output will be taken into account.
 
 Sometimes, when using template variables in hook is not needed, it may be preferable to run your real hook file in place.
