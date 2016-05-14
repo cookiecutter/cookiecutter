@@ -21,6 +21,7 @@ Basics
    first_steps
    tutorials
    advanced_usage
+   hooks
    troubleshooting
 
 .. _apiref:
