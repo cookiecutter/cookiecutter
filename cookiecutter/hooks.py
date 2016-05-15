@@ -124,7 +124,7 @@ def __get_script_command(script_path):
     return script_command
 
 
-def __do_run_script(script_path, cwd, serialized_context):
+def __do_run_script(script_path, cwd='.', serialized_context='{}'):
     """
     Executes a script wrinting the given serialized context to its standard
     input stream.
