@@ -125,3 +125,24 @@ class TestRealHooks(object):
         actual = hooks.run_script_with_context(hook, 'tests', context)
 
         assert actual == expected
+
+    def test_getting_bad_json_returns_original_context(self):
+        """
+        Execute a hook script that returns bad json
+        """
+        context = {
+            "my_key": "my_val",
+        }
+
+        actual = hooks.run_script_with_context(
+            os.path.join(
+                self.repo_path,
+                'bad_json',
+                'hooks',
+                'pre_gen_project.py'
+            ),
+            'tests',
+            context
+        )
+
+        assert actual == context
