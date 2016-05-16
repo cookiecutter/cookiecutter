@@ -81,6 +81,11 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
 Running hooks in place and consuming serialized context
 -------------------------------------------------------
 
+.. warning::
+    For Windows users, please note that sometimes the communication channel between the main process and its child running the hook, can be closed before the serialized context is written to the standard input. This is perfectly handled by cookiecutter and the process does not fail. You can refer to this issue for more information `#19612`_
+
+.. _`#19612`: https://bugs.python.org/issue19612
+
 Disabling hook duplication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 As explained in `Using Pre/Post-Generate Hooks (0.7.0+)`_, you can disable the default behaviour of hook duplication. This is interesting when you don't need to use template variables directly in your hook.
