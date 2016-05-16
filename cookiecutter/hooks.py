@@ -16,6 +16,7 @@ import sys
 import tempfile
 import json
 import re
+import errno
 
 from jinja2 import Template
 
@@ -69,7 +70,9 @@ def run_script_with_context(script_path, cwd, context):
     try:
         result = __do_run_script(script, cwd, json.dumps(context).encode())
         json_search = re.findall('(\{.*\})', result[0].decode())
+
         return json.loads(json_search[-1]) if json_search else context
+
     except ValueError:
         return context
 
@@ -86,6 +89,7 @@ def run_hook(hook_name, project_dir, context):
     if script is None:
         logging.debug('No hooks found')
         return context
+
     return run_script_with_context(script, project_dir, context)
 
 
@@ -105,6 +109,7 @@ def __create_renderable_hook(script_path, context):
     ) as temp:
         output = Template(contents).render(**context)
         temp.write(output.encode('utf-8'))
+
     return temp.name
 
 
@@ -134,6 +139,7 @@ def __do_run_script(script_path, cwd, serialized_context):
     :param serialized_context: Serialized Cookiecutter project template
                                context.
     """
+    result = (serialized_context, b'')
     run_thru_shell = sys.platform.startswith('win')
 
     proc = subprocess.Popen(
@@ -144,7 +150,18 @@ def __do_run_script(script_path, cwd, serialized_context):
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
-    result = proc.communicate(serialized_context)
+
+    try:
+        result = proc.communicate(serialized_context)
+    except OSError as e:
+        if e.errno == errno.EINVAL and run_thru_shell:
+            logging.warn(
+                'Popen.communicate failed certainly ' +
+                'because of the issue #19612'
+            )
+            pass
+        else:
+            raise e
 
     exit_status = proc.wait()
     if exit_status != EXIT_SUCCESS:

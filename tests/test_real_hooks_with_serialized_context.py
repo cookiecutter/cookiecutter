@@ -9,14 +9,23 @@ Additional tests for `cookiecutter.hooks` module.
 """
 
 import os
+import errno
+import mock
+import json
+import pytest
 
 from cookiecutter import hooks, utils
+from subprocess import Popen
+from testfixtures import LogCapture
 
 
 class TestRealHooks(object):
     repo_path = os.path.abspath(
         'tests/test-real-hooks-with-serialized-context')
     hooks_path = repo_path + '/hooks'
+
+    def teardown_method(self, method):
+        LogCapture.uninstall_all()
 
     def test_run_script_with_context_get_updated_context(self):
         """
@@ -146,3 +155,58 @@ class TestRealHooks(object):
         )
 
         assert actual == context
+
+    @mock.patch('sys.platform')
+    @mock.patch('subprocess.Popen', autospec=True)
+    def test_handle_lost_stdin_during_communication_on_windows_os(
+        self, mock_popen, mock_platform
+    ):
+        """
+        Ensure that an OSError raised from Popen._stdin_write is correctly
+        caught and logged, while not blocking the process on windows OS
+        """
+        context = {
+            "my_key": "my_val"
+        }
+
+        log = LogCapture()
+
+        proc = mock_popen.return_value
+        proc.communicate.side_effect = OSError(
+            errno.EINVAL, 'Invalid Argument'
+        )
+        proc.communicate.return_value = json.dumps(context).encode()
+        proc.wait.return_value = 0
+
+        platform = mock_platform.return_value
+        platform.return_value = "win32"
+
+        actual = hooks.run_script_with_context(
+            os.path.join(
+                self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
+            'tests',
+            context
+        )
+
+        log.check(
+            ('root', 'WARNING', 'Popen.communicate failed certainly ' +
+                'because of the issue #19612')
+        )
+        assert actual == context
+
+    def test_handle_oserror_during_communication_on_non_windows_os(self):
+        """
+        Ensure that an OSError raised on a non windows os is bubbled up
+        """
+        Popen.communicate = mock.Mock(
+            side_effect=OSError(errno.EINVAL, 'Invalid Argument')
+        )
+
+        with pytest.raises(OSError) as excinfo:
+            hooks.run_script_with_context(
+                os.path.join(
+                    self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
+                'tests',
+                {}
+            )
+            assert excinfo.value.errno == errno.EINVAL
