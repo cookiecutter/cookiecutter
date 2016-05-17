@@ -33,6 +33,64 @@ class TestRealHooks(object):
         subprocess.Popen = self.old_popen
         sys.platform = self.old_platform
 
+    def run_script_with_context(self, repo_id, context):
+        """
+        Helper method to execute hooks.run_script_with_context on a given repo
+        :param repo_id: repository identifier
+        :param context: context dictionary
+        """
+        return hooks.run_script_with_context(
+            os.path.join(
+                self.repo_path,
+                repo_id,
+                'hooks',
+                'pre_gen_project.py'
+            ),
+            'tests',
+            context
+        )
+
+    def run_hook(self, repo_id, context, hook_name='pre_gen_project'):
+        """
+        Helper method to execute hooks.run_hook on a given repo
+        :param repo_id: repository identifier
+        :param context: context dictionary
+        :param hook_name: hook name to run
+        """
+        return hooks.run_hook(
+            hook_name,
+            os.path.join(
+                self.repo_path,
+                repo_id,
+                'input{{' + repo_id + '_hooks}}'
+            ),
+            context
+        )
+
+    def __sys_platform_patcher(self, startswith):
+        """
+        Helper factory method to create a mock patcher of sys.platform
+        :param startswith: value that should be returned by
+                           sys.platform.startswith
+        """
+        patcher = mock.patch('sys.platform', new=mock.MagicMock())
+        omock = patcher.start()
+        args = {'startswith.return_value': startswith}
+        omock.configure_mock(**args)
+
+        return patcher
+
+    def __configure_mock(self, mock_object, configuration):
+        """
+        Helper method to configure a given mock object
+        :param mock_object: the mock to configure
+        :param configuration: the configuration dictionary
+        """
+        omock = mock_object.return_value
+        omock.configure_mock(**configuration)
+
+        return omock
+
     def test_run_script_with_context_get_updated_context(self):
         """
         Execute a hook script, passing a serialized context object and
@@ -44,16 +102,7 @@ class TestRealHooks(object):
         expected = {
             "my_key": "my_val_updated"
         }
-        actual = hooks.run_script_with_context(
-            os.path.join(
-                self.repo_path,
-                'update_context',
-                'hooks',
-                'pre_gen_project.py'
-            ),
-            'tests',
-            context
-        )
+        actual = self.run_script_with_context('update_context', context)
 
         assert actual == expected
 
@@ -64,12 +113,7 @@ class TestRealHooks(object):
         context = {
             "my_key": "my_val"
         }
-        actual = hooks.run_script_with_context(
-            os.path.join(
-                self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
-            'tests',
-            context
-        )
+        actual = self.run_script_with_context('simple', context)
 
         assert actual == context
 
@@ -82,42 +126,25 @@ class TestRealHooks(object):
         }
 
         with utils.work_in(os.path.join(self.repo_path, 'simple')):
-            actual = hooks.run_hook(
-                'pre_gen_project',
-                os.path.join(
-                    self.repo_path,
-                    'simple',
-                    'input{{simple_hooks}}'
-                ),
-                context
-            )
+            actual = self.run_hook('simple', context)
+
             assert actual == context
 
         with utils.work_in(os.path.join(self.repo_path, 'update_context')):
             expected = {
                 "my_key": "my_val_updated"
             }
-            actual = hooks.run_hook(
-                'pre_gen_project',
-                os.path.join(
-                    self.repo_path,
-                    'update_context',
-                    'input{{update_context_hooks}}'
-                ),
-                context
-            )
+            actual = self.run_hook('update_context', context)
+
             assert actual == expected
 
-        with utils.work_in(os.path.join(self.repo_path, 'simple')):
-            actual = hooks.run_hook(
-                'not_handled_hook',
-                os.path.join(
-                    self.repo_path,
-                    'simple',
-                    'input{{simple_hooks}}'
-                ),
-                context
+        with utils.work_in(os.path.join(self.repo_path, 'update_context')):
+            actual = self.run_hook(
+                'update_context',
+                context,
+                'not_handled_hook'
             )
+
             assert actual == context
 
     def test_run_script_with_context_runs_hook_in_place(self):
@@ -149,16 +176,7 @@ class TestRealHooks(object):
             "my_key": "my_val",
         }
 
-        actual = hooks.run_script_with_context(
-            os.path.join(
-                self.repo_path,
-                'bad_json',
-                'hooks',
-                'pre_gen_project.py'
-            ),
-            'tests',
-            context
-        )
+        actual = self.run_script_with_context('bad_json', context)
 
         assert actual == context
 
@@ -169,6 +187,7 @@ class TestRealHooks(object):
         """
         Ensure that an OSError raised from Popen._stdin_write is correctly
         caught and logged, while not blocking the process on windows OS
+        :param mock_popen: subprocess.Poper mock
         """
         context = {
             "my_key": "my_val"
@@ -176,30 +195,27 @@ class TestRealHooks(object):
 
         log = LogCapture()
 
-        proc = mock_popen.return_value
-        proc.communicate.side_effect = OSError(
-            errno.EINVAL, 'Invalid Argument'
+        self.__configure_mock(
+            mock_popen,
+            {
+                'communicate.side_effect': OSError(
+                    errno.EINVAL, 'Invalid Argument'
+                ),
+                'communicate.return_value': json.dumps(context).encode(),
+                'wait.return_value': 0
+            }
         )
-        proc.communicate.return_value = json.dumps(context).encode()
-        proc.wait.return_value = 0
 
-        patcher_platform = mock.patch('sys.platform', new=mock.MagicMock())
-        platform = patcher_platform.start()
-        args = {'startswith.return_value': True}
-        platform.configure_mock(**args)
+        patcher_platform = self.__sys_platform_patcher(True)
 
         try:
-            actual = hooks.run_script_with_context(
-                os.path.join(
-                    self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
-                'tests',
-                context
-            )
+            actual = self.run_script_with_context('simple', context)
 
             log.check(
                 ('root', 'WARNING', 'Popen.communicate failed certainly ' +
                     'because of the issue #19612')
             )
+
             assert actual == context
 
         finally:
@@ -211,29 +227,23 @@ class TestRealHooks(object):
     ):
         """
         Ensure that an OSError raised on a non windows os is bubbled up
+        :param mock_popen: subprocess.Poper mock
         """
-        proc = mock_popen.return_value
-        proc.communicate.side_effect = OSError(
-            errno.EINVAL, 'Invalid Argument'
+        self.__configure_mock(
+            mock_popen,
+            {
+                'communicate.side_effect': OSError(
+                    errno.EINVAL, 'Invalid Argument'
+                )
+            }
         )
 
-        patcher_platform = mock.patch('sys.platform', new=mock.MagicMock())
-        platform = patcher_platform.start()
-        args = {'startswith.return_value': False}
-        platform.configure_mock(**args)
+        patcher_platform = self.__sys_platform_patcher(False)
 
         try:
             with ShouldRaise() as s:
-                hooks.run_script_with_context(
-                    os.path.join(
-                        self.repo_path,
-                        'simple',
-                        'hooks',
-                        'pre_gen_project.py'
-                    ),
-                    'tests',
-                    {}
-                )
+                self.run_script_with_context('simple', {})
+
                 assert s.raised.code == errno.EINVAL
 
         finally:
