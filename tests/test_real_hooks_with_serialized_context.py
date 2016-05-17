@@ -12,6 +12,7 @@ import os
 import errno
 import mock
 import json
+import sys
 
 from cookiecutter import hooks, utils
 from testfixtures import LogCapture, ShouldRaise
@@ -154,10 +155,9 @@ class TestRealHooks(object):
 
         assert actual == context
 
-    @mock.patch('sys.platform')
     @mock.patch('subprocess.Popen', autospec=True)
     def test_handle_lost_stdin_during_communication_on_windows_os(
-        self, mock_popen, mock_platform
+        self, mock_popen
     ):
         """
         Ensure that an OSError raised from Popen._stdin_write is correctly
@@ -176,8 +176,9 @@ class TestRealHooks(object):
         proc.communicate.return_value = json.dumps(context).encode()
         proc.wait.return_value = 0
 
-        platform = mock_platform.return_value
-        platform.return_value = "win32"
+        sys.platform = mock.MagicMock()
+        args = {'startswith.return_value': True}
+        sys.platform.configure_mock(**args)
 
         actual = hooks.run_script_with_context(
             os.path.join(
@@ -192,10 +193,9 @@ class TestRealHooks(object):
         )
         assert actual == context
 
-    @mock.patch('sys.platform')
     @mock.patch('subprocess.Popen', autospec=True)
     def test_handle_oserror_during_communication_on_non_windows_os(
-        self, mock_popen, mock_platform
+        self, mock_popen
     ):
         """
         Ensure that an OSError raised on a non windows os is bubbled up
@@ -205,10 +205,10 @@ class TestRealHooks(object):
             errno.EINVAL, 'Invalid Argument'
         )
 
-        platform = mock_platform.return_value
-        platform.return_value = "linux2"
+        sys.platform = mock.MagicMock()
+        args = {'startswith.return_value': False}
+        sys.platform.configure_mock(**args)
 
-        # with pytest.raises(OSError) as excinfo:
         with ShouldRaise() as s:
             hooks.run_script_with_context(
                 os.path.join(
