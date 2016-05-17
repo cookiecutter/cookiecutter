@@ -12,11 +12,9 @@ import os
 import errno
 import mock
 import json
-import pytest
 
 from cookiecutter import hooks, utils
-from subprocess import Popen
-from testfixtures import LogCapture
+from testfixtures import LogCapture, ShouldRaise
 
 
 class TestRealHooks(object):
@@ -194,19 +192,28 @@ class TestRealHooks(object):
         )
         assert actual == context
 
-    def test_handle_oserror_during_communication_on_non_windows_os(self):
+    @mock.patch('sys.platform')
+    @mock.patch('subprocess.Popen', autospec=True)
+    def test_handle_oserror_during_communication_on_non_windows_os(
+        self, mock_popen, mock_platform
+    ):
         """
         Ensure that an OSError raised on a non windows os is bubbled up
         """
-        Popen.communicate = mock.Mock(
-            side_effect=OSError(errno.EINVAL, 'Invalid Argument')
+        proc = mock_popen.return_value
+        proc.communicate.side_effect = OSError(
+            errno.EINVAL, 'Invalid Argument'
         )
 
-        with pytest.raises(OSError) as excinfo:
+        platform = mock_platform.return_value
+        platform.return_value = "linux2"
+
+        # with pytest.raises(OSError) as excinfo:
+        with ShouldRaise() as s:
             hooks.run_script_with_context(
                 os.path.join(
                     self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
                 'tests',
                 {}
             )
-            assert excinfo.value.errno == errno.EINVAL
+            assert s.raised.code == errno.EINVAL
