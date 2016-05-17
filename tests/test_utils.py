@@ -14,6 +14,7 @@ import stat
 import sys
 
 from cookiecutter import utils
+from mock import create_autospec
 
 
 def make_readonly(path):
@@ -31,6 +32,18 @@ def test_rmtree():
     make_readonly('foo/bar')
     utils.rmtree('foo')
     assert not os.path.exists('foo')
+
+
+def test_force_delete():
+    path = 'foo'
+    func = create_autospec(lambda path: path)
+    os.mkdir(path)
+    make_readonly(path)
+    utils.force_delete(func, path, None)
+    mode = os.stat(path).st_mode
+    func.assert_called_once_with(path)
+    assert bool(mode & stat.S_IWRITE)
+    os.rmdir(path)
 
 
 def test_make_sure_path_exists():
