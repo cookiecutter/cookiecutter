@@ -13,6 +13,7 @@ import errno
 import mock
 import json
 import sys
+import subprocess
 
 from cookiecutter import hooks, utils
 from testfixtures import LogCapture, ShouldRaise
@@ -23,8 +24,14 @@ class TestRealHooks(object):
         'tests/test-real-hooks-with-serialized-context')
     hooks_path = repo_path + '/hooks'
 
+    def setup_method(self, method):
+        self.old_popen = subprocess.Popen
+        self.old_platform = sys.platform
+
     def teardown_method(self, method):
         LogCapture.uninstall_all()
+        subprocess.Popen = self.old_popen
+        sys.platform = self.old_platform
 
     def test_run_script_with_context_get_updated_context(self):
         """
@@ -176,22 +183,27 @@ class TestRealHooks(object):
         proc.communicate.return_value = json.dumps(context).encode()
         proc.wait.return_value = 0
 
-        sys.platform = mock.MagicMock()
+        patcher_platform = mock.patch('sys.platform', new=mock.MagicMock())
+        platform = patcher_platform.start()
         args = {'startswith.return_value': True}
-        sys.platform.configure_mock(**args)
+        platform.configure_mock(**args)
 
-        actual = hooks.run_script_with_context(
-            os.path.join(
-                self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
-            'tests',
-            context
-        )
+        try:
+            actual = hooks.run_script_with_context(
+                os.path.join(
+                    self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
+                'tests',
+                context
+            )
 
-        log.check(
-            ('root', 'WARNING', 'Popen.communicate failed certainly ' +
-                'because of the issue #19612')
-        )
-        assert actual == context
+            log.check(
+                ('root', 'WARNING', 'Popen.communicate failed certainly ' +
+                    'because of the issue #19612')
+            )
+            assert actual == context
+
+        finally:
+            patcher_platform.stop()
 
     @mock.patch('subprocess.Popen', autospec=True)
     def test_handle_oserror_during_communication_on_non_windows_os(
@@ -205,15 +217,24 @@ class TestRealHooks(object):
             errno.EINVAL, 'Invalid Argument'
         )
 
-        sys.platform = mock.MagicMock()
+        patcher_platform = mock.patch('sys.platform', new=mock.MagicMock())
+        platform = patcher_platform.start()
         args = {'startswith.return_value': False}
-        sys.platform.configure_mock(**args)
+        platform.configure_mock(**args)
 
-        with ShouldRaise() as s:
-            hooks.run_script_with_context(
-                os.path.join(
-                    self.repo_path, 'simple', 'hooks', 'pre_gen_project.py'),
-                'tests',
-                {}
-            )
-            assert s.raised.code == errno.EINVAL
+        try:
+            with ShouldRaise() as s:
+                hooks.run_script_with_context(
+                    os.path.join(
+                        self.repo_path,
+                        'simple',
+                        'hooks',
+                        'pre_gen_project.py'
+                    ),
+                    'tests',
+                    {}
+                )
+                assert s.raised.code == errno.EINVAL
+
+        finally:
+            patcher_platform.stop()
