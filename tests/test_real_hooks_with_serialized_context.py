@@ -14,9 +14,10 @@ import mock
 import json
 import sys
 import subprocess
+import pytest
 
 from cookiecutter import hooks, utils
-from testfixtures import LogCapture, ShouldRaise
+from testfixtures import LogCapture
 
 
 class TestRealHooks(object):
@@ -241,10 +242,10 @@ class TestRealHooks(object):
         patcher_platform = self.__sys_platform_patcher(False)
 
         try:
-            with ShouldRaise() as s:
+            with pytest.raises(OSError) as excinfo:
                 self.run_script_with_context('simple', {})
 
-                assert s.raised.code == errno.EINVAL
+                assert excinfo.value.errno == errno.EINVAL
 
         finally:
             patcher_platform.stop()
