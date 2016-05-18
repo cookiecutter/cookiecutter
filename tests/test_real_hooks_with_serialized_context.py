@@ -17,7 +17,6 @@ import subprocess
 import pytest
 
 from cookiecutter import hooks, utils
-from testfixtures import LogCapture
 
 
 class TestRealHooks(object):
@@ -28,11 +27,12 @@ class TestRealHooks(object):
     def setup_method(self, method):
         self.old_popen = subprocess.Popen
         self.old_platform = sys.platform
+        self.old_logging = hooks.logging
 
     def teardown_method(self, method):
-        LogCapture.uninstall_all()
         subprocess.Popen = self.old_popen
         sys.platform = self.old_platform
+        hooks.logging = self.old_logging
 
     def run_script_with_context(self, repo_id, context):
         """
@@ -182,9 +182,10 @@ class TestRealHooks(object):
 
         assert actual == context
 
+    @mock.patch('cookiecutter.hooks.logging')
     @mock.patch('subprocess.Popen', autospec=True)
     def test_handle_lost_stdin_during_communication_on_windows_os(
-        self, mock_popen
+        self, mock_popen, mock_logging
     ):
         """
         Ensure that an OSError raised from Popen._stdin_write is correctly
@@ -194,8 +195,6 @@ class TestRealHooks(object):
         context = {
             "my_key": "my_val"
         }
-
-        log = LogCapture()
 
         self.__configure_mock(
             mock_popen,
@@ -216,11 +215,10 @@ class TestRealHooks(object):
         try:
             actual = self.run_script_with_context('simple', context)
 
-            log.check(
-                ('root', 'WARNING', 'Popen.communicate failed certainly ' +
-                    'because of the issue #19612')
+            mock_logging.warn.assert_called_with(
+                'Popen.communicate failed certainly ' +
+                'because of the issue #19612'
             )
-
             assert actual == context
 
         finally:
