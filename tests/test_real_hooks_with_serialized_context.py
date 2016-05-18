@@ -68,16 +68,17 @@ class TestRealHooks(object):
             context
         )
 
-    def __sys_platform_patcher(self, startswith):
+    def __new_patcher(self, to_be_mocked, configuration=None):
         """
-        Helper factory method to create a mock patcher of sys.platform
-        :param startswith: value that should be returned by
-                           sys.platform.startswith
+        Helper factory method to create a configurable mock patcher
+        of a given type
+        :param to_be_mocked: the object type to get a mock from
+        :param configuration: the configuration dictionary
         """
-        patcher = mock.patch('sys.platform', new=mock.MagicMock())
+        patcher = mock.patch(to_be_mocked, new=mock.MagicMock())
         omock = patcher.start()
-        args = {'startswith.return_value': startswith}
-        omock.configure_mock(**args)
+        if configuration is not None:
+            omock.configure_mock(**configuration)
 
         return patcher
 
@@ -207,7 +208,10 @@ class TestRealHooks(object):
             }
         )
 
-        patcher_platform = self.__sys_platform_patcher(True)
+        patcher_platform = self.__new_patcher(
+            'sys.platform',
+            {'startswith.return_value': True}
+        )
 
         try:
             actual = self.run_script_with_context('simple', context)
@@ -239,7 +243,10 @@ class TestRealHooks(object):
             }
         )
 
-        patcher_platform = self.__sys_platform_patcher(False)
+        patcher_platform = self.__new_patcher(
+            'sys.platform',
+            {'startswith.return_value': False}
+        )
 
         try:
             with pytest.raises(OSError) as excinfo:
