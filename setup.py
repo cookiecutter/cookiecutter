@@ -29,7 +29,7 @@ requirements = [
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'click>=5.0',
-    'whichcraft>=0.3.1',
+    'whichcraft>=0.4.0',
     'poyo>=0.1.0',
     'jinja2-time>=0.1.0'
 ]

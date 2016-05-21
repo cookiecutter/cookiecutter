@@ -27,7 +27,7 @@ Other Changes:
   (#673)
 * Documented ``__init__`` methods for Environment objects, thanks to
   `@pydanny`_ (#677)
-* Updated whichcraft to 0.3.1, thanks to `@pydanny`_.
+* Updated whichcraft to 0.4.0, thanks to `@pydanny`_.
 * Updated documentation link to Read the Docs, thanks to `@natim`_ (#687)
 * Moved cookiecutter templates and added category links, thanks to
   `@willingc`_ (#674)
