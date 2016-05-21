@@ -16,11 +16,17 @@ Or, if you do not have pip:
 
 Though, pip is recommended.
 
-Or, if you are using conda:
+Or, if you are using conda, first add conda-forge to your channels:
 
 .. code-block:: bash
 
-    $ conda install -c https://conda.binstar.org/pydanny cookiecutter
+    $ conda config --add channels conda-forge
+
+Once the conda-forge channel has been enabled, cookiecutter can be installed with:
+
+.. code-block:: bash
+
+    $ conda install cookiecutter
 
 Alternate installations
 -----------------------
