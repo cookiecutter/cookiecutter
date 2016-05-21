@@ -10,6 +10,7 @@ New Features:
 
 * Inject extra context with command-line arguments, thanks to `@msabramo`_ and
   `@michaeljoseph`_ (#666).
+* Updated conda installation instructions to work with the new conda-forge distribution of Cookiecutter, thanks to `@pydanny`_ and especially @bollwyvl (#232). 
 
 Bug Fix:
 
@@ -33,7 +34,6 @@ Other Changes:
   `@willingc`_ (#674)
 * Added Github Issue Template, thanks to `@luzfcb`_ (#700)
 * Added ``ssh`` repository examples, thanks to `@pokoli`_ (#702)
-
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
