@@ -93,6 +93,7 @@ class UndefinedVariableInTemplate(CookiecutterException):
     """Raised when a template uses a variable which is not defined in the
     context.
     """
+
     def __init__(self, message, error, context):
         self.message = message
         self.error = error
@@ -114,3 +115,22 @@ class RepositoryNotFound(CookiecutterException):
     """
     Raised when the specified cookiecutter repository doesn't exist.
     """
+
+
+class NotRegisteredSerializer(CookiecutterException):
+    """
+    Raised when the specified serializer is not known by the serialization
+    facade.
+    """
+
+    def __init__(self, type):
+        self.message = 'The type of serializer: ' + type + ' is not registered'
+
+
+class MissingRequiredMethod(CookiecutterException):
+    """
+    Raised when an object or a class does not implement a required method.
+    """
+
+    def __init__(self, method):
+        self.message = 'The method: ' + method + ' is required'
