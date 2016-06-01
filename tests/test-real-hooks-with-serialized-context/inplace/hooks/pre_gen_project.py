@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
-import json
 import os
+from cookiecutter.serialization import SerializationFacade
 
-context = json.loads(sys.stdin.readlines()[0])
+serializer = SerializationFacade()
+context = serializer.deserialize(sys.stdin.readlines()[0])
 context['inplace'] = os.path.realpath(__file__)
-print(json.dumps(context))
+print(serializer.serialize(context))

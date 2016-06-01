@@ -14,14 +14,13 @@ import os
 import subprocess
 import sys
 import tempfile
-import json
-import re
 import errno
 
 from jinja2 import Template
 
 from cookiecutter import utils
-from .exceptions import FailedHookException
+from .exceptions import FailedHookException, BadSerializedStringFormat
+from .serialization import SerializationFacade
 
 
 _HOOKS = [
@@ -68,12 +67,13 @@ def run_script_with_context(script_path, cwd, context):
         script = __create_renderable_hook(script_path, context)
 
     try:
-        result = __do_run_script(script, cwd, json.dumps(context).encode())
-        json_search = re.findall('(\{.*\})', result[0].decode())
+        serializer = SerializationFacade()
+        result = __do_run_script(
+            script, cwd, serializer.serialize(context).encode())
 
-        return json.loads(json_search[-1]) if json_search else context
+        return serializer.deserialize(result[0].decode())
 
-    except ValueError:
+    except BadSerializedStringFormat:
         return context
 
 
