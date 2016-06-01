@@ -173,7 +173,7 @@ class TestRealHooks(object):
         """
         Ensure that an OSError raised from Popen._stdin_write is correctly
         caught and logged, while not blocking the process on windows OS
-        :param mock_popen: subprocess.Poper mock
+        :param mocker: mock library handler
         """
         mock_popen = mocker.patch('subprocess.Popen', autospec=True)
         mock_logging = mocker.patch('cookiecutter.hooks.logging')
@@ -208,7 +208,7 @@ class TestRealHooks(object):
     ):
         """
         Ensure that an OSError raised on a non windows os is bubbled up
-        :param mock_popen: subprocess.Poper mock
+        :param mocker: mock library handler
         """
         mock_popen = mocker.patch('subprocess.Popen', autospec=True)
         self.__configure_mock(
