@@ -4,7 +4,7 @@ import inspect
 
 from cookiecutter.utils import ApiChecker
 from cookiecutter.exceptions import \
-    NotRegisteredSerializer, BadSerializedStringFormat
+    UnknownSerializerType, BadSerializedStringFormat
 
 
 class JsonSerializer(object):
@@ -94,7 +94,7 @@ class SerializationFacade(object):
             return self.__serializers[type]
 
         else:
-            raise NotRegisteredSerializer(type)
+            raise UnknownSerializerType(type)
 
     def __check_serializer_api(self, serializer):
         """

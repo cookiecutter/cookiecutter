@@ -117,14 +117,14 @@ class RepositoryNotFound(CookiecutterException):
     """
 
 
-class NotRegisteredSerializer(CookiecutterException):
+class UnknownSerializerType(CookiecutterException):
     """
     Raised when the specified serializer is not known by the serialization
     facade.
     """
 
     def __init__(self, type):
-        self.message = 'The type of serializer: ' + type + ' is not registered'
+        self.message = 'Unknown serializer type: ' + type
 
 
 class BadSerializedStringFormat(CookiecutterException):

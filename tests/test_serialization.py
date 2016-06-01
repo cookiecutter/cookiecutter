@@ -12,7 +12,7 @@ import pytest
 
 from cookiecutter.serialization import SerializationFacade
 from cookiecutter.exceptions import \
-    NotRegisteredSerializer, MissingRequiredMethod, BadSerializedStringFormat
+    UnknownSerializerType, MissingRequiredMethod, BadSerializedStringFormat
 
 
 @pytest.fixture
@@ -77,7 +77,7 @@ class TestSerialization(object):
         ensure a non registered serializer cannot be called during
         serialization
         """
-        with pytest.raises(NotRegisteredSerializer) as excinfo:
+        with pytest.raises(UnknownSerializerType) as excinfo:
             type = 'not_registered'
             SerializationFacade().serialize(
                 get_context()['object'], type)
@@ -89,7 +89,7 @@ class TestSerialization(object):
         ensure a non registered serializer cannot be called during
         deserialization
         """
-        with pytest.raises(NotRegisteredSerializer) as excinfo:
+        with pytest.raises(UnknownSerializerType) as excinfo:
             type = 'not_registered'
             SerializationFacade().deserialize(type + '|somestring')
 
