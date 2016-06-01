@@ -250,7 +250,7 @@ class TestRealHooks(object):
             with pytest.raises(OSError) as excinfo:
                 self.run_script_with_context('simple', {})
 
-                assert excinfo.value.errno == errno.EINVAL
+            assert excinfo.value.errno == errno.EINVAL
 
         finally:
             patcher_platform.stop()
