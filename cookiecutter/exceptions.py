@@ -136,6 +136,13 @@ class BadSerializedStringFormat(CookiecutterException):
         self.message = message
 
 
+class InvalidSerializerType(CookiecutterException):
+    """
+    Raised when the specified serializer type is not allowed
+    facade.
+    """
+
+
 class MissingRequiredMethod(CookiecutterException):
     """
     Raised when an object or a class does not implement a required method.
