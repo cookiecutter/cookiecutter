@@ -51,7 +51,9 @@ class SerializationFacade(object):
         :param subject: the subject to serialize
         :param type: the serializer type to use
         """
-        return type + "|" + self.__get_serializer(type).serialize(subject)
+        return type + '|' \
+                    + self.__get_serializer(type).serialize(subject) \
+                    + '$'
 
     def deserialize(self, string):
         """
@@ -59,12 +61,12 @@ class SerializationFacade(object):
         serializer_type|serialized_object
         :param string: the string to deserialize
         """
-        parts = string.split('|')
+        parts = self.__get_last_serialized_part(string).split('|')
 
         if len(parts) < 2:
             raise BadSerializedStringFormat(
                 message='Serialized string should be of the form '
-                'serializer_type|serialized_string'
+                'serializer_type|serialized_string$'
             )
 
         return self.__get_serializer(parts[0]).deserialize(parts[1])
@@ -85,6 +87,12 @@ class SerializationFacade(object):
         self.__check_serializer_api(serializer)
         self.__serializers[type] = serializer() if inspect.isclass(
             serializer) else serializer
+
+    def __get_type_pattern(self):
+        """
+        get the validation pattern for serializer types
+        """
+        return '[a-zA-Z_][a-zA-Z_][a-zA-Z_0-9\-\.]+'
 
     def __get_serializer(self, type):
         """
@@ -108,7 +116,18 @@ class SerializationFacade(object):
     def __check_type(self, type):
         """
         ensure a given type is well formed and does not contain invalid chars
+        :param type: the type to check
         """
-        pattern = '^[a-zA-Z_][a-zA-Z_][a-zA-Z_0-9\-\.]+$'
+        pattern = '^' + self.__get_type_pattern() + '$'
         if not re.match(pattern, type):
             raise InvalidSerializerType()
+
+    def __get_last_serialized_part(self, string):
+        """
+        extract the last serialized part found in a mixed string
+        """
+        pattern = self.__get_type_pattern() + '\|[^\$]+'
+        print(pattern)
+        serialized_parts = re.findall(pattern, string)
+
+        return serialized_parts[-1] if serialized_parts else string

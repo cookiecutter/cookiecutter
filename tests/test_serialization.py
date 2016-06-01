@@ -24,7 +24,7 @@ def get_context():
         'object': {
             "my_key": "my_val"
         },
-        'json': 'json|{"my_key": "my_val"}'
+        'json': 'json|{"my_key": "my_val"}$'
     }
 
 
@@ -100,7 +100,7 @@ class TestSerialization(object):
         register a custom serializer class
         """
         type = 'dummy'
-        serialized = type + '|serialized'
+        serialized = type + '|serialized$'
         facade = SerializationFacade()
         facade.register(type, get_serializers()[type])
 
@@ -114,7 +114,7 @@ class TestSerialization(object):
         register a custom serializer instance
         """
         type = 'dummy'
-        serialized = type + '|serialized'
+        serialized = type + '|serialized$'
         facade = SerializationFacade()
         facade.register(type, get_serializers()[type]())
 
@@ -154,7 +154,7 @@ class TestSerialization(object):
         facade = SerializationFacade()
         facade.register(type, get_serializers()['dummy'])
 
-        assert 'json|serialized' == facade.serialize(
+        assert 'json|serialized$' == facade.serialize(
             get_context()['object'], type)
 
     def test_serializer_list_can_be_set_at_facade_initialization(self):
@@ -162,7 +162,7 @@ class TestSerialization(object):
         initialize the serialization facade with a bunch of serializers
         """
         type = 'dummy'
-        serialized = type + '|serialized'
+        serialized = type + '|serialized$'
         dict = {
             type: get_serializers()[type]
         }
@@ -206,9 +206,22 @@ class TestSerialization(object):
         ]
 
         for type in valid_types:
-            assert type + '|serialized' == facade.serialize(
+            assert type + '|serialized$' == facade.serialize(
                 get_context()['object'], type)
 
         for type in not_valid_types:
             with pytest.raises(InvalidSerializerType):
                 facade.register(type, serializer)
+
+    def test_deserialize_the_last_serialized_string_found(self):
+        """
+        deserialize method should treat only the last serialized string part
+        """
+        serialized = 'dummy text dummy|serialized$ ' \
+            'another dummy text dummy | serialized text$'
+
+        facade = SerializationFacade({
+            'dummy': get_serializers()['dummy']
+        })
+
+        assert get_context()['object'] == facade.deserialize(serialized)
