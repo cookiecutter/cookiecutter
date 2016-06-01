@@ -12,7 +12,7 @@ import pytest
 
 from cookiecutter.serialization import SerializationFacade
 from cookiecutter.exceptions import \
-    NotRegisteredSerializer, MissingRequiredMethod
+    NotRegisteredSerializer, MissingRequiredMethod, BadSerializedStringFormat
 
 
 @pytest.fixture
@@ -170,3 +170,14 @@ class TestSerialization(object):
 
         assert serialized == facade.serialize(
             get_context()['object'], type)
+
+    def test_missing_type_in_serialized_string(self):
+        """
+        ensure that a string passed to the deserialize method contains the
+        serializer type
+        """
+        expected = 'Serialized string should be of the form'
+        with pytest.raises(BadSerializedStringFormat) as excinfo:
+            SerializationFacade().deserialize('{"my_key": "my_val"}')
+
+        assert expected in excinfo.value.message

@@ -127,6 +127,15 @@ class NotRegisteredSerializer(CookiecutterException):
         self.message = 'The type of serializer: ' + type + ' is not registered'
 
 
+class BadSerializedStringFormat(CookiecutterException):
+    """
+    Raised when a serialized string is not well formed
+    """
+
+    def __init__(self, message):
+        self.message = message
+
+
 class MissingRequiredMethod(CookiecutterException):
     """
     Raised when an object or a class does not implement a required method.

@@ -3,7 +3,8 @@ import json
 import inspect
 
 from cookiecutter.utils import ApiChecker
-from cookiecutter.exceptions import NotRegisteredSerializer
+from cookiecutter.exceptions import \
+    NotRegisteredSerializer, BadSerializedStringFormat
 
 
 class JsonSerializer(object):
@@ -13,6 +14,7 @@ class JsonSerializer(object):
     It can serve as an example of the API that must implement custom
     serializers
     """
+
     def serialize(self, subject):
         """
         serialize a given subject to its JSON representation
@@ -32,6 +34,7 @@ class SerializationFacade(object):
     """
     The SerializationFacade is the public API that customers should use.
     """
+
     def __init__(self, serializers=None):
         self.__serializers = {}
         self.__current_type = 'json'
@@ -56,6 +59,13 @@ class SerializationFacade(object):
         :param string: the string to deserialize
         """
         parts = string.split('|')
+
+        if len(parts) < 2:
+            raise BadSerializedStringFormat(
+                message='Serialized string should be of the form '
+                'serializer_type|serialized_string'
+            )
+
         return self.__get_serializer(parts[0]).deserialize(parts[1])
 
     def get_type(self):
