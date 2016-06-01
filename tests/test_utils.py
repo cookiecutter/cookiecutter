@@ -14,7 +14,6 @@ import stat
 import sys
 
 from cookiecutter import utils
-from mock import create_autospec
 
 
 def make_readonly(path):
@@ -34,9 +33,9 @@ def test_rmtree():
     assert not os.path.exists('foo')
 
 
-def test_force_delete():
+def test_force_delete(mocker):
     path = 'foo'
-    func = create_autospec(lambda path: path)
+    func = mocker.MagicMock(return_value=path)
     os.mkdir(path)
     make_readonly(path)
     utils.force_delete(func, path, None)

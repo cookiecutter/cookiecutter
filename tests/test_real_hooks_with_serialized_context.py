@@ -10,7 +10,6 @@ Additional tests for `cookiecutter.hooks` module.
 
 import os
 import errno
-import mock
 import json
 import sys
 import subprocess
@@ -67,20 +66,6 @@ class TestRealHooks(object):
             ),
             context
         )
-
-    def __new_patcher(self, to_be_mocked, configuration=None):
-        """
-        Helper factory method to create a configurable mock patcher
-        of a given type
-        :param to_be_mocked: the object type to get a mock from
-        :param configuration: the configuration dictionary
-        """
-        patcher = mock.patch(to_be_mocked, new=mock.MagicMock())
-        omock = patcher.start()
-        if configuration is not None:
-            omock.configure_mock(**configuration)
-
-        return patcher
 
     def __configure_mock(self, mock_object, configuration):
         """
@@ -182,16 +167,17 @@ class TestRealHooks(object):
 
         assert actual == context
 
-    @mock.patch('cookiecutter.hooks.logging')
-    @mock.patch('subprocess.Popen', autospec=True)
     def test_handle_lost_stdin_during_communication_on_windows_os(
-        self, mock_popen, mock_logging
+        self, mocker
     ):
         """
         Ensure that an OSError raised from Popen._stdin_write is correctly
         caught and logged, while not blocking the process on windows OS
         :param mock_popen: subprocess.Poper mock
         """
+        mock_popen = mocker.patch('subprocess.Popen', autospec=True)
+        mock_logging = mocker.patch('cookiecutter.hooks.logging')
+
         context = {
             "my_key": "my_val"
         }
@@ -207,31 +193,24 @@ class TestRealHooks(object):
             }
         )
 
-        patcher_platform = self.__new_patcher(
-            'sys.platform',
-            {'startswith.return_value': True}
+        sys.platform = 'win32'
+
+        actual = self.run_script_with_context('simple', context)
+
+        mock_logging.warn.assert_called_with(
+            'Popen.communicate failed certainly ' +
+            'because of the issue #19612'
         )
+        assert actual == context
 
-        try:
-            actual = self.run_script_with_context('simple', context)
-
-            mock_logging.warn.assert_called_with(
-                'Popen.communicate failed certainly ' +
-                'because of the issue #19612'
-            )
-            assert actual == context
-
-        finally:
-            patcher_platform.stop()
-
-    @mock.patch('subprocess.Popen', autospec=True)
     def test_handle_oserror_during_communication_on_non_windows_os(
-        self, mock_popen
+        self, mocker
     ):
         """
         Ensure that an OSError raised on a non windows os is bubbled up
         :param mock_popen: subprocess.Poper mock
         """
+        mock_popen = mocker.patch('subprocess.Popen', autospec=True)
         self.__configure_mock(
             mock_popen,
             {
@@ -241,16 +220,9 @@ class TestRealHooks(object):
             }
         )
 
-        patcher_platform = self.__new_patcher(
-            'sys.platform',
-            {'startswith.return_value': False}
-        )
+        sys.platform = 'linux2'
 
-        try:
-            with pytest.raises(OSError) as excinfo:
-                self.run_script_with_context('simple', {})
+        with pytest.raises(OSError) as excinfo:
+            self.run_script_with_context('simple', {})
 
             assert excinfo.value.errno == errno.EINVAL
-
-        finally:
-            patcher_platform.stop()
