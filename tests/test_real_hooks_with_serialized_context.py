@@ -226,3 +226,14 @@ class TestRealHooks(object):
             self.run_script_with_context('simple', {})
 
             assert excinfo.value.errno == errno.EINVAL
+
+    def test_custom_serializer_from_extra_directory(self):
+        context = {
+            "_serializers": {
+                "json": "serializers.CustomSerializer"
+            }
+        }
+
+        actual = self.run_script_with_context('custom_serializer', context)
+
+        assert 'template_dir' in actual

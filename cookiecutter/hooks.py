@@ -18,6 +18,7 @@ import errno
 
 from jinja2 import Template
 
+from pydoc import locate
 from cookiecutter import utils
 from .exceptions import FailedHookException, BadSerializedStringFormat
 from .serialization import SerializationFacade
@@ -61,13 +62,21 @@ def run_script_with_context(script_path, cwd, context):
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
     """
+    lazy_load_from_extra_dir(os.path.dirname(os.path.dirname(script_path)))
+
     if '_run_hook_in_place' in context and context['_run_hook_in_place']:
         script = script_path
     else:
         script = __create_renderable_hook(script_path, context)
 
     try:
-        serializer = SerializationFacade()
+        serializers = {}
+        if '_serializers' in context:
+            for type in context['_serializers']:
+                serializers[type] = locate(context['_serializers'][type])
+
+        serializer = SerializationFacade(serializers)
+
         result = __do_run_script(
             script, cwd, serializer.serialize(context).encode())
 
@@ -91,6 +100,16 @@ def run_hook(hook_name, project_dir, context):
         return context
 
     return run_script_with_context(script, project_dir, context)
+
+
+def lazy_load_from_extra_dir(template_dir):
+    """
+    permit lazy load from the 'extra' directory
+    :param template_dir: the project template directory
+    """
+    extra_dir = os.path.abspath(os.path.join(template_dir, 'extra'))
+    if os.path.exists(extra_dir) and extra_dir not in sys.path:
+        sys.path.append(extra_dir)
 
 
 def __create_renderable_hook(script_path, context):
