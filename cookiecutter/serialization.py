@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
 import inspect
+import re
 
 from cookiecutter.utils import ApiChecker
 from cookiecutter.exceptions import \
-    UnknownSerializerType, BadSerializedStringFormat
+    UnknownSerializerType, BadSerializedStringFormat, InvalidSerializerType
 
 
 class JsonSerializer(object):
@@ -80,6 +81,7 @@ class SerializationFacade(object):
         :param type: type of the serializer to register
         :param serializer: custom serializer to register
         """
+        self.__check_type(type)
         self.__check_serializer_api(serializer)
         self.__serializers[type] = serializer() if inspect.isclass(
             serializer) else serializer
@@ -102,3 +104,11 @@ class SerializationFacade(object):
         :param serializer: serializer to check its public interface
         """
         ApiChecker('serialize', 'deserialize').implements_api(serializer)
+
+    def __check_type(self, type):
+        """
+        ensure a given type is well formed and does not contain invalid chars
+        """
+        pattern = '^[a-zA-Z_][a-zA-Z_][a-zA-Z_0-9\-\.]+$'
+        if not re.match(pattern, type):
+            raise InvalidSerializerType()

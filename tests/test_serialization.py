@@ -11,8 +11,8 @@ Tests for `cookiecutter.serialization` module.
 import pytest
 
 from cookiecutter.serialization import SerializationFacade
-from cookiecutter.exceptions import \
-    UnknownSerializerType, MissingRequiredMethod, BadSerializedStringFormat
+from cookiecutter.exceptions import UnknownSerializerType, \
+    BadSerializedStringFormat, InvalidSerializerType, MissingRequiredMethod
 
 
 @pytest.fixture
@@ -181,3 +181,34 @@ class TestSerialization(object):
             SerializationFacade().deserialize('{"my_key": "my_val"}')
 
         assert expected in excinfo.value.message
+
+    def test_serializer_valid_types(self):
+        """
+        ensure a serializer type contains only some allowed characters
+        """
+        serializer = get_serializers()['dummy']
+        valid_types = {
+            'v_a-l.idTyPe0123456789': serializer,
+            '_type': serializer,
+            'Type': serializer
+        }
+        facade = SerializationFacade(valid_types)
+
+        not_valid_types = [
+            '-type',
+            '.type',
+            '_.type',
+            '9type',
+            '_9type',
+            'typ|e',
+            'typ:e',
+            'typ!e',
+        ]
+
+        for type in valid_types:
+            assert type + '|serialized' == facade.serialize(
+                get_context()['object'], type)
+
+        for type in not_valid_types:
+            with pytest.raises(InvalidSerializerType):
+                facade.register(type, serializer)
