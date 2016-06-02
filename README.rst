@@ -547,9 +547,9 @@ Scala
 Data Science
 ~~~~~~~~~~~~
 
-* `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.
+* `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
 
-.. _`cookiecutter-data-science`: http://drivendata.github.io/cookiecutter-data-science/
+.. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
 
 Similar projects
 ----------------
