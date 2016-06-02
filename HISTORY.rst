@@ -34,6 +34,8 @@ Other Changes:
   `@willingc`_ (#674)
 * Added Github Issue Template, thanks to `@luzfcb`_ (#700)
 * Added ``ssh`` repository examples, thanks to `@pokoli`_ (#702)
+* Fix links to the cookiecutter-data-science template and its documentation,
+  thanks to `@tephyr`_ for the PR and `@willingc`_ for the review (#711, #714)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -75,6 +77,7 @@ Other Changes:
 .. _`@pjbull`: https://github.com/pjbull
 .. _`@nanuxbe`: https://github.com/nanuxbe
 .. _`@ruflin`: https://github.com/ruflin
+.. _`@tephyr`: https://github.com/tephyr
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
