@@ -87,7 +87,7 @@ Contributors
 * Fábio C. Barrionuevo da Luz (`@luzfcb`_)
 * mozillazg (`@mozillazg`_)
 * Joachim Jablon (`@ewjoachim`_)
-* Diane DeMers Chen(`@purplediane`_)
+* Diane DeMers Chen (`@purplediane`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
