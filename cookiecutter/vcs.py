@@ -14,6 +14,7 @@ import os
 import subprocess
 import sys
 
+from typing import Optional, Tuple  # NOQA  # Used for type checking
 from whichcraft import which
 
 from .exceptions import UnknownRepoType, VCSNotInstalled
@@ -22,6 +23,7 @@ from .utils import make_sure_path_exists, rmtree
 
 
 def prompt_and_delete_repo(repo_dir, no_input=False):
+    # type: (str, bool) -> None
     """
     Asks the user whether it's okay to delete the previously-cloned repo.
     If yes, deletes it. Otherwise, Cookiecutter exits.
@@ -48,6 +50,7 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
 
 
 def identify_repo(repo_url):
+    # type: (str) -> Optional[Tuple[str, str]]
     """
     Determines if `repo_url` should be treated as a URL to a git or hg repo.
     Repos can be identified prepeding "hg+" or "git+" to repo URL.
@@ -72,6 +75,7 @@ def identify_repo(repo_url):
 
 
 def is_vcs_installed(repo_type):
+    # type: (str) -> bool
     """
     Check if the version control system for a repo type is installed.
 
@@ -81,6 +85,7 @@ def is_vcs_installed(repo_type):
 
 
 def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
+    # type: (str, Optional[str], str, bool) -> str
     """
     Clone a repo to the current directory.
 

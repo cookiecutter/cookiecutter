@@ -31,7 +31,8 @@ requirements = [
     'click>=5.0',
     'whichcraft>=0.4.0',
     'poyo>=0.1.0',
-    'jinja2-time>=0.1.0'
+    'jinja2-time>=0.1.0',
+    'typing'
 ]
 
 long_description = readme + '\n\n' + history
