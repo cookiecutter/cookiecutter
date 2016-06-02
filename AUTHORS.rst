@@ -87,6 +87,7 @@ Contributors
 * Fábio C. Barrionuevo da Luz (`@luzfcb`_)
 * mozillazg (`@mozillazg`_)
 * Joachim Jablon (`@ewjoachim`_)
+* Andrew Ittner (`@tephyr`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -162,3 +163,4 @@ Contributors
 .. _`@luzfcb`: https://github.com/luzfcb
 .. _`@mozillazg`: https://github.com/mozillazg
 .. _`@ewjoachim`: https://github.com/ewjoachim
+.. _`@tephyr`: https://github.com/tephyr
