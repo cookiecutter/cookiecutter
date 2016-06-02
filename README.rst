@@ -42,6 +42,8 @@ templates), e.g. creating a Python package project from a Python package project
 
 .. image:: https://raw.github.com/audreyr/cookiecutter/aa309b73bdc974788ba265d843a65bb94c2e608e/cookiecutter_medium.png
 
+We are proud to be an open source sponsor of `PyCon 2016`_.
+
 Features
 --------
 
@@ -598,6 +600,7 @@ Similar projects
 .. _`Skaffold`: https://github.com/christabor/Skaffold
 
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
+.. _`PyCon 2016`: https://us.pycon.org/2016/sponsors/
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.io/en/latest/troubleshooting.html

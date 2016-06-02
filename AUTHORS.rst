@@ -88,6 +88,7 @@ Contributors
 * mozillazg (`@mozillazg`_)
 * Joachim Jablon (`@ewjoachim`_)
 * Andrew Ittner (`@tephyr`_)
+* Diane DeMers Chen (`@purplediane`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -164,3 +165,4 @@ Contributors
 .. _`@mozillazg`: https://github.com/mozillazg
 .. _`@ewjoachim`: https://github.com/ewjoachim
 .. _`@tephyr`: https://github.com/tephyr
+.. _`@purplediane`: https://github.com/purplediane
