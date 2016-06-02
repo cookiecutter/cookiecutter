@@ -35,7 +35,7 @@ Cookiecutter
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
 
-* Documentation: http://cookiecutter.rtfd.org
+* Documentation: https://cookiecutter.readthedocs.io
 * GitHub: https://github.com/audreyr/cookiecutter
 * Free software: BSD license
 * PyPI: https://pypi.python.org/pypi/cookiecutter
@@ -350,7 +350,7 @@ Python
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`morepath-cookiecutter`: https://github.com/morepath/morepath-cookiecutter
 .. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
-.. _`Hovercraft!`: https://hovercraft.readthedocs.org/
+.. _`Hovercraft!`: https://hovercraft.readthedocs.io/
 .. _`cookiecutter-snakemake-analysis-pipeline`: https://github.com/xguse/cookiecutter-snakemake-analysis-pipeline
 .. _`Snakemake`: https://bitbucket.org/snakemake/snakemake/wiki/Home
 
