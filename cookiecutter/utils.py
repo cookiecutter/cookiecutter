@@ -16,8 +16,13 @@ import os
 import stat
 import shutil
 
+# For typechecking via mypy
+from typing import Tuple, Any  # NOQA
+from types import TracebackType  # NOQA
+
 
 def force_delete(func, path, exc_info):
+    # type: (Any, str, Tuple[type, BaseException, TracebackType]) -> None
     """
     Error handler for `shutil.rmtree()` equivalent to `rm -rf`
     Usage: `shutil.rmtree(path, onerror=force_delete)`
@@ -29,6 +34,7 @@ def force_delete(func, path, exc_info):
 
 
 def rmtree(path):
+    # type: (str) -> None
     """
     Removes a directory and all its contents. Like rm -rf on Unix.
 
@@ -39,6 +45,7 @@ def rmtree(path):
 
 
 def make_sure_path_exists(path):
+    # type: (str) -> bool
     """
     Ensures that a directory exists.
 
@@ -70,6 +77,7 @@ def work_in(dirname=None):
 
 
 def make_executable(script_path):
+    # type: (str) -> None
     """
     Makes `script_path` executable
 

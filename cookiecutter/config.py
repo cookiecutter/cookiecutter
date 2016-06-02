@@ -14,6 +14,10 @@ import logging
 import os
 import io
 
+# Used for typechecking only
+from typing import Dict, Union  # NOQA
+from .stubs.cookiecutter import CookiecutterConfigType  # NOQA
+
 import poyo
 
 from .exceptions import ConfigDoesNotExistException
@@ -28,10 +32,11 @@ DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
     'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
     'default_context': {}
-}
+}  # type: CookiecutterConfigType
 
 
 def _expand_path(path):
+    # type: (str) -> str
     """Expand both environment variables and user home in the given path."""
     path = os.path.expandvars(path)
     path = os.path.expanduser(path)
@@ -39,6 +44,7 @@ def _expand_path(path):
 
 
 def get_config(config_path):
+    # type: (str) -> CookiecutterConfigType
     """
     Retrieve the config from the specified path, returning it as a config dict.
     """
@@ -56,7 +62,7 @@ def get_config(config_path):
                 ''.format(config_path, e)
             )
 
-    config_dict = copy.copy(DEFAULT_CONFIG)
+    config_dict = copy.copy(DEFAULT_CONFIG)  # type: CookiecutterConfigType
     config_dict.update(yaml_dict)
 
     raw_replay_dir = config_dict['replay_dir']
@@ -69,6 +75,7 @@ def get_config(config_path):
 
 
 def get_user_config(config_file=USER_CONFIG_PATH):
+    # type: (str) -> Dict[str,str]
     """Retrieve the config from a file or return the defaults if None is
     passed. If an environment variable `COOKIECUTTER_CONFIG` is set up, try
     to load its value. Otherwise fall back to a default file or config.

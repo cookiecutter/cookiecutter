@@ -15,6 +15,7 @@ from __future__ import unicode_literals
 import logging
 import os
 import re
+from typing import Optional, Dict  # NOQA
 
 from .config import get_user_config, USER_CONFIG_PATH
 from .exceptions import InvalidModeException, RepositoryNotFound
@@ -40,6 +41,7 @@ REPO_REGEX = re.compile(r"""
 
 
 def is_repo_url(value):
+    # type: (str) -> bool
     """Return True if value is a repository URL."""
     return bool(REPO_REGEX.match(value))
 
@@ -72,6 +74,7 @@ def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
         config_file=USER_CONFIG_PATH):
+    # type: (str, Optional[str], bool, Optional[Dict[str,str]], bool, bool, str, str) -> str
     """
     API equivalent to using Cookiecutter at the command line.
 

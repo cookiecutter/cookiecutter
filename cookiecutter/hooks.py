@@ -14,6 +14,7 @@ import os
 import subprocess
 import sys
 import tempfile
+from typing import Dict  # NOQA
 
 from jinja2 import Template
 
@@ -30,6 +31,7 @@ EXIT_SUCCESS = 0
 
 
 def find_hooks():
+    # type: () -> Dict[str, str]
     """
     Must be called with the project template as the current working directory.
     Returns a dict of all hook scripts provided.
@@ -38,7 +40,7 @@ def find_hooks():
     Missing scripts will not be included in the returned dict.
     """
     hooks_dir = 'hooks'
-    r = {}
+    r = {}  # type: Dict[str,str]
     logging.debug('hooks_dir is {0}'.format(hooks_dir))
     if not os.path.isdir(hooks_dir):
         logging.debug('No hooks/ dir in template_dir')
@@ -51,6 +53,7 @@ def find_hooks():
 
 
 def run_script(script_path, cwd='.'):
+    # type: (str, str) -> None
     """
     Executes a script from a working directory.
 

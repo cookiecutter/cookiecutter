@@ -11,15 +11,20 @@ import json
 import os
 from past.builtins import basestring
 
+# Used for typechecking only
+from .stubs.cookiecutter import CookiecutterConfigType  # NOQA
+
 from .utils import make_sure_path_exists
 
 
 def get_file_name(replay_dir, template_name):
+    # type: (str, str) -> str
     file_name = '{}.json'.format(template_name)
     return os.path.join(replay_dir, file_name)
 
 
 def dump(replay_dir, template_name, context):
+    # type: (str, str, CookiecutterConfigType) -> none
     if not make_sure_path_exists(replay_dir):
         raise IOError('Unable to create replay dir at {}'.format(replay_dir))
 
@@ -39,6 +44,7 @@ def dump(replay_dir, template_name, context):
 
 
 def load(replay_dir, template_name):
+    # type: (str, str) -> CookiecutterConfigType
     if not isinstance(template_name, basestring):
         raise TypeError('Template name is required to be of type str')
 

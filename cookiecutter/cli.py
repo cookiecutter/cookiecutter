@@ -12,6 +12,7 @@ import os
 import sys
 import logging
 import json
+from typing import Dict, Tuple, Optional  # NOQA
 
 import click
 
@@ -31,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 def version_msg():
+    # type: () -> str
     """Returns the Cookiecutter version, location and Python powering it."""
     python_version = sys.version[:3]
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +41,7 @@ def version_msg():
 
 
 def validate_extra_context(ctx, param, value):
+    # type: (click.Context, str, Tuple[str, ...]) -> Optional[Dict[str, str]]
     for s in value:
         if '=' not in s:
             raise click.BadParameter(

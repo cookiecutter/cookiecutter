@@ -215,6 +215,7 @@ def render_and_create_dir(dirname, context, output_dir, environment,
 
 
 def ensure_dir_is_templated(dirname):
+    # type: (str) -> bool
     """
     Ensures that dirname is a templated directory name.
     """

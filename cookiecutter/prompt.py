@@ -20,6 +20,9 @@ from jinja2.exceptions import UndefinedError
 from .exceptions import UndefinedVariableInTemplate
 from .environment import StrictEnvironment
 
+# Used for typechecking only
+from .stubs.cookiecutter import CookiecutterConfigType
+
 
 def read_user_variable(var_name, default_value):
     """Prompt the user for the given variable and return the entered value
@@ -50,6 +53,7 @@ def read_user_yes_no(question, default_value):
 
 
 def read_user_choice(var_name, options):
+    # type: (str, List[str]) -> str
     """Prompt the user to choose from several options for the given variable.
 
     The first item will be returned if no input happens.
@@ -96,6 +100,7 @@ def render_variable(env, raw, cookiecutter_dict):
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
+    # type: (CookiecutterConfigType, StrictEnvironment, str, List[str], bool) -> str
     """Prompt the user which option to choose from the given. Each of the
     possible choices is rendered beforehand.
     """
