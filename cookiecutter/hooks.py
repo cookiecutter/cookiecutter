@@ -64,7 +64,12 @@ def run_script_with_context(script_path, cwd, context):
     """
     lazy_load_from_extra_dir(os.path.dirname(os.path.dirname(script_path)))
 
-    if '_run_hook_in_place' in context and context['_run_hook_in_place']:
+    # TODO: refactor the following as it is terrific
+    current_context = context[
+        'cookiecutter'] if 'cookiecutter' in context else context
+
+    if ('_run_hook_in_place' in current_context and
+            current_context['_run_hook_in_place']):
         script = script_path
     else:
         script = __create_renderable_hook(script_path, context)
@@ -73,12 +78,13 @@ def run_script_with_context(script_path, cwd, context):
         # TODO: refactor the following ugly part
         serializers = {}
         usetype = 'json'
-        if '_serializers' in context and 'classes' in context['_serializers']:
-            classes = context['_serializers']['classes']
+        if '_serializers' in current_context and 'classes' \
+                in current_context['_serializers']:
+            classes = current_context['_serializers']['classes']
             for type in classes:
                 serializers[type] = locate(classes[type])
-            if 'use' in context['_serializers']:
-                usetype = context['_serializers']['use']
+            if 'use' in current_context['_serializers']:
+                usetype = current_context['_serializers']['use']
 
         # TODO: move .use(usetype) here:
         # serializer = SerializationFacade(serializers).use(usetype)
