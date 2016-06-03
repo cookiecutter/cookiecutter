@@ -40,6 +40,7 @@ Project Info
 
    contributing
    authors
+   sprint-contributors
    history
 
 Index
