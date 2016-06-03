@@ -16,8 +16,6 @@ import os
 import stat
 import shutil
 
-from cookiecutter.exceptions import MissingRequiredMethod
-
 
 def force_delete(func, path, exc_info):
     """
@@ -79,22 +77,3 @@ def make_executable(script_path):
     """
     status = os.stat(script_path)
     os.chmod(script_path, status.st_mode | stat.S_IEXEC)
-
-
-class ApiChecker(object):
-    """
-    Helper class that should facilitate the public interface conformance of
-    a given object or class
-    """
-
-    def __init__(self, *api):
-        self.__api = api
-
-    def implements_api(self, object):
-        """
-        check if a given object or class implements the current expected API
-        """
-        for method in self.__api:
-            if not hasattr(object, method) or \
-                    not callable(getattr(object, method)):
-                raise MissingRequiredMethod(method)

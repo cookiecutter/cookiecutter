@@ -14,7 +14,6 @@ import stat
 import sys
 
 from cookiecutter import utils
-from cookiecutter.exceptions import MissingRequiredMethod
 
 
 def make_readonly(path):
@@ -81,44 +80,3 @@ def test_workin():
     # Make sure that exceptions are still bubbled up
     with pytest.raises(TestException):
         test_work_in()
-
-
-@pytest.fixture
-def get_api_checker_fixtures():
-    """
-    helper method to provide some classes needed for api checker testing
-    """
-    class Conform(object):
-        def method1(self):
-            return
-
-        def method2(self):
-            return
-
-    class MissingMethod1(object):
-        def method2(self):
-            return
-
-    class MissingMethod2(object):
-        def method1(self):
-            return
-
-    return {
-        'conform': Conform,
-        'method1': MissingMethod1,
-        'method2': MissingMethod2
-    }
-
-
-def test_api_checker():
-    fixtures = get_api_checker_fixtures()
-    api = ['method1', 'method2']
-    checker = utils.ApiChecker(*api)
-
-    checker.implements_api(fixtures['conform'])
-
-    for method in api:
-        with pytest.raises(MissingRequiredMethod) as excinfo:
-            checker.implements_api(fixtures[method])
-
-        assert method in excinfo.value.message

@@ -150,12 +150,3 @@ class InvalidSerializerType(CookiecutterException):
     Raised when the specified serializer type is not allowed
     facade.
     """
-
-
-class MissingRequiredMethod(CookiecutterException):
-    """
-    Raised when an object or a class does not implement a required method.
-    """
-
-    def __init__(self, method):
-        self.message = 'The method: ' + method + ' is required'
