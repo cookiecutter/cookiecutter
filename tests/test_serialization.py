@@ -68,6 +68,16 @@ def get_serializers():
 
 class TestSerialization(object):
 
+    def __get_serialized_context(self, type, serializer, object=None):
+        """
+        helper method to get a serialized context for comparison
+        :param type: the type of the serializer
+        :param serializer: the serializer to use
+        :param object: the object to serialize
+        """
+        context = get_context()['object'] if object is None else object
+        return type + '|' + serializer.serialize(context).decode() + '$'
+
     def test_default_serialize(self):
         """
         serialize a context object with the default available serializer
@@ -116,7 +126,7 @@ class TestSerialization(object):
         kclass = get_serializers()[_type]
         facade = SerializationFacade()
         facade.register(_type, kclass)
-        expected = _type + '|' + kclass().serialize(context).decode() + '$'
+        expected = self.__get_serialized_context(_type, kclass(), context)
 
         assert expected == facade.serialize(context, _type)
         assert context == facade.deserialize(expected)
@@ -130,7 +140,7 @@ class TestSerialization(object):
         serializer = get_serializers()[_type]()
         facade = SerializationFacade()
         facade.register(_type, serializer)
-        expected = _type + '|' + serializer.serialize(context).decode() + '$'
+        expected = self.__get_serialized_context(_type, serializer, context)
 
         assert expected == facade.serialize(context, _type)
 
@@ -150,11 +160,10 @@ class TestSerialization(object):
         get the type of the current serializer
         """
         _type = 'dummy'
-        context = get_context()['object']
         serializer = get_serializers()[_type]()
         facade = SerializationFacade()
         facade.register(_type, serializer)
-        serialized = _type + '|' + serializer.serialize(context).decode() + '$'
+        serialized = self.__get_serialized_context(_type, serializer)
 
         assert 'json' == facade.get_type()
         facade.deserialize(serialized)
@@ -169,7 +178,7 @@ class TestSerialization(object):
         serializer = get_serializers()['dummy']()
         facade = SerializationFacade()
         facade.register(_type, serializer)
-        expected = _type + '|' + serializer.serialize(context).decode() + '$'
+        expected = self.__get_serialized_context(_type, serializer, context)
 
         assert expected == facade.serialize(context, _type)
 
@@ -184,7 +193,7 @@ class TestSerialization(object):
             _type: serializer
         }
         facade = SerializationFacade(dict)
-        expected = _type + '|' + serializer.serialize(context).decode() + '$'
+        expected = self.__get_serialized_context(_type, serializer, context)
 
         assert expected == facade.serialize(context, _type)
 
@@ -225,8 +234,8 @@ class TestSerialization(object):
         ]
 
         for _type in valid_types:
-            expected = _type + '|' + \
-                serializer.serialize(context).decode() + '$'
+            expected = self.__get_serialized_context(
+                _type, serializer, context)
             assert expected == facade.serialize(context, _type)
 
         for _type in not_valid_types:
@@ -237,13 +246,14 @@ class TestSerialization(object):
         """
         deserialize method should treat only the last serialized string part
         """
-        serializer = get_serializers()['dummy']()
-        part1 = serializer.serialize(get_context()['object']).decode()
-        part2 = serializer.serialize(get_context()['object2']).decode()
-        serialized = 'dummy text dummy|' + part1 + '$ ' \
-            'another dummy text dummy|' + part2 + '$'
+        _type = 'dummy'
+        expected = get_context()['object2']
+        serializer = get_serializers()[_type]()
+        part1 = self.__get_serialized_context(_type, serializer)
+        part2 = self.__get_serialized_context(_type, serializer, expected)
+        serialized = 'dummy text ' + part1 + 'another dummy text ' + part2
         facade = SerializationFacade({
-            'dummy': serializer
+            _type: serializer
         })
 
-        assert get_context()['object2'] == facade.deserialize(serialized)
+        assert expected == facade.deserialize(serialized)
