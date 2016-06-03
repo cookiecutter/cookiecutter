@@ -71,14 +71,18 @@ def run_script_with_context(script_path, cwd, context):
 
     try:
         serializers = {}
-        if '_serializers' in context:
-            for type in context['_serializers']:
-                serializers[type] = locate(context['_serializers'][type])
+        usetype = 'json'
+        if '_serializers' in context and 'classes' in context['_serializers']:
+            classes = context['_serializers']['classes']
+            for type in classes:
+                serializers[type] = locate(classes[type])
+            if 'use' in context['_serializers']:
+                usetype = context['_serializers']['use']
 
         serializer = SerializationFacade(serializers)
 
         result = __do_run_script(
-            script, cwd, serializer.serialize(context).encode())
+            script, cwd, serializer.use(usetype).serialize(context).encode())
 
         return serializer.deserialize(result[0].decode())
 

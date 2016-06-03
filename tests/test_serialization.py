@@ -100,8 +100,7 @@ class TestSerialization(object):
         """
         with pytest.raises(UnknownSerializerType) as excinfo:
             _type = 'not_registered'
-            SerializationFacade().serialize(
-                get_context()['object'], _type)
+            SerializationFacade().use(_type).serialize(get_context()['object'])
 
             assert _type in excinfo.message
 
@@ -128,7 +127,7 @@ class TestSerialization(object):
         facade.register(_type, kclass)
         expected = self.__get_serialized_context(_type, kclass(), context)
 
-        assert expected == facade.serialize(context, _type)
+        assert expected == facade.use(_type).serialize(context)
         assert context == facade.deserialize(expected)
 
     def test_register_serializer_accepts_object(self):
@@ -142,7 +141,7 @@ class TestSerialization(object):
         facade.register(_type, serializer)
         expected = self.__get_serialized_context(_type, serializer, context)
 
-        assert expected == facade.serialize(context, _type)
+        assert expected == facade.use(_type).serialize(context)
 
     def test_serializer_api_check(self):
         """
@@ -169,6 +168,19 @@ class TestSerialization(object):
         facade.deserialize(serialized)
         assert _type == facade.get_type()
 
+    def test_use_specific_serializer(self):
+        """
+        a registered serializer can be specified before the serialization
+        """
+        _type = 'dummy'
+        context = get_context()['object']
+        serializer = get_serializers()['dummy']()
+        facade = SerializationFacade()
+        facade.register(_type, serializer)
+        expected = self.__get_serialized_context(_type, serializer, context)
+
+        assert expected == facade.use(_type).serialize(context)
+
     def test_existing_serializer_can_be_replaced(self):
         """
         overwrite an existing serializer with a custom one
@@ -180,7 +192,7 @@ class TestSerialization(object):
         facade.register(_type, serializer)
         expected = self.__get_serialized_context(_type, serializer, context)
 
-        assert expected == facade.serialize(context, _type)
+        assert expected == facade.serialize(context)
 
     def test_serializer_list_can_be_set_at_facade_initialization(self):
         """
@@ -195,7 +207,7 @@ class TestSerialization(object):
         facade = SerializationFacade(dict)
         expected = self.__get_serialized_context(_type, serializer, context)
 
-        assert expected == facade.serialize(context, _type)
+        assert expected == facade.use(_type).serialize(context)
 
     def test_missing_type_in_serialized_string(self):
         """
@@ -236,7 +248,7 @@ class TestSerialization(object):
         for _type in valid_types:
             expected = self.__get_serialized_context(
                 _type, serializer, context)
-            assert expected == facade.serialize(context, _type)
+            assert expected == facade.use(_type).serialize(context)
 
         for _type in not_valid_types:
             with pytest.raises(InvalidSerializerType):

@@ -230,7 +230,10 @@ class TestRealHooks(object):
     def test_custom_serializer_from_extra_directory(self):
         context = {
             "_serializers": {
-                "json": "serializers.CustomSerializer"
+                "use": "custom",
+                "classes": {
+                    "custom": "serializers.CustomSerializer"
+                }
             }
         }
 

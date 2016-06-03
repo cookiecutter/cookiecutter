@@ -136,15 +136,16 @@ class SerializationFacade(object):
             for type in serializers:
                 self.register(type, serializers[type])
 
-    def serialize(self, subject, type='json'):
+    def serialize(self, subject):
         """
         serialize a given subject using a specific type (JSON by default)
         :param subject: the subject to serialize
         :param type: the serializer type to use
         """
-        return type + '|' \
-                    + self.__get_serializer(type).serialize(subject).decode() \
-                    + '$'
+        return self.__current_type + '|' \
+            + self.__get_serializer(
+                self.__current_type).serialize(subject).decode() \
+            + '$'
 
     def deserialize(self, string):
         """
@@ -161,6 +162,15 @@ class SerializationFacade(object):
             )
 
         return self.__get_serializer(parts[0]).deserialize(parts[1].encode())
+
+    def use(self, type):
+        """
+        define the type of the serializer to use
+        :param type: the serializer type
+        """
+        self.__current_type = type
+
+        return self
 
     def get_type(self):
         """
