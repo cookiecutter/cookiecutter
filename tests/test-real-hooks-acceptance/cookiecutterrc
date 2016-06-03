@@ -1,0 +1,5 @@
+default_context:
+    full_name: "John Doe"
+    email: "jd@example.com"
+    github_username: "johndoe"
+    license: "MIT"
