@@ -11,9 +11,6 @@ Cookiecutter
 .. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
         :target: https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master
 
-.. image:: https://img.shields.io/pypi/dm/cookiecutter.svg
-        :target: https://pypi.python.org/pypi/cookiecutter
-
 .. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
         :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
 
