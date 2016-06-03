@@ -70,6 +70,7 @@ def run_script_with_context(script_path, cwd, context):
         script = __create_renderable_hook(script_path, context)
 
     try:
+        # TODO: refactor the following ugly part
         serializers = {}
         usetype = 'json'
         if '_serializers' in context and 'classes' in context['_serializers']:
@@ -79,6 +80,10 @@ def run_script_with_context(script_path, cwd, context):
             if 'use' in context['_serializers']:
                 usetype = context['_serializers']['use']
 
+        # TODO: move .use(usetype) here:
+        # serializer = SerializationFacade(serializers).use(usetype)
+        # this will permit to save the facade for cross processing before
+        # running the hook
         serializer = SerializationFacade(serializers)
 
         result = __do_run_script(
@@ -164,6 +169,10 @@ def __do_run_script(script_path, cwd, serialized_context):
     """
     result = (serialized_context, b'')
     run_thru_shell = sys.platform.startswith('win')
+
+    # TODO: save the sys.path in the os.environ['PYTHONPATH'] to be sure that
+    # any added customized path will be accessible from hooks
+    # eq. this ensures that custom serializers can be instantiated from hooks
 
     proc = subprocess.Popen(
         __get_script_command(script_path),
