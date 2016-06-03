@@ -1,12 +1,11 @@
 import os
-import json
+
+from cookiecutter.serialization import JsonSerializer
 
 
-class CustomSerializer(object):
+class CustomSerializer(JsonSerializer):
 
-    def serialize(self, subject):
+    def _do_serialize(self, subject):
         subject['template_dir'] = os.path.dirname(os.path.dirname(__file__))
-        return json.dumps(subject)
 
-    def deserialize(self, string):
-        return json.loads(string)
+        return super(CustomSerializer, self)._do_serialize(subject)

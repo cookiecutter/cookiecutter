@@ -8,9 +8,12 @@ test_serialization
 Tests for `cookiecutter.serialization` module.
 """
 
+from __future__ import unicode_literals
+
 import pytest
 
-from cookiecutter.serialization import SerializationFacade
+from cookiecutter.serialization import \
+    SerializationFacade, JsonSerializer, AbstractSerializer
 from cookiecutter.exceptions import UnknownSerializerType, \
     BadSerializedStringFormat, InvalidSerializerType, MissingRequiredMethod
 
@@ -20,11 +23,20 @@ def get_context():
     """
     helper method to get a bunch of context objects
     """
+    context = {
+        "my_key": "my_val"
+    }
+
+    context2 = {
+        "my_key2": "my_val2"
+    }
+
+    json_serialized = JsonSerializer().serialize(context).decode()
+
     return {
-        'object': {
-            "my_key": "my_val"
-        },
-        'json': 'json|{"my_key": "my_val"}$'
+        'object': context,
+        'object2': context2,
+        'json': 'json|' + json_serialized + '$'
     }
 
 
@@ -39,14 +51,15 @@ def get_serializers():
 
     class NoDeserialize(object):
         def serialize(self, subject):
-            return 'serialized'
+            return b'serialized'
 
-    class DummySerializer(object):
-        def serialize(self, subject):
-            return 'serialized'
+    class DummySerializer(AbstractSerializer):
+        def _do_serialize(self, subject):
+            return ' serialized text' if 'my_key2' in subject else 'serialized'
 
-        def deserialize(self, string):
-            return get_context()['object']
+        def _do_deserialize(self, string):
+            return get_context()['object2'] if 'serialized text' in string \
+                else get_context()['object']
 
     return {
         'serialize': NoSerialize,
@@ -78,11 +91,11 @@ class TestSerialization(object):
         serialization
         """
         with pytest.raises(UnknownSerializerType) as excinfo:
-            type = 'not_registered'
+            _type = 'not_registered'
             SerializationFacade().serialize(
-                get_context()['object'], type)
+                get_context()['object'], _type)
 
-            assert type in excinfo.message
+            assert _type in excinfo.message
 
     def test_not_registered_serializer_during_deserialization(self):
         """
@@ -90,86 +103,94 @@ class TestSerialization(object):
         deserialization
         """
         with pytest.raises(UnknownSerializerType) as excinfo:
-            type = 'not_registered'
-            SerializationFacade().deserialize(type + '|somestring')
+            _type = 'not_registered'
+            serialized = _type + '|somestring$'
+            SerializationFacade().deserialize(serialized)
 
-            assert type in excinfo.message
+            assert _type in excinfo.message
 
     def test_register_serializer(self):
         """
         register a custom serializer class
         """
-        type = 'dummy'
-        serialized = type + '|serialized$'
+        _type = 'dummy'
+        context = get_context()['object']
+        kclass = get_serializers()[_type]
         facade = SerializationFacade()
-        facade.register(type, get_serializers()[type])
+        facade.register(_type, kclass)
+        expected = _type + '|' + kclass().serialize(context).decode() + '$'
 
-        assert serialized == facade.serialize(
-            get_context()['object'], type)
-        assert get_context()['object'] == facade.deserialize(
-            serialized)
+        assert expected == facade.serialize(context, _type)
+        assert context == facade.deserialize(expected)
 
     def test_register_serializer_accepts_object(self):
         """
         register a custom serializer instance
         """
-        type = 'dummy'
-        serialized = type + '|serialized$'
+        _type = 'dummy'
+        context = get_context()['object']
+        serializer = get_serializers()[_type]()
         facade = SerializationFacade()
-        facade.register(type, get_serializers()[type]())
+        facade.register(_type, serializer)
+        expected = _type + '|' + serializer.serialize(context).decode() + '$'
 
-        assert serialized == facade.serialize(
-            get_context()['object'], type)
+        assert expected == facade.serialize(context, _type)
 
     def test_serializer_api_check(self):
         """
         enforce the given serializer to implement the serializer API
         """
         types = ['serialize', 'deserialize']
-        for type in types:
+        for _type in types:
             with pytest.raises(MissingRequiredMethod) as excinfo:
                 SerializationFacade().register(
-                    type, get_serializers()[type]
+                    _type, get_serializers()[_type]
                 )
 
-            assert type in excinfo.value.message
+            assert _type in excinfo.value.message
 
     def test_get_serialization_type(self):
         """
         get the type of the current serializer
         """
-        type = 'dummy'
+        _type = 'dummy'
+        context = get_context()['object']
+        serializer = get_serializers()[_type]()
         facade = SerializationFacade()
-        facade.register(type, get_serializers()[type])
+        facade.register(_type, serializer)
+        serialized = _type + '|' + serializer.serialize(context).decode() + '$'
 
         assert 'json' == facade.get_type()
-        facade.deserialize(type + '|some string')
-        assert type == facade.get_type()
+        facade.deserialize(serialized)
+        assert _type == facade.get_type()
 
     def test_existing_serializer_can_be_replaced(self):
         """
         overwrite an existing serializer with a custom one
         """
-        type = 'json'
+        _type = 'json'
+        context = get_context()['object']
+        serializer = get_serializers()['dummy']()
         facade = SerializationFacade()
-        facade.register(type, get_serializers()['dummy'])
+        facade.register(_type, serializer)
+        expected = _type + '|' + serializer.serialize(context).decode() + '$'
 
-        assert 'json|serialized$' == facade.serialize(
-            get_context()['object'], type)
+        assert expected == facade.serialize(context, _type)
 
     def test_serializer_list_can_be_set_at_facade_initialization(self):
         """
         initialize the serialization facade with a bunch of serializers
         """
-        type = 'dummy'
-        serialized = type + '|serialized$'
+        _type = 'dummy'
+        context = get_context()['object']
+        serializer = get_serializers()[_type]()
         dict = {
-            type: get_serializers()[type]
+            _type: serializer
         }
         facade = SerializationFacade(dict)
+        expected = _type + '|' + serializer.serialize(context).decode() + '$'
 
-        assert serialized == facade.serialize(
-            get_context()['object'], type)
+        assert expected == facade.serialize(context, _type)
 
     def test_missing_type_in_serialized_string(self):
         """
@@ -186,7 +207,9 @@ class TestSerialization(object):
         """
         ensure a serializer type contains only some allowed characters
         """
-        serializer = get_serializers()['dummy']
+        context = get_context()['object']
+        serializer = get_serializers()['dummy']()
+
         valid_types = {
             'v_a-l.idTyPe0123456789': serializer,
             '_type': serializer,
@@ -205,23 +228,27 @@ class TestSerialization(object):
             'typ!e',
         ]
 
-        for type in valid_types:
-            assert type + '|serialized$' == facade.serialize(
-                get_context()['object'], type)
+        for _type in valid_types:
+            expected = _type + '|' + \
+                serializer.serialize(context).decode() + '$'
+            assert expected == facade.serialize(context, _type)
 
-        for type in not_valid_types:
+        for _type in not_valid_types:
             with pytest.raises(InvalidSerializerType):
-                facade.register(type, serializer)
+                facade.register(_type, serializer)
 
     def test_deserialize_the_last_serialized_string_found(self):
         """
         deserialize method should treat only the last serialized string part
         """
-        serialized = 'dummy text dummy|serialized$ ' \
-            'another dummy text dummy | serialized text$'
-
+        serializer = get_serializers()['dummy']()
+        part1 = serializer.serialize(get_context()['object']).decode()
+        part2 = serializer.serialize(get_context()['object2']).decode()
+        serialized = 'dummy text dummy|' + part1 + '$ ' \
+            'another dummy text dummy|' + part2 + '$'
+        print(serialized)
         facade = SerializationFacade({
-            'dummy': get_serializers()['dummy']
+            'dummy': serializer
         })
 
-        assert get_context()['object'] == facade.deserialize(serialized)
+        assert get_context()['object2'] == facade.deserialize(serialized)

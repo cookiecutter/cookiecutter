@@ -1,14 +1,86 @@
 # -*- coding: utf-8 -*-
+
+# from __future__ import unicode_literals
+
 import json
 import inspect
 import re
+import pickle
+import base64
 
+from abc import ABCMeta, abstractmethod
 from cookiecutter.utils import ApiChecker
 from cookiecutter.exceptions import \
     UnknownSerializerType, BadSerializedStringFormat, InvalidSerializerType
 
 
-class JsonSerializer(object):
+class AbstractSerializer:
+    """
+    abstract base class for serializers
+    """
+    __metaclass__ = ABCMeta
+
+    def serialize(self, subject):
+        """
+        serialize a given subject to its bytes string representation
+        :param subject: the subject to serialize
+        """
+        serialized = self._do_serialize(subject)
+
+        return base64.encodestring(self.__encode(serialized))
+
+    def deserialize(self, bstring):
+        """
+        deserialize a given bytes string to its Python object
+        :param bstring: the bytes string to deserialize
+        """
+        serialized = base64.decodestring(bstring)
+
+        return self._do_deserialize(self.__decode(serialized))
+
+    @abstractmethod
+    def _do_serialize(self, subject):
+        """
+        abstract method to be implemented by serializer
+        it should do the serialization
+        :param subject: the subject to serialize
+        """
+
+    @abstractmethod
+    def _do_deserialize(self, string):
+        """
+        abstract method to be implemented by serializer
+        it should do the deserialization
+        :param string: the string to deserialize
+        """
+
+    def __encode(self, subject):
+        """
+        sanitize encoding for a given subject, if needed
+        :param subject: the subject to treat
+        """
+        try:
+            sanitized = subject.encode()
+        except:
+            sanitized = subject
+
+        return sanitized
+
+    def __decode(self, subject):
+        """
+        revert encoding sanitization for a given subject, if it has been done
+        previously
+        :param subject: the subject to treat
+        """
+        try:
+            original = subject.decode()
+        except:
+            original = subject
+
+        return original
+
+
+class JsonSerializer(AbstractSerializer):
     """
     The JSON serializer is the default serializer registered by the
     serialization facade
@@ -16,19 +88,39 @@ class JsonSerializer(object):
     serializers
     """
 
-    def serialize(self, subject):
+    def _do_serialize(self, subject):
         """
         serialize a given subject to its JSON representation
         :param subject: the subject to serialize
         """
         return json.dumps(subject)
 
-    def deserialize(self, string):
+    def _do_deserialize(self, string):
         """
         deserialize a given JSON string to its Python object
         :param string: the string to deserialize
         """
         return json.loads(string)
+
+
+class PickleSerializer(AbstractSerializer):
+    """
+    The Pickle serializer should be used to serialize objects
+    """
+
+    def _do_serialize(self, subject):
+        """
+        serialize a given subject to its string representation
+        :param subject: the subject to serialize
+        """
+        return pickle.dumps(subject, 2)
+
+    def _do_deserialize(self, string):
+        """
+        deserialize a given string to its Python object
+        :param string: the string to deserialize
+        """
+        return pickle.loads(string)
 
 
 class SerializationFacade(object):
@@ -52,7 +144,7 @@ class SerializationFacade(object):
         :param type: the serializer type to use
         """
         return type + '|' \
-                    + self.__get_serializer(type).serialize(subject) \
+                    + self.__get_serializer(type).serialize(subject).decode() \
                     + '$'
 
     def deserialize(self, string):
@@ -69,7 +161,7 @@ class SerializationFacade(object):
                 'serializer_type|serialized_string$'
             )
 
-        return self.__get_serializer(parts[0]).deserialize(parts[1])
+        return self.__get_serializer(parts[0]).deserialize(parts[1].encode())
 
     def get_type(self):
         """
@@ -127,7 +219,6 @@ class SerializationFacade(object):
         extract the last serialized part found in a mixed string
         """
         pattern = self.__get_type_pattern() + '\|[^\$]+'
-        print(pattern)
         serialized_parts = re.findall(pattern, string)
 
         return serialized_parts[-1] if serialized_parts else string
