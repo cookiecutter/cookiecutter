@@ -15,7 +15,7 @@ import pytest
 from cookiecutter.serialization import \
     SerializationFacade, JsonSerializer, AbstractSerializer
 from cookiecutter.exceptions import UnknownSerializerType, \
-    BadSerializedStringFormat, InvalidSerializerType, MissingRequiredMethod
+    BadSerializedStringFormat, InvalidSerializerType, InvalidType
 
 
 @pytest.fixture
@@ -45,13 +45,12 @@ def get_serializers():
     """
     helper method to get a bunch of serializers
     """
-    class NoSerialize(object):
-        def deserialize(self, string):
-            return {}
-
-    class NoDeserialize(object):
+    class FakeSerializer(object):
         def serialize(self, subject):
             return b'serialized'
+
+        def deserialize(self, string):
+            return {}
 
     class DummySerializer(AbstractSerializer):
         def _do_serialize(self, subject):
@@ -62,8 +61,7 @@ def get_serializers():
                 else get_context()['object']
 
     return {
-        'serialize': NoSerialize,
-        'deserialize': NoDeserialize,
+        'fake': FakeSerializer,
         'dummy': DummySerializer
     }
 
@@ -138,16 +136,14 @@ class TestSerialization(object):
 
     def test_serializer_api_check(self):
         """
-        enforce the given serializer to implement the serializer API
+        enforce the given serializer to extends AbstractSerializer
         """
-        types = ['serialize', 'deserialize']
-        for _type in types:
-            with pytest.raises(MissingRequiredMethod) as excinfo:
-                SerializationFacade().register(
-                    _type, get_serializers()[_type]
-                )
+        with pytest.raises(InvalidType) as excinfo:
+            SerializationFacade().register(
+                'fake', get_serializers()['fake']
+            )
 
-            assert _type in excinfo.value.message
+        assert 'AbstractSerializer' in excinfo.value.message
 
     def test_get_serialization_type(self):
         """
@@ -246,7 +242,6 @@ class TestSerialization(object):
         part2 = serializer.serialize(get_context()['object2']).decode()
         serialized = 'dummy text dummy|' + part1 + '$ ' \
             'another dummy text dummy|' + part2 + '$'
-        print(serialized)
         facade = SerializationFacade({
             'dummy': serializer
         })

@@ -117,6 +117,15 @@ class RepositoryNotFound(CookiecutterException):
     """
 
 
+class InvalidType(CookiecutterException):
+    """
+    Raised when a specified object is not an instance of a required type
+    """
+
+    def __init__(self, type):
+        self.message = 'The object must be of type: ' + type
+
+
 class UnknownSerializerType(CookiecutterException):
     """
     Raised when the specified serializer is not known by the serialization

@@ -9,12 +9,11 @@ import pickle
 import base64
 
 from abc import ABCMeta, abstractmethod
-from cookiecutter.utils import ApiChecker
-from cookiecutter.exceptions import \
-    UnknownSerializerType, BadSerializedStringFormat, InvalidSerializerType
+from cookiecutter.exceptions import UnknownSerializerType, \
+    BadSerializedStringFormat, InvalidSerializerType, InvalidType
 
 
-class AbstractSerializer:
+class AbstractSerializer(object):
     """
     abstract base class for serializers
     """
@@ -176,9 +175,10 @@ class SerializationFacade(object):
         :param serializer: custom serializer to register
         """
         self.__check_type(type)
-        self.__check_serializer_api(serializer)
-        self.__serializers[type] = serializer() if inspect.isclass(
+        oserializer = serializer() if inspect.isclass(
             serializer) else serializer
+        self.__check_serializer_api(oserializer)
+        self.__serializers[type] = oserializer
 
     def __get_type_pattern(self):
         """
@@ -203,7 +203,8 @@ class SerializationFacade(object):
         ensure that a given serializer implements the expected API
         :param serializer: serializer to check its public interface
         """
-        ApiChecker('serialize', 'deserialize').implements_api(serializer)
+        if not isinstance(serializer, AbstractSerializer):
+            raise InvalidType(AbstractSerializer.__name__)
 
     def __check_type(self, type):
         """
