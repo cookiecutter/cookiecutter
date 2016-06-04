@@ -84,7 +84,7 @@ def test_empty_hooks():
                 'cookiecutter': {'shellhooks': 'shellhooks'}
             },
             repo_dir='tests/test-shellhooks-empty/',
-            output_dir='tests/test-shellhooks-empty/'
+            overwrite_if_exists=True
         )
     assert 'shebang' in str(excinfo.value)
 
@@ -106,7 +106,7 @@ def test_oserror_hooks(mocker):
                 'cookiecutter': {'shellhooks': 'shellhooks'}
             },
             repo_dir='tests/test-shellhooks-empty/',
-            output_dir='tests/test-shellhooks-empty/'
+            overwrite_if_exists=True
         )
     assert message in str(excinfo.value)
 
