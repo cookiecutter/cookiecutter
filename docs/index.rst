@@ -21,7 +21,7 @@ Basics
    tutorials
    advanced_usage
    troubleshooting
-   
+
 .. _apiref:
 
 API Reference
@@ -29,7 +29,7 @@ API Reference
 
 .. toctree::
    :maxdepth: 2
-   
+
    cookiecutter
 
 Project Info
@@ -42,6 +42,7 @@ Project Info
    authors
    sprint-contributors
    history
+   case_studies
 
 Index
 -----
