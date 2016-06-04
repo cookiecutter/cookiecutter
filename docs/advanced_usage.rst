@@ -11,7 +11,7 @@ is generated.
 Put them in `hooks/` like this::
 
     cookiecutter-something/
-    ├── {{cookiecutter.repo_name}}/
+    ├── {{cookiecutter.project_slug}}/
     ├── hooks
     │   ├── pre_gen_project.py
     │   └── post_gen_project.py
@@ -20,7 +20,7 @@ Put them in `hooks/` like this::
 Shell scripts work similarly::
 
     cookiecutter-something/
-    ├── {{cookiecutter.repo_name}}/
+    ├── {{cookiecutter.project_slug}}/
     ├── hooks
     │   ├── pre_gen_project.sh
     │   └── post_gen_project.sh
@@ -63,7 +63,7 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
         sys.exit(1)
 
 .. _user-config:
-	
+
 User Config (0.7.0+)
 ----------------------
 
@@ -209,11 +209,11 @@ Here is a `cookiecuttter.json` with templated values for this pattern::
 
     {
       "project_name": "My New Project",
-      "repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
-      "pkg_name": "{{ cookiecutter.repo_name|replace('-', '') }}"
+      "project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+      "pkg_name": "{{ cookiecutter.project_slug|replace('-', '') }}"
     }
 
-If the user takes the defaults, or uses `no_input`, the templated values will 
+If the user takes the defaults, or uses `no_input`, the templated values will
 be:
 
 * `my-new-project`
@@ -232,7 +232,7 @@ Copy without Render
 To avoid rendering directories and files of a cookiecutter mould, the `_copy_without_render` key can be used in the `cookiecutter.json`. The value of this key accepts a list of Unix shell-style wildcards::
 
     {
-        "repo_name": "sample",
+        "project_slug": "sample",
         "_copy_without_render": [
             "*.html",
             "*not_rendered_dir",
@@ -261,7 +261,7 @@ Example for a replay file (which was created via ``cookiecutter gh:hackebrot/coo
             "full_name": "Raphael Pierzina",
             "github_username": "hackebrot",
             "kivy_version": "1.8.0",
-            "repo_name": "foobar",
+            "project_slug": "foobar",
             "short_description": "A sleek slideshow app that supports swipe gestures.",
             "version": "0.1.0",
             "year": "2015"
@@ -291,7 +291,7 @@ Command Line Options
 .. cc-command-line-options::
 
 .. _choice-variables:
-   
+
 Choice Variables (1.1+)
 -----------------------
 
@@ -316,16 +316,16 @@ you'd get the following choices when running Cookiecutter::
    2 - BSD-3
    3 - GNU GPL v3.0
    4 - Apache Software License 2.0
-   Choose from 1, 2, 3, 4 [1]:		
+   Choose from 1, 2, 3, 4 [1]:
 
-Depending on an user's choice, a different license is rendered by Cookiecutter. 
+Depending on an user's choice, a different license is rendered by Cookiecutter.
 
 The above ``license`` choice variable creates ``cookiecutter.license``, which
 can be used like this::
 
   {%- if cookiecutter.license == "MIT" -%}
   # Possible license content here
-  
+
   {%- elif cookiecutter.license == "BSD-3" -%}
   # More possible license content here
 
@@ -337,7 +337,7 @@ The created choice variable is still a regular Cookiecutter variable and can be 
   -------
 
   Distributed under the terms of the `{{cookiecutter.license}}`_ license,
-  
+
 Overwriting Default Choice Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -355,11 +355,11 @@ Setting the default ``license`` agreement to *Apache Software License 2.0* can b
 
 .. code-block:: yaml
 
-   default_context:       
-       license: "Apache Software License 2.0"  
+   default_context:
+       license: "Apache Software License 2.0"
 
-in the :ref:`user-config` file. 
-       
+in the :ref:`user-config` file.
+
 The resulting prompt changes and looks like::
 
   Select license:
