@@ -15,10 +15,10 @@ Create the directory for your cookiecutter and cd into it:
     $ mkdir cookiecutter-website-simple
     $ cd cookiecutter-website-simple/
 
-Step 2: Create `repo_name` Directory
+Step 2: Create `project_slug` Directory
 -------------------------------------
 
-Create a directory called `{{ cookiecutter.repo_name }}`.
+Create a directory called `{{ cookiecutter.project_slug }}`.
 
 This value will be replaced with the repo name of projects that you generate
 from this cookiecutter.
@@ -26,7 +26,7 @@ from this cookiecutter.
 Step 3: Create Files
 --------------------
 
-Inside of `{{ cookiecutter.repo_name }}`, create `index.html`, `site.css`, and
+Inside of `{{ cookiecutter.project_slug }}`, create `index.html`, `site.css`, and
 `site.js`.
 
 To be continued...

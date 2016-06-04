@@ -11,9 +11,6 @@ Cookiecutter
 .. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
         :target: https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master
 
-.. image:: https://img.shields.io/pypi/dm/cookiecutter.svg
-        :target: https://pypi.python.org/pypi/cookiecutter
-
 .. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
         :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
 
@@ -35,12 +32,14 @@ Cookiecutter
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
 
-* Documentation: http://cookiecutter.rtfd.org
+* Documentation: https://cookiecutter.readthedocs.io
 * GitHub: https://github.com/audreyr/cookiecutter
 * Free software: BSD license
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 
 .. image:: https://raw.github.com/audreyr/cookiecutter/aa309b73bdc974788ba265d843a65bb94c2e608e/cookiecutter_medium.png
+
+We are proud to be an open source sponsor of `PyCon 2016`_.
 
 Features
 --------
@@ -181,6 +180,7 @@ Categories of Cookiecutters
 `C++`_ |
 `C#`_ |
 `Common Lisp`_ |
+`Golang`_ |
 `JS`_ |
 `Kotlin`_ |
 `LaTeX/XeTeX`_ |
@@ -188,7 +188,8 @@ Categories of Cookiecutters
 `Berkshelf-Vagrant`_ |
 `HTML`_ |
 `Scala`_ |
-`6502 Assembly`_
+`6502 Assembly`_ |
+`Data Science`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
 writing or suggesting one. We wish for our users to find a solution for their
@@ -312,6 +313,8 @@ Python
 * `cookiecutter-python-app`_: A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
 * `morepath-cookiecutter`_: Cookiecutter template for Morepath, the web microframework with superpowers.
 * `Springerle/hovercraft-slides`_: A template for new `Hovercraft!`_ presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
+* `cookiecutter-snakemake-analysis-pipeline`_: One way to easily set up `Snakemake`_-based analysis pipelines.
+* `cookiecutter-py3tkinter`_: Template for Python 3 Tkinter application gui.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -332,7 +335,7 @@ Python
 .. _`Invoke`: http://invoke.readthedocs.io/en/latest/
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
-.. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter
+.. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter-tryton
 .. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`pytest`: http://pytest.org/latest/
@@ -346,6 +349,11 @@ Python
 .. _`funkload-friendly`: https://github.com/tokibito/funkload-friendly
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
 .. _`morepath-cookiecutter`: https://github.com/morepath/morepath-cookiecutter
+.. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
+.. _`Hovercraft!`: https://hovercraft.readthedocs.io/
+.. _`cookiecutter-snakemake-analysis-pipeline`: https://github.com/xguse/cookiecutter-snakemake-analysis-pipeline
+.. _`Snakemake`: https://bitbucket.org/snakemake/snakemake/wiki/Home
+.. _`cookiecutter-py3tkinter`: https://github.com/ivanlyon/cookiecutter-py3tkinter
 
 
 Python-Django
@@ -367,6 +375,10 @@ Python-Django
 * `django-starter`_: A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
+* `cookiecutter-django-herokuapp`_: A Django 1.7+ template optimized for Python 3 on Heroku.
+* `cc_django_ember_app`_: For creating applications with Django and EmberJS
+* `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
+* `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -385,6 +397,10 @@ Python-Django
 .. _`django-starter`: https://github.com/tkjone/django-starter
 .. _`cookiecutter-django-gulp`: https://github.com/valerymelou/cookiecutter-django-gulp
 .. _`wagtail-starter-kit`: https://github.com/tkjone/wagtail-starter-kit
+.. _`cookiecutter-django-herokuapp`: https://github.com/dulaccc/cookiecutter-django-herokuapp
+.. _`cc_django_ember_app`: https://bitbucket.org/levit_scs/cc_django_ember_app
+.. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
+.. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
 
 
 Cookiecutter (meta)
@@ -435,6 +451,14 @@ Common Lisp
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 
 
+Golang
+~~~~~~
+
+* `beat-generator`_: A template to create your own beat to ship data to Elasticsearch.
+
+.. _`beat-generator`: https://github.com/elastic/beat-generator
+
+
 JS
 ~~
 
@@ -446,6 +470,8 @@ JS
   non-jQuery JS widget packaged for multiple JS packaging systems.
 * `cookiecutter-component`_: A template for a Component JS package.
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
+* `cookiecutter-es6-package`_: A template for writing node packages using ES6 via babel.
+* `cookiecutter-angular2`_: A template for modular angular2 with typescript apps.
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
@@ -453,6 +479,8 @@ JS
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
 .. _`cookiecutter-tampermonkey`: https://github.com/christabor/cookiecutter-tampermonkey
+.. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
+.. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2
 
 
 Kotlin
@@ -501,8 +529,6 @@ HTML
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 .. _`cookiecutter-tumblr-theme`: https://github.com/relekang/cookiecutter-tumblr-theme
-.. _`Springerle/hovercraft-slides`: https://github.com/Springerle/hovercraft-slides
-.. _`Hovercraft!`: https://hovercraft.readthedocs.org/
 
 
 Scala
@@ -519,6 +545,12 @@ Scala
 
 .. _`cookiecutter-atari2600`: https://github.com/joeyjoejoejr/cookiecutter-atari2600
 
+Data Science
+~~~~~~~~~~~~
+
+* `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
+
+.. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
 
 Similar projects
 ----------------
@@ -567,6 +599,7 @@ Similar projects
 .. _`Skaffold`: https://github.com/christabor/Skaffold
 
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
+.. _`PyCon 2016`: https://us.pycon.org/2016/sponsors/
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.io/en/latest/troubleshooting.html
