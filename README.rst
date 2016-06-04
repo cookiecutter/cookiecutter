@@ -314,6 +314,7 @@ Python
 * `morepath-cookiecutter`_: Cookiecutter template for Morepath, the web microframework with superpowers.
 * `Springerle/hovercraft-slides`_: A template for new `Hovercraft!`_ presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
 * `cookiecutter-snakemake-analysis-pipeline`_: One way to easily set up `Snakemake`_-based analysis pipelines.
+* `cookiecutter-py3tkinter`_: Template for Python 3 Tkinter application gui.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -352,6 +353,7 @@ Python
 .. _`Hovercraft!`: https://hovercraft.readthedocs.io/
 .. _`cookiecutter-snakemake-analysis-pipeline`: https://github.com/xguse/cookiecutter-snakemake-analysis-pipeline
 .. _`Snakemake`: https://bitbucket.org/snakemake/snakemake/wiki/Home
+.. _`cookiecutter-py3tkinter`: https://github.com/ivanlyon/cookiecutter-py3tkinter
 
 
 Python-Django
