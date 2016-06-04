@@ -78,15 +78,20 @@ def test_run_python_hooks_cwd():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_empty_hooks():
-    with pytest.raises(FailedHookException) as excinfo:
-        generate.generate_files(
-            context={
-                'cookiecutter': {'shellhooks': 'shellhooks'}
-            },
-            repo_dir='tests/test-shellhooks-empty/',
-            overwrite_if_exists=True
-        )
-    assert 'shebang' in str(excinfo.value)
+
+    # OSError.errno=8 is not thrown on Windows when the script is emtpy
+    # because it always runs through shell instead of needing a shebang.
+
+    if not sys.platform.startswith('win'):
+        with pytest.raises(FailedHookException) as excinfo:
+            generate.generate_files(
+                context={
+                    'cookiecutter': {'shellhooks': 'shellhooks'}
+                },
+                repo_dir='tests/test-shellhooks-empty/',
+                overwrite_if_exists=True
+            )
+        assert 'shebang' in str(excinfo.value)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
