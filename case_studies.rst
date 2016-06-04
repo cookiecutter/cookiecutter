@@ -2,7 +2,7 @@
 Case Studies
 ============
 
-The showcase is where organizations can describe how they are using Cookiecutter.
+This showcase is where organizations can describe how they are using Cookiecutter.
 
 `ChrisDev`_
 -----------------
