@@ -11,6 +11,8 @@ Learn How to Use Cookiecutter
 Create Your Very Own Cookiecutter
 ---------------------------------
 
+* `Learn the Basics of Cookiecutter by Creating a Cookiecutter <https://github.com/BruceEckel/HelloCookieCutter1>`_
+
 * :doc:`tutorial2` by `@audreyr`_
 
 * `Project Templates Made Easy`_ by `@pydanny`_
