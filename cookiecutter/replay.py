@@ -24,7 +24,7 @@ def get_file_name(replay_dir, template_name):
 
 
 def dump(replay_dir, template_name, context):
-    # type: (str, str, CookiecutterConfigType) -> none
+    # type: (str, str, CookiecutterConfigType) -> None
     if not make_sure_path_exists(replay_dir):
         raise IOError('Unable to create replay dir at {}'.format(replay_dir))
 

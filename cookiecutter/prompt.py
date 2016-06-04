@@ -21,7 +21,8 @@ from .exceptions import UndefinedVariableInTemplate
 from .environment import StrictEnvironment
 
 # Used for typechecking only
-from .stubs.cookiecutter import CookiecutterConfigType
+from typing import Optional  # NOQA
+from .stubs.cookiecutter import CookiecutterConfigType  # NOQA
 
 
 def read_user_variable(var_name, default_value):
@@ -53,7 +54,6 @@ def read_user_yes_no(question, default_value):
 
 
 def read_user_choice(var_name, options):
-    # type: (str, List[str]) -> str
     """Prompt the user to choose from several options for the given variable.
 
     The first item will be returned if no input happens.
@@ -89,6 +89,7 @@ def read_user_choice(var_name, options):
 
 
 def render_variable(env, raw, cookiecutter_dict):
+    # type: (StrictEnvironment, Optional[str], CookiecutterConfigType) -> str
     if raw is None:
         return None
     if not isinstance(raw, basestring):
@@ -114,6 +115,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
 
 def prompt_for_config(context, no_input=False):
+    # type: (CookiecutterConfigType, bool) -> CookiecutterConfigType
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.

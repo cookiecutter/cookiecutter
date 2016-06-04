@@ -15,6 +15,7 @@ from .exceptions import NonTemplatedInputDirException
 
 
 def find_template(repo_dir):
+    # type: (str) -> str
     """
     Determines which child directory of `repo_dir` is the project template.
 

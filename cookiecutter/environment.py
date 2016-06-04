@@ -4,6 +4,10 @@ from jinja2 import Environment, StrictUndefined
 
 from .exceptions import UnknownExtension
 
+# For typechecking only
+from typing import List  # NOQA
+from .stubs.cookiecutter import CookiecutterConfigType  # NOQA
+
 
 class ExtensionLoaderMixin(object):
     """Mixin that provides a sane way of loading extensions specified in a
@@ -36,6 +40,7 @@ class ExtensionLoaderMixin(object):
             raise UnknownExtension('Unable to load extension: {}'.format(err))
 
     def _read_extensions(self, context):
+        # type: (CookiecutterConfigType) -> List[str]
         """Return a list of extensions as str to be passed on to the jinja2
         env. If context does not contain the relevant info, return an empty
         list instead.

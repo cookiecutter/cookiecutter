@@ -16,6 +16,10 @@ import logging
 import os
 import shutil
 
+# For typechecking only
+from typing import Optional  # NOQA
+from .stubs.cookiecutter import CookiecutterConfigType  # NOQA
+
 from jinja2 import FileSystemLoader
 from cookiecutter.environment import StrictEnvironment
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
@@ -34,6 +38,7 @@ from .hooks import run_hook
 
 
 def copy_without_render(path, context):
+    # type: (str, CookiecutterConfigType) -> bool
     """
     Returns True if `path` matches some pattern in the
     `_copy_without_render` context setting.
@@ -53,6 +58,7 @@ def copy_without_render(path, context):
 
 
 def apply_overwrites_to_context(context, overwrite_context):
+    # type: (CookiecutterConfigType, CookiecutterConfigType) -> None
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
@@ -76,6 +82,7 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      extra_context=None):
+    # type: (str, Optional[CookiecutterConfigType], Optional[CookiecutterConfigType]) -> CookiecutterConfigType
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
@@ -118,6 +125,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
 
 def generate_file(project_dir, infile, context, env):
+    # type: (str, str, CookiecutterConfigType, StrictEnvironment) -> None
     """
     1. Render the filename of infile as the name of outfile.
     2. Deal with infile appropriately:
@@ -184,6 +192,7 @@ def generate_file(project_dir, infile, context, env):
 
 def render_and_create_dir(dirname, context, output_dir, environment,
                           overwrite_if_exists=False):
+    # type: (str, CookiecutterConfigType, str, StrictEnvironment, bool) -> str
     """
     Renders the name of a directory, creates the directory, and
     returns its path.
@@ -226,6 +235,7 @@ def ensure_dir_is_templated(dirname):
 
 
 def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
+    # type: (str, str, str, CookiecutterConfigType) -> None
     """
     Run hook from repo directory, cleaning up project directory if hook fails
     """
@@ -241,6 +251,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
 
 def generate_files(repo_dir, context=None, output_dir='.',
                    overwrite_if_exists=False):
+    # type: (str, Optional[CookiecutterConfigType], str, bool) -> str
     """
     Renders the templates and saves them to files.
 

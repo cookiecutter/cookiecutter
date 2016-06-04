@@ -55,14 +55,14 @@ def get_config(config_path):
     logger.debug('config_path is {0}'.format(config_path))
     with io.open(config_path, encoding='utf-8') as file_handle:
         try:
-            yaml_dict = poyo.parse_string(file_handle.read())
+            yaml_dict = poyo.parse_string(file_handle.read())  # type: CookiecutterConfigType
         except poyo.exceptions.PoyoException as e:
             raise InvalidConfiguration(
                 'Unable to parse YAML file {}. Error: {}'
                 ''.format(config_path, e)
             )
 
-    config_dict = copy.copy(DEFAULT_CONFIG)  # type: CookiecutterConfigType
+    config_dict = copy.copy(DEFAULT_CONFIG)
     config_dict.update(yaml_dict)
 
     raw_replay_dir = config_dict['replay_dir']
@@ -75,7 +75,7 @@ def get_config(config_path):
 
 
 def get_user_config(config_file=USER_CONFIG_PATH):
-    # type: (str) -> Dict[str,str]
+    # type: (str) -> CookiecutterConfigType
     """Retrieve the config from a file or return the defaults if None is
     passed. If an environment variable `COOKIECUTTER_CONFIG` is set up, try
     to load its value. Otherwise fall back to a default file or config.

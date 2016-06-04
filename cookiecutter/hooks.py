@@ -14,7 +14,10 @@ import os
 import subprocess
 import sys
 import tempfile
+
+# For typechking only
 from typing import Dict  # NOQA
+from .stubs.cookiecutter import CookiecutterConfigType  # NOQA
 
 from jinja2 import Template
 
@@ -80,6 +83,7 @@ def run_script(script_path, cwd='.'):
 
 
 def run_script_with_context(script_path, cwd, context):
+    # type: (str, str, CookiecutterConfigType) -> None
     """
     Executes a script after rendering with it Jinja.
 
@@ -103,6 +107,7 @@ def run_script_with_context(script_path, cwd, context):
 
 
 def run_hook(hook_name, project_dir, context):
+    # type: (str, str, CookiecutterConfigType) -> None
     """
     Try to find and execute a hook from the specified project directory.
 

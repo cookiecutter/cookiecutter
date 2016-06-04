@@ -15,7 +15,10 @@ from __future__ import unicode_literals
 import logging
 import os
 import re
+
+# For typechecking only
 from typing import Optional, Dict  # NOQA
+from .stubs.cookiecutter import CookiecutterConfigType  # NOQA
 
 from .config import get_user_config, USER_CONFIG_PATH
 from .exceptions import InvalidModeException, RepositoryNotFound
@@ -47,6 +50,7 @@ def is_repo_url(value):
 
 
 def expand_abbreviations(template, config_dict):
+    # type: (str, CookiecutterConfigType) -> str
     """
     Expand abbreviations in a template name.
 
