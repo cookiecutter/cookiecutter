@@ -1,6 +1,6 @@
-=========
+====================
 Additional Tutorials
-=========
+====================
 
 Learn How to Use Cookiecutter
 -----------------------------
@@ -9,7 +9,7 @@ Learn How to Use Cookiecutter
 
 
 Create Your Very Own Cookiecutter Project Template
----------------------------------
+--------------------------------------------------
 
 * :doc:`tutorial2` by `@audreyr`_
 
