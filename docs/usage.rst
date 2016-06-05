@@ -51,7 +51,7 @@ projects, but you can also give it the full URL to any repository::
 
 
 You will be prompted to enter a bunch of project config values. (These are
-defined in the project's `cookiecutter.json`.
+defined in the project's `cookiecutter.json`.)
 
 Then, Cookiecutter will generate a project from the template, using the values
 that you entered. It will be placed in your current directory.
