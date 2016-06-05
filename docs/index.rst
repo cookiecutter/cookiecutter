@@ -18,6 +18,7 @@ Basics
    overview
    installation
    usage
+   first_steps
    tutorials
    advanced_usage
    troubleshooting

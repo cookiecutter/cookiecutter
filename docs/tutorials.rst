@@ -1,5 +1,5 @@
 =========
-Tutorials
+Additional Tutorials
 =========
 
 Learn How to Use Cookiecutter
@@ -8,10 +8,8 @@ Learn How to Use Cookiecutter
 * :doc:`tutorial1` by `@audreyr`_
 
 
-Create Your Very Own Cookiecutter
+Create Your Very Own Cookiecutter Project Template
 ---------------------------------
-
-* `Learn the Basics of Cookiecutter by Creating a Cookiecutter <https://github.com/BruceEckel/HelloCookieCutter1>`_
 
 * :doc:`tutorial2` by `@audreyr`_
 
