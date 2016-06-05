@@ -63,6 +63,7 @@ To access the most recent version, choose the 'unstable' branch at https://packa
     $ sudo dpkg --configure -a # configures all packages installed above
     $ cookiecutter --version # Test installation of cookiecutter
 
+.. note:: The debian cookiecutter package is patched version of cookiecutter using a different YAML parser from other installations.
 
 Upgrading from 0.6.4 to 0.7.0 or greater
 -----------------------------------------
