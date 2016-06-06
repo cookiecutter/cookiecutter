@@ -36,7 +36,7 @@ from .hooks import run_hook
 def copy_without_render(path, context):
     """
     Returns True if `path` matches some pattern in the
-    `_copy_without_render` context setting.
+    `_copy_without_render` context dict.
 
     :param path: A file-system path referring to a file or dir that
         should be rendered or just copied.
