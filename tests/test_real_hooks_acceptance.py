@@ -9,6 +9,7 @@ Additional tests for `cookiecutter.hooks` module.
 """
 
 import os
+import sys
 import tempfile
 
 from cookiecutter.utils import rmtree
@@ -86,9 +87,20 @@ class TestRealHooksAcceptance(object):
 
     def test_run_real_hook_in_place(self):
         """
-        run a real hook in place
+        run a real hook in place: python file
         """
         template = 'inplace'
+        template_dir = os.path.join(self.templates_path, template)
+        file = os.path.join(self.project_dir, template)
+        self.run(template)
+        assert os.path.exists(file)
+        assert template_dir == open(file, 'r').read()
+
+    def test_run_real_hook_in_place_shell(self):
+        """
+        run a real hook in place: bash or batch file depending on the OS
+        """
+        template = 'batch' if sys.platform.startswith('win') else 'bash'
         template_dir = os.path.join(self.templates_path, template)
         file = os.path.join(self.project_dir, template)
         self.run(template)
