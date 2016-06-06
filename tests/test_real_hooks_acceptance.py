@@ -77,6 +77,18 @@ class TestRealHooksAcceptance(object):
         assert self.runner
         self.runner.run()
 
+    def assert_real_hook_is_run_in_place(self, template):
+        """
+        assert that the real hook is run in place
+        :param template: template id
+        """
+        template_dir = os.path.join(self.templates_path, template)
+        file = os.path.join(self.project_dir, template)
+        self.run(template)
+        assert os.path.exists(file)
+        content = open(file, 'r').read()
+        assert template_dir == content.strip()
+
     def test_renderable_hooks_can_be_run(self):
         """
         regression test
@@ -89,20 +101,11 @@ class TestRealHooksAcceptance(object):
         """
         run a real hook in place: python file
         """
-        template = 'inplace'
-        template_dir = os.path.join(self.templates_path, template)
-        file = os.path.join(self.project_dir, template)
-        self.run(template)
-        assert os.path.exists(file)
-        assert template_dir == open(file, 'r').read()
+        self.assert_real_hook_is_run_in_place('inplace')
 
     def test_run_real_hook_in_place_shell(self):
         """
         run a real hook in place: bash or batch file depending on the OS
         """
         template = 'batch' if sys.platform.startswith('win') else 'bash'
-        template_dir = os.path.join(self.templates_path, template)
-        file = os.path.join(self.project_dir, template)
-        self.run(template)
-        assert os.path.exists(file)
-        assert template_dir == open(file, 'r').read()
+        self.assert_real_hook_is_run_in_place(template)
