@@ -166,3 +166,18 @@ class TestExternalHooks(object):
             with pytest.raises(exceptions.FailedHookException) as excinfo:
                 hooks.run_hook('pre_gen_project', tests_dir, {})
             assert 'Hook script failed' in str(excinfo.value)
+
+    def test_run_failing_hook_with_stderr_message(self):
+        hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
+        tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
+        expected = "Expected error message"
+
+        with open(hook_path, 'w') as f:
+            f.write("#!/usr/bin/env python\n")
+            f.write(
+                "import sys; sys.stderr.write(%s) sys.exit(1)\n" % expected)
+
+        with utils.work_in(self.repo_path):
+            with pytest.raises(exceptions.FailedHookException) as excinfo:
+                hooks.run_hook('pre_gen_project', tests_dir, {})
+            assert expected in str(excinfo.value)

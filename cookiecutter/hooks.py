@@ -204,6 +204,7 @@ def __do_run_script(script_path, cwd, serialized_context):
     exit_status = proc.wait()
     if exit_status != EXIT_SUCCESS:
         raise FailedHookException(
-            "Hook script failed (exit status: %d)" % exit_status)
+            "Hook script failed (exit status: %d): \n%s" %
+            (exit_status, result[1]))
 
     return result
