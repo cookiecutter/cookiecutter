@@ -22,6 +22,7 @@ help:
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
 	@echo "release - package and upload a release"
 	@echo "sdist - package"
+	@echo "submodules - pull and update git submodules recursively"
 
 clean: clean-tox clean-build clean-pyc
 
@@ -51,6 +52,10 @@ test-all:
 coverage:
 	tox -e cov-report
 	$(BROWSER) htmlcov/index.html
+
+submodules:
+	git pull --recurse-submodules
+	git submodule update --init --recursive
 
 docs:
 	rm -f docs/cookiecutter.rst
