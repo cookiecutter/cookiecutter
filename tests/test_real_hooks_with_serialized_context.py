@@ -240,3 +240,22 @@ class TestRealHooks(object):
         actual = self.run_script_with_context('custom_serializer', context)
 
         assert 'template_dir' in actual
+
+    def test_run_script_with_large_context(self):
+        context = {
+            u'cookiecutter': {
+                u'_extensions': [u'jinja2_time.TimeExtension'],
+                u'email': u'jd@example.com',
+                u'full_name': u'John Doe',
+                u'github_username': u'johndoe',
+                u'project_name': u'Dummy Project',
+                u'project_short_description': u'Short description',
+                u'project_slug': u'dummy-project',
+                u'release_date': u'2016-06-07',
+                u'version': u'0.1.0'
+            }
+        }
+
+        actual = self.run_script_with_context('update_context', context)
+
+        assert 'my_key' in actual

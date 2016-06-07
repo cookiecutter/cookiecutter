@@ -143,8 +143,9 @@ class SerializationFacade(object):
         :param type: the serializer type to use
         """
         return self.__current_type + '|' \
-            + self.__get_serializer(
-                self.__current_type).serialize(subject).decode() \
+            + self.__decode(
+                self.__get_serializer(
+                    self.__current_type).serialize(subject)) \
             + '$'
 
     def deserialize(self, string):
@@ -161,7 +162,8 @@ class SerializationFacade(object):
                 'serializer_type|serialized_string$'
             )
 
-        return self.__get_serializer(parts[0]).deserialize(parts[1].encode())
+        return self.__get_serializer(parts[0]).deserialize(
+            self.__encode(parts[1]))
 
     def use(self, type):
         """
@@ -233,3 +235,17 @@ class SerializationFacade(object):
         serialized_parts = re.findall(pattern, string)
 
         return serialized_parts[-1] if serialized_parts else string
+
+    def __decode(self, serialized):
+        """
+        prepare the serialized string for crossprocessing
+        :param serialized: serialized string to treat
+        """
+        return serialized.decode().replace("\n", "*")
+
+    def __encode(self, encoded):
+        """
+        prepare the encoded string for deserialization
+        :param encoded: encoded string to treat
+        """
+        return encoded.replace("*", "\n").encode()

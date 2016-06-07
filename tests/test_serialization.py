@@ -19,6 +19,14 @@ from cookiecutter.exceptions import UnknownSerializerType, \
 
 
 @pytest.fixture
+def _encode_serialized(serialized):
+    """
+    helper method to simulate the SerializationFacade.__encode behaviour
+    """
+    return serialized.decode().replace("\n", "*")
+
+
+@pytest.fixture
 def get_context():
     """
     helper method to get a bunch of context objects
@@ -31,7 +39,7 @@ def get_context():
         "my_key2": "my_val2"
     }
 
-    json_serialized = JsonSerializer().serialize(context).decode()
+    json_serialized = _encode_serialized(JsonSerializer().serialize(context))
 
     return {
         'object': context,
@@ -76,7 +84,9 @@ class TestSerialization(object):
         :param object: the object to serialize
         """
         context = get_context()['object'] if object is None else object
-        return type + '|' + serializer.serialize(context).decode() + '$'
+        return type + '|' \
+                    + _encode_serialized(serializer.serialize(context)) \
+                    + '$'
 
     def test_default_serialize(self):
         """
