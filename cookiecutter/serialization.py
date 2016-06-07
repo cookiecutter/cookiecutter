@@ -7,10 +7,29 @@ import inspect
 import re
 import pickle
 import base64
+import sys
 
 from abc import ABCMeta, abstractmethod
 from cookiecutter.exceptions import UnknownSerializerType, \
     BadSerializedStringFormat, InvalidSerializerType, InvalidType
+
+
+def get_context():
+    """
+    high level context provider API to be used by hooks
+    it reads serialized context from stdin
+    """
+    serializer = SerializationFacade()
+    return serializer.deserialize(sys.stdin.readlines()[0])
+
+
+def put_context(context):
+    """
+    high level context updater API to be used by hooks
+    it serializes a given context object
+    :param context: context dictionary
+    """
+    print(SerializationFacade().serialize(context))
 
 
 class AbstractSerializer(object):

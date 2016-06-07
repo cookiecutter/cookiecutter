@@ -11,9 +11,11 @@ Tests for `cookiecutter.serialization` module.
 from __future__ import unicode_literals
 
 import pytest
+import sys
 
 from cookiecutter.serialization import \
-    SerializationFacade, JsonSerializer, AbstractSerializer
+    SerializationFacade, JsonSerializer, AbstractSerializer, \
+    get_context as get_context_in_hooks, put_context as put_context_in_hooks
 from cookiecutter.exceptions import UnknownSerializerType, \
     BadSerializedStringFormat, InvalidSerializerType, InvalidType
 
@@ -279,3 +281,27 @@ class TestSerialization(object):
         })
 
         assert expected == facade.deserialize(serialized)
+
+    def test_module_get_context(self, mocker):
+        """
+        serialization module context getter that should be used in hooks
+        :param mocker: mock library handler
+        """
+        mocker.patch('sys.stdin.readlines',
+                     return_value=[get_context()['json']])
+        assert get_context()['object'] == get_context_in_hooks()
+        mocker.stopall()
+
+    def test_module_put_context(self, mocker):
+        """
+        serialization module context setter that should be used in hooks
+        :param mocker: mock library handler
+        """
+        stdout = mocker.patch('sys.stdout')
+        args = {
+            'getvalue.return_value': get_context()['json']
+        }
+        stdout.configure_mock(**args)
+        put_context_in_hooks(get_context()['object'])
+        assert get_context()['json'] == sys.stdout.getvalue()
+        mocker.stopall()
