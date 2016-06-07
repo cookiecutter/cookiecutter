@@ -21,7 +21,7 @@ from jinja2 import Template
 from pydoc import locate
 from cookiecutter import utils
 from .exceptions import FailedHookException, BadSerializedStringFormat
-from .serialization import SerializationFacade
+from .serialization import SerializationFacade, make_persistent
 
 
 _HOOKS = [
@@ -82,18 +82,16 @@ def run_script_with_context(script_path, cwd, context):
                 in current_context['_serializers']:
             classes = current_context['_serializers']['classes']
             for type in classes:
-                serializers[type] = locate(classes[type])
+                serializers[type] = locate(classes[type], 1)
+
             if 'use' in current_context['_serializers']:
                 usetype = current_context['_serializers']['use']
 
-        # TODO: move .use(usetype) here:
-        # serializer = SerializationFacade(serializers).use(usetype)
-        # this will permit to save the facade for cross processing before
-        # running the hook
-        serializer = SerializationFacade(serializers)
+        serializer = SerializationFacade(serializers).use(usetype)
+        make_persistent(serializer)
 
         result = __do_run_script(
-            script, cwd, serializer.use(usetype).serialize(context).encode())
+            script, cwd, serializer.serialize(context).encode())
 
         return serializer.deserialize(result[0].decode())
 
@@ -124,7 +122,7 @@ def lazy_load_from_extra_dir(template_dir):
     """
     extra_dir = os.path.abspath(os.path.join(template_dir, 'extra'))
     if os.path.exists(extra_dir) and extra_dir not in sys.path:
-        sys.path.append(extra_dir)
+        sys.path.insert(1, extra_dir)
 
 
 def __create_renderable_hook(script_path, context):
@@ -176,9 +174,7 @@ def __do_run_script(script_path, cwd, serialized_context):
     result = (serialized_context, b'')
     run_thru_shell = sys.platform.startswith('win')
 
-    # TODO: save the sys.path in the os.environ['PYTHONPATH'] to be sure that
-    # any added customized path will be accessible from hooks
-    # eq. this ensures that custom serializers can be instantiated from hooks
+    os.environ['PYTHONPATH'] = os.pathsep.join(sys.path)
 
     proc = subprocess.Popen(
         __get_script_command(script_path),

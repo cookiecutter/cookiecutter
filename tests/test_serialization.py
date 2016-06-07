@@ -12,10 +12,12 @@ from __future__ import unicode_literals
 
 import pytest
 import sys
+import os
 
 from cookiecutter.serialization import \
     SerializationFacade, JsonSerializer, AbstractSerializer, \
-    get_context as get_context_in_hooks, put_context as put_context_in_hooks
+    get_context as get_context_in_hooks, put_context as put_context_in_hooks, \
+    remove_persisent
 from cookiecutter.exceptions import UnknownSerializerType, \
     BadSerializedStringFormat, InvalidSerializerType, InvalidType
 
@@ -77,6 +79,10 @@ def get_serializers():
 
 
 class TestSerialization(object):
+
+    def setup_method(self, method):
+        remove_persisent(SerializationFacade)
+        assert SerializationFacade.__name__ not in os.environ
 
     def __get_serialized_context(self, type, serializer, object=None):
         """

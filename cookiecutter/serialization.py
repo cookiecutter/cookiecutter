@@ -8,6 +8,7 @@ import re
 import pickle
 import base64
 import sys
+import os
 
 from abc import ABCMeta, abstractmethod
 from cookiecutter.exceptions import UnknownSerializerType, \
@@ -19,7 +20,9 @@ def get_context():
     high level context provider API to be used by hooks
     it reads serialized context from stdin
     """
-    serializer = SerializationFacade()
+    serializer = get_persistent(SerializationFacade)
+    if not serializer:
+        serializer = SerializationFacade()
     return serializer.deserialize(sys.stdin.readlines()[0])
 
 
@@ -29,7 +32,44 @@ def put_context(context):
     it serializes a given context object
     :param context: context dictionary
     """
-    print(SerializationFacade().serialize(context))
+    serializer = get_persistent(SerializationFacade)
+    if not serializer:
+        serializer = SerializationFacade()
+    print(serializer.serialize(context))
+
+
+def make_persistent(subject):
+    """
+    make a given subject persistent between processes
+    :param subject: subject to persist
+    """
+    serializer = SerializationFacade().use('pickle')
+    id = subject.__class__.__name__
+    os.environ[id] = serializer.serialize(subject)
+
+
+def get_persistent(klass):
+    """
+    get a persistent subject from a given class
+    :param klass: subject klass to retrieve if it is persistent
+    """
+    id = klass.__name__
+    subject = None
+    if id in os.environ:
+        serializer = SerializationFacade().use('pickle')
+        subject = serializer.deserialize(os.environ[id])
+
+    return subject
+
+
+def remove_persisent(klass):
+    """
+    remove a persistent subject record
+    :param klass: subject klass to remove
+    """
+    id = klass.__name__
+    if id in os.environ:
+        del(os.environ[id])
 
 
 class AbstractSerializer(object):
@@ -150,6 +190,7 @@ class SerializationFacade(object):
         self.__serializers = {}
         self.__current_type = 'json'
         self.register('json', JsonSerializer)
+        self.register('pickle', PickleSerializer)
 
         if serializers is not None:
             for type in serializers:
