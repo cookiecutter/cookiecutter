@@ -20,17 +20,7 @@ Basics
    usage
    first_steps
    tutorials
-   advanced/hooks
-   advanced/user_config
-   advanced/calling_from_python
-   advanced/injecting_content
-   advanced/suppressing_prompts
-   advanced/templates_in_context
-   advanced/copy_without_render
-   advanced/replay
-   advanced/cli_options
-   advanced/choice_variables
-   advanced/template_extensions
+   advanced/index
    troubleshooting
 
 .. _apiref:
