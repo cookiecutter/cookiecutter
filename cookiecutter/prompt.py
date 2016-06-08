@@ -101,7 +101,7 @@ def render_variable(env, raw, cookiecutter_dict):
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
-    # type: (CookiecutterConfigType, StrictEnvironment, str, List[str], bool) -> str
+    # type: (CookiecutterConfigType, StrictEnvironment, str, List[str], bool) -> str  # noqa
     """Prompt the user which option to choose from the given. Each of the
     possible choices is rendered beforehand.
     """

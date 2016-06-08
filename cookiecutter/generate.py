@@ -82,7 +82,7 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      extra_context=None):
-    # type: (str, Optional[CookiecutterConfigType], Optional[CookiecutterConfigType]) -> CookiecutterConfigType
+    # type: (str, Optional[CookiecutterConfigType], Optional[CookiecutterConfigType]) -> CookiecutterConfigType # noqa
     """
     Generates the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.

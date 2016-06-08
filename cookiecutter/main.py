@@ -78,7 +78,7 @@ def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
         config_file=USER_CONFIG_PATH):
-    # type: (str, Optional[str], bool, Optional[Dict[str,str]], bool, bool, str, str) -> str
+    # type: (str, Optional[str], bool, Optional[Dict[str,str]], bool, bool, str, str) -> str # noqa
     """
     API equivalent to using Cookiecutter at the command line.
 

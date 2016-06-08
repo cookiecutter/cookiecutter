@@ -55,7 +55,7 @@ def get_config(config_path):
     logger.debug('config_path is {0}'.format(config_path))
     with io.open(config_path, encoding='utf-8') as file_handle:
         try:
-            yaml_dict = poyo.parse_string(file_handle.read())  # type: CookiecutterConfigType
+            yaml_dict = poyo.parse_string(file_handle.read())
         except poyo.exceptions.PoyoException as e:
             raise InvalidConfiguration(
                 'Unable to parse YAML file {}. Error: {}'
