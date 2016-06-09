@@ -10,7 +10,8 @@ Tests for context related config functions
 
 import pytest
 
-from cookiecutter.config import get_from_context
+from cookiecutter.config import get_from_context, set_to_context, \
+    get_from_cookiecutter_context, set_to_cookiecutter_context
 
 
 @pytest.fixture
@@ -111,3 +112,51 @@ def test_get_config_create_missing_key():
     assert 'missing' in context['dict']
     assert value == get_from_context(context, key, value, True)
     assert key in context
+
+
+def test_set_config():
+    """
+    set a configuration key/value pair
+    """
+    context = {}
+    expected = {'key': 'value'}
+    set_to_context(context, 'key', 'value')
+
+    assert expected == context
+
+
+def test_set_config_dot_notation():
+    """
+    set a value using dot notation
+    """
+    context = {}
+    expected = {
+        'path': {
+            'to': {
+                'deep': {
+                    'key': 'value'
+                }
+            }
+        }
+    }
+    set_to_context(context, 'path.to.deep.key', 'value')
+
+    assert expected == context
+
+
+def test_get_cookiecutter_shorthand(mocker):
+    mock = mocker.patch('cookiecutter.config.get_from_context')
+    context = get_context()['basic']
+
+    get_from_cookiecutter_context(context, 'key')
+
+    mock.assert_called_once_with(context, 'cookiecutter.key', None, False)
+
+
+def test_set_cookiecutter_shorthand(mocker):
+    mock = mocker.patch('cookiecutter.config.set_to_context')
+    context = get_context()['basic']
+
+    set_to_cookiecutter_context(context, 'key', 'value')
+
+    mock.assert_called_once_with(context, 'cookiecutter.key', 'value')

@@ -134,3 +134,75 @@ def get_from_context(context, key, default=None, update=False):
                 current_context[id] = default
 
     return result
+
+
+def get_from_cookiecutter_context(context, key, default=None, update=False):
+    """
+    Shorthand function to look directly under the cookiecutter sub context
+    The given key is prefixed with 'cookiecutter.'
+    ie.
+    context = {
+        'cookiecutter':{
+            <----- the search for the given key takes place under the
+                   cookiecutter parent one
+        }
+    }
+
+    :param context: context to search in
+    :param key: key to look for (will be prefixed with 'cookiecutter.')
+    :param default: default value that will be returned if the key is not found
+    :param update: if True, create the key in the context and set its value
+                   using the default argument value
+    """
+    return get_from_context(context, 'cookiecutter.' + key, default, update)
+
+
+def set_to_context(context, key, value):
+    """
+    Set a key/value pair to a given context
+    Keys can be defined using dot notation to set values to nested dictionaries
+    ie.
+    context = {}
+    set_to_context(context, 'cookiecutter.project_name', 'My project')
+
+    # will result in
+    # context = {
+    #     'cookiecutter': {
+    #         'project_name': 'My project'
+    #     }
+    # }
+
+    :param context: context to set the key/value pair to
+    :param key: key that reference the value
+    :param value: value to set
+    """
+    current_context = context
+    key_parts = key.split('.')
+    id = key_parts.pop()
+    for subkey in key_parts:
+        if subkey not in current_context:
+            current_context[subkey] = {}
+
+        current_context = current_context[subkey]
+
+    current_context[id] = value
+
+
+def set_to_cookiecutter_context(context, key, value):
+    """
+    Shorthand function to set key/value pairs directly under the cookiecutter
+    sub context
+    The given key is prefixed with 'cookiecutter.'
+    ie.
+    context = {
+        'cookiecutter':{
+            <----- the key/value pair will be set under the cookiecutter key
+        }
+    }
+
+    :param context: context to set the key/value pair to
+    :param key: key that reference the value
+                (will be prefixed with 'cookiecutter.')
+    :param value: value to set
+    """
+    set_to_context(context, 'cookiecutter.' + key, value)
