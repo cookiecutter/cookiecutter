@@ -22,6 +22,7 @@ from pydoc import locate
 from cookiecutter import utils
 from .exceptions import FailedHookException, BadSerializedStringFormat
 from .serialization import SerializationFacade, make_persistent
+from .config import get_from_context
 
 
 _HOOKS = [
@@ -64,30 +65,10 @@ def run_script_with_context(script_path, cwd, context):
     """
     lazy_load_from_extra_dir(os.path.dirname(os.path.dirname(script_path)))
 
-    # TODO: refactor the following as it is terrific
-    current_context = context[
-        'cookiecutter'] if 'cookiecutter' in context else context
-
-    if ('_run_hook_in_place' in current_context and
-            current_context['_run_hook_in_place']):
-        script = script_path
-    else:
-        script = __create_renderable_hook(script_path, context)
+    script = __new_script(context, script_path)
 
     try:
-        # TODO: refactor the following ugly part
-        serializers = {}
-        usetype = 'json'
-        if '_serializers' in current_context and 'classes' \
-                in current_context['_serializers']:
-            classes = current_context['_serializers']['classes']
-            for type in classes:
-                serializers[type] = locate(classes[type], 1)
-
-            if 'use' in current_context['_serializers']:
-                usetype = current_context['_serializers']['use']
-
-        serializer = SerializationFacade(serializers).use(usetype)
+        serializer = __new_serialization_facade(context)
         make_persistent(serializer)
 
         result = __do_run_script(
@@ -204,3 +185,44 @@ def __do_run_script(script_path, cwd, serialized_context):
             (exit_status, result[1]))
 
     return result
+
+
+def __get_from_context(context, key, default=None):
+    """
+    config.get_from_context wrapper
+
+    :param context: context to search in
+    :param key: key to look for
+    :param default: default value to get back if key does not exist
+    """
+    result = get_from_context(context, key)
+
+    return result if result is not None else get_from_context(
+        context, 'cookiecutter.' + key, default)
+
+
+def __new_serialization_facade(context):
+    """
+    serialization facade factory function
+
+    :param context: current context
+    """
+    serializers = {}
+    usetype = __get_from_context(context, '_serializers.use', 'json')
+    classes = __get_from_context(context, '_serializers.classes', [])
+    for type in classes:
+        serializers[type] = locate(classes[type], 1)
+
+    return SerializationFacade(serializers).use(usetype)
+
+
+def __new_script(context, script_path):
+    """
+    script factory function
+
+    :param context: current context
+    :param script_path: absolute path to the script to run
+    """
+    return script_path if __get_from_context(
+        context, '_run_hook_in_place', False) else __create_renderable_hook(
+            script_path, context)
