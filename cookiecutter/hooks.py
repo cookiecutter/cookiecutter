@@ -28,6 +28,7 @@ from .config import get_from_context
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
+    'pre_user_prompt',
     # TODO: other hooks should be listed here
 ]
 EXIT_SUCCESS = 0

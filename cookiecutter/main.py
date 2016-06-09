@@ -22,6 +22,8 @@ from .prompt import prompt_for_config
 from .generate import generate_context, generate_files
 from .vcs import clone
 from .replay import dump, load
+from .utils import work_in
+from .hooks import run_hook
 
 logger = logging.getLogger(__name__)
 
@@ -130,6 +132,8 @@ def cookiecutter(
             extra_context=extra_context,
         )
 
+        with work_in(repo_dir):
+            context = run_hook('pre_user_prompt', repo_dir, context)
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
         context['cookiecutter'] = prompt_for_config(context, no_input)

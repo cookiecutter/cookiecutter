@@ -52,3 +52,26 @@ class TestRealHooksAcceptance(AbstractAcceptanceTest):
         """
         template = 'batch' if sys.platform.startswith('win') else 'bash'
         self.assert_real_hook_is_run_in_place(template)
+
+    def test_run_pre_user_prompt_hook(self, mocker):
+        """
+        used to populate the context before the user is prompted for config
+        """
+        self.configure('pre_user_prompt')
+        self.settings.no_input = False
+        license = u'BSD-3'
+        variables = {
+            'project_name': self.project,
+            'project_slug': self.project_dir
+        }
+
+        def _read_user_variable(*args, **kwargs):
+            return variables[args[0]] if args[0] in variables else args[1]
+
+        read_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_variable.side_effect = _read_user_variable
+        read_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_choice.return_value = license
+
+        self.run()
+        assert os.path.exists(os.path.join(self.project_dir, license))

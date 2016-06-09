@@ -1,0 +1,5 @@
+{
+    "project_name": "Name of the project",
+    "project_slug": "project-directory",
+    "_run_hook_in_place": "true"
+}

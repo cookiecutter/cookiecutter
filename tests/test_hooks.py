@@ -36,6 +36,15 @@ def make_test_repo(name):
         f.write("f = open('python_pre.txt', 'w')\n")
         f.write("f.close()\n")
 
+    with open(os.path.join(hook_dir, 'pre_user_prompt.py'), 'w') as f:
+        f.write("#!/usr/bin/env python\n")
+        f.write("# -*- coding: utf-8 -*-\n")
+        f.write("from __future__ import print_function\n")
+        f.write("\n")
+        f.write("print('pre user prompt hook')\n")
+        f.write("f = open('python_pre_user_prompt.txt', 'w')\n")
+        f.write("f.close()\n")
+
     if sys.platform.startswith('win'):
         post = 'post_gen_project.bat'
         with open(os.path.join(hook_dir, post), 'w') as f:
@@ -76,6 +85,9 @@ class TestFindHooks(object):
                 'post_gen_project': os.path.abspath(
                     os.path.join('hooks', self.post_hook)
                 ),
+                'pre_user_prompt': os.path.abspath(
+                    'hooks/pre_user_prompt.py'
+                ),
             }
             assert expected == hooks.find_hooks()
 
@@ -99,6 +111,8 @@ class TestExternalHooks(object):
 
         if os.path.exists('python_pre.txt'):
             os.remove('python_pre.txt')
+        if os.path.exists('python_pre_user_prompt.txt'):
+            os.remove('python_pre_user_prompt.txt')
         if os.path.exists('shell_post.txt'):
             os.remove('shell_post.txt')
         if os.path.exists('tests/shell_post.txt'):
