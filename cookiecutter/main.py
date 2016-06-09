@@ -116,7 +116,7 @@ def cookiecutter(
             'The repository {0} could not be located.'.format(template)
         )
 
-    template_name = os.path.basename(template)
+    template_name = os.path.basename(os.path.abspath(template))
 
     if replay:
         context = load(config_dict['replay_dir'], template_name)
