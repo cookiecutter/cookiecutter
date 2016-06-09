@@ -95,3 +95,42 @@ def get_user_config(config_file=USER_CONFIG_PATH):
         # There is a config environment variable. Try to load it.
         # Do not check for existence, so invalid file paths raise an error.
         return get_config(env_config_file)
+
+
+def get_from_context(context, key, default=None, update=False):
+    """
+    Get the value referenced by a given key from a given context
+    Keys can be defined using dot notation to retrieve values from nested
+    dictionaries
+    Keys can contain integers to retrieve values from lists
+    ie.
+    context = {
+        'cookiecutter': {
+            'project_name': 'Project Name'
+        }
+    }
+    project_name = get_from_context(context, 'cookiecutter.project_name')
+
+    :param context: context to search in
+    :param key: key to look for
+    :param default: default value that will be returned if the key is not found
+    :param update: if True, create the key in the context and set its value
+                   using the default argument value
+    """
+    result = default
+    current_context = context
+    key_parts = key.split('.')
+    for subkey in key_parts:
+        id = int(subkey) if subkey.isdigit() else subkey
+
+        if subkey in current_context or \
+                (isinstance(id, int) and id < len(current_context)):
+
+            result = current_context[id]
+            current_context = result
+        else:
+            result = default
+            if update:
+                current_context[id] = default
+
+    return result
