@@ -24,3 +24,19 @@ Anytime we start a new project we begin with a `Cookiecutter template that gener
 
 .. _ChrisDev: http://chrisdev.com/
 .. _`Cookiecutter template that generates a Django/Wagtail project`: https://github.com/chrisdev/wagtail-cookiecutter-foundation
+
+OpenStack_
+------------
+
+OpenStack uses several Cookiecutter templates to generate 
+
+* `Openstack compliant puppet-modules`_
+* `Install guides`_
+* `New tempest plugins`_
+
+  OpenStack_ is open source software for creating private and public clouds.
+  
+.. _OpenStack: http://www.openstack.org/
+.. _`OpenStack compliant puppet-modules`: https://github.com/openstack/puppet-openstack-cookiecutter
+.. _`Install guides`: https://github.com/openstack/installguide-cookiecutter
+.. _`New tempest plugins`: https://github.com/openstack/tempest-plugin-cookiecutter
