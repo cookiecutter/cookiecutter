@@ -28,7 +28,7 @@ Anytime we start a new project we begin with a `Cookiecutter template that gener
 OpenStack_
 ------------
 
-OpenStack uses several Cookiecutter templates to generate 
+OpenStack uses several Cookiecutter templates to generate:
 
 * `Openstack compliant puppet-modules`_
 * `Install guides`_
