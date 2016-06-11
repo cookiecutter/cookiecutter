@@ -1,4 +1,4 @@
-.. _`replay feature`:
+.. _replay-feature:
 
 Replay Project Generation
 -------------------------

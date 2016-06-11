@@ -42,7 +42,7 @@ Possible settings are:
 * cookiecutters_dir: Directory where your cookiecutters are cloned to when you
   use Cookiecutter with a repo argument.
 * replay_dir: Directory where Cookiecutter dumps context data to, which
-  you can fetch later on when using the `replay feature`_.
+  you can fetch later on when using the :ref:`replay feature <replay-feature>`.
 * abbreviations: A list of abbreviations for cookiecutters. Abbreviations can
   be simple aliases for a repo name, or can be used as a prefix, in the form
   `abbr:suffix`. Any suffix will be inserted into the expansion in place of
