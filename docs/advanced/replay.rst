@@ -15,7 +15,7 @@ Example for a replay file (which was created via ``cookiecutter gh:hackebrot/coo
         "cookiecutter": {
             "app_class_name": "FooBarApp",
             "app_title": "Foo Bar",
-            "email": "raphael@hackebrot.de",
+            "email": "raphael@example.com",
             "full_name": "Raphael Pierzina",
             "github_username": "hackebrot",
             "kivy_version": "1.8.0",

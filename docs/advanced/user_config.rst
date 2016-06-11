@@ -25,7 +25,7 @@ Example user config:
 
     default_context:
         full_name: "Audrey Roy"
-        email: "audreyr@gmail.com"
+        email: "audreyr@example.com"
         github_username: "audreyr"
     cookiecutters_dir: "/home/audreyr/my-custom-cookiecutters-dir/"
     replay_dir: "/home/audreyr/my-custom-replay-dir/"
