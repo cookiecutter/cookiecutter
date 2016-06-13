@@ -20,7 +20,7 @@ Basics
    usage
    first_steps
    tutorials
-   advanced_usage
+   advanced/index
    troubleshooting
 
 .. _apiref:
