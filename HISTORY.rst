@@ -12,10 +12,13 @@ New Features:
   `@michaeljoseph`_ (#666).
 * Updated conda installation instructions to work with the new conda-forge distribution of Cookiecutter, thanks to `@pydanny`_ and especially @bollwyvl (#232). 
 
-Bug Fix:
+Bug Fixes:
 
 * Fix typo in the error logging text for when a hook did not exit successfully,
   thanks to `@luzfcb`_ (#656)
+* Fix an issue around **replay** file names when **cookiecutter** is used with
+  a relative path to a template, thanks to `@eliasdorneles`_ for raising the
+  issue and `@hackebrot`_ for the PR (#752, #753)
 
 Other Changes:
 
