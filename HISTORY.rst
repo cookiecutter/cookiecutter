@@ -10,7 +10,9 @@ New Features:
 
 * Inject extra context with command-line arguments, thanks to `@msabramo`_ and
   `@michaeljoseph`_ (#666).
-* Updated conda installation instructions to work with the new conda-forge distribution of Cookiecutter, thanks to `@pydanny`_ and especially @bollwyvl (#232). 
+* Updated conda installation instructions to work with the new conda-forge
+  distribution of Cookiecutter, thanks to `@pydanny`_ and especially
+  `@bollwyvl`_ (#232).
 
 Bug Fixes:
 
@@ -81,6 +83,7 @@ Other Changes:
 .. _`@nanuxbe`: https://github.com/nanuxbe
 .. _`@ruflin`: https://github.com/ruflin
 .. _`@tephyr`: https://github.com/tephyr
+.. _`@bollwyvl`: https://github.com/bollwyvl
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
