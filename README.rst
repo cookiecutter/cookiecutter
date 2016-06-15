@@ -601,7 +601,7 @@ Similar projects
 
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
-.. _`Django`: https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-startproject
+.. _`Django`: https://docs.djangoproject.com/en/1.9/ref/django-admin/#cmdoption-startapp--template
 .. _`python-packager`: https://github.com/fcurella/python-packager
 .. _`Yeoman`: https://github.com/yeoman/generator
 .. _`Pyramid`: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/scaffolding.html
