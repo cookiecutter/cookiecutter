@@ -548,8 +548,10 @@ HTML
 Scala
 ~~~~~
 
+* `cookiecutter-scala`_: A cookiecutter template for a simple scala hello world application with a few libraries.
 * `cookiecutter-scala-spark`_: A cookiecutter template for Apache Spark applications written in Scala.
 
+.. _`cookiecutter-scala`: https://github.com/Plippe/cookiecutter-scala
 .. _`cookiecutter-scala-spark`: https://github.com/jpzk/cookiecutter-scala-spark
 
 
