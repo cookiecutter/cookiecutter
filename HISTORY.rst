@@ -64,6 +64,7 @@ Other Changes:
   * `cc_project_app_drf`_ by `@nanuxbe`_ (#686)
   * `cc_project_app_full_with_hooks`_ by `@nanuxbe`_ (#686)
   * `beat-generator`_ by `@ruflin`_ (#695) 
+  * `cookiecutter-scala`_ by `@Plippe`_ (#751)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -87,6 +88,7 @@ Other Changes:
 .. _`@tephyr`: https://github.com/tephyr
 .. _`@bollwyvl`: https://github.com/bollwyvl
 .. _`@purplediane`: https://github.com/purplediane
+.. _`@Plippe`: https://github.com/Plippe
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
@@ -107,6 +109,7 @@ Other Changes:
 .. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
 .. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
 .. _`beat-generator`: https://github.com/elastic/beat-generator
+.. _`cookiecutter-scala`: https://github.com/Plippe/cookiecutter-scala
 
 
 1.4.0 (2016-03-20) Shortbread
