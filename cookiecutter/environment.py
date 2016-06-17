@@ -37,7 +37,7 @@ class ExtensionLoaderMixin(object):
             raise UnknownExtension('Unable to load extension: {}'.format(err))
 
     def _read_extensions(self, context):
-        """Return list of extensions as str to be passed on to the jinja2 env.
+        """Return list of extensions as str to be passed on to the Jinja2 env.
 
         If context does not contain the relevant info, return an empty
         list instead.
