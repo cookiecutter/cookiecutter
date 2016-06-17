@@ -10,17 +10,12 @@ New Features:
 
 * Inject extra context with command-line arguments, thanks to `@msabramo`_ and
   `@michaeljoseph`_ (#666).
-* Updated conda installation instructions to work with the new conda-forge
-  distribution of Cookiecutter, thanks to `@pydanny`_ and especially
-  `@bollwyvl`_ (#232).
+* Updated conda installation instructions to work with the new conda-forge distribution of Cookiecutter, thanks to `@pydanny`_ and especially @bollwyvl (#232). 
 
-Bug Fixes:
+Bug Fix:
 
 * Fix typo in the error logging text for when a hook did not exit successfully,
   thanks to `@luzfcb`_ (#656)
-* Fix an issue around **replay** file names when **cookiecutter** is used with
-  a relative path to a template, thanks to `@eliasdorneles`_ for raising the
-  issue and `@hackebrot`_ for the PR (#752, #753)
 
 Other Changes:
 
@@ -41,8 +36,6 @@ Other Changes:
 * Added ``ssh`` repository examples, thanks to `@pokoli`_ (#702)
 * Fix links to the cookiecutter-data-science template and its documentation,
   thanks to `@tephyr`_ for the PR and `@willingc`_ for the review (#711, #714)
-* Update link to docs for Django's ``--template`` command line option, thanks
-  to `@purplediane`_ (#754)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -64,7 +57,6 @@ Other Changes:
   * `cc_project_app_drf`_ by `@nanuxbe`_ (#686)
   * `cc_project_app_full_with_hooks`_ by `@nanuxbe`_ (#686)
   * `beat-generator`_ by `@ruflin`_ (#695) 
-  * `cookiecutter-scala`_ by `@Plippe`_ (#751)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -86,9 +78,6 @@ Other Changes:
 .. _`@nanuxbe`: https://github.com/nanuxbe
 .. _`@ruflin`: https://github.com/ruflin
 .. _`@tephyr`: https://github.com/tephyr
-.. _`@bollwyvl`: https://github.com/bollwyvl
-.. _`@purplediane`: https://github.com/purplediane
-.. _`@Plippe`: https://github.com/Plippe
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
@@ -109,7 +98,6 @@ Other Changes:
 .. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
 .. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
 .. _`beat-generator`: https://github.com/elastic/beat-generator
-.. _`cookiecutter-scala`: https://github.com/Plippe/cookiecutter-scala
 
 
 1.4.0 (2016-03-20) Shortbread

@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.config
--------------------
-
-Global configuration handling
-"""
+"""Global configuration handling."""
 
 from __future__ import unicode_literals
 import copy
@@ -39,10 +34,7 @@ def _expand_path(path):
 
 
 def get_config(config_path):
-    """
-    Retrieve the config from the specified path, returning it as a config dict.
-    """
-
+    """Retrieve config from specified path, returning it as a config dict."""
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException
 
@@ -69,8 +61,9 @@ def get_config(config_path):
 
 
 def get_user_config(config_file=USER_CONFIG_PATH):
-    """Retrieve the config from a file or return the defaults if None is
-    passed. If an environment variable `COOKIECUTTER_CONFIG` is set up, try
+    """Retrieve config from a file or return the defaults if None is passed.
+
+    If an environment variable `COOKIECUTTER_CONFIG` is set up, try
     to load its value. Otherwise fall back to a default file or config.
     """
     # Do NOT load a config. Return defaults instead.
