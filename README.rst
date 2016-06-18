@@ -415,7 +415,7 @@ Python-Pyramid
 .. _`pyramid-cookiecutter-alchemy`: https://github.com/Pylons/pyramid-cookiecutter-alchemy
 .. _`pyramid-cookiecutter-starter`: https://github.com/Pylons/pyramid-cookiecutter-starter
 .. _`pyramid-cookiecutter-zodb`: https://github.com/Pylons/pyramid-cookiecutter-zodb
-.. _`substanced-cookiecutter`: https://github.com/Pylons/pyramid-cookiecutter-zodb
+.. _`substanced-cookiecutter`: https://github.com/Pylons/substanced-cookiecutter
 
 Cookiecutter (meta)
 ~~~~~~~~~~~~~~~~~~~
