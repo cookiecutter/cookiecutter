@@ -12,7 +12,7 @@ New Features:
   `@michaeljoseph`_ (#666).
 * Updated conda installation instructions to work with the new conda-forge
   distribution of Cookiecutter, thanks to `@pydanny`_ and especially
-  `@bollwyvl`_ (#232).
+  `@bollwyvl`_ (#232, #705).
 
 Bug Fixes:
 
@@ -45,6 +45,24 @@ Other Changes:
   to `@purplediane`_ (#754)
 * Applied PEP 257 docstring conventions to ``environment.py``, thanks to
   `@terryjbates`_ (#759)
+* Fix link to the Tryton cookiecutter, thanks to `@cedk`_
+  and `@nicoe`_ (#697, #698)
+* Added PyCon US 2016 sponsorship to README, thanks to `@purplediane`_ (#720)
+* Added a sprint contributor doc, thanks to `@phoebebauer`_ (#727)
+* Converted readthedocs links (.org -> .io), thanks to `@adamchainz`_ (#718)
+* Added Python 3.6 support, thanks to `@suledev`_ (#728)
+* Update occurrences of ``repo_name`` in documentation, thanks to
+  `@palmerev`_ (#734)
+* Added case studies document, thanks to `@pydanny`_ (#735)
+* Added first steps cookiecutter creation tutorial, thanks to
+  `@BruceEckel`_ (#736)
+* Reorganised tutorials and setup git submodule to external tutorial, thanks
+  to `@dot2dotseurat`_ (#740)
+* Debian installation instructions, thanks to `@ivanlyon`_ (#738)
+* Usage documentation typo fix., thanks to `@terryjbates`_ (#739)
+* Updated documentation copyright date, thanks to `@zzzirk`_ (#747)
+* Add a make rule to update git submodules, thanks to `@hackebrot`_ (#746)
+* Split up advanced usage docs, thanks to `@zzzirk`_ (#749)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -67,6 +85,12 @@ Other Changes:
   * `cc_project_app_full_with_hooks`_ by `@nanuxbe`_ (#686)
   * `beat-generator`_ by `@ruflin`_ (#695) 
   * `cookiecutter-scala`_ by `@Plippe`_ (#751)
+  * `cookiecutter-snakemake-analysis-pipeline`_ by `@xguse`_ (#692)
+  * `cookiecutter-py3tkinter`_ by `@ivanlyon`_ (#730)
+  * `pyramid-cookiecutter-alchemy`_ by `@stevepiercy`_ (#745)
+  * `pyramid-cookiecutter-starter`_ by `@stevepiercy`_ (#745)
+  * `pyramid-cookiecutter-zodb`_ by `@stevepiercy`_ (#745)
+  * `substanced-cookiecutter`_ by `@stevepiercy`_ (#745)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -92,6 +116,18 @@ Other Changes:
 .. _`@purplediane`: https://github.com/purplediane
 .. _`@Plippe`: https://github.com/Plippe
 .. _`@terryjbates`: https://github.com/terryjbates
+.. _`@cedk`: https://github.com/cedk
+.. _`@nicoe`: https://github.com/nicoe
+.. _`@phoebebauer`: https://github.com/phoebebauer
+.. _`@adamchainz`: https://github.com/adamchainz
+.. _`@suledev`: https://github.com/suledev
+.. _`@palmerev`: https://github.com/palmerev
+.. _`@BruceEckel`: https://github.com/BruceEckel
+.. _`@dot2dotseurat`: https://github.com/dot2dotseurat
+.. _`@ivanlyon`: https://github.com/ivanlyon
+.. _`@zzzirk`: https://github.com/zzzirk
+.. _`@xguse`: https://github.com/xguse
+.. _`@stevepiercy`: https://github.com/stevepiercy
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
@@ -113,6 +149,12 @@ Other Changes:
 .. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
 .. _`beat-generator`: https://github.com/elastic/beat-generator
 .. _`cookiecutter-scala`: https://github.com/Plippe/cookiecutter-scala
+.. _`cookiecutter-snakemake-analysis-pipeline`: https://github.com/xguse/cookiecutter-snakemake-analysis-pipeline
+.. _`cookiecutter-py3tkinter`: https://github.com/ivanlyon/cookiecutter-py3tkinter
+.. _`pyramid-cookiecutter-alchemy`: https://github.com/Pylons/pyramid-cookiecutter-alchemy
+.. _`pyramid-cookiecutter-starter`: https://github.com/Pylons/pyramid-cookiecutter-starter
+.. _`pyramid-cookiecutter-zodb`: https://github.com/Pylons/pyramid-cookiecutter-zodb
+.. _`substanced-cookiecutter`: https://github.com/Pylons/substanced-cookiecutter
 
 
 1.4.0 (2016-03-20) Shortbread
