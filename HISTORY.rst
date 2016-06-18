@@ -43,6 +43,8 @@ Other Changes:
   thanks to `@tephyr`_ for the PR and `@willingc`_ for the review (#711, #714)
 * Update link to docs for Django's ``--template`` command line option, thanks
   to `@purplediane`_ (#754)
+* Applied PEP 257 docstring conventions to ``environment.py``, thanks to
+  `@terryjbates`_ (#759)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -89,6 +91,7 @@ Other Changes:
 .. _`@bollwyvl`: https://github.com/bollwyvl
 .. _`@purplediane`: https://github.com/purplediane
 .. _`@Plippe`: https://github.com/Plippe
+.. _`@terryjbates`: https://github.com/terryjbates
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
