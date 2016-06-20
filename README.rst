@@ -468,9 +468,11 @@ Common Lisp
 Golang
 ~~~~~~
 
-* `beat-generator`_: A template to create your own beat to ship data to Elasticsearch.
+* `beat-generator`_: A template to create your own Beat to ship your data to Elasticsearch.
+* `metricset-generator`_: A template to create your own MetricSet based on Metricbeat to ship your metrics to Elasticsearch.
 
-.. _`beat-generator`: https://github.com/elastic/beat-generator
+.. _`beat-generator`: https://github.com/elastic/beats/tree/master/generate/beat
+.. _`metricset-generator`: https://github.com/elastic/beats/tree/master/generate/metricbeat/metricset
 
 
 JS
