@@ -8,12 +8,18 @@ To suppress the prompts asking for input, use `no_input`.
 Basic Example: Using the Defaults
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-TODO: document `no_input`:
+Cookiecutter will pick a default value if used with `no_input`::
 
-* As command-line argument
-* As parameter of `cookiecutter()`
+    from cookiecutter.main import cookiecutter
+    cookiecutter(
+        'cookiecutter-django',
+        no_input=True,
+    )
 
-TODO: document where context values come from in this example (`cookiecutter.json` and `.cookiecutterrc`)
+In this case it will be using the default defined in `cookiecutter.json` or `.cookiecutterrc`.
+
+.. note::
+   values from `cookiecutter.json` will be overriden by values from  `.cookiecutterrc`
 
 Advanced Example: Defaults + Extra Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
