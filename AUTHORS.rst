@@ -89,6 +89,15 @@ Contributors
 * Joachim Jablon (`@ewjoachim`_)
 * Andrew Ittner (`@tephyr`_)
 * Diane DeMers Chen (`@purplediane`_)
+* zzzirk (`@zzzirk`_)
+* Carol Willing (`@willingc`_)
+* phoebebauer (`@phoebebauer`_)
+* Adam Chainz (`@adamchainz`_)
+* Sulé (`@suledev`_)
+* Evan Palmer (`@palmerev`_)
+* Bruce Eckel (`@BruceEckel`_)
+* Robert Lyon (`@ivanlyon`_)
+* Terry Bates (`@terryjbates`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -166,3 +175,12 @@ Contributors
 .. _`@ewjoachim`: https://github.com/ewjoachim
 .. _`@tephyr`: https://github.com/tephyr
 .. _`@purplediane`: https://github.com/purplediane
+.. _`@willingc`: https://github.com/willingc
+.. _`@phoebebauer`: https://github.com/phoebebauer
+.. _`@adamchainz`: https://github.com/adamchainz
+.. _`@suledev`: https://github.com/suledev
+.. _`@palmerev`: https://github.com/palmerev
+.. _`@BruceEckel`: https://github.com/BruceEckel
+.. _`@ivanlyon`: https://github.com/ivanlyon
+.. _`@terryjbates`: https://github.com/terryjbates
+.. _`@zzzirk`: https://github.com/zzzirk
