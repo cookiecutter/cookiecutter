@@ -64,6 +64,8 @@ Other Changes:
 * Add a make rule to update git submodules, thanks to `@hackebrot`_ (#746)
 * Split up advanced usage docs, thanks to `@zzzirk`_ (#749)
 * Documentation for the ``no_input`` option, thanks to `@pokoli`_ (#701)
+* Remove unnecessary shebangs from python files, thanks to `@michaeljoseph`_
+  (#763)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
