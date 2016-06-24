@@ -377,7 +377,7 @@ Python-Django
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
 * `cookiecutter-django-herokuapp`_: A Django 1.7+ template optimized for Python 3 on Heroku.
-* `cookiecutter-simple-django-cn`_: a simple Django templates for chinese.
+* `cookiecutter-simple-django-cn`_: A simple Django templates for chinese.
 * `cc_django_ember_app`_: For creating applications with Django and EmberJS
 * `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
 * `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
