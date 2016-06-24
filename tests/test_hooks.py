@@ -71,19 +71,31 @@ class TestFindHooks(object):
         """Finds the specified hook."""
 
         with utils.work_in(self.repo_path):
-            expected = {
-                'pre_gen_project': os.path.abspath('hooks/pre_gen_project.py'),
-                'post_gen_project': os.path.abspath(
-                    os.path.join('hooks', self.post_hook)
-                ),
-            }
-            assert expected == hooks.find_hooks()
+            assert (
+                os.path.abspath('hooks/pre_gen_project.py') ==
+                hooks.find_hook('pre_gen_project')
+            )
+            assert (
+                os.path.abspath(os.path.join('hooks', self.post_hook)) ==
+                hooks.find_hook('post_gen_project')
+            )
 
     def test_no_hooks(self):
         """find_hooks should return None if the hook could not be found."""
 
         with utils.work_in('tests/fake-repo'):
-            assert {} == hooks.find_hooks()
+            assert None is hooks.find_hook('pre_gen_project')
+
+    def test_unknown_hooks_dir(self):
+        with utils.work_in(self.repo_path):
+            assert hooks.find_hook(
+                'pre_gen_project',
+                hooks_dir='hooks_dir'
+            ) is None
+
+    def test_hook_not_found(self):
+        with utils.work_in(self.repo_path):
+            assert hooks.find_hook('unknown_hook') is None
 
 
 class TestExternalHooks(object):
@@ -220,4 +232,5 @@ def dir_with_hooks(tmpdir):
 def test_ignore_hook_backup_files(monkeypatch, dir_with_hooks):
     # Change the current working directory that contains `hooks/`
     monkeypatch.chdir(dir_with_hooks)
-    assert hooks.find_hooks() == {}
+    assert hooks.find_hook('pre_gen_project') is None
+    assert hooks.find_hook('post_gen_project') is None

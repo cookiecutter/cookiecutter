@@ -16,38 +16,43 @@ from .exceptions import FailedHookException
 
 logger = logging.getLogger(__name__)
 
-
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
-    # TODO: other hooks should be listed here
 ]
 EXIT_SUCCESS = 0
 
 
-def find_hooks():
+def find_hook(hook_name, hooks_dir='hooks'):
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
     Dict's key will be the hook/script's name, without extension, while values
     will be the absolute path to the script. Missing scripts will not be
     included in the returned dict.
+
+    :param hook_name: The hook to find
+    :param hooks_dir: The hook directory in the template
+    :return: The absolute path to the hook script or None
     """
-    hooks_dir = 'hooks'
-    hooks = {}
-    logger.debug('hooks_dir is {}'.format(hooks_dir))
+    logger.debug('hooks_dir is {}'.format(os.path.abspath(hooks_dir)))
 
     if not os.path.isdir(hooks_dir):
         logger.debug('No hooks/ dir in template_dir')
-        return hooks
+        return None
 
     for f in os.listdir(hooks_dir):
         filename = os.path.basename(f)
         basename = os.path.splitext(filename)[0]
 
-        if basename in _HOOKS and not filename.endswith('~'):
-            hooks[basename] = os.path.abspath(os.path.join(hooks_dir, f))
-    return hooks
+        if (
+            basename in _HOOKS and
+            basename == hook_name and
+            not filename.endswith('~')
+        ):
+            return os.path.abspath(os.path.join(hooks_dir, f))
+
+    return None
 
 
 def run_script(script_path, cwd='.'):
@@ -105,7 +110,7 @@ def run_hook(hook_name, project_dir, context):
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
     """
-    script = find_hooks().get(hook_name)
+    script = find_hook(hook_name)
     if script is None:
         logger.debug('No hooks found')
         return
