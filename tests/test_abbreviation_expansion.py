@@ -1,67 +1,53 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_abbreviation_expansion
----------------------------
-
-Tests formerly known from a unittest residing in test_main.py named
-TestAbbreviationExpansion.test_abbreviation_expansion
-TestAbbreviationExpansion.test_abbreviation_expansion_not_an_abbreviation
-TestAbbreviationExpansion.test_abbreviation_expansion_prefix
-TestAbbreviationExpansion.test_abbreviation_expansion_builtin
-TestAbbreviationExpansion.test_abbreviation_expansion_override_builtin
-TestAbbreviationExpansion.test_abbreviation_expansion_prefix_ignores_suffix
-TestAbbreviationExpansion.test_abbreviation_expansion_prefix_not_0_in_braces
-"""
-
 from __future__ import unicode_literals
 import pytest
 
-from cookiecutter import main
+from cookiecutter.repository import expand_abbreviations
 
 
 def test_abbreviation_expansion():
-    input_dir = main.expand_abbreviations(
-        'foo', {'abbreviations': {'foo': 'bar'}}
+    input_dir = expand_abbreviations(
+        'foo', {'foo': 'bar'}
     )
     assert input_dir == 'bar'
 
 
 def test_abbreviation_expansion_not_an_abbreviation():
-    input_dir = main.expand_abbreviations(
-        'baz', {'abbreviations': {'foo': 'bar'}}
+    input_dir = expand_abbreviations(
+        'baz', {'foo': 'bar'}
     )
     assert input_dir == 'baz'
 
 
 def test_abbreviation_expansion_prefix():
-    input_dir = main.expand_abbreviations(
-        'xx:a', {'abbreviations': {'xx': '<{0}>'}}
+    input_dir = expand_abbreviations(
+        'xx:a', {'xx': '<{0}>'}
     )
     assert input_dir == '<a>'
 
 
 def test_abbreviation_expansion_builtin():
-    input_dir = main.expand_abbreviations(
+    input_dir = expand_abbreviations(
         'gh:a', {}
     )
     assert input_dir == 'https://github.com/a.git'
 
 
 def test_abbreviation_expansion_override_builtin():
-    input_dir = main.expand_abbreviations(
-        'gh:a', {'abbreviations': {'gh': '<{0}>'}}
+    input_dir = expand_abbreviations(
+        'gh:a', {'gh': '<{0}>'}
     )
     assert input_dir == '<a>'
 
 
 def test_abbreviation_expansion_prefix_ignores_suffix():
-    input_dir = main.expand_abbreviations(
-        'xx:a', {'abbreviations': {'xx': '<>'}}
+    input_dir = expand_abbreviations(
+        'xx:a', {'xx': '<>'}
     )
     assert input_dir == '<>'
 
 
 def test_abbreviation_expansion_prefix_not_0_in_braces():
     with pytest.raises(IndexError):
-        main.expand_abbreviations('xx:a', {'abbreviations': {'xx': '{1}'}})
+        expand_abbreviations('xx:a', {'xx': '{1}'})
