@@ -20,7 +20,7 @@ class NonTemplatedInputDirException(CookiecutterException):
 
 
 class UnknownTemplateDirException(CookiecutterException):
-    """Raised when directory that is project template cannot determined.
+    """Raised when the project template directory cannot be determined.
 
     More than one dir appears to be a template dir.
     """
@@ -29,7 +29,7 @@ class UnknownTemplateDirException(CookiecutterException):
 class MissingProjectDir(CookiecutterException):
     """Raised during cleanup stages when project directory appears missing.
 
-    When remove_repo() cannot locate generated project directory inside repo.
+    When remove_repo() cannot locate the generated project directory.
     """
 
 
@@ -40,7 +40,7 @@ class ConfigDoesNotExistException(CookiecutterException):
 class InvalidConfiguration(CookiecutterException):
     """Raised if the global configuration file is not valid.
 
-    Invalid YAML or is configuration file is badly constructed.
+    Invalid YAML or the configuration file is badly constructed.
     """
 
 
