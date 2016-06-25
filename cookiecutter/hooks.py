@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.hooks
-------------------
-
-Functions for discovering and executing various cookiecutter hooks.
-"""
+"""Functions for discovering and executing various cookiecutter hooks."""
 
 import io
 import logging
@@ -29,12 +24,12 @@ EXIT_SUCCESS = 0
 
 
 def find_hooks():
-    """
+    """Return a dict of all hook scripts provided.
+
     Must be called with the project template as the current working directory.
-    Returns a dict of all hook scripts provided.
-    Dict's key will be the hook/script's name, without extension, while
-    values will be the absolute path to the script.
-    Missing scripts will not be included in the returned dict.
+    Dict's key will be the hook/script's name, without extension, while values
+    will be the absolute path to the script. Missing scripts will not be
+    included in the returned dict.
     """
     hooks_dir = 'hooks'
     r = {}
@@ -50,8 +45,7 @@ def find_hooks():
 
 
 def run_script(script_path, cwd='.'):
-    """
-    Executes a script from a working directory.
+    """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
@@ -76,8 +70,7 @@ def run_script(script_path, cwd='.'):
 
 
 def run_script_with_context(script_path, cwd, context):
-    """
-    Executes a script after rendering with it Jinja.
+    """Execute a script after rendering with it Jinja.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
