@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+"""Cookiecutter repository functions."""
 from __future__ import unicode_literals
 import os
 import re
@@ -31,10 +32,9 @@ def expand_abbreviations(template, user_abbreviations):
     Expand abbreviations in a template name.
 
     :param template: The project template name.
-    :param config_dict: The user config, which will contain abbreviation
+    :param user_abbreviations: The user config, which will contain abbreviation
         definitions.
     """
-
     abbreviations = BUILTIN_ABBREVIATIONS.copy()
     abbreviations.update(user_abbreviations)
 
@@ -52,6 +52,22 @@ def expand_abbreviations(template, user_abbreviations):
 
 def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
                        no_input):
+    """
+    Locate the repository directory from a template reference.
+
+    Applies repository abbreviations to the template reference.
+    If the template refers to a repository URL, clone it.
+    If the template is a path to a local repository, use it.
+
+    :param template: A directory containing a project template directory,
+        or a URL to a git repository.
+    :param abbreviations: A dictionary of repository abbreviation
+        definitions.
+    :param clone_to_dir: The directory to clone the repository into.
+    :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param no_input: Prompt the user at command line for manual configuration?
+    :return:
+    """
     template = expand_abbreviations(template, abbreviations)
 
     if is_repo_url(template):
