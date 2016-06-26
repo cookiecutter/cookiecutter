@@ -54,11 +54,11 @@ def cookiecutter(
     config_dict = get_user_config(config_file=config_file)
 
     repo_dir = determine_repo_dir(
-        template,
-        config_dict.get('abbreviations', {}),
-        config_dict['cookiecutters_dir'],
-        checkout,
-        no_input
+        template=template,
+        abbreviations=config_dict.get('abbreviations', {}),
+        clone_to_dir=config_dict['cookiecutters_dir'],
+        checkout=checkout,
+        no_input=no_input,
     )
 
     template_name = os.path.basename(os.path.abspath(template))

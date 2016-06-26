@@ -50,7 +50,7 @@ def expand_abbreviations(template, user_abbreviations):
     return template
 
 
-def determine_repo_dir(template, abbreviations, cookiecutters_dir, checkout,
+def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
                        no_input):
     template = expand_abbreviations(template, abbreviations)
 
@@ -58,7 +58,7 @@ def determine_repo_dir(template, abbreviations, cookiecutters_dir, checkout,
         repo_dir = clone(
             repo_url=template,
             checkout=checkout,
-            clone_to_dir=cookiecutters_dir,
+            clone_to_dir=clone_to_dir,
             no_input=no_input,
         )
     else:

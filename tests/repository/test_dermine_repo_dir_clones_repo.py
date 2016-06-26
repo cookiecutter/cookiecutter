@@ -38,7 +38,7 @@ def test_determine_repository_url_should_clone(
     project_dir = determine_repo_dir(
         template_url,
         abbreviations={},
-        cookiecutters_dir=user_config_data['cookiecutters_dir'],
+        clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
         no_input=True
     )
