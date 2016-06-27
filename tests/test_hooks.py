@@ -7,10 +7,10 @@ test_hooks
 Tests for `cookiecutter.hooks` module.
 """
 
-import sys
 import os
-import stat
 import pytest
+import stat
+import sys
 
 from cookiecutter import hooks, utils, exceptions
 
@@ -179,3 +179,23 @@ class TestExternalHooks(object):
             with pytest.raises(exceptions.FailedHookException) as excinfo:
                 hooks.run_hook('pre_gen_project', tests_dir, {})
             assert 'Hook script failed' in str(excinfo.value)
+
+
+@pytest.fixture
+def hook_backup_files():
+    """Return basenames of all files in the hooks dir."""
+    return sorted([
+        os.path.basename(f) for f in
+        os.listdir('tests/hooks-backup-files/hooks')
+    ])
+
+
+def test_ignore_hook_backup_files(monkeypatch, hook_backup_files):
+    # This makes sure that the files are actually in the directory
+    assert hook_backup_files == [
+        'post_gen_project.py~',
+        'pre_gen_project.py~',
+    ]
+
+    monkeypatch.chdir('tests/hooks-backup-files/')
+    assert hooks.find_hooks() == {}
