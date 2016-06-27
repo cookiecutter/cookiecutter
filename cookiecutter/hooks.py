@@ -37,16 +37,20 @@ def find_hooks():
     Missing scripts will not be included in the returned dict.
     """
     hooks_dir = 'hooks'
-    r = {}
+    hooks = {}
     logging.debug('hooks_dir is {0}'.format(hooks_dir))
+
     if not os.path.isdir(hooks_dir):
         logging.debug('No hooks/ dir in template_dir')
-        return r
+        return hooks
+
     for f in os.listdir(hooks_dir):
-        basename = os.path.splitext(os.path.basename(f))[0]
-        if basename in _HOOKS:
-            r[basename] = os.path.abspath(os.path.join(hooks_dir, f))
-    return r
+        filename = os.path.basename(f)
+        basename = os.path.splitext(filename)[0]
+
+        if not filename.endswith('~') and basename in _HOOKS:
+            hooks[basename] = os.path.abspath(os.path.join(hooks_dir, f))
+    return hooks
 
 
 def run_script(script_path, cwd='.'):
