@@ -48,7 +48,7 @@ def find_hooks():
         filename = os.path.basename(f)
         basename = os.path.splitext(filename)[0]
 
-        if not filename.endswith('~') and basename in _HOOKS:
+        if basename in _HOOKS and not filename.endswith('~'):
             hooks[basename] = os.path.abspath(os.path.join(hooks_dir, f))
     return hooks
 
