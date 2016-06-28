@@ -68,7 +68,7 @@ def expand_abbreviations(template, config_dict):
 
 
 def cookiecutter(
-        template, checkout=None, no_input=False, extra_context=None,
+        template, checkout=None, no_input=False, bypass_options=(), extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
         config_file=USER_CONFIG_PATH):
     """
@@ -131,7 +131,7 @@ def cookiecutter(
 
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
-        context['cookiecutter'] = prompt_for_config(context, no_input)
+        context['cookiecutter'] = prompt_for_config(context, no_input, bypass_options)
 
         dump(config_dict['replay_dir'], template_name, context)
 

@@ -94,7 +94,7 @@ def render_variable(env, raw, cookiecutter_dict):
     return rendered_template
 
 
-def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input, bypass_options):
+def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input, bypass_options=()):
     """Prompt the user which option to choose from the given. Each of the
     possible choices is rendered beforehand.
     """
@@ -107,7 +107,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input, byp
     return read_user_choice(key, rendered_options)
 
 
-def prompt_for_config(context, no_input=False, bypass_options=None):
+def prompt_for_config(context, no_input=False, bypass_options=()):
     """
     Prompts the user to enter new config, using context as a source for the
     field names and sample values.
@@ -126,7 +126,7 @@ def prompt_for_config(context, no_input=False, bypass_options=None):
             if isinstance(raw, list):
                 # We are dealing with a choice variable
                 val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
+                    cookiecutter_dict, env, key, raw, no_input, bypass_options
                 )
             else:
                 # We are dealing with a regular variable
