@@ -21,6 +21,7 @@ Bug Fixes:
 * Fix an issue around **replay** file names when **cookiecutter** is used with
   a relative path to a template, thanks to `@eliasdorneles`_ for raising the
   issue and `@hackebrot`_ for the PR (#752, #753)
+* Ignore hook files with tilde-suffixes, thanks to `@hackebrot`_ (#768)
 
 Other Changes:
 
