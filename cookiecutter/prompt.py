@@ -94,7 +94,8 @@ def render_variable(env, raw, cookiecutter_dict):
     return rendered_template
 
 
-def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input, bypass_options=()):
+def prompt_choice_for_config(cookiecutter_dict, env, key, options, 
+                             no_input, bypass_options=()):
     """Prompt the user which option to choose from the given. Each of the
     possible choices is rendered beforehand.
     """
@@ -113,6 +114,7 @@ def prompt_for_config(context, no_input=False, bypass_options=()):
     field names and sample values.
 
     :param no_input: Prompt the user at command line for manual configuration?
+    :param bypass_options: Options to be bypassed at the prompy whe no_input=False
     """
     cookiecutter_dict = {}
     env = StrictEnvironment(context=context)
@@ -126,7 +128,8 @@ def prompt_for_config(context, no_input=False, bypass_options=()):
             if isinstance(raw, list):
                 # We are dealing with a choice variable
                 val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input, bypass_options
+                    cookiecutter_dict, env, key, raw, 
+                    no_input, bypass_options
                 )
             else:
                 # We are dealing with a regular variable
