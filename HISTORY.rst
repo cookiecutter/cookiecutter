@@ -95,6 +95,7 @@ Other Changes:
   * `pyramid-cookiecutter-starter`_ by `@stevepiercy`_ (#745)
   * `pyramid-cookiecutter-zodb`_ by `@stevepiercy`_ (#745)
   * `substanced-cookiecutter`_ by `@stevepiercy`_ (#745)
+  * `cookiecutter-simple-django-cn`_ by `@shenyushun`_ (#765)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -132,6 +133,7 @@ Other Changes:
 .. _`@zzzirk`: https://github.com/zzzirk
 .. _`@xguse`: https://github.com/xguse
 .. _`@stevepiercy`: https://github.com/stevepiercy
+.. _`@shenyushun`: https://github.com/shenyushun
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
@@ -159,6 +161,7 @@ Other Changes:
 .. _`pyramid-cookiecutter-starter`: https://github.com/Pylons/pyramid-cookiecutter-starter
 .. _`pyramid-cookiecutter-zodb`: https://github.com/Pylons/pyramid-cookiecutter-zodb
 .. _`substanced-cookiecutter`: https://github.com/Pylons/substanced-cookiecutter
+.. _`cookiecutter-simple-django-cn`: https://github.com/shenyushun/cookiecutter-simple-django-cn
 
 
 1.4.0 (2016-03-20) Shortbread
