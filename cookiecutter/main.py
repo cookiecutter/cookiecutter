@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """
-cookiecutter.main
------------------
-
 Main entry point for the `cookiecutter` command.
 
 The code in this module is also a good example of how to use Cookiecutter as a
@@ -44,14 +41,12 @@ def is_repo_url(value):
 
 
 def expand_abbreviations(template, config_dict):
-    """
-    Expand abbreviations in a template name.
+    """Expand abbreviations in a template name.
 
     :param template: The project template name.
     :param config_dict: The user config, which will contain abbreviation
         definitions.
     """
-
     abbreviations = builtin_abbreviations.copy()
     abbreviations.update(config_dict.get('abbreviations', {}))
 
