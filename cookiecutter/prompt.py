@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.prompt
----------------------
-
-Functions for prompting the user for project info.
-"""
-
+"""Functions for prompting the user for project info."""
 from collections import OrderedDict
 
 import click
@@ -21,8 +15,7 @@ from .environment import StrictEnvironment
 
 
 def read_user_variable(var_name, default_value):
-    """Prompt the user for the given variable and return the entered value
-    or the given default.
+    """Prompt for the given variable, return entered value or given default.
 
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
@@ -84,6 +77,7 @@ def read_user_choice(var_name, options):
 
 
 def render_variable(env, raw, cookiecutter_dict):
+    """Convert regular variable to string and return rendered template."""
     if raw is None:
         return None
     if not isinstance(raw, basestring):
@@ -95,8 +89,9 @@ def render_variable(env, raw, cookiecutter_dict):
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
-    """Prompt the user which option to choose from the given. Each of the
-    possible choices is rendered beforehand.
+    """Prompt the user which option to choose from the given.
+
+    Each of the possible choices is rendered beforehand.
     """
     rendered_options = [
         render_variable(env, raw, cookiecutter_dict) for raw in options
@@ -108,9 +103,9 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
 
 def prompt_for_config(context, no_input=False):
-    """
-    Prompts the user to enter new config, using context as a source for the
-    field names and sample values.
+    """Prompt user to enter new config.
+
+    Use context as a source for the field names and sample values.
 
     :param no_input: Prompt the user at command line for manual configuration?
     """
