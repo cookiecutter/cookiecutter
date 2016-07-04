@@ -79,6 +79,9 @@ def cookiecutter(
         # except when 'no-input' flag is set
         context['cookiecutter'] = prompt_for_config(context, no_input)
 
+        # include template dir or url in the context dict
+        context['cookiecutter']['_template'] = template
+
         dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
