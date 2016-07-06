@@ -66,7 +66,8 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     :param clone_to_dir: The directory to clone the repository into.
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
-    :return:
+    :return: The cookiecutter template directory
+    :raises: `RepositoryNotFound` if a repository directory could not be found.
     """
     template = expand_abbreviations(template, abbreviations)
 
