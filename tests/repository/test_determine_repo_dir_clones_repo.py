@@ -15,16 +15,8 @@ def template_url():
     return 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
 
-@pytest.fixture
-def output_dir(tmpdir):
-    """Given a temporary dir, create an `output` subdirectory inside it and
-    return its path (not a str but a py.path instance).
-    """
-    return tmpdir.mkdir('output')
-
-
 def test_determine_repository_url_should_clone(
-        mocker, template_url, output_dir, user_config_file, user_config_data):
+        mocker, template_url, user_config_data):
     """`clone()` should be called with correct args when `cookiecutter()` is
     called.
     """
