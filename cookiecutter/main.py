@@ -55,7 +55,7 @@ def cookiecutter(
 
     repo_dir = determine_repo_dir(
         template=template,
-        abbreviations=config_dict.get('abbreviations', {}),
+        abbreviations=config_dict['abbreviations'],
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,

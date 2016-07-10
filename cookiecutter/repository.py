@@ -8,11 +8,6 @@ import re
 from .exceptions import RepositoryNotFound
 from .vcs import clone
 
-BUILTIN_ABBREVIATIONS = {
-    'gh': 'https://github.com/{0}.git',
-    'bb': 'https://bitbucket.org/{0}',
-}
-
 REPO_REGEX = re.compile(r"""
 (?x)
 ((((git|hg)\+)?(git|ssh|https?):(//)?)  # something like git:// ssh:// etc.
@@ -27,17 +22,13 @@ def is_repo_url(value):
     return bool(REPO_REGEX.match(value))
 
 
-def expand_abbreviations(template, user_abbreviations):
+def expand_abbreviations(template, abbreviations):
     """
     Expand abbreviations in a template name.
 
     :param template: The project template name.
-    :param user_abbreviations: The user config, which will contain abbreviation
-        definitions.
+    :param abbreviations: Abbreviation definitions.
     """
-    abbreviations = BUILTIN_ABBREVIATIONS.copy()
-    abbreviations.update(user_abbreviations)
-
     if template in abbreviations:
         return abbreviations[template]
 
