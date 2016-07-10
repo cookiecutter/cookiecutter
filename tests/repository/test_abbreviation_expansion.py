@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import pytest
 
+from cookiecutter.config import BUILTIN_ABBREVIATIONS
 from cookiecutter.repository import expand_abbreviations
 
 
@@ -29,9 +30,9 @@ def test_abbreviation_expansion_prefix():
 
 def test_abbreviation_expansion_builtin():
     input_dir = expand_abbreviations(
-        'gh:a', {}
+        'gh:pydanny/cookiecutter-django', BUILTIN_ABBREVIATIONS
     )
-    assert input_dir == 'https://github.com/a.git'
+    assert input_dir == 'https://github.com/pydanny/cookiecutter-django.git'
 
 
 def test_abbreviation_expansion_override_builtin():
