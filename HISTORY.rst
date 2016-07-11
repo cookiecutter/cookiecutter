@@ -67,6 +67,8 @@ Other Changes:
 * Documentation for the ``no_input`` option, thanks to `@pokoli`_ (#701)
 * Remove unnecessary shebangs from python files, thanks to `@michaeljoseph`_
   (#763)
+* Refactor cookiecutter template identification, thanks to `@michaeljoseph`_
+  (#777)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
