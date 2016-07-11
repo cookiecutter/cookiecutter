@@ -23,10 +23,16 @@ logger = logging.getLogger(__name__)
 
 USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
 
+BUILTIN_ABBREVIATIONS = {
+    'gh': 'https://github.com/{0}.git',
+    'bb': 'https://bitbucket.org/{0}',
+}
+
 DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
     'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
-    'default_context': {}
+    'default_context': {},
+    'abbreviations': BUILTIN_ABBREVIATIONS,
 }
 
 

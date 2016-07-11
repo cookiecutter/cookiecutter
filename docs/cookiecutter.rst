@@ -84,6 +84,14 @@ cookiecutter.replay module
     :undoc-members:
     :show-inheritance:
 
+cookiecutter.repository module
+------------------------------
+
+.. automodule:: cookiecutter.repository
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 cookiecutter.utils module
 -------------------------
 

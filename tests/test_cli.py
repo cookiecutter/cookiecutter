@@ -180,7 +180,6 @@ def test_cli_overwrite_if_exists_when_output_dir_exists(overwrite_cli_flag):
     result = runner.invoke(main, [
         'tests/fake-repo-pre/', '--no-input', overwrite_cli_flag
     ])
-
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
 

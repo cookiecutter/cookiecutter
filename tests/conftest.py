@@ -13,6 +13,12 @@ import shutil
 from cookiecutter import utils
 
 
+USER_CONFIG = u"""
+cookiecutters_dir: "{cookiecutters_dir}"
+replay_dir: "{replay_dir}"
+"""
+
+
 def backup_dir(original_dir, backup_dir):
     # If the default original_dir is pre-existing, move it to a temp location
     if not os.path.isdir(original_dir):
@@ -138,3 +144,43 @@ def clean_system(request):
         )
 
     request.addfinalizer(restore_backup)
+
+
+@pytest.fixture(scope='session')
+def user_dir(tmpdir_factory):
+    """Fixture that simulates the user's home directory"""
+    return tmpdir_factory.mktemp('user_dir')
+
+
+@pytest.fixture(scope='session')
+def user_config_data(user_dir):
+    """Fixture that creates 2 Cookiecutter user config dirs in the user's home
+    directory:
+    * `cookiecutters_dir`
+    * `cookiecutter_replay`
+
+    :returns: Dict with name of both user config dirs
+    """
+    cookiecutters_dir = user_dir.mkdir('cookiecutters')
+    replay_dir = user_dir.mkdir('cookiecutter_replay')
+
+    return {
+        'cookiecutters_dir': str(cookiecutters_dir),
+        'replay_dir': str(replay_dir),
+    }
+
+
+@pytest.fixture(scope='session')
+def user_config_file(user_dir, user_config_data):
+    """Fixture that creates a config file called `config` in the user's home
+    directory, with YAML from `user_config_data`.
+
+    :param user_dir: Simulated user's home directory
+    :param user_config_data: Dict of config values
+    :returns: String of path to config file
+    """
+    config_file = user_dir.join('config')
+
+    config_text = USER_CONFIG.format(**user_config_data)
+    config_file.write(config_text)
+    return str(config_file)
