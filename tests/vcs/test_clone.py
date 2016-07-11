@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
+import subprocess
+
 import pytest
 
 from cookiecutter import exceptions, vcs
@@ -51,7 +53,7 @@ def test_is_vcs_installed(mocker, which_return, result):
 def test_clone_should_invoke_git(
         mocker, clone_dir, repo_type, repo_url, repo_name):
     """When `clone()` is called with a git/hg repo, the corresponding VCS
-    command should be run via `subprocess.check_call()`.
+    command should be run via `subprocess.check_output()`.
 
     This should take place:
     * In the correct dir
@@ -64,7 +66,7 @@ def test_clone_should_invoke_git(
     )
 
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_call',
+        'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
     )
     expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
@@ -81,10 +83,14 @@ def test_clone_should_invoke_git(
     assert repo_dir == expected_repo_dir
 
     mock_subprocess.assert_any_call(
-        [repo_type, 'clone', repo_url], cwd=clone_dir
+        [repo_type, 'clone', repo_url],
+        cwd=clone_dir,
+        stderr=subprocess.STDOUT
     )
     mock_subprocess.assert_any_call(
-        [repo_type, 'checkout', branch], cwd=expected_repo_dir
+        [repo_type, 'checkout', branch],
+        cwd=expected_repo_dir,
+        stderr=subprocess.STDOUT
     )
 
 
@@ -103,7 +109,7 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
         autospec=True
     )
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_call',
+        'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
     )
 
@@ -130,7 +136,7 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
     )
 
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_call',
+        'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
     )
 
@@ -141,5 +147,7 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
     )
 
     mock_subprocess.assert_called_once_with(
-        ['git', 'clone', 'https://github.com/foo/bar'], cwd=clone_dir
+        ['git', 'clone', 'https://github.com/foo/bar'],
+        cwd=clone_dir,
+        stderr=subprocess.STDOUT
     )
