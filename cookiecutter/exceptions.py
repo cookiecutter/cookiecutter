@@ -125,12 +125,12 @@ class RepositoryCloneFailed(CookiecutterException):
 
     def __init__(self, e, repo_url, checkout):
         if 'not found' in e.output.lower():
-            self.message = (
+            super(CookiecutterException, self).__init__(
                 'The repository {} could not be found, '
                 'have you made a typo?'.format(repo_url)
             )
         elif any(error in e.output for error in self.BRANCH_ERRORS):
-            self.message = (
+            super(CookiecutterException, self).__init__(
                 'The {} branch of repository {} could not found, '
                 'have you made a typo?'.format(checkout, repo_url)
             )
