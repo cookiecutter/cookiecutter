@@ -123,16 +123,16 @@ class RepositoryCloneFailed(CookiecutterException):
         'unknown revision',
     ]
 
-    def __init__(self, e, repo_url, checkout):
-        if 'not found' in e.output.lower():
+    def __init__(self, exc, repo_url, checkout):
+        if 'not found' in exc.output.lower():
             super(CookiecutterException, self).__init__(
                 'The repository {} could not be found, '
                 'have you made a typo?'.format(repo_url)
             )
-        elif any(error in e.output for error in self.BRANCH_ERRORS):
+        elif any(error in exc.output for error in self.BRANCH_ERRORS):
             super(CookiecutterException, self).__init__(
                 'The {} branch of repository {} could not found, '
                 'have you made a typo?'.format(checkout, repo_url)
             )
         else:
-            raise e
+            raise exc
