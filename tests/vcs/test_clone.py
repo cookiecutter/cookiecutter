@@ -169,12 +169,18 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
         )
     )
 
-    with pytest.raises(exceptions.RepositoryCloneFailed):
+    repository_url = 'https://github.com/hackebro/cookiedozer'
+    with pytest.raises(exceptions.RepositoryCloneFailed) as err:
         vcs.clone(
-            'https://github.com/hackebro/cookiedozer',
+            repository_url,
             clone_to_dir=clone_dir,
             no_input=True
         )
+
+    error = err.value
+    assert error.message == (
+        'The repository {} could not be found, have you made a typo?'
+    ).format(repository_url)
 
 
 @pytest.mark.parametrize('error_message', [
@@ -193,13 +199,19 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
         )
     )
 
-    with pytest.raises(exceptions.RepositoryCloneFailed):
+    repository_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin'
+    with pytest.raises(exceptions.RepositoryCloneFailed) as err:
         vcs.clone(
-            'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+            repository_url,
             clone_to_dir=clone_dir,
             checkout='unknown_branch',
             no_input=True
         )
+    error = err.value
+    assert error.message == (
+        'The unknown_branch branch of repository '
+        '{} could not found, have you made a typo?'
+    ).format(repository_url)
 
 
 def test_clone_unknown_subprocess_error(mocker, clone_dir):
