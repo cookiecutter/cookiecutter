@@ -151,3 +151,70 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
         cwd=clone_dir,
         stderr=subprocess.STDOUT
     )
+
+
+@pytest.mark.parametrize('error_message', [
+    "fatal: repository 'https://github.com/hackebro/cookiedozer' not found",
+    'hg: abort: HTTP Error 404: Not Found',
+])
+def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
+    """In `clone()`, repository not found errors should raise an
+    appropriate exception.
+    """
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=subprocess.CalledProcessError(
+            -1, 'cmd', output=error_message
+        )
+    )
+
+    with pytest.raises(exceptions.RepositoryCloneFailed):
+        vcs.clone(
+            'https://github.com/hackebro/cookiedozer',
+            clone_to_dir=clone_dir,
+            no_input=True
+        )
+
+
+@pytest.mark.parametrize('error_message', [
+    "error: pathspec 'unknown_branch' did not match any file(s) known to git.",
+    "hg: abort: unknown revision 'unknown_branch'!",
+])
+def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
+    """In `clone()`, branch not found errors should raise an
+    appropriate exception.
+    """
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=subprocess.CalledProcessError(
+            -1, 'cmd', output=error_message
+        )
+    )
+
+    with pytest.raises(exceptions.RepositoryCloneFailed):
+        vcs.clone(
+            'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+            clone_to_dir=clone_dir,
+            checkout='unknown_branch',
+            no_input=True
+        )
+
+
+def test_clone_unknown_subprocess_error(mocker, clone_dir):
+    """In `clone()`, unknown subprocess errors should be raised."""
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=subprocess.CalledProcessError(
+            -1, 'cmd', output='Something went wrong'
+        )
+    )
+
+    with pytest.raises(subprocess.CalledProcessError):
+        vcs.clone(
+            'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+            clone_to_dir=clone_dir,
+            no_input=True
+        )
