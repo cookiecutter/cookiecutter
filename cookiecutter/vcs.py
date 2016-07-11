@@ -15,7 +15,7 @@ import sys
 
 from whichcraft import which
 
-from .exceptions import UnknownRepoType, VCSNotInstalled
+from .exceptions import RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
 from .prompt import read_user_yes_no
 from .utils import make_sure_path_exists, rmtree
 
@@ -115,9 +115,19 @@ def clone(repo_url, checkout=None, clone_to_dir=".", no_input=False):
         prompt_and_delete_repo(repo_dir, no_input=no_input)
 
     if repo_type in ['git', 'hg']:
-        subprocess.check_call([repo_type, 'clone', repo_url], cwd=clone_to_dir)
-        if checkout is not None:
-            subprocess.check_call([repo_type, 'checkout', checkout],
-                                  cwd=repo_dir)
+        try:
+            subprocess.check_output(
+                [repo_type, 'clone', repo_url],
+                cwd=clone_to_dir,
+                stderr=subprocess.STDOUT,
+            )
+            if checkout is not None:
+                subprocess.check_output(
+                    [repo_type, 'checkout', checkout],
+                    cwd=repo_dir,
+                    stderr=subprocess.STDOUT,
+                )
+        except subprocess.CalledProcessError as e:
+            raise RepositoryCloneFailed(e, repo_url, checkout)
 
     return repo_dir
