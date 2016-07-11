@@ -23,7 +23,8 @@ from cookiecutter.exceptions import (
     FailedHookException,
     UndefinedVariableInTemplate,
     UnknownExtension,
-    RepositoryNotFound
+    RepositoryNotFound,
+    RepositoryCloneFailed
 )
 
 logger = logging.getLogger(__name__)
@@ -124,7 +125,8 @@ def main(template, extra_context, no_input, checkout, verbose, replay,
             InvalidModeException,
             FailedHookException,
             UnknownExtension,
-            RepositoryNotFound) as e:
+            RepositoryNotFound,
+            RepositoryCloneFailed) as e:
         click.echo(e)
         sys.exit(1)
     except UndefinedVariableInTemplate as undefined_err:
