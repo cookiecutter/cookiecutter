@@ -161,12 +161,15 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
     """In `clone()`, repository not found errors should raise an
     appropriate exception.
     """
+    # side_effect is set to an iterable here (and below),
+    # because of a Python 3.4 unittest.mock regression
+    # http://bugs.python.org/issue23661
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
-        side_effect=subprocess.CalledProcessError(
+        side_effect=[subprocess.CalledProcessError(
             -1, 'cmd', output=error_message
-        )
+        )]
     )
 
     repository_url = 'https://github.com/hackebro/cookiedozer'
@@ -193,9 +196,9 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
-        side_effect=subprocess.CalledProcessError(
+        side_effect=[subprocess.CalledProcessError(
             -1, 'cmd', output=error_message
-        )
+        )]
     )
 
     repository_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin'
@@ -218,9 +221,9 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
-        side_effect=subprocess.CalledProcessError(
+        side_effect=[subprocess.CalledProcessError(
             -1, 'cmd', output='Something went wrong'
-        )
+        )]
     )
 
     with pytest.raises(subprocess.CalledProcessError):
