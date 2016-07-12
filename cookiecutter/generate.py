@@ -34,7 +34,7 @@ from .hooks import run_hook
 
 def copy_without_render(path, context):
     """
-    Returns True if `path` matches some pattern in the
+    Return True if `path` matches some pattern in the
     `_copy_without_render` context dict.
 
     :param path: A file-system path referring to a file or dir that
@@ -76,7 +76,7 @@ def apply_overwrites_to_context(context, overwrite_context):
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      extra_context=None):
     """
-    Generates the context for a Cookiecutter project template.
+    Generate the context for a Cookiecutter project template.
     Loads the JSON file as a Python object, with key being the JSON filename.
 
     :param context_file: JSON file containing key/value pairs for populating
@@ -84,7 +84,6 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
-
     context = {}
 
     try:
@@ -137,7 +136,6 @@ def generate_file(project_dir, infile, context, env):
     :param context: Dict for populating the cookiecutter's variables.
     :param env: Jinja2 template execution environment.
     """
-
     logging.debug('Generating file {0}'.format(infile))
 
     # Render the path to the output file (not including the root project dir)
@@ -184,10 +182,10 @@ def generate_file(project_dir, infile, context, env):
 def render_and_create_dir(dirname, context, output_dir, environment,
                           overwrite_if_exists=False):
     """
-    Renders the name of a directory, creates the directory, and
+    Render the name of a directory, creates the directory, and
     returns its path.
-    """
 
+    """
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
     logging.debug('Rendered dir {0} must exist in output_dir {1}'.format(
@@ -214,9 +212,7 @@ def render_and_create_dir(dirname, context, output_dir, environment,
 
 
 def ensure_dir_is_templated(dirname):
-    """
-    Ensures that dirname is a templated directory name.
-    """
+    """Ensure that dirname is a templated directory name."""
     if '{{' in dirname and '}}' in dirname:
         return True
     else:
@@ -240,7 +236,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
 def generate_files(repo_dir, context=None, output_dir='.',
                    overwrite_if_exists=False):
     """
-    Renders the templates and saves them to files.
+    Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
     :param context: Dict for populating the template's variables.
@@ -248,7 +244,6 @@ def generate_files(repo_dir, context=None, output_dir='.',
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists
     """
-
     template_dir = find_template(repo_dir)
     logging.debug('Generating project from {0}...'.format(template_dir))
     context = context or {}
