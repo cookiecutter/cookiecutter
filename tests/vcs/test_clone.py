@@ -177,8 +177,7 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
             no_input=True
         )
 
-    error = err.value
-    assert error.message == (
+    assert str(err.value) == (
         'The repository {} could not be found, have you made a typo?'
     ).format(repository_url)
 
@@ -207,8 +206,8 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
             checkout='unknown_branch',
             no_input=True
         )
-    error = err.value
-    assert error.message == (
+
+    assert str(err.value) == (
         'The unknown_branch branch of repository '
         '{} could not found, have you made a typo?'
     ).format(repository_url)
