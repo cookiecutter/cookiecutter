@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.generate
----------------------
-
-Functions for generating a project from a project template.
-"""
+"""Functions for generating a project from a project template."""
 from __future__ import unicode_literals
 from collections import OrderedDict
 import fnmatch
@@ -33,9 +28,7 @@ from .hooks import run_hook
 
 
 def copy_without_render(path, context):
-    """
-    Returns True if `path` matches some pattern in the
-    `_copy_without_render` context dict.
+    """Return True if `path` matches context dict pattern.
 
     :param path: A file-system path referring to a file or dir that
         should be rendered or just copied.
@@ -75,8 +68,8 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      extra_context=None):
-    """
-    Generates the context for a Cookiecutter project template.
+    """Generate the context for a Cookiecutter project template.
+
     Loads the JSON file as a Python object, with key being the JSON filename.
 
     :param context_file: JSON file containing key/value pairs for populating
@@ -84,7 +77,6 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
-
     context = {}
 
     try:
@@ -117,9 +109,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
 
 def generate_file(project_dir, infile, context, env):
-    """
-    1. Render the filename of infile as the name of outfile.
-    2. Deal with infile appropriately:
+    """Render filename of infile as name of outfile, handle infile correctly.
+
+    Dealing with infile appropriately:
 
         a. If infile is a binary file, copy it over without rendering.
         b. If infile is a text file, render its contents and write the
@@ -137,7 +129,6 @@ def generate_file(project_dir, infile, context, env):
     :param context: Dict for populating the cookiecutter's variables.
     :param env: Jinja2 template execution environment.
     """
-
     logging.debug('Generating file {0}'.format(infile))
 
     # Render the path to the output file (not including the root project dir)
@@ -183,11 +174,7 @@ def generate_file(project_dir, infile, context, env):
 
 def render_and_create_dir(dirname, context, output_dir, environment,
                           overwrite_if_exists=False):
-    """
-    Renders the name of a directory, creates the directory, and
-    returns its path.
-    """
-
+    """Render name of a directory, create the directory, return its path."""
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
     logging.debug('Rendered dir {0} must exist in output_dir {1}'.format(
@@ -214,9 +201,7 @@ def render_and_create_dir(dirname, context, output_dir, environment,
 
 
 def ensure_dir_is_templated(dirname):
-    """
-    Ensures that dirname is a templated directory name.
-    """
+    """Ensure that dirname is a templated directory name."""
     if '{{' in dirname and '}}' in dirname:
         return True
     else:
@@ -224,9 +209,7 @@ def ensure_dir_is_templated(dirname):
 
 
 def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
-    """
-    Run hook from repo directory, cleaning up project directory if hook fails
-    """
+    """Run hook from repo directory, clean project directory if hook fails."""
     with work_in(repo_dir):
         try:
             run_hook(hook_name, project_dir, context)
@@ -239,16 +222,14 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
 
 def generate_files(repo_dir, context=None, output_dir='.',
                    overwrite_if_exists=False):
-    """
-    Renders the templates and saves them to files.
+    """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
     :param context: Dict for populating the template's variables.
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
-        if it exists
+        if it exists.
     """
-
     template_dir = find_template(repo_dir)
     logging.debug('Generating project from {0}...'.format(template_dir))
     context = context or {}
