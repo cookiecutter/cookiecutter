@@ -87,6 +87,9 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
         # If it's a local repo, no need to clone or copy to your
         # cookiecutters_dir
         repo_dir = template
+        if not valid_repository(repo_dir):
+            already_cloned_cookiecutter = os.path.join(clone_to_dir, template)
+            repo_dir = already_cloned_cookiecutter
 
     if repository_has_cookiecutter_json(repo_dir):
         return repo_dir
