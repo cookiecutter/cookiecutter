@@ -25,7 +25,9 @@ def output_dir(tmpdir):
 
 @pytest.fixture
 def template(tmpdir):
-    return str(tmpdir.mkdir('template'))
+    template_dir = tmpdir.mkdir('template')
+    template_dir.join('cookiecutter.json').ensure(file=True)
+    return str(template_dir)
 
 
 @pytest.fixture(autouse=True)
