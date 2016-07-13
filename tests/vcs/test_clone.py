@@ -173,7 +173,7 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
     )
 
     repository_url = 'https://github.com/hackebro/cookiedozer'
-    with pytest.raises(exceptions.RepositoryCloneFailed) as err:
+    with pytest.raises(exceptions.RepositoryNotFound) as err:
         vcs.clone(
             repository_url,
             clone_to_dir=clone_dir,

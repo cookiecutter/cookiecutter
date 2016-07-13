@@ -125,7 +125,7 @@ class RepositoryCloneFailed(CookiecutterException):
 
     def __init__(self, exception, repo_url, checkout):
         if 'not found' in exception.output.lower():
-            super(CookiecutterException, self).__init__(
+            raise RepositoryNotFound(
                 'The repository {} could not be found, '
                 'have you made a typo?'.format(repo_url)
             )
