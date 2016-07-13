@@ -130,7 +130,7 @@ class RepositoryCloneFailed(CookiecutterException):
                 'have you made a typo?'.format(repo_url)
             )
         elif any(error in exception.output for error in self.BRANCH_ERRORS):
-            super(CookiecutterException, self).__init__(
+            super(RepositoryCloneFailed, self).__init__(
                 'The {} branch of repository {} could not found, '
                 'have you made a typo?'.format(checkout, repo_url)
             )
