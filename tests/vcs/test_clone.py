@@ -50,7 +50,7 @@ def test_is_vcs_installed(mocker, which_return, result):
     ('git', 'https://github.com/hello/world.git', 'world'),
     ('hg', 'https://bitbucket.org/foo/bar', 'bar'),
 ])
-def test_clone_should_invoke_git(
+def test_clone_should_invoke_vcs_command(
         mocker, clone_dir, repo_type, repo_url, repo_name):
     """When `clone()` is called with a git/hg repo, the corresponding VCS
     command should be run via `subprocess.check_output()`.
