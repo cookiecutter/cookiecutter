@@ -117,22 +117,3 @@ class RepositoryNotFound(CookiecutterException):
 
 class RepositoryCloneFailed(CookiecutterException):
     """Raised when a cookiecutter template can't be cloned."""
-
-    BRANCH_ERRORS = [
-        'error: pathspec',
-        'unknown revision',
-    ]
-
-    def __init__(self, exception, repo_url, checkout):
-        if 'not found' in exception.output.lower():
-            raise RepositoryNotFound(
-                'The repository {} could not be found, '
-                'have you made a typo?'.format(repo_url)
-            )
-        elif any(error in exception.output for error in self.BRANCH_ERRORS):
-            super(RepositoryCloneFailed, self).__init__(
-                'The {} branch of repository {} could not found, '
-                'have you made a typo?'.format(checkout, repo_url)
-            )
-        else:
-            raise exception

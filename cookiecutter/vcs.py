@@ -15,9 +15,17 @@ import sys
 
 from whichcraft import which
 
-from .exceptions import RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
+from .exceptions import (
+    RepositoryNotFound, RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
+)
 from .prompt import read_user_yes_no
 from .utils import make_sure_path_exists, rmtree
+
+
+BRANCH_ERRORS = [
+    'error: pathspec',
+    'unknown revision',
+]
 
 
 def prompt_and_delete_repo(repo_dir, no_input=False):
@@ -128,6 +136,16 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                     stderr=subprocess.STDOUT,
                 )
         except subprocess.CalledProcessError as e:
-            raise RepositoryCloneFailed(e, repo_url, checkout)
+            if 'not found' in e.output.lower():
+                raise RepositoryNotFound(
+                    'The repository {} could not be found, '
+                    'have you made a typo?'.format(repo_url)
+                )
+            if any(error in e.output for error in BRANCH_ERRORS):
+                raise RepositoryCloneFailed(
+                    'The {} branch of repository {} could not found, '
+                    'have you made a typo?'.format(checkout, repo_url)
+                )
+            raise
 
     return repo_dir
