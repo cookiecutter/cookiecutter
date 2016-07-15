@@ -36,6 +36,7 @@ templates), e.g. creating a Python package project from a Python package project
 * GitHub: https://github.com/audreyr/cookiecutter
 * Free software: BSD license
 * PyPI: https://pypi.python.org/pypi/cookiecutter
+* conda-forge: https://github.com/conda-forge/cookiecutter-feedstock
 
 .. image:: https://raw.github.com/audreyr/cookiecutter/aa309b73bdc974788ba265d843a65bb94c2e608e/cookiecutter_medium.png
 
@@ -566,8 +567,10 @@ Scala
 Data Science
 ~~~~~~~~~~~~
 
+* `conda-forge/cookiecutter-feedstock`_: Instruction on installing cookiecutter from conda-forge.
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
 
+.. _`conda-forge/cookiecutter-feedstock`: https://github.com/conda-forge/cookiecutter-feedstock
 .. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
 
 Similar projects
