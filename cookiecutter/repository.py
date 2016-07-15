@@ -90,6 +90,7 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
 
     if not valid_repository(repo_dir):
         raise RepositoryNotFound(
-            'The repository {0} could not be located.'.format(template)
+            'The repository {} could not be located or does not contain '
+            'a "cookiecutter.json" file.'.format(repo_dir)
         )
     return repo_dir
