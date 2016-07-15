@@ -122,30 +122,29 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     if os.path.isdir(repo_dir):
         prompt_and_delete_repo(repo_dir, no_input=no_input)
 
-    if repo_type in ['git', 'hg']:
-        try:
+    try:
+        subprocess.check_output(
+            [repo_type, 'clone', repo_url],
+            cwd=clone_to_dir,
+            stderr=subprocess.STDOUT,
+        )
+        if checkout is not None:
             subprocess.check_output(
-                [repo_type, 'clone', repo_url],
-                cwd=clone_to_dir,
+                [repo_type, 'checkout', checkout],
+                cwd=repo_dir,
                 stderr=subprocess.STDOUT,
             )
-            if checkout is not None:
-                subprocess.check_output(
-                    [repo_type, 'checkout', checkout],
-                    cwd=repo_dir,
-                    stderr=subprocess.STDOUT,
-                )
-        except subprocess.CalledProcessError as e:
-            if 'not found' in e.output.lower():
-                raise RepositoryNotFound(
-                    'The repository {} could not be found, '
-                    'have you made a typo?'.format(repo_url)
-                )
-            if any(error in e.output for error in BRANCH_ERRORS):
-                raise RepositoryCloneFailed(
-                    'The {} branch of repository {} could not found, '
-                    'have you made a typo?'.format(checkout, repo_url)
-                )
-            raise
+    except subprocess.CalledProcessError as clone_error:
+        if 'not found' in clone_error.output.lower():
+            raise RepositoryNotFound(
+                'The repository {} could not be found, '
+                'have you made a typo?'.format(repo_url)
+            )
+        if any(error in clone_error.output for error in BRANCH_ERRORS):
+            raise RepositoryCloneFailed(
+                'The {} branch of repository {} could not found, '
+                'have you made a typo?'.format(checkout, repo_url)
+            )
+        raise
 
     return repo_dir
