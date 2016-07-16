@@ -76,25 +76,27 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     """
     template = expand_abbreviations(template, abbreviations)
 
+    repository_candidates = []
+
     if is_repo_url(template):
-        return clone(
+        cloned_repo = clone(
             repo_url=template,
             checkout=checkout,
             clone_to_dir=clone_to_dir,
             no_input=no_input,
         )
-    else:
-        # If it's a local repo, no need to clone or copy to your
-        # cookiecutters_dir
-        repo_dir = template
-        if not repository_has_cookiecutter_json(repo_dir):
-            already_cloned_cookiecutter = os.path.join(clone_to_dir, template)
-            repo_dir = already_cloned_cookiecutter
+        repository_candidates.append(cloned_repo)
 
-    if repository_has_cookiecutter_json(repo_dir):
-        return repo_dir
+    repository_candidates.extend([
+        template,
+        os.path.join(clone_to_dir, template)
+    ])
+
+    for repo_candidate in repository_candidates:
+        if repository_has_cookiecutter_json(repo_candidate):
+            return repo_candidate
 
     raise RepositoryNotFound(
         'The repository {} could not be located or does not contain '
-        'a "cookiecutter.json" file.'.format(repo_dir)
+        'a "cookiecutter.json" file.'.format(template)
     )
