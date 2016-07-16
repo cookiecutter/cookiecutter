@@ -46,7 +46,8 @@ def test_repository_url_should_clone(
     assert 'tests/fake-repo-tmpl' == project_dir
 
 
-def test_repository_url_with_no_context_file(mocker, template_url):
+def test_repository_url_with_no_context_file(
+        mocker, template_url, user_config_data):
     mocker.patch(
         'cookiecutter.repository.clone',
         return_value='tests/fake-repo-bad',
@@ -57,7 +58,7 @@ def test_repository_url_with_no_context_file(mocker, template_url):
         repository.determine_repo_dir(
             template_url,
             abbreviations={},
-            clone_to_dir=None,
+            clone_to_dir=user_config_data['cookiecutters_dir'],
             checkout=None,
             no_input=True
         )
