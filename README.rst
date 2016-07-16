@@ -67,7 +67,7 @@ Did someone say features?
         # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
         $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
-* Can also use it at the command line with a local template:
+* Use it at the command line with a local template:
 
     .. code-block:: bash
 
@@ -128,6 +128,16 @@ Did someone say features?
 
 * Cookiecutters (cloned Cookiecutter project templates) are put into
   `~/.cookiecutters/` by default, or cookiecutters_dir if specified.
+
+* If you have already cloned a cookiecutter into `~/.cookiecutters/`, you
+  can reference it by directory name:
+
+    .. code-block:: bash
+
+        # Clone cookiecutter-pypackage
+        $ cookiecutter gh:audreyr/cookiecutter-pypackage
+        # Now you can use the already cloned cookiecutter by name
+        $ cookiecutter cookiecutter-pypackage
 
 * You can use local cookiecutters, or remote cookiecutters directly from Git
   repos or from Mercurial repos on Bitbucket.
