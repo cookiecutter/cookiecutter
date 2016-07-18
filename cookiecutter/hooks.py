@@ -70,7 +70,7 @@ def run_script(script_path, cwd='.'):
 
 
 def run_script_with_context(script_path, cwd, context):
-    """Execute a script after rendering with its Jinja.
+    """Execute a script after rendering it with Jinja.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
