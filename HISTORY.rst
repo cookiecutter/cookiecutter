@@ -13,6 +13,8 @@ New Features:
 * Updated conda installation instructions to work with the new conda-forge
   distribution of Cookiecutter, thanks to `@pydanny`_ and especially
   `@bollwyvl`_ (#232, #705).
+* Refactor code responsible for interaction with version control systems and
+  raise better error messages, thanks to `@michaeljoseph`_ (#778).
 
 Bug Fixes:
 
