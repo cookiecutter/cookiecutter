@@ -113,3 +113,7 @@ class RepositoryNotFound(CookiecutterException):
     """
     Raised when the specified cookiecutter repository doesn't exist.
     """
+
+
+class RepositoryCloneFailed(CookiecutterException):
+    """Raised when a cookiecutter template can't be cloned."""

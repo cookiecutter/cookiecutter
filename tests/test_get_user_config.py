@@ -57,23 +57,32 @@ def back_up_rc(request, user_config_path):
     request.addfinalizer(remove_test_rc)
 
 
+@pytest.fixture
+def custom_config():
+    return {
+        'default_context': {
+            'full_name': 'Firstname Lastname',
+            'email': 'firstname.lastname@gmail.com',
+            'github_username': 'example',
+        },
+        'cookiecutters_dir': '/home/example/some-path-to-templates',
+        'replay_dir': '/home/example/some-path-to-replay-files',
+        'abbreviations': {
+            'gh': 'https://github.com/{0}.git',
+            'bb': 'https://bitbucket.org/{0}',
+        }
+    }
+
+
 @pytest.mark.usefixtures('back_up_rc')
-def test_get_user_config_valid(user_config_path):
+def test_get_user_config_valid(user_config_path, custom_config):
     """
     Get config from a valid ~/.cookiecutterrc file
     """
     shutil.copy('tests/test-config/valid-config.yaml', user_config_path)
     conf = config.get_user_config()
-    expected_conf = {
-        'cookiecutters_dir': '/home/example/some-path-to-templates',
-        'replay_dir': '/home/example/some-path-to-replay-files',
-        'default_context': {
-            'full_name': 'Firstname Lastname',
-            'email': 'firstname.lastname@gmail.com',
-            'github_username': 'example'
-        }
-    }
-    assert conf == expected_conf
+
+    assert conf == custom_config
 
 
 @pytest.mark.usefixtures('back_up_rc')
@@ -92,19 +101,6 @@ def test_get_user_config_nonexistent():
     Get config from a nonexistent ~/.cookiecutterrc file
     """
     assert config.get_user_config() == config.DEFAULT_CONFIG
-
-
-@pytest.fixture
-def custom_config():
-    return {
-        'default_context': {
-            'full_name': 'Firstname Lastname',
-            'email': 'firstname.lastname@gmail.com',
-            'github_username': 'example',
-        },
-        'cookiecutters_dir': '/home/example/some-path-to-templates',
-        'replay_dir': '/home/example/some-path-to-replay-files'
-    }
 
 
 @pytest.fixture

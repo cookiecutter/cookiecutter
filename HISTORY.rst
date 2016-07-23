@@ -13,6 +13,8 @@ New Features:
 * Updated conda installation instructions to work with the new conda-forge
   distribution of Cookiecutter, thanks to `@pydanny`_ and especially
   `@bollwyvl`_ (#232, #705).
+* Refactor code responsible for interaction with version control systems and
+  raise better error messages, thanks to `@michaeljoseph`_ (#778).
 
 Bug Fixes:
 
@@ -44,8 +46,12 @@ Other Changes:
   thanks to `@tephyr`_ for the PR and `@willingc`_ for the review (#711, #714)
 * Update link to docs for Django's ``--template`` command line option, thanks
   to `@purplediane`_ (#754)
-* Applied PEP 257 docstring conventions to ``environment.py``, thanks to
-  `@terryjbates`_ (#759)
+* Applied PEP 257 docstring conventions to:
+
+  * ``environment.py``, thanks to `@terryjbates`_ (#759)
+  * ``find.py``, thanks to `@terryjbates`_ (#761)
+  * ``generate.py``, thanks to `@terryjbates`_ (#764)
+  * ``hooks.py``, thanks to `@terryjbates`_ (#766)
 * Fix link to the Tryton cookiecutter, thanks to `@cedk`_
   and `@nicoe`_ (#697, #698)
 * Added PyCon US 2016 sponsorship to README, thanks to `@purplediane`_ (#720)
@@ -67,6 +73,8 @@ Other Changes:
 * Documentation for the ``no_input`` option, thanks to `@pokoli`_ (#701)
 * Remove unnecessary shebangs from python files, thanks to `@michaeljoseph`_
   (#763)
+* Refactor cookiecutter template identification, thanks to `@michaeljoseph`_
+  (#777)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)

@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.find
------------------
-
-Functions for finding Cookiecutter templates and other components.
-"""
+"""Functions for finding Cookiecutter templates and other components."""
 
 import logging
 import os
@@ -14,13 +9,11 @@ from .exceptions import NonTemplatedInputDirException
 
 
 def find_template(repo_dir):
-    """
-    Determines which child directory of `repo_dir` is the project template.
+    """Determine which child directory of `repo_dir` is the project template.
 
     :param repo_dir: Local directory of newly cloned repo.
     :returns project_template: Relative path to project template.
     """
-
     logging.debug('Searching {0} for the project template.'.format(repo_dir))
 
     repo_dir_contents = os.listdir(repo_dir)
