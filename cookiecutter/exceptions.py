@@ -72,7 +72,12 @@ class UndefinedVariableInTemplate(CookiecutterException):
     """Raised when template uses an undefined variable in the context."""
 
     def __init__(self, message, error, context):
-        """Initialize instance of UndefinedVariableInTemplate class."""
+        """Initialize instance of UndefinedVariableInTemplate class.
+        :param message: Detailed error message.
+        :param error: Exception raised by the undefined variable.
+        :param context: Dict for populating the template's variables.
+        
+        """
         self.message = message
         self.error = error
         self.context = context
