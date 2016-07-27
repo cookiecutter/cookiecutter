@@ -102,3 +102,4 @@ class RepositoryNotFound(CookiecutterException):
 
 class RepositoryCloneFailed(CookiecutterException):
     """Raised when a cookiecutter template can't be cloned."""
+
