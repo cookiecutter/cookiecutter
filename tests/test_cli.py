@@ -6,7 +6,7 @@ import pytest
 
 from click.testing import CliRunner
 
-from cookiecutter.cli import main
+from cookiecutter.__main__ import main
 from cookiecutter.main import cookiecutter
 from cookiecutter import utils, config
 
