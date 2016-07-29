@@ -57,7 +57,7 @@ setup(
     package_dir={'cookiecutter': 'cookiecutter'},
     entry_points={
         'console_scripts': [
-            'cookiecutter = cookiecutter.cli:main',
+            'cookiecutter = cookiecutter.__main__:main',
         ]
     },
     include_package_data=True,
