@@ -11,6 +11,7 @@ import os
 import pytest
 import stat
 import sys
+import textwrap
 
 from cookiecutter import hooks, utils, exceptions
 
@@ -181,21 +182,38 @@ class TestExternalHooks(object):
             assert 'Hook script failed' in str(excinfo.value)
 
 
-@pytest.fixture
-def hook_backup_files():
-    """Return basenames of all files in the hooks dir."""
-    return sorted([
-        os.path.basename(f) for f in
-        os.listdir('tests/hooks-backup-files/hooks')
-    ])
+@pytest.yield_fixture
+def hook_backup_dir(tmpdir):
+    """Yield a directory that contains hook backup files."""
+
+    hooks_dir = tmpdir.mkdir('hook-files')
+
+    pre_hook_content = textwrap.dedent(
+        """
+        #!/usr/bin/env python
+        # -*- coding: utf-8 -*-
+        print('pre_gen_project.py~')
+        """
+    )
+    pre_gen_hook_file = hooks_dir / 'pre_gen_project.py~'
+    pre_gen_hook_file.write_text(pre_hook_content, encoding='utf8')
+
+    post_hook_content = textwrap.dedent(
+        """
+        #!/usr/bin/env python
+        # -*- coding: utf-8 -*-
+        print('post_gen_project.py~')
+        """
+    )
+
+    post_gen_hook_file = hooks_dir / 'post_gen_project.py~'
+    post_gen_hook_file.write_text(post_hook_content, encoding='utf8')
+
+    yield str(hooks_dir)
+
+    hooks_dir.remove()
 
 
-def test_ignore_hook_backup_files(monkeypatch, hook_backup_files):
-    # This makes sure that the files are actually in the directory
-    assert hook_backup_files == [
-        'post_gen_project.py~',
-        'pre_gen_project.py~',
-    ]
-
-    monkeypatch.chdir('tests/hooks-backup-files/')
+def test_ignore_hook_backup_files(monkeypatch, hook_backup_dir):
+    monkeypatch.chdir(hook_backup_dir)
     assert hooks.find_hooks() == {}
