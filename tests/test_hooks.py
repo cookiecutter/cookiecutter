@@ -211,7 +211,8 @@ def hook_backup_dir(tmpdir):
 
     yield str(hooks_dir)
 
-    hooks_dir.remove()
+    pre_gen_hook_file.remove()
+    post_gen_hook_file.remove()
 
 
 def test_ignore_hook_backup_files(monkeypatch, hook_backup_dir):
