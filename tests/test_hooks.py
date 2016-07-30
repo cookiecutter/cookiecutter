@@ -189,7 +189,7 @@ def hook_backup_dir(tmpdir):
     hooks_dir = tmpdir.mkdir('hook-files')
 
     pre_hook_content = textwrap.dedent(
-        """
+        u"""
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('pre_gen_project.py~')
@@ -199,7 +199,7 @@ def hook_backup_dir(tmpdir):
     pre_gen_hook_file.write_text(pre_hook_content, encoding='utf8')
 
     post_hook_content = textwrap.dedent(
-        """
+        u"""
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('post_gen_project.py~')
