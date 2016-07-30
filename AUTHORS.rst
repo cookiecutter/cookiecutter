@@ -98,6 +98,7 @@ Contributors
 * Bruce Eckel (`@BruceEckel`_)
 * Robert Lyon (`@ivanlyon`_)
 * Terry Bates (`@terryjbates`_)
+* Brett Cannon (`@brettcannon`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -184,3 +185,4 @@ Contributors
 .. _`@ivanlyon`: https://github.com/ivanlyon
 .. _`@terryjbates`: https://github.com/terryjbates
 .. _`@zzzirk`: https://github.com/zzzirk
+.. _`@brettcannon`: https://github.com/brettcannon
