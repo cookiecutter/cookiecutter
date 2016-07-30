@@ -15,6 +15,8 @@ New Features:
   `@bollwyvl`_ (#232, #705).
 * Refactor code responsible for interaction with version control systems and
   raise better error messages, thanks to `@michaeljoseph`_ (#778).
+* Add support for executing cookiecutter using ``python -m cookiecutter`` or
+  from a checkout/zip file, thanks to `@brettcannon`_ (#788).
 
 Bug Fixes:
 
@@ -52,6 +54,7 @@ Other Changes:
   * ``find.py``, thanks to `@terryjbates`_ (#761)
   * ``generate.py``, thanks to `@terryjbates`_ (#764)
   * ``hooks.py``, thanks to `@terryjbates`_ (#766)
+
 * Fix link to the Tryton cookiecutter, thanks to `@cedk`_
   and `@nicoe`_ (#697, #698)
 * Added PyCon US 2016 sponsorship to README, thanks to `@purplediane`_ (#720)
@@ -142,6 +145,7 @@ Other Changes:
 .. _`@xguse`: https://github.com/xguse
 .. _`@stevepiercy`: https://github.com/stevepiercy
 .. _`@shenyushun`: https://github.com/shenyushun
+.. _`@brettcannon`: https://github.com/brettcannon
 
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
