@@ -35,7 +35,7 @@ def find_hooks():
     """
     hooks_dir = 'hooks'
     hooks = {}
-    logger.debug('hooks_dir is {0}'.format(hooks_dir))
+    logger.debug('hooks_dir is {}'.format(hooks_dir))
 
     if not os.path.isdir(hooks_dir):
         logger.debug('No hooks/ dir in template_dir')
@@ -109,4 +109,5 @@ def run_hook(hook_name, project_dir, context):
     if script is None:
         logger.debug('No hooks found')
         return
+    logger.debug('Running hook {}'.format(hook_name))
     run_script_with_context(script, project_dir, context)
