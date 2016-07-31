@@ -374,3 +374,53 @@ def test_cli_extra_context_invalid_format():
     assert result.exit_code == 2
     assert 'Error: Invalid value for "extra_context"' in result.output
     assert 'should contain items of the form key=value' in result.output
+
+
+@pytest.fixture
+def debug_file(tmpdir):
+    return tmpdir / 'fake-repo.log'
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_debug_file_non_verbose(debug_file):
+    assert not debug_file.exists()
+
+    result = runner.invoke(main, [
+        '--no-input',
+        '--debug-file',
+        str(debug_file),
+        'tests/fake-repo-pre/',
+    ])
+    assert result.exit_code == 0
+
+    assert debug_file.exists()
+
+    context_log = (
+        "DEBUG [fake-repo-pre] cookiecutter.main: context_file is "
+        "tests/fake-repo-pre/cookiecutter.json"
+    )
+    assert context_log in debug_file.readlines(cr=False)
+    assert context_log not in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_debug_file_verbose(debug_file):
+    assert not debug_file.exists()
+
+    result = runner.invoke(main, [
+        '--verbose',
+        '--no-input',
+        '--debug-file',
+        str(debug_file),
+        'tests/fake-repo-pre/',
+    ])
+    assert result.exit_code == 0
+
+    assert debug_file.exists()
+
+    context_log = (
+        "DEBUG [fake-repo-pre] cookiecutter.main: context_file is "
+        "tests/fake-repo-pre/cookiecutter.json"
+    )
+    assert context_log in debug_file.readlines(cr=False)
+    assert context_log in result.output
