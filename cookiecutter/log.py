@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import sys
 
 LOG_LEVELS = {
     'DEBUG': logging.DEBUG,
@@ -55,7 +56,7 @@ def create_logger(template, stream_level='DEBUG', debug_file=None):
     log_level = LOG_LEVELS[stream_level]
 
     # Create a stream handler
-    stream_handler = logging.StreamHandler()
+    stream_handler = logging.StreamHandler(stream=sys.stdout)
     stream_handler.setLevel(log_level)
     stream_handler.setFormatter(log_formatter)
     stream_handler.addFilter(context_filter)
