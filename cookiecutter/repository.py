@@ -41,8 +41,8 @@ def expand_abbreviations(template, abbreviations):
     return template
 
 
-def valid_repository(repo_directory):
-    """Determines if `repo_directory` is a valid cookiecutter.
+def repository_has_cookiecutter_json(repo_directory):
+    """Determines if `repo_directory` contains a `cookiecutter.json` file.
 
     :param repo_directory: The candidate repository directory.
     :return: True if the `repo_directory` is valid, else False.
@@ -88,9 +88,10 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
         # cookiecutters_dir
         repo_dir = template
 
-    if not valid_repository(repo_dir):
-        raise RepositoryNotFound(
-            'The repository {} could not be located or does not contain '
-            'a "cookiecutter.json" file.'.format(repo_dir)
-        )
-    return repo_dir
+    if repository_has_cookiecutter_json(repo_dir):
+        return repo_dir
+
+    raise RepositoryNotFound(
+        'The repository {} could not be located or does not contain '
+        'a "cookiecutter.json" file.'.format(repo_dir)
+    )

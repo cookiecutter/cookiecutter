@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from cookiecutter.repository import valid_repository
+from cookiecutter.repository import repository_has_cookiecutter_json
 
 import pytest
 
 
 def test_valid_repository():
-    assert valid_repository('tests/fake-repo')
+    assert repository_has_cookiecutter_json('tests/fake-repo')
 
 
 @pytest.fixture(params=[
@@ -17,4 +17,4 @@ def invalid_repository(request):
 
 
 def test_invalid_repository(invalid_repository):
-    assert not valid_repository(invalid_repository)
+    assert not repository_has_cookiecutter_json(invalid_repository)
