@@ -25,6 +25,7 @@ class ExtensionLoaderMixin(object):
 
         default_extensions = [
             'jinja2_time.TimeExtension',
+            'cookiecutter.extensions.JsonifyExtension'
         ]
         extensions = default_extensions + self._read_extensions(context)
 
