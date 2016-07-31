@@ -29,14 +29,10 @@ class ContextFilter(logging.Filter):
         return record
 
 
-def create_logger(template, level='DEBUG', log_file=None):
-    # Get settings for given log level
-    log_level = LOG_LEVELS[level]
-    log_format = LOG_FORMATS[level]
-
+def create_logger(template, stream_level='DEBUG', debug_file=None):
     # Set up 'cookiecutter' logger
     logger = logging.getLogger('cookiecutter')
-    logger.setLevel(log_level)
+    logger.setLevel(logging.DEBUG)
 
     # Remove all attached handlers, in case there was
     # a logger with using the name 'cookiecutter'
@@ -45,16 +41,18 @@ def create_logger(template, level='DEBUG', log_file=None):
     # Add additional information to the logger
     context_filter = ContextFilter(template)
 
-    # Create formatter based on the given level
-    log_formatter = logging.Formatter(log_format)
-
     # Create a file handler if a log file is provided
-    if log_file is not None:
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setLevel(log_level)
-        file_handler.setFormatter(log_formatter)
+    if debug_file is not None:
+        debug_formatter = logging.Formatter(LOG_FORMATS['DEBUG'])
+        file_handler = logging.FileHandler(debug_file)
+        file_handler.setLevel(LOG_LEVELS['DEBUG'])
+        file_handler.setFormatter(debug_formatter)
         file_handler.addFilter(context_filter)
         logger.addHandler(file_handler)
+
+    # Get settings based on the given stream_level
+    log_formatter = logging.Formatter(LOG_FORMATS[stream_level])
+    log_level = LOG_LEVELS[stream_level]
 
     # Create a stream handler
     stream_handler = logging.StreamHandler()
