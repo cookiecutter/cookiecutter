@@ -88,13 +88,13 @@ def validate_extra_context(ctx, param, value):
     help=u'Do not load a config file. Use the defaults instead'
 )
 @click.option(
-    u'--log-file', type=click.Path(), default=None,
-    help=u'File to be used as a stream for logging',
+    u'--debug-file', type=click.Path(), default=None,
+    help=u'File to be used as a stream for DEBUG logging',
 )
 def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
-        default_config, log_file):
+        default_config, debug_file):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
 
     # If you _need_ to support a local template in a directory
@@ -107,8 +107,8 @@ def main(
 
     create_logger(
         template_name,
-        level='DEBUG' if verbose else 'INFO',
-        log_file=log_file,
+        stream_level='DEBUG' if verbose else 'INFO',
+        debug_file=debug_file,
     )
 
     try:
