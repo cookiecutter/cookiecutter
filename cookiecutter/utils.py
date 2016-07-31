@@ -15,6 +15,8 @@ import os
 import stat
 import shutil
 
+logger = logging.getLogger(__name__)
+
 
 def force_delete(func, path, exc_info):
     """
@@ -44,7 +46,7 @@ def make_sure_path_exists(path):
     :param path: A directory path.
     """
 
-    logging.debug('Making sure path exists: {0}'.format(path))
+    logger.debug('Making sure path exists: {0}'.format(path))
     try:
         os.makedirs(path)
     except OSError as exception:

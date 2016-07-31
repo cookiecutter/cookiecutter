@@ -21,6 +21,8 @@ from .exceptions import (
 from .prompt import read_user_yes_no
 from .utils import make_sure_path_exists, rmtree
 
+logger = logging.getLogger(__name__)
+
 
 BRANCH_ERRORS = [
     'error: pathspec',
@@ -117,7 +119,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                                                  tail.rsplit('.git')[0]))
     elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail))
-    logging.debug('repo_dir is {0}'.format(repo_dir))
+    logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
         prompt_and_delete_repo(repo_dir, no_input=no_input)

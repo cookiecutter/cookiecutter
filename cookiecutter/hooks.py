@@ -14,6 +14,8 @@ from jinja2 import Template
 from cookiecutter import utils
 from .exceptions import FailedHookException
 
+logger = logging.getLogger(__name__)
+
 
 _HOOKS = [
     'pre_gen_project',
@@ -33,10 +35,10 @@ def find_hooks():
     """
     hooks_dir = 'hooks'
     hooks = {}
-    logging.debug('hooks_dir is {0}'.format(hooks_dir))
+    logger.debug('hooks_dir is {0}'.format(hooks_dir))
 
     if not os.path.isdir(hooks_dir):
-        logging.debug('No hooks/ dir in template_dir')
+        logger.debug('No hooks/ dir in template_dir')
         return hooks
 
     for f in os.listdir(hooks_dir):
@@ -105,6 +107,6 @@ def run_hook(hook_name, project_dir, context):
     """
     script = find_hooks().get(hook_name)
     if script is None:
-        logging.debug('No hooks found')
+        logger.debug('No hooks found')
         return
     run_script_with_context(script, project_dir, context)

@@ -7,6 +7,8 @@ import os
 
 from .exceptions import NonTemplatedInputDirException
 
+logger = logging.getLogger(__name__)
+
 
 def find_template(repo_dir):
     """Determine which child directory of `repo_dir` is the project template.
@@ -14,7 +16,7 @@ def find_template(repo_dir):
     :param repo_dir: Local directory of newly cloned repo.
     :returns project_template: Relative path to project template.
     """
-    logging.debug('Searching {0} for the project template.'.format(repo_dir))
+    logger.debug('Searching {0} for the project template.'.format(repo_dir))
 
     repo_dir_contents = os.listdir(repo_dir)
 
@@ -26,7 +28,7 @@ def find_template(repo_dir):
 
     if project_template:
         project_template = os.path.join(repo_dir, project_template)
-        logging.debug(
+        logger.debug(
             'The project template appears to be {0}'.format(project_template)
         )
         return project_template
