@@ -78,6 +78,8 @@ Other Changes:
   (#763)
 * Refactor cookiecutter template identification, thanks to `@michaeljoseph`_
   (#777)
+* Add a ``cli_runner`` test fixture to simplify CLI tests, thanks to
+  `@hackebrot`_ (#790)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
