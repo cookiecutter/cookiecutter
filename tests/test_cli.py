@@ -382,15 +382,15 @@ def debug_file(tmpdir):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_debug_file_non_verbose(debug_file):
+def test_debug_file_non_verbose(cli_runner, debug_file):
     assert not debug_file.exists()
 
-    result = runner.invoke(main, [
+    result = cli_runner(
         '--no-input',
         '--debug-file',
         str(debug_file),
         'tests/fake-repo-pre/',
-    ])
+    )
     assert result.exit_code == 0
 
     assert debug_file.exists()
@@ -404,16 +404,16 @@ def test_debug_file_non_verbose(debug_file):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_debug_file_verbose(debug_file):
+def test_debug_file_verbose(cli_runner, debug_file):
     assert not debug_file.exists()
 
-    result = runner.invoke(main, [
+    result = cli_runner(
         '--verbose',
         '--no-input',
         '--debug-file',
         str(debug_file),
         'tests/fake-repo-pre/',
-    ])
+    )
     assert result.exit_code == 0
 
     assert debug_file.exists()
