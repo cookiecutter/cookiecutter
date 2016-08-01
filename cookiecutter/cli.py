@@ -15,7 +15,7 @@ import click
 
 from cookiecutter import __version__
 from cookiecutter.config import USER_CONFIG_PATH
-from cookiecutter.log import create_logger
+from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException,
@@ -105,7 +105,7 @@ def main(
 
     template_name = os.path.basename(os.path.abspath(template))
 
-    create_logger(
+    configure_logger(
         template_name,
         stream_level='DEBUG' if verbose else 'INFO',
         debug_file=debug_file,

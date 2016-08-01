@@ -30,7 +30,7 @@ class ContextFilter(logging.Filter):
         return record
 
 
-def create_logger(template, stream_level='DEBUG', debug_file=None):
+def configure_logger(template, stream_level='DEBUG', debug_file=None):
     # Set up 'cookiecutter' logger
     logger = logging.getLogger('cookiecutter')
     logger.setLevel(logging.DEBUG)

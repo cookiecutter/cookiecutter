@@ -4,7 +4,7 @@ import logging
 
 import pytest
 
-from cookiecutter.log import create_logger
+from cookiecutter.log import configure_logger
 
 
 def create_log_records():
@@ -58,12 +58,12 @@ def debug_messages():
 
 @pytest.fixture
 def info_logger():
-    return create_logger('pytest-plugin', stream_level='INFO')
+    return configure_logger('pytest-plugin', stream_level='INFO')
 
 
 @pytest.fixture
 def debug_logger():
-    return create_logger('pytest-plugin', stream_level='DEBUG')
+    return configure_logger('pytest-plugin', stream_level='DEBUG')
 
 
 @pytest.fixture
@@ -73,7 +73,7 @@ def debug_file(tmpdir):
 
 @pytest.fixture
 def info_logger_with_file(debug_file):
-    return create_logger(
+    return configure_logger(
         'pytest-plugin',
         stream_level='INFO',
         debug_file=str(debug_file),
