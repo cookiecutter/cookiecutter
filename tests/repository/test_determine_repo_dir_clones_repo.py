@@ -53,7 +53,7 @@ def test_repository_url_with_no_context_file(mocker, template_url):
         autospec=True
     )
 
-    with pytest.raises(exceptions.RepositoryNotFound):
+    with pytest.raises(exceptions.RepositoryNotFound) as err:
         repository.determine_repo_dir(
             template_url,
             abbreviations={},
@@ -61,3 +61,8 @@ def test_repository_url_with_no_context_file(mocker, template_url):
             checkout=None,
             no_input=True
         )
+
+    assert str(err.value) == (
+        'The repository tests/fake-repo-bad could not be located or does not '
+        'contain a "cookiecutter.json" file.'
+    )
