@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """All exceptions used in the Cookiecutter code base are defined here."""
