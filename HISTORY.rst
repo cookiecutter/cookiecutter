@@ -48,6 +48,8 @@ Other Changes:
   thanks to `@tephyr`_ for the PR and `@willingc`_ for the review (#711, #714)
 * Update link to docs for Django's ``--template`` command line option, thanks
   to `@purplediane`_ (#754)
+* Create *hook backup files* during the tests as opposed to having them as
+  static files in the repository, thanks to `@hackebrot`_ (#789)
 * Applied PEP 257 docstring conventions to:
 
   * ``environment.py``, thanks to `@terryjbates`_ (#759)
