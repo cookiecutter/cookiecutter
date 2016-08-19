@@ -12,25 +12,12 @@ LOG_LEVELS = {
 }
 
 LOG_FORMATS = {
-    'DEBUG': u'%(levelname)s [%(template)s] %(name)s: %(message)s',
+    'DEBUG': u'%(levelname)s %(name)s: %(message)s',
     'INFO': u'%(levelname)s: %(message)s',
 }
 
 
-class ContextFilter(logging.Filter):
-    """Logging filter that holds the name of the used template."""
-
-    def __init__(self, template):
-        super(ContextFilter, self).__init__()
-        self.template = template
-
-    def filter(self, record):
-        """Add 'template' as extra information on a logging record."""
-        record.template = self.template
-        return record
-
-
-def configure_logger(template, stream_level='DEBUG', debug_file=None):
+def configure_logger(stream_level='DEBUG', debug_file=None):
     # Set up 'cookiecutter' logger
     logger = logging.getLogger('cookiecutter')
     logger.setLevel(logging.DEBUG)
@@ -39,16 +26,12 @@ def configure_logger(template, stream_level='DEBUG', debug_file=None):
     # a logger with using the name 'cookiecutter'
     del logger.handlers[:]
 
-    # Add additional information to the logger
-    context_filter = ContextFilter(template)
-
     # Create a file handler if a log file is provided
     if debug_file is not None:
         debug_formatter = logging.Formatter(LOG_FORMATS['DEBUG'])
         file_handler = logging.FileHandler(debug_file)
         file_handler.setLevel(LOG_LEVELS['DEBUG'])
         file_handler.setFormatter(debug_formatter)
-        file_handler.addFilter(context_filter)
         logger.addHandler(file_handler)
 
     # Get settings based on the given stream_level
@@ -59,7 +42,6 @@ def configure_logger(template, stream_level='DEBUG', debug_file=None):
     stream_handler = logging.StreamHandler(stream=sys.stdout)
     stream_handler.setLevel(log_level)
     stream_handler.setFormatter(log_formatter)
-    stream_handler.addFilter(context_filter)
     logger.addHandler(stream_handler)
 
     return logger

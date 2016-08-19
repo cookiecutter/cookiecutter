@@ -33,37 +33,37 @@ def info_messages():
 @pytest.fixture
 def debug_messages():
     return [
-        'INFO [pytest-plugin] cookiecutter: '
+        'INFO cookiecutter: '
         'Welcome to Cookiecutter',
 
-        'DEBUG [pytest-plugin] cookiecutter: '
+        'DEBUG cookiecutter: '
         'Generating project from pytest-plugin',
 
-        'INFO [pytest-plugin] cookiecutter.foo: '
+        'INFO cookiecutter.foo: '
         'Loading user config from home dir',
 
-        "DEBUG [pytest-plugin] cookiecutter.foo.bar: "
+        "DEBUG cookiecutter.foo.bar: "
         "I don't know.",
 
-        'DEBUG [pytest-plugin] cookiecutter.foo.bar: '
+        'DEBUG cookiecutter.foo.bar: '
         'I wanted to save the world.',
 
-        'ERROR [pytest-plugin] cookiecutter.foo: '
+        'ERROR cookiecutter.foo: '
         'Aw, snap! Something went wrong',
 
-        'DEBUG [pytest-plugin] cookiecutter: '
+        'DEBUG cookiecutter: '
         'Successfully generated project',
     ]
 
 
 @pytest.fixture
 def info_logger():
-    return configure_logger('pytest-plugin', stream_level='INFO')
+    return configure_logger(stream_level='INFO')
 
 
 @pytest.fixture
 def debug_logger():
-    return configure_logger('pytest-plugin', stream_level='DEBUG')
+    return configure_logger(stream_level='DEBUG')
 
 
 @pytest.fixture
@@ -74,7 +74,6 @@ def debug_file(tmpdir):
 @pytest.fixture
 def info_logger_with_file(debug_file):
     return configure_logger(
-        'pytest-plugin',
         stream_level='INFO',
         debug_file=str(debug_file),
     )

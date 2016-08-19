@@ -103,10 +103,7 @@ def main(
         click.echo(click.get_current_context().get_help())
         sys.exit(0)
 
-    template_name = os.path.basename(os.path.abspath(template))
-
     configure_logger(
-        template_name,
         stream_level='DEBUG' if verbose else 'INFO',
         debug_file=debug_file,
     )
