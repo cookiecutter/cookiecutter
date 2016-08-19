@@ -111,6 +111,7 @@ Other Changes:
   * `pyramid-cookiecutter-zodb`_ by `@stevepiercy`_ (#745)
   * `substanced-cookiecutter`_ by `@stevepiercy`_ (#745)
   * `cookiecutter-simple-django-cn`_ by `@shenyushun`_ (#765)
+  * `cookiecutter-pyqt5`_ by `@mandeepbhutani`_ (#797)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -150,7 +151,9 @@ Other Changes:
 .. _`@stevepiercy`: https://github.com/stevepiercy
 .. _`@shenyushun`: https://github.com/shenyushun
 .. _`@brettcannon`: https://github.com/brettcannon
+.. _`@mandeepbhutani`: https://github.com/mandeepbhutani
 
+.. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
 .. _`cookiecutter-python-app`: https://github.com/mdklatt/cookiecutter-python-app
