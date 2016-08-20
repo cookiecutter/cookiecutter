@@ -28,7 +28,11 @@ from .hooks import run_hook
 
 
 def is_copy_only_path(path, context):
-    """Return True if `path` matches context dict pattern.
+    """Check whether the given `path` should only be copied as opposed to being
+    rendered.
+
+    Returns True if `path` matches a pattern in the given `context` dict,
+    otherwise False.
 
     :param path: A file-system path referring to a file or dir that
         should be rendered or just copied.
