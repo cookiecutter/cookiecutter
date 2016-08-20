@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from cookiecutter.repository import determine_repo_dir
+from cookiecutter import repository, exceptions
 
 
 @pytest.fixture
@@ -15,10 +15,10 @@ def template_url():
     return 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
 
-def test_determine_repository_url_should_clone(
+def test_repository_url_should_clone(
         mocker, template_url, user_config_data):
-    """`clone()` should be called with correct args when `cookiecutter()` is
-    called.
+    """`clone()` should be called with correct args when
+    `determine_repo_dir()` is passed a repository template url.
     """
 
     mock_clone = mocker.patch(
@@ -27,7 +27,7 @@ def test_determine_repository_url_should_clone(
         autospec=True
     )
 
-    project_dir = determine_repo_dir(
+    project_dir = repository.determine_repo_dir(
         template_url,
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
@@ -43,3 +43,26 @@ def test_determine_repository_url_should_clone(
     )
 
     assert os.path.isdir(project_dir)
+    assert 'tests/fake-repo-tmpl' == project_dir
+
+
+def test_repository_url_with_no_context_file(mocker, template_url):
+    mocker.patch(
+        'cookiecutter.repository.clone',
+        return_value='tests/fake-repo-bad',
+        autospec=True
+    )
+
+    with pytest.raises(exceptions.RepositoryNotFound) as err:
+        repository.determine_repo_dir(
+            template_url,
+            abbreviations={},
+            clone_to_dir=None,
+            checkout=None,
+            no_input=True
+        )
+
+    assert str(err.value) == (
+        'The repository tests/fake-repo-bad could not be located or does not '
+        'contain a "cookiecutter.json" file.'
+    )

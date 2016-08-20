@@ -41,6 +41,20 @@ def expand_abbreviations(template, abbreviations):
     return template
 
 
+def repository_has_cookiecutter_json(repo_directory):
+    """Determines if `repo_directory` contains a `cookiecutter.json` file.
+
+    :param repo_directory: The candidate repository directory.
+    :return: True if the `repo_directory` is valid, else False.
+    """
+    repo_directory_exists = os.path.isdir(repo_directory)
+
+    repo_config_exists = os.path.isfile(
+        os.path.join(repo_directory, 'cookiecutter.json')
+    )
+    return repo_directory_exists and repo_config_exists
+
+
 def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
                        no_input):
     """
@@ -74,8 +88,10 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
         # cookiecutters_dir
         repo_dir = template
 
-    if not os.path.isdir(repo_dir):
-        raise RepositoryNotFound(
-            'The repository {0} could not be located.'.format(template)
-        )
-    return repo_dir
+    if repository_has_cookiecutter_json(repo_dir):
+        return repo_dir
+
+    raise RepositoryNotFound(
+        'The repository {} could not be located or does not contain '
+        'a "cookiecutter.json" file.'.format(repo_dir)
+    )
