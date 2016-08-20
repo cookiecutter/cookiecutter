@@ -27,7 +27,7 @@ from .utils import make_sure_path_exists, work_in, rmtree
 from .hooks import run_hook
 
 
-def copy_without_render(path, context):
+def is_copy_only_path(path, context):
     """Return True if `path` matches context dict pattern.
 
     :param path: A file-system path referring to a file or dir that
@@ -279,7 +279,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 # We check the full path, because that's how it can be
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
-                if copy_without_render(d_, context):
+                if is_copy_only_path(d_, context):
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -314,7 +314,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
-                if copy_without_render(infile, context):
+                if is_copy_only_path(infile, context):
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
@@ -325,6 +325,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     shutil.copyfile(infile, outfile)
                     shutil.copymode(infile, outfile)
                     continue
+
                 logging.debug('f is {0}'.format(f))
                 try:
                     generate_file(project_dir, infile, context, env)
