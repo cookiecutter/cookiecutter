@@ -111,15 +111,14 @@ def main(template, extra_context, no_input, checkout, verbose, replay,
             click.echo(click.get_current_context().get_help())
             sys.exit(0)
 
-        user_config = None if default_config else config_file
-
         cookiecutter(
             template, checkout, no_input,
             extra_context=extra_context,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
             output_dir=output_dir,
-            config_file=user_config
+            config_file=config_file,
+            default_config=default_config,
         )
     except (OutputDirExistsException,
             InvalidModeException,

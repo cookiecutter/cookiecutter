@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=USER_CONFIG_PATH):
+        config_file=USER_CONFIG_PATH, default_config=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -50,7 +50,12 @@ def cookiecutter(
         raise InvalidModeException(err_msg)
 
     # Get user config from ~/.cookiecutterrc or equivalent
-    # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
+    # If no config file, sensible defaults from
+    # config.DEFAULT_CONFIG are used
+
+    if default_config:
+        config_file = None
+
     config_dict = get_user_config(config_file=config_file)
 
     repo_dir = determine_repo_dir(
