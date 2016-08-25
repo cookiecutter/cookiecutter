@@ -95,6 +95,7 @@ def test_cli_replay(mocker, cli_runner):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=config.USER_CONFIG_PATH,
+        context_file=None,
         extra_context=None
     )
 
@@ -126,6 +127,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=config.USER_CONFIG_PATH,
+        context_file=None,
         extra_context=None
     )
 
@@ -156,6 +158,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         overwrite_if_exists=True,
         output_dir='.',
         config_file=config.USER_CONFIG_PATH,
+        context_file=None,
         extra_context=None
     )
 
@@ -214,6 +217,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         overwrite_if_exists=False,
         output_dir=output_dir,
         config_file=config.USER_CONFIG_PATH,
+        context_file=None,
         extra_context=None
     )
 
@@ -251,6 +255,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=user_config_path,
+        context_file=None,
         extra_context=None
     )
 
@@ -277,6 +282,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=None,
+        context_file=None,
         extra_context=None
     )
 
@@ -298,6 +304,7 @@ def test_default_user_config(mocker, cli_runner):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=None,
+        context_file=None,
         extra_context=None
     )
 
@@ -374,3 +381,26 @@ def test_cli_extra_context_invalid_format(cli_runner):
     assert result.exit_code == 2
     assert 'Error: Invalid value for "extra_context"' in result.output
     assert 'should contain items of the form key=value' in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_context_file(mocker, cli_runner):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--context-file', 'xxx')
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir='.',
+        config_file=config.USER_CONFIG_PATH,
+        context_file='xxx',
+        extra_context=None
+    )

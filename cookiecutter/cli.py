@@ -89,8 +89,13 @@ def validate_extra_context(ctx, param, value):
     u'--default-config', is_flag=True,
     help=u'Do not load a config file. Use the defaults instead'
 )
+@click.option(
+    u'--context-file',
+    help=u'Override cookiecutter.json with a user defined json file',
+)
 def main(template, extra_context, no_input, checkout, verbose, replay,
-         overwrite_if_exists, output_dir, config_file, default_config):
+         overwrite_if_exists, output_dir, config_file, default_config,
+         context_file):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
     if verbose:
         logging.basicConfig(
@@ -115,6 +120,7 @@ def main(template, extra_context, no_input, checkout, verbose, replay,
 
         cookiecutter(
             template, checkout, no_input,
+            context_file=context_file,
             extra_context=extra_context,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
