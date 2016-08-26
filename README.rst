@@ -190,7 +190,8 @@ Categories of Cookiecutters
 `HTML`_ |
 `Scala`_ |
 `6502 Assembly`_ |
-`Data Science`_
+`Data Science`_ |
+`Tornado`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
 writing or suggesting one. We wish for our users to find a solution for their
@@ -571,6 +572,13 @@ Data Science
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
 
 .. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
+
+Tornado
+~~~~~~~
+
+* `cookiecutter-tornado`_: Cookiecutter template for Tornado based projects
+
+.. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
 
 Similar projects
 ----------------
