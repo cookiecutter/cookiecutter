@@ -402,6 +402,7 @@ Python-Django
 * `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
 * `cc-automated-drf-template`_: A template + script that automatically creates your Django REST project with serializers, views, urls, and admin files based on your models file as input.
 * `cookiecutter-django-foundation`_: Fork of `cookiecutter-django`_ based on `Zurb Foundation`_ 6 front-end framework
+* `cookiecutter-django-ansible`_: Cookiecutter Django Ansible is a framework for jumpstarting an ansible project for provisioning a server that is ready for your *cookiecutter-django* application.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -428,6 +429,7 @@ Python-Django
 .. _`cc-automated-drf-template`: https://github.com/TAMU-CPT/cc-automated-drf-template
 .. _`cookiecutter-django-foundation`: https://github.com/Parbhat/cookiecutter-django-foundation
 .. _`Zurb Foundation`: http://foundation.zurb.com
+.. _`cookiecutter-django-ansible`: https://github.com/HackSoftware/cookiecutter-django-ansible
 
 Python-Pyramid
 ^^^^^^^^^^^^^^
