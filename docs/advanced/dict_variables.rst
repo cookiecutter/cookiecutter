@@ -1,7 +1,7 @@
 .. _dict-variables:
 
-Dictionary Variables (1.1+)
----------------------
+Dictionary Variables (1.5+)
+---------------------------
 
 Dictionary variables provide a way to define deep structured information when
 rendering a template.
@@ -59,5 +59,4 @@ The above ``file_type`` dictionary variable creates
   {% endfor %}
 
 Cookiecutter is using `Jinja2's for expression <http://jinja.pocoo.org/docs/dev/templates/#for>`_ to iterate over the items in the dictionary.
-
 
