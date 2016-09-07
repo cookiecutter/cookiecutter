@@ -334,7 +334,7 @@ Python
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pyvanguard`: https://github.com/robinandeer/cookiecutter-pyvanguard
-.. _`Invoke`: http://invoke.readthedocs.io/en/latest/
+.. _`Invoke`: http://docs.pyinvoke.org/en/latest/
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter-tryton
