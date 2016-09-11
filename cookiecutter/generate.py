@@ -270,7 +270,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     # absolute path for the target folder (project_dir)
 
     project_dir = os.path.abspath(project_dir)
-    logger.debug('project_dir is {}'.format(project_dir))
+    logger.debug('Project directory is {}'.format(project_dir))
 
     _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context)
 
