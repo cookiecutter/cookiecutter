@@ -29,8 +29,12 @@ from .hooks import run_hook
 logger = logging.getLogger(__name__)
 
 
-def copy_without_render(path, context):
-    """Return True if `path` matches context dict pattern.
+def is_copy_only_path(path, context):
+    """Check whether the given `path` should only be copied as opposed to being
+    rendered.
+
+    Returns True if `path` matches a pattern in the given `context` dict,
+    otherwise False.
 
     :param path: A file-system path referring to a file or dir that
         should be rendered or just copied.
@@ -289,7 +293,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 # We check the full path, because that's how it can be
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
-                if copy_without_render(d_, context):
+                if is_copy_only_path(d_, context):
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -324,7 +328,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
-                if copy_without_render(infile, context):
+                if is_copy_only_path(infile, context):
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
