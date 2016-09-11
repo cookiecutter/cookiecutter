@@ -44,8 +44,8 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
         ok_to_delete = True
     else:
         question = (
-            "You've cloned {0} before. "
-            'Is it okay to delete and re-clone it?'
+            "You've cloned {} before. "
+            "Is it okay to delete and re-clone it?"
         ).format(repo_dir)
 
         ok_to_delete = read_user_yes_no(question, 'yes')
