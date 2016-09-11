@@ -61,7 +61,7 @@ def cookiecutter(
         no_input=no_input,
     )
 
-    template_name = os.path.basename(os.path.abspath(template))
+    template_name = os.path.basename(os.path.abspath(repo_dir))
 
     if replay:
         context = load(config_dict['replay_dir'], template_name)
