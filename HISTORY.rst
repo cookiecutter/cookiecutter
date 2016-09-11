@@ -17,6 +17,9 @@ New Features:
   raise better error messages, thanks to `@michaeljoseph`_ (#778).
 * Add support for executing cookiecutter using ``python -m cookiecutter`` or
   from a checkout/zip file, thanks to `@brettcannon`_ (#788).
+* New CLI option ``--debug-file PATH`` to store a log file on disk. By default
+  no log file is written.  Entries for ``DEBUG`` level and higher. Thanks to
+  `@hackebrot`_ (#792).
 
 Bug Fixes:
 
@@ -26,6 +29,8 @@ Bug Fixes:
   a relative path to a template, thanks to `@eliasdorneles`_ for raising the
   issue and `@hackebrot`_ for the PR (#752, #753)
 * Ignore hook files with tilde-suffixes, thanks to `@hackebrot`_ (#768)
+* Fix a minor issue with the code that generates a name for a template, thanks
+  to `@hackebrot`_ (#798)
 
 Other Changes:
 
