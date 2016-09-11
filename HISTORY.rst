@@ -29,6 +29,8 @@ Bug Fixes:
   a relative path to a template, thanks to `@eliasdorneles`_ for raising the
   issue and `@hackebrot`_ for the PR (#752, #753)
 * Ignore hook files with tilde-suffixes, thanks to `@hackebrot`_ (#768)
+* Fix a minor issue with the code that generates a name for a template, thanks
+  to `@hackebrot`_ (#798)
 
 Other Changes:
 
