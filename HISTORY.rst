@@ -17,6 +17,9 @@ New Features:
   raise better error messages, thanks to `@michaeljoseph`_ (#778).
 * Add support for executing cookiecutter using ``python -m cookiecutter`` or
   from a checkout/zip file, thanks to `@brettcannon`_ (#788).
+* New CLI option ``--debug-file PATH`` to store a log file on disk. By default
+  no log file is written.  Entries for ``DEBUG`` level and higher. Thanks to
+  `@hackebrot`_ (#792).
 
 Bug Fixes:
 
