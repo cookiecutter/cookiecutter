@@ -89,6 +89,9 @@ Other Changes:
   `@hackebrot`_ (#790)
 * Add a check to ensure cookiecutter repositories have JSON context, thanks to
   `@michaeljoseph`_ (#782)
+* Rename internal function that determines whether a file should be rendered,
+  thanks to `@audreyr`_ for raising the issue and `@hackebrot`_ for the PR
+  (#741, #802)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
