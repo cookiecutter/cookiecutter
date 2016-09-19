@@ -58,7 +58,7 @@ def test_repository_url_with_no_context_file(
         repository.determine_repo_dir(
             template_url,
             abbreviations={},
-            clone_to_dir=user_config_data['cookiecutters_dir'],
+            clone_to_dir=None,
             checkout=None,
             no_input=True
         )

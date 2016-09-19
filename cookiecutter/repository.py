@@ -76,8 +76,6 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     """
     template = expand_abbreviations(template, abbreviations)
 
-    repository_candidates = []
-
     if is_repo_url(template):
         cloned_repo = clone(
             repo_url=template,
@@ -85,12 +83,12 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
             clone_to_dir=clone_to_dir,
             no_input=no_input,
         )
-        repository_candidates.append(cloned_repo)
-
-    repository_candidates.extend([
-        template,
-        os.path.join(clone_to_dir, template)
-    ])
+        repository_candidates = [cloned_repo]
+    else:
+        repository_candidates = [
+            template,
+            os.path.join(clone_to_dir, template)
+        ]
 
     for repo_candidate in repository_candidates:
         if repository_has_cookiecutter_json(repo_candidate):
