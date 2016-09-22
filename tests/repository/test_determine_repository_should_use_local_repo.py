@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from cookiecutter import repository, exceptions
 
 import pytest
@@ -21,9 +22,10 @@ def test_local_repo_with_no_context_raises(tmpdir):
     """A local repository without a cookiecutter.json should raise a
     `RepositoryNotFound` exception.
     """
+    template_path = os.path.join('tests', 'fake-repo-bad')
     with pytest.raises(exceptions.RepositoryNotFound) as err:
         repository.determine_repo_dir(
-            'tests/fake-repo-bad',
+            template_path,
             abbreviations={},
             clone_to_dir=str(tmpdir),
             checkout=None,
@@ -33,9 +35,9 @@ def test_local_repo_with_no_context_raises(tmpdir):
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
-            'tests/fake-repo-bad',
+            template_path,
             '\n'.join([
-                'tests/fake-repo-bad',
+                template_path,
                 str(tmpdir / 'tests/fake-repo-bad')
             ]),
         )
@@ -46,9 +48,10 @@ def test_local_repo_typo(tmpdir):
     """An unknown local repository should raise a `RepositoryNotFound`
     exception.
     """
+    template_path = os.path.join('tests', 'unknown-repo')
     with pytest.raises(exceptions.RepositoryNotFound) as err:
         repository.determine_repo_dir(
-            'tests/unknown-repo',
+            template_path,
             abbreviations={},
             clone_to_dir=str(tmpdir),
             checkout=None,
@@ -58,9 +61,9 @@ def test_local_repo_typo(tmpdir):
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
-            'tests/unknown-repo',
+            template_path,
             '\n'.join([
-                'tests/unknown-repo',
+                template_path,
                 str(tmpdir / 'tests/unknown-repo')
             ]),
         )
