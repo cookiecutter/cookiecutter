@@ -31,8 +31,14 @@ def test_local_repo_with_no_context_raises(tmpdir):
         )
 
     assert str(err.value) == (
-        'The repository tests/fake-repo-bad could not be located or does not '
-        'contain a "cookiecutter.json" file.'
+        'A valid repository for "{}" could not be found in the following '
+        'locations:\n{}'.format(
+            'tests/fake-repo-bad',
+            '\n'.join([
+                'tests/fake-repo-bad',
+                str(tmpdir / 'tests/fake-repo-bad')
+            ]),
+        )
     )
 
 
@@ -50,6 +56,12 @@ def test_local_repo_typo(tmpdir):
         )
 
     assert str(err.value) == (
-        'The repository tests/unknown-repo could not be located or does not '
-        'contain a "cookiecutter.json" file.'
+        'A valid repository for "{}" could not be found in the following '
+        'locations:\n{}'.format(
+            'tests/unknown-repo',
+            '\n'.join([
+                'tests/unknown-repo',
+                str(tmpdir / 'tests/unknown-repo')
+            ]),
+        )
     )

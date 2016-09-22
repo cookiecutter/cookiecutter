@@ -64,6 +64,9 @@ def test_repository_url_with_no_context_file(
         )
 
     assert str(err.value) == (
-        'The repository {} could not be located or does not '
-        'contain a "cookiecutter.json" file.'.format(template_url)
+        'A valid repository for "{}" could not be found in the following '
+        'locations:\n{}'.format(
+            template_url,
+            'tests/fake-repo-bad',
+        )
     )
