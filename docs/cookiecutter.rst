@@ -60,6 +60,14 @@ cookiecutter.hooks module
     :undoc-members:
     :show-inheritance:
 
+cookiecutter.log module
+-----------------------
+
+.. automodule:: cookiecutter.log
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 cookiecutter.main module
 ------------------------
 
