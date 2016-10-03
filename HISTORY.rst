@@ -92,6 +92,7 @@ Other Changes:
 * Rename the internal function that determines whether a file should be
   rendered, thanks to `@audreyr`_ for raising the issue and `@hackebrot`_ for
   the PR (#741, #802)
+* Fix typo in docs, thanks to `@mwarkentin`_ (#828)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -162,6 +163,7 @@ Other Changes:
 .. _`@shenyushun`: https://github.com/shenyushun
 .. _`@brettcannon`: https://github.com/brettcannon
 .. _`@mandeepbhutani`: https://github.com/mandeepbhutani
+.. _`@mwarkentin`: https://github.com/mwarkentin
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
