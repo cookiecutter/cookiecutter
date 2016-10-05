@@ -67,7 +67,7 @@ Did someone say features?
         # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
         $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
-* Can also use it at the command line with a local template:
+* Use it at the command line with a local template:
 
     .. code-block:: bash
 
@@ -95,7 +95,7 @@ Did someone say features?
 
 * 100% of templating is done with Jinja2. This includes file and directory names.
 
-* Simply define your template variables in a `cookiecutter.json` file. For example:
+* Simply define your template variables in a ``cookiecutter.json`` file. For example:
 
     .. code-block:: json
 
@@ -110,13 +110,13 @@ Did someone say features?
             "version": "0.1.1"
         }
 
-* Unless you suppress it with `--no-input`, you are prompted for input:
+* Unless you suppress it with ``--no-input``, you are prompted for input:
 
-  - Prompts are the keys in `cookiecutter.json`.
-  - Default responses are the values in `cookiecutter.json`.
+  - Prompts are the keys in ``cookiecutter.json``.
+  - Default responses are the values in ``cookiecutter.json``.
   - Prompts are shown in order.
 
-* Cross-platform support for `~/.cookiecutterrc` files:
+* Cross-platform support for ``~/.cookiecutterrc`` files:
 
     .. code-block:: yaml
 
@@ -127,7 +127,17 @@ Did someone say features?
         cookiecutters_dir: "~/.cookiecutters/"
 
 * Cookiecutters (cloned Cookiecutter project templates) are put into
-  `~/.cookiecutters/` by default, or cookiecutters_dir if specified.
+  ``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
+
+* If you have already cloned a cookiecutter into ``~/.cookiecutters/``, you
+  can reference it by directory name:
+
+    .. code-block:: bash
+
+        # Clone cookiecutter-pypackage
+        $ cookiecutter gh:audreyr/cookiecutter-pypackage
+        # Now you can use the already cloned cookiecutter by name
+        $ cookiecutter cookiecutter-pypackage
 
 * You can use local cookiecutters, or remote cookiecutters directly from Git
   repos or from Mercurial repos on Bitbucket.
