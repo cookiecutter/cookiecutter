@@ -20,6 +20,9 @@ New Features:
 * New CLI option ``--debug-file PATH`` to store a log file on disk. By default
   no log file is written.  Entries for ``DEBUG`` level and higher. Thanks to
   `@hackebrot`_ (#792).
+* Existing templates in a user's ``cookiecutters_dir`` (default is
+  ``~/.cookiecutters/``) can now be referenced by directory name, thanks to
+  `@michaeljoseph`_ (#825).
 
 Bug Fixes:
 
