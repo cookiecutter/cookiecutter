@@ -96,6 +96,7 @@ Other Changes:
   rendered, thanks to `@audreyr`_ for raising the issue and `@hackebrot`_ for
   the PR (#741, #802)
 * Fix typo in docs, thanks to `@mwarkentin`_ (#828)
+* Fix broken link to *Invoke* docs, thanks to `@B3QL`_ (#820)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -167,6 +168,7 @@ Other Changes:
 .. _`@brettcannon`: https://github.com/brettcannon
 .. _`@mandeepbhutani`: https://github.com/mandeepbhutani
 .. _`@mwarkentin`: https://github.com/mwarkentin
+.. _`@B3QL`: https://github.com/B3QL
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
