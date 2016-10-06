@@ -100,6 +100,7 @@ Contributors
 * Terry Bates (`@terryjbates`_)
 * Brett Cannon (`@brettcannon`_)
 * Michael Warkentin (`@mwarkentin`_)
+* Bartłomiej Kurzeja (`@B3QL`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -188,3 +189,4 @@ Contributors
 .. _`@zzzirk`: https://github.com/zzzirk
 .. _`@brettcannon`: https://github.com/brettcannon
 .. _`@mwarkentin`: https://github.com/mwarkentin
+.. _`@B3QL`: https://github.com/B3QL
