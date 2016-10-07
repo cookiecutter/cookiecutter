@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.vcs
-----------------
-
-Helper functions for working with version control systems.
-"""
+"""Helper functions for working with version control systems."""
 
 from __future__ import unicode_literals
 import logging
@@ -31,14 +26,13 @@ BRANCH_ERRORS = [
 
 
 def prompt_and_delete_repo(repo_dir, no_input=False):
-    """
-    Asks the user whether it's okay to delete the previously-cloned repo.
+    """Ask the user whether it's okay to delete the previously-cloned repo.
+
     If yes, deletes it. Otherwise, Cookiecutter exits.
 
     :param repo_dir: Directory of previously-cloned repo.
     :param no_input: Suppress prompt to delete repo and just delete it.
     """
-
     # Suppress prompt if called via API
     if no_input:
         ok_to_delete = True
@@ -57,8 +51,8 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
 
 
 def identify_repo(repo_url):
-    """
-    Determines if `repo_url` should be treated as a URL to a git or hg repo.
+    """Determine if `repo_url` should be treated as a URL to a git or hg repo.
+
     Repos can be identified by prepending "hg+" or "git+" to the repo URL.
 
     :param repo_url: Repo URL of unknown type.
@@ -90,8 +84,7 @@ def is_vcs_installed(repo_type):
 
 
 def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
-    """
-    Clone a repo to the current directory.
+    """Clone a repo to the current directory.
 
     :param repo_url: Repo URL of unknown type.
     :param checkout: The branch, tag or commit ID to checkout after clone.
@@ -99,7 +92,6 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                          Defaults to the current directory.
     :param no_input: Suppress all user prompts when calling via API.
     """
-
     # Ensure that clone_to_dir exists
     clone_to_dir = os.path.expanduser(clone_to_dir)
     make_sure_path_exists(clone_to_dir)
