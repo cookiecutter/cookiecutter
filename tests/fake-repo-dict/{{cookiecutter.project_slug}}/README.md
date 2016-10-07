@@ -1,6 +1,6 @@
 # README
 
-{% for extension, details in cookiecutter.file_types.items() %}
+{% for extension, details in cookiecutter.file_types|dictsort %}
 <dl>
   <dt>Format name:</dt>
   <dd>{{ details.name }}</dd>
