@@ -8,6 +8,7 @@ Functions for prompting the user for project info.
 """
 
 from collections import OrderedDict
+import json
 
 import click
 from past.builtins import basestring
@@ -83,11 +84,43 @@ def read_user_choice(var_name, options):
     return choice_map[user_choice]
 
 
+def read_user_dict(var_name, default_value):
+    """Prompt the user to provide a dictionary of data.
+
+    :param str var_name: Variable as specified in the context
+    :param default_value: Value that will be returned if no input is provided
+    :return: A Python dictionary to use in the context.
+    """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
+    if not isinstance(default_value, dict):
+        raise TypeError
+
+    raw = click.prompt(var_name, default='default')
+    if raw != 'default':
+        value = json.loads(raw, object_hook=OrderedDict)
+    else:
+        value = default_value
+
+    return value
+
+
 def render_variable(env, raw, cookiecutter_dict):
     if raw is None:
         return None
-    if not isinstance(raw, basestring):
+    elif isinstance(raw, dict):
+        return {
+            render_variable(env, k, cookiecutter_dict):
+                render_variable(env, v, cookiecutter_dict)
+            for k, v in raw.items()
+        }
+    elif isinstance(raw, list):
+        return [
+            render_variable(env, v, cookiecutter_dict)
+            for v in raw
+        ]
+    elif not isinstance(raw, basestring):
         raw = str(raw)
+
     template = env.from_string(raw)
 
     rendered_template = template.render(cookiecutter=cookiecutter_dict)
@@ -117,6 +150,9 @@ def prompt_for_config(context, no_input=False):
     cookiecutter_dict = {}
     env = StrictEnvironment(context=context)
 
+    # First pass: Handle simple and raw variables, plus choices.
+    # These must be done first because the dictionaries keys and
+    # values might refer to them.
     for key, raw in iteritems(context[u'cookiecutter']):
         if key.startswith(u'_'):
             cookiecutter_dict[key] = raw
@@ -128,15 +164,33 @@ def prompt_for_config(context, no_input=False):
                 val = prompt_choice_for_config(
                     cookiecutter_dict, env, key, raw, no_input
                 )
-            else:
+                cookiecutter_dict[key] = val
+            elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
 
                 if not no_input:
                     val = read_user_variable(key, val)
+
+                cookiecutter_dict[key] = val
         except UndefinedError as err:
             msg = "Unable to render variable '{}'".format(key)
             raise UndefinedVariableInTemplate(msg, err, context)
 
-        cookiecutter_dict[key] = val
+    # Second pass; handle the dictionaries.
+    for key, raw in iteritems(context[u'cookiecutter']):
+
+        try:
+            if isinstance(raw, dict):
+                # We are dealing with a dict variable
+                val = render_variable(env, raw, cookiecutter_dict)
+
+                if not no_input:
+                    val = read_user_dict(key, val)
+
+                cookiecutter_dict[key] = val
+        except UndefinedError as err:
+            msg = "Unable to render variable '{}'".format(key)
+            raise UndefinedVariableInTemplate(msg, err, context)
+
     return cookiecutter_dict
