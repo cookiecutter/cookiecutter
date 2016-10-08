@@ -396,6 +396,7 @@ Python-Django
 * `cc_django_ember_app`_: For creating applications with Django and EmberJS
 * `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
 * `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
+* `cookiecutter-django-ansible`_: Cookiecutter Django Ansible is a framework for jumpstarting an ansible project for provisioning a server that is ready for your *cookiecutter-django* application.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -419,7 +420,7 @@ Python-Django
 .. _`cc_django_ember_app`: https://bitbucket.org/levit_scs/cc_django_ember_app
 .. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
 .. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
-
+.. _`cookiecutter-django-ansible`: https://github.com/HackSoftware/cookiecutter-django-ansible
 
 Python-Pyramid
 ^^^^^^^^^^^^^^
