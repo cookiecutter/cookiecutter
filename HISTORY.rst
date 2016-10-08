@@ -66,6 +66,7 @@ Other Changes:
   * ``find.py``, thanks to `@terryjbates`_ (#761)
   * ``generate.py``, thanks to `@terryjbates`_ (#764)
   * ``hooks.py``, thanks to `@terryjbates`_ (#766)
+  * ``repository.py``, thanks to `@terryjbates`_ (#833)
 
 * Fix link to the Tryton cookiecutter, thanks to `@cedk`_
   and `@nicoe`_ (#697, #698)
