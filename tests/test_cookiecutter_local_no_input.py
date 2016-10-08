@@ -12,6 +12,7 @@ TestCookiecutterLocalNoInput.test_cookiecutter_templated_context
 """
 
 import os
+import textwrap
 import pytest
 
 from cookiecutter import main, utils
@@ -29,6 +30,8 @@ def remove_additional_dirs(request):
             utils.rmtree('fake-project-extra')
         if os.path.isdir('fake-project-templated'):
             utils.rmtree('fake-project-templated')
+        if os.path.isdir('fake-project-dict'):
+            utils.rmtree('fake-project-dict')
     request.addfinalizer(fin_remove_additional_dirs)
 
 
@@ -80,3 +83,49 @@ def test_cookiecutter_no_input_return_project_dir():
     """Call `cookiecutter()` with `no_input=True`."""
     project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
     assert project_dir == os.path.abspath('fake-project')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+def test_cookiecutter_dict_values_in_context():
+    project_dir = main.cookiecutter('tests/fake-repo-dict', no_input=True)
+    assert project_dir == os.path.abspath('fake-project-dict')
+
+    with open(os.path.join(project_dir, 'README.md')) as fh:
+        contents = fh.read()
+
+    assert contents == textwrap.dedent("""
+        # README
+
+
+        <dl>
+          <dt>Format name:</dt>
+          <dd>Bitmap</dd>
+
+          <dt>Extension:</dt>
+          <dd>bmp</dd>
+
+          <dt>Applications:</dt>
+          <dd>
+              <ul>
+              <li>Paint</li>
+              <li>GIMP</li>
+              </ul>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>Format name:</dt>
+          <dd>Portable Network Graphic</dd>
+
+          <dt>Extension:</dt>
+          <dd>png</dd>
+
+          <dt>Applications:</dt>
+          <dd>
+              <ul>
+              <li>GIMP</li>
+              </ul>
+          </dd>
+        </dl>
+
+    """).lstrip()

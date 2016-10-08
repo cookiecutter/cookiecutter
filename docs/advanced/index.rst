@@ -18,4 +18,5 @@ Various advanced topics regarding cookiecutter usage.
    replay
    cli_options
    choice_variables
+   dict_variables
    template_extensions

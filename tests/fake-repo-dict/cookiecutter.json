@@ -1,0 +1,20 @@
+{
+    "project_slug": "fake-project-dict",
+    "file_types": {
+        "png": {
+            "name": "Portable Network Graphic",
+            "library": "libpng",
+            "apps": [
+                "GIMP"
+            ]
+        },
+        "bmp": {
+            "name": "Bitmap",
+            "library": "libbmp",
+            "apps": [
+                "Paint",
+                "GIMP"
+            ]
+        }
+    }
+}

@@ -70,6 +70,147 @@ class TestPrompt(object):
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'full_name': u'Pizzä ïs Gööd'}
 
+    def test_prompt_for_config_empty_dict(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_dict',
+            lambda var, default: {}
+        )
+        context = {'cookiecutter': {'details': {}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {'details': {}}
+
+    def test_prompt_for_config_dict(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_dict',
+            lambda var, default: {"key": "value", "integer": 37}
+        )
+        context = {'cookiecutter': {'details': {}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {
+            'details': {
+                'key': u'value',
+                'integer': 37
+            }
+        }
+
+    def test_prompt_for_config_deep_dict(self, monkeypatch):
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_dict',
+            lambda var, default: {
+                "key": "value",
+                "integer_key": 37,
+                "dict_key": {
+                    "deep_key": "deep_value",
+                    "deep_integer": 42,
+                    "deep_list": [
+                        "deep value 1",
+                        "deep value 2",
+                        "deep value 3",
+                    ]
+                },
+                "list_key": [
+                    "value 1",
+                    "value 2",
+                    "value 3",
+                ]
+            }
+        )
+        context = {'cookiecutter': {'details': {}}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == {
+            'details': {
+                "key": "value",
+                "integer_key": 37,
+                "dict_key": {
+                    "deep_key": "deep_value",
+                    "deep_integer": 42,
+                    "deep_list": [
+                        "deep value 1",
+                        "deep value 2",
+                        "deep value 3",
+                    ]
+                },
+                "list_key": [
+                    "value 1",
+                    "value 2",
+                    "value 3",
+                ]
+            }
+        }
+
+    def test_should_render_dict(self):
+        context = {
+            'cookiecutter': {
+                'project_name': 'Slartibartfast',
+                'details': {
+                    'other_name': '{{cookiecutter.project_name}}'
+                }
+            }
+        }
+
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == {
+            'project_name': 'Slartibartfast',
+            'details': {
+                'other_name': u'Slartibartfast',
+            }
+        }
+
+    def test_should_render_deep_dict(self):
+        context = {
+            'cookiecutter': {
+                'project_name': "Slartibartfast",
+                'details': {
+                    "key": "value",
+                    "integer_key": 37,
+                    "other_name": '{{cookiecutter.project_name}}',
+                    "dict_key": {
+                        "deep_key": "deep_value",
+                        "deep_integer": 42,
+                        "deep_other_name": '{{cookiecutter.project_name}}',
+                        "deep_list": [
+                            "deep value 1",
+                            "{{cookiecutter.project_name}}",
+                            "deep value 3",
+                        ]
+                    },
+                    "list_key": [
+                        "value 1",
+                        "{{cookiecutter.project_name}}",
+                        "value 3",
+                    ]
+                }
+            }
+        }
+
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == {
+            'project_name': "Slartibartfast",
+            'details': {
+                "key": "value",
+                "integer_key": "37",
+                "other_name": "Slartibartfast",
+                "dict_key": {
+                    "deep_key": "deep_value",
+                    "deep_integer": "42",
+                    "deep_other_name": "Slartibartfast",
+                    "deep_list": [
+                        "deep value 1",
+                        "Slartibartfast",
+                        "deep value 3",
+                    ]
+                },
+                "list_key": [
+                    "value 1",
+                    "Slartibartfast",
+                    "value 3",
+                ]
+            }
+        }
+
     def test_unicode_prompt_for_config_unicode(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
@@ -271,6 +412,36 @@ def test_undefined_variable_in_cookiecutter_dict_with_choices():
         'cookiecutter': {
             'hello': 'world',
             'foo': ['123', '{{cookiecutter.nope}}', '456']
+        }
+    }
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        prompt.prompt_for_config(context, no_input=True)
+
+    error = err.value
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context
+
+
+def test_undefined_variable_in_cookiecutter_dict_with_dict_key():
+    context = {
+        'cookiecutter': {
+            'hello': 'world',
+            'foo': {'{{cookiecutter.nope}}': 'value'}
+        }
+    }
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        prompt.prompt_for_config(context, no_input=True)
+
+    error = err.value
+    assert error.message == "Unable to render variable 'foo'"
+    assert error.context == context
+
+
+def test_undefined_variable_in_cookiecutter_dict_with_key_value():
+    context = {
+        'cookiecutter': {
+            'hello': 'world',
+            'foo': {'key': '{{cookiecutter.nope}}'}
         }
     }
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
