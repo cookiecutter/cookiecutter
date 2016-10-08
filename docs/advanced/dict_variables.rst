@@ -41,24 +41,25 @@ For example, you could provide the following dictionary variable in your
 The above ``file_type`` dictionary variable creates
 ``cookiecutter.file_types``, which can be used like this::
 
-  {% for extension, details in cookiecutter.file_types.items %}
-  <dl>
-    <dt>Format name:</dt>
-    <dd>{{ details.name }}</dd>
+    {% for extension, details in cookiecutter.file_types|dictsort %}
+    <dl>
+      <dt>Format name:</dt>
+      <dd>{{ details.name }}</dd>
 
-    <dt>Extension:</dt>
-    <dd>{{ extension }}</dd>
+      <dt>Extension:</dt>
+      <dd>{{ extension }}</dd>
 
-    <dt>Applications:</dt>
-    <dd>
-        <ul>
-        {% for app in details.apps %}
-            <li>{{ details.name }}</li>
-        </ul>
-    </dd>
-  </dl>
+      <dt>Applications:</dt>
+      <dd>
+          <ul>
+          {% for app in details.apps -%}
+              <li>{{ app }}</li>
+          {% endfor -%}
+          </ul>
+      </dd>
+    </dl>
+    {% endfor %}
 
-  {% endfor %}
 
 Cookiecutter is using `Jinja2's for expression <http://jinja.pocoo.org/docs/dev/templates/#for>`_ to iterate over the items in the dictionary.
 
