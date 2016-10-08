@@ -42,7 +42,7 @@ def expand_abbreviations(template, abbreviations):
 
 
 def repository_has_cookiecutter_json(repo_directory):
-    """Determines if `repo_directory` contains a `cookiecutter.json` file.
+    """Determine if `repo_directory` contains a `cookiecutter.json` file.
 
     :param repo_directory: The candidate repository directory.
     :return: True if the `repo_directory` is valid, else False.
