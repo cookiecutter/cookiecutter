@@ -17,12 +17,13 @@ For example, you could provide the following dictionary variable in your
 ``cookiecutter.json``::
 
     {
+        "project_slug": "new_project",
         "file_types": {
             "png": {
                 "name": "Portable Network Graphic",
-                "library": "libpng"
+                "library": "libpng",
                 "apps": [
-                    "GIMP",
+                    "GIMP"
                 ]
             },
             "bmp": {
@@ -30,11 +31,12 @@ For example, you could provide the following dictionary variable in your
                 "library": "libbmp",
                 "apps": [
                     "Paint",
-                    "GIMP",
+                    "GIMP"
                 ]
             }
         }
-   }
+    }
+
 
 The above ``file_type`` dictionary variable creates
 ``cookiecutter.file_types``, which can be used like this::
