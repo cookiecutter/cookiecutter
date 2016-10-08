@@ -132,6 +132,7 @@ Other Changes:
   * `cookiecutter-simple-django-cn`_ by `@shenyushun`_ (#765)
   * `cookiecutter-pyqt5`_ by `@mandeepbhutani`_ (#797)
   * `cookiecutter-xontrib`_ by `@laerus`_ (#817)
+  * `cookiecutter-reproducible-science`_ by `@mkrapp`_ (#826)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -175,6 +176,7 @@ Other Changes:
 .. _`@mwarkentin`: https://github.com/mwarkentin
 .. _`@B3QL`: https://github.com/B3QL
 .. _`@laerus`: https://github.com/laerus
+.. _`@mkrapp`: https://github.com/mkrapp
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
@@ -205,6 +207,7 @@ Other Changes:
 .. _`substanced-cookiecutter`: https://github.com/Pylons/substanced-cookiecutter
 .. _`cookiecutter-simple-django-cn`: https://github.com/shenyushun/cookiecutter-simple-django-cn
 .. _`cookiecutter-xontrib`: https://github.com/laerus/cookiecutter-xontrib
+.. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
 
 1.4.0 (2016-03-20) Shortbread
