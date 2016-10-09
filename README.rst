@@ -397,6 +397,7 @@ Python-Django
 * `cc_django_ember_app`_: For creating applications with Django and EmberJS
 * `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
 * `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
+* `cc-automated-drf-template`_: A template + script that automatically creates your Django REST project with serializers, views, urls, and admin files based on your models file as input.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -420,6 +421,7 @@ Python-Django
 .. _`cc_django_ember_app`: https://bitbucket.org/levit_scs/cc_django_ember_app
 .. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
 .. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
+.. _`cc-automated-drf-template`: https://github.com/TAMU-CPT/cc-automated-drf-template
 
 
 Python-Pyramid
