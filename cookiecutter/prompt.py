@@ -22,11 +22,12 @@ from .environment import StrictEnvironment
 
 
 def read_user_variable(var_name, default_value):
-    """Prompt the user for the given variable and return the entered value
-    or the given default.
+    """Prompt the user for the given variable, return the value or the default.
 
     :param str var_name: Variable of the context to query the user
-    :param default_value: Value that will be returned if no input happens
+    :param default_value: Value that will be returned if no input
+        is given
+    :return: Either the entered or given default value
     """
     # Please see http://click.pocoo.org/4/api/#click.prompt
     return click.prompt(var_name, default=default_value)
@@ -39,7 +40,9 @@ def read_user_yes_no(question, default_value):
       Possible choices are 'true', '1', 'yes', 'y' or 'false', '0', 'no', 'n'
 
     :param str question: Question to the user
-    :param default_value: Value that will be returned if no input happens
+    :param default_value: Value that will be returned if no input
+        is given
+    :return: A bool data type (True or False)
     """
     # Please see http://click.pocoo.org/4/api/#click.prompt
     return click.prompt(
@@ -52,7 +55,7 @@ def read_user_yes_no(question, default_value):
 def read_user_choice(var_name, options):
     """Prompt the user to choose from several options for the given variable.
 
-    The first item will be returned if no input happens.
+    The first item will be returned if no user input is given.
 
     :param str var_name: Variable as specified in the context
     :param list options: Sequence of options that are available to select from
@@ -105,6 +108,14 @@ def read_user_dict(var_name, default_value):
 
 
 def render_variable(env, raw, cookiecutter_dict):
+    """Render possible user choices.
+
+    :param env: A CookieCutter StrictEnvironment (Jinja2 StrictUndefined)
+    :param str raw: An option to pass to the project template
+    :param dict cookiecutter_dict: Project template fields and values based on
+        user input
+    :return: A template rendered with variables from ``cookiecutter_dict``
+    """
     if raw is None:
         return None
     elif isinstance(raw, dict):
@@ -128,8 +139,19 @@ def render_variable(env, raw, cookiecutter_dict):
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
-    """Prompt the user which option to choose from the given. Each of the
-    possible choices is rendered beforehand.
+    """Prompt the user to choose from given options.
+
+    Each possible choice is rendered before presenting to the user.
+
+    :param dict cookiecutter_dict: Project template fields and values based on
+        user input
+    :param env: A CookieCutter StrictEnvironment (Jinja2 StrictUndefined)
+    :param str key: The name of the key to access the value at
+        cookiecutter_dict[key]
+    :param list options: Sequence of options that are available to select from
+    :param bool no_input: Prompt the user at command line for manual
+        configuration?
+    :return: The dictionary provided by read_user_choice
     """
     rendered_options = [
         render_variable(env, raw, cookiecutter_dict) for raw in options
@@ -142,10 +164,17 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
 def prompt_for_config(context, no_input=False):
     """
-    Prompts the user to enter new config, using context as a source for the
-    field names and sample values.
+    Prompt the user to enter a new config.
 
+    Using context as a source for the field names and sample values. Raises an
+    UndefinedVariableInTemplate exception when a variable is used which is not
+    defined in the context.
+
+    :param dict context: Field names mapped to sample values
     :param no_input: Prompt the user at command line for manual configuration?
+    :raises UndefinedVariableInTemplate: A variable is used that is not
+        defined in ``context``
+    :return: A dictionary of fields and values based on user input
     """
     cookiecutter_dict = {}
     env = StrictEnvironment(context=context)
