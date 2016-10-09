@@ -101,6 +101,8 @@ Other Changes:
   the PR (#741, #802)
 * Fix typo in docs, thanks to `@mwarkentin`_ (#828)
 * Fix broken link to *Invoke* docs, thanks to `@B3QL`_ (#820)
+* Add documentation to ``render_variable`` function in ``prompt.py``, thanks to
+  `@pydanny`_ (#678)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
