@@ -106,7 +106,8 @@ def read_user_dict(var_name, default_value):
 
 def render_variable(env, raw, cookiecutter_dict):
     """Inside the prompting taken from the cookiecutter.json file, this renders
-    the next variable. For example, if a project_name is "Peanut Butter Cookie", the repo_name could be be rendered with:
+    the next variable. For example, if a project_name is "Peanut Butter
+    Cookie", the repo_name could be be rendered with:
 
         `{{ cookiecutter.project_name.replace(" ", "_") }}`.
 
@@ -114,7 +115,8 @@ def render_variable(env, raw, cookiecutter_dict):
 
     :param Environment env: A Jinja2 Environment object.
     :param str raw: The next value to be prompted for by the user.
-    :param dict cookiecutter_dict: The deserialized cookiecutter.json file.
+    :param dict cookiecutter_dict: The current context as it's gradually
+        being populated with variables.
     :return: The rendered value for the default variable.
     """
     if raw is None:
