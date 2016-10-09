@@ -135,6 +135,7 @@ Other Changes:
   * `cookiecutter-pyqt5`_ by `@mandeepbhutani`_ (#797)
   * `cookiecutter-xontrib`_ by `@laerus`_ (#817)
   * `cookiecutter-reproducible-science`_ by `@mkrapp`_ (#826)
+  * `cc-automated-drf-template`_ by `@TAMU-CPT`_ (#832)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -179,6 +180,7 @@ Other Changes:
 .. _`@B3QL`: https://github.com/B3QL
 .. _`@laerus`: https://github.com/laerus
 .. _`@mkrapp`: https://github.com/mkrapp
+.. _`@TAMU-CPT`: https://github.com/TAMU-CPT
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
@@ -210,6 +212,7 @@ Other Changes:
 .. _`cookiecutter-simple-django-cn`: https://github.com/shenyushun/cookiecutter-simple-django-cn
 .. _`cookiecutter-xontrib`: https://github.com/laerus/cookiecutter-xontrib
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
+.. _`cc-automated-drf-template`: https://github.com/TAMU-CPT/cc-automated-drf-template
 
 
 1.4.0 (2016-03-20) Shortbread
