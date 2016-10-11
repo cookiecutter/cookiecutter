@@ -137,7 +137,7 @@ Did someone say features?
         # Clone cookiecutter-pypackage
         $ cookiecutter gh:audreyr/cookiecutter-pypackage
         # Now you can use the already cloned cookiecutter by name
-        $ cookiecutter cookiecutter-pypackage
+        $ cookiecutter ~/.cookiecutters/cookiecutter-pypackage
 
 * You can use local cookiecutters, or remote cookiecutters directly from Git
   repos or from Mercurial repos on Bitbucket.
