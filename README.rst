@@ -506,6 +506,7 @@ JS
 * `cookiecutter-tampermonkey`_: A template for a TamperMonkey browser script.
 * `cookiecutter-es6-package`_: A template for writing node packages using ES6 via babel.
 * `cookiecutter-angular2`_: A template for modular angular2 with typescript apps.
+* `CICADA`_: A template + script that automatically creates list/detail controllers and partials for an AngularJS frontend to connect to a DRF backend. Works well with `cc-automated-drf-template <https://github.com/TAMU-CPT/cc-automated-drf-template>`__.
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
@@ -515,7 +516,7 @@ JS
 .. _`cookiecutter-tampermonkey`: https://github.com/christabor/cookiecutter-tampermonkey
 .. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
 .. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2
-
+.. _`CICADA`: https://github.com/TAMU-CPT/CICADA
 
 Kotlin
 ~~~~~~
