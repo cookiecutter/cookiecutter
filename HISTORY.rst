@@ -103,6 +103,7 @@ Other Changes:
 * Fix broken link to *Invoke* docs, thanks to `@B3QL`_ (#820)
 * Add documentation to ``render_variable`` function in ``prompt.py``, thanks to
   `@pydanny`_ (#678)
+* Fix python3.6 travis-ci and tox configuration, thanks to `@luzfcb`_ (#844)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
