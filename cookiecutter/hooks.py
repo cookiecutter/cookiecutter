@@ -23,6 +23,23 @@ _HOOKS = [
 EXIT_SUCCESS = 0
 
 
+def valid_hook(hook_file, hook_name):
+    """Determine if a hook file is valid.
+
+    :param hook_file: The hook file to consider for validity
+    :param hook_name: The hook to find
+    :return: The hook file validity
+    """
+    filename = os.path.basename(hook_file)
+    basename = os.path.splitext(filename)[0]
+
+    matching_hook = basename == hook_name
+    supported_hook = basename in _HOOKS
+    backup_file = filename.endswith('~')
+
+    return matching_hook and supported_hook and not backup_file
+
+
 def find_hook(hook_name, hooks_dir='hooks'):
     """Return a dict of all hook scripts provided.
 
@@ -41,16 +58,9 @@ def find_hook(hook_name, hooks_dir='hooks'):
         logger.debug('No hooks/ dir in template_dir')
         return None
 
-    for f in os.listdir(hooks_dir):
-        filename = os.path.basename(f)
-        basename = os.path.splitext(filename)[0]
-
-        if (
-            basename in _HOOKS and
-            basename == hook_name and
-            not filename.endswith('~')
-        ):
-            return os.path.abspath(os.path.join(hooks_dir, f))
+    for hook_file in os.listdir(hooks_dir):
+        if valid_hook(hook_file, hook_name):
+            return os.path.abspath(os.path.join(hooks_dir, hook_file))
 
     return None
 
