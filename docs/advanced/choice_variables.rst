@@ -11,7 +11,7 @@ Basic Usage
 
 Choice variables are regular key / value pairs, but with the value being a list of strings.
 
-For example, if you provide the follwing choice variable in your ``cookiecutter.json``::
+For example, if you provide the following choice variable in your ``cookiecutter.json``::
 
    {
        "license": ["MIT", "BSD-3", "GNU GPL v3.0", "Apache Software License 2.0"]

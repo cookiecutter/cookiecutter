@@ -67,7 +67,7 @@ Did someone say features?
         # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
         $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
-* Can also use it at the command line with a local template:
+* Use it at the command line with a local template:
 
     .. code-block:: bash
 
@@ -95,7 +95,7 @@ Did someone say features?
 
 * 100% of templating is done with Jinja2. This includes file and directory names.
 
-* Simply define your template variables in a `cookiecutter.json` file. For example:
+* Simply define your template variables in a ``cookiecutter.json`` file. For example:
 
     .. code-block:: json
 
@@ -110,13 +110,13 @@ Did someone say features?
             "version": "0.1.1"
         }
 
-* Unless you suppress it with `--no-input`, you are prompted for input:
+* Unless you suppress it with ``--no-input``, you are prompted for input:
 
-  - Prompts are the keys in `cookiecutter.json`.
-  - Default responses are the values in `cookiecutter.json`.
+  - Prompts are the keys in ``cookiecutter.json``.
+  - Default responses are the values in ``cookiecutter.json``.
   - Prompts are shown in order.
 
-* Cross-platform support for `~/.cookiecutterrc` files:
+* Cross-platform support for ``~/.cookiecutterrc`` files:
 
     .. code-block:: yaml
 
@@ -127,7 +127,17 @@ Did someone say features?
         cookiecutters_dir: "~/.cookiecutters/"
 
 * Cookiecutters (cloned Cookiecutter project templates) are put into
-  `~/.cookiecutters/` by default, or cookiecutters_dir if specified.
+  ``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
+
+* If you have already cloned a cookiecutter into ``~/.cookiecutters/``, you
+  can reference it by directory name:
+
+    .. code-block:: bash
+
+        # Clone cookiecutter-pypackage
+        $ cookiecutter gh:audreyr/cookiecutter-pypackage
+        # Now you can use the already cloned cookiecutter by name
+        $ cookiecutter cookiecutter-pypackage
 
 * You can use local cookiecutters, or remote cookiecutters directly from Git
   repos or from Mercurial repos on Bitbucket.
@@ -191,7 +201,8 @@ Categories of Cookiecutters
 `Scala`_ |
 `6502 Assembly`_ |
 `Data Science`_ |
-`Tornado`_
+`Tornado`_ |
+`Reproducible Science`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
 writing or suggesting one. We wish for our users to find a solution for their
@@ -318,6 +329,7 @@ Python
 * `cookiecutter-snakemake-analysis-pipeline`_: One way to easily set up `Snakemake`_-based analysis pipelines.
 * `cookiecutter-py3tkinter`_: Template for Python 3 Tkinter application gui.
 * `cookiecutter-pyqt5`_: A prebuilt PyQt5 GUI template with a fully featured Pytest test suite and Travis CI integration all in an optimal Python package.
+* `cookiecutter-xontrib`_: A template for building xontribs, a.k.a `xonsh`_ contributions
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -335,7 +347,7 @@ Python
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pyvanguard`: https://github.com/robinandeer/cookiecutter-pyvanguard
-.. _`Invoke`: http://invoke.readthedocs.io/en/latest/
+.. _`Invoke`: http://docs.pyinvoke.org/en/latest/
 .. _`Python-iOS-template`: https://github.com/pybee/Python-iOS-template
 .. _`Python-Android-template`: https://github.com/pybee/Python-Android-template
 .. _`cookiecutter-tryton`: https://bitbucket.org/tryton/cookiecutter-tryton
@@ -358,6 +370,8 @@ Python
 .. _`Snakemake`: https://bitbucket.org/snakemake/snakemake/wiki/Home
 .. _`cookiecutter-py3tkinter`: https://github.com/ivanlyon/cookiecutter-py3tkinter
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
+.. _`cookiecutter-xontrib`: https://github.com/laerus/cookiecutter-xontrib
+.. _`xonsh`: https://github.com/xonsh/xonsh
 
 
 Python-Django
@@ -384,6 +398,7 @@ Python-Django
 * `cc_django_ember_app`_: For creating applications with Django and EmberJS
 * `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
 * `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
+* `cc-automated-drf-template`_: A template + script that automatically creates your Django REST project with serializers, views, urls, and admin files based on your models file as input.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -407,6 +422,7 @@ Python-Django
 .. _`cc_django_ember_app`: https://bitbucket.org/levit_scs/cc_django_ember_app
 .. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
 .. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
+.. _`cc-automated-drf-template`: https://github.com/TAMU-CPT/cc-automated-drf-template
 
 
 Python-Pyramid
@@ -572,6 +588,13 @@ Data Science
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
 
 .. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
+
+Reproducible Science
+~~~~~~~~~~~~~~~~~~~~
+
+* `cookiecutter-reproducible-science`_: A cookiecutter template to start a reproducible and transparent science project including data, models, analysis, and reports (i.e., your scientifc paper) with close resemblances to the philosophy of Cookiecutter `Data Science`_.
+
+.. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
 Tornado
 ~~~~~~~

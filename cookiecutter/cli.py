@@ -9,13 +9,13 @@ Main `cookiecutter` CLI.
 
 import os
 import sys
-import logging
 import json
 
 import click
 
 from cookiecutter import __version__
 from cookiecutter.config import USER_CONFIG_PATH
+from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException,
@@ -26,8 +26,6 @@ from cookiecutter.exceptions import (
     RepositoryNotFound,
     RepositoryCloneFailed
 )
-
-logger = logging.getLogger(__name__)
 
 
 def version_msg():
@@ -89,28 +87,28 @@ def validate_extra_context(ctx, param, value):
     u'--default-config', is_flag=True,
     help=u'Do not load a config file. Use the defaults instead'
 )
-def main(template, extra_context, no_input, checkout, verbose, replay,
-         overwrite_if_exists, output_dir, config_file, default_config):
+@click.option(
+    u'--debug-file', type=click.Path(), default=None,
+    help=u'File to be used as a stream for DEBUG logging',
+)
+def main(
+        template, extra_context, no_input, checkout, verbose,
+        replay, overwrite_if_exists, output_dir, config_file,
+        default_config, debug_file):
     """Create a project from a Cookiecutter project template (TEMPLATE)."""
-    if verbose:
-        logging.basicConfig(
-            format=u'%(levelname)s %(filename)s: %(message)s',
-            level=logging.DEBUG
-        )
-    else:
-        # Log info and above to console
-        logging.basicConfig(
-            format=u'%(levelname)s: %(message)s',
-            level=logging.INFO
-        )
+
+    # If you _need_ to support a local template in a directory
+    # called 'help', use a qualified path to the directory.
+    if template == u'help':
+        click.echo(click.get_current_context().get_help())
+        sys.exit(0)
+
+    configure_logger(
+        stream_level='DEBUG' if verbose else 'INFO',
+        debug_file=debug_file,
+    )
 
     try:
-        # If you _need_ to support a local template in a directory
-        # called 'help', use a qualified path to the directory.
-        if template == u'help':
-            click.echo(click.get_current_context().get_help())
-            sys.exit(0)
-
         user_config = None if default_config else config_file
 
         cookiecutter(

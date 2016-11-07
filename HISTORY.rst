@@ -17,6 +17,14 @@ New Features:
   raise better error messages, thanks to `@michaeljoseph`_ (#778).
 * Add support for executing cookiecutter using ``python -m cookiecutter`` or
   from a checkout/zip file, thanks to `@brettcannon`_ (#788).
+* New CLI option ``--debug-file PATH`` to store a log file on disk. By default
+  no log file is written.  Entries for ``DEBUG`` level and higher. Thanks to
+  `@hackebrot`_ (#792).
+* Existing templates in a user's ``cookiecutters_dir`` (default is
+  ``~/.cookiecutters/``) can now be referenced by directory name, thanks to
+  `@michaeljoseph`_ (#825).
+* Add support for dict values in ``cookiecutter.json``, thanks to
+  `@freakboy3742`_ (#815).
 
 Bug Fixes:
 
@@ -26,6 +34,8 @@ Bug Fixes:
   a relative path to a template, thanks to `@eliasdorneles`_ for raising the
   issue and `@hackebrot`_ for the PR (#752, #753)
 * Ignore hook files with tilde-suffixes, thanks to `@hackebrot`_ (#768)
+* Fix a minor issue with the code that generates a name for a template, thanks
+  to `@hackebrot`_ (#798)
 
 Other Changes:
 
@@ -56,6 +66,8 @@ Other Changes:
   * ``find.py``, thanks to `@terryjbates`_ (#761)
   * ``generate.py``, thanks to `@terryjbates`_ (#764)
   * ``hooks.py``, thanks to `@terryjbates`_ (#766)
+  * ``repository.py``, thanks to `@terryjbates`_ (#833)
+  * ``vcs.py``, thanks to `@terryjbates`_ (#831)
 
 * Fix link to the Tryton cookiecutter, thanks to `@cedk`_
   and `@nicoe`_ (#697, #698)
@@ -84,6 +96,14 @@ Other Changes:
   `@hackebrot`_ (#790)
 * Add a check to ensure cookiecutter repositories have JSON context, thanks to
   `@michaeljoseph`_ (#782)
+* Rename the internal function that determines whether a file should be
+  rendered, thanks to `@audreyr`_ for raising the issue and `@hackebrot`_ for
+  the PR (#741, #802)
+* Fix typo in docs, thanks to `@mwarkentin`_ (#828)
+* Fix broken link to *Invoke* docs, thanks to `@B3QL`_ (#820)
+* Add documentation to ``render_variable`` function in ``prompt.py``, thanks to
+  `@pydanny`_ (#678)
+* Fix python3.6 travis-ci and tox configuration, thanks to `@luzfcb`_ (#844)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -114,6 +134,9 @@ Other Changes:
   * `substanced-cookiecutter`_ by `@stevepiercy`_ (#745)
   * `cookiecutter-simple-django-cn`_ by `@shenyushun`_ (#765)
   * `cookiecutter-pyqt5`_ by `@mandeepbhutani`_ (#797)
+  * `cookiecutter-xontrib`_ by `@laerus`_ (#817)
+  * `cookiecutter-reproducible-science`_ by `@mkrapp`_ (#826)
+  * `cc-automated-drf-template`_ by `@TAMU-CPT`_ (#832)
 
 .. _`@keimlink`: https://github.com/keimlink
 .. _`@luzfcb`: https://github.com/luzfcb
@@ -154,6 +177,11 @@ Other Changes:
 .. _`@shenyushun`: https://github.com/shenyushun
 .. _`@brettcannon`: https://github.com/brettcannon
 .. _`@mandeepbhutani`: https://github.com/mandeepbhutani
+.. _`@mwarkentin`: https://github.com/mwarkentin
+.. _`@B3QL`: https://github.com/B3QL
+.. _`@laerus`: https://github.com/laerus
+.. _`@mkrapp`: https://github.com/mkrapp
+.. _`@TAMU-CPT`: https://github.com/TAMU-CPT
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
@@ -183,6 +211,9 @@ Other Changes:
 .. _`pyramid-cookiecutter-zodb`: https://github.com/Pylons/pyramid-cookiecutter-zodb
 .. _`substanced-cookiecutter`: https://github.com/Pylons/substanced-cookiecutter
 .. _`cookiecutter-simple-django-cn`: https://github.com/shenyushun/cookiecutter-simple-django-cn
+.. _`cookiecutter-xontrib`: https://github.com/laerus/cookiecutter-xontrib
+.. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
+.. _`cc-automated-drf-template`: https://github.com/TAMU-CPT/cc-automated-drf-template
 
 
 1.4.0 (2016-03-20) Shortbread

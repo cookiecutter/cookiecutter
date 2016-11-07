@@ -46,7 +46,8 @@ def test_repository_url_should_clone(
     assert 'tests/fake-repo-tmpl' == project_dir
 
 
-def test_repository_url_with_no_context_file(mocker, template_url):
+def test_repository_url_with_no_context_file(
+        mocker, template_url, user_config_data):
     mocker.patch(
         'cookiecutter.repository.clone',
         return_value='tests/fake-repo-bad',
@@ -63,6 +64,9 @@ def test_repository_url_with_no_context_file(mocker, template_url):
         )
 
     assert str(err.value) == (
-        'The repository tests/fake-repo-bad could not be located or does not '
-        'contain a "cookiecutter.json" file.'
+        'A valid repository for "{}" could not be found in the following '
+        'locations:\n{}'.format(
+            template_url,
+            'tests/fake-repo-bad',
+        )
     )
