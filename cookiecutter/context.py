@@ -183,19 +183,19 @@ class Variable(object):
 
 
 class CookiecutterTemplate(object):
-    def __init__(self, name, description, variables, **info):
+    def __init__(self, name, variables, **info):
         # mandatory fields
         self.name = name
-        self.description = description
         self.variables = [Variable(**v) for v in variables]
 
         # optional fields
         self.authors = info.get('authors', [])
         self.cookiecutter_version = info.get('cookiecutter_version', None)
+        self.description = info.get('description', None)
         self.keywords = info.get('keywords', [])
         self.license = info.get('license', None)
-        self.version = info.get('version', None)
         self.url = info.get('url', None)
+        self.version = info.get('version', None)
 
     def __repr__(self):
         return "<{class_name} {template_name}>".format(
