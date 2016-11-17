@@ -104,6 +104,8 @@ Other Changes:
 * Add documentation to ``render_variable`` function in ``prompt.py``, thanks to
   `@pydanny`_ (#678)
 * Fix python3.6 travis-ci and tox configuration, thanks to `@luzfcb`_ (#844)
+* Add missing encoding declarations to python files, thanks to `@andytom`_
+  (#852)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -182,6 +184,7 @@ Other Changes:
 .. _`@laerus`: https://github.com/laerus
 .. _`@mkrapp`: https://github.com/mkrapp
 .. _`@TAMU-CPT`: https://github.com/TAMU-CPT
+.. _`@andytom`: https://github.com/andytom
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
