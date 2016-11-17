@@ -23,6 +23,7 @@ def prompt_string(variable, default):
     return click.prompt(
         variable.prompt,
         default=default,
+        hide_input=variable.hide_input,
         type=click.STRING,
     )
 
@@ -31,6 +32,7 @@ def prompt_boolean(variable, default):
     return click.prompt(
         variable.prompt,
         default=default,
+        hide_input=variable.hide_input,
         type=click.BOOL,
     )
 
@@ -39,6 +41,7 @@ def prompt_int(variable, default):
     return click.prompt(
         variable.prompt,
         default=default,
+        hide_input=variable.hide_input,
         type=click.INT,
     )
 
@@ -63,6 +66,7 @@ def prompt_json(variable, default):
     return click.prompt(
         variable.prompt,
         default=DEFAULT_JSON,
+        hide_input=variable.hide_input,
         type=click.STRING,
         value_proc=process_json,
     )
@@ -77,6 +81,7 @@ def prompt_yes_no(variable, default):
     return click.prompt(
         variable.prompt,
         default=default_display,
+        hide_input=variable.hide_input,
         type=click.BOOL,
     )
 
@@ -98,10 +103,12 @@ def prompt_choice(variable, default):
 
     user_choice = click.prompt(
         prompt,
-        type=click.Choice(choices),
         default=default,
+        hide_input=variable.hide_input,
+        type=click.Choice(choices),
     )
     return choice_map[user_choice]
+
 
 PROMPTS = {
     'string': prompt_string,
@@ -151,6 +158,7 @@ class Variable(object):
         # optional fields
         self.description = info.get('description', None)
         self.prompt = info.get('prompt', DEFAULT_PROMPT.format(variable=self))
+        self.hide_input = info.get('hide_input', False)
 
         self.var_type = info.get('type', 'string')
         if self.var_type not in VALID_TYPES:

@@ -30,6 +30,13 @@
             "type": "string"
         },
         {
+            "name": "secret_token",
+            "default": null,
+            "prompt": "Please enter your secret token",
+            "type": "string",
+            "hide_input": true
+        },
+        {
             "name": "plugin_name",
             "default": "emoji",
             "prompt": "What should be the name for your plugin?",
