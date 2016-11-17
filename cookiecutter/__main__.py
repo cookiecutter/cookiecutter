@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Allow cookiecutter to be executable through `python -m cookiecutter`."""
 from __future__ import absolute_import
 
