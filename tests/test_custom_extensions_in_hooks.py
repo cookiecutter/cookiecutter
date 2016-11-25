@@ -8,9 +8,15 @@ import pytest
 from cookiecutter import main
 
 
-@pytest.fixture
-def template():
-    return 'tests/test-extensions/custom-extension'
+@pytest.fixture(params=[
+    'custom-extension-pre',
+    'custom-extension-post',
+], ids=[
+    'pre_gen_hook',
+    'post_gen_hook',
+])
+def template(request):
+    return 'tests/test-extensions/' + request.param
 
 
 @pytest.fixture
@@ -25,8 +31,12 @@ def modify_syspath(monkeypatch):
         'tests/test-extensions/hello_extension'
     )
 
-@pytest.mark.xfail(reason='issue #850')
-def test_pre_generate_hook(template, output_dir):
+
+@pytest.mark.xfail(
+    reason='issue #850',
+    strict=True,
+)
+def test_hook_with_extension(template, output_dir):
     project_dir = main.cookiecutter(
         template,
         no_input=True,
