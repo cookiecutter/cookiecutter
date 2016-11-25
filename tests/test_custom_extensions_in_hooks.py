@@ -25,7 +25,7 @@ def modify_syspath(monkeypatch):
         'tests/test-extensions/hello_extension'
     )
 
-
+@pytest.mark.xfail(reason='issue #850')
 def test_pre_generate_hook(template, output_dir):
     project_dir = main.cookiecutter(
         template,
