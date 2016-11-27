@@ -106,6 +106,7 @@ Other Changes:
 * Fix python3.6 travis-ci and tox configuration, thanks to `@luzfcb`_ (#844)
 * Add missing encoding declarations to python files, thanks to `@andytom`_
   (#852)
+* Disable poyo logging for tests, thanks to `@hackebrot`_ (#855)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
