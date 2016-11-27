@@ -110,6 +110,8 @@ Other Changes:
 * Remove pycache directories in make clean-pyc, thanks to `@hackebrot`_ (#849)
 * Refactor hook system to only find the requested hook, thanks to
   `@michaeljoseph`_ (#834)
+* Add tests for custom extensions in ``pre_gen_project`` and
+  ``post_gen_project`` hooks, thanks to `@hackebrot`_ (#856)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
