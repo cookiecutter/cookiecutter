@@ -108,6 +108,8 @@ Other Changes:
   (#852)
 * Disable poyo logging for tests, thanks to `@hackebrot`_ (#855)
 * Remove pycache directories in make clean-pyc, thanks to `@hackebrot`_ (#849)
+* Refactor hook system to only find the requested hook, thanks to
+  `@michaeljoseph`_ (#834)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
