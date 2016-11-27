@@ -107,6 +107,7 @@ Other Changes:
 * Add missing encoding declarations to python files, thanks to `@andytom`_
   (#852)
 * Disable poyo logging for tests, thanks to `@hackebrot`_ (#855)
+* Remove pycache directories in make clean-pyc, thanks to `@hackebrot`_ (#849)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
