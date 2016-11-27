@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 import logging
 import os
 
-from .config import get_user_config, USER_CONFIG_PATH
+from .config import get_user_config, NOT_PROVIDED
 from .generate import generate_context, generate_files
 from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=USER_CONFIG_PATH):
+        config_file=NOT_PROVIDED):
     """
     API equivalent to using Cookiecutter at the command line.
 
