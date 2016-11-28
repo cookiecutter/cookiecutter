@@ -32,10 +32,6 @@ def modify_syspath(monkeypatch):
     )
 
 
-@pytest.mark.xfail(
-    reason='issue #850',
-    strict=True,
-)
 def test_hook_with_extension(template, output_dir):
     project_dir = main.cookiecutter(
         template,
