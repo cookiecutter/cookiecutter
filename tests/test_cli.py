@@ -8,7 +8,7 @@ import pytest
 
 from cookiecutter.__main__ import main
 from cookiecutter.main import cookiecutter
-from cookiecutter import utils, config
+from cookiecutter import utils
 
 
 @pytest.fixture(scope='session')
@@ -94,8 +94,9 @@ def test_cli_replay(mocker, cli_runner):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH,
-        extra_context=None
+        config_file=None,
+        default_config=False,
+        extra_context=None,
     )
 
 
@@ -125,8 +126,9 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         replay=True,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH,
-        extra_context=None
+        config_file=None,
+        default_config=False,
+        extra_context=None,
     )
 
 
@@ -155,8 +157,9 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         replay=True,
         overwrite_if_exists=True,
         output_dir='.',
-        config_file=config.USER_CONFIG_PATH,
-        extra_context=None
+        config_file=None,
+        default_config=False,
+        extra_context=None,
     )
 
 
@@ -213,8 +216,9 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         replay=False,
         overwrite_if_exists=False,
         output_dir=output_dir,
-        config_file=config.USER_CONFIG_PATH,
-        extra_context=None
+        config_file=None,
+        default_config=False,
+        extra_context=None,
     )
 
 
@@ -251,7 +255,8 @@ def test_user_config(mocker, cli_runner, user_config_path):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=user_config_path,
-        extra_context=None
+        default_config=False,
+        extra_context=None,
     )
 
 
@@ -276,7 +281,8 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         replay=False,
         overwrite_if_exists=False,
         output_dir='.',
-        config_file=None,
+        config_file=user_config_path,
+        default_config=True,
         extra_context=None
     )
 
@@ -298,7 +304,8 @@ def test_default_user_config(mocker, cli_runner):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=None,
-        extra_context=None
+        default_config=True,
+        extra_context=None,
     )
 
 
