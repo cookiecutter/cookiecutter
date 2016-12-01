@@ -74,9 +74,20 @@ def get_config(config_path):
 
 
 def get_user_config(config_file=None, default_config=False):
-    """Retrieve the config from a file or return the defaults if None is
-    passed. If an environment variable `COOKIECUTTER_CONFIG` is set up, try
-    to load its value. Otherwise fall back to a default file or config.
+    """Return the user config as a dict.
+
+    If ``default_config`` is True, ignore ``config_file and return default
+    values for the config parameters.
+
+    If a path to a ``config_file`` is given, that is different from the default
+    location, load the user config from that.
+
+    Otherwise look up the config file path in the ``COOKIECUTTER_CONFIG``
+    environment variable. If set, load the config from this path. This will
+    raise an error if the specified path is not valid.
+
+    If the environment variable is not set, try the default config file path
+    before falling back to the default config values. 
     """
     # Do NOT load a config. Return defaults instead.
     if default_config:
