@@ -87,7 +87,7 @@ def get_user_config(config_file=None, default_config=False):
     raise an error if the specified path is not valid.
 
     If the environment variable is not set, try the default config file path
-    before falling back to the default config values. 
+    before falling back to the default config values.
     """
     # Do NOT load a config. Return defaults instead.
     if default_config:
