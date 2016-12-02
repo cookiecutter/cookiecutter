@@ -22,6 +22,8 @@ from cookiecutter import generate
 from cookiecutter import utils
 from cookiecutter.exceptions import FailedHookException
 
+WINDOWS = sys.platform.startswith('win')
+
 
 @pytest.fixture(scope='function')
 def remove_additional_folders(request):
@@ -75,22 +77,20 @@ def test_run_python_hooks_cwd():
     assert os.path.exists('inputpyhooks/python_post.txt')
 
 
+@pytest.mark.skipif(WINDOWS, reason='OSError.errno=8 is not thrown on Windows')
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_empty_hooks():
-
-    # OSError.errno=8 is not thrown on Windows when the script is emtpy
+    # OSError.errno=8 is not thrown on Windows when the script is empty
     # because it always runs through shell instead of needing a shebang.
-
-    if not sys.platform.startswith('win'):
-        with pytest.raises(FailedHookException) as excinfo:
-            generate.generate_files(
-                context={
-                    'cookiecutter': {'shellhooks': 'shellhooks'}
-                },
-                repo_dir='tests/test-shellhooks-empty/',
-                overwrite_if_exists=True
-            )
-        assert 'shebang' in str(excinfo.value)
+    with pytest.raises(FailedHookException) as excinfo:
+        generate.generate_files(
+            context={
+                'cookiecutter': {'shellhooks': 'shellhooks'}
+            },
+            repo_dir='tests/test-shellhooks-empty/',
+            overwrite_if_exists=True
+        )
+    assert 'shebang' in str(excinfo.value)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
