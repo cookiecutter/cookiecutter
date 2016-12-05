@@ -220,18 +220,17 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context, env):
+def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.
     :param hook_name: The hook to execute.
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
-    :param env: Jinja2 template execution environment.
     """
     with work_in(repo_dir):
         try:
-            run_hook(hook_name, project_dir, context, env)
+            run_hook(hook_name, project_dir, context)
         except FailedHookException:
             rmtree(project_dir)
             logger.error(
@@ -283,13 +282,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     project_dir = os.path.abspath(project_dir)
     logger.debug('Project directory is {}'.format(project_dir))
 
-    _run_hook_from_repo_dir(
-        repo_dir,
-        'pre_gen_project',
-        project_dir,
-        context,
-        env
-    )
+    _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context)
 
     with work_in(template_dir):
         env.loader = FileSystemLoader('.')
@@ -359,12 +352,6 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    _run_hook_from_repo_dir(
-        repo_dir,
-        'post_gen_project',
-        project_dir,
-        context,
-        env
-    )
+    _run_hook_from_repo_dir(repo_dir, 'post_gen_project', project_dir, context)
 
     return project_dir

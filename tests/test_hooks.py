@@ -14,7 +14,6 @@ import sys
 import textwrap
 
 from cookiecutter import hooks, utils, exceptions
-from cookiecutter.environment import StrictEnvironment
 
 
 def make_test_repo(name):
@@ -102,7 +101,6 @@ class TestExternalHooks(object):
 
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
-    env = StrictEnvironment()
 
     def setup_method(self, method):
         self.post_hook = make_test_repo(self.repo_path)
@@ -165,8 +163,7 @@ class TestExternalHooks(object):
                 'cookiecutter': {
                     'file': 'context_post.txt'
                 }
-            },
-            self.env)
+            })
         assert os.path.isfile('tests/context_post.txt')
         assert 'tests' not in os.getcwd()
 
@@ -176,10 +173,10 @@ class TestExternalHooks(object):
         """
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
-            hooks.run_hook('pre_gen_project', tests_dir, {}, self.env)
+            hooks.run_hook('pre_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
 
-            hooks.run_hook('post_gen_project', tests_dir, {}, self.env)
+            hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
 
     def test_run_failing_hook(self):
@@ -192,7 +189,7 @@ class TestExternalHooks(object):
 
         with utils.work_in(self.repo_path):
             with pytest.raises(exceptions.FailedHookException) as excinfo:
-                hooks.run_hook('pre_gen_project', tests_dir, {}, self.env)
+                hooks.run_hook('pre_gen_project', tests_dir, {})
             assert 'Hook script failed' in str(excinfo.value)
 
 

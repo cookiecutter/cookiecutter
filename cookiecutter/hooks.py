@@ -10,6 +10,7 @@ import sys
 import tempfile
 
 from cookiecutter import utils
+from cookiecutter.environment import StrictEnvironment
 from .exceptions import FailedHookException
 
 logger = logging.getLogger(__name__)
@@ -88,13 +89,12 @@ def run_script(script_path, cwd='.'):
             "Hook script failed (exit status: %d)" % exit_status)
 
 
-def run_script_with_context(script_path, cwd, context, env):
+def run_script_with_context(script_path, cwd, context):
     """Execute a script after rendering it with Jinja.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
-    :param env: Jinja2 template execution environment.
     """
     _, extension = os.path.splitext(script_path)
 
@@ -105,6 +105,10 @@ def run_script_with_context(script_path, cwd, context, env):
         mode='wb',
         suffix=extension
     ) as temp:
+        env = StrictEnvironment(
+            context=context,
+            keep_trailing_newline=True,
+        )
         template = env.from_string(contents)
         output = template.render(**context)
         temp.write(output.encode('utf-8'))
@@ -112,18 +116,17 @@ def run_script_with_context(script_path, cwd, context, env):
     run_script(temp.name, cwd)
 
 
-def run_hook(hook_name, project_dir, context, env):
+def run_hook(hook_name, project_dir, context):
     """
     Try to find and execute a hook from the specified project directory.
 
     :param hook_name: The hook to execute.
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
-    :param env: Jinja2 template execution environment.
     """
     script = find_hook(hook_name)
     if script is None:
         logger.debug('No hooks found')
         return
     logger.debug('Running hook {}'.format(hook_name))
-    run_script_with_context(script, project_dir, context, env)
+    run_script_with_context(script, project_dir, context)
