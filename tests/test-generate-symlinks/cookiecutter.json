@@ -1,0 +1,9 @@
+{
+    "name": "test_symlinks",
+    "link_dir": "rendered_dir",
+    "sym_to_nontemp": "rendered_sym_to_original",
+    "sym_to_temp": "rendered_sym_to_rendered_dir",
+    "_copy_without_render": [
+      "copy_no_render"
+  ]
+}
