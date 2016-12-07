@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 def is_copy_only_path(path, context):
-    """Check whether the given `path` should only be copied as opposed to being
+    """Check whether the given `path` should only be copied as opposed to being,
     rendered.
 
     Returns True if `path` matches a pattern in the given `context` dict,
