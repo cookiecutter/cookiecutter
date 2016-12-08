@@ -36,6 +36,9 @@ Bug Fixes:
 * Ignore hook files with tilde-suffixes, thanks to `@hackebrot`_ (#768)
 * Fix a minor issue with the code that generates a name for a template, thanks
   to `@hackebrot`_ (#798)
+* Handle empty hook file or other OS errors, thanks to `@christianmlong`_ for
+  raising this bug and `@jcarbaugh`_ and `@hackebrot`_ for the fix (#632, #729,
+  #862)
 
 Other Changes:
 
@@ -194,6 +197,8 @@ Other Changes:
 .. _`@TAMU-CPT`: https://github.com/TAMU-CPT
 .. _`@andytom`: https://github.com/andytom
 .. _`@lamby`: https://github.com/lamby
+.. _`@christianmlong`: https://github.com/christianmlong
+.. _`@jcarbaugh`: https://github.com/jcarbaugh
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
