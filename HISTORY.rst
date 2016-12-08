@@ -112,6 +112,8 @@ Other Changes:
   `@michaeljoseph`_ (#834)
 * Add tests for custom extensions in ``pre_gen_project`` and
   ``post_gen_project`` hooks, thanks to `@hackebrot`_ (#856)
+* Make the build reproducible by avoiding nondeterministic keyword arguments,
+  thanks to `@lamby`_ and `@hackebrot`_ (#800, #861)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -191,6 +193,7 @@ Other Changes:
 .. _`@mkrapp`: https://github.com/mkrapp
 .. _`@TAMU-CPT`: https://github.com/TAMU-CPT
 .. _`@andytom`: https://github.com/andytom
+.. _`@lamby`: https://github.com/lamby
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
