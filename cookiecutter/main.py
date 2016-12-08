@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 import logging
 import os
 
-from .config import get_user_config, USER_CONFIG_PATH
+from .config import get_user_config
 from .generate import generate_context, generate_files
 from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=USER_CONFIG_PATH):
+        config_file=None, default_config=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -41,6 +41,7 @@ def cookiecutter(
         if it exists
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
+    :param default_config: Use default values rather than a config file.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -49,9 +50,10 @@ def cookiecutter(
         )
         raise InvalidModeException(err_msg)
 
-    # Get user config from ~/.cookiecutterrc or equivalent
-    # If no config file, sensible defaults from config.DEFAULT_CONFIG are used
-    config_dict = get_user_config(config_file=config_file)
+    config_dict = get_user_config(
+        config_file=config_file,
+        default_config=default_config,
+    )
 
     repo_dir = determine_repo_dir(
         template=template,
