@@ -94,7 +94,12 @@ def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
         default_config, debug_file):
-    """Create a project from a Cookiecutter project template (TEMPLATE)."""
+    """Create a project from a Cookiecutter project template (TEMPLATE).
+
+    Cookiecutter is free and open source software, developed and managed by
+    volunteers. If you would like to help out or fund the project, please get
+    in touch at https://github.com/audreyr/cookiecutter.
+    """
 
     # If you _need_ to support a local template in a directory
     # called 'help', use a qualified path to the directory.
