@@ -117,6 +117,8 @@ Other Changes:
   ``post_gen_project`` hooks, thanks to `@hackebrot`_ (#856)
 * Make the build reproducible by avoiding nondeterministic keyword arguments,
   thanks to `@lamby`_ and `@hackebrot`_ (#800, #861)
+* Extend CLI help message and point users to the github project to engage with
+  the community, thanks to `@hackebrot`_ (#859)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
