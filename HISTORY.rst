@@ -39,6 +39,9 @@ Bug Fixes:
 * Handle empty hook file or other OS errors, thanks to `@christianmlong`_ for
   raising this bug and `@jcarbaugh`_ and `@hackebrot`_ for the fix (#632, #729,
   #862)
+* Resolve an issue with custom extensions not being loaded for
+  ``pre_gen_project`` and ``post_gen_project`` hooks, thanks to `@cheungnj`_
+  (#860)
 
 Other Changes:
 
@@ -201,6 +204,7 @@ Other Changes:
 .. _`@lamby`: https://github.com/lamby
 .. _`@christianmlong`: https://github.com/christianmlong
 .. _`@jcarbaugh`: https://github.com/jcarbaugh
+.. _`@cheungnj`: https://github.com/cheungnj
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
