@@ -103,6 +103,7 @@ Contributors
 * Bartłomiej Kurzeja (`@B3QL`_)
 * Thomas O'Donnell (`@andytom`_)
 * Jeremy Carbaugh (`@jcarbaugh`_)
+* Nathan Cheung (`@cheungnj`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -194,3 +195,4 @@ Contributors
 .. _`@B3QL`: https://github.com/B3QL
 .. _`@andytom`: https://github.com/andytom
 .. _`@jcarbaugh`: https://github.com/jcarbaugh
+.. _`@cheungnj`: https://github.com/cheungnj
