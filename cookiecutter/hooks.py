@@ -10,9 +10,8 @@ import subprocess
 import sys
 import tempfile
 
-from jinja2 import Template
-
 from cookiecutter import utils
+from cookiecutter.environment import StrictEnvironment
 from .exceptions import FailedHookException
 
 logger = logging.getLogger(__name__)
@@ -118,7 +117,12 @@ def run_script_with_context(script_path, cwd, context):
         mode='wb',
         suffix=extension
     ) as temp:
-        output = Template(contents).render(**context)
+        env = StrictEnvironment(
+            context=context,
+            keep_trailing_newline=True,
+        )
+        template = env.from_string(contents)
+        output = template.render(**context)
         temp.write(output.encode('utf-8'))
 
     run_script(temp.name, cwd)
