@@ -24,7 +24,7 @@ New Features:
   ``~/.cookiecutters/``) can now be referenced by directory name, thanks to
   `@michaeljoseph`_ (#825).
 * Add support for dict values in ``cookiecutter.json``, thanks to
-  `@freakboy3742`_ (#815).
+  `@freakboy3742`_ and `@hackebrot`_ (#815, #858).
 
 Bug Fixes:
 
