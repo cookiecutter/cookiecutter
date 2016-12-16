@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 """Jinja2 environment and extensions loading."""
 
 from jinja2 import Environment, StrictUndefined
+
 from .exceptions import UnknownExtension
 
 
@@ -24,8 +26,8 @@ class ExtensionLoaderMixin(object):
         context = kwargs.pop('context', {})
 
         default_extensions = [
+            'cookiecutter.extensions.JsonifyExtension',
             'jinja2_time.TimeExtension',
-            'cookiecutter.extensions.JsonifyExtension'
         ]
         extensions = default_extensions + self._read_extensions(context)
 
