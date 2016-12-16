@@ -25,6 +25,8 @@ New Features:
   `@michaeljoseph`_ (#825).
 * Add support for dict values in ``cookiecutter.json``, thanks to
   `@freakboy3742`_ and `@hackebrot`_ (#815, #858).
+* Add a ``jsonify`` filter to default jinja2 extensions that json.dumps a
+  Python object into a string, thanks to `@aroig`_ (#791).
 
 Bug Fixes:
 
@@ -205,6 +207,7 @@ Other Changes:
 .. _`@christianmlong`: https://github.com/christianmlong
 .. _`@jcarbaugh`: https://github.com/jcarbaugh
 .. _`@cheungnj`: https://github.com/cheungnj
+.. _`@aroig`: https://github.com/aroig
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
