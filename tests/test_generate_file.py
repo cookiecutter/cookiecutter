@@ -12,6 +12,7 @@ TestGenerateFile.test_generate_file_verbose_template_syntax_error
 from __future__ import unicode_literals
 import os
 import pytest
+import json
 
 from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError
@@ -63,6 +64,22 @@ def test_generate_file_with_false_condition(env):
         env=env
     )
     assert not os.path.exists('tests/files/cheese.txt')
+
+
+@pytest.mark.usefixtures('remove_cheese_file')
+def test_generate_file_jsonify_filter(env):
+    infile = 'tests/files/{{cookiecutter.jsonify_file}}.txt'
+    data = {'jsonify_file': 'cheese', 'type': 'roquefort'}
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': data},
+        env=env
+    )
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
+        generated_text = f.read()
+        assert json.loads(generated_text) == data
 
 
 @pytest.mark.usefixtures('remove_cheese_file')
