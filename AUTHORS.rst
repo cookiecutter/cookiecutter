@@ -104,6 +104,7 @@ Contributors
 * Thomas O'Donnell (`@andytom`_)
 * Jeremy Carbaugh (`@jcarbaugh`_)
 * Nathan Cheung (`@cheungnj`_)
+* Abdó Roig-Maranges (`@aroig`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -196,3 +197,4 @@ Contributors
 .. _`@andytom`: https://github.com/andytom
 .. _`@jcarbaugh`: https://github.com/jcarbaugh
 .. _`@cheungnj`: https://github.com/cheungnj
+.. _`@aroig`: https://github.com/aroig
