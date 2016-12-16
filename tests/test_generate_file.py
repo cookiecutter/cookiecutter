@@ -10,12 +10,12 @@ TestGenerateFile.test_generate_file_verbose_template_syntax_error
 """
 
 from __future__ import unicode_literals
-import os
-import pytest
 import json
+import os
 
 from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError
+import pytest
 
 from cookiecutter import generate
 from cookiecutter.environment import StrictEnvironment
