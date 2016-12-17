@@ -3,8 +3,11 @@
 History
 -------
 
-1.5.0 (2016-04-20) ???
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.5.0 (2016-12-17) Alfajor
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The primary goal of this release was to add command-line support for passing
+extra context, address minor bugs and make a number of improvements.
 
 New Features:
 
