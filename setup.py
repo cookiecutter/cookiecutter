@@ -22,9 +22,6 @@ if sys.argv[-1] == 'tag':
 with io.open('README.rst', 'r', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
-with io.open('HISTORY.rst', 'r', encoding='utf-8') as history_file:
-    history = history_file.read().replace('.. :changelog:', '')
-
 requirements = [
     'future>=0.15.2',
     'binaryornot>=0.2.0',
@@ -35,10 +32,8 @@ requirements = [
     'jinja2-time>=0.1.0'
 ]
 
-long_description = readme + '\n\n' + history
-
 if sys.argv[-1] == 'readme':
-    print(long_description)
+    print(readme)
     sys.exit()
 
 
@@ -48,7 +43,7 @@ setup(
     description=('A command-line utility that creates projects from project '
                  'templates, e.g. creating a Python package project from a '
                  'Python package project template.'),
-    long_description=long_description,
+    long_description=readme,
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
     url='https://github.com/audreyr/cookiecutter',
