@@ -489,7 +489,7 @@ Common Lisp
 Elm
 ~~~
 
-* `cookiecutter-elm`_: Elm base cookiecutter with basic html example.
+* `cookiecutter-elm`_: Elm based cookiecutter with basic html example.
 
 .. _`cookiecutter-elm`: https://github.com/m-x-k/cookiecutter-elm.git
 
