@@ -121,7 +121,8 @@ Now you can make your changes locally.
     coverage report -m
     coverage html
 
-8. Submit a pull request through the GitHub website.
+8. Submit a pull request through the GitHub website.
+
 Contributor Guidelines
 ----------------------
 
