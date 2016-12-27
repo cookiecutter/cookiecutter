@@ -191,7 +191,9 @@ Categories of Cookiecutters
 `C++`_ |
 `C#`_ |
 `Common Lisp`_ |
+`Elm`_ |
 `Golang`_ |
+`Java`_ |
 `JS`_ |
 `Kotlin`_ |
 `LaTeX/XeTeX`_ |
@@ -484,6 +486,13 @@ Common Lisp
 
 .. _`cookiecutter-cl-project`: https://github.com/svetlyak40wt/cookiecutter-cl-project
 
+Elm
+~~~
+
+* `cookiecutter-elm`_: Elm base cookiecutter with basic html example.
+
+.. _`cookiecutter-elm`: https://github.com/m-x-k/cookiecutter-elm.git
+
 
 Golang
 ~~~~~~
@@ -491,6 +500,16 @@ Golang
 * `beat-generator`_: A template to create your own beat to ship data to Elasticsearch.
 
 .. _`beat-generator`: https://github.com/elastic/beat-generator
+
+
+Java
+~~~~
+
+* `cookiecutter-java`_: Cookiecutter for basic java application setup with gradle
+* `cookiecutter-spring-boot`_: Cookiecutter for standard java spring boot gradle application
+
+.. _`cookiecutter-java`: https://github.com/m-x-k/cookiecutter-java.git
+.. _`cookiecutter-spring-boot`: https://github.com/m-x-k/cookiecutter-spring-boot.git
 
 
 JS
