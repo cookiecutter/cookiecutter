@@ -14,8 +14,7 @@ little bit helps, and credit will always be given.
    contributor_guidelines
    contributor_testing
    core_committer_guide
-
-
+
 Types of Contributions
 ----------------------
 
@@ -54,14 +53,13 @@ Implement Features
 ~~~~~~~~~~~~~~~~~~
 
 Look through the GitHub issues for features. Anything tagged with "enhancement"
-and "please-help" is open to whoever wants to implement it.
+is open to whoever wants to implement it.
 
 Please do not combine multiple feature enhancements into a single pull request.
 
-Note: this project is very conservative, so new features that aren't tagged
-with "please-help" might not get into core. We're trying to keep the code base
-small, extensible, and streamlined. Whenever possible, it's best to try and 
-implement feature ideas as separate projects outside of the core codebase.
+Note: this project is a bit conservative, so new features might not get into core.
+If possible, it's best to try and implement feature ideas as separate projects
+outside of the core codebase.
 
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -90,8 +88,7 @@ If you are proposing a feature:
 * Keep the scope as narrow as possible, to make it easier to implement.
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
-
-
+
 Setting Up the Code for Local Development
 -----------------------------------------
 
@@ -136,13 +133,12 @@ If you feel like running only the flake8 environment, please use the following c
     $ tox -e cov-report
 
 8. Submit a pull request through the GitHub website.
-
-
+
 Contributor Guidelines
------------------------
+----------------------
 
 Pull Request Guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you submit a pull request, check that it meets these guidelines:
 
@@ -182,8 +178,7 @@ Coding Standards
             return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
 
   * Write new code in Python 3.
-
-
+
 Testing with tox
 ----------------
 
@@ -222,7 +217,7 @@ Will run py.test with the python2.7, python3.4 and pypy interpreters, for
 example.
 
 Troubleshooting for Contributors
----------------------------------
+--------------------------------
 
 Python 3.3 tests fail locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,13 +226,12 @@ Try upgrading Tox to the latest version. I noticed that they were failing
 locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
 
 .. _`pytest usage docs`: https://pytest.org/latest/usage.html#specifying-tests-selecting-tests
-
-
+
 Core Committer Guide
 ====================
 
 Vision and Scope
------------------
+----------------
 
 Core committers, use this section to:
 
@@ -304,7 +298,7 @@ Stable
 * New features require a +1 from 3 core committers
 
 VCS-Hosted Templates
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Cookiecutter project templates are intentionally hosted VCS repos as-is.
 
@@ -316,7 +310,7 @@ Cookiecutter project templates are intentionally hosted VCS repos as-is.
 * Easy to collaborate
 
 Process: Pull Requests
-------------------------
+----------------------
 
 If a pull request is untriaged:
 
@@ -337,7 +331,7 @@ Ensure that each pull request meets all requirements in this checklist:
 https://gist.github.com/audreyr/4feef90445b9680475f2
 
 Process: Issues
-----------------
+---------------
 
 If an issue is a bug that needs an urgent fix, mark it for the next patch release.
 Then either fix it or mark as please-help.
@@ -347,7 +341,7 @@ For other issues: encourage friendly discussion, moderate debate, offer your tho
 New features require a +1 from 2 other core committers (besides yourself).
 
 Process: Roadmap
------------------
+----------------
 
 The roadmap is https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
 
@@ -426,7 +420,7 @@ This will generate the following message::
     WARNING: Don't forget to replace any :ref: statements with literal names
 
 Process: Your own code changes
--------------------------------
+------------------------------
 
 All code changes, regardless of who does them, need to be reviewed and merged by someone else.
 This rule applies to all the core committers.
@@ -438,7 +432,7 @@ Exceptions:
 * Small documentation changes that reinforce existing subject matter. Most commonly being, but not limited to spelling and grammar corrections.
 
 Responsibilities
------------------
+----------------
 
 #. Ensure cross-platform compatibility for every change that's accepted. Windows, Mac, Debian & Ubuntu Linux.
 #. Ensure that code that goes into core meets all requirements in this checklist: https://gist.github.com/audreyr/4feef90445b9680475f2
@@ -448,7 +442,7 @@ Responsibilities
 #. Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the Python Community Code of Conduct (https://www.python.org/psf/codeofconduct/).
 
 Becoming a Core Committer
---------------------------
+-------------------------
 
 Contributors may be given core commit privileges. Preference will be given to those with:
 
@@ -456,6 +450,4 @@ A. Past contributions to Cookiecutter and other open-source projects. Contributi
 B. A coding style that the other core committers find simple, minimal, and clean.
 C. Access to resources for cross-platform development and testing.
 D. Time to devote to the project regularly.
-
-
-Autogenerated from the docs via `make contributing`
+Autogenerated from the docs via `make contributing`
