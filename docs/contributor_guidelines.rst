@@ -1,8 +1,8 @@
 Contributor Guidelines
------------------------
+----------------------
 
 Pull Request Guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you submit a pull request, check that it meets these guidelines:
 

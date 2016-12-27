@@ -123,10 +123,10 @@ Now you can make your changes locally.
 
 8. Submit a pull request through the GitHub website.
 Contributor Guidelines
------------------------
+----------------------
 
 Pull Request Guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you submit a pull request, check that it meets these guidelines:
 
@@ -134,7 +134,7 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, 3.3, and PyPy on Appveyor and Travis CI.
+3. The pull request should work for Python 2.7, 3.3, 3.4, and PyPy on Appveyor and Travis CI.
 4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and 
    https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
@@ -143,7 +143,28 @@ Coding Standards
 
 * PEP8
 * Functions over classes except in tests
-* Prefer single quotes (unless inconvenient) http://stackoverflow.com/a/56190/5549
+* Quotes via http://stackoverflow.com/a/56190/5549
+  * Use double quotes around strings that are used for interpolation or that are natural language messages
+  * Use single quotes for small symbol-like strings (but break the rules if the strings contain quotes)
+  * Use triple double quotes for docstrings and raw string literals for regular expressions even if they aren't needed.
+  * Example:
+
+    .. code-block:: python
+
+        LIGHT_MESSAGES = {
+            'English': "There are %(number_of_lights)s lights.",
+            'Pirate':  "Arr! Thar be %(number_of_lights)s lights."
+        }
+
+        def lights_message(language, number_of_lights):
+            """Return a language-appropriate string reporting the light count."""
+            return LIGHT_MESSAGES[language] % locals()
+
+        def is_pirate(message):
+            """Return True if the given message sounds piratical."""
+            return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
+
+  * Write new code in Python 3.
 
 Testing
 -------
@@ -190,7 +211,7 @@ Will run py.test with the python2.7, python3.4 and pypy interpreters, for
 example.
 
 Troubleshooting for Contributors
----------------------------------
+--------------------------------
 
 Python 3.3 tests fail locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,7 +224,7 @@ Core Committer Guide
 ====================
 
 Vision and Scope
------------------
+----------------
 
 Core committers, use this section to:
 
@@ -270,7 +291,7 @@ Stable
 * New features require a +1 from 3 core committers
 
 VCS-Hosted Templates
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Cookiecutter project templates are intentionally hosted VCS repos as-is.
 
@@ -282,7 +303,7 @@ Cookiecutter project templates are intentionally hosted VCS repos as-is.
 * Easy to collaborate
 
 Process: Pull Requests
-------------------------
+----------------------
 
 If a pull request is untriaged:
 
@@ -303,7 +324,7 @@ Ensure that each pull request meets all requirements in this checklist:
 https://gist.github.com/audreyr/4feef90445b9680475f2
 
 Process: Issues
-----------------
+---------------
 
 If an issue is a bug that needs an urgent fix, mark it for the next patch release.
 Then either fix it or mark as please-help.
@@ -313,7 +334,7 @@ For other issues: encourage friendly discussion, moderate debate, offer your tho
 New features require a +1 from 2 other core committers (besides yourself).
 
 Process: Roadmap
------------------
+----------------
 
 The roadmap is https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
 
@@ -327,6 +348,45 @@ Milestone size:
 
 * If a milestone contains too much, move some to the next milestone.
 * Err on the side of more frequent patch releases.
+
+Process: Pull Request merging and HISTORY.rst maintenance
+---------------------------------------------------------
+
+If you merge a pull request, you're responsible for updating `AUTHORS.rst` and `HISTORY.rst`
+
+When you're processing the first change after a release, create boilerplate following the existing pattern:
+
+.. code-block:: rst
+
+    x.y.z (Development)
+    ~~~~~~~~~~~~~~~~~~~
+
+    The goals of this release are TODO: release summary of features
+
+    Features:
+
+    * Feature description, thanks to @contributor (#PR).
+
+    Bug Fixes:
+
+    * Bug fix description, thanks to @contributor (#PR).
+
+    Other changes:
+
+    * Description of the change, thanks to @contributor (#PR). 
+                      
+    .. _`@contributor`: https://github.com/contributor
+
+Process: Accepting Template Pull Requests
+-----------------------------------------
+
+#. Run the template to generate the project.
+#. Attempt to start/use the rendered project.
+#. Merge the template in.
+#. Update the history file.
+
+.. note:: Adding a template doesn't give authors credit.
+
 
 Process: Generating CONTRIBUTING.rst
 -------------------------------------
@@ -355,7 +415,7 @@ This will generate the following message::
     WARNING: Don't forget to replace any :ref: statements with literal names
 
 Process: Your own code changes
--------------------------------
+------------------------------
 
 All code changes, regardless of who does them, need to be reviewed and merged by someone else.
 This rule applies to all the core committers.
@@ -367,7 +427,7 @@ Exceptions:
 * Small documentation changes that reinforce existing subject matter. Most commonly being, but not limited to spelling and grammar corrections.
 
 Responsibilities
------------------
+----------------
 
 #. Ensure cross-platform compatibility for every change that's accepted. Windows, Mac, Debian & Ubuntu Linux.
 #. Ensure that code that goes into core meets all requirements in this checklist: https://gist.github.com/audreyr/4feef90445b9680475f2
@@ -377,7 +437,7 @@ Responsibilities
 #. Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the Python Community Code of Conduct (https://www.python.org/psf/codeofconduct/).
 
 Becoming a Core Committer
---------------------------
+-------------------------
 
 Contributors may be given core commit privileges. Preference will be given to those with:
 
