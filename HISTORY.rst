@@ -19,8 +19,12 @@ Other Changes:
 * Added more cookiecutter templates to the mix:
 
   * `widget-cookiecutter`_ by `@willingc`_ (#781)
+  * `cookiecutter-tornado`_ by `@hkage`_ (#807)
+
+.. _`@hkage`: https://github.com/hkage
 
 .. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
+.. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
 
 1.5.0 (2016-12-18) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
