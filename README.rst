@@ -201,6 +201,7 @@ Categories of Cookiecutters
 `Scala`_ |
 `6502 Assembly`_ |
 `Data Science`_ |
+`Tornado`_ |
 `Reproducible Science`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
@@ -328,6 +329,7 @@ Python
 * `cookiecutter-snakemake-analysis-pipeline`_: One way to easily set up `Snakemake`_-based analysis pipelines.
 * `cookiecutter-py3tkinter`_: Template for Python 3 Tkinter application gui.
 * `cookiecutter-pyqt5`_: A prebuilt PyQt5 GUI template with a fully featured Pytest test suite and Travis CI integration all in an optimal Python package.
+* `cookiecutter-pyqt4`_: A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
 * `cookiecutter-xontrib`_: A template for building xontribs, a.k.a `xonsh`_ contributions
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
@@ -369,6 +371,7 @@ Python
 .. _`Snakemake`: https://bitbucket.org/snakemake/snakemake/wiki/Home
 .. _`cookiecutter-py3tkinter`: https://github.com/ivanlyon/cookiecutter-py3tkinter
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
+.. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
 .. _`cookiecutter-xontrib`: https://github.com/laerus/cookiecutter-xontrib
 .. _`xonsh`: https://github.com/xonsh/xonsh
 
@@ -388,7 +391,7 @@ Python-Django
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
 * `cookiecutter-django-aws-eb`_: Get up and running with Django on AWS Elastic Beanstalk.
 * `cookiecutter-wagtail`_ : A cookiecutter template for `Wagtail`_ CMS based sites.
-* `wagtail-cookiecutter-foundation`_: A complete template for Wagtail CMS projects featuring Zurb Foundation 5, ansible provisioning and deployment , front-end dependency management with bower, modular apps to get your site up and running including photo_gallery, RSS feed etc.
+* `wagtail-cookiecutter-foundation`_: A complete template for Wagtail CMS projects featuring `Zurb Foundation`_ 6, ansible provisioning and deployment , front-end dependency management with bower, modular apps to get your site up and running including photo_gallery, RSS feed etc.
 * `django-starter`_: A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
 * `cookiecutter-django-gulp`_: A Cookiecutter template for integrating frontend development tools in Django projects.
 * `wagtail-starter-kit`_: A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
@@ -398,6 +401,8 @@ Python-Django
 * `cc_project_app_drf`_: For creating REST apis based on the "project app" project architecture
 * `cc_project_app_full_with_hooks`_: For creating Django projects using the "project app" project architecture
 * `cc-automated-drf-template`_: A template + script that automatically creates your Django REST project with serializers, views, urls, and admin files based on your models file as input.
+* `cookiecutter-django-foundation`_: Fork of `cookiecutter-django`_ based on `Zurb Foundation`_ 6 front-end framework
+* `cookiecutter-django-ansible`_: Cookiecutter Django Ansible is a framework for jumpstarting an ansible project for provisioning a server that is ready for your *cookiecutter-django* application.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -422,13 +427,15 @@ Python-Django
 .. _`cc_project_app_drf`: https://bitbucket.org/levit_scs/cc_project_app_drf
 .. _`cc_project_app_full_with_hooks`: https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks
 .. _`cc-automated-drf-template`: https://github.com/TAMU-CPT/cc-automated-drf-template
-
+.. _`cookiecutter-django-foundation`: https://github.com/Parbhat/cookiecutter-django-foundation
+.. _`Zurb Foundation`: http://foundation.zurb.com
+.. _`cookiecutter-django-ansible`: https://github.com/HackSoftware/cookiecutter-django-ansible
 
 Python-Pyramid
 ^^^^^^^^^^^^^^
 
 * `pyramid-cookiecutter-alchemy`_: A Cookiecutter (project template) for creating a Pyramid project using SQLite for persistent storage, SQLAlchemy for an ORM, URL dispatch for routing, and Jinja2 for templating.
-* `pyramid-cookiecutter-starter`_: A Cookiecutter (project template) for creating a Pyramid starter project using Jinja2 for templating.
+* `pyramid-cookiecutter-starter`_: A Cookiecutter (project template) for creating a Pyramid starter project using URL dispatch for routing and Jinja2 for templating.
 * `pyramid-cookiecutter-zodb`_: A Cookiecutter (project template) for creating a Pyramid project using ZODB for persistent storage, traversal for routing, and Chameleon for templating.
 * `substanced-cookiecutter`_: A cookiecutter (project template) for creating a Substance D starter project. Substance D is built on top of Pyramid.
 
@@ -493,6 +500,7 @@ Golang
 
 .. _`beat-generator`: https://github.com/elastic/beat-generator
 .. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang 
+
 JS
 ~~
 
@@ -584,8 +592,10 @@ Scala
 Data Science
 ~~~~~~~~~~~~
 
+* `widget-cookiecutter`_: A cookiecutter template for creating a custom Jupyter widget project.
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
 
+.. _`widget-cookiecutter`_: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
 
 Reproducible Science
@@ -595,6 +605,12 @@ Reproducible Science
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
+Tornado
+~~~~~~~
+
+* `cookiecutter-tornado`_: Cookiecutter template for Tornado based projects
+
+.. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
 
 Similar projects
 ----------------
