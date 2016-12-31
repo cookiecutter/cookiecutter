@@ -2,6 +2,7 @@
 
 """Functions for discovering and executing various cookiecutter hooks."""
 
+import errno
 import io
 import logging
 import os
@@ -9,45 +10,59 @@ import subprocess
 import sys
 import tempfile
 
-from jinja2 import Template
-
 from cookiecutter import utils
+from cookiecutter.environment import StrictEnvironment
 from .exceptions import FailedHookException
 
 logger = logging.getLogger(__name__)
 
-
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
-    # TODO: other hooks should be listed here
 ]
 EXIT_SUCCESS = 0
 
 
-def find_hooks():
+def valid_hook(hook_file, hook_name):
+    """Determine if a hook file is valid.
+
+    :param hook_file: The hook file to consider for validity
+    :param hook_name: The hook to find
+    :return: The hook file validity
+    """
+    filename = os.path.basename(hook_file)
+    basename = os.path.splitext(filename)[0]
+
+    matching_hook = basename == hook_name
+    supported_hook = basename in _HOOKS
+    backup_file = filename.endswith('~')
+
+    return matching_hook and supported_hook and not backup_file
+
+
+def find_hook(hook_name, hooks_dir='hooks'):
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
     Dict's key will be the hook/script's name, without extension, while values
     will be the absolute path to the script. Missing scripts will not be
     included in the returned dict.
+
+    :param hook_name: The hook to find
+    :param hooks_dir: The hook directory in the template
+    :return: The absolute path to the hook script or None
     """
-    hooks_dir = 'hooks'
-    hooks = {}
-    logger.debug('hooks_dir is {}'.format(hooks_dir))
+    logger.debug('hooks_dir is {}'.format(os.path.abspath(hooks_dir)))
 
     if not os.path.isdir(hooks_dir):
         logger.debug('No hooks/ dir in template_dir')
-        return hooks
+        return None
 
-    for f in os.listdir(hooks_dir):
-        filename = os.path.basename(f)
-        basename = os.path.splitext(filename)[0]
+    for hook_file in os.listdir(hooks_dir):
+        if valid_hook(hook_file, hook_name):
+            return os.path.abspath(os.path.join(hooks_dir, hook_file))
 
-        if basename in _HOOKS and not filename.endswith('~'):
-            hooks[basename] = os.path.abspath(os.path.join(hooks_dir, f))
-    return hooks
+    return None
 
 
 def run_script(script_path, cwd='.'):
@@ -64,15 +79,26 @@ def run_script(script_path, cwd='.'):
 
     utils.make_executable(script_path)
 
-    proc = subprocess.Popen(
-        script_command,
-        shell=run_thru_shell,
-        cwd=cwd
-    )
-    exit_status = proc.wait()
-    if exit_status != EXIT_SUCCESS:
+    try:
+        proc = subprocess.Popen(
+            script_command,
+            shell=run_thru_shell,
+            cwd=cwd
+        )
+        exit_status = proc.wait()
+        if exit_status != EXIT_SUCCESS:
+            raise FailedHookException(
+                'Hook script failed (exit status: {})'.format(exit_status)
+            )
+    except OSError as os_error:
+        if os_error.errno == errno.ENOEXEC:
+            raise FailedHookException(
+                'Hook script failed, might be an '
+                'empty file or missing a shebang'
+            )
         raise FailedHookException(
-            "Hook script failed (exit status: %d)" % exit_status)
+            'Hook script failed (error: {})'.format(os_error)
+        )
 
 
 def run_script_with_context(script_path, cwd, context):
@@ -91,7 +117,12 @@ def run_script_with_context(script_path, cwd, context):
         mode='wb',
         suffix=extension
     ) as temp:
-        output = Template(contents).render(**context)
+        env = StrictEnvironment(
+            context=context,
+            keep_trailing_newline=True,
+        )
+        template = env.from_string(contents)
+        output = template.render(**context)
         temp.write(output.encode('utf-8'))
 
     run_script(temp.name, cwd)
@@ -105,7 +136,7 @@ def run_hook(hook_name, project_dir, context):
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
     """
-    script = find_hooks().get(hook_name)
+    script = find_hook(hook_name)
     if script is None:
         logger.debug('No hooks found')
         return
