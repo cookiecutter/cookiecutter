@@ -20,11 +20,14 @@ Other Changes:
 
   * `widget-cookiecutter`_ by `@willingc`_ (#781)
   * `cookiecutter-tornado`_ by `@hkage`_ (#807)
+  * `cookiecutter-pyqt4`_ by `@aeroaks`_ (#847)
 
 .. _`@hkage`: https://github.com/hkage
+.. _`@aeroaks`: https://github.com/aeroaks
 
 .. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
+.. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
 
 1.5.0 (2016-12-18) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
