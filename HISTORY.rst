@@ -10,6 +10,17 @@ New Features:
 
 * ???
 
+Bug Fixes:
+
+* ???
+
+Other Changes:
+
+* Added more cookiecutter templates to the mix:
+
+  * `widget-cookiecutter`_ by `@willingc`_ (#781)
+
+.. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 
 1.5.0 (2016-12-18) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
