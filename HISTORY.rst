@@ -22,12 +22,14 @@ Other Changes:
   * `cookiecutter-django-foundation`_ by `@Parbhat`_ (#804)
   * `cookiecutter-tornado`_ by `@hkage`_ (#807)
   * `cookiecutter-django-ansible`_ by `@Ivaylo-Bachvarov`_ (#816)
+  * `CICADA`_ by `@elenimijalis`_ (#840)
   * `cookiecutter-pyqt4`_ by `@aeroaks`_ (#847)
   * `cookiecutter-golang`_ by `@mjhea0`_ (#872)
 
 .. _`@Parbhat`: https://github.com/Parbhat
 .. _`@hkage`: https://github.com/hkage
 .. _`@Ivaylo-Bachvarov`: https://github.com/Ivaylo-Bachvarov
+.. _`@elenimijalis`: https://github.com/elenimijalis
 .. _`@aeroaks`: https://github.com/aeroaks
 .. _`@mjhea0`: https://github.com/mjhea0
 
@@ -35,6 +37,7 @@ Other Changes:
 .. _`cookiecutter-django-foundation`: https://github.com/Parbhat/cookiecutter-django-foundation
 .. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
 .. _`cookiecutter-django-ansible`: https://github.com/HackSoftware/cookiecutter-django-ansible
+.. _`CICADA`: https://github.com/TAMU-CPT/CICADA
 .. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
 .. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang
 
