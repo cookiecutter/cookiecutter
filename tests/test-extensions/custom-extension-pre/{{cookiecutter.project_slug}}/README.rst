@@ -1,0 +1,1 @@
+{% hello cookiecutter.name %}

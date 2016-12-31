@@ -12,6 +12,7 @@ TestHooks.test_run_shell_hooks
 """
 
 from __future__ import unicode_literals
+import errno
 import os
 import sys
 import stat
@@ -19,6 +20,9 @@ import pytest
 
 from cookiecutter import generate
 from cookiecutter import utils
+from cookiecutter.exceptions import FailedHookException
+
+WINDOWS = sys.platform.startswith('win')
 
 
 @pytest.fixture(scope='function')
@@ -71,6 +75,44 @@ def test_run_python_hooks_cwd():
     )
     assert os.path.exists('inputpyhooks/python_pre.txt')
     assert os.path.exists('inputpyhooks/python_post.txt')
+
+
+@pytest.mark.skipif(WINDOWS, reason='OSError.errno=8 is not thrown on Windows')
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_empty_hooks():
+    # OSError.errno=8 is not thrown on Windows when the script is empty
+    # because it always runs through shell instead of needing a shebang.
+    with pytest.raises(FailedHookException) as excinfo:
+        generate.generate_files(
+            context={
+                'cookiecutter': {'shellhooks': 'shellhooks'}
+            },
+            repo_dir='tests/test-shellhooks-empty/',
+            overwrite_if_exists=True
+        )
+    assert 'shebang' in str(excinfo.value)
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_oserror_hooks(mocker):
+
+    message = 'Out of memory'
+
+    err = OSError(message)
+    err.errno = errno.ENOMEM
+
+    prompt = mocker.patch('subprocess.Popen')
+    prompt.side_effect = err
+
+    with pytest.raises(FailedHookException) as excinfo:
+        generate.generate_files(
+            context={
+                'cookiecutter': {'shellhooks': 'shellhooks'}
+            },
+            repo_dir='tests/test-shellhooks-empty/',
+            overwrite_if_exists=True
+        )
+    assert message in str(excinfo.value)
 
 
 def make_test_repo(name):

@@ -132,7 +132,7 @@ def test_default_config_from_env_variable(
 def test_force_default_config(mocker):
     spy_get_config = mocker.spy(config, 'get_config')
 
-    user_config = config.get_user_config(None)
+    user_config = config.get_user_config(None, default_config=True)
 
     assert user_config == config.DEFAULT_CONFIG
     assert not spy_get_config.called

@@ -14,7 +14,6 @@ import json
 import click
 
 from cookiecutter import __version__
-from cookiecutter.config import USER_CONFIG_PATH
 from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
@@ -80,7 +79,7 @@ def validate_extra_context(ctx, param, value):
     help=u'Where to output the generated project dir into'
 )
 @click.option(
-    u'--config-file', type=click.Path(), default=USER_CONFIG_PATH,
+    u'--config-file', type=click.Path(), default=None,
     help=u'User configuration file'
 )
 @click.option(
@@ -95,7 +94,12 @@ def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
         default_config, debug_file):
-    """Create a project from a Cookiecutter project template (TEMPLATE)."""
+    """Create a project from a Cookiecutter project template (TEMPLATE).
+
+    Cookiecutter is free and open source software, developed and managed by
+    volunteers. If you would like to help out or fund the project, please get
+    in touch at https://github.com/audreyr/cookiecutter.
+    """
 
     # If you _need_ to support a local template in a directory
     # called 'help', use a qualified path to the directory.
@@ -109,15 +113,14 @@ def main(
     )
 
     try:
-        user_config = None if default_config else config_file
-
         cookiecutter(
             template, checkout, no_input,
             extra_context=extra_context,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
             output_dir=output_dir,
-            config_file=user_config
+            config_file=config_file,
+            default_config=default_config,
         )
     except (OutputDirExistsException,
             InvalidModeException,

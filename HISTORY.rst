@@ -3,8 +3,47 @@
 History
 -------
 
-1.5.0 (2016-04-20) ???
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.6.0 (????-??-??) ???????
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+New Features:
+
+* ???
+
+Bug Fixes:
+
+* ???
+
+Other Changes:
+
+* Added more cookiecutter templates to the mix:
+
+  * `widget-cookiecutter`_ by `@willingc`_ (#781)
+  * `cookiecutter-django-foundation`_ by `@Parbhat`_ (#804)
+  * `cookiecutter-tornado`_ by `@hkage`_ (#807)
+  * `cookiecutter-django-ansible`_ by `@Ivaylo-Bachvarov`_ (#816)
+  * `cookiecutter-pyqt4`_ by `@aeroaks`_ (#847)
+  * `cookiecutter-golang`_ by `@mjhea0`_ (#872)
+
+.. _`@Parbhat`: https://github.com/Parbhat
+.. _`@hkage`: https://github.com/hkage
+.. _`@Ivaylo-Bachvarov`: https://github.com/Ivaylo-Bachvarov
+.. _`@aeroaks`: https://github.com/aeroaks
+.. _`@mjhea0`: https://github.com/mjhea0
+
+.. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
+.. _`cookiecutter-django-foundation`: https://github.com/Parbhat/cookiecutter-django-foundation
+.. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
+.. _`cookiecutter-django-ansible`: https://github.com/HackSoftware/cookiecutter-django-ansible
+.. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
+.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang
+
+
+1.5.0 (2016-12-18) Alfajor
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The primary goal of this release was to add command-line support for passing
+extra context, address minor bugs and make a number of improvements.
 
 New Features:
 
@@ -24,7 +63,9 @@ New Features:
   ``~/.cookiecutters/``) can now be referenced by directory name, thanks to
   `@michaeljoseph`_ (#825).
 * Add support for dict values in ``cookiecutter.json``, thanks to
-  `@freakboy3742`_ (#815).
+  `@freakboy3742`_ and `@hackebrot`_ (#815, #858).
+* Add a ``jsonify`` filter to default jinja2 extensions that json.dumps a
+  Python object into a string, thanks to `@aroig`_ (#791).
 
 Bug Fixes:
 
@@ -36,6 +77,12 @@ Bug Fixes:
 * Ignore hook files with tilde-suffixes, thanks to `@hackebrot`_ (#768)
 * Fix a minor issue with the code that generates a name for a template, thanks
   to `@hackebrot`_ (#798)
+* Handle empty hook file or other OS errors, thanks to `@christianmlong`_ for
+  raising this bug and `@jcarbaugh`_ and `@hackebrot`_ for the fix (#632, #729,
+  #862)
+* Resolve an issue with custom extensions not being loaded for
+  ``pre_gen_project`` and ``post_gen_project`` hooks, thanks to `@cheungnj`_
+  (#860)
 
 Other Changes:
 
@@ -103,6 +150,19 @@ Other Changes:
 * Fix broken link to *Invoke* docs, thanks to `@B3QL`_ (#820)
 * Add documentation to ``render_variable`` function in ``prompt.py``, thanks to
   `@pydanny`_ (#678)
+* Fix python3.6 travis-ci and tox configuration, thanks to `@luzfcb`_ (#844)
+* Add missing encoding declarations to python files, thanks to `@andytom`_
+  (#852)
+* Disable poyo logging for tests, thanks to `@hackebrot`_ (#855)
+* Remove pycache directories in make clean-pyc, thanks to `@hackebrot`_ (#849)
+* Refactor hook system to only find the requested hook, thanks to
+  `@michaeljoseph`_ (#834)
+* Add tests for custom extensions in ``pre_gen_project`` and
+  ``post_gen_project`` hooks, thanks to `@hackebrot`_ (#856)
+* Make the build reproducible by avoiding nondeterministic keyword arguments,
+  thanks to `@lamby`_ and `@hackebrot`_ (#800, #861)
+* Extend CLI help message and point users to the github project to engage with
+  the community, thanks to `@hackebrot`_ (#859)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-funkload-friendly`_ by `@tokibito`_ (#657)
@@ -181,6 +241,12 @@ Other Changes:
 .. _`@laerus`: https://github.com/laerus
 .. _`@mkrapp`: https://github.com/mkrapp
 .. _`@elenimijalis`: https://github.com/elenimijalis
+.. _`@andytom`: https://github.com/andytom
+.. _`@lamby`: https://github.com/lamby
+.. _`@christianmlong`: https://github.com/christianmlong
+.. _`@jcarbaugh`: https://github.com/jcarbaugh
+.. _`@cheungnj`: https://github.com/cheungnj
+.. _`@aroig`: https://github.com/aroig
 
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-funkload-friendly`: https://github.com/tokibito/cookiecutter-funkload-friendly
