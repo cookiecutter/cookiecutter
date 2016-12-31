@@ -25,7 +25,7 @@ Other Changes:
   * `CICADA`_ by `@elenimijalis`_ (#840)
   * `cookiecutter-tf-module`_ by `@VDuda`_ (#843)
   * `cookiecutter-pyqt4`_ by `@aeroaks`_ (#847)
-  * `cookiecutter-golang`_ by `@mjhea0`_ (#872)
+  * `cookiecutter-golang`_ by `@mjhea0`_ and `@lacion`_ (#872, #873)
 
 .. _`@Parbhat`: https://github.com/Parbhat
 .. _`@hkage`: https://github.com/hkage
@@ -34,6 +34,7 @@ Other Changes:
 .. _`@VDuda`: https://github.com/VDuda
 .. _`@aeroaks`: https://github.com/aeroaks
 .. _`@mjhea0`: https://github.com/mjhea0
+.. _`@lacion`: https://github.com/lacion
 
 .. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-django-foundation`: https://github.com/Parbhat/cookiecutter-django-foundation
