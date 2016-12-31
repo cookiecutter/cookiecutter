@@ -201,6 +201,7 @@ Categories of Cookiecutters
 `Scala`_ |
 `6502 Assembly`_ |
 `Data Science`_ |
+`Tornado`_ |
 `Reproducible Science`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
@@ -597,6 +598,12 @@ Reproducible Science
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
+Tornado
+~~~~~~~
+
+* `cookiecutter-tornado`_: Cookiecutter template for Tornado based projects
+
+.. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
 
 Similar projects
 ----------------
