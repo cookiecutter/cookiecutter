@@ -492,8 +492,10 @@ Golang
 ~~~~~~
 
 * `beat-generator`_: A template to create your own beat to ship data to Elasticsearch.
+* `cookiecutter-golang`_: Basic project template for golang
 
 .. _`beat-generator`: https://github.com/elastic/beat-generator
+.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang
 
 
 JS
