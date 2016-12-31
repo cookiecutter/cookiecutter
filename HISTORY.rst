@@ -26,6 +26,7 @@ Other Changes:
   * `cookiecutter-tf-module`_ by `@VDuda`_ (#843)
   * `cookiecutter-pyqt4`_ by `@aeroaks`_ (#847)
   * `cookiecutter-golang`_ by `@mjhea0`_ and `@lacion`_ (#872, #873)
+  * `cookiecutter-elm`_, `cookiecutter-java`_ and `cookiecutter-spring-boot`_ by `@m-x-k`_ (#879)
 
 .. _`@Parbhat`: https://github.com/Parbhat
 .. _`@hkage`: https://github.com/hkage
@@ -35,6 +36,7 @@ Other Changes:
 .. _`@aeroaks`: https://github.com/aeroaks
 .. _`@mjhea0`: https://github.com/mjhea0
 .. _`@lacion`: https://github.com/lacion
+.. _`@m-x-k`: https://github.com/m-x-k
 
 .. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-django-foundation`: https://github.com/Parbhat/cookiecutter-django-foundation
@@ -44,6 +46,9 @@ Other Changes:
 .. _`cookiecutter-tf-module`: https://github.com/DualSpark/cookiecutter-tf-module
 .. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
 .. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang
+.. _`cookiecutter-elm`: https://github.com/m-x-k/cookiecutter-elm.git
+.. _`cookiecutter-java`: https://github.com/m-x-k/cookiecutter-java.git
+.. _`cookiecutter-spring-boot`: https://github.com/m-x-k/cookiecutter-spring-boot.git
 
 
 1.5.0 (2016-12-18) Alfajor
