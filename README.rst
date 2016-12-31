@@ -607,6 +607,13 @@ Reproducible Science
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
+Cloud Tools
+~~~~~~~~~~~~
+
+* `cookiecutter-tf-module`_: Cookiecutter template for building consistent Terraform modules. 
+
+.. _`cookiecutter-tf-module`: https://github.com/DualSpark/cookiecutter-tf-module
+
 Tornado
 ~~~~~~~
 
