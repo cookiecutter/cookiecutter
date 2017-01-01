@@ -95,7 +95,7 @@ Alternate installations
 
     $ pipsi install cookiecutter
 
-**Debian (Most recentpackaged cookiecutter version):**
+**Debian/Ubuntu:**
 
 .. code-block:: bash
 
