@@ -36,7 +36,7 @@ Will run py.test with the python2.7, python3.4 and pypy interpreters, for
 example.
 
 Troubleshooting for Contributors
----------------------------------
+--------------------------------
 
 Python 3.3 tests fail locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
