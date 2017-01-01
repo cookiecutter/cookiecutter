@@ -55,13 +55,14 @@ Implement Features
 ~~~~~~~~~~~~~~~~~~
 
 Look through the GitHub issues for features. Anything tagged with "enhancement"
-is open to whoever wants to implement it.
+and "please-help" is open to whoever wants to implement it.
 
 Please do not combine multiple feature enhancements into a single pull request.
 
-Note: this project is a bit conservative, so new features might not get into core.
-If possible, it's best to try and implement feature ideas as separate projects
-outside of the core codebase.
+Note: this project is very conservative, so new features that aren't tagged
+with "please-help" might not get into core. We're trying to keep the code base
+small, extensible, and streamlined. Whenever possible, it's best to try and
+implement feature ideas as separate projects outside of the core codebase.
 
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
