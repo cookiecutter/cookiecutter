@@ -16,6 +16,7 @@ Bug Fixes:
 
 Other Changes:
 
+* Contributor documentation reST fixes, thanks to `@stevepiercy`_ (#878)
 * Added more cookiecutter templates to the mix:
 
   * `widget-cookiecutter`_ by `@willingc`_ (#781)
