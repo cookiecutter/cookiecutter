@@ -8,7 +8,7 @@ History
 
 New Features:
 
-* ???
+* Major update to installation documentation, thanks to `@stevepiercy`_ (#880)
 
 Bug Fixes:
 
