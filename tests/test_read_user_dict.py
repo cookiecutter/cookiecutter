@@ -11,49 +11,35 @@ import click
 import pytest
 
 from cookiecutter.prompt import (
-    create_value_proc,
+    process_json,
     read_user_dict,
 )
 
 
-@pytest.fixture
-def value_proc():
-    return create_value_proc(
-        'default123',
-        {
-            'key': 1,
-        },
-    )
-
-
-def test_value_proc_default_display(value_proc):
-    assert value_proc('default123') == {'key': 1}
-
-
-def test_value_proc_invalid_json(value_proc):
+def test_process_json_invalid_json():
     with pytest.raises(click.UsageError) as exc_info:
-        value_proc('nope]')
+        process_json('nope]')
 
     assert str(exc_info.value) == 'Unable to decode to JSON.'
 
 
-def test_value_proc_non_dict(value_proc):
+def test_process_json_non_dict():
     with pytest.raises(click.UsageError) as exc_info:
-        value_proc('[1, 2]')
+        process_json('[1, 2]')
 
     assert str(exc_info.value) == 'Requires JSON dict.'
 
 
-def test_value_proc_valid_json(value_proc):
+def test_process_json_valid_json():
     user_value = '{"name": "foobar", "bla": ["a", 1, "b", false]}'
 
-    assert value_proc(user_value) == {
+    assert process_json(user_value) == {
         'name': 'foobar',
         'bla': ['a', 1, 'b', False],
     }
 
 
-def test_value_proc_deep_dict(value_proc):
+def test_process_json_deep_dict():
     user_value = '''{
         "key": "value",
         "integer_key": 37,
@@ -73,7 +59,7 @@ def test_value_proc_deep_dict(value_proc):
         ]
     }'''
 
-    assert value_proc(user_value) == {
+    assert process_json(user_value) == {
         "key": "value",
         "integer_key": 37,
         "dict_key": {
@@ -105,25 +91,39 @@ def test_should_raise_type_error(mocker):
 def test_should_call_prompt_with_value_proc(mocker):
     """Test to make sure that create_value_proc is actually being used
     to generate a processer for the user input."""
-    prompt = mocker.patch('click.prompt')
 
-    def process_json(user_value):
-        return user_value
-
-    create_value_proc = mocker.patch(
-        'cookiecutter.prompt.create_value_proc',
-        return_value=process_json,
+    mock_prompt = mocker.patch(
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
     )
 
     read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
-    assert create_value_proc.call_args == mocker.call(
-        'default',
-        {'project_slug': 'pytest-plugin'},
-    )
-    assert prompt.call_args == mocker.call(
+    assert mock_prompt.call_args == mocker.call(
         'name',
         type=click.STRING,
         default='default',
         value_proc=process_json,
     )
+
+
+def test_read_user_dict_default_value(mocker):
+    """Test to make sure that read_user_dict returns the default value for a
+    dict variable rather than the display value.
+    """
+    mock_prompt = mocker.patch(
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value='default',
+    )
+
+    val = read_user_dict('name', {'project_slug': 'pytest-plugin'})
+
+    assert mock_prompt.call_args == mocker.call(
+        'name',
+        type=click.STRING,
+        default='default',
+        value_proc=process_json,
+    )
+
+    assert val == {'project_slug': 'pytest-plugin'}
