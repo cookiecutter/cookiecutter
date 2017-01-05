@@ -452,8 +452,10 @@ Cookiecutter (meta)
 Meta-templates for generating Cookiecutter project templates.
 
 * `cookiecutter-template`_: A template to help in creating cookiecutter templates.
+* `cookiecutter-bare`_: A template for a programming language agnostic project.
 
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
+.. _`cookiecutter-bare`: https://github.com/webevllc/cookiecutter-bare
 
 
 C
@@ -508,7 +510,7 @@ Golang
 * `cookiecutter-golang`_: A template to create new go based projects following best practices.
 
 .. _`beat-generator`: https://github.com/elastic/beat-generator
-.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang 
+.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang
 
 Java
 ~~~~
@@ -628,7 +630,7 @@ Reproducible Science
 Cloud Tools
 ~~~~~~~~~~~~
 
-* `cookiecutter-tf-module`_: Cookiecutter template for building consistent Terraform modules. 
+* `cookiecutter-tf-module`_: Cookiecutter template for building consistent Terraform modules.
 
 .. _`cookiecutter-tf-module`: https://github.com/DualSpark/cookiecutter-tf-module
 
