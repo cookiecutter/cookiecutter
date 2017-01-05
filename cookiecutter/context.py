@@ -52,24 +52,27 @@ def prompt_json(variable, default):
     DEFAULT_JSON = 'default'
 
     def process_json(user_value):
-        if user_value == DEFAULT_JSON:
-            # Return the given default w/o any processing
-            return default
-
         try:
-            hook = collections.OrderedDict
-            return json.loads(user_value, object_pairs_hook=hook)
+            return json.loads(
+                user_value,
+                object_pairs_hook=collections.OrderedDict,
+            )
         except json.decoder.JSONDecodeError:
             # Leave it up to click to ask the user again
             raise click.UsageError('Unable to decode to JSON.')
 
-    return click.prompt(
+    dict_value = click.prompt(
         variable.prompt,
         default=DEFAULT_JSON,
         hide_input=variable.hide_input,
         type=click.STRING,
         value_proc=process_json,
     )
+
+    if dict_value == DEFAULT_JSON:
+        # Return the given default w/o any processing
+        return default
+    return dict_value
 
 
 def prompt_yes_no(variable, default):
