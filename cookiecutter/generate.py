@@ -221,7 +221,8 @@ def render_and_create_dir(dirname, context, output_dir, environment,
         if output_dir_exists:
             msg = 'Error: "{}" directory already exists'.format(dir_to_create)
             raise OutputDirExistsException(msg)
-    else:
+    else: #pragma: no cover
+        # This code is unreachable
         raise ValueError(exists_action)
 
     make_sure_path_exists(dir_to_create)

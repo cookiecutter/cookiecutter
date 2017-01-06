@@ -186,6 +186,35 @@ def test_generate_files_target_dir_no_overwrite():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_target_dir_no_overwrite_no_render():
+    os.mkdir('tests/custom_output_dir')
+    os.mkdir('tests/custom_output_dir/target')
+
+    with open('tests/custom_output_dir/target/bystander.txt', 'w'):
+        pass
+
+    with open('tests/custom_output_dir/target/simple.txt', 'w'):
+        pass
+
+    with pytest.raises(exceptions.OutputFileExistsException):
+        generate.generate_files(
+            context={
+                'cookiecutter': {
+                    'food': 'pizzä',
+                    '_target': 'target',
+                    '_copy_without_render': [
+                        "*"
+                    ]
+                }
+            },
+            repo_dir=os.path.abspath('tests/test-generate-files'),
+            output_dir='tests/custom_output_dir'
+        )
+
+    assert os.path.isfile('tests/custom_output_dir/target/bystander.txt')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_target_dir_overwrite():
     os.mkdir('tests/custom_output_dir')
     os.mkdir('tests/custom_output_dir/target')
