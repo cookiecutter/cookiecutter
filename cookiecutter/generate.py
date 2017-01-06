@@ -29,6 +29,7 @@ from .hooks import run_hook
 
 logger = logging.getLogger(__name__)
 
+
 class ExistsAction(object):
     LEAVE = 'exists'
     OVERWRITE = 'overwrite'
@@ -121,7 +122,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
 
 def generate_file(project_dir, infile, context, env,
-        overwrite_if_exists=False):
+                  overwrite_if_exists=False):
     """Render filename of infile as name of outfile, handle infile correctly.
 
     Dealing with infile appropriately:
@@ -222,7 +223,6 @@ def render_and_create_dir(dirname, context, output_dir, environment,
             raise OutputDirExistsException(msg)
     else:
         raise ValueError(exists_action)
-
 
     make_sure_path_exists(dir_to_create)
     return dir_to_create
@@ -379,7 +379,12 @@ def generate_files(repo_dir, context=None, output_dir='.',
                         shutil.copymode(infile, outfile)
                     continue
                 try:
-                    generate_file(project_dir, infile, context, env, overwrite_if_exists)
+                    generate_file(
+                        project_dir,
+                        infile,
+                        context,
+                        env,
+                        overwrite_if_exists)
                 except UndefinedError as err:
                     # Don't delete pre-existing directories
                     if not target_dir:

@@ -147,6 +147,7 @@ def test_generate_files_output_dir():
     )
     assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
 
+
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_target_dir():
     os.mkdir('tests/custom_output_dir')
@@ -160,15 +161,16 @@ def test_generate_files_target_dir():
     assert os.path.isfile('tests/custom_output_dir/target/simple.txt')
     assert not os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
 
+
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_generate_files_target_dir_overwrite():
+def test_generate_files_target_dir_no_overwrite():
     os.mkdir('tests/custom_output_dir')
     os.mkdir('tests/custom_output_dir/target')
 
-    with open('tests/custom_output_dir/target/bystander.txt' , 'w'):
-       pass
+    with open('tests/custom_output_dir/target/bystander.txt', 'w'):
+        pass
 
-    with open('tests/custom_output_dir/target/simple.txt' , 'w'):
+    with open('tests/custom_output_dir/target/simple.txt', 'w'):
         pass
 
     with pytest.raises(exceptions.OutputFileExistsException):
@@ -188,10 +190,10 @@ def test_generate_files_target_dir_overwrite():
     os.mkdir('tests/custom_output_dir')
     os.mkdir('tests/custom_output_dir/target')
 
-    with open('tests/custom_output_dir/target/bystander.txt' , 'w'):
-       pass
+    with open('tests/custom_output_dir/target/bystander.txt', 'w'):
+        pass
 
-    with open('tests/custom_output_dir/target/simple.txt' , 'w'):
+    with open('tests/custom_output_dir/target/simple.txt', 'w'):
         pass
 
     generate.generate_files(
@@ -209,12 +211,13 @@ def test_generate_files_target_dir_overwrite():
     with open('tests/custom_output_dir/target/simple.txt') as stream:
         assert stream.read() != ''
 
+
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_target_preexisting():
     os.mkdir('tests/custom_output_dir')
     os.mkdir('tests/custom_output_dir/target')
 
-    with open('tests/custom_output_dir/target/bystander.txt' , 'w'):
+    with open('tests/custom_output_dir/target/bystander.txt', 'w'):
         pass
 
     generate.generate_files(
@@ -235,7 +238,7 @@ def test_generate_files_preexisting():
     os.mkdir('tests/custom_output_dir')
     os.mkdir('tests/custom_output_dir/target')
 
-    with open('tests/custom_output_dir/target/bystander.txt' , 'w') as pre_stream:
+    with open('tests/custom_output_dir/target/bystander.txt', 'w'):
         pass
 
     generate.generate_files(
@@ -248,7 +251,8 @@ def test_generate_files_preexisting():
     )
 
     assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
-    assert not os.path.isfile('tests/custom_output_dir/inputpizzä/bystander.txt')
+    assert not os.path.isfile(
+        'tests/custom_output_dir/inputpizzä/bystander.txt')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
