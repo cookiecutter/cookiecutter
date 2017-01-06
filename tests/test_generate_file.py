@@ -114,7 +114,8 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg):
             project_dir=".",
             infile='tests/files/syntax_error.txt',
             context={'syntax_error': 'syntax_error'},
-            env=env
+            env=env,
+            overwrite_if_exists=True
         )
     except TemplateSyntaxError as exception:
         assert str(exception) == expected_msg

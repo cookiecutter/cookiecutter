@@ -147,6 +147,109 @@ def test_generate_files_output_dir():
     )
     assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
 
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_target_dir():
+    os.mkdir('tests/custom_output_dir')
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä', '_target': 'target'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files'),
+        output_dir='tests/custom_output_dir'
+    )
+    assert os.path.isfile('tests/custom_output_dir/target/simple.txt')
+    assert not os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_target_dir_overwrite():
+    os.mkdir('tests/custom_output_dir')
+    os.mkdir('tests/custom_output_dir/target')
+
+    with open('tests/custom_output_dir/target/bystander.txt' , 'w'):
+       pass
+
+    with open('tests/custom_output_dir/target/simple.txt' , 'w'):
+        pass
+
+    with pytest.raises(exceptions.OutputFileExistsException):
+        generate.generate_files(
+            context={
+                'cookiecutter': {'food': 'pizzä', '_target': 'target'}
+            },
+            repo_dir=os.path.abspath('tests/test-generate-files'),
+            output_dir='tests/custom_output_dir'
+        )
+
+    assert os.path.isfile('tests/custom_output_dir/target/bystander.txt')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_target_dir_overwrite():
+    os.mkdir('tests/custom_output_dir')
+    os.mkdir('tests/custom_output_dir/target')
+
+    with open('tests/custom_output_dir/target/bystander.txt' , 'w'):
+       pass
+
+    with open('tests/custom_output_dir/target/simple.txt' , 'w'):
+        pass
+
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä', '_target': 'target'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files'),
+        output_dir='tests/custom_output_dir',
+        overwrite_if_exists=True
+    )
+
+    assert os.path.isfile('tests/custom_output_dir/target/simple.txt')
+    assert os.path.isfile('tests/custom_output_dir/target/bystander.txt')
+
+    with open('tests/custom_output_dir/target/simple.txt') as stream:
+        assert stream.read() != ''
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_target_preexisting():
+    os.mkdir('tests/custom_output_dir')
+    os.mkdir('tests/custom_output_dir/target')
+
+    with open('tests/custom_output_dir/target/bystander.txt' , 'w'):
+        pass
+
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä', '_target': 'target'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files'),
+        output_dir='tests/custom_output_dir'
+    )
+
+    assert os.path.isfile('tests/custom_output_dir/target/simple.txt')
+    assert os.path.isfile('tests/custom_output_dir/target/bystander.txt')
+    assert not os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_preexisting():
+    os.mkdir('tests/custom_output_dir')
+    os.mkdir('tests/custom_output_dir/target')
+
+    with open('tests/custom_output_dir/target/bystander.txt' , 'w') as pre_stream:
+        pass
+
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files'),
+        output_dir='tests/custom_output_dir',
+        overwrite_if_exists=True,
+    )
+
+    assert os.path.isfile('tests/custom_output_dir/inputpizzä/simple.txt')
+    assert not os.path.isfile('tests/custom_output_dir/inputpizzä/bystander.txt')
+
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_return_rendered_project_dir():

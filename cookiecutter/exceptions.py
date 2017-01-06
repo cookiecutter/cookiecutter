@@ -75,6 +75,14 @@ class OutputDirExistsException(CookiecutterException):
     """
 
 
+class OutputFileExistsException(CookiecutterException):
+    """
+    Raised when a template file exists already. For example when using _target.
+    """
+    def __init__(self, name):
+        self.name = name
+
+
 class InvalidModeException(CookiecutterException):
     """
     Raised when cookiecutter is called with both `no_input==True` and
