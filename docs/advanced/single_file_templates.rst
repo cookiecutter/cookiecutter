@@ -1,6 +1,6 @@
 .. _single-file-templates:
 
-Single file templates
+Single File Templates
 ---------------------
 
 *New in dev master*
