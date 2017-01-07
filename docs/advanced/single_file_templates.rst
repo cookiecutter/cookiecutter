@@ -10,7 +10,7 @@ creating a complete project. This can be achieved with the `_target` key,
 which specifies which directory template files should be placed in.
 
 For example, the following places all files in the template into the
-current directory.::
+current directory::
 
     {
         "project_slug": "sample",
