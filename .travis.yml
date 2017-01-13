@@ -13,7 +13,7 @@ matrix:
         env: TOX_ENV=py34
       - python: 3.5
         env: TOX_ENV=py35
-      - python: 3.6-dev
+      - python: 3.6
         env: TOX_ENV=py36
       - python: pypy
         env: TOX_ENV=pypy
