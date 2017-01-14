@@ -84,28 +84,21 @@ def read_user_choice(var_name, options):
     return choice_map[user_choice]
 
 
-def create_value_proc(default_display, default_value):
-    def process_json(user_value):
-        if user_value == default_display:
-            # Return the given default w/o any processing
-            return default_value
+def process_json(user_value):
+    try:
+        user_dict = json.loads(
+            user_value,
+            object_pairs_hook=OrderedDict,
+        )
+    except Exception:
+        # Leave it up to click to ask the user again
+        raise click.UsageError('Unable to decode to JSON.')
 
-        try:
-            user_dict = json.loads(
-                user_value,
-                object_pairs_hook=OrderedDict,
-            )
-        except Exception:
-            # Leave it up to click to ask the user again
-            raise click.UsageError('Unable to decode to JSON.')
+    if not isinstance(user_dict, dict):
+        # Leave it up to click to ask the user again
+        raise click.UsageError('Requires JSON dict.')
 
-        if not isinstance(user_dict, dict):
-            # Leave it up to click to ask the user again
-            raise click.UsageError('Requires JSON dict.')
-
-        return user_dict
-
-    return process_json
+    return user_dict
 
 
 def read_user_dict(var_name, default_value):
@@ -121,15 +114,17 @@ def read_user_dict(var_name, default_value):
 
     default_display = 'default'
 
-    return click.prompt(
+    user_value = click.prompt(
         var_name,
         default=default_display,
         type=click.STRING,
-        value_proc=create_value_proc(
-            default_display,
-            default_value,
-        ),
+        value_proc=process_json,
     )
+
+    if user_value == default_display:
+        # Return the given default w/o any processing
+        return default_value
+    return user_value
 
 
 def render_variable(env, raw, cookiecutter_dict):
