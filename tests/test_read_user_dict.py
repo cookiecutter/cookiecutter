@@ -88,8 +88,8 @@ def test_should_raise_type_error(mocker):
     assert not prompt.called
 
 
-def test_should_call_prompt_with_value_proc(mocker):
-    """Test to make sure that create_value_proc is actually being used
+def test_should_call_prompt_with_process_json(mocker):
+    """Test to make sure that process_jon is actually being used
     to generate a processer for the user input."""
 
     mock_prompt = mocker.patch(
