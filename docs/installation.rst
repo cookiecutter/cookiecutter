@@ -25,9 +25,13 @@ You can install the Python binaries from `python.org <https://www.python.org/dow
 Adjust your path
 ^^^^^^^^^^^^^^^^
 
-Ensure that your ``bin`` folder is on your path for your platform. Typically ``~/.local/`` for UNIX, or ``%APPDATA%\Python`` on Windows. (See the Python documentation for `site.USER_BASE <https://docs.python.org/3/library/site.html#site.USER_BASE>`_ for full details.)
+Ensure that your ``bin`` folder is on your path for your platform. Typically ``~/.local/`` for UNIX and macOS, or ``%APPDATA%\Python`` on Windows. (See the Python documentation for `site.USER_BASE <https://docs.python.org/3/library/site.html#site.USER_BASE>`_ for full details.)
 
-On UNIX and macOS, for bash shells, add the following to your ``.bash_profile`` (adjust for other shells):
+
+UNIX and macOS
+""""""""""""""
+
+For bash shells, add the following to your ``.bash_profile`` (adjust for other shells):
 
 .. code-block:: bash
 
@@ -36,13 +40,17 @@ On UNIX and macOS, for bash shells, add the following to your ``.bash_profile`` 
 
 Remember to load changes with ``source ~/.bash_profile`` or open a new shell session.
 
-On Windows, ensure the ``c:\Python3x`` directory is in your environment's ``Path``, where ``x`` is the minor version of installed Python, in order to make it possible to invoke Python from a command prompt by typing ``python``. You will also need to add your ``bin`` folder. To do so:
 
-#. Right click ``My Computer``
-#. Select ``Properties`` --> ``Advanced Tab`` --> ``Environment Variables``
-#. Add each directory to the end of the ``Path`` environment variable, one for your Python interpreter and another for your ``bin`` folder.
+Windows
+"""""""
 
-   .. seealso:: See `Configuring Python (on Windows) <https://docs.python.org/3/using/windows.html#configuring-python>`_ for full details.
+Ensure the directory where cookiecutter will be installed is in your environment's ``Path`` in order to make it possible to invoke it from a command prompt. To do so, search for "Environment Variables" on your computer (on Windows 10, it is under ``System Properties`` --> ``Advanced``) and add that directory to the ``Path`` environment variable, using the GUI to edit path segments.
+
+Example segments should look like ``%APPDATA%\Python\Python3x\Scripts``, where you have your version of Python instead of ``Python3x``.
+
+You may need to restart your command prompt session to load the environment variables.
+
+.. seealso:: See `Configuring Python (on Windows) <https://docs.python.org/3/using/windows.html#configuring-python>`_ for full details.
 
 
 Packaging tools
