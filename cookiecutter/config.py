@@ -76,7 +76,7 @@ def get_config(config_path):
 def get_user_config(config_file=None, default_config=False):
     """Return the user config as a dict.
 
-    If ``default_config`` is True, ignore ``config_file and return default
+    If ``default_config`` is True, ignore ``config_file`` and return default
     values for the config parameters.
 
     If a path to a ``config_file`` is given, that is different from the default
