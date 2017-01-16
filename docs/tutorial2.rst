@@ -16,7 +16,7 @@ Create the directory for your cookiecutter and cd into it:
     $ cd cookiecutter-website-simple/
 
 Step 2: Create `project_slug` Directory
--------------------------------------
+---------------------------------------
 
 Create a directory called `{{ cookiecutter.project_slug }}`.
 

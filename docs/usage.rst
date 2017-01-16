@@ -79,7 +79,7 @@ As of the Cookiecutter 0.7.0 release:
 
 * Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
   directory (or Windows equivalent). The location is configurable: see
-  :doc:`advanced_usage` for details.
+  :doc:`advanced/user_config` for details.
 
 Pre-0.7.0, this is how it worked:
 
