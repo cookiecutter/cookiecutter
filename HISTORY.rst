@@ -12,7 +12,9 @@ New Features:
 
 Bug Fixes:
 
-* ???
+* Resolve an issue around default values for dict variables, thanks to
+  `@e-kolpakov`_ for raising the issue and `@hackebrot`_ for the PR (#882,
+  #884)
 
 Other Changes:
 
@@ -38,6 +40,7 @@ Other Changes:
 .. _`@mjhea0`: https://github.com/mjhea0
 .. _`@lacion`: https://github.com/lacion
 .. _`@m-x-k`: https://github.com/m-x-k
+.. _`@e-kolpakov`: https://github.com/e-kolpakov
 
 .. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-django-foundation`: https://github.com/Parbhat/cookiecutter-django-foundation

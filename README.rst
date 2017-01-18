@@ -452,9 +452,14 @@ Cookiecutter (meta)
 Meta-templates for generating Cookiecutter project templates.
 
 * `cookiecutter-template`_: A template to help in creating cookiecutter templates.
-* `cookiecutter-bare`_: A template for a programming language agnostic project.
 
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
+
+
+Git
+~~~
+* `cookiecutter-bare`_: A template for a programming language agnostic git project.
+
 .. _`cookiecutter-bare`: https://github.com/webevllc/cookiecutter-bare
 
 
@@ -617,7 +622,7 @@ Data Science
 * `widget-cookiecutter`_: A cookiecutter template for creating a custom Jupyter widget project.
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
 
-.. _`widget-cookiecutter`_: https://github.com/jupyter/widget-cookiecutter
+.. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
 
 Reproducible Science
