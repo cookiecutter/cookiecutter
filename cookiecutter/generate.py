@@ -31,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class ExistsAction(object):
-    LEAVE = 'exists'
+    "Enum of actions to carry out if a file exists"
+    LEAVE = 'leave'
     OVERWRITE = 'overwrite'
     ERROR = 'error'
 
