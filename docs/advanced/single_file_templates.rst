@@ -17,5 +17,5 @@ current directory::
         "_target": ".",
     }
 
-A directory of the form `{{cookiecutter.<X>}}` must be created to keep the
-templates, but its value is ignored.
+A top-level directory of the form `{{cookiecutter.<X>}}` must be created to keep the
+templates and files as for standard-templates, but its name is ignored.
