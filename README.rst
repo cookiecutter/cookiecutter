@@ -508,16 +508,18 @@ Golang
 * `cookiecutter-golang`_: A template to create new go based projects following best practices.
 
 .. _`beat-generator`: https://github.com/elastic/beat-generator
-.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang 
+.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang
 
 Java
 ~~~~
 
 * `cookiecutter-java`_: Cookiecutter for basic java application setup with gradle
 * `cookiecutter-spring-boot`_: Cookiecutter for standard java spring boot gradle application
+* `cookiecutter-android`_: Cookiecutter for Gradle-based Android projects
 
 .. _`cookiecutter-java`: https://github.com/m-x-k/cookiecutter-java.git
 .. _`cookiecutter-spring-boot`: https://github.com/m-x-k/cookiecutter-spring-boot.git
+.. _`cookiecutter-android`: https://github.com/alexfu/cookiecutter-android
 
 
 JS
@@ -628,7 +630,7 @@ Reproducible Science
 Cloud Tools
 ~~~~~~~~~~~~
 
-* `cookiecutter-tf-module`_: Cookiecutter template for building consistent Terraform modules. 
+* `cookiecutter-tf-module`_: Cookiecutter template for building consistent Terraform modules.
 
 .. _`cookiecutter-tf-module`: https://github.com/DualSpark/cookiecutter-tf-module
 
