@@ -10,6 +10,7 @@ library rather than a script.
 from __future__ import unicode_literals
 import logging
 import os
+import sys
 
 from .config import get_user_config
 from .generate import generate_context, generate_files
@@ -62,6 +63,7 @@ def cookiecutter(
         no_input=no_input,
         password=password
     )
+    sys.path.insert(0, repo_dir)
 
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
