@@ -72,6 +72,7 @@ def cookiecutter(
         logger.debug('context_file is {}'.format(context_file))
 
         context = generate_context(
+            repo_dir=repo_dir,
             context_file=context_file,
             default_context=config_dict['default_context'],
             extra_context=extra_context,

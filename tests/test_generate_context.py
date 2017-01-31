@@ -24,40 +24,48 @@ from cookiecutter.exceptions import ContextDecodingException
 def context_data():
     context = (
         {
+            'repo_dir': os.getcwd(),
             'context_file': 'tests/test-generate-context/test.json'
         },
         {
+            '_repo_dir': os.getcwd(),
             'test': {'1': 2, 'some_key': 'some_val'}
         }
     )
 
     context_with_default = (
         {
+            'repo_dir': os.getcwd(),
             'context_file': 'tests/test-generate-context/test.json',
             'default_context': {'1': 3}
         },
         {
+            '_repo_dir': os.getcwd(),
             'test': {'1': 3, 'some_key': 'some_val'}
         }
     )
 
     context_with_extra = (
         {
+            'repo_dir': os.getcwd(),
             'context_file': 'tests/test-generate-context/test.json',
             'extra_context': {'1': 4},
         },
         {
+            '_repo_dir': os.getcwd(),
             'test': {'1': 4, 'some_key': 'some_val'}
         }
     )
 
     context_with_default_and_extra = (
         {
+            'repo_dir': os.getcwd(),
             'context_file': 'tests/test-generate-context/test.json',
             'default_context': {'1': 3},
             'extra_context': {'1': 5},
         },
         {
+            '_repo_dir': os.getcwd(),
             'test': {'1': 5, 'some_key': 'some_val'}
         }
     )
@@ -82,6 +90,7 @@ def test_generate_context(input_params, expected_context):
 def test_generate_context_with_json_decoding_error():
     with pytest.raises(ContextDecodingException) as excinfo:
         generate.generate_context(
+            os.getcwd(),
             'tests/test-generate-context/invalid-syntax.json'
         )
     # original message from json module should be included
@@ -126,7 +135,9 @@ def test_choices(context_file, default_context, extra_context):
     """Make sure that the default for list variables is based on the user
     config and the list as such is not changed to a single value.
     """
+    repo_dir = os.getcwd()
     expected_context = {
+        '_repo_dir': repo_dir,
         'choices_template': OrderedDict([
             ('full_name', 'Raphael Pierzina'),
             ('github_username', 'hackebrot'),
@@ -137,7 +148,7 @@ def test_choices(context_file, default_context, extra_context):
     }
 
     generated_context = generate.generate_context(
-        context_file, default_context, extra_context
+        repo_dir, context_file, default_context, extra_context
     )
 
     assert generated_context == expected_context

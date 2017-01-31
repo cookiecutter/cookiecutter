@@ -72,18 +72,19 @@ def apply_overwrites_to_context(context, overwrite_context):
             context[variable] = overwrite
 
 
-def generate_context(context_file='cookiecutter.json', default_context=None,
-                     extra_context=None):
+def generate_context(repo_dir, context_file='cookiecutter.json',
+                     default_context=None, extra_context=None):
     """Generate the context for a Cookiecutter project template.
 
     Loads the JSON file as a Python object, with key being the JSON filename.
 
+    :param repo_dir: Project template input directory.
     :param context_file: JSON file containing key/value pairs for populating
         the cookiecutter's variables.
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
-    context = {}
+    context = {'_repo_dir': os.path.abspath(repo_dir)}
 
     try:
         with open(context_file) as file_handle:

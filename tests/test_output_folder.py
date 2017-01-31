@@ -31,6 +31,7 @@ def remove_output_folder(request):
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_output_folder():
     context = generate.generate_context(
+        repo_dir=os.getcwd(),
         context_file='tests/test-output-folder/cookiecutter.json'
     )
     generate.generate_files(
@@ -55,6 +56,7 @@ It is 2014."""
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_exception_when_output_folder_exists():
     context = generate.generate_context(
+        repo_dir=os.getcwd(),
         context_file='tests/test-output-folder/cookiecutter.json'
     )
     output_folder = context['cookiecutter']['test_name']

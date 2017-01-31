@@ -330,6 +330,7 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     assert message in result.output
 
     context = {
+        '_repo_dir': os.path.abspath(template_path),
         'cookiecutter': {
             'github_username': 'hackebrot',
             'project_slug': 'testproject'
