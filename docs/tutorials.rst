@@ -17,15 +17,16 @@ Create Your Very Own Cookiecutter Project Template
 
 * Cookiedozer Tutorials by `@hackebrot`_
 
-  * Part 1: `Create Your Own Cookiecutter`_
-  * Part 2: `Extending Cookiedozer`_
-  * Part 3: `Wrapping up Cookiedozer`_
+  * Part 1: `Create your own Cookiecutter template`_
+  * Part 2: `Extending our Cookiecutter template`_
+  * Part 3: `Wrapping up our Cookiecutter template`_
 
 
 .. _`Project Templates Made Easy`: http://www.pydanny.com/cookie-project-templates-made-easy.html
-.. _`Create Your Own Cookiecutter`: http://www.hackebrot.de/python/create-your-own-cookiecutter/
-.. _`Extending Cookiedozer`: http://www.hackebrot.de/python/extending-cookiedozer/
-.. _`Wrapping up Cookiedozer`: http://www.hackebrot.de/python/wrapping-up-cookiedozer/
+
+.. _`Create your own Cookiecutter template`: https://raphael.codes/blog/create-your-own-cookiecutter-template/
+.. _`Extending our Cookiecutter template`: https://raphael.codes/blog/extending-our-cookiecutter-template/
+.. _`Wrapping up our Cookiecutter template`: https://raphael.codes/blog/wrapping-up-our-cookiecutter-template/
 
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
