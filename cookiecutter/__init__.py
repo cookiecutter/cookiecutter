@@ -7,4 +7,4 @@ cookiecutter
 Main package for Cookiecutter.
 """
 
-__version__ = '1.5.0'
+__version__ = '1.5.1'
