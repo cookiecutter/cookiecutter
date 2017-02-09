@@ -16,7 +16,15 @@ Bug Fixes:
 
 Other Changes:
 
-* ???
+* Added more cookiecutter templates to the mix:
+
+  * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
+  * `cookiecutter-kata-gtest`_ by `@13coders`_ (#901)
+
+.. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
+.. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
+
+.. _`@13coders`: https://github.com/13coders
 
 
 1.5.1 (2017-02-04) Alfajor
