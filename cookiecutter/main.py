@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
-        replay=False, overwrite_if_exists=False, output_dir='.',
+        replay=None, overwrite_if_exists=False, output_dir='.',
         config_file=None, default_config=False):
     """
     API equivalent to using Cookiecutter at the command line.
@@ -37,6 +37,8 @@ def cookiecutter(
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param replay: Do not prompt for input, instead read from saved json. If
+        ``True`` read from the ``replay_dir``.
     :param: overwrite_if_exists: Overwrite the contents of output directory
         if it exists
     :param output_dir: Where to output the generated project dir into.
@@ -66,7 +68,11 @@ def cookiecutter(
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
     if replay:
-        context = load(config_dict['replay_dir'], template_name)
+        if isinstance(replay, bool):
+            context = load(config_dict['replay_dir'], template_name)
+        else:
+            path, template_name = os.path.split(os.path.splitext(replay)[0])
+            context = load(path, template_name)
     else:
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is {}'.format(context_file))

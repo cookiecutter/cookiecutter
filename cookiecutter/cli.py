@@ -71,6 +71,10 @@ def validate_extra_context(ctx, param, value):
          u'previously',
 )
 @click.option(
+    u'--replay-file', type=click.Path(), default=None,
+    help=u'Use this file for replay instead of the default.'
+)
+@click.option(
     u'-f', u'--overwrite-if-exists', is_flag=True,
     help=u'Overwrite the contents of the output directory if it already exists'
 )
@@ -91,8 +95,8 @@ def validate_extra_context(ctx, param, value):
     help=u'File to be used as a stream for DEBUG logging',
 )
 def main(
-        template, extra_context, no_input, checkout, verbose,
-        replay, overwrite_if_exists, output_dir, config_file,
+        template, extra_context, no_input, checkout, verbose, replay,
+        replay_file, overwrite_if_exists, output_dir, config_file,
         default_config, debug_file):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -111,6 +115,9 @@ def main(
         stream_level='DEBUG' if verbose else 'INFO',
         debug_file=debug_file,
     )
+
+    if replay_file:
+        replay = replay_file
 
     try:
         cookiecutter(
