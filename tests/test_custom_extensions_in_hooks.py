@@ -33,7 +33,7 @@ def modify_syspath(monkeypatch):
 
 
 def test_hook_with_extension(template, output_dir):
-    project_dir = main.cookiecutter(
+    project_dir, _ = main.cookiecutter(
         template,
         no_input=True,
         output_dir=output_dir,

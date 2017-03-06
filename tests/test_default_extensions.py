@@ -18,7 +18,7 @@ def freeze():
 
 
 def test_jinja2_time_extension(tmpdir):
-    project_dir = cookiecutter(
+    project_dir, _ = cookiecutter(
         'tests/test-extensions/default/',
         no_input=True,
         output_dir=str(tmpdir)

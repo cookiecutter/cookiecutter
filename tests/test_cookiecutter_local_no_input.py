@@ -81,13 +81,13 @@ def test_cookiecutter_templated_context():
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_no_input_return_project_dir():
     """Call `cookiecutter()` with `no_input=True`."""
-    project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
+    project_dir, _ = main.cookiecutter('tests/fake-repo-pre', no_input=True)
     assert project_dir == os.path.abspath('fake-project')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_dict_values_in_context():
-    project_dir = main.cookiecutter('tests/fake-repo-dict', no_input=True)
+    project_dir, _ = main.cookiecutter('tests/fake-repo-dict', no_input=True)
     assert project_dir == os.path.abspath('fake-project-dict')
 
     with open(os.path.join(project_dir, 'README.md')) as fh:
