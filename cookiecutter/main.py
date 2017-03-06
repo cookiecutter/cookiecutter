@@ -89,4 +89,4 @@ def cookiecutter(
         context=context,
         overwrite_if_exists=overwrite_if_exists,
         output_dir=output_dir
-    )
+    ), context['cookiecutter']
