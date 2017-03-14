@@ -73,10 +73,6 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
         side_effect=SystemExit,
         autospec=True
     )
-    mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output',
-        autospec=True,
-    )
 
     clone_to_dir = tmpdir.mkdir('clone')
 
@@ -87,7 +83,6 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
 
     with pytest.raises(SystemExit):
         vcs.clone(repo_url, clone_to_dir=str(clone_to_dir))
-    assert not mock_subprocess.called
 
 
 @pytest.mark.parametrize('repo_type, repo_url, repo_name', [

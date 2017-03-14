@@ -39,6 +39,7 @@ def prompt_and_delete_repo(repo_dir, no_input=False):
     else:
         question = (
             "You've cloned {} before. "
+            "And It wasn't possible to pull new changes. "
             "Is it okay to delete and re-clone it?"
         ).format(repo_dir)
 
@@ -114,7 +115,28 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        prompt_and_delete_repo(repo_dir, no_input=no_input)
+        # Try to pull from origin repo before re-cloning
+        try:
+            if checkout is not None:
+                subprocess.check_output(
+                    [repo_type, 'checkout', checkout],
+                    cwd=repo_dir,
+                    stderr=subprocess.STDOUT,
+                )
+
+            if repo_type == 'git':
+                pull_cmd = [repo_type, 'pull', 'origin', checkout or 'master']
+            elif repo_type == 'hg':
+                pull_cmd = [repo_type, 'pull', checkout or 'default']
+            subprocess.check_output(
+                pull_cmd,
+                cwd=repo_dir,
+                stderr=subprocess.STDOUT,
+            )
+
+            return repo_dir
+        except subprocess.CalledProcessError:
+            prompt_and_delete_repo(repo_dir, no_input=no_input)
 
     try:
         subprocess.check_output(
