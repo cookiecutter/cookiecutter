@@ -15,6 +15,7 @@ import click
 
 from cookiecutter import __version__
 from cookiecutter.log import configure_logger
+from cookiecutter.config import get_user_config, get_config, DEFAULT_CONFIG
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException,
@@ -46,6 +47,27 @@ def validate_extra_context(ctx, param, value):
     # Convert tuple -- e.g.: (u'program_name=foobar', u'startsecs=66')
     # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
     return dict(s.split('=', 1) for s in value) or None
+
+
+def list_installed_templates(default_config, passed_config_file):
+    """Lists installed (locally cloned) templates. Use cookiecutter installed"""
+
+    config = get_user_config(passed_config_file, default_config)
+    cookiecutter_folder = config.get('cookiecutters_dir')
+
+    if not os.path.exists(cookiecutter_folder):
+        click.echo('Error: Cannot list installed templates. Folder does not exist: {}'.format(cookiecutter_folder))
+        sys.exit(-27)
+
+    template_names = [
+        folder
+        for folder in os.listdir(cookiecutter_folder)
+        if os.path.exists(os.path.join(cookiecutter_folder, folder, 'cookiecutter.json'))
+    ]
+
+    click.echo('{} installed templates: '.format(len(template_names)))
+    for name in template_names:
+        click.echo(' * {}'.format(name))
 
 
 @click.command(context_settings=dict(help_option_names=[u'-h', u'--help']))
@@ -105,6 +127,9 @@ def main(
     # called 'help', use a qualified path to the directory.
     if template == u'help':
         click.echo(click.get_current_context().get_help())
+        sys.exit(0)
+    if template == u'installed' or template == u'i':
+        list_installed_templates(default_config, config_file)
         sys.exit(0)
 
     configure_logger(
