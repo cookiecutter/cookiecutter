@@ -44,10 +44,10 @@ def _expand_path(path):
 
 def _fix_missing_endline_in_yaml(yaml_lines):
     """
-       If the yaml config file does not end with a single blank line a 
-       cookiecutter.exceptions.InvalidConfiguration exception is thrown with
-       an indecipherable error. This method fixes that by adding a trivial newline
-       if it is missing.
+       If the yaml config file does not end with a single blank line a
+       cookiecutter.exceptions.InvalidConfiguration exception is thrown
+       with an indecipherable error. This method fixes that by adding a
+       trivial newline if it is missing.
        """
     if yaml_lines and yaml_lines[-1] != u'\n':
         yaml_lines.append(u'\n')
