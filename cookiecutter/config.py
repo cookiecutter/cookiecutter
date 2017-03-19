@@ -18,7 +18,6 @@ import poyo
 from .exceptions import ConfigDoesNotExistException
 from .exceptions import InvalidConfiguration
 
-
 logger = logging.getLogger(__name__)
 
 USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
@@ -43,6 +42,19 @@ def _expand_path(path):
     return path
 
 
+def _fix_missing_endline_in_yaml(yaml_lines):
+    """
+       If the yaml config file does not end with a single blank line a 
+       cookiecutter.exceptions.InvalidConfiguration exception is thrown with
+       an indecipherable error. This method fixes that by adding a trivial newline
+       if it is missing.
+       """
+    if yaml_lines and yaml_lines[-1] != u'\n':
+        yaml_lines.append(u'\n')
+
+    return yaml_lines
+
+
 def get_config(config_path):
     """
     Retrieve the config from the specified path, returning it as a config dict.
@@ -54,7 +66,11 @@ def get_config(config_path):
     logger.debug('config_path is {0}'.format(config_path))
     with io.open(config_path, encoding='utf-8') as file_handle:
         try:
-            yaml_dict = poyo.parse_string(file_handle.read())
+            yaml_lines = file_handle.readlines()
+            yaml_lines = _fix_missing_endline_in_yaml(yaml_lines)
+            yaml_text = "".join(yaml_lines)
+
+            yaml_dict = poyo.parse_string(yaml_text)
         except poyo.exceptions.PoyoException as e:
             raise InvalidConfiguration(
                 'Unable to parse YAML file {}. Error: {}'
