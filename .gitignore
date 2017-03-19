@@ -60,3 +60,4 @@ target/
 
 # PyCharm
 .idea/
+.env
