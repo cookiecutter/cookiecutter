@@ -15,7 +15,7 @@ import click
 
 from cookiecutter import __version__
 from cookiecutter.log import configure_logger
-from cookiecutter.config import get_user_config, get_config, DEFAULT_CONFIG
+from cookiecutter.config import get_user_config
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException,
@@ -58,7 +58,7 @@ def list_installed_templates(default_config, passed_config_file):
     cookiecutter_folder = config.get('cookiecutters_dir')
 
     if not os.path.exists(cookiecutter_folder):
-        click.echo('Error: Cannot list installed templates. ' + \
+        click.echo('Error: Cannot list installed templates. ' +
                    'Folder does not exist: {}'.format(cookiecutter_folder))
         sys.exit(-27)
 
