@@ -50,19 +50,25 @@ def validate_extra_context(ctx, param, value):
 
 
 def list_installed_templates(default_config, passed_config_file):
-    """Lists installed (locally cloned) templates. Use cookiecutter installed"""
+    """
+    Lists installed (locally cloned) templates. Use cookiecutter installed
+    """
 
     config = get_user_config(passed_config_file, default_config)
     cookiecutter_folder = config.get('cookiecutters_dir')
 
     if not os.path.exists(cookiecutter_folder):
-        click.echo('Error: Cannot list installed templates. Folder does not exist: {}'.format(cookiecutter_folder))
+        click.echo('Error: Cannot list installed templates. ' + \
+                   'Folder does not exist: {}'.format(cookiecutter_folder))
         sys.exit(-27)
 
     template_names = [
         folder
         for folder in os.listdir(cookiecutter_folder)
-        if os.path.exists(os.path.join(cookiecutter_folder, folder, 'cookiecutter.json'))
+        if os.path.exists(os.path.join(
+            cookiecutter_folder,
+            folder,
+            'cookiecutter.json'))
     ]
 
     click.echo('{} installed templates: '.format(len(template_names)))
