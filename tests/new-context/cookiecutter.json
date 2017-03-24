@@ -14,6 +14,11 @@
         "plugin"
     ],
     "url": "https://github.com/pytest-dev/cookiecutter-pytest-plugin",
+    "environment_settings": {
+        "keep_trailing_newline": true,
+        "comment_start_string": "{##",
+        "comment_end_string": "##}"
+    },
     "variables": [
         {
             "name": "full_name",
