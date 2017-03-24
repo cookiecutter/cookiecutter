@@ -440,11 +440,13 @@ Python-Pyramid
 * `pyramid-cookiecutter-starter`_: A Cookiecutter (project template) for creating a Pyramid starter project using URL dispatch for routing and Jinja2 for templating.
 * `pyramid-cookiecutter-zodb`_: A Cookiecutter (project template) for creating a Pyramid project using ZODB for persistent storage, traversal for routing, and Chameleon for templating.
 * `substanced-cookiecutter`_: A cookiecutter (project template) for creating a Substance D starter project. Substance D is built on top of Pyramid.
+* `cookiecutter-pyramid-talk-python-starter`_: An opinionated Cookiecutter template for creating Pyramid web applications starting way further down the development chain. This cookiecutter template will create a new Pyramid web application with email, sqlalchemy, rollbar, and way more integrated.
 
 .. _`pyramid-cookiecutter-alchemy`: https://github.com/Pylons/pyramid-cookiecutter-alchemy
 .. _`pyramid-cookiecutter-starter`: https://github.com/Pylons/pyramid-cookiecutter-starter
 .. _`pyramid-cookiecutter-zodb`: https://github.com/Pylons/pyramid-cookiecutter-zodb
 .. _`substanced-cookiecutter`: https://github.com/Pylons/substanced-cookiecutter
+.. _`cookiecutter-pyramid-talk-python-starter`: https://github.com/mikeckennedy/cookiecutter-pyramid-talk-python-starter
 
 Cookiecutter (meta)
 ~~~~~~~~~~~~~~~~~~~
@@ -510,7 +512,7 @@ Golang
 
 * `cookiecutter-golang`_: A template to create new go based projects following best practices.
 
-.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang 
+.. _`cookiecutter-golang`: https://github.com/lacion/cookiecutter-golang
 
 Java
 ~~~~
@@ -630,7 +632,7 @@ Reproducible Science
 Cloud Tools
 ~~~~~~~~~~~~
 
-* `cookiecutter-tf-module`_: Cookiecutter template for building consistent Terraform modules. 
+* `cookiecutter-tf-module`_: Cookiecutter template for building consistent Terraform modules.
 
 .. _`cookiecutter-tf-module`: https://github.com/DualSpark/cookiecutter-tf-module
 
