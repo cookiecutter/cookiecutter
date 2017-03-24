@@ -20,6 +20,8 @@ Other Changes:
   (#912)
 * Improve debug log message for when a hook is not found, thanks to
   `@raphigaziano`_ (#160)
+* Fix module summary and ``expand_abbreviations()`` doc string as per pep257,
+  thanks to `@terryjbates`_ (#772)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
