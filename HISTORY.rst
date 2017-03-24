@@ -16,7 +16,10 @@ Bug Fixes:
 
 Other Changes:
 
-* Fix broken link to *Copy without Render* docs, thanks to `@coreysnyder04`_ (#912)
+* Fix broken link to *Copy without Render* docs, thanks to `@coreysnyder04`_
+  (#912)
+* Improve debug log message for when a hook is not found, thanks to
+  `@raphigaziano`_ (#160)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
