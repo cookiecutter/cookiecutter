@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """Cookiecutter repository functions."""
+
 from __future__ import unicode_literals
 import os
 import re
@@ -23,8 +24,7 @@ def is_repo_url(value):
 
 
 def expand_abbreviations(template, abbreviations):
-    """
-    Expand abbreviations in a template name.
+    """Expand abbreviations in a template name.
 
     :param template: The project template name.
     :param abbreviations: Abbreviation definitions.
