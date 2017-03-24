@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """
-cookiecutter.main
------------------
-
 Main entry point for the `cookiecutter` command.
 
 The code in this module is also a good example of how to use Cookiecutter as a
