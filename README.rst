@@ -187,6 +187,7 @@ Categories of Cookiecutters
 `Python-Django`_ |
 `Python-Pyramid`_ |
 `Cookiecutter (meta)`_ |
+`Git`_ |
 `C`_ |
 `C++`_ |
 `C#`_ |
@@ -456,6 +457,14 @@ Meta-templates for generating Cookiecutter project templates.
 * `cookiecutter-template`_: A template to help in creating cookiecutter templates.
 
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
+
+
+Git
+~~~
+
+* `cookiecutter-git`_: Git Cookiecutter. A git repository project template!
+
+.. _`cookiecutter-git`: https://github.com/webevllc/cookiecutter-git
 
 
 C
