@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False):
+        config_file=None, default_config=False, render_context=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -39,6 +39,11 @@ def cookiecutter(
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
+    :param render_context: Create your custom rendering context.
+        You can use this to add extra render vars.
+        For instance, you might want to create
+        custom rendering values on the fly depending on users' input.
+        You can pass this dictionary that will be used to render templates.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -68,15 +73,13 @@ def cookiecutter(
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is {}'.format(context_file))
 
-        context = generate_context(
-            context_file=context_file,
-            default_context=config_dict['default_context'],
-            extra_context=extra_context,
-        )
-
-        # prompt the user to manually configure at the command line.
-        # except when 'no-input' flag is set
-        context['cookiecutter'] = prompt_for_config(context, no_input)
+        if render_context:
+            context = render_context
+        else:
+            context = get_render_context(
+                context_file, config_dict,
+                extra_context=extra_context,
+                no_input=no_input)
 
         dump(config_dict['replay_dir'], template_name, context)
 
@@ -87,3 +90,22 @@ def cookiecutter(
         overwrite_if_exists=overwrite_if_exists,
         output_dir=output_dir
     )
+
+
+def get_render_context(
+        context_file, config_dict, extra_context=None, no_input=False):
+    """
+    :param context_file: cookiecutter.json path.
+    :param config_dict: User configuration.
+    :param no_input: Prompt the user at command line for manual configuration?
+    """
+    context = generate_context(
+        context_file=context_file,
+        default_context=config_dict['default_context'],
+        extra_context=extra_context,
+    )
+
+    # prompt the user to manually configure at the command line.
+    # except when 'no-input' flag is set
+    context['cookiecutter'] = prompt_for_config(context, no_input)
+    return context
