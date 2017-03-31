@@ -374,6 +374,8 @@ If you merge a pull request, you're responsible for updating `AUTHORS.rst` and `
 
 When you're processing the first change after a release, create boilerplate following the existing pattern:
 
+.. code-block:: rest
+
     x.y.z (Development)
     ~~~~~~~~~~~~~~~~~~~
 
