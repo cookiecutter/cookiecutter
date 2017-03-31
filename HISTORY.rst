@@ -22,6 +22,7 @@ Other Changes:
   `@raphigaziano`_ (#160)
 * Fix module summary and ``expand_abbreviations()`` doc string as per pep257,
   thanks to `@terryjbates`_ (#772)
+* Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
