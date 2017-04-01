@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.cli
------------------
-
-Main `cookiecutter` CLI.
-"""
+"""Main `cookiecutter` CLI."""
 
 import os
 import sys
@@ -28,7 +23,7 @@ from cookiecutter.exceptions import (
 
 
 def version_msg():
-    """Returns the Cookiecutter version, location and Python powering it."""
+    """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version[:3]
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     message = u'Cookiecutter %(version)s from {} (Python {})'
@@ -36,6 +31,7 @@ def version_msg():
 
 
 def validate_extra_context(ctx, param, value):
+    """Validate extra context."""
     for s in value:
         if '=' not in s:
             raise click.BadParameter(
@@ -100,7 +96,6 @@ def main(
     volunteers. If you would like to help out or fund the project, please get
     in touch at https://github.com/audreyr/cookiecutter.
     """
-
     # If you _need_ to support a local template in a directory
     # called 'help', use a qualified path to the directory.
     if template == u'help':
