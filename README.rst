@@ -437,7 +437,7 @@ Python-Pyramid
 ^^^^^^^^^^^^^^
 
 * `pyramid-cookiecutter-alchemy`_: A Cookiecutter (project template) for creating a Pyramid project using SQLite for persistent storage, SQLAlchemy for an ORM, URL dispatch for routing, and Jinja2 for templating.
-* `pyramid-cookiecutter-starter`_: A Cookiecutter (project template) for creating a Pyramid starter project using URL dispatch for routing and Jinja2 for templating.
+* `pyramid-cookiecutter-starter`_: A Cookiecutter (project template) for creating a Pyramid starter project using URL dispatch for routing and either Jinja2, Chameleon, or Mako for templating.
 * `pyramid-cookiecutter-zodb`_: A Cookiecutter (project template) for creating a Pyramid project using ZODB for persistent storage, traversal for routing, and Chameleon for templating.
 * `substanced-cookiecutter`_: A cookiecutter (project template) for creating a Substance D starter project. Substance D is built on top of Pyramid.
 * `cookiecutter-pyramid-talk-python-starter`_: An opinionated Cookiecutter template for creating Pyramid web applications starting way further down the development chain. This cookiecutter template will create a new Pyramid web application with email, sqlalchemy, rollbar, and way more integrated.
