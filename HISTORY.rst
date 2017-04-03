@@ -31,16 +31,19 @@ Other Changes:
   * `cookiecutter-kata-gtest`_ by `@13coders`_ (#901)
   * `cookiecutter-pyramid-talk-python-starter`_ by `@mikeckennedy`_ (#915)
   * `cookiecutter-android`_ by `@alexfu`_ (#890)
+  * `cookiecutter-lux-python`_ by `@alexkey`_ (#895)
 
 .. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
 .. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
 .. _`cookiecutter-pyramid-talk-python-starter`: https://github.com/mikeckennedy/cookiecutter-pyramid-talk-python-starter
 .. _`cookiecutter-android`: https://github.com/alexfu/cookiecutter-android
+.. _`cookiecutter-lux-python`: https://github.com/alexkey/cookiecutter-lux-python
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
 .. _`@mikeckennedy`: https://github.com/mikeckennedy
 .. _`@alexfu`: https://github.com/alexfu
+.. _`@alexkey`: https://github.com/alexkey
 
 
 1.5.1 (2017-02-04) Alfajor
