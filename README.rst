@@ -519,9 +519,11 @@ Java
 
 * `cookiecutter-java`_: Cookiecutter for basic java application setup with gradle
 * `cookiecutter-spring-boot`_: Cookiecutter for standard java spring boot gradle application
+* `cookiecutter-android`_: Cookiecutter for Gradle-based Android projects
 
 .. _`cookiecutter-java`: https://github.com/m-x-k/cookiecutter-java.git
 .. _`cookiecutter-spring-boot`: https://github.com/m-x-k/cookiecutter-spring-boot.git
+.. _`cookiecutter-android`: https://github.com/alexfu/cookiecutter-android
 
 
 JS
