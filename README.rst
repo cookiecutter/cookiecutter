@@ -656,6 +656,13 @@ Tornado
 
 .. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
 
+Other
+~~~~~
+
+* `cookiecutter_dotfile`_: Template for a folder of dotfiles managed by stow.
+
+.. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
+
 Similar projects
 ----------------
 
