@@ -206,7 +206,8 @@ Categories of Cookiecutters
 `6502 Assembly`_ |
 `Data Science`_ |
 `Tornado`_ |
-`Reproducible Science`_
+`Reproducible Science`_ |
+`Continuous Delivery`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
 writing or suggesting one. We wish for our users to find a solution for their
@@ -648,6 +649,13 @@ Reproducible Science
 * `cookiecutter-reproducible-science`_: A cookiecutter template to start a reproducible and transparent science project including data, models, analysis, and reports (i.e., your scientifc paper) with close resemblances to the philosophy of Cookiecutter `Data Science`_.
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
+
+Continuous Delivery
+~~~~~~~~~~~~~~~~~~~
+
+* `painless-continuous-delivery`_: A cookiecutter template for software development setups with continuous delivery baked in. Python (Django, Flask), and experimental PHP support.
+
+.. _`painless-continuous-delivery`: https://github.com/painless-software/painless-continuous-delivery
 
 Cloud Tools
 ~~~~~~~~~~~~
