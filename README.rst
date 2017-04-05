@@ -187,6 +187,7 @@ Categories of Cookiecutters
 `Python-Django`_ |
 `Python-Pyramid`_ |
 `Cookiecutter (meta)`_ |
+`Ansible`_ |
 `Git`_ |
 `C`_ |
 `C++`_ |
@@ -314,7 +315,6 @@ Python
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
 * `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
-* `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
 * `cookiecutter-pyvanguard`_: A template for cutting edge Python development. `Invoke`_, pytest, bumpversion, and Python 2/3 compatability.
 * `Python-iOS-template`_: A template to create a Python project that will run on iOS devices.
@@ -350,7 +350,6 @@ Python
 .. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
 .. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
-.. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pyvanguard`: https://github.com/robinandeer/cookiecutter-pyvanguard
 .. _`Invoke`: http://docs.pyinvoke.org/en/latest/
@@ -460,6 +459,14 @@ Meta-templates for generating Cookiecutter project templates.
 
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
 
+Ansible
+~~~~~~~
+
+* `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
+* `cookiecutter-ansible-role-ci`_: Create Ansible roles following best practices, with an already implemented test infrastructure leveraging Test-kitchen, Docker and InSpec.
+
+.. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
+.. _`cookiecutter-ansible-role-ci`: https://github.com/ferrarimarco/cookiecutter-ansible-role
 
 Git
 ~~~
