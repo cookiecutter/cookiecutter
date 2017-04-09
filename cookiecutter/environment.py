@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Jinja2 environment and extensions loading."""
 
 """Jinja2 environment and extensions loading."""
 
 from jinja2 import Environment, StrictUndefined
-
 from .exceptions import UnknownExtension
 
 
