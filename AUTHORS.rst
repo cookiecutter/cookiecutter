@@ -107,6 +107,7 @@ Contributors
 * Abdó Roig-Maranges (`@aroig`_)
 * Steve Piercy (`@stevepiercy`_)
 * Corey (`@coreysnyder04`_)
+* Peter Bittner (`@bittner`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -202,3 +203,4 @@ Contributors
 .. _`@aroig`: https://github.com/aroig
 .. _`@stevepiercy`: https://github.com/stevepiercy
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
+.. _`@bittner`: https://github.com/bittner
