@@ -677,6 +677,8 @@ Similar projects
 * `python-packager`_: Creates Python packages from its own template, with
   configurable options.
 
+* `pyscaffold`_ Tool for easily putting up the scaffold of a Python project 
+
 * `Yeoman`_ has a Rails-inspired generator system that provides scaffolding
   for apps.
 
@@ -700,6 +702,7 @@ Similar projects
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.9/ref/django-admin/#cmdoption-startapp--template
 .. _`python-packager`: https://github.com/fcurella/python-packager
+.. _`pyscaffold`: https://github.com/blue-yonder/pyscaffold
 .. _`Yeoman`: https://github.com/yeoman/generator
 .. _`Pyramid`: http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/scaffolding.html
 .. _`mr.bob`: https://github.com/iElectric/mr.bob
