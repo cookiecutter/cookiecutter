@@ -57,35 +57,35 @@ Did someone say features?
 
 * Simple command line usage:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        # Create project from the cookiecutter-pypackage.git repo template
-        # You'll be prompted to enter values.
-        # Then it'll create your Python package in the current working directory,
-        # based on those values.
-        $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
-        # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-        $ cookiecutter gh:audreyr/cookiecutter-pypackage
+    # Create project from the cookiecutter-pypackage.git repo template
+    # You'll be prompted to enter values.
+    # Then it'll create your Python package in the current working directory,
+    # based on those values.
+    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
+    # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
+    $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
 * Use it at the command line with a local template:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        # Create project in the current working directory, from the local
-        # cookiecutter-pypackage/ template
-        $ cookiecutter cookiecutter-pypackage/
+    # Create project in the current working directory, from the local
+    # cookiecutter-pypackage/ template
+    $ cookiecutter cookiecutter-pypackage/
 
 * Or use it from Python:
 
-    .. code-block:: python
+.. code-block:: python
 
-        from cookiecutter.main import cookiecutter
+    from cookiecutter.main import cookiecutter
 
-        # Create project from the cookiecutter-pypackage/ template
-        cookiecutter('cookiecutter-pypackage/')
+    # Create project from the cookiecutter-pypackage/ template
+    cookiecutter('cookiecutter-pypackage/')
 
-        # Create project from the cookiecutter-pypackage.git repo template
-        cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+    # Create project from the cookiecutter-pypackage.git repo template
+    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
 * Directory names and filenames can be templated. For example::
 
@@ -97,18 +97,18 @@ Did someone say features?
 
 * Simply define your template variables in a ``cookiecutter.json`` file. For example:
 
-    .. code-block:: json
+.. code-block:: json
 
-        {
-            "full_name": "Audrey Roy",
-            "email": "audreyr@gmail.com",
-            "project_name": "Complexity",
-            "repo_name": "complexity",
-            "project_short_description": "Refreshingly simple static site generator.",
-            "release_date": "2013-07-10",
-            "year": "2013",
-            "version": "0.1.1"
-        }
+    {
+        "full_name": "Audrey Roy",
+        "email": "audreyr@gmail.com",
+        "project_name": "Complexity",
+        "repo_name": "complexity",
+        "project_short_description": "Refreshingly simple static site generator.",
+        "release_date": "2013-07-10",
+        "year": "2013",
+        "version": "0.1.1"
+    }
 
 * Unless you suppress it with ``--no-input``, you are prompted for input:
 
@@ -118,13 +118,13 @@ Did someone say features?
 
 * Cross-platform support for ``~/.cookiecutterrc`` files:
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        default_context:
-            full_name: "Audrey Roy"
-            email: "audreyr@gmail.com"
-            github_username: "audreyr"
-        cookiecutters_dir: "~/.cookiecutters/"
+    default_context:
+        full_name: "Audrey Roy"
+        email: "audreyr@gmail.com"
+        github_username: "audreyr"
+    cookiecutters_dir: "~/.cookiecutters/"
 
 * Cookiecutters (cloned Cookiecutter project templates) are put into
   ``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
