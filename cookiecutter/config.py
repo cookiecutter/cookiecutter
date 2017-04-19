@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.config
--------------------
-
-Global configuration handling
-"""
+"""Global configuration handling."""
 
 from __future__ import unicode_literals
 import copy
@@ -44,10 +39,7 @@ def _expand_path(path):
 
 
 def get_config(config_path):
-    """
-    Retrieve the config from the specified path, returning it as a config dict.
-    """
-
+    """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException
 
