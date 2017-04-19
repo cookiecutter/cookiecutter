@@ -22,8 +22,8 @@ Other Changes:
   `@raphigaziano`_ (#160)
 * Fix module summary and ``expand_abbreviations()`` doc string as per pep257,
   thanks to `@terryjbates`_ (#772)
-* Update doc strings in ``cookiecutter/cli.py`` according to pep257, thanks to
-  `@terryjbates`_ (#922)
+* Update doc strings in ``cookiecutter/cli.py`` and ``cookiecutter/config.py``
+  according to pep257, thanks to `@terryjbates`_ (#922, #931)
 * Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
 * Added more cookiecutter templates to the mix:
 
