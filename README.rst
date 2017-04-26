@@ -638,9 +638,11 @@ Data Science
 
 * `widget-cookiecutter`_: A cookiecutter template for creating a custom Jupyter widget project.
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
+* `cookiecutter-r-data-analysis`_: Template for a R based workflow to docx (via Pandoc) and pdf (via LaTeX) reports.
 
 .. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
+.. _`cookiecutter-r-data-analysis`: https://github.com/bdcaf/cookiecutter-r-data-analysis
 
 Reproducible Science
 ~~~~~~~~~~~~~~~~~~~~
@@ -662,6 +664,13 @@ Tornado
 * `cookiecutter-tornado`_: Cookiecutter template for Tornado based projects
 
 .. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
+
+Other
+~~~~~
+
+* `cookiecutter_dotfile`_: Template for a folder of dotfiles managed by stow.
+
+.. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
 
 Similar projects
 ----------------
