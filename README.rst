@@ -274,13 +274,13 @@ Waiting for a response to an issue/question?
 Support This Project
 --------------------
 
-This project is maintained by volunteers. Support their efforts by spreading the word about:
+This project is maintained by volunteers. Support their efforts by spreading the word about Two Scoops of Django 1.11:
 
-.. image:: https://s3.amazonaws.com/tsacademy/images/tsa-logo-250x60-transparent-01.png
-   :name: Two Scoops Academy
+.. image:: https://cdn.shopify.com/s/files/1/0304/6901/files/tsd-111-alpha-470x235.jpg?11350964796982104043
+   :name: Two Scoops Press
    :align: center
-   :alt: Two Scoops Academy
-   :target: http://www.twoscoops.academy/
+   :alt: Two Scoops Press
+   :target: https://www.twoscoopspress.com/products/two-scoops-of-django-1-11
 
 Code of Conduct
 ---------------
