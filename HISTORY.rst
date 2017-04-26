@@ -25,6 +25,8 @@ Other Changes:
 * Update doc strings in ``cookiecutter/cli.py`` and ``cookiecutter/config.py``
   according to pep257, thanks to `@terryjbates`_ (#922, #931)
 * Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
+* Re-implement Makefile and update several make rules, thanks to `@hackebrot`_
+  (#930)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
