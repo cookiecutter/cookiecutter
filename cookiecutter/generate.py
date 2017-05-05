@@ -311,7 +311,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     'Copying dir {} to {} without rendering'
                     ''.format(indir, outdir)
                 )
-                shutil.copytree(indir, outdir)
+                shutil.copytree(indir, outdir, symlinks=True)
 
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively
