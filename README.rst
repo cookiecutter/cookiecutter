@@ -37,7 +37,7 @@ templates), e.g. creating a Python package project from a Python package project
 * Free software: BSD license
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 
-.. image:: https://raw.github.com/audreyr/cookiecutter/aa309b73bdc974788ba265d843a65bb94c2e608e/cookiecutter_medium.png
+.. image:: https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png
 
 We are proud to be an open source sponsor of `PyCon 2016`_.
 
