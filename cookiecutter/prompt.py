@@ -6,9 +6,7 @@ from collections import OrderedDict
 import json
 
 import click
-from past.builtins import basestring
-
-from future.utils import iteritems
+import six
 
 from jinja2.exceptions import UndefinedError
 
@@ -164,7 +162,7 @@ def render_variable(env, raw, cookiecutter_dict):
             render_variable(env, v, cookiecutter_dict)
             for v in raw
         ]
-    elif not isinstance(raw, basestring):
+    elif not isinstance(raw, six.string_types):
         raw = str(raw)
 
     template = env.from_string(raw)
@@ -199,7 +197,7 @@ def prompt_for_config(context, no_input=False):
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    for key, raw in iteritems(context[u'cookiecutter']):
+    for key, raw in context[u'cookiecutter'].items():
         if key.startswith(u'_'):
             cookiecutter_dict[key] = raw
             continue
@@ -224,7 +222,7 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
-    for key, raw in iteritems(context[u'cookiecutter']):
+    for key, raw in context[u'cookiecutter'].items():
 
         try:
             if isinstance(raw, dict):
