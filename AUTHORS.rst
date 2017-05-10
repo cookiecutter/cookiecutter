@@ -107,6 +107,8 @@ Contributors
 * Abdó Roig-Maranges (`@aroig`_)
 * Steve Piercy (`@stevepiercy`_)
 * Corey (`@coreysnyder04`_)
+* Dmitry Evstratov (`@devstrat`_)
+* Eyal Levin (`@eyalev`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -202,3 +204,5 @@ Contributors
 .. _`@aroig`: https://github.com/aroig
 .. _`@stevepiercy`: https://github.com/stevepiercy
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
+.. _`@devstrat`: https://github.com/devstrat
+.. _`@eyalev`: https://github.com/eyalev
