@@ -27,6 +27,8 @@ Other Changes:
 * Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
 * Re-implement Makefile and update several make rules, thanks to `@hackebrot`_
   (#930)
+* Fix broken link to pytest docs, thanks to `@eyalev`_ for the issue report and
+  `@devstrat`_ for the fix (#939, #940)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
@@ -52,6 +54,8 @@ Other Changes:
 .. _`@alexkey`: https://github.com/alexkey
 .. _`@tuxredux`: https://github.com/tuxredux
 .. _`@ferrarimarco`: https://github.com/ferrarimarco
+.. _`@eyalev`: https://github.com/eyalev
+.. _`@devstrat`: https://github.com/devstrat
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
