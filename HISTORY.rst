@@ -29,6 +29,7 @@ Other Changes:
   (#930)
 * Fix broken link to pytest docs, thanks to `@eyalev`_ for the issue report and
   `@devstrat`_ for the fix (#939, #940)
+* Improve wording in *copy without render* docs, thanks to `@eyalev`_ (#938)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
