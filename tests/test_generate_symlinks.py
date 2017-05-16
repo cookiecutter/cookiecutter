@@ -14,9 +14,8 @@ import pytest
 from cookiecutter import generate
 from cookiecutter import utils
 
-TEST_OUTPUT_DIR = 'test_symlinks'
 
-WIN_BEFORE_PY32 = sys.platform.startswith('win') and sys.version_info < (3, 2)
+TEST_OUTPUT_DIR = 'test_symlinks'
 
 
 @pytest.fixture(scope='function')
@@ -30,10 +29,8 @@ def remove_test_dir(request):
     request.addfinalizer(fin_remove_test_dir)
 
 
-@pytest.mark.skipif(WIN_BEFORE_PY32,
-                    reason='No symlinks on Windows + Python < 3.2')
 @pytest.mark.usefixtures('clean_system', 'remove_test_dir')
-def test_generate_copy_without_render_extensions():
+def test_symlinks():
     generate.generate_files(
         context={
             'cookiecutter': {
@@ -110,3 +107,4 @@ def test_generate_copy_without_render_extensions():
     _test_symlink(non_rendered_dir,
                   '{{ cookiecutter.sym_to_temp }}',
                   '{{ cookiecutter.link_dir }}')
+
