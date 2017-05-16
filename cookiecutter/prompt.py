@@ -227,7 +227,7 @@ def prompt_for_config(context, no_input=False):
     for key, raw in iteritems(context[u'cookiecutter']):
 
         try:
-            if isinstance(raw, dict):
+            if isinstance(raw, dict) and not key.startswith(u'_'):
                 # We are dealing with a dict variable
                 val = render_variable(env, raw, cookiecutter_dict)
 
