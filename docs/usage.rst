@@ -7,7 +7,7 @@ Grab a Cookiecutter template
 
 First, clone a Cookiecutter project template::
 
-    $ git clone git@github.com:audreyr/cookiecutter-pypackage.git
+    $ git clone https://github.com/audreyr/cookiecutter-pypackage.git
 
 Make your changes
 -----------------
