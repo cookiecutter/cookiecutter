@@ -109,6 +109,7 @@ Contributors
 * Corey (`@coreysnyder04`_)
 * Dmitry Evstratov (`@devstrat`_)
 * Eyal Levin (`@eyalev`_)
+* mathagician (`@mathagician`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -206,3 +207,4 @@ Contributors
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
 .. _`@devstrat`: https://github.com/devstrat
 .. _`@eyalev`: https://github.com/eyalev
+.. _`@mathagician`: https://github.com/mathagician
