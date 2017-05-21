@@ -49,11 +49,14 @@ def is_copy_only_path(path, context):
     return False
 
 
-def apply_overwrites_to_context(context, overwrite_context):
+def apply_overwrites_to_context(context, overwrite_context, known_only=False):
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
-            # Do not include variables which are not used in the template
+            if not known_only:
+                # Add a new entry to the context dict for values that are not
+                # declared in context but required in the template itself
+                context[variable] = overwrite
             continue
 
         context_value = context[variable]
@@ -105,9 +108,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
     if default_context:
-        apply_overwrites_to_context(obj, default_context)
+        apply_overwrites_to_context(obj, default_context, known_only=True)
     if extra_context:
-        apply_overwrites_to_context(obj, extra_context)
+        apply_overwrites_to_context(obj, extra_context, known_only=False)
 
     logger.debug('Context generated is {}'.format(context))
     return context

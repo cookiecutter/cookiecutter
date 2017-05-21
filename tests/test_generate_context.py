@@ -62,10 +62,32 @@ def context_data():
         }
     )
 
+    context_with_unknown_extra = (
+        {
+            'context_file': 'tests/test-generate-context/test.json',
+            'extra_context': {'1': 4, 'not in json': 'foobar'},
+        },
+        {
+            'test': {'1': 4, 'some_key': 'some_val', 'not in json': 'foobar'}
+        }
+    )
+
+    context_with_unknown_default = (
+        {
+            'context_file': 'tests/test-generate-context/test.json',
+            'default_context': {'1': 3, 'not in json': 'foobar'}
+        },
+        {
+            'test': {'1': 3, 'some_key': 'some_val'}
+        }
+    )
+
     yield context
     yield context_with_default
     yield context_with_extra
     yield context_with_default_and_extra
+    yield context_with_unknown_extra
+    yield context_with_unknown_default
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -133,6 +155,7 @@ def test_choices(context_file, default_context, extra_context):
             ('project_name', 'Kivy Project'),
             ('repo_name', '{{cookiecutter.project_name|lower}}'),
             ('orientation', ['landscape', 'all', 'portrait']),
+            ('also_not_in_template', 'foobar2'),
         ])
     }
 
@@ -154,10 +177,21 @@ def template_context():
     ])
 
 
-def test_apply_overwrites_does_include_unused_variables(template_context):
+def test_apply_overwrites_does_include_unknown_variables(template_context):
     generate.apply_overwrites_to_context(
         template_context,
         {'not in template': 'foobar'}
+    )
+
+    assert 'not in template' in template_context
+
+
+def test_apply_overwrites_does_not_include_unknown_variables_if_option_is_set(
+        template_context):
+    generate.apply_overwrites_to_context(
+        template_context,
+        {'not in template': 'foobar'},
+        known_only=True
     )
 
     assert 'not in template' not in template_context
