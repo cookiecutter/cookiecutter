@@ -24,6 +24,8 @@ Other Changes:
   thanks to `@terryjbates`_ (#772)
 * Update doc strings in ``cookiecutter/cli.py`` and ``cookiecutter/config.py``
   according to pep257, thanks to `@terryjbates`_ (#922, #931)
+* Update doc string for ``is_copy_only_path()`` according to pep257, thanks to
+  `@mathagician`_ and `@terryjbates`_ (#935, #949)
 * Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
 * Re-implement Makefile and update several make rules, thanks to `@hackebrot`_
   (#930)
@@ -57,6 +59,7 @@ Other Changes:
 .. _`@ferrarimarco`: https://github.com/ferrarimarco
 .. _`@eyalev`: https://github.com/eyalev
 .. _`@devstrat`: https://github.com/devstrat
+.. _`@mathagician`: https://github.com/mathagician
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
