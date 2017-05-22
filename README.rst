@@ -274,13 +274,31 @@ Waiting for a response to an issue/question?
 Support This Project
 --------------------
 
-This project is maintained by volunteers. Support their efforts by spreading the word about Two Scoops of Django 1.11:
+This project is run by volunteers. Please support them in their efforts to
+maintain and improve Cookiecutter:
+
+* Daniel Roy Greenfeld (`@pydanny`_): `patreon.com/danielroygreenfeld`_
+* Raphael Pierzina (`@hackebrot`_): `patreon.com/hackebrot`_
+
+.. _`patreon.com/danielroygreenfeld`: https://www.patreon.com/danielroygreenfeld
+.. _`patreon.com/hackebrot`: https://www.patreon.com/hackebrot
+
+You can also support the maintainers by spreading the word about Two Scoops of
+Django 1.11!
 
 .. image:: https://cdn.shopify.com/s/files/1/0304/6901/files/tsd-111-alpha-470x235.jpg?11350964796982104043
    :name: Two Scoops Press
    :align: center
    :alt: Two Scoops Press
    :target: https://www.twoscoopspress.com/products/two-scoops-of-django-1-11
+
+Backers
+-------
+
+We would like to thank the following people for supporting us:
+
+* Bruno Alla
+* Russell Keith-Magee
 
 Code of Conduct
 ---------------
