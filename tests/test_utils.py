@@ -32,6 +32,44 @@ def test_rmtree():
     assert not os.path.exists('foo')
 
 
+def test_rmtree_error_uses_callback(mocker):
+    """
+    Test that on system who fails deleting files when those files
+    are read only, the workaround that sets them to writable first
+    works.
+    """
+
+    # Setting up mocks to check if callbacks were really called
+    real_force_delete = utils.force_delete
+    force_delete = mocker.patch("cookiecutter.utils.force_delete")
+    force_delete.side_effect = real_force_delete
+
+    real_unlink = os.unlink
+    # python 2.7 uses os.remove, python3.+ uses os.unlink
+    unlink = mocker.patch("os.unlink")
+    mocker.patch("os.remove", new=unlink)
+
+    def fail_if_readonly(*args, **kwargs):
+        if not os.stat("foo/bar").st_mode & stat.S_IWRITE:
+            raise OSError
+        real_unlink(*args, **kwargs)
+
+    unlink.side_effect = fail_if_readonly
+
+    # Doing the same as in test_rmtree
+    os.mkdir('foo')
+    with open('foo/bar', "w") as f:
+        f.write("Test data")
+    make_readonly('foo/bar')
+    utils.rmtree('foo')
+    assert not os.path.exists('foo')
+
+    # Validating that it's really the callback that helped
+    # having the desired behaviour
+    assert len(unlink.mock_calls) == 2
+    assert len(force_delete.mock_calls) == 1
+
+
 def test_make_sure_path_exists():
     if sys.platform.startswith('win'):
         existing_directory = os.path.abspath(os.curdir)
