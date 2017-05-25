@@ -31,6 +31,8 @@ Other Changes:
   (#930)
 * Fix broken link to pytest docs, thanks to `@eyalev`_ for the issue report and
   `@devstrat`_ for the fix (#939, #940)
+* Add ``test_requirements.txt`` file for easier testing outside of tox, thanks
+  to `@ramnes`_ (#945)
 * Improve wording in *copy without render* docs, thanks to `@eyalev`_ (#938)
 * Added more cookiecutter templates to the mix:
 
@@ -63,6 +65,7 @@ Other Changes:
 .. _`@devstrat`: https://github.com/devstrat
 .. _`@mathagician`: https://github.com/mathagician
 .. _`@bdcaf`: https://github.com/bdcaf
+.. _`@ramnes`: https://github.com/ramnes
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
