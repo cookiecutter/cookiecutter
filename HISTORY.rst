@@ -41,6 +41,7 @@ Other Changes:
   * `cookiecutter-lux-python`_ by `@alexkey`_ (#895)
   * `cookiecutter-git`_ by `@tuxredux`_ (#921)
   * `cookiecutter-ansible-role-ci`_ by `@ferrarimarco`_ (#903)
+  * `cookiecutter_dotfile`_ by `@bdcaf`_ (#925)
 
 .. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
 .. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
@@ -48,6 +49,7 @@ Other Changes:
 .. _`cookiecutter-android`: https://github.com/alexfu/cookiecutter-android
 .. _`cookiecutter-lux-python`: https://github.com/alexkey/cookiecutter-lux-python
 .. _`cookiecutter-git`: https://github.com/webevllc/cookiecutter-git
+.. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
 .. _`cookiecutter-ansible-role-ci`: https://github.com/ferrarimarco/cookiecutter-ansible-role
 
 .. _`@13coders`: https://github.com/13coders
@@ -60,6 +62,7 @@ Other Changes:
 .. _`@eyalev`: https://github.com/eyalev
 .. _`@devstrat`: https://github.com/devstrat
 .. _`@mathagician`: https://github.com/mathagician
+.. _`@bdcaf`: https://github.com/bdcaf
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
