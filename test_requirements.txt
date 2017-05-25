@@ -1,4 +1,3 @@
--e .
 pytest
 pytest-cov
 pytest-mock==1.1
