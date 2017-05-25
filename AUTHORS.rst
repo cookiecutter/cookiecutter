@@ -110,6 +110,7 @@ Contributors
 * Dmitry Evstratov (`@devstrat`_)
 * Eyal Levin (`@eyalev`_)
 * mathagician (`@mathagician`_)
+* Guillaume Gelin (`@ramnes`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -208,3 +209,4 @@ Contributors
 .. _`@devstrat`: https://github.com/devstrat
 .. _`@eyalev`: https://github.com/eyalev
 .. _`@mathagician`: https://github.com/mathagician
+.. _`@ramnes`: https://github.com/ramnes
