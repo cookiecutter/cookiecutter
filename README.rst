@@ -326,6 +326,7 @@ Python
 * `cookiecutter-lux-python`_: A boilerplate Python project that aims to create Python package with a convenient Makefile-facility and additional helpers.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-flask-2`_: A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
+* `flask-extension-cookiecutter`_ : A flask cookiecutter template for easily writing flask extensions.
 * `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
@@ -430,6 +431,7 @@ Python-Django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
 .. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
+.. _`flask-extension-cookiecutter`: https://github.com/Olamyy/flask-extension-cookiecutter
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-cms`: https://github.com/palazzem/cookiecutter-django-cms
 .. _`cookiecutter-django-crud`: https://github.com/wildfish/cookiecutter-django-crud
