@@ -129,7 +129,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                 stderr=subprocess.STDOUT,
             )
     except subprocess.CalledProcessError as clone_error:
-        output = clone_error.output.decode()
+        output = clone_error.output.decode('utf-8')
         if 'not found' in output.lower():
             raise RepositoryNotFound(
                 'The repository {} could not be found, '
