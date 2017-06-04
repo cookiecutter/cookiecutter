@@ -45,6 +45,7 @@ Other Changes:
   * `cookiecutter-ansible-role-ci`_ by `@ferrarimarco`_ (#903)
   * `cookiecutter_dotfile`_ by `@bdcaf`_ (#925)
   * `painless-continuous-delivery`_ by `@painless-software`_ (#927)
+  * `cookiecutter-molecule`_ by `@retr0h`_ (#954)
 
 .. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
 .. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
@@ -55,6 +56,7 @@ Other Changes:
 .. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
 .. _`cookiecutter-ansible-role-ci`: https://github.com/ferrarimarco/cookiecutter-ansible-role
 .. _`painless-continuous-delivery`: https://github.com/painless-software/painless-continuous-delivery
+.. _`cookiecutter-molecule`: https://github.com/retr0h/cookiecutter-molecule
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
@@ -69,6 +71,7 @@ Other Changes:
 .. _`@bdcaf`: https://github.com/bdcaf
 .. _`@ramnes`: https://github.com/ramnes
 .. _`@painless-software`: https://github.com/painless-software
+.. _`@retr0h`: https://github.com/retr0h
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
