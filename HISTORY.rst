@@ -46,6 +46,7 @@ Other Changes:
   * `cookiecutter_dotfile`_ by `@bdcaf`_ (#925)
   * `painless-continuous-delivery`_ by `@painless-software`_ (#927)
   * `cookiecutter-molecule`_ by `@retr0h`_ (#954)
+  * `sublime-snippet-package-template`_ by `@agenoria`_ (#956)
 
 .. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
 .. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
@@ -57,6 +58,7 @@ Other Changes:
 .. _`cookiecutter-ansible-role-ci`: https://github.com/ferrarimarco/cookiecutter-ansible-role
 .. _`painless-continuous-delivery`: https://github.com/painless-software/painless-continuous-delivery
 .. _`cookiecutter-molecule`: https://github.com/retr0h/cookiecutter-molecule
+.. _`sublime-snippet-package-template`: https://github.com/agenoria/sublime-snippet-package-template
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
@@ -72,6 +74,7 @@ Other Changes:
 .. _`@ramnes`: https://github.com/ramnes
 .. _`@painless-software`: https://github.com/painless-software
 .. _`@retr0h`: https://github.com/retr0h
+.. _`@agenoria`: https://github.com/agenoria
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
