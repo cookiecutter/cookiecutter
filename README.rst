@@ -481,11 +481,15 @@ Meta-templates for generating Cookiecutter project templates.
 Ansible
 ~~~~~~~
 
+* `cookiecutter-molecule`_: Create `Molecule`_ roles following community best practices, with an already implemented test infrastructure leveraging `Molecule`_, Docker and Testinfra.
 * `cookiecutter-ansible-role`_: A template to create ansible roles. Forget about file creation and focus on actions.
 * `cookiecutter-ansible-role-ci`_: Create Ansible roles following best practices, with an already implemented test infrastructure leveraging Test-kitchen, Docker and InSpec.
 
 .. _`cookiecutter-ansible-role`: https://github.com/iknite/cookiecutter-ansible-role
 .. _`cookiecutter-ansible-role-ci`: https://github.com/ferrarimarco/cookiecutter-ansible-role
+.. _`cookiecutter-molecule`: https://github.com/retr0h/cookiecutter-molecule
+
+.. _`Molecule`: http://molecule.readthedocs.io/en/v2/
 
 Git
 ~~~
