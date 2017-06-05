@@ -34,8 +34,8 @@ templates), e.g. creating a Python package project from a Python package project
 
 * Documentation: https://cookiecutter.readthedocs.io
 * GitHub: https://github.com/audreyr/cookiecutter
-* Free software: BSD license
 * PyPI: https://pypi.python.org/pypi/cookiecutter
+* Free and open source software: `BSD license`_
 
 .. image:: https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png
 
@@ -757,6 +757,7 @@ Similar projects
 
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
 .. _`PyCon 2016`: https://us.pycon.org/2016/sponsors/
+.. _`BSD license`: https://github.com/audreyr/cookiecutter/blob/master/LICENSE
 
 .. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.io/en/latest/troubleshooting.html
