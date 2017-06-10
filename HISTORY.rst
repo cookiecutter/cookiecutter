@@ -8,7 +8,8 @@ History
 
 New Features:
 
-* ???
+* Include template path or template URL in cookiecutter context under
+  ``_template``, thanks to `@aroig`_ (#774)
 
 Bug Fixes:
 
