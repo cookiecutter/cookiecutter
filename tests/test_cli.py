@@ -332,7 +332,8 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     context = {
         'cookiecutter': {
             'github_username': 'hackebrot',
-            'project_slug': 'testproject'
+            'project_slug': 'testproject',
+            '_template': template_path
         }
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
