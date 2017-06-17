@@ -8,6 +8,7 @@ import re
 
 from .exceptions import RepositoryNotFound
 from .vcs import clone
+from .zipfile import unzip
 
 REPO_REGEX = re.compile(r"""
 (?x)
@@ -21,6 +22,11 @@ REPO_REGEX = re.compile(r"""
 def is_repo_url(value):
     """Return True if value is a repository URL."""
     return bool(REPO_REGEX.match(value))
+
+
+def is_zip_file(value):
+    """Return True if value is a repository URL."""
+    return value.endswith('.zip')
 
 
 def expand_abbreviations(template, abbreviations):
@@ -76,7 +82,15 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     """
     template = expand_abbreviations(template, abbreviations)
 
-    if is_repo_url(template):
+    if is_zip_file(template):
+        unzipped_dir = unzip(
+            zip_url=template,
+            is_url=is_repo_url(template),
+            clone_to_dir=clone_to_dir,
+            no_input=no_input
+        )
+        repository_candidates = [unzipped_dir]
+    elif is_repo_url(template):
         cloned_repo = clone(
             repo_url=template,
             checkout=checkout,

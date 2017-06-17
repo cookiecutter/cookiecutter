@@ -2,7 +2,21 @@
 import pytest
 
 from cookiecutter.config import BUILTIN_ABBREVIATIONS
-from cookiecutter.repository import is_repo_url, expand_abbreviations
+from cookiecutter.repository import is_zip_file, is_repo_url, expand_abbreviations
+
+
+@pytest.fixture(params=[
+    '/path/to/zipfile.zip',
+    'https://example.com/path/to/zipfile.zip',
+    'http://example.com/path/to/zipfile.zip',
+])
+def zipfile(request):
+    return request.param
+
+
+def test_is_zip_file(zipfile):
+    """Verify is_repo_url works."""
+    assert is_zip_file(zipfile) is True
 
 
 @pytest.fixture(params=[
