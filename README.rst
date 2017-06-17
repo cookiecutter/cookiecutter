@@ -248,7 +248,7 @@ Cookiecutter, show support:
 
 * Thank a core committer for their efforts.
 * Star `Cookiecutter on GitHub`_.
-* Join the `Cookiecutter Gittip community`_.
+* `Support this project`_
 
 Got criticism or complaints?
 
@@ -765,7 +765,6 @@ Similar projects
 .. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
 .. _`Stack Overflow`: http://stackoverflow.com/
 .. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
-.. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
