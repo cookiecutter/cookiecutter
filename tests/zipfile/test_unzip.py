@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -66,7 +65,7 @@ def test_unzip_url(mocker, tmpdir):
         autospec=True
     )
 
-    request = MagicMock()
+    request = mocker.MagicMock()
     request.iter_content.return_value = mock_download()
 
     mocker.patch(
@@ -97,7 +96,7 @@ def test_unzip_url_existing_cache(mocker, tmpdir):
         autospec=True
     )
 
-    request = MagicMock()
+    request = mocker.MagicMock()
     request.iter_content.return_value = mock_download()
 
     mocker.patch(
@@ -132,7 +131,7 @@ def test_unzip_url_existing_template(mocker, tmpdir):
         autospec=True
     )
 
-    request = MagicMock()
+    request = mocker.MagicMock()
     request.iter_content.return_value = mock_download()
 
     mocker.patch(
@@ -173,7 +172,7 @@ def test_unzip_url_existing_cache_and_template(mocker, tmpdir):
                 yield chunk
                 chunk = zipfile.read(1024)
 
-    request = MagicMock()
+    request = mocker.MagicMock()
     request.iter_content.return_value = mock_download()
 
     mocker.patch(
