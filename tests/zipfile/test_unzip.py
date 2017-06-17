@@ -4,7 +4,15 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from cookiecutter import exceptions, zipfile
+from cookiecutter import zipfile
+
+
+def mock_download():
+    with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:
+        chunk = zf.read(1024)
+        while chunk:
+            yield chunk
+            chunk = zf.read(1024)
 
 
 def test_unzip_local_file(mocker, tmpdir):
@@ -28,7 +36,7 @@ def test_unzip_local_file(mocker, tmpdir):
     assert not mock_prompt_and_delete.called
 
 
-def test_unzip_should_abort_if_user_does_not_want_to_overwrite_template(mocker, tmpdir):
+def test_unzip_should_abort_not_overwrite_template(mocker, tmpdir):
     """In `unzip()`, if user doesn't want to overwrite an existing cached
     template, Cookiecutter should exit.
     """
@@ -39,7 +47,7 @@ def test_unzip_should_abort_if_user_does_not_want_to_overwrite_template(mocker, 
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
-    existing_tmpl = clone_to_dir.mkdir('fake-repo-tmpl')
+    clone_to_dir.mkdir('fake-repo-tmpl')
 
     with pytest.raises(SystemExit):
         zipfile.unzip(
@@ -58,17 +66,10 @@ def test_unzip_url(mocker, tmpdir):
         autospec=True
     )
 
-    def mock_download():
-        with open('tests/files/fake-repo-tmpl.zip', 'rb') as zipfile:
-            chunk = zipfile.read(1024)
-            while chunk:
-                yield chunk
-                chunk = zipfile.read(1024)
-
     request = MagicMock()
     request.iter_content.return_value = mock_download()
 
-    mock_requests_get = mocker.patch(
+    mocker.patch(
         'cookiecutter.zipfile.requests.get',
         return_value=request,
         autospec=True,
@@ -96,17 +97,10 @@ def test_unzip_url_existing_cache(mocker, tmpdir):
         autospec=True
     )
 
-    def mock_download():
-        with open('tests/files/fake-repo-tmpl.zip', 'rb') as zipfile:
-            chunk = zipfile.read(1024)
-            while chunk:
-                yield chunk
-                chunk = zipfile.read(1024)
-
     request = MagicMock()
     request.iter_content.return_value = mock_download()
 
-    mock_requests_get = mocker.patch(
+    mocker.patch(
         'cookiecutter.zipfile.requests.get',
         return_value=request,
         autospec=True,
@@ -138,17 +132,10 @@ def test_unzip_url_existing_template(mocker, tmpdir):
         autospec=True
     )
 
-    def mock_download():
-        with open('tests/files/fake-repo-tmpl.zip', 'rb') as zipfile:
-            chunk = zipfile.read(1024)
-            while chunk:
-                yield chunk
-                chunk = zipfile.read(1024)
-
     request = MagicMock()
     request.iter_content.return_value = mock_download()
 
-    mock_requests_get = mocker.patch(
+    mocker.patch(
         'cookiecutter.zipfile.requests.get',
         return_value=request,
         autospec=True,
@@ -157,7 +144,7 @@ def test_unzip_url_existing_template(mocker, tmpdir):
     clone_to_dir = tmpdir.mkdir('clone')
 
     # Create an existing rolled out template directory
-    existing_template = clone_to_dir.mkdir('fake-repo-tmpl')
+    clone_to_dir.mkdir('fake-repo-tmpl')
 
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
@@ -189,7 +176,7 @@ def test_unzip_url_existing_cache_and_template(mocker, tmpdir):
     request = MagicMock()
     request.iter_content.return_value = mock_download()
 
-    mock_requests_get = mocker.patch(
+    mocker.patch(
         'cookiecutter.zipfile.requests.get',
         return_value=request,
         autospec=True,
@@ -202,7 +189,7 @@ def test_unzip_url_existing_cache_and_template(mocker, tmpdir):
     existing_zip.write('This is an existing zipfile')
 
     # Create an existing rolled out template directory
-    existing_template = clone_to_dir.mkdir('fake-repo-tmpl')
+    clone_to_dir.mkdir('fake-repo-tmpl')
 
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
@@ -214,7 +201,7 @@ def test_unzip_url_existing_cache_and_template(mocker, tmpdir):
     assert mock_prompt_and_delete.call_count == 1
 
 
-def test_unzip_should_abort_if_user_does_not_want_to_redownload(mocker, tmpdir):
+def test_unzip_should_abort_if_no_redownload(mocker, tmpdir):
     """In `unzip()`, if user doesn't want to download, Cookiecutter should exit
     without cloning anything.
     """
@@ -241,4 +228,3 @@ def test_unzip_should_abort_if_user_does_not_want_to_redownload(mocker, tmpdir):
         zipfile.unzip(zipfile_url, is_url=True, clone_to_dir=str(clone_to_dir))
 
     assert not mock_requests_get.called
-

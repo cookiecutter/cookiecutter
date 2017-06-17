@@ -1,6 +1,5 @@
 import os
 import requests
-import shutil
 import sys
 from zipfile import ZipFile
 
@@ -9,7 +8,8 @@ from .utils import make_sure_path_exists, rmtree
 
 
 def prompt_and_delete(path, no_input=False):
-    """Ask the user whether it's okay to delete the previously-downloaded file/directory.
+    """Ask the user whether it's okay to delete the previously-downloaded
+    file/directory.
 
     If yes, deletes it. Otherwise, Cookiecutter exits.
 
@@ -58,7 +58,7 @@ def unzip(zip_url, is_url, clone_to_dir='.', no_input=False):
         r = requests.get(zip_url, stream=True)
         with open(zip_path, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024):
-                if chunk: # filter out keep-alive new chunks
+                if chunk:  # filter out keep-alive new chunks
                     f.write(chunk)
     else:
         # Just use the local zipfile as-is.

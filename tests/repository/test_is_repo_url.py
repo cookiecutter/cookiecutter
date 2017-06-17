@@ -2,7 +2,9 @@
 import pytest
 
 from cookiecutter.config import BUILTIN_ABBREVIATIONS
-from cookiecutter.repository import is_zip_file, is_repo_url, expand_abbreviations
+from cookiecutter.repository import (
+    is_zip_file, is_repo_url, expand_abbreviations
+)
 
 
 @pytest.fixture(params=[
