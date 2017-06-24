@@ -20,6 +20,7 @@ USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
+    'gl': 'https://gitlab.com/{0}.git',
     'bb': 'https://bitbucket.org/{0}',
 }
 
