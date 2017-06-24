@@ -10,6 +10,8 @@ New Features:
 
 * Include template path or template URL in cookiecutter context under
   ``_template``, thanks to `@aroig`_ (#774)
+* Add a URL abbreviation for GitLab template projects, thanks to `@hackebrot`_
+  (#963)
 
 Bug Fixes:
 
