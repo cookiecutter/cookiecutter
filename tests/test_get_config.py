@@ -23,6 +23,7 @@ def test_get_config():
         },
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
+            'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
         }
     }
@@ -70,6 +71,7 @@ def test_get_config_with_defaults():
         },
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
+            'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
         }
     }

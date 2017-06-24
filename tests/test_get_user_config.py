@@ -69,6 +69,7 @@ def custom_config():
         'replay_dir': '/home/example/some-path-to-replay-files',
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
+            'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
         }
     }
