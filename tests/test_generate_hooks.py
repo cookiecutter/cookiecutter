@@ -37,6 +37,8 @@ def remove_additional_folders(request):
             utils.rmtree('inputpyhooks')
         if os.path.exists('tests/test-shellhooks'):
             utils.rmtree('tests/test-shellhooks')
+        if os.path.exists('tests/test-hooks'):
+            utils.rmtree('tests/test-hooks')
     request.addfinalizer(fin_remove_additional_folders)
 
 
@@ -113,6 +115,65 @@ def test_oserror_hooks(mocker):
             overwrite_if_exists=True
         )
     assert message in str(excinfo.value)
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_run_failing_hook_removes_output_directory():
+    repo_path = os.path.abspath('tests/test-hooks/')
+    hooks_path = os.path.abspath('tests/test-hooks/hooks')
+
+    hook_dir = os.path.join(repo_path, 'hooks')
+    template = os.path.join(repo_path, 'input{{cookiecutter.hooks}}')
+    os.mkdir(repo_path)
+    os.mkdir(hook_dir)
+    os.mkdir(template)
+
+    hook_path = os.path.join(hooks_path, 'pre_gen_project.py')
+
+    with open(hook_path, 'w') as f:
+        f.write("#!/usr/bin/env python\n")
+        f.write("import sys; sys.exit(1)\n")
+
+    with pytest.raises(FailedHookException) as excinfo:
+        generate.generate_files(
+            context={
+                'cookiecutter': {'hooks': 'hooks'}
+            },
+            repo_dir='tests/test-hooks/',
+            overwrite_if_exists=True
+        )
+        assert 'Hook script failed' in str(excinfo.value)
+    assert not os.path.exists('inputhooks')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_run_failing_hook_preserves_existing_output_directory():
+    repo_path = os.path.abspath('tests/test-hooks/')
+    hooks_path = os.path.abspath('tests/test-hooks/hooks')
+
+    hook_dir = os.path.join(repo_path, 'hooks')
+    template = os.path.join(repo_path, 'input{{cookiecutter.hooks}}')
+    os.mkdir(repo_path)
+    os.mkdir(hook_dir)
+    os.mkdir(template)
+
+    hook_path = os.path.join(hooks_path, 'pre_gen_project.py')
+
+    with open(hook_path, 'w') as f:
+        f.write("#!/usr/bin/env python\n")
+        f.write("import sys; sys.exit(1)\n")
+
+    os.mkdir('inputhooks')
+    with pytest.raises(FailedHookException) as excinfo:
+        generate.generate_files(
+            context={
+                'cookiecutter': {'hooks': 'hooks'}
+            },
+            repo_dir='tests/test-hooks/',
+            overwrite_if_exists=True
+        )
+        assert 'Hook script failed' in str(excinfo.value)
+    assert os.path.exists('inputhooks')
 
 
 def make_test_repo(name):
