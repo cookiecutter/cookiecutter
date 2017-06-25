@@ -39,6 +39,21 @@ def _expand_path(path):
     return path
 
 
+def merge_config(default, overwrite):
+    """Recursively update a dict with the key/value pair of another.
+
+    Dict values that are dictionaries themselves will be updated, whilst
+    preserving existing keys.
+    """
+    for k, v in overwrite.items():
+        if isinstance(v, dict):
+            default[k] = merge_config(default[k], v)
+            continue
+        default[k] = v
+
+    return default
+
+
 def get_config(config_path):
     """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
