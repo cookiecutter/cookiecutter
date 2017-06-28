@@ -31,14 +31,16 @@ def remove_additional_folders(request):
     Remove some special folders which are created by the tests.
     """
     def fin_remove_additional_folders():
-        if os.path.exists('tests/test-pyhooks/inputpyhooks'):
-            utils.rmtree('tests/test-pyhooks/inputpyhooks')
-        if os.path.exists('inputpyhooks'):
-            utils.rmtree('inputpyhooks')
-        if os.path.exists('tests/test-shellhooks'):
-            utils.rmtree('tests/test-shellhooks')
-        if os.path.exists('tests/test-hooks'):
-            utils.rmtree('tests/test-hooks')
+        directories_to_delete = [
+            'tests/test-pyhooks/inputpyhooks',
+            'inputpyhooks',
+            'inputhooks',
+            'tests/test-shellhooks',
+            'tests/test-hooks',
+        ]
+        for directory in directories_to_delete:
+            if os.path.exists(directory):
+                utils.rmtree(directory)
     request.addfinalizer(fin_remove_additional_folders)
 
 
