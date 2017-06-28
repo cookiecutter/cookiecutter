@@ -220,14 +220,16 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context, delete_project_on_failure):
+def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
+                            delete_project_on_failure):
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.
     :param hook_name: The hook to execute.
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
-    :param delete_project_on_failure: Delete the project directory on hook failure?
+    :param delete_project_on_failure: Delete the project directory on hook
+        failure?
     """
     with work_in(repo_dir):
         try:
@@ -287,7 +289,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
     delete_project_on_failure = output_directory_created
-    
+
     _run_hook_from_repo_dir(
         repo_dir,
         'pre_gen_project',
