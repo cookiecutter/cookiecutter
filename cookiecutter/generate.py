@@ -338,7 +338,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
                         overwrite_if_exists
                     )
                 except UndefinedError as err:
-                    rmtree(project_dir)
+                    if delete_project_on_failure:
+                        rmtree(project_dir)
                     _dir = os.path.relpath(unrendered_dir, output_dir)
                     msg = "Unable to create directory '{}'".format(_dir)
                     raise UndefinedVariableInTemplate(msg, err, context)
@@ -359,7 +360,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 try:
                     generate_file(project_dir, infile, context, env)
                 except UndefinedError as err:
-                    rmtree(project_dir)
+                    if delete_project_on_failure:
+                        rmtree(project_dir)
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
