@@ -2,19 +2,20 @@
 
 """Functions for generating a project from a project template."""
 from __future__ import unicode_literals
-from collections import OrderedDict
+
 import fnmatch
 import io
 import json
 import logging
 import os
 import shutil
+from collections import OrderedDict
 
-from jinja2 import FileSystemLoader
-from cookiecutter.environment import StrictEnvironment
-from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from binaryornot.check import is_binary
+from jinja2 import FileSystemLoader
+from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
+from .environment import StrictEnvironment
 from .exceptions import (
     NonTemplatedInputDirException,
     ContextDecodingException,
@@ -23,8 +24,8 @@ from .exceptions import (
     UndefinedVariableInTemplate
 )
 from .find import find_template
-from .utils import make_sure_path_exists, work_in, rmtree
 from .hooks import run_hook
+from .utils import make_sure_path_exists, work_in, rmtree
 
 logger = logging.getLogger(__name__)
 
