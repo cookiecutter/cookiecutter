@@ -69,7 +69,7 @@ def get_config(config_path):
                 ''.format(config_path, e)
             )
 
-    config_dict = merge_config(copy.copy(DEFAULT_CONFIG), yaml_dict)
+    config_dict = merge_config(copy.deepcopy(DEFAULT_CONFIG), yaml_dict)
 
     raw_replay_dir = config_dict['replay_dir']
     config_dict['replay_dir'] = _expand_path(raw_replay_dir)
