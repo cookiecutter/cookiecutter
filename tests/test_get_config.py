@@ -66,6 +66,7 @@ def test_get_config():
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'helloworld': 'https://github.com/hackebrot/helloworld'
         }
     }
     assert conf == expected_conf
