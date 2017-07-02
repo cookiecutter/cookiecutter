@@ -46,7 +46,7 @@ def test_merge_config():
         }
     }
 
-    assert config.merge_config(default, user_config) == expected_config
+    assert config.merge_configs(default, user_config) == expected_config
 
 
 def test_get_config():

@@ -39,19 +39,23 @@ def _expand_path(path):
     return path
 
 
-def merge_config(default, overwrite):
+def merge_configs(default, overwrite):
     """Recursively update a dict with the key/value pair of another.
 
     Dict values that are dictionaries themselves will be updated, whilst
     preserving existing keys.
     """
-    for k, v in overwrite.items():
-        if isinstance(v, dict):
-            default[k] = merge_config(default[k], v)
-            continue
-        default[k] = v
+    new_config = copy.deepcopy(default)
 
-    return default
+    for k, v in overwrite.items():
+        # Make sure to preserve existing items in
+        # nested dicts, for example `abbreviations`
+        if isinstance(v, dict):
+            new_config[k] = merge_configs(default[k], v)
+        else:
+            new_config[k] = v
+
+    return new_config
 
 
 def get_config(config_path):
@@ -69,7 +73,7 @@ def get_config(config_path):
                 ''.format(config_path, e)
             )
 
-    config_dict = merge_config(copy.deepcopy(DEFAULT_CONFIG), yaml_dict)
+    config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
     raw_replay_dir = config_dict['replay_dir']
     config_dict['replay_dir'] = _expand_path(raw_replay_dir)
