@@ -8,7 +8,7 @@ from cookiecutter.exceptions import (
 )
 
 
-def test_merge_config():
+def test_merge_configs():
     default = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
         'replay_dir': '/home/example/some-path-to-replay-files',
