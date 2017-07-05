@@ -56,7 +56,7 @@ You may need to restart your command prompt session to load the environment vari
 Packaging tools
 ^^^^^^^^^^^^^^^
 
-``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.4. See the Python Packaging Authority's (PyPA) documention `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
+``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.4. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
 
 
 Install cookiecutter

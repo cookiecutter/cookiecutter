@@ -1,4 +1,4 @@
-.. _supressing-command-line-prompts:
+.. _suppressing-command-line-prompts:
 
 Suppressing Command-Line Prompts
 --------------------------------
@@ -19,7 +19,7 @@ Cookiecutter will pick a default value if used with `no_input`::
 In this case it will be using the default defined in `cookiecutter.json` or `.cookiecutterrc`.
 
 .. note::
-   values from `cookiecutter.json` will be overriden by values from  `.cookiecutterrc`
+   values from `cookiecutter.json` will be overridden by values from  `.cookiecutterrc`
 
 Advanced Example: Defaults + Extra Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
