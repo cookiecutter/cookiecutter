@@ -15,7 +15,9 @@ New Features:
 
 Bug Fixes:
 
-* ???
+* Fix an issue with missing default template abbreviations for when a user
+  defined custom abbreviations, thanks to `@noirbizarre`_ for the issue report
+  and `@hackebrot`_ for the fix (#966, #967)
 
 Other Changes:
 
@@ -78,6 +80,7 @@ Other Changes:
 .. _`@painless-software`: https://github.com/painless-software
 .. _`@retr0h`: https://github.com/retr0h
 .. _`@agenoria`: https://github.com/agenoria
+.. _`@noirbizarre`: https://github.com/noirbizarre
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
