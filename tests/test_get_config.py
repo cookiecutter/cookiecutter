@@ -8,6 +8,47 @@ from cookiecutter.exceptions import (
 )
 
 
+def test_merge_configs():
+    default = {
+        'cookiecutters_dir': '/home/example/some-path-to-templates',
+        'replay_dir': '/home/example/some-path-to-replay-files',
+        'default_context': {},
+        'abbreviations': {
+            'gh': 'https://github.com/{0}.git',
+            'gl': 'https://gitlab.com/{0}.git',
+            'bb': 'https://bitbucket.org/{0}',
+        }
+    }
+
+    user_config = {
+        'default_context': {
+            'full_name': 'Raphael Pierzina',
+            'github_username': 'hackebrot',
+        },
+        'abbreviations': {
+            'gl': 'https://gitlab.com/hackebrot/{0}.git',
+            'pytest-plugin': 'https://github.com/pytest-dev/pytest-plugin.git',
+        }
+    }
+
+    expected_config = {
+        'cookiecutters_dir': '/home/example/some-path-to-templates',
+        'replay_dir': '/home/example/some-path-to-replay-files',
+        'default_context': {
+            'full_name': 'Raphael Pierzina',
+            'github_username': 'hackebrot',
+        },
+        'abbreviations': {
+            'gh': 'https://github.com/{0}.git',
+            'gl': 'https://gitlab.com/hackebrot/{0}.git',
+            'bb': 'https://bitbucket.org/{0}',
+            'pytest-plugin': 'https://github.com/pytest-dev/pytest-plugin.git',
+        }
+    }
+
+    assert config.merge_configs(default, user_config) == expected_config
+
+
 def test_get_config():
     """
     Opening and reading config file
@@ -25,6 +66,7 @@ def test_get_config():
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'helloworld': 'https://github.com/hackebrot/helloworld'
         }
     }
     assert conf == expected_conf
