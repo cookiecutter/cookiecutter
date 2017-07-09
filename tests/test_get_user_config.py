@@ -15,12 +15,16 @@ import shutil
 import pytest
 
 from cookiecutter import config
-from cookiecutter.exceptions import InvalidConfiguration
+from cookiecutter.exceptions import (InvalidConfiguration,
+                                     ConfigDoesNotExistException)
 
 
 @pytest.fixture(scope='module')
 def user_config_path():
-    return os.path.expanduser('~/.cookiecutterrc')
+    try:
+        return config._find_user_config()
+    except ConfigDoesNotExistException:
+        return config.USER_CONFIG_FALLBACK_PATH
 
 
 @pytest.fixture(scope='function')
@@ -120,7 +124,10 @@ def test_specify_config_path(mocker, custom_config_path, custom_config):
 
 
 def test_default_config_path(user_config_path):
-    assert config.USER_CONFIG_PATH == user_config_path
+    try:
+        assert config._find_user_config() == user_config_path
+    except ConfigDoesNotExistException:
+        assert config.USER_CONFIG_FALLBACK_PATH == user_config_path
 
 
 def test_default_config_from_env_variable(
@@ -143,7 +150,13 @@ def test_force_default_config(mocker):
 def test_expand_user_for_directories_in_config(monkeypatch):
     def _expanduser(path):
         return path.replace('~', 'Users/bob')
-    monkeypatch.setattr('os.path.expanduser', _expanduser)
+    # cookiecutter.config imports expanduser directly, rather than calling into
+    # os.path.expanduser.  Hence we must patch where the import happens, 'cause
+    # the patch will occur after import time and if we patch at os.path the
+    # config module will still hold a reference to the unpatched
+    # os.path.expanduser
+    # See more: http://alexmarandon.com/articles/python_mock_gotchas/
+    monkeypatch.setattr('cookiecutter.config.expanduser', _expanduser)
 
     config_file = 'tests/test-config/config-expand-user.yaml'
 

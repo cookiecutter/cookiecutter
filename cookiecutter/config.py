@@ -5,7 +5,9 @@
 from __future__ import unicode_literals
 import copy
 import logging
-import os
+from os.path import (
+    abspath, expandvars, expanduser, isfile, isdir, join
+)
 import io
 
 import poyo
@@ -16,7 +18,64 @@ from .exceptions import InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 
-USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+USER_CONFIG_FALLBACK_PATH = expanduser('~/.cookiecutterrc')
+
+
+def _find_user_config():
+    # user override gets returned immediately
+    if isfile(expandvars('$COOKIECUTTER_CONFIG')):
+        return expandvars('$COOKIECUTTER_CONFIG')
+
+    # give priority to existing cookie cutter rc's
+    if isfile(USER_CONFIG_FALLBACK_PATH):
+        return USER_CONFIG_FALLBACK_PATH
+
+    paths = [
+        expandvars('$XDG_CONFIG_HOME'),         # *nix
+        expandvars('%APPDATA%'),                # Windows
+        expanduser('~/.config'),                # lazy Linux (not all set XDG)
+        expanduser('~/Library/Application\ Support/'),  # OS X
+    ]
+    for _path in paths:
+        path = abspath(join(_path, 'cookiecutter', 'config'))
+        if isfile(path):
+            return path
+    # if we reach this point then either the config file does not exist or we
+    # have not properly been told where to look via env vars
+    raise ConfigDoesNotExistException
+
+
+def _find_user_data_dir(kind):
+    envvar = '${}'.format(kind.upper())
+    dotdir = '~/.{}'.format(kind.lower())
+
+    # only two types of data dir in the cookiecutter project at the moment
+    assert kind.lower() in ('cookiecutters_dir', 'cookiecutter_replay')
+
+    # user override via $COOKIECUTTERS_DIR
+    if isdir(expandvars(envvar)):
+        return expandvars(envvar)
+
+    # respect existing COOKIECUTTERS_DIR
+    fallback = expanduser(dotdir)
+    if isdir(fallback):
+        return fallback
+
+    # data dir search path
+    paths = [
+        expandvars('$XDG_DATA_HOME'),           # *nix
+        expandvars('%APPDATA%'),                # Windows
+        expanduser('~/.local/share'),           # lazy Linux (not all set XDG)
+        expanduser('~/Library/Application\ Support/'),  # OS X
+    ]
+
+    # search for an existing, appropriate location
+    for _path in paths:
+        if isdir(_path):
+            return abspath(join(_path, 'cookiecutter', kind))
+    # No appropriate location exists; use the fallback
+    return fallback
+
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
@@ -25,18 +84,11 @@ BUILTIN_ABBREVIATIONS = {
 }
 
 DEFAULT_CONFIG = {
-    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
-    'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
+    'cookiecutters_dir': _find_user_data_dir('cookiecutters_dir'),
+    'replay_dir': _find_user_data_dir('cookiecutter_replay'),
     'default_context': {},
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
-
-
-def _expand_path(path):
-    """Expand both environment variables and user home in the given path."""
-    path = os.path.expandvars(path)
-    path = os.path.expanduser(path)
-    return path
 
 
 def merge_configs(default, overwrite):
@@ -60,7 +112,7 @@ def merge_configs(default, overwrite):
 
 def get_config(config_path):
     """Retrieve the config from the specified path, returning a config dict."""
-    if not os.path.exists(config_path):
+    if not isfile(config_path):
         raise ConfigDoesNotExistException
 
     logger.debug('config_path is {0}'.format(config_path))
@@ -75,11 +127,13 @@ def get_config(config_path):
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
+    # the calls to expanduser/expandvars are only necessary if the User
+    # overrides the default location using envvars or '~'
     raw_replay_dir = config_dict['replay_dir']
-    config_dict['replay_dir'] = _expand_path(raw_replay_dir)
+    config_dict['replay_dir'] = expanduser(expandvars(raw_replay_dir))
 
     raw_cookies_dir = config_dict['cookiecutters_dir']
-    config_dict['cookiecutters_dir'] = _expand_path(raw_cookies_dir)
+    config_dict['cookiecutters_dir'] = expanduser(expandvars(raw_cookies_dir))
 
     return config_dict
 
@@ -105,20 +159,17 @@ def get_user_config(config_file=None, default_config=False):
         return copy.copy(DEFAULT_CONFIG)
 
     # Load the given config file
-    if config_file and config_file is not USER_CONFIG_PATH:
+    if config_file is not None:
         return get_config(config_file)
 
     try:
-        # Does the user set up a config environment variable?
-        env_config_file = os.environ['COOKIECUTTER_CONFIG']
-    except KeyError:
-        # Load an optional user config if it exists
-        # otherwise return the defaults
-        if os.path.exists(USER_CONFIG_PATH):
-            return get_config(USER_CONFIG_PATH)
-        else:
-            return copy.copy(DEFAULT_CONFIG)
+        # If the user has a valid COOKIECUTTER_CONFIG set or has placed a
+        # config file in a platform appropriate location (defaulting to HOME),
+        # this should find it
+        found_config_file = _find_user_config()
+    except ConfigDoesNotExistException:
+        # Otherwise, return the defaults
+        return copy.copy(DEFAULT_CONFIG)
     else:
-        # There is a config environment variable. Try to load it.
-        # Do not check for existence, so invalid file paths raise an error.
-        return get_config(env_config_file)
+        # There IS a config file. Try to load it
+        return get_config(found_config_file)
