@@ -5,8 +5,9 @@
 from __future__ import unicode_literals
 import copy
 import logging
+import os
 from os.path import (
-    abspath, expandvars, expanduser, isfile, isdir, join
+    abspath, normpath, expandvars, expanduser, isfile, isdir, join
 )
 import io
 
@@ -18,36 +19,62 @@ from .exceptions import InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 
+HOME_DIR = os.path.expanduser('~')
 USER_CONFIG_FALLBACK_PATH = expanduser('~/.cookiecutterrc')
 
 
 def _find_user_config():
+    r"""
+    If ``$COOKIECUTTER_CONFIG`` is set and valid, use it. If
+    ``$COOKIECUTTER_CONFIG`` is set but not a file, raise
+    ``ConfigDoesNotExistException``.
+
+    If ``$COOKIECUTTER_CONFIG`` is unset but ``~/.cookiecutterrc`` exists,
+    return ``~/.cookiecutterrc``.
+
+    If ``$COOKIECUTTER_CONFIG`` is unset and ``~/.cookiecutterrc`` does not
+    exist, then search the following:
+
+        ``$XDG_CONFIG_HOME/cookiecutter/config``
+        ``%APPDATA%\cookiecutter\config``
+        ``~/.config/cookiecutter/config``
+        ``~/Library/Application\ Support/cookiecutter/config``
+
+    And the return the first matching file that exists.
+    """
     # user override gets returned immediately
-    if isfile(expandvars('$COOKIECUTTER_CONFIG')):
-        return expandvars('$COOKIECUTTER_CONFIG')
+    if 'COOKIECUTTER_CONFIG' in os.environ:
+        if isfile(expandvars('$COOKIECUTTER_CONFIG')):
+            return expandvars('$COOKIECUTTER_CONFIG')
+        else:
+            # COOKIECUTTER_CONFIG is set but invalid
+            raise ConfigDoesNotExistException
 
     # give priority to existing cookie cutter rc's
     if isfile(USER_CONFIG_FALLBACK_PATH):
         return USER_CONFIG_FALLBACK_PATH
 
     paths = [
-        expandvars('$XDG_CONFIG_HOME'),         # *nix
-        expandvars('%APPDATA%'),                # Windows
-        expanduser('~/.config'),                # lazy Linux (not all set XDG)
-        expanduser('~/Library/Application\ Support/'),  # OS X
+        expandvars('$XDG_CONFIG_HOME'),  # *nix
+        expandvars('$APPDATA'),          # Windows
+        join(HOME_DIR, '.config'),       # lazy Linux (not all set XDG)
+        join(HOME_DIR, 'Library', 'Application Support'),  # OS X
     ]
     for _path in paths:
-        path = abspath(join(_path, 'cookiecutter', 'config'))
+        path = normpath(abspath(join(_path, 'cookiecutter', 'config')))
         if isfile(path):
             return path
     # if we reach this point then either the config file does not exist or we
     # have not properly been told where to look via env vars
-    raise ConfigDoesNotExistException
+    return None
 
 
 def _find_user_data_dir(kind):
+    """Attempt to locate a suitable directory for storing app data in based on
+    the XDG spec and other common locations.
+    """
     envvar = '${}'.format(kind.upper())
-    dotdir = '~/.{}'.format(kind.lower())
+    dotdir = '.{}'.format(kind.lower())
 
     # only two types of data dir in the cookiecutter project at the moment
     assert kind.lower() in ('cookiecutters_dir', 'cookiecutter_replay')
@@ -57,16 +84,16 @@ def _find_user_data_dir(kind):
         return expandvars(envvar)
 
     # respect existing COOKIECUTTERS_DIR
-    fallback = expanduser(dotdir)
+    fallback = join(HOME_DIR, dotdir)
     if isdir(fallback):
         return fallback
 
     # data dir search path
     paths = [
-        expandvars('$XDG_DATA_HOME'),           # *nix
-        expandvars('%APPDATA%'),                # Windows
-        expanduser('~/.local/share'),           # lazy Linux (not all set XDG)
-        expanduser('~/Library/Application\ Support/'),  # OS X
+        expandvars('$XDG_DATA_HOME'),       # *nix
+        expandvars('$APPDATA'),             # Windows
+        join(HOME_DIR, '.local', 'share'),  # lazy Linux (not all set XDG)
+        join(HOME_DIR, 'Library', 'Application Support'),  # OS X
     ]
 
     # search for an existing, appropriate location
@@ -144,15 +171,11 @@ def get_user_config(config_file=None, default_config=False):
     If ``default_config`` is True, ignore ``config_file`` and return default
     values for the config parameters.
 
-    If a path to a ``config_file`` is given, that is different from the default
-    location, load the user config from that.
+    If a path to a ``config_file`` is given explicitly, load the user config
+    from that.
 
-    Otherwise look up the config file path in the ``COOKIECUTTER_CONFIG``
-    environment variable. If set, load the config from this path. This will
-    raise an error if the specified path is not valid.
-
-    If the environment variable is not set, try the default config file path
-    before falling back to the default config values.
+    Otherwise look up the config file path via ``_find_user_config``.  If no
+    user config can be found by that function, return the default values.
     """
     # Do NOT load a config. Return defaults instead.
     if default_config:
@@ -162,14 +185,15 @@ def get_user_config(config_file=None, default_config=False):
     if config_file is not None:
         return get_config(config_file)
 
-    try:
-        # If the user has a valid COOKIECUTTER_CONFIG set or has placed a
-        # config file in a platform appropriate location (defaulting to HOME),
-        # this should find it
-        found_config_file = _find_user_config()
-    except ConfigDoesNotExistException:
-        # Otherwise, return the defaults
-        return copy.copy(DEFAULT_CONFIG)
-    else:
+    # If the user has a valid COOKIECUTTER_CONFIG set or has placed a
+    # config file in a platform appropriate location (defaulting to HOME),
+    # this should find it.  If COOKIECUTTER_CONFIG is set but invalid,
+    # _find_user_config() will raise ConfigDoesNotExistException and we let
+    # that propagate up
+    found_config_file = _find_user_config()
+    if found_config_file is not None:
         # There IS a config file. Try to load it
         return get_config(found_config_file)
+    else:
+        # Otherwise, return the defaults
+        return copy.copy(DEFAULT_CONFIG)

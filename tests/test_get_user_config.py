@@ -15,16 +15,12 @@ import shutil
 import pytest
 
 from cookiecutter import config
-from cookiecutter.exceptions import (InvalidConfiguration,
-                                     ConfigDoesNotExistException)
+from cookiecutter.exceptions import InvalidConfiguration
 
 
 @pytest.fixture(scope='module')
 def user_config_path():
-    try:
-        return config._find_user_config()
-    except ConfigDoesNotExistException:
-        return config.USER_CONFIG_FALLBACK_PATH
+    return config._find_user_config() or config.USER_CONFIG_FALLBACK_PATH
 
 
 @pytest.fixture(scope='function')
@@ -124,10 +120,8 @@ def test_specify_config_path(mocker, custom_config_path, custom_config):
 
 
 def test_default_config_path(user_config_path):
-    try:
-        assert config._find_user_config() == user_config_path
-    except ConfigDoesNotExistException:
-        assert config.USER_CONFIG_FALLBACK_PATH == user_config_path
+    assert (config._find_user_config() == user_config_path or
+            config.USER_CONFIG_FALLBACK_PATH == user_config_path)
 
 
 def test_default_config_from_env_variable(
