@@ -114,8 +114,8 @@ def test_find_user_data_dir_falls_back_to_user_home(monkeypatch, tmpdir, kind):
     monkeypatch.delenv('APPDATA', raising=False)
     mockdir = tmpdir.mkdir('mock')
     monkeypatch.setattr(config, 'HOME_DIR', str(mockdir))
-    assert config._find_user_data_dir(kind) == '{}/.{}'.format(str(mockdir),
-                                                               kind.lower())
+    expected = os.path.normpath('{}/.{}'.format(str(mockdir), kind.lower()))
+    assert config._find_user_data_dir(kind) == expected
 
 
 def test_merge_configs():
