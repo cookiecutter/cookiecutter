@@ -94,6 +94,7 @@ def test_find_user_config_platform_dir_search_path(monkeypatch,
 
 @pytest.mark.parametrize('kind', ['cookiecutters_dir', 'cookiecutter_replay'])
 def test_find_user_data_dir_valid_envvar(monkeypatch, tmpdir, kind):
+    """If $COOKIECUTTERS_DIR or $COOKIECUTTER_REPLAY is set, use that"""
     tmpdatadir = tmpdir.mkdir('spoof').join('temprc').ensure(dir=True)
     monkeypatch.setenv(kind.upper(), str(tmpdatadir))
     assert config._find_user_data_dir(kind) == str(tmpdatadir)
@@ -101,6 +102,9 @@ def test_find_user_data_dir_valid_envvar(monkeypatch, tmpdir, kind):
 
 @pytest.mark.parametrize('kind', ['cookiecutters_dir', 'cookiecutter_replay'])
 def test_find_user_data_dir_preexisting_dotdir(monkeypatch, tmpdir, kind):
+    """If a pre-existing ~/.cookiecutter_replay/ or ~/.cookiecutters_dir/
+    exists and the relevant envvars are unset, use the existing dirs
+    """
     tmphome = tmpdir.mkdir('phonyhome')
     monkeypatch.setattr(config, 'HOME_DIR', str(tmphome))
     tmpdatadir = tmphome.join('.{}'.format(kind.lower())).ensure(dir=True)
@@ -108,7 +112,30 @@ def test_find_user_data_dir_preexisting_dotdir(monkeypatch, tmpdir, kind):
 
 
 @pytest.mark.parametrize('kind', ['cookiecutters_dir', 'cookiecutter_replay'])
+@pytest.mark.parametrize("platform", ['XDG', 'NIX', 'OSX', 'WIN'])
+def test_find_user_data_dir_search_path(monkeypatch, tmpdir, kind, platform):
+    base_path = tmpdir.mkdir('datadir')
+    search_path = {
+        'XDG': base_path.join('XDG'),
+        'WIN': base_path.join('WIN'),
+        # these two are a little more concrete - they have to match what's
+        # hardcoded in the join in cookiecutter/config.py
+        'NIX': base_path.join('.local', 'share'),
+        'OSX': base_path.join('Library', 'Application Support')
+    }
+    monkeypatch.setenv('XDG_DATA_HOME', str(search_path['XDG']))
+    monkeypatch.setenv('APPDATA', str(search_path['WIN']))
+    monkeypatch.setattr(config, 'HOME_DIR', str(base_path))
+    path = search_path.pop(platform)
+    path = path.join('cookiecutter', kind).ensure(dir=True)
+    assert config._find_user_data_dir(kind) == str(path)
+    for _, other_path in search_path.items():
+        assert config._find_user_data_dir(kind) != str(other_path)
+
+
+@pytest.mark.parametrize('kind', ['cookiecutters_dir', 'cookiecutter_replay'])
 def test_find_user_data_dir_falls_back_to_user_home(monkeypatch, tmpdir, kind):
+    """If all else fails, store user data in $HOME"""
     monkeypatch.delenv(kind.upper(), raising=False)
     monkeypatch.delenv('XDG_DATA_HOME', raising=False)
     monkeypatch.delenv('APPDATA', raising=False)
