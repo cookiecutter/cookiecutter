@@ -111,6 +111,7 @@ Contributors
 * Eyal Levin (`@eyalev`_)
 * mathagician (`@mathagician`_)
 * Guillaume Gelin (`@ramnes`_)
+* @delirious-lettuce (`@delirious-lettuce`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -210,3 +211,4 @@ Contributors
 .. _`@eyalev`: https://github.com/eyalev
 .. _`@mathagician`: https://github.com/mathagician
 .. _`@ramnes`: https://github.com/ramnes
+.. _`@delirious-lettuce`: https://github.com/delirious-lettuce
