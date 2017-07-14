@@ -353,6 +353,7 @@ Python
 * `cookiecutter-pyqt5`_: A prebuilt PyQt5 GUI template with a fully featured Pytest test suite and Travis CI integration all in an optimal Python package.
 * `cookiecutter-pyqt4`_: A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
 * `cookiecutter-xontrib`_: A template for building xontribs, a.k.a `xonsh`_ contributions
+* `cookiecutter-conda-python`_: A template for building Conda Python packages
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -395,6 +396,7 @@ Python
 .. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
 .. _`cookiecutter-xontrib`: https://github.com/laerus/cookiecutter-xontrib
 .. _`xonsh`: https://github.com/xonsh/xonsh
+.. _`cookiecutter-conda-python`: https://github.com/conda/cookiecutter-conda-python
 
 
 Python-Django
