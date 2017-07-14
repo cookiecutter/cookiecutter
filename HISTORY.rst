@@ -39,6 +39,7 @@ Other Changes:
 * Add ``test_requirements.txt`` file for easier testing outside of tox, thanks
   to `@ramnes`_ (#945)
 * Improve wording in *copy without render* docs, thanks to `@eyalev`_ (#938)
+* Fix a number of typos, thanks to `@delirious-lettuce`_ (#968)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
@@ -81,6 +82,7 @@ Other Changes:
 .. _`@retr0h`: https://github.com/retr0h
 .. _`@agenoria`: https://github.com/agenoria
 .. _`@noirbizarre`: https://github.com/noirbizarre
+.. _`@delirious-lettuce`: https://github.com/delirious-lettuce
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
