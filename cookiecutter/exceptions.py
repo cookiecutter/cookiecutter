@@ -47,7 +47,7 @@ class ConfigDoesNotExistException(CookiecutterException):
 class InvalidConfiguration(CookiecutterException):
     """
     Raised if the global configuration file is not valid YAML or is
-    badly contructed.
+    badly constructed.
     """
 
 
