@@ -290,3 +290,80 @@ def test_raise_undefined_variable_project_dir(tmpdir):
     assert error.context == {}
 
     assert not output_dir.join('testproject').exists()
+
+
+def test_raise_undefined_variable_file_name_with_safe_force(tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/file-name/',
+            output_dir=str(output_dir),
+            context=undefined_context,
+            safe_force=True
+        )
+    error = err.value
+    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert error.context == undefined_context
+
+    assert output_dir.join('testproject').exists()
+    assert output_dir.exists()
+
+
+def test_raise_undefined_variable_file_content_with_safe_force(tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/file-content/',
+            output_dir=str(output_dir),
+            context=undefined_context,
+            safe_force=True
+        )
+    error = err.value
+    assert "Unable to create file 'README.rst'" == error.message
+    assert error.context == undefined_context
+
+    assert output_dir.join('testproject').exists()
+    assert output_dir.exists()
+
+
+def test_raise_undefined_variable_dir_name_with_safe_force(tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/dir-name/',
+            output_dir=str(output_dir),
+            context=undefined_context,
+            safe_force=True
+        )
+    error = err.value
+
+    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    msg = "Unable to create directory '{}'".format(directory)
+    assert msg == error.message
+
+    assert error.context == undefined_context
+
+    assert output_dir.join('testproject').exists()
+    assert output_dir.exists()
+
+
+def test_raise_undefined_variable_project_dir_with_safe_force(tmpdir):
+    output_dir = tmpdir.mkdir('output')
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/dir-name/',
+            output_dir=str(output_dir),
+            context={},
+            safe_force=True
+        )
+    error = err.value
+    msg = "Unable to create project directory '{{cookiecutter.project_slug}}'"
+    assert msg == error.message
+    assert error.context == {}
+
+    assert not output_dir.join('testproject').exists()
+    assert output_dir.exists()

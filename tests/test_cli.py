@@ -193,6 +193,56 @@ def test_cli_overwrite_if_exists_when_output_dir_exists(
     assert os.path.isdir('fake-project')
 
 
+@pytest.fixture(params=['--safe-force'])
+def safe_force_cli_flag(request):
+    return request.param
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_safe_force_when_output_dir_does_not_exist(
+        mocker, cli_runner, safe_force_cli_flag):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(
+        template_path,
+        '--no-input',
+        safe_force_cli_flag,
+    )
+
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        True,
+        replay=False,
+        overwrite_if_exists=True,
+        safe_force=True,
+        output_dir='.',
+        config_file=None,
+        default_config=False,
+        extra_context=None,
+    )
+
+
+@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
+def test_cli_safe_force_when_output_dir_exists(
+        cli_runner, safe_force_cli_flag):
+
+    result = cli_runner(
+        'tests/fake-repo-pre/',
+        '--no-input',
+        safe_force_cli_flag,
+    )
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+
+
 @pytest.fixture(params=['-o', '--output-dir'])
 def output_dir_flag(request):
     return request.param
