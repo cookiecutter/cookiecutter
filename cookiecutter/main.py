@@ -23,8 +23,8 @@ logger = logging.getLogger(__name__)
 
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
-        replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False):
+        replay=False, overwrite_if_exists=False, safe_force=False,
+        output_dir='.', config_file=None, default_config=False):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -36,6 +36,8 @@ def cookiecutter(
         and user configuration.
     :param: overwrite_if_exists: Overwrite the contents of output directory
         if it exists
+    :param: safe_force: Overwrite the contents of output directory
+        if it exists, but do not delete the directory upon errors
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
@@ -88,5 +90,6 @@ def cookiecutter(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
+        safe_force=safe_force,
         output_dir=output_dir
     )

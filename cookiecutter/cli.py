@@ -71,6 +71,10 @@ def validate_extra_context(ctx, param, value):
     help=u'Overwrite the contents of the output directory if it already exists'
 )
 @click.option(
+    u'--safe-force', is_flag=True,
+    help=u'Implies -f/--overwrite-if-exists, but do not delete the directory upon errors',
+)
+@click.option(
     u'-o', u'--output-dir', default='.', type=click.Path(),
     help=u'Where to output the generated project dir into'
 )
@@ -88,8 +92,8 @@ def validate_extra_context(ctx, param, value):
 )
 def main(
         template, extra_context, no_input, checkout, verbose,
-        replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file):
+        replay, overwrite_if_exists, safe_force, output_dir,
+        config_file, default_config, debug_file):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -107,12 +111,16 @@ def main(
         debug_file=debug_file,
     )
 
+    if safe_force:
+        overwrite_if_exists = True
+
     try:
         cookiecutter(
             template, checkout, no_input,
             extra_context=extra_context,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
+            safe_force=safe_force,
             output_dir=output_dir,
             config_file=config_file,
             default_config=default_config,
