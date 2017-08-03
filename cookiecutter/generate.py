@@ -180,7 +180,7 @@ def generate_file(project_dir, infile, context, env):
 
 
 def render_and_create_dir(dirname, context, output_dir, environment,
-                          overwrite_if_exists=False):
+                          overwrite_if_exists=False, safe_force=False):
     """Render name of a directory, create the directory, return its path."""
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
@@ -219,7 +219,7 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
+def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context, safe_force):
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.
@@ -231,7 +231,8 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
         try:
             run_hook(hook_name, project_dir, context)
         except FailedHookException:
-            rmtree(project_dir)
+            if not safe_force:
+                rmtree(project_dir)
             logger.error(
                 "Stopping generation because {} hook "
                 "script didn't exit successfully".format(hook_name)
@@ -240,7 +241,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
 
 
 def generate_files(repo_dir, context=None, output_dir='.',
-                   overwrite_if_exists=False):
+                   overwrite_if_exists=False, safe_force=False):
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -248,6 +249,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param safe_force: Overwrite the contents of the output directory
+        if it exists, but do not delete the directory upon errors.
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
@@ -259,13 +262,15 @@ def generate_files(repo_dir, context=None, output_dir='.',
         context=context,
         keep_trailing_newline=True,
     )
+
     try:
         project_dir = render_and_create_dir(
             unrendered_dir,
             context,
             output_dir,
             env,
-            overwrite_if_exists
+            overwrite_if_exists,
+            safe_force
         )
     except UndefinedError as err:
         msg = "Unable to create project directory '{}'".format(unrendered_dir)
@@ -281,7 +286,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     project_dir = os.path.abspath(project_dir)
     logger.debug('Project directory is {}'.format(project_dir))
 
-    _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context)
+    _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context, safe_force)
 
     with work_in(template_dir):
         env.loader = FileSystemLoader('.')
@@ -323,10 +328,12 @@ def generate_files(repo_dir, context=None, output_dir='.',
                         context,
                         output_dir,
                         env,
-                        overwrite_if_exists
+                        overwrite_if_exists,
+                        safe_force
                     )
                 except UndefinedError as err:
-                    rmtree(project_dir)
+                    if not safe_force:
+                        rmtree(project_dir)
                     _dir = os.path.relpath(unrendered_dir, output_dir)
                     msg = "Unable to create directory '{}'".format(_dir)
                     raise UndefinedVariableInTemplate(msg, err, context)
@@ -347,10 +354,11 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 try:
                     generate_file(project_dir, infile, context, env)
                 except UndefinedError as err:
-                    rmtree(project_dir)
+                    if not safe_force:
+                        rmtree(project_dir)
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    _run_hook_from_repo_dir(repo_dir, 'post_gen_project', project_dir, context)
+    _run_hook_from_repo_dir(repo_dir, 'post_gen_project', project_dir, context, safe_force)
 
     return project_dir
