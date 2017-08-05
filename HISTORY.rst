@@ -57,6 +57,7 @@ Other Changes:
   * `sublime-snippet-package-template`_ by `@agenoria`_ (#956)
   * `cookiecutter-conda-python`_ by `@conda`_ (#969)
   * `cookiecutter-flask-minimal`_ by `@candidtim`_ (#977)
+  * `cookiecutter-pypackage-rust-cross-platform-publish`_ by `@mckaymatt`_ (#957)
 
 .. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
 .. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
@@ -71,6 +72,7 @@ Other Changes:
 .. _`sublime-snippet-package-template`: https://github.com/agenoria/sublime-snippet-package-template
 .. _`cookiecutter-conda-python`: https://github.com/conda/cookiecutter-conda-python
 .. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
+.. _`cookiecutter-pypackage-rust-cross-platform-publish`: https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
@@ -91,6 +93,7 @@ Other Changes:
 .. _`@delirious-lettuce`: https://github.com/delirious-lettuce
 .. _`@conda`: https://github.com/conda
 .. _`@candidtim`: https://github.com/candidtim
+.. _`@mckaymatt`: https://github.com/mckaymatt
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
