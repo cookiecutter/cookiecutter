@@ -18,6 +18,8 @@ Bug Fixes:
 * Fix an issue with missing default template abbreviations for when a user
   defined custom abbreviations, thanks to `@noirbizarre`_ for the issue report
   and `@hackebrot`_ for the fix (#966, #967)
+* Preserve existing output directory on project generation failure, thanks to
+  `@ionelmc`_ for the report and `@michaeljoseph`_ for the fix (#629, #964)
 
 Other Changes:
 
