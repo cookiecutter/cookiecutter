@@ -144,7 +144,8 @@ def test_run_failing_hook_removes_output_directory():
             repo_dir='tests/test-hooks/',
             overwrite_if_exists=True
         )
-        assert 'Hook script failed' in str(excinfo.value)
+
+    assert 'Hook script failed' in str(excinfo.value)
     assert not os.path.exists('inputhooks')
 
 
@@ -174,7 +175,8 @@ def test_run_failing_hook_preserves_existing_output_directory():
             repo_dir='tests/test-hooks/',
             overwrite_if_exists=True
         )
-        assert 'Hook script failed' in str(excinfo.value)
+
+    assert 'Hook script failed' in str(excinfo.value)
     assert os.path.exists('inputhooks')
 
 
