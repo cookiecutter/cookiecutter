@@ -42,6 +42,9 @@ Other Changes:
   to `@ramnes`_ (#945)
 * Improve wording in *copy without render* docs, thanks to `@eyalev`_ (#938)
 * Fix a number of typos, thanks to `@delirious-lettuce`_ (#968)
+* Improved *extra context* docs by noting that extra context keys must be
+  present in the template's ``cookiecutter.json``, thanks to `@karantan`_ for
+  the report and fix (#863, #864)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
@@ -94,6 +97,7 @@ Other Changes:
 .. _`@conda`: https://github.com/conda
 .. _`@candidtim`: https://github.com/candidtim
 .. _`@mckaymatt`: https://github.com/mckaymatt
+.. _`@karantan`: https://github.com/karantan
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
