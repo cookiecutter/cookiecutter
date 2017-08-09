@@ -16,7 +16,7 @@ import textwrap
 from cookiecutter import hooks, utils, exceptions
 
 
-def make_test_repo(name):
+def make_test_repo(name, multiple_hooks=False):
     """Helper function which is called in the test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
@@ -53,6 +53,26 @@ def make_test_repo(name):
             f.write("touch 'shell_post.txt'\n")
         # Set the execute bit
         os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
+
+    # Adding an additional pre script
+    if multiple_hooks:
+        if sys.platform.startswith('win'):
+            pre = 'pre_gen_project.bat'
+            with open(os.path.join(hook_dir, pre), 'w') as f:
+                f.write("@echo off\n")
+                f.write("\n")
+                f.write("echo post generation hook\n")
+                f.write("echo. >shell_pre.txt\n")
+        else:
+            pre = 'pre_gen_project.sh'
+            filename = os.path.join(hook_dir, pre)
+            with open(filename, 'w') as f:
+                f.write("#!/bin/bash\n")
+                f.write("\n")
+                f.write("echo 'post generation hook';\n")
+                f.write("touch 'shell_pre.txt'\n")
+            # Set the execute bit
+            os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
 
     return post
 
@@ -103,7 +123,7 @@ class TestExternalHooks(object):
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
     def setup_method(self, method):
-        self.post_hook = make_test_repo(self.repo_path)
+        self.post_hook = make_test_repo(self.repo_path, multiple_hooks=True)
 
     def teardown_method(self, method):
         utils.rmtree(self.repo_path)
@@ -112,6 +132,8 @@ class TestExternalHooks(object):
             os.remove('python_pre.txt')
         if os.path.exists('shell_post.txt'):
             os.remove('shell_post.txt')
+        if os.path.exists('shell_pre.txt'):
+            os.remove('shell_pre.txt')
         if os.path.exists('tests/shell_post.txt'):
             os.remove('tests/shell_post.txt')
         if os.path.exists('tests/test-hooks/input{{hooks}}/python_pre.txt'):
@@ -175,6 +197,7 @@ class TestExternalHooks(object):
         with utils.work_in(self.repo_path):
             hooks.run_hook('pre_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
+            assert os.path.isfile(os.path.join(tests_dir, 'shell_pre.txt'))
 
             hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
