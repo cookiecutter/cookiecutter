@@ -20,6 +20,8 @@ Bug Fixes:
   and `@hackebrot`_ for the fix (#966, #967)
 * Preserve existing output directory on project generation failure, thanks to
   `@ionelmc`_ for the report and `@michaeljoseph`_ for the fix (#629, #964)
+* Fix Python 3.x error handling for ``git`` operation failures, thanks to `@jmcarp`_
+  (#905)
 
 Other Changes:
 
@@ -100,6 +102,7 @@ Other Changes:
 .. _`@candidtim`: https://github.com/candidtim
 .. _`@mckaymatt`: https://github.com/mckaymatt
 .. _`@karantan`: https://github.com/karantan
+.. _`@jmcarp`: https://github.com/jmcarp
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
