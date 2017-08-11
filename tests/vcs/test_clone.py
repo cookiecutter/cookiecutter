@@ -139,8 +139,11 @@ def test_clone_should_invoke_vcs_command(
 
 
 @pytest.mark.parametrize('error_message', [
-    "fatal: repository 'https://github.com/hackebro/cookiedozer' not found",
-    'hg: abort: HTTP Error 404: Not Found',
+    (
+        "fatal: repository 'https://github.com/hackebro/cookiedozer' "
+        "not found"
+    ).encode('utf-8'),
+    'hg: abort: HTTP Error 404: Not Found'.encode('utf-8'),
 ])
 def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
     """In `clone()`, repository not found errors should raise an
@@ -171,8 +174,11 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
 
 
 @pytest.mark.parametrize('error_message', [
-    "error: pathspec 'unknown_branch' did not match any file(s) known to git.",
-    "hg: abort: unknown revision 'unknown_branch'!",
+    (
+        "error: pathspec 'unknown_branch' did not match any file(s) known "
+        "to git"
+    ).encode('utf-8'),
+    "hg: abort: unknown revision 'unknown_branch'!".encode('utf-8'),
 ])
 def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
     """In `clone()`, branch not found errors should raise an
@@ -207,7 +213,7 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
         side_effect=[subprocess.CalledProcessError(
-            -1, 'cmd', output='Something went wrong'
+            -1, 'cmd', output='Something went wrong'.encode('utf-8')
         )]
     )
 
