@@ -63,8 +63,8 @@ Other Changes:
   * `cookiecutter-pypackage-rust-cross-platform-publish`_ by `@mckaymatt`_ (#957)
   * `cookie-cookie`_ by `@tuxredux`_ (#951)
 
-.. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
-.. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
+.. _`cookiecutter-kata-gtest`: https://github.com/13coders/cookiecutter-kata-gtest
+.. _`cookiecutter-kata-cpputest`: https://github.com/13coders/cookiecutter-kata-cpputest
 .. _`cookiecutter-pyramid-talk-python-starter`: https://github.com/mikeckennedy/cookiecutter-pyramid-talk-python-starter
 .. _`cookiecutter-android`: https://github.com/alexfu/cookiecutter-android
 .. _`cookiecutter-lux-python`: https://github.com/alexkey/cookiecutter-lux-python
