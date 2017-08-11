@@ -113,6 +113,7 @@ Contributors
 * Guillaume Gelin (`@ramnes`_)
 * @delirious-lettuce (`@delirious-lettuce`_)
 * Gasper Vozel (`@karantan`_)
+* Joshua Carp (`@jmcarp`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -214,3 +215,4 @@ Contributors
 .. _`@ramnes`: https://github.com/ramnes
 .. _`@delirious-lettuce`: https://github.com/delirious-lettuce
 .. _`@karantan`: https://github.com/karantan
+.. _`@jmcarp`: https://github.com/jmcarp
