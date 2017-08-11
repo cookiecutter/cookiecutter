@@ -481,6 +481,10 @@ Meta-templates for generating Cookiecutter project templates.
 
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
 
+* `cookie-cookie`_: A project template for... project templates...
+
+.. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
+
 Ansible
 ~~~~~~~
 
@@ -497,9 +501,9 @@ Ansible
 Git
 ~~~
 
-* `cookiecutter-git`_: Git Cookiecutter. A git repository project template!
+* `cookiecutter-git`_: A git repository project template!
 
-.. _`cookiecutter-git`: https://github.com/webevllc/cookiecutter-git
+.. _`cookiecutter-git`: https://github.com/tuxredux/cookiecutter-git
 
 
 C
