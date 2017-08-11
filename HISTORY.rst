@@ -61,6 +61,7 @@ Other Changes:
   * `cookiecutter-conda-python`_ by `@conda`_ (#969)
   * `cookiecutter-flask-minimal`_ by `@candidtim`_ (#977)
   * `cookiecutter-pypackage-rust-cross-platform-publish`_ by `@mckaymatt`_ (#957)
+  * `cookie-cookie`_ by `@tuxredux`_ (#951)
 
 .. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
 .. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
@@ -76,6 +77,7 @@ Other Changes:
 .. _`cookiecutter-conda-python`: https://github.com/conda/cookiecutter-conda-python
 .. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
 .. _`cookiecutter-pypackage-rust-cross-platform-publish`: https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish
+.. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
