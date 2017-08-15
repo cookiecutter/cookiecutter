@@ -160,6 +160,6 @@ def get_hooks_env(cwd='.', hooks_dir='hooks'):
 
     PYTHONPATH = hooks_env.get('PYTHONPATH', '')
     hooks_env[str('PYTHONPATH')] = str('{0}:{1}'.format(
-        os.path.join(os.path.dirname(cwd), hooks_dir), PYTHONPATH))
+        os.path.join(os.path.dirname(cwd), hooks_dir), str(PYTHONPATH)))
 
     return hooks_env
