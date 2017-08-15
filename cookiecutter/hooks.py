@@ -82,6 +82,7 @@ def run_script(script_path, cwd='.'):
     try:
         proc = subprocess.Popen(
             script_command,
+            env=get_hooks_env(cwd),
             shell=run_thru_shell,
             cwd=cwd
         )
@@ -142,3 +143,23 @@ def run_hook(hook_name, project_dir, context):
         return
     logger.debug('Running hook {}'.format(hook_name))
     run_script_with_context(script, project_dir, context)
+
+
+def get_hooks_env(cwd='.', hooks_dir='hooks'):
+    """
+    Create and return a copy of the environmental variables including
+    the current hooks path appended to the PYTHONPATH. This is used for
+    Popen to enable local imports when running hooks.
+
+    :param cwd: The directory to run the script from.
+    :param hooks_dir: The hook directory in the template.
+    :return: A copy of the environmental variables with the addition of
+    the current hooks path appended to the PYTHONPATH.
+    """
+    hooks_env = os.environ.copy()
+
+    PYTHONPATH = hooks_env.get("PYTHONPATH", "")
+    hooks_env["PYTHONPATH"] = \
+        os.path.join(os.path.dirname(cwd), hooks_dir) + ":" + PYTHONPATH
+
+    return hooks_env

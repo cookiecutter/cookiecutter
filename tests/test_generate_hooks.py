@@ -37,6 +37,7 @@ def remove_additional_folders(request):
             'inputhooks',
             'tests/test-shellhooks',
             'tests/test-hooks',
+            'tests/test-hook-imports/inputpyhooks'
         ]
         for directory in directories_to_delete:
             if os.path.exists(directory):
@@ -54,6 +55,19 @@ def test_ignore_hooks_dirs():
         output_dir='tests/test-pyhooks/'
     )
     assert not os.path.exists('tests/test-pyhooks/inputpyhooks/hooks')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_imports_in_hooks():
+    try:
+        generate.generate_files(
+            context={
+                'cookiecutter': {'pyhooks': 'pyhooks'}
+            },
+            repo_dir='tests/test-hook-imports/',
+            output_dir='tests/test-hook-imports/')
+    except FailedHookException:
+        pytest.fail("Unexpected FailedHookException...")
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
@@ -117,6 +131,32 @@ def test_oserror_hooks(mocker):
             overwrite_if_exists=True
         )
     assert message in str(excinfo.value)
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_popen_includes_hooks_in_python_path(mocker):
+    err = OSError()
+    prompt = mocker.patch('subprocess.Popen')
+    prompt.side_effect = err
+
+    original_env = os.environ.copy()
+    original_python_path = original_env.get("PYTHONPATH", "")
+
+    with pytest.raises(FailedHookException):
+        generate.generate_files(
+            context={
+                'cookiecutter': {'pyhooks': 'pyhooks'}
+            },
+            repo_dir='tests/test-hook-imports/',
+            output_dir='tests/test-hook-imports/')
+
+    hooks_env = prompt.call_args[1]["env"]
+    hooks_env_python_path = hooks_env["PYTHONPATH"]
+
+    assert original_python_path in hooks_env_python_path
+    assert os.path.join("tests",
+                        "test-hook-imports",
+                        "hooks") in hooks_env_python_path
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
