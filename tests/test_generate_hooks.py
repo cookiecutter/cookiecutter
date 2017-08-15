@@ -135,12 +135,15 @@ def test_oserror_hooks(mocker):
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_popen_includes_hooks_in_python_path(mocker):
+    repo_path = os.path.abspath('tests/test-hook-imports/')
+    hook_dir = os.path.join(repo_path, 'hooks')
+
     err = OSError()
     prompt = mocker.patch('subprocess.Popen')
     prompt.side_effect = err
 
     original_env = os.environ.copy()
-    original_python_path = original_env.get("PYTHONPATH", "")
+    original_python_path = original_env.get('PYTHONPATH', '')
 
     with pytest.raises(FailedHookException):
         generate.generate_files(
@@ -150,13 +153,11 @@ def test_popen_includes_hooks_in_python_path(mocker):
             repo_dir='tests/test-hook-imports/',
             output_dir='tests/test-hook-imports/')
 
-    hooks_env = prompt.call_args[1]["env"]
-    hooks_env_python_path = hooks_env["PYTHONPATH"]
+    hooks_env = prompt.call_args[1]['env']
+    hooks_env_python_path = hooks_env['PYTHONPATH']
 
     assert original_python_path in hooks_env_python_path
-    assert os.path.join("tests",
-                        "test-hook-imports",
-                        "hooks") in hooks_env_python_path
+    assert hook_dir in hooks_env_python_path
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')

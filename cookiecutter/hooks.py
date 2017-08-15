@@ -158,8 +158,8 @@ def get_hooks_env(cwd='.', hooks_dir='hooks'):
     """
     hooks_env = os.environ.copy()
 
-    PYTHONPATH = hooks_env.get("PYTHONPATH", "")
-    hooks_env["PYTHONPATH"] = \
-        os.path.join(os.path.dirname(cwd), hooks_dir) + ":" + PYTHONPATH
+    PYTHONPATH = hooks_env.get('PYTHONPATH', '')
+    hooks_env[str('PYTHONPATH')] = str('{0}:{1}'.format(
+        os.path.join(os.path.dirname(cwd), hooks_dir), PYTHONPATH))
 
     return hooks_env
