@@ -349,7 +349,10 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
-                if is_copy_only_path(infile, context):
+                if (
+                    is_copy_only_path(infile, context) or
+                    os.path.islink(infile)
+                ):
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
@@ -357,8 +360,13 @@ def generate_files(repo_dir, context=None, output_dir='.',
                         'Copying file {} to {} without rendering'
                         ''.format(infile, outfile)
                     )
-                    shutil.copyfile(infile, outfile)
-                    shutil.copymode(infile, outfile)
+                    if os.path.islink(infile) and hasattr(os, 'symlink'):
+                        # only true on link-supporting OS
+                        target = os.readlink(infile)
+                        os.symlink(target, outfile)
+                    else:
+                        shutil.copyfile(infile, outfile)
+                        shutil.copymode(infile, outfile)
                     continue
                 try:
                     generate_file(project_dir, infile, context, env)

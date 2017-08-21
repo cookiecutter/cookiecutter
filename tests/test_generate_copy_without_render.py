@@ -68,3 +68,15 @@ def test_generate_copy_without_render_extensions():
 
     with open('test_copy_without_render/rendered/not_rendered.yml') as f:
         assert '{{cookiecutter.render_test}}' in f.read()
+
+    if hasattr(os.path, 'symlink'):
+        for link in [
+            'sample-of-dangling-absolute-symlink',
+            'sample-of-relative-symlink',
+        ]:
+            expected = os.path.join(
+                'test_copy_without_render',
+                'test_copy_without_render-rendered',
+                link,
+            )
+            assert os.path.lexists(expected)
