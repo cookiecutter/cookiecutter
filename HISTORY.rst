@@ -64,6 +64,7 @@ Other Changes:
   * `cookiecutter-flask-minimal`_ by `@candidtim`_ (#977)
   * `cookiecutter-pypackage-rust-cross-platform-publish`_ by `@mckaymatt`_ (#957)
   * `cookie-cookie`_ by `@tuxredux`_ (#951)
+  * `cookiecutter-telegram-bot`_ by `@Ars2014`_ (#984)
 
 .. _`cookiecutter-kata-gtest`: https://github.com/13coders/cookiecutter-kata-gtest
 .. _`cookiecutter-kata-cpputest`: https://github.com/13coders/cookiecutter-kata-cpputest
@@ -80,6 +81,7 @@ Other Changes:
 .. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
 .. _`cookiecutter-pypackage-rust-cross-platform-publish`: https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish
 .. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
+.. _`cookiecutter-telegram-bot`: https://github.com/Ars2014/cookiecutter-telegram-bot
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
@@ -103,6 +105,7 @@ Other Changes:
 .. _`@mckaymatt`: https://github.com/mckaymatt
 .. _`@karantan`: https://github.com/karantan
 .. _`@jmcarp`: https://github.com/jmcarp
+.. _`@Ars2014`: https://github.com/Ars2014
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
