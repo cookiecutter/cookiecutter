@@ -26,7 +26,7 @@ def replay_file(replay_test_dir, template_name):
 
 
 def test_type_error_if_no_template_name(replay_test_dir):
-    """Test that replay.load raises if the tempate_name is not a valid str."""
+    """Test that replay.load raises if the template_name is not a valid str."""
     with pytest.raises(TypeError):
         replay.load(replay_test_dir, None)
 

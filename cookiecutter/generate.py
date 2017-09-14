@@ -2,19 +2,20 @@
 
 """Functions for generating a project from a project template."""
 from __future__ import unicode_literals
-from collections import OrderedDict
+
 import fnmatch
 import io
 import json
 import logging
 import os
 import shutil
+from collections import OrderedDict
 
-from jinja2 import FileSystemLoader
-from cookiecutter.environment import StrictEnvironment
-from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from binaryornot.check import is_binary
+from jinja2 import FileSystemLoader
+from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
+from .environment import StrictEnvironment
 from .exceptions import (
     NonTemplatedInputDirException,
     ContextDecodingException,
@@ -23,8 +24,8 @@ from .exceptions import (
     UndefinedVariableInTemplate
 )
 from .find import find_template
-from .utils import make_sure_path_exists, work_in, rmtree
 from .hooks import run_hook
+from .utils import make_sure_path_exists, work_in, rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -196,19 +197,19 @@ def render_and_create_dir(dirname, context, output_dir, environment,
 
     output_dir_exists = os.path.exists(dir_to_create)
 
-    if overwrite_if_exists:
-        if output_dir_exists:
+    if output_dir_exists:
+        if overwrite_if_exists:
             logger.debug(
                 'Output directory {} already exists,'
                 'overwriting it'.format(dir_to_create)
             )
-    else:
-        if output_dir_exists:
+        else:
             msg = 'Error: "{}" directory already exists'.format(dir_to_create)
             raise OutputDirExistsException(msg)
+    else:
+        make_sure_path_exists(dir_to_create)
 
-    make_sure_path_exists(dir_to_create)
-    return dir_to_create
+    return dir_to_create, not output_dir_exists
 
 
 def ensure_dir_is_templated(dirname):
@@ -219,19 +220,23 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context):
+def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
+                            delete_project_on_failure):
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.
     :param hook_name: The hook to execute.
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
+    :param delete_project_on_failure: Delete the project directory on hook
+        failure?
     """
     with work_in(repo_dir):
         try:
             run_hook(hook_name, project_dir, context)
         except FailedHookException:
-            rmtree(project_dir)
+            if delete_project_on_failure:
+                rmtree(project_dir)
             logger.error(
                 "Stopping generation because {} hook "
                 "script didn't exit successfully".format(hook_name)
@@ -260,7 +265,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
         keep_trailing_newline=True,
     )
     try:
-        project_dir = render_and_create_dir(
+        project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir,
             context,
             output_dir,
@@ -281,7 +286,17 @@ def generate_files(repo_dir, context=None, output_dir='.',
     project_dir = os.path.abspath(project_dir)
     logger.debug('Project directory is {}'.format(project_dir))
 
-    _run_hook_from_repo_dir(repo_dir, 'pre_gen_project', project_dir, context)
+    # if we created the output directory, then it's ok to remove it
+    # if rendering fails
+    delete_project_on_failure = output_directory_created
+
+    _run_hook_from_repo_dir(
+        repo_dir,
+        'pre_gen_project',
+        project_dir,
+        context,
+        delete_project_on_failure
+    )
 
     with work_in(template_dir):
         env.loader = FileSystemLoader('.')
@@ -326,7 +341,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
                         overwrite_if_exists
                     )
                 except UndefinedError as err:
-                    rmtree(project_dir)
+                    if delete_project_on_failure:
+                        rmtree(project_dir)
                     _dir = os.path.relpath(unrendered_dir, output_dir)
                     msg = "Unable to create directory '{}'".format(_dir)
                     raise UndefinedVariableInTemplate(msg, err, context)
@@ -347,10 +363,17 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 try:
                     generate_file(project_dir, infile, context, env)
                 except UndefinedError as err:
-                    rmtree(project_dir)
+                    if delete_project_on_failure:
+                        rmtree(project_dir)
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    _run_hook_from_repo_dir(repo_dir, 'post_gen_project', project_dir, context)
+    _run_hook_from_repo_dir(
+        repo_dir,
+        'post_gen_project',
+        project_dir,
+        context,
+        delete_project_on_failure
+    )
 
     return project_dir

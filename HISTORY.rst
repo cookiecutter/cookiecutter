@@ -10,10 +10,18 @@ New Features:
 
 * Include template path or template URL in cookiecutter context under
   ``_template``, thanks to `@aroig`_ (#774)
+* Add a URL abbreviation for GitLab template projects, thanks to `@hackebrot`_
+  (#963)
 
 Bug Fixes:
 
-* ???
+* Fix an issue with missing default template abbreviations for when a user
+  defined custom abbreviations, thanks to `@noirbizarre`_ for the issue report
+  and `@hackebrot`_ for the fix (#966, #967)
+* Preserve existing output directory on project generation failure, thanks to
+  `@ionelmc`_ for the report and `@michaeljoseph`_ for the fix (#629, #964)
+* Fix Python 3.x error handling for ``git`` operation failures, thanks to `@jmcarp`_
+  (#905)
 
 Other Changes:
 
@@ -35,6 +43,10 @@ Other Changes:
 * Add ``test_requirements.txt`` file for easier testing outside of tox, thanks
   to `@ramnes`_ (#945)
 * Improve wording in *copy without render* docs, thanks to `@eyalev`_ (#938)
+* Fix a number of typos, thanks to `@delirious-lettuce`_ (#968)
+* Improved *extra context* docs by noting that extra context keys must be
+  present in the template's ``cookiecutter.json``, thanks to `@karantan`_ for
+  the report and fix (#863, #864)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
@@ -48,9 +60,14 @@ Other Changes:
   * `painless-continuous-delivery`_ by `@painless-software`_ (#927)
   * `cookiecutter-molecule`_ by `@retr0h`_ (#954)
   * `sublime-snippet-package-template`_ by `@agenoria`_ (#956)
+  * `cookiecutter-conda-python`_ by `@conda`_ (#969)
+  * `cookiecutter-flask-minimal`_ by `@candidtim`_ (#977)
+  * `cookiecutter-pypackage-rust-cross-platform-publish`_ by `@mckaymatt`_ (#957)
+  * `cookie-cookie`_ by `@tuxredux`_ (#951)
+  * `cookiecutter-telegram-bot`_ by `@Ars2014`_ (#984)
 
-.. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
-.. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
+.. _`cookiecutter-kata-gtest`: https://github.com/13coders/cookiecutter-kata-gtest
+.. _`cookiecutter-kata-cpputest`: https://github.com/13coders/cookiecutter-kata-cpputest
 .. _`cookiecutter-pyramid-talk-python-starter`: https://github.com/mikeckennedy/cookiecutter-pyramid-talk-python-starter
 .. _`cookiecutter-android`: https://github.com/alexfu/cookiecutter-android
 .. _`cookiecutter-lux-python`: https://github.com/alexkey/cookiecutter-lux-python
@@ -60,6 +77,11 @@ Other Changes:
 .. _`painless-continuous-delivery`: https://github.com/painless-software/painless-continuous-delivery
 .. _`cookiecutter-molecule`: https://github.com/retr0h/cookiecutter-molecule
 .. _`sublime-snippet-package-template`: https://github.com/agenoria/sublime-snippet-package-template
+.. _`cookiecutter-conda-python`: https://github.com/conda/cookiecutter-conda-python
+.. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
+.. _`cookiecutter-pypackage-rust-cross-platform-publish`: https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish
+.. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
+.. _`cookiecutter-telegram-bot`: https://github.com/Ars2014/cookiecutter-telegram-bot
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
@@ -76,6 +98,14 @@ Other Changes:
 .. _`@painless-software`: https://github.com/painless-software
 .. _`@retr0h`: https://github.com/retr0h
 .. _`@agenoria`: https://github.com/agenoria
+.. _`@noirbizarre`: https://github.com/noirbizarre
+.. _`@delirious-lettuce`: https://github.com/delirious-lettuce
+.. _`@conda`: https://github.com/conda
+.. _`@candidtim`: https://github.com/candidtim
+.. _`@mckaymatt`: https://github.com/mckaymatt
+.. _`@karantan`: https://github.com/karantan
+.. _`@jmcarp`: https://github.com/jmcarp
+.. _`@Ars2014`: https://github.com/Ars2014
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -248,7 +248,7 @@ Cookiecutter, show support:
 
 * Thank a core committer for their efforts.
 * Star `Cookiecutter on GitHub`_.
-* Join the `Cookiecutter Gittip community`_.
+* `Support this project`_
 
 Got criticism or complaints?
 
@@ -328,6 +328,7 @@ Python
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-flask-2`_: A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
 * `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
+* `cookiecutter-flask-minimal`_ : Minimal but production-ready Flask project template with no other dependencies except for Flask itself.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
@@ -335,7 +336,7 @@ Python
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
 * `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
-* `cookiecutter-pyvanguard`_: A template for cutting edge Python development. `Invoke`_, pytest, bumpversion, and Python 2/3 compatability.
+* `cookiecutter-pyvanguard`_: A template for cutting edge Python development. `Invoke`_, pytest, bumpversion, and Python 2/3 compatibility.
 * `Python-iOS-template`_: A template to create a Python project that will run on iOS devices.
 * `Python-Android-template`_: A template to create a Python project that will run on Android devices.
 * `cookiecutter-tryton`_: A template to create base and external Tryton modules.
@@ -353,6 +354,9 @@ Python
 * `cookiecutter-pyqt5`_: A prebuilt PyQt5 GUI template with a fully featured Pytest test suite and Travis CI integration all in an optimal Python package.
 * `cookiecutter-pyqt4`_: A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
 * `cookiecutter-xontrib`_: A template for building xontribs, a.k.a `xonsh`_ contributions
+* `cookiecutter-conda-python`_: A template for building Conda Python packages
+* `cookiecutter-pypackage-rust-cross-platform-publish`_: A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux. 
+* `cookiecutter-telegram-bot`_: A template project for Telegram bots with webhooks on CherryPy.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -361,6 +365,7 @@ Python
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
+.. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
@@ -395,7 +400,9 @@ Python
 .. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
 .. _`cookiecutter-xontrib`: https://github.com/laerus/cookiecutter-xontrib
 .. _`xonsh`: https://github.com/xonsh/xonsh
-
+.. _`cookiecutter-conda-python`: https://github.com/conda/cookiecutter-conda-python
+.. _`cookiecutter-pypackage-rust-cross-platform-publish`: https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish
+.. _`cookiecutter-telegram-bot`: https://github.com/Ars2014/cookiecutter-telegram-bot
 
 Python-Django
 ^^^^^^^^^^^^^
@@ -407,7 +414,7 @@ Python-Django
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
 * `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
-* `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Booststrap 3 and FontAwesome 4
+* `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Bootstrap 3 and FontAwesome 4
 * `cookiecutter-django-paas`_: Django template ready to use in PAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
 * `cookiecutter-django-aws-eb`_: Get up and running with Django on AWS Elastic Beanstalk.
@@ -476,6 +483,10 @@ Meta-templates for generating Cookiecutter project templates.
 
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
 
+* `cookie-cookie`_: A project template for... project templates...
+
+.. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
+
 Ansible
 ~~~~~~~
 
@@ -492,9 +503,9 @@ Ansible
 Git
 ~~~
 
-* `cookiecutter-git`_: Git Cookiecutter. A git repository project template!
+* `cookiecutter-git`_: A git repository project template!
 
-.. _`cookiecutter-git`: https://github.com/webevllc/cookiecutter-git
+.. _`cookiecutter-git`: https://github.com/tuxredux/cookiecutter-git
 
 
 C
@@ -640,7 +651,7 @@ HTML
 
 * `cookiecutter-complexity`_: A cookiecutter for a Complexity static site with Bootstrap 3.
 * `cookiecutter-reveal.js`_: A cookiecutter template for reveal.js presentations.
-* `cookiecutter-tumblr-theme`_: A cookiecutter for a Tumblr theme project with GruntJS as concatination tool.
+* `cookiecutter-tumblr-theme`_: A cookiecutter for a Tumblr theme project with GruntJS as concatenation tool.
 
 .. _`cookiecutter-complexity`: https://github.com/audreyr/cookiecutter-complexity
 .. _`cookiecutter-reveal.js`: https://github.com/keimlink/cookiecutter-reveal.js
@@ -677,7 +688,7 @@ Data Science
 Reproducible Science
 ~~~~~~~~~~~~~~~~~~~~
 
-* `cookiecutter-reproducible-science`_: A cookiecutter template to start a reproducible and transparent science project including data, models, analysis, and reports (i.e., your scientifc paper) with close resemblances to the philosophy of Cookiecutter `Data Science`_.
+* `cookiecutter-reproducible-science`_: A cookiecutter template to start a reproducible and transparent science project including data, models, analysis, and reports (i.e., your scientific paper) with close resemblances to the philosophy of Cookiecutter `Data Science`_.
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
@@ -765,7 +776,6 @@ Similar projects
 .. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
 .. _`Stack Overflow`: http://stackoverflow.com/
 .. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
-.. _`Cookiecutter Gittip community`: https://www.gittip.com/for/cookiecutter/
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph

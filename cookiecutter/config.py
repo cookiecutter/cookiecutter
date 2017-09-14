@@ -20,6 +20,7 @@ USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
+    'gl': 'https://gitlab.com/{0}.git',
     'bb': 'https://bitbucket.org/{0}',
 }
 
@@ -38,6 +39,25 @@ def _expand_path(path):
     return path
 
 
+def merge_configs(default, overwrite):
+    """Recursively update a dict with the key/value pair of another.
+
+    Dict values that are dictionaries themselves will be updated, whilst
+    preserving existing keys.
+    """
+    new_config = copy.deepcopy(default)
+
+    for k, v in overwrite.items():
+        # Make sure to preserve existing items in
+        # nested dicts, for example `abbreviations`
+        if isinstance(v, dict):
+            new_config[k] = merge_configs(default[k], v)
+        else:
+            new_config[k] = v
+
+    return new_config
+
+
 def get_config(config_path):
     """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
@@ -53,8 +73,7 @@ def get_config(config_path):
                 ''.format(config_path, e)
             )
 
-    config_dict = copy.copy(DEFAULT_CONFIG)
-    config_dict.update(yaml_dict)
+    config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
     raw_replay_dir = config_dict['replay_dir']
     config_dict['replay_dir'] = _expand_path(raw_replay_dir)

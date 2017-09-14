@@ -35,7 +35,7 @@ def remove_replay_dump(request, replay_file):
 
 
 def test_type_error_if_no_template_name(replay_test_dir, context):
-    """Test that replay.dump raises if the tempate_name is not a valid str."""
+    """Test that replay.dump raises if the template_name is not a valid str."""
     with pytest.raises(TypeError):
         replay.dump(replay_test_dir, None, context)
 

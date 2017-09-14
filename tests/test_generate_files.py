@@ -239,6 +239,26 @@ def test_raise_undefined_variable_file_name(tmpdir, undefined_context):
     assert not output_dir.join('testproject').exists()
 
 
+def test_raise_undefined_variable_file_name_existing_project(
+        tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    output_dir.join('testproject').mkdir()
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/file-name/',
+            output_dir=str(output_dir),
+            context=undefined_context,
+            overwrite_if_exists=True
+        )
+    error = err.value
+    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert error.context == undefined_context
+
+    assert output_dir.join('testproject').exists()
+
+
 def test_raise_undefined_variable_file_content(tmpdir, undefined_context):
     output_dir = tmpdir.mkdir('output')
 
@@ -273,6 +293,30 @@ def test_raise_undefined_variable_dir_name(tmpdir, undefined_context):
     assert error.context == undefined_context
 
     assert not output_dir.join('testproject').exists()
+
+
+def test_raise_undefined_variable_dir_name_existing_project(
+        tmpdir, undefined_context):
+    output_dir = tmpdir.mkdir('output')
+
+    output_dir.join('testproject').mkdir()
+
+    with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/dir-name/',
+            output_dir=str(output_dir),
+            context=undefined_context,
+            overwrite_if_exists=True
+        )
+    error = err.value
+
+    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    msg = "Unable to create directory '{}'".format(directory)
+    assert msg == error.message
+
+    assert error.context == undefined_context
+
+    assert output_dir.join('testproject').exists()
 
 
 def test_raise_undefined_variable_project_dir(tmpdir):

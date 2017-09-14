@@ -90,7 +90,7 @@ def test_should_raise_type_error(mocker):
 
 def test_should_call_prompt_with_process_json(mocker):
     """Test to make sure that process_jon is actually being used
-    to generate a processer for the user input."""
+    to generate a processor for the user input."""
 
     mock_prompt = mocker.patch(
         'cookiecutter.prompt.click.prompt',
