@@ -17,6 +17,7 @@ from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
 from .replay import dump, load
 from .repository import determine_repo_dir
+from .utils import rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,7 @@ def cookiecutter(
         default_config=default_config,
     )
 
-    repo_dir = determine_repo_dir(
+    repo_dir, cleanup = determine_repo_dir(
         template=template,
         abbreviations=config_dict['abbreviations'],
         clone_to_dir=config_dict['cookiecutters_dir'],
@@ -84,9 +85,15 @@ def cookiecutter(
         dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
-    return generate_files(
+    result = generate_files(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
         output_dir=output_dir
     )
+
+    # Cleanup (if required)
+    if cleanup:
+        rmtree(repo_dir)
+
+    return result

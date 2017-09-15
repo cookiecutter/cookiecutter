@@ -77,7 +77,9 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     :param clone_to_dir: The directory to clone the repository into.
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
-    :return: The cookiecutter template directory
+    :return: A tuple containing the cookiecutter template directory, and
+        a boolean descriving whether that directory should be cleaned up
+        after the template has been instantiated.
     :raises: `RepositoryNotFound` if a repository directory could not be found.
     """
     template = expand_abbreviations(template, abbreviations)
@@ -90,6 +92,7 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
             no_input=no_input
         )
         repository_candidates = [unzipped_dir]
+        cleanup = True
     elif is_repo_url(template):
         cloned_repo = clone(
             repo_url=template,
@@ -98,15 +101,17 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
             no_input=no_input,
         )
         repository_candidates = [cloned_repo]
+        cleanup = False
     else:
         repository_candidates = [
             template,
             os.path.join(clone_to_dir, template)
         ]
+        cleanup = False
 
     for repo_candidate in repository_candidates:
         if repository_has_cookiecutter_json(repo_candidate):
-            return repo_candidate
+            return repo_candidate, cleanup
 
     raise RepositoryNotFound(
         'A valid repository for "{}" could not be found in the following '

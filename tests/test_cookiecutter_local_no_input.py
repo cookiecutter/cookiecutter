@@ -32,6 +32,8 @@ def remove_additional_dirs(request):
             utils.rmtree('fake-project-templated')
         if os.path.isdir('fake-project-dict'):
             utils.rmtree('fake-project-dict')
+        if os.path.isdir('fake-tmp'):
+            utils.rmtree('fake-tmp')
     request.addfinalizer(fin_remove_additional_dirs)
 
 
@@ -129,3 +131,33 @@ def test_cookiecutter_dict_values_in_context():
         </dl>
 
     """).lstrip()
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+def test_cookiecutter_template_cleanup(mocker):
+    """
+    `Call cookiecutter()` with `no_input=True` and templates in the
+    cookiecutter.json file
+    """
+    mock_mkdtemp = mocker.patch(
+        'tempfile.mkdtemp',
+        return_value='fake-tmp',
+        autospec=True
+    )
+
+    mock_tmpdir = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+
+    main.cookiecutter(
+        'tests/files/fake-repo-tmpl.zip',
+        no_input=True
+    )
+    assert os.path.isdir('fake-project-templated')
+
+    # The tmp directory will still exist, but the
+    # extracted template directory *in* the temp directory will not.
+    assert os.path.exists('fake-tmp')
+    assert not os.path.exists('fake-tmp/fake-repo-tmpl')

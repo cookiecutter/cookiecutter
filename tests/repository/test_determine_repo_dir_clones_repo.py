@@ -23,7 +23,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
         autospec=True
     )
 
-    project_dir = repository.determine_repo_dir(
+    project_dir, cleanup = repository.determine_repo_dir(
         template,
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
@@ -39,6 +39,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
     )
 
     assert os.path.isdir(project_dir)
+    assert cleanup
     assert 'tests/fake-repo-tmpl' == project_dir
 
 
@@ -63,7 +64,7 @@ def test_repository_url_should_clone(
         autospec=True
     )
 
-    project_dir = repository.determine_repo_dir(
+    project_dir, cleanup = repository.determine_repo_dir(
         template_url,
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
@@ -79,6 +80,7 @@ def test_repository_url_should_clone(
     )
 
     assert os.path.isdir(project_dir)
+    assert not cleanup
     assert 'tests/fake-repo-tmpl' == project_dir
 
 
