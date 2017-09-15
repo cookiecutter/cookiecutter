@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
+import tempfile
 
 import pytest
 
 from cookiecutter import zipfile
+from cookiecutter.exceptions import InvalidZipRepository
 
 
 def mock_download():
@@ -15,7 +17,7 @@ def mock_download():
 
 
 def test_unzip_local_file(mocker, tmpdir):
-    """In `unzip()`, a local file reference is just unzipped where it is.
+    """In `unzip()`, a local file reference can be unzipped.
     """
     mock_prompt_and_delete = mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete',
@@ -31,26 +33,81 @@ def test_unzip_local_file(mocker, tmpdir):
         clone_to_dir=str(clone_to_dir)
     )
 
-    assert output_dir == os.path.join(str(clone_to_dir), 'fake-repo-tmpl')
+    assert output_dir.startswith(tempfile.gettempdir())
     assert not mock_prompt_and_delete.called
 
 
-def test_unzip_should_abort_not_overwrite_template(mocker, tmpdir):
-    """In `unzip()`, if user doesn't want to overwrite an existing cached
-    template, Cookiecutter should exit.
+def test_unzip_protected_local_file(mocker, tmpdir):
+    """In `unzip()`, a password-protected local file reference can be unzipped.
     """
-    mocker.patch(
+    mock_prompt_and_delete = mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete',
-        side_effect=SystemExit,
+        return_value=True,
         autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
-    clone_to_dir.mkdir('fake-repo-tmpl')
 
-    with pytest.raises(SystemExit):
+    with pytest.raises(InvalidZipRepository):
+        output_dir = zipfile.unzip(
+            'tests/files/protected-fake-repo-tmpl.zip',
+            is_url=False,
+            clone_to_dir=str(clone_to_dir)
+        )
+
+
+def test_empty_zip_file(mocker, tmpdir):
+    """In `unzip()`, an empty file raises an error.
+    """
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    with pytest.raises(InvalidZipRepository):
         zipfile.unzip(
-            'tests/files/fake-repo-tmpl.zip',
+            'tests/files/empty.zip',
+            is_url=False,
+            clone_to_dir=str(clone_to_dir)
+        )
+
+
+def test_non_repo_zip_file(mocker, tmpdir):
+    """In `unzip()`, a repository must have a top level directory
+    """
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    with pytest.raises(InvalidZipRepository):
+        zipfile.unzip(
+            'tests/files/not-a-repo.zip',
+            is_url=False,
+            clone_to_dir=str(clone_to_dir)
+        )
+
+
+def test_bad_zip_file(mocker, tmpdir):
+    """In `unzip()`, a corrupted zip file raises an error.
+    """
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    with pytest.raises(InvalidZipRepository):
+        zipfile.unzip(
+            'tests/files/bad-zip-file.zip',
             is_url=False,
             clone_to_dir=str(clone_to_dir)
         )
@@ -82,7 +139,7 @@ def test_unzip_url(mocker, tmpdir):
         clone_to_dir=str(clone_to_dir)
     )
 
-    assert output_dir == os.path.join(str(clone_to_dir), 'fake-repo-tmpl')
+    assert output_dir.startswith(tempfile.gettempdir())
     assert not mock_prompt_and_delete.called
 
 
@@ -117,61 +174,13 @@ def test_unzip_url_existing_cache(mocker, tmpdir):
         clone_to_dir=str(clone_to_dir)
     )
 
-    assert output_dir == os.path.join(str(clone_to_dir), 'fake-repo-tmpl')
+    assert output_dir.startswith(tempfile.gettempdir())
     assert mock_prompt_and_delete.call_count == 1
 
 
-def test_unzip_url_existing_template(mocker, tmpdir):
-    """In `unzip()`, a url will be downloaded and unzipped; an existing
-    template directory will be removed
+def test_unzip_url_existing_cache_no_input(mocker, tmpdir):
+    """In `unzip()`, if no_input is provided, the existing file will be removed.
     """
-    mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete',
-        return_value=True,
-        autospec=True
-    )
-
-    request = mocker.MagicMock()
-    request.iter_content.return_value = mock_download()
-
-    mocker.patch(
-        'cookiecutter.zipfile.requests.get',
-        return_value=request,
-        autospec=True,
-    )
-
-    clone_to_dir = tmpdir.mkdir('clone')
-
-    # Create an existing rolled out template directory
-    clone_to_dir.mkdir('fake-repo-tmpl')
-
-    output_dir = zipfile.unzip(
-        'https://example.com/path/to/fake-repo-tmpl.zip',
-        is_url=True,
-        clone_to_dir=str(clone_to_dir)
-    )
-
-    assert output_dir == os.path.join(str(clone_to_dir), 'fake-repo-tmpl')
-    assert mock_prompt_and_delete.call_count == 1
-
-
-def test_unzip_url_existing_cache_and_template(mocker, tmpdir):
-    """In `unzip()`, a url will be downloaded and unzipped; an existing
-    zipfile cache and template directory will both be removed
-    """
-    mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete',
-        return_value=True,
-        autospec=True
-    )
-
-    def mock_download():
-        with open('tests/files/fake-repo-tmpl.zip', 'rb') as zipfile:
-            chunk = zipfile.read(1024)
-            while chunk:
-                yield chunk
-                chunk = zipfile.read(1024)
-
     request = mocker.MagicMock()
     request.iter_content.return_value = mock_download()
 
@@ -187,17 +196,14 @@ def test_unzip_url_existing_cache_and_template(mocker, tmpdir):
     existing_zip = clone_to_dir.join('fake-repo-tmpl.zip')
     existing_zip.write('This is an existing zipfile')
 
-    # Create an existing rolled out template directory
-    clone_to_dir.mkdir('fake-repo-tmpl')
-
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
-        clone_to_dir=str(clone_to_dir)
+        clone_to_dir=str(clone_to_dir),
+        no_input=True
     )
 
-    assert output_dir == os.path.join(str(clone_to_dir), 'fake-repo-tmpl')
-    assert mock_prompt_and_delete.call_count == 1
+    assert output_dir.startswith(tempfile.gettempdir())
 
 
 def test_unzip_should_abort_if_no_redownload(mocker, tmpdir):

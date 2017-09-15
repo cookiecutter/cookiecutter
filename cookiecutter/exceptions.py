@@ -117,3 +117,10 @@ class RepositoryNotFound(CookiecutterException):
 
 class RepositoryCloneFailed(CookiecutterException):
     """Raised when a cookiecutter template can't be cloned."""
+
+
+class InvalidZipRepository(CookiecutterException):
+    """
+    Raised when the specified cookiecutter repository isn't a valid
+    Zip archive.
+    """

@@ -3,8 +3,14 @@ from __future__ import absolute_import
 import os
 import requests
 import sys
+import tempfile
 from zipfile import ZipFile
+try:
+    from zipfile import BadZipFile
+except ImportError:
+    from zipfile import BadZipfile as BadZipFile
 
+from .exceptions import InvalidZipRepository
 from .prompt import read_user_yes_no
 from .utils import make_sure_path_exists, rmtree
 
@@ -37,8 +43,6 @@ def prompt_and_delete(path, no_input=False):
     else:
         sys.exit()
 
-    return ok_to_delete
-
 
 def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
     """Download and unpack a zipfile at a given URI.
@@ -59,13 +63,11 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
     if is_url:
         # Build the name of the cached zipfile,
         # and prompt to delete if it already exists.
-        identifier = zip_uri.rsplit('/', 1)[1]
+        identifier = zip_uri.rsplit(os.path.sep, 1)[1]
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
-            ok_to_delete = prompt_and_delete(zip_path, no_input=no_input)
-        else:
-            ok_to_delete = None
+            prompt_and_delete(zip_path, no_input=no_input)
 
         # (Re) download the zipfile
         r = requests.get(zip_uri, stream=True)
@@ -76,24 +78,44 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
     else:
         # Just use the local zipfile as-is.
         zip_path = os.path.abspath(zip_uri)
-        ok_to_delete = None
 
-    # Now unpack the repository. The zipfile will include
-    # the name of the template as the top level directory;
-    # Check if that directory already exists, and if so,
-    # prompt for deletion. If we've previously OK'd deletion,
-    # don't ask again.
-    zip_file = ZipFile(zip_path)
-    unzip_name = zip_file.namelist()[0][:-1]
+    # Now unpack the repository. The zipfile will be unpacked
+    # into a temporary directory
+    try:
+        zip_file = ZipFile(zip_path)
 
-    unzip_path = os.path.join(clone_to_dir, unzip_name)
-    if os.path.exists(unzip_path):
-        if ok_to_delete is None:
-            ok_to_delete = prompt_and_delete(unzip_path, no_input=no_input)
-        else:
-            rmtree(unzip_path)
+        if len(zip_file.namelist()) == 0:
+            raise InvalidZipRepository(
+                'Zip repository {} is empty'.format(zip_uri)
+            )
 
-    # Extract the zip file
-    zip_file.extractall(path=clone_to_dir)
+        # The first record in the zipfile should be the directory entry for
+        # the archive. If it isn't a directory, there's a problem.
+        first_filename = zip_file.namelist()[0]
+        if not first_filename.endswith(os.path.sep):
+            raise InvalidZipRepository(
+                'Zip repository {} does not include '
+                'a top-level directory'.format(zip_uri)
+            )
+
+        # Construct the final target directory
+        project_name = first_filename[:-1]
+        unzip_base = tempfile.mkdtemp()
+        unzip_path = os.path.join(unzip_base, project_name)
+
+        # Extract the zip file into the temporary directory
+        try:
+            zip_file.extractall(path=unzip_base)
+        except RuntimeError:
+            # File is encrypted; in the future, we can get a password
+            # and retry here.
+            raise InvalidZipRepository(
+                'Zip repository {} is password protected'.format(zip_uri)
+            )
+
+    except BadZipFile:
+        raise InvalidZipRepository(
+            'Zip repository {} is not a valid zip archive:'.format(zip_uri)
+        )
 
     return unzip_path
