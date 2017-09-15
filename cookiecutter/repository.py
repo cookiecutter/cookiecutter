@@ -84,7 +84,7 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
 
     if is_zip_file(template):
         unzipped_dir = unzip(
-            zip_url=template,
+            zip_uri=template,
             is_url=is_repo_url(template),
             clone_to_dir=clone_to_dir,
             no_input=no_input

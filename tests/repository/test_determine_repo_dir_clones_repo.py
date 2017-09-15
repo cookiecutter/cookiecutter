@@ -6,17 +6,12 @@ import pytest
 from cookiecutter import repository, exceptions
 
 
-@pytest.fixture(params=[
+@pytest.mark.parametrize('template, is_url', [
     ('/path/to/zipfile.zip', False),
     ('https://example.com/path/to/zipfile.zip', True),
     ('http://example.com/path/to/zipfile.zip', True),
 ])
-def zipfile(request):
-    return request.param
-
-
-def test_zipfile_unzip(
-        mocker, zipfile, user_config_data):
+def test_zipfile_unzip(mocker, template, is_url, user_config_data):
     """`unzip()` should be called with correct args when
     `determine_repo_dir()` is passed a zipfile, or a URL
     to a zipfile.
@@ -29,7 +24,7 @@ def test_zipfile_unzip(
     )
 
     project_dir = repository.determine_repo_dir(
-        zipfile[0],
+        template,
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
@@ -37,8 +32,8 @@ def test_zipfile_unzip(
     )
 
     mock_clone.assert_called_once_with(
-        zip_url=zipfile[0],
-        is_url=zipfile[1],
+        zip_uri=template,
+        is_url=is_url,
         clone_to_dir=user_config_data['cookiecutters_dir'],
         no_input=True
     )
