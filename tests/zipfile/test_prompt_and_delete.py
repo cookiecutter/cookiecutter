@@ -13,12 +13,12 @@ def test_prompt_should_ask_and_rm_dir(mocker, tmpdir):
         return_value=True,
         autospec=True
     )
-    dir = tmpdir.mkdir('repo')
+    repodir = tmpdir.mkdir('repo')
 
-    zipfile.prompt_and_delete(str(dir))
+    zipfile.prompt_and_delete(str(repodir))
 
     assert mock_read_user.called
-    assert not dir.exists()
+    assert not repodir.exists()
 
 
 def test_prompt_should_ask_and_keep_dir(mocker, tmpdir):
@@ -30,13 +30,13 @@ def test_prompt_should_ask_and_keep_dir(mocker, tmpdir):
         return_value=False,
         autospec=True
     )
-    dir = tmpdir.mkdir('repo')
+    repodir = tmpdir.mkdir('repo')
 
     with pytest.raises(SystemExit):
-        zipfile.prompt_and_delete(str(dir))
+        zipfile.prompt_and_delete(str(repodir))
 
     assert mock_read_user.called
-    assert dir.exists()
+    assert repodir.exists()
 
 
 def test_prompt_should_not_ask_if_no_input_and_rm_dir(mocker, tmpdir):
@@ -48,12 +48,12 @@ def test_prompt_should_not_ask_if_no_input_and_rm_dir(mocker, tmpdir):
         return_value=True,
         autospec=True
     )
-    dir = tmpdir.mkdir('repo')
+    repodir = tmpdir.mkdir('repo')
 
-    zipfile.prompt_and_delete(str(dir), no_input=True)
+    zipfile.prompt_and_delete(str(repodir), no_input=True)
 
     assert not mock_read_user.called
-    assert not dir.exists()
+    assert not repodir.exists()
 
 
 def test_prompt_should_ask_and_rm_file(mocker, tmpdir):
@@ -65,13 +65,13 @@ def test_prompt_should_ask_and_rm_file(mocker, tmpdir):
         return_value=True,
         autospec=True
     )
-    file = tmpdir.join('repo.zip')
-    file.write('this is zipfile content')
+    repofile = tmpdir.join('repo.zip')
+    repofile.write('this is zipfile content')
 
-    zipfile.prompt_and_delete(str(file))
+    zipfile.prompt_and_delete(str(repofile))
 
     assert mock_read_user.called
-    assert not file.exists()
+    assert not repofile.exists()
 
 
 def test_prompt_should_ask_and_keep_file(mocker, tmpdir):
@@ -83,14 +83,14 @@ def test_prompt_should_ask_and_keep_file(mocker, tmpdir):
         return_value=False,
         autospec=True
     )
-    file = tmpdir.join('repo.zip')
-    file.write('this is zipfile content')
+    repofile = tmpdir.join('repo.zip')
+    repofile.write('this is zipfile content')
 
     with pytest.raises(SystemExit):
-        zipfile.prompt_and_delete(str(file))
+        zipfile.prompt_and_delete(str(repofile))
 
     assert mock_read_user.called
-    assert file.exists()
+    assert repofile.exists()
 
 
 def test_prompt_should_not_ask_if_no_input_and_rm_file(mocker, tmpdir):
@@ -102,10 +102,10 @@ def test_prompt_should_not_ask_if_no_input_and_rm_file(mocker, tmpdir):
         return_value=True,
         autospec=True
     )
-    file = tmpdir.join('repo.zip')
-    file.write('this is zipfile content')
+    repofile = tmpdir.join('repo.zip')
+    repofile.write('this is zipfile content')
 
-    zipfile.prompt_and_delete(str(file), no_input=True)
+    zipfile.prompt_and_delete(str(repofile), no_input=True)
 
     assert not mock_read_user.called
-    assert not file.exists()
+    assert not repofile.exists()
