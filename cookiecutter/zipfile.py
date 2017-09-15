@@ -40,7 +40,18 @@ def prompt_and_delete(path, no_input=False):
     return ok_to_delete
 
 
-def unzip(zip_url, is_url, clone_to_dir='.', no_input=False):
+def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
+    """Download and unpack a zipfile at a given URI.
+
+    This will download the zipfile to the cookiecutter repository,
+    and unpack into a temporary directory.
+
+    :param zip_uri: The URI for the zipfile.
+    :param is_url: Is the zip URI a URL or a file?
+    :param clone_to_dir: The cookiecutter repository directory
+        to put the archive into.
+    :param no_input: Supress any prompts
+    """
     # Ensure that clone_to_dir exists
     clone_to_dir = os.path.expanduser(clone_to_dir)
     make_sure_path_exists(clone_to_dir)
@@ -48,7 +59,7 @@ def unzip(zip_url, is_url, clone_to_dir='.', no_input=False):
     if is_url:
         # Build the name of the cached zipfile,
         # and prompt to delete if it already exists.
-        identifier = zip_url.rsplit('/', 1)[1]
+        identifier = zip_uri.rsplit('/', 1)[1]
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
@@ -57,14 +68,14 @@ def unzip(zip_url, is_url, clone_to_dir='.', no_input=False):
             ok_to_delete = None
 
         # (Re) download the zipfile
-        r = requests.get(zip_url, stream=True)
+        r = requests.get(zip_uri, stream=True)
         with open(zip_path, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024):
                 if chunk:  # filter out keep-alive new chunks
                     f.write(chunk)
     else:
         # Just use the local zipfile as-is.
-        zip_path = os.path.abspath(zip_url)
+        zip_path = os.path.abspath(zip_uri)
         ok_to_delete = None
 
     # Now unpack the repository. The zipfile will include
