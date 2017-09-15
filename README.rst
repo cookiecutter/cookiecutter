@@ -357,6 +357,7 @@ Python
 * `cookiecutter-conda-python`_: A template for building Conda Python packages
 * `cookiecutter-pypackage-rust-cross-platform-publish`_: A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux. 
 * `cookiecutter-telegram-bot`_: A template project for Telegram bots with webhooks on CherryPy.
+* `python-project-template`_: A template for Python projects with sophisticated release automation.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -403,6 +404,7 @@ Python
 .. _`cookiecutter-conda-python`: https://github.com/conda/cookiecutter-conda-python
 .. _`cookiecutter-pypackage-rust-cross-platform-publish`: https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish
 .. _`cookiecutter-telegram-bot`: https://github.com/Ars2014/cookiecutter-telegram-bot
+.. _`python-project-template`: https://github.com/Kwpolska/python-project-template
 
 Python-Django
 ^^^^^^^^^^^^^
