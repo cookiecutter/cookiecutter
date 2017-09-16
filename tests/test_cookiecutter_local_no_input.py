@@ -139,13 +139,13 @@ def test_cookiecutter_template_cleanup(mocker):
     `Call cookiecutter()` with `no_input=True` and templates in the
     cookiecutter.json file
     """
-    mock_mkdtemp = mocker.patch(
+    mocker.patch(
         'tempfile.mkdtemp',
         return_value='fake-tmp',
         autospec=True
     )
 
-    mock_tmpdir = mocker.patch(
+    mocker.patch(
         'cookiecutter.utils.prompt_and_delete',
         return_value=True,
         autospec=True

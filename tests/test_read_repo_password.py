@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-
-import click
-import pytest
-
 from cookiecutter.prompt import read_repo_password
+
 
 def test_click_invocation(mocker):
     prompt = mocker.patch('click.prompt')

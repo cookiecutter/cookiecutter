@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 import logging
 import os
 import subprocess
-import sys
 
 from whichcraft import which
 

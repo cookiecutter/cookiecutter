@@ -2,7 +2,6 @@ from __future__ import absolute_import
 
 import os
 import requests
-import sys
 import tempfile
 from zipfile import ZipFile
 try:
@@ -112,7 +111,8 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
                         retry += 1
                         if retry == 3:
                             raise InvalidZipRepository(
-                                'Invalid password provided for protected repository'
+                                'Invalid password provided '
+                                'for protected repository'
                             )
 
     except BadZipFile:
