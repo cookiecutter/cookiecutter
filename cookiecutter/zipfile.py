@@ -34,7 +34,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     if is_url:
         # Build the name of the cached zipfile,
         # and prompt to delete if it already exists.
-        identifier = zip_uri.rsplit(os.path.sep, 1)[1]
+        identifier = zip_uri.rsplit('/', 1)[1]
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
