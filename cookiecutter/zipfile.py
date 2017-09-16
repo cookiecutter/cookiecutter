@@ -11,6 +11,7 @@ except ImportError:
     from zipfile import BadZipfile as BadZipFile
 
 from .exceptions import InvalidZipRepository
+from .prompt import read_repo_password
 from .utils import make_sure_path_exists, prompt_and_delete
 
 
@@ -80,11 +81,39 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
         try:
             zip_file.extractall(path=unzip_base)
         except RuntimeError:
-            # File is encrypted; in the future, we can get a password
-            # and retry here.
-            raise InvalidZipRepository(
-                'Zip repository {} is password protected'.format(zip_uri)
-            )
+            # File is password protected; try to get a password from the
+            # environment; if that doesn't work, ask the user.
+            password = os.environ.get('COOKIECUTTER_REPO_PASSWORD')
+            if password:
+                try:
+                    zip_file.extractall(
+                        path=unzip_base,
+                        pwd=password.encode('utf-8')
+                    )
+                except RuntimeError:
+                    raise InvalidZipRepository(
+                        'Invalid password provided for protected repository'
+                    )
+            elif no_input:
+                raise InvalidZipRepository(
+                    'Unable to unlock password protected repository'
+                )
+            else:
+                retry = 0
+                while retry is not None:
+                    try:
+                        password = read_repo_password('Repo password')
+                        zip_file.extractall(
+                            path=unzip_base,
+                            pwd=password.encode('utf-8')
+                        )
+                        retry = None
+                    except RuntimeError:
+                        retry += 1
+                        if retry == 3:
+                            raise InvalidZipRepository(
+                                'Unable to unlock password protected repository'
+                            )
 
     except BadZipFile:
         raise InvalidZipRepository(

@@ -95,6 +95,17 @@ If you want to see an example Zipfile, find any Cookiecutter repository on Githu
 and download that repository as a zip file - Github repository downloads are in
 a valid format for Cookiecutter.
 
+Password-protected Zip files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your repository Zip file is password protected, Cookiecutter will prompt you
+for that password whenever the template is used.
+
+Alternatively, if you want to use a password-protected Zip file in an
+automated environment, you can export the `COOKIECUTTER_REPO_PASSWORD`
+environment variable; the value of that environment variable will be used
+whenever a password is required.
+
 Keeping your cookiecutters organized
 ------------------------------------
 

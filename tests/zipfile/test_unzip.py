@@ -37,13 +37,110 @@ def test_unzip_local_file(mocker, tmpdir):
     assert not mock_prompt_and_delete.called
 
 
-def test_unzip_protected_local_file(mocker, tmpdir):
+def test_unzip_protected_local_file_environment_password(mocker, tmpdir):
+    """In `unzip()`, the environment can be used to provide a repo password
+    """
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+    mock_os_environ = mocker.patch(
+        'os.environ.get',
+        return_value='sekrit'
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    output_dir = zipfile.unzip(
+        'tests/files/protected-fake-repo-tmpl.zip',
+        is_url=False,
+        clone_to_dir=str(clone_to_dir)
+    )
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    assert not mock_prompt_and_delete.called
+
+
+def test_unzip_protected_local_file_bad_environment_password(mocker, tmpdir):
+    """In `unzip()`, an error occurs if the environment has a bad password.
+    """
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+    mock_os_environ = mocker.patch(
+        'os.environ.get',
+        return_value='not-the-right-password'
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    with pytest.raises(InvalidZipRepository):
+        output_dir = zipfile.unzip(
+            'tests/files/protected-fake-repo-tmpl.zip',
+            is_url=False,
+            clone_to_dir=str(clone_to_dir)
+        )
+
+
+def test_unzip_protected_local_file_user_password_with_noinput(mocker, tmpdir):
+    """In `unzip()`, you can't unpack a password-protected repo in no_input mode
+    """
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    with pytest.raises(InvalidZipRepository):
+        zipfile.unzip(
+            'tests/files/protected-fake-repo-tmpl.zip',
+            is_url=False,
+            clone_to_dir=str(clone_to_dir),
+            no_input=True
+        )
+
+
+def test_unzip_protected_local_file_user_password(mocker, tmpdir):
     """In `unzip()`, a password-protected local file reference can be unzipped.
     """
     mock_prompt_and_delete = mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete',
         return_value=True,
         autospec=True
+    )
+    mock_read_password = mocker.patch(
+        'cookiecutter.zipfile.read_repo_password',
+        return_value='sekrit'
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    output_dir = zipfile.unzip(
+        'tests/files/protected-fake-repo-tmpl.zip',
+        is_url=False,
+        clone_to_dir=str(clone_to_dir)
+    )
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    assert not mock_prompt_and_delete.called
+
+
+def test_unzip_protected_local_file_user_bad_password(mocker, tmpdir):
+    """In `unzip()`, If you can't provide a valid password, you get an error
+    """
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete',
+        return_value=True,
+        autospec=True
+    )
+    mock_read_password = mocker.patch(
+        'cookiecutter.zipfile.read_repo_password',
+        return_value='not-the-right-password'
     )
 
     clone_to_dir = tmpdir.mkdir('clone')

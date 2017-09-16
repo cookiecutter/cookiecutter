@@ -88,7 +88,7 @@ def prompt_and_delete(path, no_input=False):
     """Ask the user whether it's okay to delete the previously-downloaded
     file/directory.
 
-    If yes, deletes it. If no, checks to see if the old version should be
+    If yes, delete it. If no, checks to see if the old version should be
     reused. If yes, it's reused; otherwise, Cookiecutter exits.
 
     :param path: Previously downloaded zipfile.
