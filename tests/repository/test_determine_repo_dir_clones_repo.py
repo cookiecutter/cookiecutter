@@ -28,14 +28,16 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
-        no_input=True
+        no_input=True,
+        password=None,
     )
 
     mock_clone.assert_called_once_with(
         zip_uri=template,
         is_url=is_url,
         clone_to_dir=user_config_data['cookiecutters_dir'],
-        no_input=True
+        no_input=True,
+        password=None,
     )
 
     assert os.path.isdir(project_dir)

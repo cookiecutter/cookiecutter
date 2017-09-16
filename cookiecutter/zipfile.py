@@ -15,7 +15,7 @@ from .prompt import read_repo_password
 from .utils import make_sure_path_exists, prompt_and_delete
 
 
-def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
+def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     """Download and unpack a zipfile at a given URI.
 
     This will download the zipfile to the cookiecutter repository,
@@ -26,6 +26,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
     :param clone_to_dir: The cookiecutter repository directory
         to put the archive into.
     :param no_input: Supress any prompts
+    :param password: The password to use when unpacking the repository.
     """
     # Ensure that clone_to_dir exists
     clone_to_dir = os.path.expanduser(clone_to_dir)
@@ -83,8 +84,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
         except RuntimeError:
             # File is password protected; try to get a password from the
             # environment; if that doesn't work, ask the user.
-            password = os.environ.get('COOKIECUTTER_REPO_PASSWORD')
-            if password:
+            if password is not None:
                 try:
                     zip_file.extractall(
                         path=unzip_base,
@@ -112,7 +112,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
                         retry += 1
                         if retry == 3:
                             raise InvalidZipRepository(
-                                'Unable to unlock password protected repository'
+                                'Invalid password provided for protected repository'
                             )
 
     except BadZipFile:

@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False):
+        config_file=None, default_config=False, password=None):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -40,6 +40,7 @@ def cookiecutter(
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
+    :param password: The password to use when extracting the repository.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -59,6 +60,7 @@ def cookiecutter(
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,
+        password=password
     )
 
     template_name = os.path.basename(os.path.abspath(repo_dir))

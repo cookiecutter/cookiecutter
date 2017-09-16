@@ -62,7 +62,7 @@ def repository_has_cookiecutter_json(repo_directory):
 
 
 def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
-                       no_input):
+                       no_input, password=None):
     """
     Locate the repository directory from a template reference.
 
@@ -77,6 +77,7 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     :param clone_to_dir: The directory to clone the repository into.
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
+    :param password: The password to use when extracting the repository.
     :return: A tuple containing the cookiecutter template directory, and
         a boolean descriving whether that directory should be cleaned up
         after the template has been instantiated.
@@ -89,7 +90,8 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
             zip_uri=template,
             is_url=is_repo_url(template),
             clone_to_dir=clone_to_dir,
-            no_input=no_input
+            no_input=no_input,
+            password=password
         )
         repository_candidates = [unzipped_dir]
         cleanup = True

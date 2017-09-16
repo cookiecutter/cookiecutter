@@ -45,17 +45,14 @@ def test_unzip_protected_local_file_environment_password(mocker, tmpdir):
         return_value=True,
         autospec=True
     )
-    mock_os_environ = mocker.patch(
-        'os.environ.get',
-        return_value='sekrit'
-    )
 
     clone_to_dir = tmpdir.mkdir('clone')
 
     output_dir = zipfile.unzip(
         'tests/files/protected-fake-repo-tmpl.zip',
         is_url=False,
-        clone_to_dir=str(clone_to_dir)
+        clone_to_dir=str(clone_to_dir),
+        password='sekrit'
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
@@ -70,10 +67,6 @@ def test_unzip_protected_local_file_bad_environment_password(mocker, tmpdir):
         return_value=True,
         autospec=True
     )
-    mock_os_environ = mocker.patch(
-        'os.environ.get',
-        return_value='not-the-right-password'
-    )
 
     clone_to_dir = tmpdir.mkdir('clone')
 
@@ -81,7 +74,8 @@ def test_unzip_protected_local_file_bad_environment_password(mocker, tmpdir):
         output_dir = zipfile.unzip(
             'tests/files/protected-fake-repo-tmpl.zip',
             is_url=False,
-            clone_to_dir=str(clone_to_dir)
+            clone_to_dir=str(clone_to_dir),
+            password='not-the-right-password'
         )
 
 
