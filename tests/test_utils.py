@@ -67,3 +67,121 @@ def test_workin():
     # Make sure that exceptions are still bubbled up
     with pytest.raises(TestException):
         test_work_in()
+
+
+def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete()`, if the user agrees to delete/reclone the
+    repo, the repo should be deleted.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    deleted = utils.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert not repo_dir.exists()
+    assert deleted
+
+
+def test_prompt_should_ask_and_rm_repo_file(mocker, tmpdir):
+    """In `prompt_and_delete()`, if the user agrees to delete/reclone a
+    repo file, the repo should be deleted.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+
+    repo_file = tmpdir.join('repo.zip')
+    repo_file.write('this is zipfile content')
+
+    deleted = utils.prompt_and_delete(str(repo_file))
+
+    assert mock_read_user.called
+    assert not repo_file.exists()
+    assert deleted
+
+
+def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmpdir):
+    """In `prompt_and_delete()`, if the user wants to keep their old
+    cloned template repo, it should not be deleted.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=False,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    with pytest.raises(SystemExit):
+        utils.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+
+
+def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmpdir):
+    """In `prompt_and_delete()`, if the user wants to keep their old
+    cloned template repo, it should not be deleted.
+    """
+    def answer(question, default):
+        if 'okay to delete' in question:
+            return False
+        else:
+            return True
+
+    mock_read_user = mocker.patch(
+        'cookiecutter.utils.read_user_yes_no',
+        side_effect=answer,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    deleted = utils.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+    assert not deleted
+
+
+def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
+    """In `prompt_and_delete()`, if `no_input` is True, the call to
+    `prompt.read_user_yes_no()` should be suppressed.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    deleted = utils.prompt_and_delete(str(repo_dir), no_input=True)
+
+    assert not mock_read_user.called
+    assert not repo_dir.exists()
+    assert deleted
+
+
+def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmpdir):
+    """In `prompt_and_delete()`, if `no_input` is True, the call to
+    `prompt.read_user_yes_no()` should be suppressed.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no',
+        return_value=True,
+        autospec=True
+    )
+
+    repo_file = tmpdir.join('repo.zip')
+    repo_file.write('this is zipfile content')
+
+    deleted = utils.prompt_and_delete(str(repo_file), no_input=True)
+
+    assert not mock_read_user.called
+    assert not repo_file.exists()
+    assert deleted

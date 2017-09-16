@@ -69,7 +69,7 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
         return_value=True
     )
     mocker.patch(
-        'cookiecutter.vcs.prompt_and_delete_repo',
+        'cookiecutter.vcs.prompt_and_delete',
         side_effect=SystemExit,
         autospec=True
     )
@@ -80,7 +80,7 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
 
     clone_to_dir = tmpdir.mkdir('clone')
 
-    # Create repo_dir to trigger prompt_and_delete_repo
+    # Create repo_dir to trigger prompt_and_delete
     clone_to_dir.mkdir('cookiecutter-pytest-plugin')
 
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'

@@ -11,37 +11,7 @@ except ImportError:
     from zipfile import BadZipfile as BadZipFile
 
 from .exceptions import InvalidZipRepository
-from .prompt import read_user_yes_no
-from .utils import make_sure_path_exists, rmtree
-
-
-def prompt_and_delete(path, no_input=False):
-    """Ask the user whether it's okay to delete the previously-downloaded
-    file/directory.
-
-    If yes, deletes it. Otherwise, Cookiecutter exits.
-
-    :param path: Previously downloaded zipfile.
-    :param no_input: Suppress prompt to delete repo and just delete it.
-    """
-    # Suppress prompt if called via API
-    if no_input:
-        ok_to_delete = True
-    else:
-        question = (
-            "You've downloaded {} before. "
-            "Is it okay to delete and re-download it?"
-        ).format(path)
-
-        ok_to_delete = read_user_yes_no(question, 'yes')
-
-    if ok_to_delete:
-        if os.path.isdir(path):
-            rmtree(path)
-        else:
-            os.remove(path)
-    else:
-        sys.exit()
+from .utils import make_sure_path_exists, prompt_and_delete
 
 
 def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
@@ -67,14 +37,17 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False):
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
-            prompt_and_delete(zip_path, no_input=no_input)
+            download = prompt_and_delete(zip_path, no_input=no_input)
+        else:
+            download = True
 
-        # (Re) download the zipfile
-        r = requests.get(zip_uri, stream=True)
-        with open(zip_path, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024):
-                if chunk:  # filter out keep-alive new chunks
-                    f.write(chunk)
+        if download:
+            # (Re) download the zipfile
+            r = requests.get(zip_uri, stream=True)
+            with open(zip_path, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=1024):
+                    if chunk:  # filter out keep-alive new chunks
+                        f.write(chunk)
     else:
         # Just use the local zipfile as-is.
         zip_path = os.path.abspath(zip_uri)

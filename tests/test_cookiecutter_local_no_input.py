@@ -146,7 +146,7 @@ def test_cookiecutter_template_cleanup(mocker):
     )
 
     mock_tmpdir = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete',
+        'cookiecutter.utils.prompt_and_delete',
         return_value=True,
         autospec=True
     )
