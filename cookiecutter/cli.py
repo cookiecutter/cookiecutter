@@ -17,6 +17,7 @@ from cookiecutter.exceptions import (
     FailedHookException,
     UndefinedVariableInTemplate,
     UnknownExtension,
+    InvalidZipRepository,
     RepositoryNotFound,
     RepositoryCloneFailed
 )
@@ -122,6 +123,7 @@ def main(
             InvalidModeException,
             FailedHookException,
             UnknownExtension,
+            InvalidZipRepository,
             RepositoryNotFound,
             RepositoryCloneFailed) as e:
         click.echo(e)
