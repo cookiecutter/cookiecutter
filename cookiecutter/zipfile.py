@@ -5,6 +5,7 @@ import requests
 import tempfile
 from zipfile import ZipFile
 try:
+    # BadZipfile was renamed to BadZipFile in Python 3.2.
     from zipfile import BadZipFile
 except ImportError:
     from zipfile import BadZipfile as BadZipFile
