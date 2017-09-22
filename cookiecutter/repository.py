@@ -26,7 +26,7 @@ def is_repo_url(value):
 
 def is_zip_file(value):
     """Return True if value is a zip file."""
-    return value.endswith('.zip')
+    return value.lower().endswith('.zip')
 
 
 def expand_abbreviations(template, abbreviations):
