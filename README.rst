@@ -66,6 +66,8 @@ Did someone say features?
         $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
         # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
         $ cookiecutter gh:audreyr/cookiecutter-pypackage
+        # Cookiecutter Specials have short-names
+        $ cookiecutter python
 
 * Use it at the command line with a local template:
 
@@ -173,12 +175,14 @@ Cookiecutter Specials
 These Cookiecutters are maintained by the cookiecutter team:
 
 * `cookiecutter-pypackage`_: `@audreyr`_'s ultimate Python package project
-  template.
+  template. Can be used by short name `python`.
 * `cookiecutter-django`_: A bleeding edge Django project template with
   Bootstrap 4, customizable users app, starter templates, working user
-  registration, celery setup, and much more.
+  registration, celery setup, and much more. Can be used by short name
+  `django`.
 * `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring
-  `pytest`_ plugins that help you to write better programs.
+  `pytest`_ plugins that help you to write better programs.  Can be used by
+  short name `pytest`.
 
 Categories of Cookiecutters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -355,7 +359,7 @@ Python
 * `cookiecutter-pyqt4`_: A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
 * `cookiecutter-xontrib`_: A template for building xontribs, a.k.a `xonsh`_ contributions
 * `cookiecutter-conda-python`_: A template for building Conda Python packages
-* `cookiecutter-pypackage-rust-cross-platform-publish`_: A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux. 
+* `cookiecutter-pypackage-rust-cross-platform-publish`_: A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux.
 * `cookiecutter-telegram-bot`_: A template project for Telegram bots with webhooks on CherryPy.
 * `python-project-template`_: A template for Python projects with sophisticated release automation.
 
