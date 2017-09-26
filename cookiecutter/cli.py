@@ -92,6 +92,10 @@ def main(
         default_config, debug_file):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
+    TEMPLATE is a local path or a link to a cookiecutter project template.
+    It can also be help, python, django or pytest for Cookiecutter
+    specials.
+
     Cookiecutter is free and open source software, developed and managed by
     volunteers. If you would like to help out or fund the project, please get
     in touch at https://github.com/audreyr/cookiecutter.
@@ -101,6 +105,21 @@ def main(
     if template == u'help':
         click.echo(click.get_current_context().get_help())
         sys.exit(0)
+    elif template == u'python':
+        template = 'https://github.com/audreyr/cookiecutter-pypackage'
+        click.echo(
+            'Using default Python package project template {}'.format(template)
+        )
+    elif template == u'django':
+        template = 'https://github.com/pydanny/cookiecutter-django'
+        click.echo(
+            'Using default Django project template {}'.format(template)
+        )
+    elif template == u'pytest':
+        template = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin'
+        click.echo(
+            'Using default pytest template {}'.format(template)
+        )
 
     configure_logger(
         stream_level='DEBUG' if verbose else 'INFO',
