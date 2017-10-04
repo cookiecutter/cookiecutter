@@ -698,8 +698,10 @@ Continuous Delivery
 ~~~~~~~~~~~~~~~~~~~
 
 * `painless-continuous-delivery`_: A cookiecutter template for software development setups with continuous delivery baked in. Python (Django, Flask), and experimental PHP support.
+* `cookiecutter-devenv`_: A template to add a development and ci environment to an existing project.
 
 .. _`painless-continuous-delivery`: https://github.com/painless-software/painless-continuous-delivery
+.. _`cookiecutter-devenv`: https://bitbucket.org/greenguavalabs/cookiecutter-devenv
 
 Cloud Tools
 ~~~~~~~~~~~~
