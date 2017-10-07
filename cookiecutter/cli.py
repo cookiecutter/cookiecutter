@@ -102,6 +102,12 @@ def validate_extra_context(ctx, param, value):
     default=None,
     help='File to be used as a stream for DEBUG logging',
 )
+@click.option(
+    u"--accept-hooks",
+    type=click.Choice(["yes", "ask", "no"]),
+    default="yes",
+    help=u"Accept pre/post hooks",
+)
 def main(
     template,
     extra_context,
@@ -116,6 +122,7 @@ def main(
     debug_file,
     directory,
     skip_if_file_exists,
+    accept_hooks,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -131,6 +138,13 @@ def main(
 
     configure_logger(stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file)
 
+    # If needed, prompt the user to ask whether or not they want to execute
+    # the pre/post hooks.
+    if accept_hooks == "ask":
+        _accept_hooks = click.confirm("Do you want to execute hooks?")
+    else:
+        _accept_hooks = accept_hooks == "yes"
+
     try:
         cookiecutter(
             template,
@@ -145,6 +159,7 @@ def main(
             password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
             directory=directory,
             skip_if_file_exists=skip_if_file_exists,
+            accept_hooks=_accept_hooks,
         )
     except (
         OutputDirExistsException,
