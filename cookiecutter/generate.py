@@ -245,7 +245,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
 
 
 def generate_files(repo_dir, context=None, output_dir='.',
-                   overwrite_if_exists=False):
+                   overwrite_if_exists=False, jinja_environment_kwargs=None):
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -253,16 +253,19 @@ def generate_files(repo_dir, context=None, output_dir='.',
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param jinja_environment_kwargs: kwargs to pass to jinja Environmnet initialization
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
     context = context or {}
+    jinja_environment_kwargs = jinja_environment_kwargs or {}
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
     env = StrictEnvironment(
         context=context,
         keep_trailing_newline=True,
+        **jinja_environment_kwargs
     )
     try:
         project_dir, output_directory_created = render_and_create_dir(
