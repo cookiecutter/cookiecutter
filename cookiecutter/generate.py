@@ -258,15 +258,13 @@ def generate_files(repo_dir, context=None, output_dir='.',
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
     context = context or {}
-    jinja_environment_kwargs = jinja_environment_kwargs or {}
+    env_kwargs = {'context': context, 'keep_trailing_newline': True}
+    env_kwargs.update(jinja_environment_kwargs or {})
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
-    env = StrictEnvironment(
-        context=context,
-        keep_trailing_newline=True,
-        **jinja_environment_kwargs
-    )
+    env = StrictEnvironment(**env_kwargs)
+
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir,
