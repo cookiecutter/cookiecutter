@@ -7,7 +7,7 @@ import pytest
 
 def test_finds_local_repo(tmpdir):
     """A valid local repository should be returned."""
-    project_dir = repository.determine_repo_dir(
+    project_dir, cleanup = repository.determine_repo_dir(
         'tests/fake-repo',
         abbreviations={},
         clone_to_dir=str(tmpdir),
@@ -16,6 +16,7 @@ def test_finds_local_repo(tmpdir):
     )
 
     assert 'tests/fake-repo' == project_dir
+    assert not cleanup
 
 
 def test_local_repo_with_no_context_raises(tmpdir):

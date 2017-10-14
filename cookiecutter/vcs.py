@@ -6,15 +6,13 @@ from __future__ import unicode_literals
 import logging
 import os
 import subprocess
-import sys
 
 from whichcraft import which
 
 from .exceptions import (
     RepositoryNotFound, RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
 )
-from .prompt import read_user_yes_no
-from .utils import make_sure_path_exists, rmtree
+from .utils import make_sure_path_exists, prompt_and_delete
 
 logger = logging.getLogger(__name__)
 
@@ -23,31 +21,6 @@ BRANCH_ERRORS = [
     'error: pathspec',
     'unknown revision',
 ]
-
-
-def prompt_and_delete_repo(repo_dir, no_input=False):
-    """Ask the user whether it's okay to delete the previously-cloned repo.
-
-    If yes, deletes it. Otherwise, Cookiecutter exits.
-
-    :param repo_dir: Directory of previously-cloned repo.
-    :param no_input: Suppress prompt to delete repo and just delete it.
-    """
-    # Suppress prompt if called via API
-    if no_input:
-        ok_to_delete = True
-    else:
-        question = (
-            "You've cloned {} before. "
-            "Is it okay to delete and re-clone it?"
-        ).format(repo_dir)
-
-        ok_to_delete = read_user_yes_no(question, 'yes')
-
-    if ok_to_delete:
-        rmtree(repo_dir)
-    else:
-        sys.exit()
 
 
 def identify_repo(repo_url):
@@ -114,32 +87,35 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        prompt_and_delete_repo(repo_dir, no_input=no_input)
+        clone = prompt_and_delete(repo_dir, no_input=no_input)
+    else:
+        clone = True
 
-    try:
-        subprocess.check_output(
-            [repo_type, 'clone', repo_url],
-            cwd=clone_to_dir,
-            stderr=subprocess.STDOUT,
-        )
-        if checkout is not None:
+    if clone:
+        try:
             subprocess.check_output(
-                [repo_type, 'checkout', checkout],
-                cwd=repo_dir,
+                [repo_type, 'clone', repo_url],
+                cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
-    except subprocess.CalledProcessError as clone_error:
-        output = clone_error.output.decode('utf-8')
-        if 'not found' in output.lower():
-            raise RepositoryNotFound(
-                'The repository {} could not be found, '
-                'have you made a typo?'.format(repo_url)
-            )
-        if any(error in output for error in BRANCH_ERRORS):
-            raise RepositoryCloneFailed(
-                'The {} branch of repository {} could not found, '
-                'have you made a typo?'.format(checkout, repo_url)
-            )
-        raise
+            if checkout is not None:
+                subprocess.check_output(
+                    [repo_type, 'checkout', checkout],
+                    cwd=repo_dir,
+                    stderr=subprocess.STDOUT,
+                )
+        except subprocess.CalledProcessError as clone_error:
+            output = clone_error.output.decode('utf-8')
+            if 'not found' in output.lower():
+                raise RepositoryNotFound(
+                    'The repository {} could not be found, '
+                    'have you made a typo?'.format(repo_url)
+                )
+            if any(error in output for error in BRANCH_ERRORS):
+                raise RepositoryCloneFailed(
+                    'The {} branch of repository {} could not found, '
+                    'have you made a typo?'.format(checkout, repo_url)
+                )
+            raise
 
     return repo_dir

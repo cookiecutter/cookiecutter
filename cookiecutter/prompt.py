@@ -49,6 +49,15 @@ def read_user_yes_no(question, default_value):
     )
 
 
+def read_repo_password(question):
+    """Prompt the user to enter a password
+
+    :param str question: Question to the user
+    """
+    # Please see http://click.pocoo.org/4/api/#click.prompt
+    return click.prompt(question, hide_input=True)
+
+
 def read_user_choice(var_name, options):
     """Prompt the user to choose from several options for the given variable.
 
