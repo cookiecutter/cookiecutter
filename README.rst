@@ -705,7 +705,7 @@ Continuous Delivery
 * `cookiecutter-devenv`_: A template to add a development and ci environment to an existing project.
 
 .. _`painless-continuous-delivery`: https://github.com/painless-software/painless-continuous-delivery
-.. _`cookiecutter-devenv`: https://bitbucket.org/greenguavalabs/cookiecutter-devenv
+.. _`cookiecutter-devenv`: https://bitbucket.org/greenguavalabs/cookiecutter-devenv.git
 
 Cloud Tools
 ~~~~~~~~~~~~
