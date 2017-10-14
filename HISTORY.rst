@@ -12,6 +12,8 @@ New Features:
   ``_template``, thanks to `@aroig`_ (#774)
 * Add a URL abbreviation for GitLab template projects, thanks to `@hackebrot`_
   (#963)
+* Add option to use templates from Zip files or Zip URLs, thanks to
+  `@freakboy3742`_ (#961)
 
 Bug Fixes:
 
