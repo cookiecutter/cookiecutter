@@ -69,6 +69,7 @@ Other Changes:
   * `wemake-django-template`_ by `@wemake-services`_ (#990)
   * `cookiecutter-raml`_ by `@genzj`_ (#994)
   * `cookiecutter-anyblok-project`_ by `@AnyBlok`_ (#988)
+  * `cookiecutter-devenv`_ by `@greenguavalabs`_ (#991)
 
 .. _`cookiecutter-kata-gtest`: https://github.com/13coders/cookiecutter-kata-gtest
 .. _`cookiecutter-kata-cpputest`: https://github.com/13coders/cookiecutter-kata-cpputest
@@ -90,6 +91,7 @@ Other Changes:
 .. _`wemake-django-template`: https://github.com/wemake-services/wemake-django-template
 .. _`cookiecutter-raml`: https://github.com/genzj/cookiecutter-raml
 .. _`cookiecutter-anyblok-project`: https://github.com/AnyBlok/cookiecutter-anyblok-project
+.. _`cookiecutter-devenv`: https://bitbucket.org/greenguavalabs/cookiecutter-devenv.git
 
 .. _`@13coders`: https://github.com/13coders
 .. _`@coreysnyder04`: https://github.com/coreysnyder04
@@ -118,6 +120,7 @@ Other Changes:
 .. _`@wemake-services`: https://github.com/wemake-services
 .. _`@genzj`: https://github.com/genzj
 .. _`@AnyBlok`: https://github.com/AnyBlok
+.. _`@greenguavalabs`: https://bitbucket.org/greenguavalabs
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
