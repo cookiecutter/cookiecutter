@@ -116,7 +116,8 @@ class RepositoryCloneFailed(CookiecutterException):
 
 
 class InvalidZipRepository(CookiecutterException):
-    """
+    """Raised or invalid zip repositories.
+
     Raised when the specified cookiecutter repository isn't a valid
     Zip archive.
     """
