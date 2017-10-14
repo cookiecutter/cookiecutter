@@ -8,9 +8,10 @@ from jinja2.ext import Extension
 
 
 class JsonifyExtension(Extension):
-    """Jinja2 extension to convert a python object to json"""
+    """Jinja2 extension to convert a python object to json."""
 
     def __init__(self, environment):
+        """Initilize extension with given environment."""
         super(JsonifyExtension, self).__init__(environment)
 
         def jsonify(obj):
