@@ -22,8 +22,8 @@ LOG_FORMATS = {
 def configure_logger(stream_level='DEBUG', debug_file=None):
     """Configure logging for cookiecutter.
 
-    Set up logging to stdout with given level and with DEBUG level for loggin
-    to file if debug_file given
+    Set up logging to stdout with given level and with DEBUG level for logging
+    to file if debug_file given.
     """
     # Set up 'cookiecutter' logger
     logger = logging.getLogger('cookiecutter')
