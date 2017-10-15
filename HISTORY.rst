@@ -37,6 +37,8 @@ Other Changes:
   according to pep257, thanks to `@terryjbates`_ (#922, #931)
 * Update doc string for ``is_copy_only_path()`` according to pep257, thanks to
   `@mathagician`_ and `@terryjbates`_ (#935, #949)
+* Update doc strings in ``cookiecutter/extensions.py`` according to pep257,
+  thanks to `@meahow`_ (#996)
 * Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
 * Re-implement Makefile and update several make rules, thanks to `@hackebrot`_
   (#930)
@@ -123,6 +125,7 @@ Other Changes:
 .. _`@genzj`: https://github.com/genzj
 .. _`@AnyBlok`: https://github.com/AnyBlok
 .. _`@greenguavalabs`: https://bitbucket.org/greenguavalabs
+.. _`@meahow`: https://github.com/meahow
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
