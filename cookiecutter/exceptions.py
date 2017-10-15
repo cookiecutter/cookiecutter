@@ -21,7 +21,8 @@ class NonTemplatedInputDirException(CookiecutterException):
 class UnknownTemplateDirException(CookiecutterException):
     """Raised when Cookiecutter cannot determine template directory.
 
-    For example when more than one dir appears to be a template dir.
+    Raised when Cookiecutter cannot determine which directory is the project
+    template, e.g. more than one dir appears to be a template dir.
     """
 
 
@@ -116,7 +117,7 @@ class RepositoryCloneFailed(CookiecutterException):
 
 
 class InvalidZipRepository(CookiecutterException):
-    """Raised or invalid zip repositories.
+    """Raised for invalid zip repositories.
 
     Raised when the specified cookiecutter repository isn't a valid
     Zip archive.
