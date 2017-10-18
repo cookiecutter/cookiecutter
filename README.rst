@@ -356,7 +356,7 @@ Python
 * `cookiecutter-pyqt4`_: A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
 * `cookiecutter-xontrib`_: A template for building xontribs, a.k.a `xonsh`_ contributions
 * `cookiecutter-conda-python`_: A template for building Conda Python packages
-* `cookiecutter-pypackage-rust-cross-platform-publish`_: A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux. 
+* `cookiecutter-pypackage-rust-cross-platform-publish`_: A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux.
 * `cookiecutter-telegram-bot`_: A template project for Telegram bots with webhooks on CherryPy.
 * `python-project-template`_: A template for Python projects with sophisticated release automation.
 * `cookiecutter-anyblok-project`_: A template for Anyblok based projects.
