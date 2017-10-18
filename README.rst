@@ -299,6 +299,7 @@ Backers
 We would like to thank the following people for supporting us:
 
 * Bruno Alla
+* Carol Willing
 * Russell Keith-Magee
 
 Code of Conduct
