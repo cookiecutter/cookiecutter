@@ -360,6 +360,7 @@ Python
 * `cookiecutter-telegram-bot`_: A template project for Telegram bots with webhooks on CherryPy.
 * `python-project-template`_: A template for Python projects with sophisticated release automation.
 * `cookiecutter-anyblok-project`_: A template for Anyblok based projects.
+* `cookiecutter-python-cli`_: A cookiecutter template for creating a Python CLI application using click
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -408,6 +409,7 @@ Python
 .. _`cookiecutter-telegram-bot`: https://github.com/Ars2014/cookiecutter-telegram-bot
 .. _`python-project-template`: https://github.com/Kwpolska/python-project-template
 .. _`cookiecutter-anyblok-project`: https://github.com/AnyBlok/cookiecutter-anyblok-project
+.. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 
 Python-Django
 ^^^^^^^^^^^^^
