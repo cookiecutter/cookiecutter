@@ -9,6 +9,7 @@ History
 Other Changes:
 
 * Added more cookiecutter templates to the mix:
+
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
