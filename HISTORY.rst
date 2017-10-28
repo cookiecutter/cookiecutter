@@ -6,7 +6,14 @@ History
 1.7.0 (????-??-??) ???????
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*No changes since the 1.6.0 release.*
+Other Changes:
+
+* Added more cookiecutter templates to the mix:
+  * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
+
+.. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
+
+.. _`@xuanluong`: https://github.com/xuanluong
 
 
 1.6.0 (2017-10-15) Tim Tam
