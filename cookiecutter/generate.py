@@ -27,6 +27,8 @@ from .find import find_template
 from .hooks import run_hook
 from .utils import make_sure_path_exists, work_in, rmtree
 
+from .context import context_is_version_2
+
 logger = logging.getLogger(__name__)
 
 
@@ -72,6 +74,38 @@ def apply_overwrites_to_context(context, overwrite_context):
             context[variable] = overwrite
 
 
+def apply_overwrites_to_context2(context, overwrite_context):
+    """Modify the given version 2 context in place based on the overwrite_context."""
+
+    # Need a more pythonic way of doing this, its convoluted...
+    variable_idx_by_name = {}
+    for idx, dictionary in enumerate(context['variables']):
+        variable_idx_by_name[dictionary['name']] = idx
+
+    for variable, overwrite in overwrite_context.items():
+        if variable not in variable_idx_by_name.keys():
+            # Do not include variables which are not used in the template
+            continue
+
+        if 'choices' in context['variables'][variable_idx_by_name[variable]].keys():
+            context_value = context['variables'][variable_idx_by_name[variable]]['choices']
+        else:
+            context_value = context['variables'][variable_idx_by_name[variable]]['default']
+
+        if isinstance(context_value, list):
+            # We are dealing with a choice variable
+            if overwrite in context_value:
+                # This overwrite is actually valid for the given context
+                # Let's set it as default (by definition first item in list)
+                # see ``cookiecutter.prompt.prompt_choice_for_config``
+                context_value.remove(overwrite)
+                context_value.insert(0, overwrite)
+                context['variables'][variable_idx_by_name[variable]]['default'] = overwrite
+        else:
+            # Simply overwrite the value for this variable
+            context['variables'][variable_idx_by_name[variable]]['default'] = overwrite
+
+
 def generate_context(context_file='cookiecutter.json', default_context=None,
                      extra_context=None):
     """Generate the context for a Cookiecutter project template.
@@ -105,10 +139,20 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
-    if default_context:
-        apply_overwrites_to_context(obj, default_context)
-    if extra_context:
-        apply_overwrites_to_context(obj, extra_context)
+    if context_is_version_2(context[file_stem]):
+        logger.debug("Context is version 2")
+
+        if default_context:
+            apply_overwrites_to_context2(obj, default_context)
+        if extra_context:
+            apply_overwrites_to_context2(obj, extra_context)
+    else:
+        logger.debug("Context is version 1")
+
+        if default_context:
+            apply_overwrites_to_context(obj, default_context)
+        if extra_context:
+            apply_overwrites_to_context(obj, extra_context)
 
     logger.debug('Context generated is {}'.format(context))
     return context
