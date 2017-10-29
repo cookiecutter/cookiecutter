@@ -1,0 +1,36 @@
+{
+    "name": "cookiecutter-test-choices-with-inputs",
+    "version": "0.1.0",
+    "cookiecutter_version": "2.0.0",
+    "variables": [
+        {
+            "name": "full_name",
+            "default": "Raphael Pierzina",
+            "prompt": "What's your full name?",
+            "description": "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "default": "raphael@hackebrot.de",
+            "prompt": "What's your email?",
+            "description": "Please enter an email address for the meta information in setup.py.",
+            "type": "string"
+        },
+        {
+            "name": "license",
+            "default": "ISC",
+            "prompt": "Please choose a license!",
+            "description": "Cookiecutter will add an according LICENSE file for you and set the according classifier in setup.py.",
+            "type": "string",
+            "choices": [
+                "ISC",
+                "MIT",
+                "BSD3",
+                "GNU-GPL3",
+                "Apache2",
+                "Mozilla2"
+            ]
+        }
+    ]
+}
