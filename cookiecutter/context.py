@@ -1,12 +1,31 @@
 # -*- coding: utf-8 -*-
 
-import codecs
+"""
+cookiecutter.context
+--------------------
+
+Process the version 2 cookiecutter context (previsously loaded via
+cookiecutter.json) and handle any user input that might be associated with
+initializing the settings defined in the 'variables' OrderedDict part of the
+context.
+
+This module produces a dictionary used later by the jinja2 template engine to
+generate files.
+
+Based on the source code written by @hackebrot see:
+https://github.com/audreyr/cookiecutter/pull/848
+
+"""
+
+import logging
 import collections
 import json
-import pprint
+import re
 
 import click
 from jinja2 import Environment
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_PROMPT = 'Please enter a value for "{variable.name}"'
 
@@ -14,9 +33,41 @@ VALID_TYPES = [
     'boolean',
     'yes_no',
     'int',
+    'float',
+    'uuid',
     'json',
     'string',
 ]
+
+SET_OF_REQUIRED_FIELDS = {
+    'name',
+    'cookiecutter_version',
+    'variables',
+}
+
+REGEX_COMPILE_FLAGS = {
+    'ascii': re.ASCII,
+    'debug': re.DEBUG,
+    'ignorecase': re.IGNORECASE,
+    'locale': re.LOCALE,
+    'mulitline': re.MULTILINE,
+    'dotall': re.DOTALL,
+    'verbose': re.VERBOSE,
+}
+
+
+def context_is_version_2(cookiecutter_context):
+    """
+    Return True if the cookiecutter_context meets the current requirements for
+    a version 2 cookiecutter.json file format.
+    """
+    # This really is not sufficient since a v1 context could define each of
+    # these fields; perhaps a more thorough test would be to also check if the
+    # 'variables' field was defined as a list of OrderedDict items.
+    if (cookiecutter_context.keys() & SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
+        return True
+    else:
+        return False
 
 
 def prompt_string(variable, default):
@@ -46,6 +97,24 @@ def prompt_int(variable, default):
     )
 
 
+def prompt_float(variable, default):
+    return click.prompt(
+        variable.prompt,
+        default=default,
+        hide_input=variable.hide_input,
+        type=click.FLOAT,
+    )
+
+
+def prompt_uuid(variable, default):
+    return click.prompt(
+        variable.prompt,
+        default=default,
+        hide_input=variable.hide_input,
+        type=click.UUID,
+    )
+
+
 def prompt_json(variable, default):
     # The JSON object from cookiecutter.json might be very large
     # We only show 'default'
@@ -58,7 +127,10 @@ def prompt_json(variable, default):
                 object_pairs_hook=collections.OrderedDict,
             )
         except json.decoder.JSONDecodeError:
-            # Leave it up to click to ask the user again
+            # Leave it up to click to ask the user again.
+            # Local function procsse_json() is called by click within a
+            # try block that catches click.UsageError exception's and asks
+            # the user to try again.
             raise click.UsageError('Unable to decode to JSON.')
 
     dict_value = click.prompt(
@@ -117,6 +189,8 @@ PROMPTS = {
     'string': prompt_string,
     'boolean': prompt_boolean,
     'int': prompt_int,
+    'float': prompt_float,
+    'uuid': prompt_uuid,
     'json': prompt_json,
     'yes_no': prompt_yes_no,
 }
@@ -138,6 +212,14 @@ def deserialize_int(value):
     return int(value)
 
 
+def deserialize_float(value):
+    return float(value)
+
+
+def deserialize_uuid(value):
+    return click.UUID(value)
+
+
 def deserialize_json(value):
     return value
 
@@ -146,45 +228,122 @@ DESERIALIZERS = {
     'string': deserialize_string,
     'boolean': deserialize_boolean,
     'int': deserialize_int,
+    'float': deserialize_float,
+    'uuid': deserialize_uuid,
     'json': deserialize_json,
     'yes_no': deserialize_yes_no,
 }
 
 
 class Variable(object):
+    """
+    Embody attributes of variables while processing the variables field of
+    a cookiecutter version 2 context.
+    """
+
     def __init__(self, name, default, **info):
+        """
+        :param name: A string containing the variable's name in the jinja2 context.
+        :param default: The variable's default value. Can any type defined below.
+        :param kwargs info: Keyword/Argument pairs recognized are shown below.
+
+        Recognized Keyword/Arguments, but optional:
+
+            - `description` -- A string description of the variable.
+            - `prompt` -- A string to show user when prompted for input.
+            - `prompt_user` -- A boolean, if True prompt user; else no prompt.
+            - `hide_input` -- A boolean, if True hide user's input.
+            - `type` -- Specifies the variable's data type see below,
+                    defaults to string.
+            - `skip_if` -- A string of a jinja2 renderable boolean expression,
+                    the variable will be skipped if it renders True.
+            - `choices` -- A list of choices, may be of mixed types.
+            - `validation` -- A string defining a regex to use to validation
+                    user input. Defaults to None.
+            - `validation_flags` - A list of validation flag names that can be
+                    specified to control the behaviour of the validation
+                    check done using the above defined `validation` string.
+                    Specifying a flag is equivalent to setting it to True,
+                    not specifying a flag is equivalent to setting it to False.
+                    The default value of this variable has no effect on the
+                    validation check.
+
+                    The flags supported are:
+
+                        * ascii - enabling re.ASCII
+                        * debug - enabling re.DEBUG
+                        * ignorecase - enabling re.IGNORECASE
+                        * locale - enabling re.LOCALE
+                        * mulitline - enabling re.MULTILINE
+                        * dotall - enabling re.DOTALL
+                        * verbose - enabling re.VERBOSE
+
+                    See: https://docs.python.org/3/library/re.html#re.compile
+
+        Supported Types
+            * string
+            * boolean
+            * int
+            * float
+            * uuid
+            * json
+            * yes_no
+
+        """
 
         # mandatory fields
         self.name = name
         self.default = default
 
         # optional fields
-        self.description = info.get('description', None)
-        self.prompt = info.get('prompt', DEFAULT_PROMPT.format(variable=self))
-        self.hide_input = info.get('hide_input', False)
+        self.info = info
+
+        self.description = self.check_type('description', None, str)
+
+        self.prompt = self.check_type('prompt', DEFAULT_PROMPT.format(variable=self), str)
+
+        self.hide_input = self.check_type('hide_input', False, bool)
 
         self.var_type = info.get('type', 'string')
         if self.var_type not in VALID_TYPES:
-            msg = 'Invalid type {var_type} for variable'
-            raise ValueError(msg.format(var_type=self.var_type))
+            msg = 'Variable: {var_name} has an invalid type {var_type}. Valid types are: {types}'
+            raise ValueError(msg.format(var_type=self.var_type,
+                                        var_name=self.name,
+                                        types=VALID_TYPES))
 
-        self.skip_if = info.get('skip_if', '')
-        if not isinstance(self.skip_if, str):
-            # skip_if was specified in cookiecutter.json
-            msg = 'Field skip_if is required to be a str, got {value}'
-            raise ValueError(msg.format(value=self.skip_if))
+        self.skip_if = self.check_type('skip_if', '', str)
 
-        self.prompt_user = info.get('prompt_user', True)
-        if not isinstance(self.prompt_user, bool):
-            # prompt_user was specified in cookiecutter.json
-            msg = 'Field prompt_user is required to be a bool, got {value}'
-            raise ValueError(msg.format(value=self.prompt_user))
+        self.prompt_user = self.check_type('prompt_user', True, bool)
 
-        # choices are somewhat special as they can of every type
-        self.choices = info.get('choices', [])
+        # choices are somewhat special as they can be of every type
+        self.choices = self.check_type('choices', [], list)
         if self.choices and default not in self.choices:
-            msg = 'Invalid default value {default} for choice variable'
-            raise ValueError(msg.format(default=self.default))
+            msg = "Variable: {var_name} has an invalid default value {default} for choices: {choices}."
+            raise ValueError(msg.format(var_name=self.name, default=self.default, choices=self.choices))
+
+        self.validation = self.check_type('validation', None, str)
+
+        self.validation_flag_names = self.check_type('validation_flags', [], list)
+
+        self.validation_flags = 0
+        for vflag in self.validation_flag_names:
+            if vflag in REGEX_COMPILE_FLAGS.keys():
+                self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
+            else:
+                msg = "Variable: {var_name} - Ignoring unkown RegEx validation Control Flag named '{flag}'\n" \
+                      "Legal flag names are: {names}"
+                logger.warn(msg.format(var_name=self.name, flag=vflag,
+                                       names=REGEX_COMPILE_FLAGS.keys()))
+                self.validation_flag_names.remove(vflag)
+
+        self.validate = None
+        if self.validation:
+            try:
+                self.validate = re.compile(self.validation, self.validation_flags)
+            except re.error as e:
+                msg = "Variable: {var_name} - Validation Setup Error: Invalid RegEx '{value}' - does not compile - {err}"
+                raise ValueError(msg.format(var_name=self.name,
+                                            value=self.validation, err=e))
 
     def __repr__(self):
         return "<{class_name} {variable_name}>".format(
@@ -192,9 +351,53 @@ class Variable(object):
             variable_name=self.name,
         )
 
+    def __str__(self):
+        s = ["{key}='{value}'".format(key=key, value=self.__dict__[key]) for key in self.__dict__ if key != 'info']
+        return self.__repr__() + ':\n' + ',\n'.join(s)
+
+    def check_type(self, option_name, option_default_value, option_type):
+        """
+        Retrieve the option_value named option_name from info and check its type.
+        Raise ValueError if the type is incorrect; otherwise return option's value.
+        """
+        option_value = self.info.get(option_name, option_default_value)
+
+        if option_value is not None:
+            if not isinstance(option_value, option_type):
+                msg = "Variable: '{var_name}' Option: '{opt_name}' requires a value of type {type_name}, but has a value of: {value}"
+                raise ValueError(msg.format(var_name=self.name, opt_name=option_name, type_name=option_type.__name__, value=option_value))
+
+        return option_value
+
 
 class CookiecutterTemplate(object):
+    """
+    Embodies all attributes of a version 2 Cookiecutter template.
+    """
+
     def __init__(self, name, cookiecutter_version, variables, **info):
+        """
+        Mandatorty Parameters
+
+        :param name: The cookiecutter template name
+        :param cookiecutter_version: The version of the cookiecutter application
+            that is compatible with this template.
+        :param variables: A list of OrderedDict items that describe each
+            variable in the template. These variables are essentially what
+            is found in the version 1 cookiecutter.json file.
+
+        Optional Parameters (via \**info)
+
+        :param authors: An array of string - maintainers of the template.
+        :param description: A human readable description of the template.
+        :param keywords: An array of string - similar to PyPI keywords.
+        :param license: A string identifying the license of the template code.
+        :param url: A string containing the URL for the template project.
+        :param version: A string containing a version identifier, ideally
+            following the semantic versioning spec.
+
+        """
+
         # mandatory fields
         self.name = name
         self.cookiecutter_version = cookiecutter_version
@@ -219,7 +422,16 @@ class CookiecutterTemplate(object):
             yield v
 
 
-def load_context(json_object, verbose):
+def load_context(json_object, no_input=False, verbose=True):
+    """
+    Load a version 2 context & process the json_object for declared variables
+    in the Cookiecutter template.
+
+    :param json_object: A JSON file that has be loaded into a Python OrderedDict.
+    :param no_input: Prompt the user at command line for manual configuration if False,
+                     if True, no input prompts are made, all defaults are accepted.
+    :param verbose: Emit maximum varible information.
+    """
     env = Environment(extensions=['jinja2_time.TimeExtension'])
     context = collections.OrderedDict({})
 
@@ -237,7 +449,7 @@ def load_context(json_object, verbose):
 
         deserialize = DESERIALIZERS[variable.var_type]
 
-        if not variable.prompt_user:
+        if no_input or (not variable.prompt_user):
             context[variable.name] = deserialize(default)
             continue
 
@@ -249,7 +461,17 @@ def load_context(json_object, verbose):
         if verbose and variable.description:
             click.echo(variable.description)
 
-        value = prompt(variable, default)
+        while True:
+            value = prompt(variable, default)
+            if variable.validate:
+                if variable.validate.match(value):
+                    break
+                else:
+                    msg = "Input validation failure against regex: '{val_string}', try again!".format(val_string=variable.validation)
+                    click.echo(msg)
+            else:
+                # no validation defined
+                break
 
         if verbose:
             width, _ = click.get_terminal_size()
@@ -260,14 +482,16 @@ def load_context(json_object, verbose):
     return context
 
 
-def main(file_path):
-    """Load the json object and prompt the user for input"""
+# def main(file_path):
+#     """Load the json object and prompt the user for input"""
 
-    with codecs.open(file_path, 'r', encoding='utf8') as f:
-        json_object = json.load(f, object_pairs_hook=collections.OrderedDict)
+#     import codecs
+#     import pprint
+#     with codecs.open(file_path, 'r', encoding='utf8') as f:
+#         json_object = json.load(f, object_pairs_hook=collections.OrderedDict)
 
-    pprint.pprint(load_context(json_object, True))
+#     pprint.pprint(load_context(json_object, True, False))
 
 
-if __name__ == '__main__':
-    main('cookiecutter.json')
+# if __name__ == '__main__':
+#     main('cookiecutter.json')
