@@ -68,3 +68,32 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
     mock_replay_load.assert_called_once_with(
         '.', 'custom-replay-file',
     )
+
+
+def test_version_2_load_context_call(
+        monkeypatch, mocker, user_config_file):
+    """Check that the version 2 load_context() is called.
+
+    Change the current working directory temporarily to
+    'tests/test-generate-context-v2/min-v2-cookiecutter'
+    for this test and call cookiecutter with '.' for the target template.
+    """
+    monkeypatch.chdir('tests/test-generate-context-v2/min-v2-cookiecutter')
+
+    mock_replay_dump = mocker.patch('cookiecutter.main.dump')
+
+    mock_version_1_prompt_for_config = mocker.patch('cookiecutter.main.prompt_for_config')
+    mock_version_2_load_context = mocker.patch('cookiecutter.main.load_context')
+
+    mocker.patch('cookiecutter.main.generate_files')
+
+    cookiecutter(
+        '.',
+        no_input=True,
+        replay=False,
+        config_file=user_config_file,
+    )
+
+    assert mock_version_1_prompt_for_config.call_count == 0
+    assert mock_version_2_load_context.call_count == 1
+    assert mock_replay_dump.call_count == 1
