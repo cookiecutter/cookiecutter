@@ -165,7 +165,7 @@ def render_variable(env, raw, cookiecutter_dict):
             for v in raw
         ]
     elif not isinstance(raw, basestring):
-        raw = str(raw)
+        return raw
 
     template = env.from_string(raw)
 

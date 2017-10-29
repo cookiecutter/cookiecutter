@@ -17,8 +17,8 @@ from cookiecutter import prompt, exceptions, environment
 
 
 @pytest.mark.parametrize('raw_var, rendered_var', [
-    (1, '1'),
-    (True, 'True'),
+    (1, 1),
+    (True, True),
     ('foo', 'foo'),
     ('{{cookiecutter.project}}', 'foobar'),
     (None, None),
@@ -35,9 +35,7 @@ def test_convert_to_str(mocker, raw_var, rendered_var):
     assert result == rendered_var
 
     # Make sure that non None non str variables are converted beforehand
-    if raw_var is not None:
-        if not isinstance(raw_var, basestring):
-            raw_var = str(raw_var)
+    if isinstance(raw_var, basestring):
         from_string.assert_called_once_with(raw_var)
     else:
         assert not from_string.called
@@ -191,11 +189,11 @@ class TestPrompt(object):
             'project_name': "Slartibartfast",
             'details': {
                 "key": "value",
-                "integer_key": "37",
+                "integer_key": 37,
                 "other_name": "Slartibartfast",
                 "dict_key": {
                     "deep_key": "deep_value",
-                    "deep_integer": "42",
+                    "deep_integer": 42,
                     "deep_other_name": "Slartibartfast",
                     "deep_list": [
                         "deep value 1",
