@@ -69,36 +69,111 @@ def apply_overwrites_to_context(context, overwrite_context):
             context[variable] = overwrite
 
 
-def apply_overwrites_to_context2(context, overwrite_context):
-    """Modify the given version 2 context in place based on the overwrite_context."""
+def apply_default_overwrites_to_context2(context, overwrite_default_context):
+    """Modify the given version 2 context in place based on the overwrite_default_context."""
 
-    # Need a more pythonic way of doing this, its convoluted...
-    variable_idx_by_name = {}
-    for idx, dictionary in enumerate(context['variables']):
-        variable_idx_by_name[dictionary['name']] = idx
+    for variable, overwrite in overwrite_default_context.items():
+        var_dict = next((d for d in context['variables'] if d['name'] == variable), None)
+        if var_dict:
+            if 'choices' in var_dict.keys():
+                context_value = var_dict['choices']
+            else:
+                context_value = var_dict['default']
 
-    for variable, overwrite in overwrite_context.items():
-        if variable not in variable_idx_by_name.keys():
-            # Do not include variables which are not used in the template
-            continue
+            if isinstance(context_value, list):
+                # We are dealing with a choice variable
+                if overwrite in context_value:
+                    # This overwrite is actually valid for the given context
+                    # Let's set it as default (by definition first item in list)
+                    # see ``cookiecutter.prompt.prompt_choice_for_config``
+                    context_value.remove(overwrite)
+                    context_value.insert(0, overwrite)
+                    var_dict['default'] = overwrite
+            else:
+                # Simply overwrite the value for this variable
+                var_dict['default'] = overwrite
 
-        if 'choices' in context['variables'][variable_idx_by_name[variable]].keys():
-            context_value = context['variables'][variable_idx_by_name[variable]]['choices']
-        else:
-            context_value = context['variables'][variable_idx_by_name[variable]]['default']
 
-        if isinstance(context_value, list):
-            # We are dealing with a choice variable
-            if overwrite in context_value:
-                # This overwrite is actually valid for the given context
-                # Let's set it as default (by definition first item in list)
-                # see ``cookiecutter.prompt.prompt_choice_for_config``
-                context_value.remove(overwrite)
-                context_value.insert(0, overwrite)
-                context['variables'][variable_idx_by_name[variable]]['default'] = overwrite
-        else:
-            # Simply overwrite the value for this variable
-            context['variables'][variable_idx_by_name[variable]]['default'] = overwrite
+def apply_extra_overwrites_to_context2(context, extra_context):
+    """
+    Modify the given version 2 context in place based on extra_context.
+
+    The extra_context parameter may be a dictionary or a list of dictionaries.
+
+    If extra_context is a dictionary, the key is assumed to identify the
+    variable's 'name' field and the value will be applied to the name field's
+    default value -- this behavior is exactly like version 1 context overwrite
+    behavior.
+
+    When extra_context is a list of dictionaries, each dictionary MUST specify
+    at the very least a 'name' key/value pair, or a ValueError is raised. The
+    'name' key's value will be used to find the variable dictionary to
+    overwrite by matching each dictionary's 'name' field.
+
+    If extra_context is a list of dictionaries, apply the overwrite from each
+    dictionary to it's matching variable's dictionary. This allows all fields
+    of a variable to be updated. A match considers the variable's 'name' field
+    only; any name fields in the extra_context list of dictionaries that do not
+    match a variable 'name' field, are ignored. Any key/value pairs specified in
+    an extra_content dictionary that are not already defined by the matching
+    variable dictionary will raise a ValueError.
+
+    """
+    if isinstance(extra_context, dict):
+        apply_default_overwrites_to_context2(context, extra_context)
+    elif isinstance(extra_context, list):
+        for xtra_ctx_item in extra_context:
+            if isinstance(xtra_ctx_item, dict):
+                if 'name' in xtra_ctx_item.keys():
+                    # xtra_ctx_item['name'] may have a replace value of the form:
+                    # 'name_value::replace_name_value'
+                    xtra_ctx_name = xtra_ctx_item['name'].split('::')[0]
+                    try:
+                        replace_name = xtra_ctx_item['name'].split('::')[1]
+                    except IndexError:
+                        replace_name = None
+
+                    var_dict = next((d for d in context['variables'] if d['name'] == xtra_ctx_name), None)
+                    if var_dict:
+                        # Since creation of new key/value pairs is NOT desired, we only use a key
+                        # that is common to both variables context and the extra context
+                        common_keys = [key for key in xtra_ctx_item.keys() if key in var_dict.keys()]
+                        for key in common_keys:
+                            if xtra_ctx_item[key] == '<<REMOVE::FIELD>>':
+                                var_dict.pop(key, None)
+                            else:
+                                # normal field update
+                                var_dict[key] = xtra_ctx_item[key]
+
+                        # After all fields have been update, there is some house-keeping to do.
+                        # The default/choices house-keeping could effecively be no-ops if the
+                        # user did the correct thing.
+                        if ('default' in common_keys) & ('choices' in var_dict.keys()):
+                            # default updated, regardless if choices has been updated,
+                            # re-order choices based on default
+                            if var_dict['default'] in var_dict['choices']:
+                                var_dict['choices'].remove(var_dict['default'])
+
+                            var_dict['choices'].insert(0, var_dict['default'])
+
+                        if ('default' not in common_keys) & ('choices' in common_keys):
+                            # choices updated, so update default based on first location in choices
+                            var_dict['default'] = var_dict['choices'][0]
+
+                        if replace_name:
+                            var_dict['name'] = replace_name
+                    else:
+                        msg = "No variable found in context whose name matches extra context name '{name}'"
+                        raise ValueError(msg.format(name=xtra_ctx_name))
+                else:
+                    msg = "Extra context dictionary item {item} is missing a 'name' key."
+                    raise ValueError(msg.format(item=xtra_ctx_item))
+            else:
+                msg = "Extra context list item '{item}' is of type {t}, should be a dictionary."
+                raise ValueError(msg.format(item=str(xtra_ctx_item), t=type(xtra_ctx_item).__name__))
+    else:
+        msg = "Extra context must be a dictionary or a list of dictionaries!"
+        raise ValueError(msg)
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
@@ -139,9 +214,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
         logger.debug("Context is version 2")
 
         if default_context:
-            apply_overwrites_to_context2(obj, default_context)
+            apply_default_overwrites_to_context2(obj, default_context)
         if extra_context:
-            apply_overwrites_to_context2(obj, extra_context)
+            apply_extra_overwrites_to_context2(obj, extra_context)
     else:
         logger.debug("Context is version 1")
 
