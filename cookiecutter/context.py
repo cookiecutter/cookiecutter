@@ -480,18 +480,3 @@ def load_context(json_object, no_input=False, verbose=True):
         context[variable.name] = deserialize(value)
 
     return context
-
-
-# def main(file_path):
-#     """Load the json object and prompt the user for input"""
-
-#     import codecs
-#     import pprint
-#     with codecs.open(file_path, 'r', encoding='utf8') as f:
-#         json_object = json.load(f, object_pairs_hook=collections.OrderedDict)
-
-#     pprint.pprint(load_context(json_object, True, False))
-
-
-# if __name__ == '__main__':
-#     main('cookiecutter.json')
