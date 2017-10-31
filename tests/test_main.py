@@ -83,9 +83,9 @@ def test_version_2_load_context_call(
     mock_replay_dump = mocker.patch('cookiecutter.main.dump')
 
     mock_version_1_prompt_for_config = mocker.patch(
-                                    'cookiecutter.main.prompt_for_config')
+        'cookiecutter.main.prompt_for_config')
     mock_version_2_load_context = mocker.patch(
-                                    'cookiecutter.main.load_context')
+        'cookiecutter.main.load_context')
 
     mocker.patch('cookiecutter.main.generate_files')
 
