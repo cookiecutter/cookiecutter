@@ -203,8 +203,8 @@ def apply_extra_overwrites_to_context2(context, extra_context):
                         # house-keeping could effecively be no-ops if the
                         # user did the correct thing.
                         if ('default' in common_keys) & ('choices' in var_dict.keys()):       # noqa
-                            # default updated, regardless if choices has been updated,
-                            # re-order choices based on default
+                            # default updated, regardless if choices has been
+                            # updated, re-order choices based on default
                             if var_dict['default'] in var_dict['choices']:
                                 var_dict['choices'].remove(var_dict['default'])                # noqa
 
