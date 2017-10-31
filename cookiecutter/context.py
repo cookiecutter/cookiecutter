@@ -127,10 +127,9 @@ def prompt_json(variable, default):
                 object_pairs_hook=collections.OrderedDict,
             )
         except ValueError:
-            # ValueError raised in Python 3.4
-            raise click.UsageError('Unable to decode to JSON.')
-        except json.decoder.JSONDecodeError:
             # json.decoder.JSONDecodeError raised in Python 3.5, 3.6
+            # but it inherits from ValueError which is raised in Python 3.4
+            # ---------------------------------------------------------------
             # Leave it up to click to ask the user again.
             # Local function procsse_json() is called by click within a
             # try block that catches click.UsageError exception's and asks
