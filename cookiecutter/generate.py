@@ -102,7 +102,7 @@ def apply_default_overwrites_to_context2(context, overwrite_default_context):
                 var_dict['default'] = overwrite
 
 
-def apply_extra_overwrites_to_context2(context, extra_context):
+def apply_overwrites_to_context_v2(context, extra_context):
     """
     Modify the given version 2 context in place based on extra_context.
 
@@ -273,9 +273,9 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
         logger.debug("Context is version 2")
 
         if default_context:
-            apply_default_overwrites_to_context2(obj, default_context)
+            apply_overwrites_to_context_v2(obj, default_context)
         if extra_context:
-            apply_extra_overwrites_to_context2(obj, extra_context)
+            apply_overwrites_to_context_v2(obj, extra_context)
     else:
         logger.debug("Context is version 1")
 
