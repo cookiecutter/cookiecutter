@@ -498,21 +498,20 @@ def test_variable_str():
         validation_flags=['ignorecase'],
         hide_input=True)
 
-    assert str(v) == \
-        ('<Variable module_name>:\n'
-         "name='module_name',\n"
-         "default='{{cookiecutter.plugin_name|lower|replace('-','_')}}',\n"
-         "description='None',\n"
-         "prompt='Please enter a name for your base python module',\n"
-         "hide_input='True',\n"
-         "var_type='string',\n"
-         "skip_if='',\n"
-         "prompt_user='True',\n"
-         "choices='[]',\n"
-         "validation='^[a-z_]+$',\n"
-         "validation_flag_names='['ignorecase']',\n"
-         "validation_flags='2',\n"
-         "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'")
+    assert '<Variable module_name>:' in str(v)
+    assert "name='module_name'" in str(v)
+    assert "default='{{cookiecutter.plugin_name|lower|replace('-','_')}}'" in str(v)
+    assert "description='None'" in str(v)
+    assert "prompt='Please enter a name for your base python module'" in str(v)
+    assert "hide_input='True'" in str(v)
+    assert "var_type='string'" in str(v)
+    assert "skip_if=''" in str(v)
+    assert "prompt_user='True'" in str(v)
+    assert "choices='[]'" in str(v)
+    assert "validation='^[a-z_]+$'" in str(v)
+    assert "validation_flag_names='['ignorecase']'" in str(v)
+    assert "validation_flags='2'" in str(v)
+    assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in str(v)
 
 
 def test_variable_option_raise_invalid_type_value_error():
