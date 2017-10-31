@@ -64,7 +64,8 @@ def context_is_version_2(cookiecutter_context):
     # This really is not sufficient since a v1 context could define each of
     # these fields; perhaps a more thorough test would be to also check if the
     # 'variables' field was defined as a list of OrderedDict items.
-    if (cookiecutter_context.keys() & SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
+    if (cookiecutter_context.keys() &
+            SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
         return True
     else:
         return False
@@ -246,8 +247,10 @@ class Variable(object):
 
     def __init__(self, name, default, **info):
         """
-        :param name: A string containing the variable's name in the jinja2 context.
-        :param default: The variable's default value. Can any type defined below.
+        :param name: A string containing the variable's name in the jinja2
+                     context.
+        :param default: The variable's default value. Can any type defined
+                        below.
         :param kwargs info: Keyword/Argument pairs recognized are shown below.
 
         Recognized Keyword/Arguments, but optional:
@@ -303,7 +306,10 @@ class Variable(object):
 
         self.description = self.check_type('description', None, str)
 
-        self.prompt = self.check_type('prompt', DEFAULT_PROMPT.format(variable=self), str)
+        self.prompt = self.check_type(
+            'prompt',
+            DEFAULT_PROMPT.format(variable=self),
+            str)
 
         self.hide_input = self.check_type('hide_input', False, bool)
 

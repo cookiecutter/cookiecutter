@@ -663,9 +663,12 @@ def gen_context_data_inputs_expected():
     yield context_with_valid_extra_7
     yield context_with_valid_extra_8
 
+
 @pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context', gen_context_data_inputs_expected())
-def test_generate_context_with_extra_context_dictionary(input_params, expected_context, monkeypatch):
+@pytest.mark.parametrize('input_params, expected_context',
+                         gen_context_data_inputs_expected())
+def test_generate_context_with_extra_context_dictionary(
+        input_params, expected_context, monkeypatch):
     """
     Test the generated context with extra content overwrite to multiple fields,
     with creation of new fields NOT allowed.
