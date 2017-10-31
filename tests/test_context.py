@@ -8,6 +8,7 @@ Tests for `cookiecutter.context` module that handles prompts for v2 context.
 """
 from __future__ import unicode_literals
 
+import sys
 import os.path
 import time
 import json
@@ -511,7 +512,11 @@ def test_variable_str():
     assert "validation='^[a-z_]+$'" in str(v)
     assert "validation_flag_names='['ignorecase']'" in str(v)
     assert "validation_flags='2'" in str(v)
-    assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in str(v)
+
+    if sys.version_info >= (3, 4):
+        assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in str(v)
+    else:
+        assert "validate='<_sre.SRE_Pattern object at" in str(v)
 
 
 def test_variable_option_raise_invalid_type_value_error():
