@@ -75,10 +75,13 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 
 def apply_default_overwrites_to_context2(context, overwrite_default_context):
-    """Modify the given version 2 context in place based on the overwrite_default_context."""
+    """
+    Modify the given version 2 context in place based on the
+    overwrite_default_context.
+    """
 
     for variable, overwrite in overwrite_default_context.items():
-        var_dict = next((d for d in context['variables'] if d['name'] == variable), None)
+        var_dict = next((d for d in context['variables'] if d['name'] == variable), None)   # noqa
         if var_dict:
             if 'choices' in var_dict.keys():
                 context_value = var_dict['choices']
@@ -89,7 +92,7 @@ def apply_default_overwrites_to_context2(context, overwrite_default_context):
                 # We are dealing with a choice variable
                 if overwrite in context_value:
                     # This overwrite is actually valid for the given context
-                    # Let's set it as default (by definition first item in list)
+                    # Let's set it as default (by definition 1st item in list)
                     # see ``cookiecutter.prompt.prompt_choice_for_config``
                     context_value.remove(overwrite)
                     context_value.insert(0, overwrite)
@@ -118,10 +121,58 @@ def apply_extra_overwrites_to_context2(context, extra_context):
     If extra_context is a list of dictionaries, apply the overwrite from each
     dictionary to it's matching variable's dictionary. This allows all fields
     of a variable to be updated. A match considers the variable's 'name' field
-    only; any name fields in the extra_context list of dictionaries that do not
-    match a variable 'name' field, are ignored. Any key/value pairs specified in
-    an extra_content dictionary that are not already defined by the matching
-    variable dictionary will raise a ValueError.
+    only; any name fields in the extra_context list of dictionaries that do
+    not match a variable 'name' field, are ignored. Any key/value pairs
+    specified in an extra_content dictionary that are not already defined by
+    the matching variable dictionary will raise a ValueError.
+
+    Changing the 'name' Field
+    -------------------------
+    Changing the 'name' field requires a special syntax. Because the algorithm
+    chosen to find a variable’s dictionary entry in the variables list of
+    OrderDicts uses the variable’s ‘name’ field; it could not be used to
+    simultaneously hold a new ‘name’ field value. Therefore the following
+    extra context dictionary entry snytax was introduced to allow the ‘name’
+    field of a variable to be changed:
+
+        {
+           'name': 'CURRENT_VARIABLE_NAME::NEW_VARIABLE_NAME',
+        }
+
+    So, for example, to change a variable’s ‘name’ field from
+    ‘director_credit’ to ‘producer_credit’, would require:
+
+        {
+           'name': 'director_credit::producer_credit',
+        }
+
+    Removing a Field from a Variable
+    --------------------------------
+    It is possible that a previous extra context overwrite requires that a
+    subsequent variable entry be removed.
+
+    In order to accomplish this a remove field token is used in the extra
+    context as follows:
+
+        {
+           'name': 'director_cut',
+           'skip_if': '<<REMOVE::FIELD>>',
+        }
+
+    In the example above, the extra context overwrite results in the variable
+    named ‘director_cut’ having it’s ‘skip_if’ field removed.
+
+    Overwrite Considerations Regarding ‘default’ & ‘choices’ Fields
+    ---------------------------------------------------------------
+    When a variable is defined that has both the ‘default’ and the ‘choices’
+    fields, these two fields influence each other. If one of these fields is
+    updated, but not the other field, then the other field will be
+    automatically updated by the overwrite logic.
+
+    If both fields are updated, then the ‘default’ value will be moved to the
+    first location of the ‘choices’ field if it exists elsewhere in the list;
+    if the default value is not in the list, it will be added to the first
+    location in the choices list.
 
     """
     if isinstance(extra_context, dict):
@@ -130,19 +181,21 @@ def apply_extra_overwrites_to_context2(context, extra_context):
         for xtra_ctx_item in extra_context:
             if isinstance(xtra_ctx_item, dict):
                 if 'name' in xtra_ctx_item.keys():
-                    # xtra_ctx_item['name'] may have a replace value of the form:
-                    # 'name_value::replace_name_value'
+                    # xtra_ctx_item['name'] may have a replace value of the
+                    # form:
+                    #       'name_value::replace_name_value'
                     xtra_ctx_name = xtra_ctx_item['name'].split('::')[0]
                     try:
                         replace_name = xtra_ctx_item['name'].split('::')[1]
                     except IndexError:
                         replace_name = None
 
-                    var_dict = next((d for d in context['variables'] if d['name'] == xtra_ctx_name), None)
+                    var_dict = next((d for d in context['variables'] if d['name'] == xtra_ctx_name), None)  # noqa
                     if var_dict:
-                        # Since creation of new key/value pairs is NOT desired, we only use a key
-                        # that is common to both variables context and the extra context
-                        common_keys = [key for key in xtra_ctx_item.keys() if key in var_dict.keys()]
+                        # Since creation of new key/value pairs is NOT
+                        # desired, we only use a key that is common to both
+                        # the variables context and the extra context.
+                        common_keys = [key for key in xtra_ctx_item.keys() if key in var_dict.keys()]   # noqa
                         for key in common_keys:
                             if xtra_ctx_item[key] == '<<REMOVE::FIELD>>':
                                 var_dict.pop(key, None)
@@ -150,32 +203,34 @@ def apply_extra_overwrites_to_context2(context, extra_context):
                                 # normal field update
                                 var_dict[key] = xtra_ctx_item[key]
 
-                        # After all fields have been update, there is some house-keeping to do.
-                        # The default/choices house-keeping could effecively be no-ops if the
+                        # After all fields have been updated, there is some
+                        # house-keeping to do. The default/choices
+                        # house-keeping could effecively be no-ops if the
                         # user did the correct thing.
-                        if ('default' in common_keys) & ('choices' in var_dict.keys()):
+                        if ('default' in common_keys) & ('choices' in var_dict.keys()):       # noqa
                             # default updated, regardless if choices has been updated,
                             # re-order choices based on default
                             if var_dict['default'] in var_dict['choices']:
-                                var_dict['choices'].remove(var_dict['default'])
+                                var_dict['choices'].remove(var_dict['default'])                # noqa
 
                             var_dict['choices'].insert(0, var_dict['default'])
 
-                        if ('default' not in common_keys) & ('choices' in common_keys):
-                            # choices updated, so update default based on first location in choices
+                        if ('default' not in common_keys) & ('choices' in common_keys):         # noqa
+                            # choices updated, so update default based on
+                            # first location in choices
                             var_dict['default'] = var_dict['choices'][0]
 
                         if replace_name:
                             var_dict['name'] = replace_name
                     else:
-                        msg = "No variable found in context whose name matches extra context name '{name}'"
+                        msg = "No variable found in context whose name matches extra context name '{name}'"  # noqa
                         raise ValueError(msg.format(name=xtra_ctx_name))
                 else:
-                    msg = "Extra context dictionary item {item} is missing a 'name' key."
+                    msg = "Extra context dictionary item {item} is missing a 'name' key."                    # noqa
                     raise ValueError(msg.format(item=xtra_ctx_item))
             else:
-                msg = "Extra context list item '{item}' is of type {t}, should be a dictionary."
-                raise ValueError(msg.format(item=str(xtra_ctx_item), t=type(xtra_ctx_item).__name__))
+                msg = "Extra context list item '{item}' is of type {t}, should be a dictionary."             # noqa
+                raise ValueError(msg.format(item=str(xtra_ctx_item), t=type(xtra_ctx_item).__name__))        # noqa
     else:
         msg = "Extra context must be a dictionary or a list of dictionaries!"
         raise ValueError(msg)
@@ -446,8 +501,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 )
                 shutil.copytree(indir, outdir)
 
-            # We mutate ``dirs``, because we only want to go through these dirs
-            # recursively
+            # We mutate ``dirs``, because we only want to go through these
+            # dirs recursively
             dirs[:] = render_dirs
             for d in dirs:
                 unrendered_dir = os.path.join(project_dir, root, d)
