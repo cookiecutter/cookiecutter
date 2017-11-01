@@ -14,6 +14,7 @@ generate files.
 
 Based on the source code written by @hackebrot see:
 https://github.com/audreyr/cookiecutter/pull/848
+https://github.com/hackebrot/cookiecutter/tree/new-context-format
 
 """
 
@@ -304,15 +305,16 @@ class Variable(object):
         # optional fields
         self.info = info
 
+        # -- DESCRIPTION -----------------------------------------------------
         self.description = self.check_type('description', None, str)
 
-        self.prompt = self.check_type(
-            'prompt',
-            DEFAULT_PROMPT.format(variable=self),
-            str)
+        # -- PROMPT ----------------------------------------------------------
+        self.prompt = self.check_type('prompt', DEFAULT_PROMPT.format(variable=self), str)
 
+        # -- HIDE_INPUT ------------------------------------------------------
         self.hide_input = self.check_type('hide_input', False, bool)
 
+        # -- TYPE ------------------------------------------------------------
         self.var_type = info.get('type', 'string')
         if self.var_type not in VALID_TYPES:
             msg = 'Variable: {var_name} has an invalid type {var_type}. Valid types are: {types}'
@@ -320,21 +322,29 @@ class Variable(object):
                                         var_name=self.name,
                                         types=VALID_TYPES))
 
+        # -- SKIP_IF ---------------------------------------------------------
         self.skip_if = self.check_type('skip_if', '', str)
 
+        # -- PROMPT_USER -----------------------------------------------------
         self.prompt_user = self.check_type('prompt_user', True, bool)
+        # do not prompt for private variable names (beginning with _)
+        if self.name.startswith('_'):
+            self.prompt_user = False
 
+        # -- CHOICES ---------------------------------------------------------
         # choices are somewhat special as they can be of every type
         self.choices = self.check_type('choices', [], list)
         if self.choices and default not in self.choices:
             msg = "Variable: {var_name} has an invalid default value {default} for choices: {choices}."
             raise ValueError(msg.format(var_name=self.name, default=self.default, choices=self.choices))
 
+        # -- VALIDATION STARTS -----------------------------------------------
         self.validation = self.check_type('validation', None, str)
 
         self.validation_flag_names = self.check_type('validation_flags', [], list)
 
         self.validation_flags = 0
+
         for vflag in self.validation_flag_names:
             if vflag in REGEX_COMPILE_FLAGS.keys():
                 self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
@@ -353,6 +363,7 @@ class Variable(object):
                 msg = "Variable: {var_name} - Validation Setup Error: Invalid RegEx '{value}' - does not compile - {err}"
                 raise ValueError(msg.format(var_name=self.name,
                                             value=self.validation, err=e))
+        # -- VALIDATION ENDS -------------------------------------------------
 
     def __repr__(self):
         return "<{class_name} {variable_name}>".format(
@@ -388,9 +399,9 @@ class CookiecutterTemplate(object):
         """
         Mandatorty Parameters
 
-        :param name: The cookiecutter template name
-        :param cookiecutter_version: The version of the cookiecutter application
-            that is compatible with this template.
+        :param name: A string, the cookiecutter template name
+        :param cookiecutter_version: A string containing the version of the
+            cookiecutter application that is compatible with this template.
         :param variables: A list of OrderedDict items that describe each
             variable in the template. These variables are essentially what
             is found in the version 1 cookiecutter.json file.
@@ -398,7 +409,7 @@ class CookiecutterTemplate(object):
         Optional Parameters (via \**info)
 
         :param authors: An array of string - maintainers of the template.
-        :param description: A human readable description of the template.
+        :param description: A string, human readable description of template.
         :param keywords: An array of string - similar to PyPI keywords.
         :param license: A string identifying the license of the template code.
         :param url: A string containing the URL for the template project.
