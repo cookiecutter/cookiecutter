@@ -474,6 +474,20 @@ def test_variable_validation_compile_exception():
     assert "Variable: {var_name} - Validation Setup Error: Invalid RegEx '{value}' - does not compile - ".format(var_name=VAR_NAME, value=BAD_REGEX_STRING) in str(excinfo.value)
 
 
+def test_variable_forces_no_prompt_for_private_variable_names():
+    v = context.Variable(
+        '_private_variable_name',
+        "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
+        prompt="Please enter a name for your base python module",
+        prompt_user=True,
+        type='string',
+        validation='^[a-z_]+$',
+        validation_flags=['ignorecase'],
+        hide_input=True)
+
+    assert v.prompt_user == False
+
+
 def test_variable_repr():
 
     v = context.Variable(
@@ -547,7 +561,6 @@ def test_cookiecutter_template_repr():
     assert repr(cct) == "<CookiecutterTemplate cookiecutter_template_repr_test>"
 
 
-# ############################################################################
 def test_load_context_with_input_chioces(mocker):
     cc = load_cookiecutter('tests/test-context/cookiecutter_choices.json')
 
