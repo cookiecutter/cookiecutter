@@ -74,7 +74,7 @@ def apply_overwrites_to_context(context, overwrite_context):
             context[variable] = overwrite
 
 
-def apply_default_overwrites_to_context2(context, overwrite_default_context):
+def apply_default_overwrites_to_context_v2(context, overwrite_default_context):
     """
     Modify the given version 2 context in place based on the
     overwrite_default_context.
@@ -176,7 +176,7 @@ def apply_overwrites_to_context_v2(context, extra_context):
 
     """
     if isinstance(extra_context, dict):
-        apply_default_overwrites_to_context2(context, extra_context)
+        apply_default_overwrites_to_context_v2(context, extra_context)
     elif isinstance(extra_context, list):
         for xtra_ctx_item in extra_context:
             if isinstance(xtra_ctx_item, dict):
