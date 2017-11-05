@@ -298,6 +298,7 @@ Backers
 
 We would like to thank the following people for supporting us:
 
+* Alex DeBrie
 * Bruno Alla
 * Carol Willing
 * Russell Keith-Magee
