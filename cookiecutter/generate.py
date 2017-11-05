@@ -97,6 +97,31 @@ def apply_default_overwrites_to_context_v2(context, overwrite_default_context):
                 var_dict['default'] = overwrite
 
 
+def resolve_changed_variable_names(context, variables_to_resolve):
+    """
+    The variable names contained in the variables_to_resolve dictionary's
+    key names have been over-written with keys' value. Check the entire
+    context and update any other variable context fields that may still
+    reference the original variable name.
+    """
+    for var_name_to_resolve in variables_to_resolve:
+
+        new_var_name = variables_to_resolve[var_name_to_resolve]
+
+        for variable in context['variables']:
+            for field_name in variable.keys():
+                if isinstance(variable[field_name], str):
+                    if var_name_to_resolve in variable[field_name]:
+                        variable[field_name] = variable[field_name].replace(var_name_to_resolve, new_var_name)     # noqa
+
+                elif isinstance(variable[field_name], list):
+                    # a choices field could have an str item to update
+                    for i, item in enumerate(variable[field_name]):
+                        if isinstance(item, str):
+                            if var_name_to_resolve in item:
+                                variable[field_name][i] = item.replace(var_name_to_resolve, new_var_name)     # noqa
+
+
 def apply_overwrites_to_context_v2(context, extra_context):
     """
     Modify the given version 2 context in place based on extra_context.
@@ -170,6 +195,7 @@ def apply_overwrites_to_context_v2(context, extra_context):
     location in the choices list.
 
     """
+    variable_names_to_resolve = {}
     if isinstance(extra_context, dict):
         apply_default_overwrites_to_context_v2(context, extra_context)
     elif isinstance(extra_context, list):
@@ -216,6 +242,7 @@ def apply_overwrites_to_context_v2(context, extra_context):
                             var_dict['default'] = var_dict['choices'][0]
 
                         if replace_name:
+                            variable_names_to_resolve[xtra_ctx_name] = replace_name   # noqa
                             var_dict['name'] = replace_name
                     else:
                         msg = "No variable found in context whose name matches extra context name '{name}'"  # noqa
@@ -226,6 +253,12 @@ def apply_overwrites_to_context_v2(context, extra_context):
             else:
                 msg = "Extra context list item '{item}' is of type {t}, should be a dictionary."             # noqa
                 raise ValueError(msg.format(item=str(xtra_ctx_item), t=type(xtra_ctx_item).__name__))        # noqa
+
+        if variable_names_to_resolve:
+            # At least one variable name has been over-written, if any
+            # variables use the original name, they must get updated as well
+            resolve_changed_variable_names(context, variable_names_to_resolve)
+
     else:
         msg = "Extra context must be a dictionary or a list of dictionaries!"
         raise ValueError(msg)
