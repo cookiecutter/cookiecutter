@@ -8,13 +8,17 @@ History
 
 Other Changes:
 
-* Added more cookiecutter templates to the mix:
+* Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
+  `@andreagrandi`_ (#1009)
+* Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
+.. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
 .. _`@xuanluong`: https://github.com/xuanluong
+.. _`@andreagrandi`: https://github.com/andreagrandi
 
 
 1.6.0 (2017-10-15) Tim Tam
