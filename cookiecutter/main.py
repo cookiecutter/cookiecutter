@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None, no_dump=False):
+        config_file=None, default_config=False, password=None, dump_replay_data=True):
     """
     API equivalent to using Cookiecutter at the command line.
 
@@ -84,7 +84,7 @@ def cookiecutter(
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
 
-        if not no_dump:
+        if dump_replay_data:
             dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
