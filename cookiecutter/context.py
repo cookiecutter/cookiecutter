@@ -486,7 +486,6 @@ def load_context(json_object, no_input=False, verbose=True):
             if variable.name == skip_to_variable_name:
                 skip_to_variable_name = None
             else:
-                print("Skip variable: ", variable.name)
                 continue
 
         if variable.skip_if:
@@ -538,11 +537,9 @@ def load_context(json_object, no_input=False, verbose=True):
 
         if variable.if_yes_skip_to and context[variable.name] is True:
             skip_to_variable_name = variable.if_yes_skip_to
-            print("skip_to_variable_name: ", skip_to_variable_name)
 
         if variable.if_no_skip_to and context[variable.name] is False:
             skip_to_variable_name = variable.if_no_skip_to
-            print("skip_to_variable_name: ", skip_to_variable_name)
 
     if skip_to_variable_name:
         logger.warn("Processed all variables, but skip_to_variable_name '{}' was never found.".format(skip_to_variable_name))
