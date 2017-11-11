@@ -125,11 +125,11 @@ def test_load_context_defaults():
     assert cc_cfg['plugin_name'] == 'emoji'
     assert cc_cfg['module_name'] == 'emoji'
     assert cc_cfg['license'] == 'MIT'
-    assert cc_cfg['docs'] == False
-    assert 'docs_tool' not in cc_cfg.keys()
+    assert cc_cfg['docs'] is False
+    assert 'docs_tool' not in cc_cfg.keys()   # skip_if worked
     assert cc_cfg['year'] == time.strftime('%Y')
     assert cc_cfg['incept_year'] == 2017
-    assert cc_cfg['released'] == False
+    assert cc_cfg['released'] is False
     assert cc_cfg['temperature'] == 77.3
     assert cc_cfg['Release-GUID'] == UUID('04f5eaa9ee7345469dccffc538b27194')
     assert cc_cfg['extensions'] == "['jinja2_time.TimeExtension']"
@@ -141,6 +141,76 @@ def test_load_context_defaults():
                                                OrderedDict([('scope', 'function'),
                                                             ('autouse',
                                                              False)]))])
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_load_context_defaults_skips_branch():
+    """
+    Test that if_no_skip_to and if_yes_skip_to actually do branch and
+    skip variables
+    """
+    cc = load_cookiecutter('tests/test-context/cookiecutter_skips_1.json')
+
+    cc_cfg = context.load_context(cc['cookiecutter_skips_1'], no_input=True)
+
+    assert cc_cfg['project_configuration_enabled'] is False
+    assert 'project_config_format' not in cc_cfg.keys()  # it was skipped
+
+    assert cc_cfg['project_uses_existing_logging_facilities'] is True
+    assert 'project_logging_enabled' not in cc_cfg.keys()  # it was skipped
+    assert 'project_console_logging_enabled' not in cc_cfg.keys()  # it was skipped
+    assert 'project_console_logging_level' not in cc_cfg.keys()  # it was skipped
+    assert 'project_file_logging_enabled' not in cc_cfg.keys()  # it was skipped
+    assert 'project_file_logging_level' not in cc_cfg.keys()  # it was skipped
+    assert cc_cfg['github_username'] == 'eruber'
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_load_context_defaults_skips_no_branch():
+    """
+    Test that if_no_skip_to and if_yes_skip_to do not branch and do not
+    skip variables.
+    """
+    cc = load_cookiecutter('tests/test-context/cookiecutter_skips_2.json')
+
+    cc_cfg = context.load_context(cc['cookiecutter_skips_2'], no_input=True)
+
+    assert cc_cfg['project_configuration_enabled'] is True
+    assert cc_cfg['project_config_format'] == 'toml'  # not skipped
+
+    assert cc_cfg['project_uses_existing_logging_facilities'] is False
+    assert cc_cfg['project_logging_enabled'] is True          # not skipped
+    assert cc_cfg['project_console_logging_enabled'] is True  # not skipped
+    assert cc_cfg['project_console_logging_level'] == 'WARN'  # not skipped
+    assert cc_cfg['project_file_logging_enabled'] is True     # not skipped
+
+    assert 'project_file_logging_level' not in cc_cfg.keys()  # do_if skipped
+
+    assert cc_cfg['github_username'] == 'eruber'
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_load_context_defaults_skips_unknown_variable_name_warning(caplog):
+    """
+    Test that a warning is issued if a variable.name specified in a skip_to
+    directive is not in the variable list.
+    """
+    cc = load_cookiecutter('tests/test-context/cookiecutter_skips_3.json')
+
+    cc_cfg = context.load_context(cc['cookiecutter_skips_3'], no_input=True)
+
+    assert cc_cfg['project_uses_existing_logging_facilities'] is False
+    assert 'project_logging_enabled' not in cc_cfg.keys()  # it was skipped
+    assert 'project_console_logging_enabled' not in cc_cfg.keys()  # it was skipped
+    assert 'project_console_logging_level' not in cc_cfg.keys()  # it was skipped
+    assert 'project_file_logging_enabled' not in cc_cfg.keys()  # it was skipped
+    assert 'project_file_logging_level' not in cc_cfg.keys()  # it was skipped
+    assert 'github_username' not in cc_cfg.keys()  # it was skipped
+
+    for record in caplog.records:
+        assert record.levelname == 'WARNING'
+
+    assert "Processed all variables, but skip_to_variable_name 'this_variable_name_is_not_in_the_list' was never found." in caplog.text
 
 
 def test_prompt_string(mocker):
@@ -485,7 +555,7 @@ def test_variable_forces_no_prompt_for_private_variable_names():
         validation_flags=['ignorecase'],
         hide_input=True)
 
-    assert v.prompt_user == False
+    assert v.prompt_user is False
 
 
 def test_variable_repr():

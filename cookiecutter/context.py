@@ -158,12 +158,27 @@ def prompt_yes_no(variable, default):
     else:
         default_display = 'n'
 
-    return click.prompt(
+    # click.prompt() behavior:
+    # When supplied with a string default, the string default is returned,
+    # rather than the string converted to a click.BOOL.
+    # If default is passed as a boolean then the default is displayed as
+    # [True] or [False], rather than [y] or [n].
+    # This prompt translates y, yes, Yes, YES, n, no, No, NO to their correct
+    # boolean values, its just that it does not translate a string default
+    # value of y, yes, Yes, YES, n, no, No, NO to a boolean...
+    value = click.prompt(
         variable.prompt,
         default=default_display,
         hide_input=variable.hide_input,
         type=click.BOOL,
     )
+
+    # ...so if we get the displayed default value back (its a string),
+    # change it to its associated boolean value
+    if value == default_display:
+        value = default
+
+    return value
 
 
 def prompt_choice(variable, default):
@@ -325,6 +340,15 @@ class Variable(object):
         # -- SKIP_IF ---------------------------------------------------------
         self.skip_if = self.check_type('skip_if', '', str)
 
+        # -- DO_IF ---------------------------------------------------------
+        self.do_if = self.check_type('do_if', '', str)
+
+        # -- IF_YES_SKIP_TO ---------------------------------------------------------
+        self.if_yes_skip_to = self.check_type('if_yes_skip_to', None, str)
+
+        # -- IF_NO_SKIP_TO ---------------------------------------------------------
+        self.if_no_skip_to = self.check_type('if_no_skip_to', None, str)
+
         # -- PROMPT_USER -----------------------------------------------------
         self.prompt_user = self.check_type('prompt_user', True, bool)
         # do not prompt for private variable names (beginning with _)
@@ -455,10 +479,24 @@ def load_context(json_object, no_input=False, verbose=True):
     env = Environment(extensions=['jinja2_time.TimeExtension'])
     context = collections.OrderedDict({})
 
+    skip_to_variable_name = None
+
     for variable in CookiecutterTemplate(**json_object):
+        if skip_to_variable_name:
+            if variable.name == skip_to_variable_name:
+                skip_to_variable_name = None
+            else:
+                print("Skip variable: ", variable.name)
+                continue
+
         if variable.skip_if:
             skip_template = env.from_string(variable.skip_if)
             if skip_template.render(cookiecutter=context) == 'True':
+                continue
+
+        if variable.do_if:
+            do_template = env.from_string(variable.do_if)
+            if do_template.render(cookiecutter=context) == 'False':
                 continue
 
         default = variable.default
@@ -471,32 +509,42 @@ def load_context(json_object, no_input=False, verbose=True):
 
         if no_input or (not variable.prompt_user):
             context[variable.name] = deserialize(default)
-            continue
-
-        if variable.choices:
-            prompt = prompt_choice
         else:
-            prompt = PROMPTS[variable.var_type]
-
-        if verbose and variable.description:
-            click.echo(variable.description)
-
-        while True:
-            value = prompt(variable, default)
-            if variable.validate:
-                if variable.validate.match(value):
-                    break
-                else:
-                    msg = "Input validation failure against regex: '{val_string}', try again!".format(val_string=variable.validation)
-                    click.echo(msg)
+            if variable.choices:
+                prompt = prompt_choice
             else:
-                # no validation defined
-                break
+                prompt = PROMPTS[variable.var_type]
 
-        if verbose:
-            width, _ = click.get_terminal_size()
-            click.echo('-' * width)
+            if verbose and variable.description:
+                click.echo(variable.description)
 
-        context[variable.name] = deserialize(value)
+            while True:
+                value = prompt(variable, default)
+                if variable.validate:
+                    if variable.validate.match(value):
+                        break
+                    else:
+                        msg = "Input validation failure against regex: '{val_string}', try again!".format(val_string=variable.validation)
+                        click.echo(msg)
+                else:
+                    # no validation defined
+                    break
+
+            if verbose:
+                width, _ = click.get_terminal_size()
+                click.echo('-' * width)
+
+            context[variable.name] = deserialize(value)
+
+        if variable.if_yes_skip_to and context[variable.name] is True:
+            skip_to_variable_name = variable.if_yes_skip_to
+            print("skip_to_variable_name: ", skip_to_variable_name)
+
+        if variable.if_no_skip_to and context[variable.name] is False:
+            skip_to_variable_name = variable.if_no_skip_to
+            print("skip_to_variable_name: ", skip_to_variable_name)
+
+    if skip_to_variable_name:
+        logger.warn("Processed all variables, but skip_to_variable_name '{}' was never found.".format(skip_to_variable_name))
 
     return context
