@@ -486,7 +486,11 @@ def load_context(json_object, no_input=False, verbose=True):
             if variable.name == skip_to_variable_name:
                 skip_to_variable_name = None
             else:
-                continue
+                # Is executed, but not marked so in coverage report, due to
+                # CPython's peephole optimizer's optimizations.
+                # See https://bitbucket.org/ned/coveragepy/issues/198/continue-marked-as-not-covered
+                # Issue #198 in coverage.py marked WONTFIX
+                continue  # pragma: no cover
 
         if variable.skip_if:
             skip_template = env.from_string(variable.skip_if)
