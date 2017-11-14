@@ -224,6 +224,8 @@ def apply_overwrites_to_context_v2(context, extra_context):
                         common_keys = [key for key in xtra_ctx_item.keys() if key in var_dict.keys()]   # noqa
                         for key in common_keys:
                             if xtra_ctx_item[key] == '<<REMOVE::FIELD>>':
+                                if key in ['default']:
+                                    raise ValueError("Cannot remove mandatory 'default' field")   # noqa
                                 var_dict.pop(key, None)
                             else:
                                 # normal field update
