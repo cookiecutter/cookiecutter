@@ -279,10 +279,20 @@ class Variable(object):
                     defaults to string.
             - `skip_if` -- A string of a jinja2 renderable boolean expression,
                     the variable will be skipped if it renders True.
+            - `do_if` -- A string of a jinja2 renderable boolean expression,
+                    the variable will be processed if it renders True.
             - `choices` -- A list of choices, may be of mixed types.
+            - `if_yes_skip_to` -- A string containing a variable name to skip
+                    to if the yes_no value is True (yes). Only has meaning for
+                    variables of type 'yes_no'.
+            - `if_no_skip_to` -- A string containing a variable name to skip
+                    to if the yes_no value is False (no). Only has meaning for
+                    variables of type 'yes_no'.
             - `validation` -- A string defining a regex to use to validation
                     user input. Defaults to None.
-            - `validation_flags` - A list of validation flag names that can be
+            - `validation_msg` -- A string defining an additional message to
+                    display if the validation check fails.
+            - `validation_flags` -- A list of validation flag names that can be
                     specified to control the behaviour of the validation
                     check done using the above defined `validation` string.
                     Specifying a flag is equivalent to setting it to True,
@@ -345,9 +355,17 @@ class Variable(object):
 
         # -- IF_YES_SKIP_TO ---------------------------------------------------------
         self.if_yes_skip_to = self.check_type('if_yes_skip_to', None, str)
+        if self.if_yes_skip_to:
+            if self.var_type not in ['yes_no']:
+                msg = "Variable: '{var_name}' specifies 'if_yes_skip_to' field, but variable not of type 'yes_no'"
+                raise ValueError(msg.format(var_name=self.name))
 
         # -- IF_NO_SKIP_TO ---------------------------------------------------------
         self.if_no_skip_to = self.check_type('if_no_skip_to', None, str)
+        if self.if_no_skip_to:
+            if self.var_type not in ['yes_no']:
+                msg = "Variable: '{var_name}' specifies 'if_no_skip_to' field, but variable not of type 'yes_no'"
+                raise ValueError(msg.format(var_name=self.name))
 
         # -- PROMPT_USER -----------------------------------------------------
         self.prompt_user = self.check_type('prompt_user', True, bool)
@@ -364,6 +382,8 @@ class Variable(object):
 
         # -- VALIDATION STARTS -----------------------------------------------
         self.validation = self.check_type('validation', None, str)
+
+        self.validation_msg = self.check_type('validation_msg', None, str)
 
         self.validation_flag_names = self.check_type('validation_flags', [], list)
 
@@ -529,6 +549,8 @@ def load_context(json_object, no_input=False, verbose=True):
                     else:
                         msg = "Input validation failure against regex: '{val_string}', try again!".format(val_string=variable.validation)
                         click.echo(msg)
+                        if variable.validation_msg:
+                            click.echo(variable.validation_msg)
                 else:
                     # no validation defined
                     break

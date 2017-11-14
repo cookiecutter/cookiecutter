@@ -690,3 +690,53 @@ def test_load_context_with_input_with_validation_failure(mocker, capsys):
 
     assert cc_cfg['project_name'] == INPUT_1
     assert cc_cfg['module_name'] == INPUT_3
+
+
+def test_load_context_with_input_with_validation_failure_msg(mocker, capsys):
+    cc = load_cookiecutter('tests/test-context/cookiecutter_val_failure_msg.json')
+
+    INPUT_1 = '6 Debug Shell'
+    INPUT_2 = ''
+    INPUT_3 = 'debug_shell'
+    mocker.patch(
+        'click.termui.visible_prompt_func',
+        autospec=True,
+        side_effect=[INPUT_1, INPUT_2, INPUT_3]
+    )
+
+    cc_cfg = context.load_context(cc['cookiecutter_val_failure_msg'], no_input=False)
+
+    out, err = capsys.readouterr()
+
+    msg = "Input validation failure against regex: '^[a-z_]+$', try again!"
+    assert msg in out
+
+    msg2 = "Really, you couldn't get this correct the first time?"
+    assert msg2 in out
+
+    assert cc_cfg['project_name'] == INPUT_1
+    assert cc_cfg['module_name'] == INPUT_3
+
+
+def test_specify_if_yes_skip_to_without_yes_no_type():
+    """
+    Test ValueError is raised when a variable specifies an if_yes_skip_to
+    field and the variable type is not 'yes+no'
+    """
+    with pytest.raises(ValueError) as excinfo:
+        context.Variable(name='author', default='JKR', type='string',
+                         if_yes_skip_to='roman')
+
+    assert "Variable: 'author' specifies 'if_yes_skip_to' field, but variable not of type 'yes_no'" in str(excinfo.value)
+
+
+def test_specify_if_no_skip_to_without_yes_no_type():
+    """
+    Test ValueError is raised when a variable specifies an if_no_skip_to
+    field and the variable type is not 'yes+no'
+    """
+    with pytest.raises(ValueError) as excinfo:
+        context.Variable(name='author', default='JKR', type='string',
+                         if_no_skip_to='roman')
+
+    assert "Variable: 'author' specifies 'if_no_skip_to' field, but variable not of type 'yes_no'" in str(excinfo.value)
