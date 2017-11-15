@@ -299,6 +299,7 @@ Backers
 We would like to thank the following people for supporting us:
 
 * Alex DeBrie
+* Alexandre Y. Harano
 * Bruno Alla
 * Carol Willing
 * Russell Keith-Magee
