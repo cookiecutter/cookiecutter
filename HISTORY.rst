@@ -10,6 +10,8 @@ Other Changes:
 
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
   `@andreagrandi`_ (#1009)
+* Update docstring in ``cookiecutter/main.py`` to follow the PEP 257 style
+  guide, thanks to `@meahow`_ (#1000)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
