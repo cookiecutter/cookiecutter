@@ -27,7 +27,7 @@ def cookiecutter(
         replay=False, overwrite_if_exists=False, output_dir='.',
         config_file=None, default_config=False, password=None):
     """
-    API equivalent to using Cookiecutter at the command line.
+    Run Cookiecutter just as if using it from the command line.
 
     :param template: A directory containing a project template directory,
         or a URL to a git repository.
