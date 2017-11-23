@@ -337,18 +337,21 @@ def test_raise_undefined_variable_project_dir(tmpdir):
 
 
 def test_external_templates(tmpdir):
-    output_dir = generate.generate_files(
-        context={
-            'cookiecutter': {'food': 'pizzä'}
-        },
-        repo_dir=os.path.abspath('tests/test-generate-external-template'),
-        output_dir=str(tmpdir.mkdir('output')),
-        extra_templates=os.path.abspath(
-            'tests/test-generate-external-template'
-        )
+    template = os.path.abspath(
+        'tests/test-generate-external-template'
     )
-    with io.open(
-        os.path.join(output_dir, 'extra-template.txt'),
-        'rt', encoding='utf-8'
-    ) as f:
-        assert f.readline() == u'I eat pizzä\n'
+    # Testing with a extra_templates being a string, or with a list of strings
+    for i, extra_templates in enumerate([template, [template]]):
+        project_dir = generate.generate_files(
+            context={
+                'cookiecutter': {'food': 'pizzä'}
+            },
+            repo_dir=os.path.abspath('tests/test-generate-external-template'),
+            output_dir=str(tmpdir.mkdir('output{}'.format(i))),
+            extra_templates=extra_templates
+        )
+        with io.open(
+            os.path.join(project_dir, 'extra-template.txt'),
+            'rt', encoding='utf-8'
+        ) as f:
+            assert f.readline() == u'I eat pizzä\n'
