@@ -13,6 +13,8 @@ Other Changes:
 * Update docstrings in ``cookiecutter/main.py``, ``cookiecutter/__init__.py``,
   and ``cookiecutter/log.py`` to follow the PEP 257 style guide, thanks to
   `@meahow`_ (#998, #999, #1000)
+* Fix grammar in *Choice Variables* documentation, thanks to `@jubrilissa`_
+  (#1011)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -22,6 +24,7 @@ Other Changes:
 
 .. _`@xuanluong`: https://github.com/xuanluong
 .. _`@andreagrandi`: https://github.com/andreagrandi
+.. _`@jubrilissa`: https://github.com/jubrilissa
 
 
 1.6.0 (2017-10-15) Tim Tam
