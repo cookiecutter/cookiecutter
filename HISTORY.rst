@@ -48,6 +48,12 @@ Bug Fixes:
 
 Other Changes:
 
+* Update sponsoring section, add backers, thanks to `@hackebrot`_ (#950)
+* Changed link title for cookiecutter-django-paas, thanks to `@mpachas`_ (#933)
+* Merge pull request from stevepiercy/patch-6, thanks to `@hackebrot`_ (#911)
+* Fix Windows installation instructions, thanks to `@stevepiercy`_ (#887)
+* Fix the doc string in is_copy_only_path funciton for PEP257, thanks to `@harshtheworkman`_ (#742)
+* Add test_requirements.txt, thanks to `@ramnes`_ (#377)
 * Fix broken link to *Copy without Render* docs, thanks to `@coreysnyder04`_
   (#912)
 * Improve debug log message for when a hook is not found, thanks to
@@ -59,7 +65,7 @@ Other Changes:
 * Update doc string for ``is_copy_only_path()`` according to pep257, thanks to
   `@mathagician`_ and `@terryjbates`_ (#935, #949)
 * Update doc strings in ``cookiecutter/extensions.py`` according to pep257,
-  thanks to `@meahow`_ (#996)
+  thanks to `@meahow`_ (#996, #742)
 * Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
 * Re-implement Makefile and update several make rules, thanks to `@hackebrot`_
   (#930)
@@ -92,7 +98,7 @@ Other Changes:
   * `cookiecutter-telegram-bot`_ by `@Ars2014`_ (#984)
   * `python-project-template`_ by `@Kwpolska`_ (#986)
   * `wemake-django-template`_ by `@wemake-services`_ (#990)
-  * `cookiecutter-raml`_ by `@genzj`_ (#994)
+  * `cookiecutter-raml`_ by `@genzj`_ (#994, #1)
   * `cookiecutter-anyblok-project`_ by `@AnyBlok`_ (#988)
   * `cookiecutter-devenv`_ by `@greenguavalabs`_ (#991)
 
@@ -163,6 +169,7 @@ Bug Fixes:
 
 Other Changes:
 
+* Merge pull request from ruflin/remove-beat-generator, thanks to `@hackebrot`_ (#893)
 * Contributor documentation reST fixes, thanks to `@stevepiercy`_ (#878)
 * Added more cookiecutter templates to the mix:
 
@@ -247,6 +254,15 @@ Bug Fixes:
 
 Other Changes:
 
+* Merge pull request from stevepiercy/patch-3, thanks to `@hackebrot`_ (#870)
+* Mark test as xfail, thanks to `@hackebrot`_ (#850)
+* Added the first case study, thanks to `@pydanny`_ (#708)
+* Merge pull request from pydanny/ratson-master, thanks to `@pydanny`_ (#693)
+* Unpin codecov version in CI, thanks to `@audreyr`_ (#691)
+* Merge pull request from pydanny/master, thanks to `@pydanny`_ (#689)
+* Merge pull request from michaeljoseph/pin-codecov, thanks to `@audreyr`_ (#688)
+* Added support for dictionary data in configurations, thanks to `@freakboy3742`_ (#479)
+* Merge pull request from aeroaks/aeroaks-patch-1, thanks to `@aeroaks`_ (#1)
 * Remove external dependencies from tests, so that tests can be run w/o network
   connection, thanks to `@hackebrot`_ (#603)
 * Remove execute permissions on Python files, thanks to `@mozillazg`_ (#650)
@@ -478,6 +494,10 @@ Bug Fixes:
 
 Other Changes:
 
+* Merge pull request from prodicus/issue651, thanks to `@michaeljoseph`_ (#654)
+* Merge pull request from michaeljoseph/local-repository-not-found, thanks to `@pydanny`_ (#652)
+* Merge pull request from johtso/patch-1, thanks to `@hackebrot`_ (#612)
+* Fixes, thanks to `@tasdikrahman`_ (#651)
 * Set path before running tox, thanks to `@maiksensi`_ (#615, #620)
 * Removed xfail in test_cookiecutters, thanks to `@hackebrot`_ (#618)
 * Removed django-cms-plugin on account of 404 error, thanks to `@mativs`_ and `@pydanny`_ (#593)
@@ -587,6 +607,9 @@ Bug Fixes:
 
 Other Changes:
 
+* Merge pull request from audreyr/ruamel-yaml-557, thanks to `@pydanny`_ (#558)
+* Merge pull request from hackebrot/increase-development-status, thanks to `@pydanny`_ (#539)
+* Merge pull request from hackebrot/update-readme-to-point-users-t, thanks to `@pydanny`_ (#538)
 * Enable py35 support on Travis by using Python 3.5 as base Python (`@maiksensi`_ / #540)
 * If a filename is empty, do not generate. Log instead (`@iljabauer`_ / #444)
 * Fix tests as per last changes in `cookiecutter-pypackage`_, thanks to `@eliasdorneles`_ (#555).
@@ -621,6 +644,18 @@ Features:
 
 Other Changes:
 
+* Remove 1.0.0 specifier from pypi badges in README.rst,thanks to `@hackebrot`_ (#537)
+* Merge pull request from hackebrot/fix-is-repo-url-for-win-path, thanks to `@pydanny`_ (#532)
+* Merge pull request from hackebrot/use-future-instead-of-custom-c, thanks to `@audreyr`_ (#529)
+* Merge pull request from hackebrot/add-code-of-conduct, thanks to `@pydanny`_ (#525)
+* Merge pull request from maiksensi/feat/appveyor-remove-explicit, thanks to `@pydanny`_ (#523)
+* Merge pull request from hackebrot/extend-flake8-checks, thanks to `_@audreyr`_ (#519)
+* Merge pull request from hackebrot/test-ensure-dir-is-templated, thanks to `_@audreyr`_ (#515)
+* Merge pull request from hackebrot/use-click-version, thanks to `@pydanny`_ (#506)
+* Merge pull request from hackebrot/implement-tests-for-identify-repo, thanks to `@pydanny`_ (#484)
+* Merge pull request from hackebrot/fix-flake8-in-tests-dir, thanks to `@pydanny`_ (#483)
+* Merge pull request from christabor/master, thanks to `@pydanny`_ (#469)
+* Merge pull request from Matthias84/patch-1, thanks to `@pydanny`_ (#468)
 * Updated click requirement to < 6.0, thanks to `@pydanny`_ (#473).
 * Added landscape.io flair, thanks to `@michaeljoseph`_ (#439).
 * Descriptions of PEP8 specifications and milestone management, thanks to `@michaeljoseph`_ (#440).
@@ -704,6 +739,22 @@ Features:
 
 Other Changes:
 
+* Merge pull request from hackebrot/remove-2.6-support-from-setup, thanks to `@pydanny`_ (#432)
+* Merge pull request from streeter/patch-1, thanks to `@michaeljoseph`_ (#420)
+* Merge pull request from hackebrot/remove-obsolete-test-config, thanks to `@pydanny`_ (#418)
+* Merge pull request from hackebrot/remove-unittest-baseclass-in-t, thanks to `@pydanny`_ (#417)
+* Merge pull request from kmike/patch-1, thanks to `@michaeljoseph`_ (#415)
+* Merge pull request from hackebrot/fix-contributor-ref-in-changelog, thanks to `@michaeljoseph`_ (#411)
+* Merge pull request from msabramo/fix_flake8_version_conflict, thanks to `@pydanny`_ (#407)
+* Merge pull request from Kreger51/master, thanks to `@pydanny`_ (#396)
+* Merge pull request from lord63/fix-broken-url, thanks to `@pydanny`_ (#395)
+* Merge pull request from michaeljoseph/pep8-W503, thanks to `@pydanny`_ (#394)
+* Merge pull request from hackebrot/hackebrot-add-cookiedozer-temp, thanks to `@michaeljoseph`_ (#392)
+* Merge pull request from avelino/patch-1, thanks to `@pydanny`_ (#372)
+* Merge pull request from jpzk/master, thanks to `@pydanny`_ (#365)
+* Merge pull request from jpadilla/patch-1, thanks to `@pydanny`_ (#346)
+* Merge pull request from michaeljoseph/fix-pytest-collection, thanks to `@pydanny`_ (#335)
+* Merge pull request from hackebrot/hackebrot-fix-duplicate-author, thanks to `@michaeljoseph`_ (#331)
 * Formally removed support for 2.6, thanks to `@pydanny`_ (#201).
 * Moved to codecov for continuous integration test coverage and badges, thanks to `@michaeljoseph`_ (#71, #369).
 * Made JSON parsing errors easier to debug, thanks to `@rsyring`_ and `@mark0978`_ (#355, #358, #388).
@@ -755,6 +806,17 @@ Bug Fixes:
 
 Other changes:
 
+* Merge pull request from michaeljoseph/coding-standards, thanks to `@pydanny`_ (#328)
+* Merge pull request from michaeljoseph/rtfd-badge, thanks to `@pydanny`_ (#318)
+* Merge pull request from michaeljoseph/cleanup-strings, thanks to `@pydanny`_ (#312)
+* Merge pull request from michaeljoseph/windows-ci-support, thanks to `@pydanny`_ (#311)
+* Merge pull request from michaeljoseph/gitter-badge, thanks to `@pydanny`_ (#295)
+* Merge pull request from michaeljoseph/more-changelog-and-authors, thanks to `@pydanny`_ (#290)
+* Merge pull request from michaeljoseph/master, thanks to `@michaeljoseph`_ (#287)
+* Merge pull request from pfmoore/aliases, thanks to `@pfmoore`_ (#270)
+* Merge pull request from freakboy3742/patch-1, thanks to `@pydanny`_ (#263)
+* Add support to run tests with py.test and coverage, thanks to `@ramiroluz`_ (#256)
+* Added the appveyor badge to address, thanks to Daniel Greenfeld (#255)
 * Creation of `gitter`_ account for logged chat, thanks to `@michaeljoseph`_.
 * Added ReadTheDocs badge, thanks to `@michaeljoseph`_.
 * Added AppVeyor badge, thanks to `@pydanny`_
@@ -788,6 +850,11 @@ Bug Fixes:
 
 Other Changes:
 
+* Merge pull request from audreyr/audreyr-extra-context, thanks to `@pydanny`_ (#274)
+* Merge pull request from robinandeer/new-template/cookiecutter-py, thanks to `@audreyr`_ (#271)
+* Merge pull request from mishbahr/master, thanks to `@audreyr`_ (#266)
+* Merge pull request from pfmoore/input_test, thanks to `@audreyr`_ (#262)
+* Merge pull request from pfmoore/remove_unicode_dir, thanks to `@pfmoore`_ (#257)
 * Added more Cookiecutters to the list:
 
   * `Python-iOS-template`_ by `@freakboy3742`_
@@ -841,6 +908,22 @@ Bug Fixes:
 
 Other Changes:
 
+* Merge pull request from mineo/readme-dead-links, thanks to `@michaeljoseph`_ (#214)
+* Merge pull request from dreftymac/dreftymac.update.readme, thanks to `@michaeljoseph`_ (#211)
+* Merge pull request from ionelmc/patch-1, thanks to `@michaeljoseph`_ (#210)
+* Remove cookie forms, pending, thanks to `@pydanny`_ (#208)
+* Merge pull request from pydanny/fix-contributing-rst, thanks to `@pydanny`_ (#194)
+* Merge pull request from pydanny/fix-contributing-rst, thanks to `@pydanny`_ (#193)
+* Merge pull request from uranusjr/fix_98 , thanks to `@michaeljoseph`_ (#192)
+* Vision/scope, more edits for core committer guide, thanks to `@audreyr`_ (#190)
+* Break up contributing docs. First pass at core committer docs, thanks to `@audreyr`_ (#190)
+* Merge pull request from iknite/patch-1, thanks to `@michaeljoseph`_ (#185)
+* Updates 2.6 requirements to fix issue, thanks to `@saxix`_ (#174)
+* Merge pull request from hackebrot/master, thanks to `@audreyr`_ (#171)
+* Merge pull request from merwok/patch-1, thanks to `@audreyr`_ (#168)
+* Merge pull request from Natim/patch-1, thanks to `@michaeljoseph`_ (#159)
+* Merge pull request from borntyping/patch-1, thanks to `@michaeljoseph`_ (#158)
+* Merge pull request from Paspartout/master, thanks to `@michaeljoseph`_ (#134)
 * `@audreyr`_ formally accepted position as **BDFL of cookiecutter**.
 * Elevated `@pydanny`_, `@michaeljoseph`_, and `@pfmoore`_ to core committer status.
 * Added Core Committer guide, by `@audreyr`_.
@@ -907,6 +990,19 @@ Bug fixes:
 
 Other changes:
 
+* Merge pull request from pbacterio/master, thanks to `@audreyr`_ (#164)
+* Import version using relative import, thanks to `@cyberj`_ (#163)
+* Merge pull request from coderanger/master, thanks to `@audreyr`_ (#152)
+* Merge pull request from solarnz/avr, thanks to `@audreyr`_ (#151)
+* Merge pull request from palazzem/template-djangocms, thanks to `@audreyr`_ (#139)
+* Merge pull request from lborgav/patch-1, thanks to `@audreyr`_ (#115)
+* Merge pull request from lborgav/patch-1, thanks to `@audreyr`_ (#114)
+* Merge pull request from michaeljoseph/clarify-output-directory-i, thanks to `@audreyr`_ (#113)
+* Merge pull request from mahmoudimus/patch-1, thanks to `@audreyr`_ (#110)
+* Merge pull request from svetlyak40wt/patch-1, thanks to `@audreyr`_ (#97)
+* Merge pull request from rochacbruno/master, thanks to `@audreyr`_ (#96)
+* First stab at overview, thanks to `@audreyr`_ (#83)
+* Tutorial part 1, thanks to `@audreyr`_ (#7)
 * Add more Cookiecutters to the list:
 
   * `cookiecutter-avr`_ by `@solarnz`_
@@ -962,6 +1058,13 @@ Bug fixes:
 
 Other changes:
 
+* Merge pull request from oubiga/master, thanks to `@audreyr`_ (#93)
+* Merge pull request from rolo/patch-1, thanks to `@audreyr`_ (#91)
+* Revert to non-context manager version of subprocess, thanks to `@audreyr`_ (#88)
+* Add init-skeleton and scaffolt, thanks to `@audreyr`_ (#67)
+* Merge pull request from sloria/master, thanks to `@audreyr`_ (#65)
+* "Don't delete the repo anymore, as per my comments today", thanks to `@audreyr`_ (#54)
+* Add mr.bob to similar projects, thanks to `@audreyr`_ (#44)
 * Quite a bit of refactoring and API changes.
 * Lots of documentation improvements. Thanks `@sloria`_, `@alex`_, `@pydanny`_,
   `@freakboy3742`_, `@es128`_, `@rolo`_.
@@ -993,12 +1096,17 @@ Other changes:
 0.6.4 (2013-08-21)
 ~~~~~~~~~~~~~~~~~~
 
+* Fixes to version-specific dependencies, thanks to `@audreyr`_ (#42)
+* Set up Travis to use requirements files, thanks to `@audreyr`_ (#42)
+* Have tox use requirements files, thanks to `@audreyr`_ (#42)
 * Windows support officially added.
 * Fix TemplateNotFound Exception on Windows (#37).
 
 0.6.3 (2013-08-20)
 ~~~~~~~~~~~~~~~~~~
 
+* Merge pull request from pydanny/update-template-names, thanks to `@audreyr`_ (#43)
+* Merge pull request from pydanny/logo-fix-for-pypi, thanks to `@audreyr`_ (#38)
 * Fix copying of binary files in nested paths (#41), thanks to `@sloria`_.
 
 .. _`@sloria`: https://github.com/sloria/
@@ -1006,6 +1114,11 @@ Other changes:
 0.6.2 (2013-08-19)
 ~~~~~~~~~~~~~~~~~~
 
+* Merge pull request from pydanny/add-mock-for-tests, thanks to `@audreyr`_ (#32)
+* "Move encoding kwarg up", thanks to `@audreyr`_ (#27)
+* Fix Now copies over binary files as-is, without rendering them, thanks to `@audreyr`_ (#18)
+* Merge pull request from sloria/master, thanks to `@audreyr`_ (#17)
+* Fix Depend on Jinja2>=2.4, thanks to `@audreyr`_ (#15)
 * Depend on Jinja2>=2.4 instead of Jinja2==2.7.
 * Fix errors on attempt to render binary files. Copy them over from the project
   template without rendering.
@@ -1024,6 +1137,7 @@ Other changes:
 0.6.0 (2013-08-08)
 ~~~~~~~~~~~~~~~~~~
 
+* Partial checkin of getting user input, thanks to `@audreyr`_ (#4)
 * Config is now in a single `cookiecutter.json` instead of in `json/`.
 * When you create a project from a git repo template, Cookiecutter prompts
   you to enter custom values for the fields defined in `cookiecutter.json`.
