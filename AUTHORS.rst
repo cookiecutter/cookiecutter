@@ -116,6 +116,7 @@ Contributors
 * Joshua Carp (`@jmcarp`_)
 * @meahow (`@meahow`_)
 * Andrea Grandi (`@andreagrandi`_)
+* Issa Jubril (`@jubrilissa`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -220,4 +221,5 @@ Contributors
 .. _`@jmcarp`: https://github.com/jmcarp
 .. _`@meahow`: https://github.com/meahow
 .. _`@andreagrandi`: https://github.com/andreagrandi
+.. _`@jubrilissa`: https://github.com/jubrilissa
 
