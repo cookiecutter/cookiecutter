@@ -3,7 +3,7 @@
 Choice Variables (1.1+)
 -----------------------
 
-Choice variables provide different choices when creating a project. Depending on an user's choice
+Choice variables provide different choices when creating a project. Depending on a user's choice
 the template renders things differently.
 
 Basic Usage
