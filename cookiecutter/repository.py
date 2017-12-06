@@ -61,6 +61,20 @@ def repository_has_cookiecutter_json(repo_directory):
     return repo_directory_exists and repo_config_exists
 
 
+def repository_has_cookiecutter_yaml(repo_directory):
+    """Determine if `repo_directory` contains a `cookiecutter.yml` file.
+
+    :param repo_directory: The candidate repository directory.
+    :return: True if the `repo_directory` is valid, else False.
+    """
+    repo_directory_exists = os.path.isdir(repo_directory)
+
+    repo_config_exists = os.path.isfile(
+        os.path.join(repo_directory, 'cookiecutter.yml')
+    )
+    return repo_directory_exists and repo_config_exists
+
+
 def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
                        no_input, password=None):
     """
@@ -112,6 +126,9 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
         cleanup = False
 
     for repo_candidate in repository_candidates:
+        # prefer yaml to json
+        if repository_has_cookiecutter_yaml(repo_candidate):
+            return repo_candidate, cleanup
         if repository_has_cookiecutter_json(repo_candidate):
             return repo_candidate, cleanup
 

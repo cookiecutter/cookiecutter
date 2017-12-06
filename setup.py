@@ -31,6 +31,7 @@ requirements = [
     'poyo>=0.1.0',
     'jinja2-time>=0.1.0',
     'requests>=2.18.0',
+    'PyYAML>=3.12',
 ]
 
 if sys.argv[-1] == 'readme':
