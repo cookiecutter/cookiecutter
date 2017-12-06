@@ -82,8 +82,10 @@ def cookiecutter(
             path, template_name = os.path.split(os.path.splitext(replay)[0])
             context = load(path, template_name)
     else:
-        context_file = os.path.join(repo_dir, 'cookiecutter.json')
-        logger.debug('context_file is %s', context_file)
+        context_file = os.path.join(repo_dir, 'cookiecutter.yml')
+        if not os.path.isfile(context_file):
+            context_file = os.path.join(repo_dir, 'cookiecutter.json')
+        logger.debug('context_file is {}'.format(context_file))
 
         context = generate_context(
             context_file=context_file,

@@ -9,6 +9,7 @@ from collections import OrderedDict
 from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
+import yaml
 
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
@@ -23,6 +24,21 @@ from cookiecutter.hooks import run_hook
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
 logger = logging.getLogger(__name__)
+
+
+# https://stackoverflow.com/a/21912744
+def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
+    """# usage example:
+    ordered_load(stream, yaml.SafeLoader)"""
+    class OrderedLoader(Loader):
+        pass
+    def construct_mapping(loader, node):
+        loader.flatten_mapping(node)
+        return object_pairs_hook(loader.construct_pairs(node))
+    OrderedLoader.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+        construct_mapping)
+    return yaml.load(stream, OrderedLoader)
 
 
 def is_copy_only_path(path, context):
@@ -81,20 +97,25 @@ def generate_context(
     """
     context = OrderedDict([])
 
-    try:
-        with open(context_file, encoding='utf-8') as file_handle:
-            obj = json.load(file_handle, object_pairs_hook=OrderedDict)
-    except ValueError as e:
-        # JSON decoding error.  Let's throw a new exception that is more
-        # friendly for the developer or user.
-        full_fpath = os.path.abspath(context_file)
-        json_exc_message = str(e)
-        our_exc_message = (
-            'JSON decoding error while loading "{0}".  Decoding'
-            ' error details: "{1}"'.format(full_fpath, json_exc_message)
-        )
-        raise ContextDecodingException(our_exc_message)
-
+    if context_file.endswith('.json'):
+        try:
+            with open(context_file, encoding='utf-8') as file_handle:
+                obj = json.load(file_handle, object_pairs_hook=OrderedDict)
+        except ValueError as e:
+            # JSON decoding error.  Let's throw a new exception that is more
+            # friendly for the developer or user.
+            full_fpath = os.path.abspath(context_file)
+            json_exc_message = str(e)
+            our_exc_message = (
+                'JSON decoding error while loading "{0}".  Decoding'
+                ' error details: "{1}"'.format(full_fpath, json_exc_message)
+            )
+            raise ContextDecodingException(our_exc_message)
+    else:
+        # FIXME handle potential errors
+        with open(context_file) as file_handle:
+            obj = ordered_load(file_handle, yaml.SafeLoader)
+        
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
