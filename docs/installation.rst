@@ -55,7 +55,7 @@ You may need to restart your command prompt session to load the environment vari
 **Unix on Windows**
 
 
-You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10?f=255&MSPPError=-2147217396>`_ or `GNU utilities for Win32 <http://unxutils.sourceforge.net>`_ to use Unix commands on Windows.
+You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10>`_ or `GNU utilities for Win32 <http://unxutils.sourceforge.net>`_ to use Unix commands on Windows.
 
 Packaging tools
 ^^^^^^^^^^^^^^^
