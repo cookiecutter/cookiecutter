@@ -15,6 +15,9 @@ Other Changes:
   `@meahow`_ (#998, #999, #1000)
 * Fix grammar in *Choice Variables* documentation, thanks to `@jubrilissa`_
   (#1011)
+* Update installation docs with links to the Windows Subsystem and GNU
+  utilities, thanks to `@Nythiennzo`_ for the PR and `@BruceEckel`_ for the
+  review (#1016)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -25,6 +28,7 @@ Other Changes:
 .. _`@xuanluong`: https://github.com/xuanluong
 .. _`@andreagrandi`: https://github.com/andreagrandi
 .. _`@jubrilissa`: https://github.com/jubrilissa
+.. _`@Nythiennzo`: https://github.com/Nythiennzo
 
 
 1.6.0 (2017-10-15) Tim Tam
