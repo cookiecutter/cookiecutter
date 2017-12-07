@@ -770,6 +770,8 @@ Similar projects
 
 * `Skaffold`_ python and json config based django/MVC generator, with some add-ons and integrations.
 
+* `Metalsmith`_ is a pluggable file manipulation library written javascript. It powers the `vue-cli`_ scaffolding utility. 
+
 .. _`Paste`: http://pythonpaste.org/script/#paster-create
 .. _`Diecutter`: https://github.com/novagile/diecutter
 .. _`Django`: https://docs.djangoproject.com/en/1.9/ref/django-admin/#cmdoption-startapp--template
@@ -782,6 +784,8 @@ Similar projects
 .. _`init-skeleton`: https://github.com/paulmillr/init-skeleton
 .. _`Cog`: https://bitbucket.org/ned/cog
 .. _`Skaffold`: https://github.com/christabor/Skaffold
+.. _`Metalsmith`: http://www.metalsmith.io/
+.. _`vue-cli`: https://github.com/vuejs/vue-cli
 
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
 .. _`PyCon 2016`: https://us.pycon.org/2016/sponsors/
