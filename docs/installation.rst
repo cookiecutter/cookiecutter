@@ -52,6 +52,10 @@ You may need to restart your command prompt session to load the environment vari
 
 .. seealso:: See `Configuring Python (on Windows) <https://docs.python.org/3/using/windows.html#configuring-python>`_ for full details.
 
+**Unix on Windows**
+
+
+You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10>`_ or `GNU utilities for Win32 <http://unxutils.sourceforge.net>`_ to use Unix commands on Windows.
 
 Packaging tools
 ^^^^^^^^^^^^^^^

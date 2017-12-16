@@ -117,6 +117,7 @@ Contributors
 * @meahow (`@meahow`_)
 * Andrea Grandi (`@andreagrandi`_)
 * Issa Jubril (`@jubrilissa`_)
+* Nytiennzo Madooray (`@Nytiennzo`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -222,4 +223,5 @@ Contributors
 .. _`@meahow`: https://github.com/meahow
 .. _`@andreagrandi`: https://github.com/andreagrandi
 .. _`@jubrilissa`: https://github.com/jubrilissa
+.. _`@Nythiennzo`: https://github.com/Nythiennzo
 
