@@ -34,14 +34,3 @@ is::
 
 Will run py.test with the python2.7, python3.4 and pypy interpreters, for
 example.
-
-Troubleshooting for Contributors
---------------------------------
-
-Python 3.3 tests fail locally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Try upgrading Tox to the latest version. I noticed that they were failing
-locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
-
-.. _`pytest usage docs`: https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests
