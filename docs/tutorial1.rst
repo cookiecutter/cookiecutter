@@ -108,6 +108,8 @@ Find the directory called `{{ cookiecutter.project_slug }}`. Click on it. Observ
 the files inside of it. You should see that this directory and its contents
 corresponds to the project that you just generated.
 
+This happens in `find.py`, where the `find_template()` method looks for the first jinja-like directory name that starts with `cookiecutter`. 
+
 AUTHORS.rst
 ~~~~~~~~~~~
 
