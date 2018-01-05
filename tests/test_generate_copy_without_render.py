@@ -11,7 +11,7 @@ import pytest
 
 from cookiecutter import generate
 from cookiecutter import utils
-
+from cookiecutter.cli import OutputDirExistsException
 
 @pytest.fixture(scope='function')
 def remove_test_dir(request):
@@ -23,11 +23,14 @@ def remove_test_dir(request):
             utils.rmtree('test_copy_without_render')
     request.addfinalizer(fin_remove_test_dir)
 
+@pytest.fixture(params=[True, False])
+def overwrite_if_exists(request):
+    return request.param
 
 @pytest.mark.usefixtures('clean_system', 'remove_test_dir')
-def test_generate_copy_without_render_extensions():
-    generate.generate_files(
-        context={
+def test_generate_copy_without_render_extensions(overwrite_if_exists):
+    
+    context={
             'cookiecutter': {
                 'repo_name': 'test_copy_without_render',
                 'render_test': 'I have been rendered!',
@@ -36,7 +39,10 @@ def test_generate_copy_without_render_extensions():
                     'rendered/not_rendered.yml',
                     '*.txt',
                 ]}
-        },
+        }
+    
+    generate.generate_files(
+        context=context,
         repo_dir='tests/test-generate-copy-without-render'
     )
 
@@ -68,3 +74,25 @@ def test_generate_copy_without_render_extensions():
 
     with open('test_copy_without_render/rendered/not_rendered.yml') as f:
         assert '{{cookiecutter.render_test}}' in f.read()
+
+    if overwrite_if_exists:
+        
+        # This should in all cases:
+        generate.generate_files(
+            context=context,
+            repo_dir='tests/test-generate-copy-without-render',
+            overwrite_if_exists=overwrite_if_exists
+        )
+
+    else:
+        
+        # This should fail, with OutputDirExistsException:
+        try:
+            generate.generate_files(
+                context=context,
+                repo_dir='tests/test-generate-copy-without-render',
+                overwrite_if_exists=overwrite_if_exists
+            )
+        except OutputDirExistsException as e:
+            pass
+        
