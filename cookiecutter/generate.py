@@ -328,9 +328,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
                 if overwrite_if_exists and os.path.exists(outdir):
                     shutil.rmtree(outdir)
-                    shutil.copytree(indir, outdir)
-                else:
-                    shutil.copytree(indir, outdir)
+                shutil.copytree(indir, outdir)
 
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively
