@@ -625,10 +625,12 @@ LaTeX/XeTeX
 
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
 * `cookiecutter-latex-article`_: A LaTeX template geared towards academic use.
+* `sigchiproceedings-cookiecutter`_: A cookiecutter for LaTeX documents in the ACM SIGCHI Proceedings Format.
 * `cookiecutter-beamer`_: A template for a LaTeX Beamer presentation.
 
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
+.. _`sigchiproceedings-cookiecutter`: https://github.com/seclinch/sigchiproceedings-cookiecutter
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
 
 
