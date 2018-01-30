@@ -36,8 +36,9 @@ def valid_hook(hook_file, hook_name):
     matching_hook = basename == hook_name
     supported_hook = basename in _HOOKS
     backup_file = filename.endswith('~')
+    pyc_file = filename.endswith('.pyc')
 
-    return matching_hook and supported_hook and not backup_file
+    return matching_hook and supported_hook and not backup_file and not pyc_file
 
 
 def find_hook(hook_name, hooks_dir='hooks'):
