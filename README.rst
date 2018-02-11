@@ -549,9 +549,12 @@ C#
 ~~
 
 * `cookiecutter-csharp-objc-binding`_: A template for generating a C# binding project for binding an Objective-C static library.
+* `cookiecutter-rimworld-mod-development`_: A template for generating a Visual Studio C# project for developing modifications to  `Rimworld`_.
 
 .. _`cookiecutter-csharp-objc-binding`: https://github.com/SandyChapman/cookiecutter-csharp-objc-binding
+.. _`cookiecutter-rimworld-mod-development`: https://github.com/n-fisher/cookiecutter-rimworld-mod-development
 
+.. _`Rimworld`: http://rimworldwiki.com/wiki/Modding
 
 Common Lisp
 ~~~~~~~~~~~
