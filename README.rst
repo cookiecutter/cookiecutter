@@ -691,10 +691,12 @@ Data Science
 * `widget-cookiecutter`_: A cookiecutter template for creating a custom Jupyter widget project.
 * `cookiecutter-data-science`_: A logical, reasonably standardized, but flexible project structure for doing and sharing data science work in Python.  Full documentation available `here <http://drivendata.github.io/cookiecutter-data-science/>`__.
 * `cookiecutter-r-data-analysis`_: Template for a R based workflow to docx (via Pandoc) and pdf (via LaTeX) reports.
+* `cookiecutter-docker-science`_: Cookiecutter template for data scientists working in Docker containers.
 
 .. _`widget-cookiecutter`: https://github.com/jupyter/widget-cookiecutter
 .. _`cookiecutter-data-science`: https://github.com/drivendata/cookiecutter-data-science
 .. _`cookiecutter-r-data-analysis`: https://github.com/bdcaf/cookiecutter-r-data-analysis
+.. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
 
 Reproducible Science
 ~~~~~~~~~~~~~~~~~~~~
