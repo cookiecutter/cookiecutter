@@ -21,14 +21,17 @@ Other Changes:
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
+  * `cookiecutter-docker-science`_ by `@takahi-i`_ (#1040)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
+.. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
 .. _`@xuanluong`: https://github.com/xuanluong
 .. _`@andreagrandi`: https://github.com/andreagrandi
 .. _`@jubrilissa`: https://github.com/jubrilissa
 .. _`@Nythiennzo`: https://github.com/Nythiennzo
+.. _`@takahi-i`: https://github.com/takahi-i
 
 
 1.6.0 (2017-10-15) Tim Tam
