@@ -125,7 +125,7 @@ def test_run_failing_hook_removes_output_directory():
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
     hook_dir = os.path.join(repo_path, 'hooks')
-    template = os.path.join(repo_path, 'input{{cookiecutter.hooks}}')
+    template = os.path.join(repo_path, 'input%%cookiecutter.hooks%%')
     os.mkdir(repo_path)
     os.mkdir(hook_dir)
     os.mkdir(template)
@@ -155,7 +155,7 @@ def test_run_failing_hook_preserves_existing_output_directory():
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
     hook_dir = os.path.join(repo_path, 'hooks')
-    template = os.path.join(repo_path, 'input{{cookiecutter.hooks}}')
+    template = os.path.join(repo_path, 'input%%cookiecutter.hooks%%')
     os.mkdir(repo_path)
     os.mkdir(hook_dir)
     os.mkdir(template)
@@ -182,7 +182,7 @@ def test_run_failing_hook_preserves_existing_output_directory():
 
 def make_test_repo(name):
     hooks = os.path.join(name, 'hooks')
-    template = os.path.join(name, 'input{{cookiecutter.shellhooks}}')
+    template = os.path.join(name, 'input%%cookiecutter.shellhooks%%')
     os.mkdir(name)
     os.mkdir(hooks)
     os.mkdir(template)

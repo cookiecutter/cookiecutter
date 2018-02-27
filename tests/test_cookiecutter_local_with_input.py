@@ -35,7 +35,7 @@ def test_cookiecutter_local_with_input(monkeypatch):
         lambda var, default: default
     )
     main.cookiecutter('tests/fake-repo-pre/', no_input=False)
-    assert os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}')
+    assert os.path.isdir('tests/fake-repo-pre/%%cookiecutter.repo_name%%')
     assert not os.path.isdir('tests/fake-repo-pre/fake-project')
     assert os.path.isdir('fake-project')
     assert os.path.isfile('fake-project/README.rst')

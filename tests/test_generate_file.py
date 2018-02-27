@@ -41,7 +41,7 @@ def env():
 
 @pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file(env):
-    infile = 'tests/files/{{generate_file}}.txt'
+    infile = 'tests/files/%%generate_file%%.txt'
     generate.generate_file(
         project_dir=".",
         infile=infile,
@@ -68,7 +68,7 @@ def test_generate_file_with_false_condition(env):
 
 @pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_jsonify_filter(env):
-    infile = 'tests/files/{{cookiecutter.jsonify_file}}.txt'
+    infile = 'tests/files/%%cookiecutter.jsonify_file%%.txt'
     data = {'jsonify_file': 'cheese', 'type': 'roquefort'}
     generate.generate_file(
         project_dir=".",
@@ -102,7 +102,7 @@ def expected_msg():
     msg = (
         'Missing end of comment tag\n'
         '  File "./tests/files/syntax_error.txt", line 1\n'
-        '    I eat {{ syntax_error }} {# this comment is not closed}'
+        '    I eat %% syntax_error %% {# this comment is not closed}'
     )
     return msg.replace("/", os.sep)
 

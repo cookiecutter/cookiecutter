@@ -33,7 +33,7 @@ from cookiecutter import exceptions
 from cookiecutter import utils
 
 
-@pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])
+@pytest.mark.parametrize('invalid_dirname', ['', '%foo%', '{{foo', 'bar}}'])
 def test_ensure_dir_is_templated_raises(invalid_dirname):
     with pytest.raises(exceptions.NonTemplatedInputDirException):
         generate.ensure_dir_is_templated(invalid_dirname)
@@ -182,7 +182,7 @@ def test_generate_files_permissions():
     tests_simple_file = os.path.join(
         'tests',
         'test-generate-files-permissions',
-        'input{{cookiecutter.permissions}}',
+        'input%%cookiecutter.permissions%%',
         'simple.txt'
     )
     tests_simple_file_mode = os.stat(tests_simple_file).st_mode & 0o777
@@ -200,7 +200,7 @@ def test_generate_files_permissions():
     tests_script_file = os.path.join(
         'tests',
         'test-generate-files-permissions',
-        'input{{cookiecutter.permissions}}',
+        'input%%cookiecutter.permissions%%',
         'script.sh'
     )
     tests_script_file_mode = os.stat(tests_script_file).st_mode & 0o777
@@ -233,7 +233,7 @@ def test_raise_undefined_variable_file_name(tmpdir, undefined_context):
             context=undefined_context
         )
     error = err.value
-    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert "Unable to create file '%%cookiecutter.foobar%%'" == error.message
     assert error.context == undefined_context
 
     assert not output_dir.join('testproject').exists()
@@ -253,7 +253,7 @@ def test_raise_undefined_variable_file_name_existing_project(
             overwrite_if_exists=True
         )
     error = err.value
-    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert "Unable to create file '%%cookiecutter.foobar%%'" == error.message
     assert error.context == undefined_context
 
     assert output_dir.join('testproject').exists()
@@ -286,7 +286,7 @@ def test_raise_undefined_variable_dir_name(tmpdir, undefined_context):
         )
     error = err.value
 
-    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    directory = os.path.join('testproject', '%%cookiecutter.foobar%%')
     msg = "Unable to create directory '{}'".format(directory)
     assert msg == error.message
 
@@ -310,7 +310,7 @@ def test_raise_undefined_variable_dir_name_existing_project(
         )
     error = err.value
 
-    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    directory = os.path.join('testproject', '%%cookiecutter.foobar%%')
     msg = "Unable to create directory '{}'".format(directory)
     assert msg == error.message
 
@@ -329,7 +329,7 @@ def test_raise_undefined_variable_project_dir(tmpdir):
             context={}
         )
     error = err.value
-    msg = "Unable to create project directory '{{cookiecutter.project_slug}}'"
+    msg = "Unable to create project directory '%%cookiecutter.project_slug%%'"
     assert msg == error.message
     assert error.context == {}
 

@@ -330,7 +330,7 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
 
     assert result.exit_code == 1
 
-    error = "Unable to create file '{{cookiecutter.foobar}}'"
+    error = "Unable to create file '%%cookiecutter.foobar%%'"
     assert error in result.output
 
     message = "Error message: 'dict object' has no attribute 'foobar'"

@@ -21,5 +21,5 @@ def repo_dir(request):
 def test_find_template(repo_dir):
     template = find.find_template(repo_dir=repo_dir)
 
-    test_dir = os.path.join(repo_dir, '{{cookiecutter.repo_name}}')
+    test_dir = os.path.join(repo_dir, '%%cookiecutter.repo_name%%')
     assert template == test_dir

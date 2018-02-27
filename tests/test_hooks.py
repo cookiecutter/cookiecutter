@@ -19,7 +19,7 @@ from cookiecutter import hooks, utils, exceptions
 def make_test_repo(name):
     """Helper function which is called in the test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
-    template = os.path.join(name, 'input{{hooks}}')
+    template = os.path.join(name, 'input%%hooks%%')
     os.mkdir(name)
     os.mkdir(hook_dir)
     os.mkdir(template)
@@ -114,10 +114,10 @@ class TestExternalHooks(object):
             os.remove('shell_post.txt')
         if os.path.exists('tests/shell_post.txt'):
             os.remove('tests/shell_post.txt')
-        if os.path.exists('tests/test-hooks/input{{hooks}}/python_pre.txt'):
-            os.remove('tests/test-hooks/input{{hooks}}/python_pre.txt')
-        if os.path.exists('tests/test-hooks/input{{hooks}}/shell_post.txt'):
-            os.remove('tests/test-hooks/input{{hooks}}/shell_post.txt')
+        if os.path.exists('tests/test-hooks/input%%hooks%%/python_pre.txt'):
+            os.remove('tests/test-hooks/input%%hooks%%/python_pre.txt')
+        if os.path.exists('tests/test-hooks/input%%hooks%%/shell_post.txt'):
+            os.remove('tests/test-hooks/input%%hooks%%/shell_post.txt')
         if os.path.exists('tests/context_post.txt'):
             os.remove('tests/context_post.txt')
 
@@ -146,14 +146,14 @@ class TestExternalHooks(object):
                 f.write("@echo off\n")
                 f.write("\n")
                 f.write("echo post generation hook\n")
-                f.write("echo. >{{cookiecutter.file}}\n")
+                f.write("echo. >%%cookiecutter.file%%\n")
         else:
             with open(hook_path, 'w') as fh:
                 fh.write("#!/bin/bash\n")
                 fh.write("\n")
                 fh.write("echo 'post generation hook';\n")
                 fh.write("touch 'shell_post.txt'\n")
-                fh.write("touch '{{cookiecutter.file}}'\n")
+                fh.write("touch '%%cookiecutter.file%%'\n")
                 os.chmod(hook_path, os.stat(hook_path).st_mode | stat.S_IXUSR)
 
         hooks.run_script_with_context(
@@ -171,7 +171,7 @@ class TestExternalHooks(object):
         """Execute hook from specified template in specified output
         directory.
         """
-        tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
+        tests_dir = os.path.join(self.repo_path, 'input%%hooks%%')
         with utils.work_in(self.repo_path):
             hooks.run_hook('pre_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
@@ -181,7 +181,7 @@ class TestExternalHooks(object):
 
     def test_run_failing_hook(self):
         hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
-        tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
+        tests_dir = os.path.join(self.repo_path, 'input%%hooks%%')
 
         with open(hook_path, 'w') as f:
             f.write("#!/usr/bin/env python\n")
