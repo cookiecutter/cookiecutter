@@ -67,5 +67,7 @@ class StrictEnvironment(ExtensionLoaderMixin, Environment):
         """
         super(StrictEnvironment, self).__init__(
             undefined=StrictUndefined,
+            variable_start_string='%%',
+            variable_end_string='%%',
             **kwargs
         )
