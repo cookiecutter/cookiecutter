@@ -214,7 +214,7 @@ def render_and_create_dir(dirname, context, output_dir, environment,
 
 def ensure_dir_is_templated(dirname):
     """Ensure that dirname is a templated directory name."""
-    if '{{' in dirname and '}}' in dirname:
+    if '%%' in dirname and '%%' in dirname:
         return True
     else:
         raise NonTemplatedInputDirException

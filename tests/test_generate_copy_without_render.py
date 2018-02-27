@@ -42,11 +42,11 @@ def test_generate_copy_without_render_extensions():
 
     dir_contents = os.listdir('test_copy_without_render')
 
-    assert '{{cookiecutter.repo_name}}-not-rendered' in dir_contents
+    assert '%%cookiecutter.repo_name%%-not-rendered' in dir_contents
     assert 'test_copy_without_render-rendered' in dir_contents
 
     with open('test_copy_without_render/README.txt') as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+        assert '%%cookiecutter.render_test%%' in f.read()
 
     with open('test_copy_without_render/README.rst') as f:
         assert 'I have been rendered!' in f.read()
@@ -54,7 +54,7 @@ def test_generate_copy_without_render_extensions():
     with open('test_copy_without_render/'
               'test_copy_without_render-rendered/'
               'README.txt') as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+        assert '%%cookiecutter.render_test%%' in f.read()
 
     with open('test_copy_without_render/'
               'test_copy_without_render-rendered/'
@@ -62,9 +62,9 @@ def test_generate_copy_without_render_extensions():
         assert 'I have been rendered' in f.read()
 
     with open('test_copy_without_render/'
-              '{{cookiecutter.repo_name}}-not-rendered/'
+              '%%cookiecutter.repo_name%%-not-rendered/'
               'README.rst') as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+        assert '%%cookiecutter.render_test%%' in f.read()
 
     with open('test_copy_without_render/rendered/not_rendered.yml') as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+        assert '%%cookiecutter.render_test%%' in f.read()

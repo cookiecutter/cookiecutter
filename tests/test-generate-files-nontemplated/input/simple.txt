@@ -1,1 +1,1 @@
-I eat {{ food }}
+I eat %% food %%

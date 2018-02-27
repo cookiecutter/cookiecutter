@@ -20,7 +20,7 @@ from cookiecutter import prompt, exceptions, environment
     (1, '1'),
     (True, 'True'),
     ('foo', 'foo'),
-    ('{{cookiecutter.project}}', 'foobar'),
+    ('%%cookiecutter.project%%', 'foobar'),
     (None, None),
 ])
 def test_convert_to_str(mocker, raw_var, rendered_var):
@@ -146,7 +146,7 @@ class TestPrompt(object):
             'cookiecutter': {
                 'project_name': 'Slartibartfast',
                 'details': {
-                    'other_name': '{{cookiecutter.project_name}}'
+                    'other_name': '%%cookiecutter.project_name%%'
                 }
             }
         }
@@ -166,20 +166,20 @@ class TestPrompt(object):
                 'details': {
                     "key": "value",
                     "integer_key": 37,
-                    "other_name": '{{cookiecutter.project_name}}',
+                    "other_name": '%%cookiecutter.project_name%%',
                     "dict_key": {
                         "deep_key": "deep_value",
                         "deep_integer": 42,
-                        "deep_other_name": '{{cookiecutter.project_name}}',
+                        "deep_other_name": '%%cookiecutter.project_name%%',
                         "deep_list": [
                             "deep value 1",
-                            "{{cookiecutter.project_name}}",
+                            "%%cookiecutter.project_name%%",
                             "deep value 3",
                         ]
                     },
                     "list_key": [
                         "value 1",
-                        "{{cookiecutter.project_name}}",
+                        "%%cookiecutter.project_name%%",
                         "value 3",
                     ]
                 }
@@ -242,7 +242,7 @@ class TestPrompt(object):
                 u'A New Project'
             ), (
                 'pkg_name',
-                u'{{ cookiecutter.project_name|lower|replace(" ", "") }}'
+                u'%% cookiecutter.project_name|lower|replace(" ", "") %%'
             )
         ])}
 
@@ -330,7 +330,7 @@ class TestReadUserChoice(object):
                 'pkg_name',
                 [
                     u'foo',
-                    u'{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                    u'%% cookiecutter.project_name|lower|replace(" ", "") %%',
                     u'bar'
                 ]
             )
@@ -396,7 +396,7 @@ def test_undefined_variable_in_cookiecutter_dict():
     context = {
         'cookiecutter': {
             'hello': 'world',
-            'foo': '{{cookiecutter.nope}}'
+            'foo': '%%cookiecutter.nope%%'
         }
     }
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
@@ -411,7 +411,7 @@ def test_undefined_variable_in_cookiecutter_dict_with_choices():
     context = {
         'cookiecutter': {
             'hello': 'world',
-            'foo': ['123', '{{cookiecutter.nope}}', '456']
+            'foo': ['123', '%%cookiecutter.nope%%', '456']
         }
     }
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
@@ -426,7 +426,7 @@ def test_undefined_variable_in_cookiecutter_dict_with_dict_key():
     context = {
         'cookiecutter': {
             'hello': 'world',
-            'foo': {'{{cookiecutter.nope}}': 'value'}
+            'foo': {'%%cookiecutter.nope%%': 'value'}
         }
     }
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
@@ -441,7 +441,7 @@ def test_undefined_variable_in_cookiecutter_dict_with_key_value():
     context = {
         'cookiecutter': {
             'hello': 'world',
-            'foo': {'key': '{{cookiecutter.nope}}'}
+            'foo': {'key': '%%cookiecutter.nope%%'}
         }
     }
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:

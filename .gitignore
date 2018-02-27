@@ -61,3 +61,4 @@ target/
 # PyCharm
 .idea/
 .env
+.DS_Store

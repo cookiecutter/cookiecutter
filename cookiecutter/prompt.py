@@ -141,7 +141,7 @@ def render_variable(env, raw, cookiecutter_dict):
     the next variable. For example, if a project_name is "Peanut Butter
     Cookie", the repo_name could be be rendered with:
 
-        `{{ cookiecutter.project_name.replace(" ", "_") }}`.
+        `%% cookiecutter.project_name.replace(" ", "_") %%`.
 
     This is then presented to the user as the default.
 
