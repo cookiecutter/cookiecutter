@@ -3,3 +3,4 @@ pytest-cov
 pytest-mock==1.1
 pytest-catchlog
 freezegun
+tox==2.9.1
