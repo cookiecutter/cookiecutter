@@ -731,12 +731,15 @@ Tornado
 Other
 ~~~~~
 
+* `cookiecutter-awesome`_: Cookiecutter to create an `awesome`_ list.
 * `cookiecutter_dotfile`_: Template for a folder of dotfiles managed by stow.
 * `cookiecutter-raml`_: Template for RAML v1.0 API documents.
 
-
+.. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
 .. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
 .. _`cookiecutter-raml`: https://github.com/genzj/cookiecutter-raml
+
+.. _`awesome`: https://github.com/sindresorhus/awesome
 
 
 Similar projects
