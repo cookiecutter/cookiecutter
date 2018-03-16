@@ -87,10 +87,14 @@ def validate_extra_context(ctx, param, value):
     u'--debug-file', type=click.Path(), default=None,
     help=u'File to be used as a stream for DEBUG logging',
 )
+@click.option(
+    u'--subfolder', type=click.Path(), default=None,
+    help=u'Specify subfolder to search for the template',
+)
 def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file):
+        default_config, debug_file, subfolder):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -117,7 +121,8 @@ def main(
             output_dir=output_dir,
             config_file=config_file,
             default_config=default_config,
-            password=os.environ.get('COOKIECUTTER_REPO_PASSWORD')
+            password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
+            subfolder=subfolder
         )
     except (OutputDirExistsException,
             InvalidModeException,

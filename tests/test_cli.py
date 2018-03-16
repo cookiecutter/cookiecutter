@@ -97,6 +97,7 @@ def test_cli_replay(mocker, cli_runner):
         config_file=None,
         default_config=False,
         extra_context=None,
+        subfolder=None,
         password=None
     )
 
@@ -131,6 +132,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         default_config=False,
         extra_context=None,
         password=None,
+        subfolder=None
     )
 
 
@@ -163,6 +165,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         default_config=False,
         extra_context=None,
         password=None,
+        subfolder=None
     )
 
 
@@ -223,6 +226,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         default_config=False,
         extra_context=None,
         password=None,
+        subfolder=None
     )
 
 
@@ -262,6 +266,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         default_config=False,
         extra_context=None,
         password=None,
+        subfolder=None
     )
 
 
@@ -290,6 +295,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         default_config=True,
         extra_context=None,
         password=None,
+        subfolder=None
     )
 
 
@@ -313,6 +319,7 @@ def test_default_user_config(mocker, cli_runner):
         default_config=True,
         extra_context=None,
         password=None,
+        subfolder=None
     )
 
 
@@ -439,3 +446,33 @@ def test_debug_file_verbose(cli_runner, debug_file):
     )
     assert context_log in debug_file.readlines(cr=False)
     assert context_log in result.output
+
+def test_cli_subfolder(mocker, cli_runner, output_dir_flag, output_dir):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    subfolder = 'fake-repo-subfolder'
+    result = cli_runner('--subfolder',
+                        subfolder,
+                        template_path,
+                        output_dir_flag,
+                        output_dir)
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir=output_dir,
+        config_file=None,
+        default_config=False,
+        extra_context=None,
+        password=None,
+        subfolder=subfolder
+    )
+
+

@@ -1,0 +1,11 @@
+{
+	"full_name": "Audrey Roy",
+	"email": "audreyr@gmail.com",
+	"github_username": "audreyr",
+	"project_name": "Fake Project Templated",
+	"repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+	"project_short_description": "This is a fake project.",
+	"release_date": "2013-07-28",
+	"year": "2013",
+	"version": "0.1"
+}
