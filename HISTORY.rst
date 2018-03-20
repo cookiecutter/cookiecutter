@@ -24,9 +24,11 @@ Other Changes:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
   * `cookiecutter-docker-science`_ by `@takahi-i`_ (#1040)
+  * `cookiecutter-flask-skeleton`_ by `@mjhea0`_ (#1052)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
+.. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
 .. _`@xuanluong`: https://github.com/xuanluong
