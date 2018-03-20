@@ -21,6 +21,8 @@ Other Changes:
   utilities, thanks to `@Nythiennzo`_ for the PR and `@BruceEckel`_ for the
   review (#1016)
 * Upgrade flake8 to version 3.5.0, thanks to `@cclauss`_ (#1038)
+* Update tutorial with explanation for how cookiecutter finds the template
+  file, thanks to `@accraze`_ (#1025)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -42,6 +44,7 @@ Other Changes:
 .. _`@dornheimer`: https://github.com/dornheimer
 .. _`@Pawamoy`: https://github.com/Pawamoy
 .. _`@cclauss`: https://github.com/cclauss
+.. _`@accraze`: https://github.com/accraze
 
 
 1.6.0 (2017-10-15) Tim Tam
