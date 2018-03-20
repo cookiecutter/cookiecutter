@@ -119,6 +119,7 @@ Contributors
 * Issa Jubril (`@jubrilissa`_)
 * Nytiennzo Madooray (`@Nythiennzo`_)
 * Erik Bachorski (`@dornheimer`_)
+* cclauss (`@cclauss`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -226,4 +227,5 @@ Contributors
 .. _`@jubrilissa`: https://github.com/jubrilissa
 .. _`@Nythiennzo`: https://github.com/Nythiennzo
 .. _`@dornheimer`: https://github.com/dornheimer
+.. _`@cclauss`: https://github.com/cclauss
 
