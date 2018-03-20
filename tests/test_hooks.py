@@ -195,7 +195,7 @@ class TestExternalHooks(object):
 
 @pytest.yield_fixture
 def dir_with_hooks(tmpdir):
-    """Yield a directory that contains hook backup files."""
+    """Yield a directory that contains hook backup files and *.pyc files."""
 
     hooks_dir = tmpdir.mkdir('hooks')
 
@@ -204,21 +204,31 @@ def dir_with_hooks(tmpdir):
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('pre_gen_project.py~')
+        print('pre_gen_project.pyc')
         """
     )
+    # *.py~
     pre_gen_hook_file = hooks_dir / 'pre_gen_project.py~'
     pre_gen_hook_file.write_text(pre_hook_content, encoding='utf8')
+    # *.pyc
+    pre_gen_hook_file_pyc = hooks_dir / 'pre_gen_project.pyc'
+    pre_gen_hook_file_pyc.write_text(pre_hook_content, encoding='utf8')
 
     post_hook_content = textwrap.dedent(
         u"""
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('post_gen_project.py~')
+        print('post_gen_project.pyc')
         """
     )
 
+    # *.py~
     post_gen_hook_file = hooks_dir / 'post_gen_project.py~'
     post_gen_hook_file.write_text(post_hook_content, encoding='utf8')
+    # *.pyc
+    post_gen_hook_file_pyc = hooks_dir / 'post_gen_project.pyc'
+    post_gen_hook_file_pyc.write_text(post_hook_content, encoding='utf8')
 
     # Make sure to yield the parent directory as `find_hooks()`
     # looks into `hooks/` in the current working directory
@@ -226,6 +236,8 @@ def dir_with_hooks(tmpdir):
 
     pre_gen_hook_file.remove()
     post_gen_hook_file.remove()
+    pre_gen_hook_file_pyc.remove()
+    post_gen_hook_file_pyc.remove()
 
 
 def test_ignore_hook_backup_files(monkeypatch, dir_with_hooks):
