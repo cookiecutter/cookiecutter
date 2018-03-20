@@ -25,10 +25,12 @@ Other Changes:
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
   * `cookiecutter-docker-science`_ by `@takahi-i`_ (#1040)
   * `cookiecutter-flask-skeleton`_ by `@mjhea0`_ (#1052)
+  * `cookiecutter-awesome`_ by `@Pawamoy`_ (#1051)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
 .. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
+.. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
 .. _`@xuanluong`: https://github.com/xuanluong
@@ -37,6 +39,7 @@ Other Changes:
 .. _`@Nythiennzo`: https://github.com/Nythiennzo
 .. _`@takahi-i`: https://github.com/takahi-i
 .. _`@dornheimer`: https://github.com/dornheimer
+.. _`@Pawamoy`: https://github.com/Pawamoy
 
 
 1.6.0 (2017-10-15) Tim Tam
