@@ -120,6 +120,7 @@ Contributors
 * Nytiennzo Madooray (`@Nythiennzo`_)
 * Erik Bachorski (`@dornheimer`_)
 * cclauss (`@cclauss`_)
+* Andy Craze (`@accraze`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -228,4 +229,5 @@ Contributors
 .. _`@Nythiennzo`: https://github.com/Nythiennzo
 .. _`@dornheimer`: https://github.com/dornheimer
 .. _`@cclauss`: https://github.com/cclauss
+.. _`@accraze`: https://github.com/accraze
 
