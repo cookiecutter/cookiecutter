@@ -6,21 +6,21 @@ language: python
 matrix:
     include:
       - python: 2.7
-        env: TOX_ENV=py27
+        env: TOXENV=py27
       - python: 3.3
-        env: TOX_ENV=py33
+        env: TOXENV=py33
       - python: 3.4
-        env: TOX_ENV=py34
+        env: TOXENV=py34
       - python: 3.5
-        env: TOX_ENV=py35
+        env: TOXENV=py35
       - python: 3.6
-        env: TOX_ENV=py36
+        env: TOXENV=py36
       - python: pypy
-        env: TOX_ENV=pypy
+        env: TOXENV=pypy
       - python: 3.5
-        env: TOX_ENV=flake8
+        env: TOXENV=flake8
 
-script: tox -e $TOX_ENV
+script: tox
 
 install:
     - pip install tox
@@ -30,4 +30,4 @@ after_success:
     # Report coverage results to codecov.io
     # and export tox environment variables
     - pip install codecov
-    - codecov -e TOX_ENV TRAVIS_OS_NAME
+    - codecov -e TOXENV TRAVIS_OS_NAME
