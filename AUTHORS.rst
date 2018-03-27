@@ -122,6 +122,7 @@ Contributors
 * cclauss (`@cclauss`_)
 * Andy Craze (`@accraze`_)
 * Anthony Sottile (`@asottile`_)
+* Jonathan Sick (`@jonathansick`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -232,4 +233,5 @@ Contributors
 .. _`@cclauss`: https://github.com/cclauss
 .. _`@accraze`: https://github.com/accraze
 .. _`@asottile`: https://github.com/asottile
+.. _`@jonathansick`: https://github.com/jonathansick
 
