@@ -25,6 +25,8 @@ Other Changes:
   file, thanks to `@accraze`_ (#1025)
 * Update CI config files to use ``TOXENV`` environment variable, thanks to
   `@asottile`_ (#1019)
+* Improve user documentation for writing hooks, thanks to `@jonathansick`_
+  (#1057)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -48,6 +50,7 @@ Other Changes:
 .. _`@cclauss`: https://github.com/cclauss
 .. _`@accraze`: https://github.com/accraze
 .. _`@asottile`: https://github.com/asottile
+.. _`@jonathansick`: https://github.com/jonathansick
 
 
 1.6.0 (2017-10-15) Tim Tam
