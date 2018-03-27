@@ -34,12 +34,14 @@ Other Changes:
   * `cookiecutter-flask-skeleton`_ by `@mjhea0`_ (#1052)
   * `cookiecutter-awesome`_ by `@Pawamoy`_ (#1051)
   * `cookiecutter-flask-ask`_ by `@machinekoder`_ (#1056)
+  * `cookiecutter-data-driven-journalism`_ by `@JAStark`_ (#1020)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
 .. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
 .. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
 .. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
+.. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
 .. _`@xuanluong`: https://github.com/xuanluong
@@ -54,6 +56,7 @@ Other Changes:
 .. _`@asottile`: https://github.com/asottile
 .. _`@jonathansick`: https://github.com/jonathansick
 .. _`@machinekoder`: https://github.com/machinekoder
+.. _`@JAStark`: https://github.com/JAStark
 
 
 1.6.0 (2017-10-15) Tim Tam
