@@ -708,6 +708,13 @@ Reproducible Science
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
+Data Driven Journalism
+~~~~~~~~~~~~~~~~~~~~
+
+* `cookiecutter-data-driven-journalism`_: A cookiecutter template to facilitate transparency in data journalism with consistant organisation of data journalism projects and some pre-populated files (inlcuding .gitignore, README, ATHORS)
+
+.. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
+
 Continuous Delivery
 ~~~~~~~~~~~~~~~~~~~
 
