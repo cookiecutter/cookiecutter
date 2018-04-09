@@ -14,13 +14,20 @@ def template_url():
     """
     return 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
+
+@pytest.fixture
+def subfolder():
+    """Returns normalized subfolder path"""
+    return os.path.normpath('tests/fake-repo-tmpl-sf/fake_template')
+
+
 def test_subfolder_added_to_repo_dir(
         mocker, template_url, user_config_data):
     """`determine_repo_dir()` returns cloned repo path
     with subfolder attached.
     """
 
-    mock_clone = mocker.patch(
+    mocker.patch(
         'cookiecutter.repository.clone',
         return_value='tests/fake-repo-tmpl-sf',
         autospec=True
@@ -36,5 +43,4 @@ def test_subfolder_added_to_repo_dir(
     )
 
     assert os.path.isdir(project_dir)
-    assert 'tests/fake-repo-tmpl-sf/fake_template' == project_dir
-
+    assert subfolder() == project_dir

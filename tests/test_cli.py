@@ -447,6 +447,7 @@ def test_debug_file_verbose(cli_runner, debug_file):
     assert context_log in debug_file.readlines(cr=False)
     assert context_log in result.output
 
+
 def test_cli_subfolder(mocker, cli_runner, output_dir_flag, output_dir):
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter'
@@ -474,5 +475,3 @@ def test_cli_subfolder(mocker, cli_runner, output_dir_flag, output_dir):
         password=None,
         subfolder=subfolder
     )
-
-

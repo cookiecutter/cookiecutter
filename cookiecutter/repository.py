@@ -114,7 +114,8 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
 
     for repo_candidate in repository_candidates:
         if subfolder:
-            repo_dir = os.path.join(repo_candidate, subfolder)
+            repo_dir = os.path.normpath(os.path.join(repo_candidate,
+                                                     subfolder))
         else:
             repo_dir = repo_candidate
 
