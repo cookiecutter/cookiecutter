@@ -336,6 +336,7 @@ Python
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
+* `python-module-cookiecutter`_: A template bootstraping almost any Python module, with dependencies handled by pipenv (Pipfile), easy packaging with PBR, and of course pytest, Sphinx, yapft, flake8, pylint, mypy, optimized for both "library" and "Application" use cases, with auto-publish to travis on succesful tag build. "Sematic commit" also supported thanks to PBR in commit messages, allowing automatic tag.
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
 * `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
@@ -378,6 +379,7 @@ Python
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
+.. _`python-module-cookiecutter`: https://github.com/gsemet/python-module-cookiecutter
 .. _`docopt`: http://docopt.org/
 .. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
