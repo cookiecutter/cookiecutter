@@ -256,7 +256,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
-    context = context or {}
+    context = context or OrderedDict([])
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
