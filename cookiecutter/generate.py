@@ -83,7 +83,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
-    context = {}
+    context = OrderedDict([])
 
     try:
         with open(context_file) as file_handle:
