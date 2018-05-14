@@ -284,14 +284,22 @@ maintain and improve Cookiecutter:
 .. _`patreon.com/danielroygreenfeld`: https://www.patreon.com/danielroygreenfeld
 .. _`patreon.com/hackebrot`: https://www.patreon.com/hackebrot
 
-You can also support the maintainers by spreading the word about Two Scoops of
-Django 1.11!
+You can also support this project by taking our Python packaging course:
 
-.. image:: https://cdn.shopify.com/s/files/1/0304/6901/products/tsd-111-alpha_medium.jpg?v=1499531513
-   :name: Two Scoops of Django 1.11 Cover
+.. image:: https://www.pydanny.com/static/packaging-course.jpg
+   :name: Creating and Distributing Python Packages image
    :align: center
-   :alt: Two Scoops of Django
-   :target: http://twoscoopspress.com/products/two-scoops-of-django-1-11
+   :alt: Creating and Distributing Python Packages
+   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages
+
+Also available in Spanish:
+
+.. image:: https://www.pydanny.com/static/packaging-course-es.jpg
+   :name: Creating and Distributing Python Packages ES image
+   :align: center
+   :alt: Creating and Distributing Python Packages ES
+   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages-es
+
 
 Backers
 -------
