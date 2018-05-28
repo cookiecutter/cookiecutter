@@ -114,7 +114,8 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     return context
 
 
-def generate_file(project_dir, infile, context, env):
+def generate_file(project_dir, infile, context, env,
+                  skip_if_file_exists=False):
     """Render filename of infile as name of outfile, handle infile correctly.
 
     Dealing with infile appropriately:
@@ -144,6 +145,10 @@ def generate_file(project_dir, infile, context, env):
     file_name_is_empty = os.path.isdir(outfile)
     if file_name_is_empty:
         logger.debug('The resulting file name is empty: {0}'.format(outfile))
+        return
+
+    if skip_if_file_exists and os.path.exists(outfile):
+        logger.debug('The resulting file already exists: {0}'.format(outfile))
         return
 
     logger.debug('Created file at {0}'.format(outfile))
@@ -245,7 +250,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
 
 
 def generate_files(repo_dir, context=None, output_dir='.',
-                   overwrite_if_exists=False):
+                   overwrite_if_exists=False, skip_if_file_exists=False):
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -361,7 +366,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     shutil.copymode(infile, outfile)
                     continue
                 try:
-                    generate_file(project_dir, infile, context, env)
+                    generate_file(project_dir, infile, context, env,
+                                  skip_if_file_exists)
                 except UndefinedError as err:
                     if delete_project_on_failure:
                         rmtree(project_dir)

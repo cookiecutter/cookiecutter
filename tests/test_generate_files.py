@@ -213,6 +213,81 @@ def test_generate_files_permissions():
     assert tests_script_file_mode == input_script_file_mode
 
 
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists():
+    simple_file = 'inputpizzä/simple.txt'
+    simple_with_new_line_file = 'inputpizzä/simple-with-newline.txt'
+
+    os.makedirs('inputpizzä')
+    with open(simple_file, 'w') as f:
+        f.write('temp')
+
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir='tests/test-generate-files',
+
+        overwrite_if_exists=True,
+        skip_if_file_exists=True
+    )
+
+    assert os.path.isfile(simple_file)
+    assert os.path.isfile(simple_with_new_line_file)
+
+    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    assert simple_text == u'temp'
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_with_skip_if_file_exists():
+    simple_file = 'inputpizzä/simple.txt'
+    simple_with_new_line_file = 'inputpizzä/simple-with-newline.txt'
+
+    os.makedirs('inputpizzä')
+    with open(simple_file, 'w') as f:
+        f.write('temp')
+
+    with pytest.raises(exceptions.OutputDirExistsException):
+        generate.generate_files(
+            context={
+                'cookiecutter': {'food': 'pizzä'}
+            },
+            repo_dir='tests/test-generate-files',
+            skip_if_file_exists=True
+        )
+
+    assert os.path.isfile(simple_file)
+    assert not os.path.exists(simple_with_new_line_file)
+
+    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    assert simple_text == u'temp'
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_with_overwrite_if_exists():
+    simple_file = 'inputpizzä/simple.txt'
+    simple_with_new_line_file = 'inputpizzä/simple-with-newline.txt'
+
+    os.makedirs('inputpizzä')
+    with open(simple_file, 'w') as f:
+        f.write('temp')
+
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir='tests/test-generate-files',
+        overwrite_if_exists=True
+    )
+
+    assert os.path.isfile(simple_file)
+    assert os.path.isfile(simple_with_new_line_file)
+
+    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    assert simple_text == u'I eat pizzä'
+
+
 @pytest.fixture
 def undefined_context():
     return {

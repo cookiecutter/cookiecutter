@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None):
+        config_file=None, default_config=False, password=None,
+        skip_if_file_exists=False):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -91,6 +92,7 @@ def cookiecutter(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
+        skip_if_file_exists=skip_if_file_exists,
         output_dir=output_dir
     )
 
