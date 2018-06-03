@@ -4,28 +4,28 @@
 environment:
   matrix:
     - PYTHON: "C:\\Python27"
-      TOX_ENV: "py27"
+      TOXENV: "py27"
 
     - PYTHON: "C:\\Python27-x64"
-      TOX_ENV: "py27"
+      TOXENV: "py27"
 
     - PYTHON: "C:\\Python34"
-      TOX_ENV: "py34"
+      TOXENV: "py34"
 
     - PYTHON: "C:\\Python34-x64"
-      TOX_ENV: "py34"
+      TOXENV: "py34"
 
     - PYTHON: "C:\\Python35"
-      TOX_ENV: "py35"
+      TOXENV: "py35"
 
     - PYTHON: "C:\\Python35-x64"
-      TOX_ENV: "py35"
+      TOXENV: "py35"
 
     - PYTHON: "C:\\Python36"
-      TOX_ENV: "py36"
+      TOXENV: "py36"
 
     - PYTHON: "C:\\Python36-x64"
-      TOX_ENV: "py36"
+      TOXENV: "py36"
 
 init:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
@@ -41,7 +41,7 @@ install:
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
-  - "%PYTHON%/Scripts/tox -e %TOX_ENV%"
+  - "%PYTHON%/Scripts/tox"
 
 after_test:
   - "%PYTHON%/python setup.py bdist_wheel"
@@ -52,7 +52,7 @@ on_success:
     # and export tox environment variables
     - "%PYTHON%/Scripts/pip install codecov"
     - set OS=WINDOWS
-    - "%PYTHON%/Scripts/codecov -e TOX_ENV OS"
+    - "%PYTHON%/Scripts/codecov -e TOXENV OS"
 
 artifacts:
   - path: dist\*
