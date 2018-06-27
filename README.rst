@@ -716,6 +716,13 @@ Reproducible Science
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
+Ruby on Rails
+~~~~~~~~~~~~~
+
+* `cookiecutter-rails`_: A cookiecutter template for a Ruby on Rails project.
+
+.. _`cookiecutter-rails`: https://github.com/ConradPacesa/cookiecutter-rails
+
 Data Driven Journalism
 ~~~~~~~~~~~~~~~~~~~~~~
 
