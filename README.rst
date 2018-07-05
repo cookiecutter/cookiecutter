@@ -603,6 +603,7 @@ JS
 
 * `cookiecutter-es6-boilerplate`_: A cookiecutter for front end projects in ES6.
 * `cookiecutter-webpack`_: A template for webpack 2 projects with hot reloading, babel es6 modules, and react.
+* `cookiecutter-typescript-webpack`_: A template for webpack 4 typescript projects, awseome-typescript-loader, es6 modules, and react.
 * `cookiecutter-jquery`_: A jQuery plugin project template based on jQuery
   Boilerplate.
 * `cookiecutter-jswidget`_: A project template for creating a generic front-end,
@@ -615,6 +616,7 @@ JS
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
+.. _`cookiecutter-typescript-webpack`: https://github.com/DerekCL/cookiecutter-typescript-webpack
 .. _`cookiecutter-jquery`: https://github.com/audreyr/cookiecutter-jquery
 .. _`cookiecutter-jswidget`: https://github.com/audreyr/cookiecutter-jswidget
 .. _`cookiecutter-component`: https://github.com/audreyr/cookiecutter-component
