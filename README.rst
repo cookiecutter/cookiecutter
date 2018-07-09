@@ -284,14 +284,22 @@ maintain and improve Cookiecutter:
 .. _`patreon.com/danielroygreenfeld`: https://www.patreon.com/danielroygreenfeld
 .. _`patreon.com/hackebrot`: https://www.patreon.com/hackebrot
 
-You can also support the maintainers by spreading the word about Two Scoops of
-Django 1.11!
+You can also support this project by taking our Python packaging course:
 
-.. image:: https://cdn.shopify.com/s/files/1/0304/6901/products/tsd-111-alpha_medium.jpg?v=1499531513
-   :name: Two Scoops of Django 1.11 Cover
+.. image:: https://www.pydanny.com/static/packaging-course.jpg
+   :name: Creating and Distributing Python Packages image
    :align: center
-   :alt: Two Scoops of Django
-   :target: http://twoscoopspress.com/products/two-scoops-of-django-1-11
+   :alt: Creating and Distributing Python Packages
+   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages
+
+Also available in Spanish:
+
+.. image:: https://www.pydanny.com/static/packaging-course-es.jpg
+   :name: Creating and Distributing Python Packages ES image
+   :align: center
+   :alt: Creating and Distributing Python Packages ES
+   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages-es
+
 
 Backers
 -------
@@ -374,6 +382,7 @@ Python
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 .. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
 .. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
+.. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
@@ -706,6 +715,16 @@ Reproducible Science
 * `cookiecutter-reproducible-science`_: A cookiecutter template to start a reproducible and transparent science project including data, models, analysis, and reports (i.e., your scientific paper) with close resemblances to the philosophy of Cookiecutter `Data Science`_.
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
+
+Data Driven Journalism
+~~~~~~~~~~~~~~~~~~~~~~
+
+* `cookiecutter-data-driven-journalism`_: A cookiecutter template to facilitate
+  transparency in data journalism with consistant organisation of data
+  journalism projects and some pre-populated files (including .gitignore,
+  README, AUTHORS)
+
+.. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
 
 Continuous Delivery
 ~~~~~~~~~~~~~~~~~~~
