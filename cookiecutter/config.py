@@ -7,6 +7,7 @@ import copy
 import logging
 import os
 import io
+import collections
 
 import poyo
 
@@ -27,7 +28,7 @@ BUILTIN_ABBREVIATIONS = {
 DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
     'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
-    'default_context': {},
+    'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
 

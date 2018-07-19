@@ -83,7 +83,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
-    context = {}
+    context = OrderedDict([])
 
     try:
         with open(context_file) as file_handle:
@@ -256,7 +256,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
-    context = context or {}
+    context = context or OrderedDict([])
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
