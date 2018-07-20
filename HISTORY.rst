@@ -27,6 +27,8 @@ Other Changes:
   `@asottile`_ (#1019)
 * Improve user documentation for writing hooks, thanks to `@jonathansick`_
   (#1057)
+* Make sure to preserve order of items in generated context, thanks to
+  `@hackebrot`_ (#1074)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
