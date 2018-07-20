@@ -42,7 +42,7 @@ templates), e.g. creating a Python package project from a Python package project
 
 .. image:: https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png
 
-We are proud to be an open source sponsor of `PyCon 2016`_.
+We are proud to have been an open source sponsor of `PyCon 2016`_.
 
 Features
 --------
@@ -51,7 +51,7 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.7, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
+* Works with Python 2.7, 3.4, 3.5, 3.6, 3.7, and PyPy. *(But you don't have to
   know/write Python code to use Cookiecutter.)*
 
 * Project templates can be in any programming language or markup format:
