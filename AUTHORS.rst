@@ -123,6 +123,7 @@ Contributors
 * Andy Craze (`@accraze`_)
 * Anthony Sottile (`@asottile`_)
 * Jonathan Sick (`@jonathansick`_)
+* Hugo (`@hugovk`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -234,4 +235,5 @@ Contributors
 .. _`@accraze`: https://github.com/accraze
 .. _`@asottile`: https://github.com/asottile
 .. _`@jonathansick`: https://github.com/jonathansick
+.. _`@hugovk`: https://github.com/hugovk
 
