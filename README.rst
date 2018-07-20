@@ -5,6 +5,9 @@ Cookiecutter
 .. image:: https://img.shields.io/pypi/v/cookiecutter.svg
         :target: https://pypi.python.org/pypi/cookiecutter
 
+.. image:: https://img.shields.io/pypi/pyversions/cookiecutter.svg
+        :target: https://pypi.python.org/pypi/cookiecutter
+
 .. image:: https://travis-ci.org/audreyr/cookiecutter.svg?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
 
@@ -48,7 +51,7 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.7, 3.3, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
+* Works with Python 2.7, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
   know/write Python code to use Cookiecutter.)*
 
 * Project templates can be in any programming language or markup format:
