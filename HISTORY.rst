@@ -6,6 +6,12 @@ History
 1.7.0 (????-??-??) ???????
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Important Changes:
+
+* Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+
+.. _`@hugovk`: https://github.com/hugovk
+
 Other Changes:
 
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
