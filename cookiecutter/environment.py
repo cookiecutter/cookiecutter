@@ -7,6 +7,26 @@ from jinja2 import Environment, StrictUndefined
 from .exceptions import UnknownExtension
 
 
+class CustomEnvironmentArgsMixin(object):
+    """
+    Provides ability to rewrite default arguments of jonja environment instance
+
+    e.g tags syntax
+    """
+
+    def __init__(self, **kwargs):
+        """
+        Looks for the custom arguments in the cookiecutter's context dict on the _environment key
+        """
+
+        custom_arguments = kwargs.get('context', {}).get('cookiecutter', {}).get('_environment', {})
+        custom_arguments.update(kwargs)
+
+        super(CustomEnvironmentArgsMixin, self).__init__(
+            **custom_arguments
+        )
+
+
 class ExtensionLoaderMixin(object):
     """Mixin providing sane loading of extensions specified in a given context.
 
@@ -53,7 +73,7 @@ class ExtensionLoaderMixin(object):
             return [str(ext) for ext in extensions]
 
 
-class StrictEnvironment(ExtensionLoaderMixin, Environment):
+class StrictEnvironment(CustomEnvironmentArgsMixin, ExtensionLoaderMixin, Environment):
     """Create strict Jinja2 environment.
 
     Jinja2 environment will raise error on undefined variable in template-
