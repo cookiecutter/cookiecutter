@@ -151,6 +151,7 @@ def render_variable(env, raw, cookiecutter_dict):
         being populated with variables.
     :return: The rendered value for the default variable.
     """
+
     if raw is None:
         return None
     elif isinstance(raw, dict):
@@ -225,6 +226,8 @@ def prompt_for_config(context, no_input=False):
 
     # Second pass; handle the dictionaries.
     for key, raw in iteritems(context[u'cookiecutter']):
+        if key.startswith(u'_'):
+            continue
 
         try:
             if isinstance(raw, dict):

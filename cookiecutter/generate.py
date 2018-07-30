@@ -212,9 +212,9 @@ def render_and_create_dir(dirname, context, output_dir, environment,
     return dir_to_create, not output_dir_exists
 
 
-def ensure_dir_is_templated(dirname):
+def ensure_dir_is_templated(dirname, env):
     """Ensure that dirname is a templated directory name."""
-    if '{{' in dirname and '}}' in dirname:
+    if env.variable_start_string in dirname and env.variable_end_string in dirname:
         return True
     else:
         raise NonTemplatedInputDirException
@@ -254,16 +254,17 @@ def generate_files(repo_dir, context=None, output_dir='.',
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
     """
-    template_dir = find_template(repo_dir)
-    logger.debug('Generating project from {}...'.format(template_dir))
-    context = context or OrderedDict([])
-
-    unrendered_dir = os.path.split(template_dir)[1]
-    ensure_dir_is_templated(unrendered_dir)
     env = StrictEnvironment(
         context=context,
         keep_trailing_newline=True,
     )
+
+    template_dir = find_template(repo_dir, env)
+    logger.debug('Generating project from {}...'.format(template_dir))
+    context = context or OrderedDict([])
+
+    unrendered_dir = os.path.split(template_dir)[1]
+    ensure_dir_is_templated(unrendered_dir, env)
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir,

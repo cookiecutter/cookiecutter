@@ -28,15 +28,26 @@ import os
 import io
 import pytest
 
-from cookiecutter import generate
+from cookiecutter import generate, environment
 from cookiecutter import exceptions
 from cookiecutter import utils
 
 
 @pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])
 def test_ensure_dir_is_templated_raises(invalid_dirname):
+    env = environment.StrictEnvironment()
+
     with pytest.raises(exceptions.NonTemplatedInputDirException):
-        generate.ensure_dir_is_templated(invalid_dirname)
+        generate.ensure_dir_is_templated(invalid_dirname, env)
+
+
+@pytest.mark.parametrize('invalid_dirname', ['{{foo}}'])
+def test_ensure_dir_is_templated_raises_by_env(invalid_dirname):
+    env = environment.StrictEnvironment(variable_start_string='[[',
+                                        variable_end_string=']]')
+
+    with pytest.raises(exceptions.NonTemplatedInputDirException):
+        generate.ensure_dir_is_templated(invalid_dirname, env)
 
 
 @pytest.fixture(scope='function')
@@ -44,6 +55,7 @@ def remove_additional_folders(request):
     """
     Remove some special folders which are created by the tests.
     """
+
     def fin_remove_additional_folders():
         if os.path.exists('inputpizzä'):
             utils.rmtree('inputpizzä')
@@ -55,6 +67,7 @@ def remove_additional_folders(request):
             utils.rmtree('tests/custom_output_dir')
         if os.path.exists('inputpermissions'):
             utils.rmtree('inputpermissions')
+
     request.addfinalizer(fin_remove_additional_folders)
 
 
