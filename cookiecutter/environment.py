@@ -16,14 +16,19 @@ class CustomEnvironmentArgsMixin(object):
 
     def __init__(self, **kwargs):
         """
-        Looks for the custom arguments in the cookiecutter's context dict on the _environment key
+        Looks for the custom arguments in the cookiecutter's
+        context dict on the _environment key
         """
 
-        custom_arguments = kwargs.get('context', {}).get('cookiecutter', {}).get('_environment', {})
-        custom_arguments.update(kwargs)
+        try:
+            context = kwargs['context']
+            custom_arguments = context['cookiecutter']['_environment']
+            kwargs.update(custom_arguments or {})
+        except KeyError:
+            pass
 
         super(CustomEnvironmentArgsMixin, self).__init__(
-            **custom_arguments
+            **kwargs
         )
 
 
@@ -73,7 +78,8 @@ class ExtensionLoaderMixin(object):
             return [str(ext) for ext in extensions]
 
 
-class StrictEnvironment(CustomEnvironmentArgsMixin, ExtensionLoaderMixin, Environment):
+class StrictEnvironment(CustomEnvironmentArgsMixin,
+                        ExtensionLoaderMixin, Environment):
     """Create strict Jinja2 environment.
 
     Jinja2 environment will raise error on undefined variable in template-
