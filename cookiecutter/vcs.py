@@ -91,10 +91,15 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     else:
         clone = True
 
+    clone_command = {
+        'git': ['git', 'clone', '--recurse-submodules', repo_url],
+        'hg': ['hg', 'clone', repo_url]
+    }
+
     if clone:
         try:
             subprocess.check_output(
-                [repo_type, 'clone', repo_url],
+                clone_command[repo_type],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
