@@ -214,7 +214,8 @@ def render_and_create_dir(dirname, context, output_dir, environment,
 
 def ensure_dir_is_templated(dirname, env):
     """Ensure that dirname is a templated directory name."""
-    if env.variable_start_string in dirname and env.variable_end_string in dirname:
+    if env.variable_start_string in dirname \
+            and env.variable_end_string in dirname:
         return True
     else:
         raise NonTemplatedInputDirException
