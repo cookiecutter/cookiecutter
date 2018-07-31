@@ -437,6 +437,7 @@ Python-Django
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
 * `cookiecutter-django-crud`_: A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
+* `cookiecutter-django-json-api`_: Django REST Framework template to implement APIs following `JSON API`_ specification
 * `cookiecutter-django-lborgav`_: Another cookiecutter template for Django project with Bootstrap 3 and FontAwesome 4
 * `cookiecutter-django-paas`_: Django template ready to use in PAAS platforms like Heroku, OpenShift, etc..
 * `cookiecutter-django-rest-framework`_: A template for creating reusable Django REST Framework packages.
@@ -463,6 +464,8 @@ Python-Django
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-cms`: https://github.com/palazzem/cookiecutter-django-cms
 .. _`cookiecutter-django-crud`: https://github.com/wildfish/cookiecutter-django-crud
+.. _`cookiecutter-django-json-api`: https://github.com/adfinis-sygroup/cookiecutter-django-json-api
+.. _`JSON API`: http://jsonapi.org/
 .. _`cookiecutter-django-lborgav`: https://github.com/lborgav/cookiecutter-django
 .. _`cookiecutter-django-paas`: https://github.com/pbacterio/cookiecutter-django-paas
 .. _`cookiecutter-django-rest-framework`: https://github.com/jpadilla/cookiecutter-django-rest-framework
