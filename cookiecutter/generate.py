@@ -181,10 +181,16 @@ def generate_file(project_dir, infile, context, env):
 
 
 def render_and_create_dir(dirname, context, output_dir, environment,
-                          overwrite_if_exists=False):
+                          overwrite_if_exists=False, inplace=False):
     """Render name of a directory, create the directory, return its path."""
-    name_tmpl = environment.from_string(dirname)
-    rendered_dirname = name_tmpl.render(**context)
+
+    # we need to overwrite when running inplace
+    overwrite_if_exists = inplace or overwrite_if_exists
+    if inplace:
+        rendered_dirname = u''
+    else:
+        name_tmpl = environment.from_string(dirname)
+        rendered_dirname = name_tmpl.render(**context)
 
     dir_to_create = os.path.normpath(
         os.path.join(output_dir, rendered_dirname)
@@ -245,7 +251,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
 
 
 def generate_files(repo_dir, context=None, output_dir='.',
-                   overwrite_if_exists=False):
+                   overwrite_if_exists=False, inplace=False):
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -270,7 +276,8 @@ def generate_files(repo_dir, context=None, output_dir='.',
             context,
             output_dir,
             env,
-            overwrite_if_exists
+            overwrite_if_exists,
+            inplace
         )
     except UndefinedError as err:
         msg = "Unable to create project directory '{}'".format(unrendered_dir)

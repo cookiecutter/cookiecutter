@@ -149,6 +149,20 @@ def test_generate_files_output_dir():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_inplace():
+    os.mkdir('tests/custom_output_dir')
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir=os.path.abspath('tests/test-generate-files'),
+        output_dir='tests/custom_output_dir',
+        inplace=True
+    )
+    assert os.path.isfile('tests/custom_output_dir/simple.txt')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_return_rendered_project_dir():
     os.mkdir('tests/custom_output_dir')
     project_dir = generate.generate_files(
