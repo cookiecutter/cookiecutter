@@ -455,6 +455,7 @@ Python-Django
 * `cookiecutter-django-foundation`_: Fork of `cookiecutter-django`_ based on `Zurb Foundation`_ 6 front-end framework
 * `cookiecutter-django-ansible`_: Cookiecutter Django Ansible is a framework for jumpstarting an ansible project for provisioning a server that is ready for your *cookiecutter-django* application.
 * `wemake-django-template`_: Bleeding edge Django template focused on code quality and security.
+* `cookiecutter-django-dokku`_: A template for jumpstarting Django projects and deploying with Dokku.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -483,6 +484,7 @@ Python-Django
 .. _`Zurb Foundation`: http://foundation.zurb.com
 .. _`cookiecutter-django-ansible`: https://github.com/HackSoftware/cookiecutter-django-ansible
 .. _`wemake-django-template`: https://github.com/wemake-services/wemake-django-template
+.. _`cookiecutter-django-dokku`: https://github.com/mashrikt/cookiecutter-django-dokku
 
 Python-Pyramid
 ^^^^^^^^^^^^^^
