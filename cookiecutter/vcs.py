@@ -98,12 +98,6 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
-            if checkout is not None:
-                subprocess.check_output(
-                    [repo_type, 'checkout', checkout],
-                    cwd=repo_dir,
-                    stderr=subprocess.STDOUT,
-                )
         except subprocess.CalledProcessError as clone_error:
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
@@ -111,6 +105,17 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                     'The repository {} could not be found, '
                     'have you made a typo?'.format(repo_url)
                 )
+            raise
+
+    if checkout is not None:
+        try:
+            subprocess.check_output(
+                [repo_type, 'checkout', checkout],
+                cwd=repo_dir,
+                stderr=subprocess.STDOUT,
+            )
+        except subprocess.CalledProcessError as branch_error:
+            output = branch_error.output.decode('utf-8')
             if any(error in output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
                     'The {} branch of repository {} could not found, '

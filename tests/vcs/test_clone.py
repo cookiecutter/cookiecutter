@@ -187,9 +187,10 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
-        side_effect=[subprocess.CalledProcessError(
-            -1, 'cmd', output=error_message
-        )]
+        side_effect=[
+            None, 
+            subprocess.CalledProcessError(-1, 'cmd', output=error_message)
+        ]
     )
 
     repository_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin'
@@ -212,9 +213,13 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
-        side_effect=[subprocess.CalledProcessError(
-            -1, 'cmd', output='Something went wrong'.encode('utf-8')
-        )]
+        side_effect=[
+            subprocess.CalledProcessError(
+                -1, 
+                'cmd', 
+                output='Something went wrong'.encode('utf-8')
+            ),
+        ]
     )
 
     with pytest.raises(subprocess.CalledProcessError):
@@ -223,3 +228,50 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
             clone_to_dir=clone_dir,
             no_input=True
         )
+
+def test_clone_unknown_subprocess_error_on_checkout(mocker, clone_dir):
+    """In `clone()`, unknown subprocess errors should be raised."""
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=[
+            None,
+            subprocess.CalledProcessError(-1, 'cmd', output='Something went wrong'.encode('utf-8'))
+        ]
+    )
+
+    with pytest.raises(subprocess.CalledProcessError):
+        vcs.clone(
+            'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+            clone_to_dir=clone_dir,
+            checkout='foobar',
+            no_input=True
+        )
+
+
+def test_existing_repo_different_branch(mocker, tmpdir):
+    """In clone(), if we are not cloning the repo, but need a different branch,
+    ensure we call checkout"""
+    check_output = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+    )
+    mocker.patch(
+        'cookiecutter.vcs.prompt_and_delete',
+        autospec=True,
+        return_value=False
+    )
+
+    clone_dir = tmpdir.mkdir('clone')
+
+    # Create a repo dir to make clone think it exists already
+    clone_dir.mkdir('cookiecutter-pytest-plugin')
+
+    vcs.clone(
+        'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+        clone_to_dir=str(clone_dir),
+        checkout='foobar',
+        no_input=True
+    )
+
+    assert check_output.call_count == 1
