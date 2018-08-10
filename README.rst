@@ -712,8 +712,10 @@ Reproducible Science
 ~~~~~~~~~~~~~~~~~~~~
 
 * `cookiecutter-reproducible-science`_: A cookiecutter template to start a reproducible and transparent science project including data, models, analysis, and reports (i.e., your scientific paper) with close resemblances to the philosophy of Cookiecutter `Data Science`_.
+* `cookiecutter-computational-biology`_: A boilerplate for reproducible computational biology projects that mirrors the ideology of Dr. William Stafford Noble's `A Quick Guide to Organizing Computational Biology Projects <http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424/>`__.
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
+.. _`cookiecutter-computational-biology`: https://github.com/sdhutchins/cookiecutter-computational-biology
 
 Data Driven Journalism
 ~~~~~~~~~~~~~~~~~~~~~~
