@@ -55,7 +55,8 @@ def list_installed_templates(default_config, passed_config_file):
     cookiecutter_folder = config.get('cookiecutters_dir')
     if not os.path.exists(cookiecutter_folder):
         click.echo(
-            'Error: Cannot list installed templates. Folder does not exist: {}'.format(cookiecutter_folder)
+            'Error: Cannot list installed templates. Folder does not exist: '
+            '{}'.format(cookiecutter_folder)
         )
         sys.exit(-1)
 
