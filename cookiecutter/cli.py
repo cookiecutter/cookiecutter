@@ -11,6 +11,7 @@ import click
 
 from cookiecutter import __version__
 from cookiecutter.log import configure_logger
+from cookiecutter.config import get_user_config
 from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
     OutputDirExistsException,
@@ -44,6 +45,29 @@ def validate_extra_context(ctx, param, value):
     # Convert tuple -- e.g.: (u'program_name=foobar', u'startsecs=66')
     # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
     return collections.OrderedDict(s.split('=', 1) for s in value) or None
+
+
+def list_installed_templates(default_config, passed_config_file):
+    """
+    Lists installed (locally cloned) templates. Use cookiecutter installed
+    """
+    config = get_user_config(passed_config_file, default_config)
+    cookiecutter_folder = config.get('cookiecutters_dir')
+    if not os.path.exists(cookiecutter_folder):
+        click.echo(
+            'Error: Cannot list installed templates. Folder does not exist: '
+            '{}'.format(cookiecutter_folder)
+        )
+        sys.exit(-1)
+
+    template_names = [
+        folder for folder in os.listdir(cookiecutter_folder)
+        if os.path.exists(
+            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json'))
+    ]
+    click.echo('{} installed templates: '.format(len(template_names)))
+    for name in template_names:
+        click.echo(' * {}'.format(name))
 
 
 @click.command(context_settings=dict(help_option_names=[u'-h', u'--help']))
@@ -88,10 +112,14 @@ def validate_extra_context(ctx, param, value):
     u'--debug-file', type=click.Path(), default=None,
     help=u'File to be used as a stream for DEBUG logging',
 )
+@click.option(
+    u'-l', u'--list', is_flag=True,
+    help=u'List currently installed templates.'
+)
 def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file):
+        default_config, debug_file, list):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -102,6 +130,10 @@ def main(
     # called 'help', use a qualified path to the directory.
     if template == u'help':
         click.echo(click.get_current_context().get_help())
+        sys.exit(0)
+
+    if list:
+        list_installed_templates(default_config, config_file)
         sys.exit(0)
 
     configure_logger(
