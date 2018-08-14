@@ -49,7 +49,7 @@ def validate_extra_context(ctx, param, value):
 
 def list_installed_templates(default_config, passed_config_file):
     """
-    Lists installed (locally cloned) templates. Use cookiecutter installed
+    Lists installed (locally cloned) templates. Use cookiecutter --list
     """
     config = get_user_config(passed_config_file, default_config)
     cookiecutter_folder = config.get('cookiecutters_dir')
