@@ -445,15 +445,25 @@ def test_debug_file_verbose(cli_runner, debug_file):
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
-def test_debug_list_installed_templates(cli_runner, debug_file):
+def test_debug_list_installed_templates(
+        cli_runner, debug_file, user_config_path):
 
-    result = cli_runner('--list', str(debug_file),)
+    fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
+    os.makedirs(os.path.dirname(user_config_path))
+    with open(user_config_path, 'w') as config_file:
+        config_file.write('cookiecutters_dir: "%s"' % fake_template_dir)
+    open(os.path.join('fake-project', 'cookiecutter.json'), 'w').write('{}')
 
-    assert "installed templates:" in result.output
+    result = cli_runner(
+        '--list',
+        '--config-file',
+        user_config_path,
+        str(debug_file),)
+
+    assert "1 installed templates:" in result.output
     assert result.exit_code == 0
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_debug_list_installed_templates_failure(
         cli_runner, debug_file, user_config_path):
 
