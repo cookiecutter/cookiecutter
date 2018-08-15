@@ -138,7 +138,7 @@ def run_hook(hook_name, project_dir, context):
     """
     script = find_hook(hook_name)
     if script is None:
-        logger.debug('No hooks found')
+        logger.debug('No {} hook found'.format(hook_name))
         return
     logger.debug('Running hook {}'.format(hook_name))
     run_script_with_context(script, project_dir, context)

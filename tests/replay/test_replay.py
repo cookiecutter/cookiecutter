@@ -11,10 +11,11 @@ import pytest
 from cookiecutter import replay, main, exceptions
 
 
-def test_get_replay_file_name():
+@pytest.mark.parametrize("replay_file_name", ['bar', 'bar.json'])
+def test_get_replay_file_name(replay_file_name):
     """Make sure that replay.get_file_name generates a valid json file path."""
     exp_replay_file_name = os.path.join('foo', 'bar.json')
-    assert replay.get_file_name('foo', 'bar') == exp_replay_file_name
+    assert replay.get_file_name('foo', replay_file_name) == exp_replay_file_name
 
 
 @pytest.fixture(params=[

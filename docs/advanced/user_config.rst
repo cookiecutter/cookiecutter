@@ -49,5 +49,5 @@ Possible settings are:
   the text `{0}`, using standard Python string formatting.  With the above
   aliases, you could use the `cookiecutter-pypackage` template simply by saying
   `cookiecutter pp`, or `cookiecutter gh:audreyr/cookiecutter-pypackage`.
-  The `gh` (github) and `bb` (bitbucket) abbreviations shown above are actually
-  built in, and can be used without defining them yourself.
+  The `gh` (github), `bb` (bitbucket), and `gl` (gitlab) abbreviations shown
+  above are actually built in, and can be used without defining them yourself.

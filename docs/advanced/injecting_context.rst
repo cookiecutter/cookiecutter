@@ -8,11 +8,20 @@ You can specify an `extra_context` dictionary that will override values from `co
     cookiecutter('cookiecutter-pypackage/',
                  extra_context={'project_name': 'TheGreatest'})
 
+You will also need to add these keys to the `cookiecutter.json` or `.cookiecutterrc`.
+
 Example: Injecting a Timestamp
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is a sample Python script that dynamically injects a timestamp value
-as a project is generated::
+If you have ``cookiecutter.json`` that has the following keys::
+
+    {
+        "timestamp": "{{ cookiecutter.timestamp }}"
+    }
+
+
+This Python script will dynamically inject a timestamp value as the project is
+generated::
 
     from cookiecutter.main import cookiecutter
 

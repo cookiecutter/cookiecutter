@@ -34,7 +34,7 @@ def test_convert_to_str(mocker, raw_var, rendered_var):
     result = prompt.render_variable(env, raw_var, context)
     assert result == rendered_var
 
-    # Make sure that non None non str variables are conerted beforehand
+    # Make sure that non None non str variables are converted beforehand
     if raw_var is not None:
         if not isinstance(raw_var, basestring):
             raw_var = str(raw_var)

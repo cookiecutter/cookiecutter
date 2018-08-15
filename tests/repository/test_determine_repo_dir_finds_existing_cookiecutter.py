@@ -25,7 +25,7 @@ def cloned_cookiecutter_path(user_config_data, template):
 
 def test_should_find_existing_cookiecutter(
         template, user_config_data, cloned_cookiecutter_path):
-    project_dir = repository.determine_repo_dir(
+    project_dir, cleanup = repository.determine_repo_dir(
         template,
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
@@ -34,3 +34,4 @@ def test_should_find_existing_cookiecutter(
     )
 
     assert cloned_cookiecutter_path == project_dir
+    assert not cleanup

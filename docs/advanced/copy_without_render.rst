@@ -5,7 +5,7 @@ Copy without Render
 
 *New in Cookiecutter 1.1*
 
-To avoid rendering directories and files of a cookiecutter mould, the `_copy_without_render` key can be used in the `cookiecutter.json`. The value of this key accepts a list of Unix shell-style wildcards::
+To avoid rendering directories and files of a cookiecutter, the `_copy_without_render` key can be used in the `cookiecutter.json`. The value of this key accepts a list of Unix shell-style wildcards::
 
     {
         "project_slug": "sample",

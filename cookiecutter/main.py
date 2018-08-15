@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """
-cookiecutter.main
------------------
-
 Main entry point for the `cookiecutter` command.
 
 The code in this module is also a good example of how to use Cookiecutter as a
@@ -20,6 +17,7 @@ from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
 from .replay import dump, load
 from .repository import determine_repo_dir
+from .utils import rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -27,9 +25,9 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=None, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False):
+        config_file=None, default_config=False, password=None):
     """
-    API equivalent to using Cookiecutter at the command line.
+    Run Cookiecutter just as if using it from the command line.
 
     :param template: A directory containing a project template directory,
         or a URL to a git repository.
@@ -44,6 +42,7 @@ def cookiecutter(
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
+    :param password: The password to use when extracting the repository.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -57,12 +56,13 @@ def cookiecutter(
         default_config=default_config,
     )
 
-    repo_dir = determine_repo_dir(
+    repo_dir, cleanup = determine_repo_dir(
         template=template,
         abbreviations=config_dict['abbreviations'],
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,
+        password=password
     )
 
     template_name = os.path.basename(os.path.abspath(repo_dir))
@@ -87,12 +87,21 @@ def cookiecutter(
         # except when 'no-input' flag is set
         context['cookiecutter'] = prompt_for_config(context, no_input)
 
+        # include template dir or url in the context dict
+        context['cookiecutter']['_template'] = template
+
         dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
-    return generate_files(
+    result = generate_files(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
         output_dir=output_dir
     )
+
+    # Cleanup (if required)
+    if cleanup:
+        rmtree(repo_dir)
+
+    return result

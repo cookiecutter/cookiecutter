@@ -102,11 +102,13 @@ Step 3: Observe How It Was Generated
 Let's take a look at cookiecutter-pypackage together. Open https://github.com/audreyr/cookiecutter-pypackage in a new browser window.
 
 {{ cookiecutter.project_slug }}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Find the directory called `{{ cookiecutter.project_slug }}`. Click on it. Observe
 the files inside of it. You should see that this directory and its contents
 corresponds to the project that you just generated.
+
+This happens in `find.py`, where the `find_template()` method looks for the first jinja-like directory name that starts with `cookiecutter`. 
 
 AUTHORS.rst
 ~~~~~~~~~~~

@@ -1,0 +1,5 @@
+pytest
+pytest-cov
+pytest-mock
+pytest-catchlog
+freezegun

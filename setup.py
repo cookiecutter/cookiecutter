@@ -7,7 +7,7 @@ import sys
 
 from setuptools import setup
 
-version = "1.5.1"
+version = "1.6.0"
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -29,7 +29,8 @@ requirements = [
     'click>=5.0',
     'whichcraft>=0.4.0',
     'poyo>=0.1.0',
-    'jinja2-time>=0.1.0'
+    'jinja2-time>=0.1.0',
+    'requests>=2.18.0',
 ]
 
 if sys.argv[-1] == 'readme':
@@ -57,6 +58,7 @@ setup(
         ]
     },
     include_package_data=True,
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     install_requires=requirements,
     license='BSD',
     zip_safe=False,
@@ -70,7 +72,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',

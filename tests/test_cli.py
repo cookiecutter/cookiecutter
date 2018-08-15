@@ -97,6 +97,33 @@ def test_cli_replay(mocker, cli_runner):
         config_file=None,
         default_config=False,
         extra_context=None,
+        password=None
+    )
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_replay_file(mocker, cli_runner):
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
+
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(
+        template_path, '--replay-file', '~/custom-replay-file', '-v'
+    )
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay='~/custom-replay-file',
+        overwrite_if_exists=False,
+        output_dir='.',
+        config_file=None,
+        default_config=False,
+        extra_context=None,
+        password=None
     )
 
 
@@ -129,6 +156,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         config_file=None,
         default_config=False,
         extra_context=None,
+        password=None,
     )
 
 
@@ -160,6 +188,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         config_file=None,
         default_config=False,
         extra_context=None,
+        password=None,
     )
 
 
@@ -219,6 +248,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         config_file=None,
         default_config=False,
         extra_context=None,
+        password=None,
     )
 
 
@@ -257,6 +287,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         config_file=user_config_path,
         default_config=False,
         extra_context=None,
+        password=None,
     )
 
 
@@ -283,7 +314,8 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         output_dir='.',
         config_file=user_config_path,
         default_config=True,
-        extra_context=None
+        extra_context=None,
+        password=None,
     )
 
 
@@ -306,6 +338,7 @@ def test_default_user_config(mocker, cli_runner):
         config_file=None,
         default_config=True,
         extra_context=None,
+        password=None,
     )
 
 
@@ -326,13 +359,17 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     error = "Unable to create file '{{cookiecutter.foobar}}'"
     assert error in result.output
 
-    message = "Error message: 'dict object' has no attribute 'foobar'"
+    message = (
+        "Error message: 'collections.OrderedDict object' "
+        "has no attribute 'foobar'"
+    )
     assert message in result.output
 
     context = {
         'cookiecutter': {
             'github_username': 'hackebrot',
-            'project_slug': 'testproject'
+            'project_slug': 'testproject',
+            '_template': template_path
         }
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)

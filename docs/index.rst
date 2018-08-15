@@ -20,6 +20,8 @@ Basics
    usage
    first_steps
    tutorials
+   tutorial1
+   tutorial2
    advanced/index
    troubleshooting
 

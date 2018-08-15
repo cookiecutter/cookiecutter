@@ -106,6 +106,24 @@ Contributors
 * Nathan Cheung (`@cheungnj`_)
 * Abdó Roig-Maranges (`@aroig`_)
 * Steve Piercy (`@stevepiercy`_)
+* Corey (`@coreysnyder04`_)
+* Dmitry Evstratov (`@devstrat`_)
+* Eyal Levin (`@eyalev`_)
+* mathagician (`@mathagician`_)
+* Guillaume Gelin (`@ramnes`_)
+* @delirious-lettuce (`@delirious-lettuce`_)
+* Gasper Vozel (`@karantan`_)
+* Joshua Carp (`@jmcarp`_)
+* @meahow (`@meahow`_)
+* Andrea Grandi (`@andreagrandi`_)
+* Issa Jubril (`@jubrilissa`_)
+* Nytiennzo Madooray (`@Nythiennzo`_)
+* Erik Bachorski (`@dornheimer`_)
+* cclauss (`@cclauss`_)
+* Andy Craze (`@accraze`_)
+* Anthony Sottile (`@asottile`_)
+* Jonathan Sick (`@jonathansick`_)
+* Hugo (`@hugovk`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -200,3 +218,22 @@ Contributors
 .. _`@cheungnj`: https://github.com/cheungnj
 .. _`@aroig`: https://github.com/aroig
 .. _`@stevepiercy`: https://github.com/stevepiercy
+.. _`@coreysnyder04`: https://github.com/coreysnyder04
+.. _`@devstrat`: https://github.com/devstrat
+.. _`@eyalev`: https://github.com/eyalev
+.. _`@mathagician`: https://github.com/mathagician
+.. _`@ramnes`: https://github.com/ramnes
+.. _`@delirious-lettuce`: https://github.com/delirious-lettuce
+.. _`@karantan`: https://github.com/karantan
+.. _`@jmcarp`: https://github.com/jmcarp
+.. _`@meahow`: https://github.com/meahow
+.. _`@andreagrandi`: https://github.com/andreagrandi
+.. _`@jubrilissa`: https://github.com/jubrilissa
+.. _`@Nythiennzo`: https://github.com/Nythiennzo
+.. _`@dornheimer`: https://github.com/dornheimer
+.. _`@cclauss`: https://github.com/cclauss
+.. _`@accraze`: https://github.com/accraze
+.. _`@asottile`: https://github.com/asottile
+.. _`@jonathansick`: https://github.com/jonathansick
+.. _`@hugovk`: https://github.com/hugovk
+
