@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.cli
------------------
-
-Main `cookiecutter` CLI.
-"""
+"""Main `cookiecutter` CLI."""
 
 import os
 import sys
 import json
+import collections
 
 import click
 
@@ -22,13 +18,14 @@ from cookiecutter.exceptions import (
     FailedHookException,
     UndefinedVariableInTemplate,
     UnknownExtension,
+    InvalidZipRepository,
     RepositoryNotFound,
     RepositoryCloneFailed
 )
 
 
 def version_msg():
-    """Returns the Cookiecutter version, location and Python powering it."""
+    """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version[:3]
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     message = u'Cookiecutter %(version)s from {} (Python {})'
@@ -36,6 +33,7 @@ def version_msg():
 
 
 def validate_extra_context(ctx, param, value):
+    """Validate extra context."""
     for s in value:
         if '=' not in s:
             raise click.BadParameter(
@@ -45,7 +43,7 @@ def validate_extra_context(ctx, param, value):
 
     # Convert tuple -- e.g.: (u'program_name=foobar', u'startsecs=66')
     # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
-    return dict(s.split('=', 1) for s in value) or None
+    return collections.OrderedDict(s.split('=', 1) for s in value) or None
 
 
 @click.command(context_settings=dict(help_option_names=[u'-h', u'--help']))
@@ -104,7 +102,6 @@ def main(
     volunteers. If you would like to help out or fund the project, please get
     in touch at https://github.com/audreyr/cookiecutter.
     """
-
     # If you _need_ to support a local template in a directory
     # called 'help', use a qualified path to the directory.
     if template == u'help':
@@ -128,11 +125,13 @@ def main(
             output_dir=output_dir,
             config_file=config_file,
             default_config=default_config,
+            password=os.environ.get('COOKIECUTTER_REPO_PASSWORD')
         )
     except (OutputDirExistsException,
             InvalidModeException,
             FailedHookException,
             UnknownExtension,
+            InvalidZipRepository,
             RepositoryNotFound,
             RepositoryCloneFailed) as e:
         click.echo(e)

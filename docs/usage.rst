@@ -16,7 +16,7 @@ Modify the variables defined in `cookiecutter.json`.
 
 Open up the skeleton project. If you need to change it around a bit, do so.
 
-You probably also want to create a repo, name it differently, and push it as 
+You probably also want to create a repo, name it differently, and push it as
 your own new Cookiecutter project template, for handy future use.
 
 Generate your project
@@ -42,8 +42,9 @@ To create a project from the cookiecutter-pypackage.git repo template::
 
     $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
-Cookiecutter knows abbreviations for Github (``gh``) and Bitbucket (``bb``)
-projects, but you can also give it the full URL to any repository::
+Cookiecutter knows abbreviations for Github (``gh``), Bitbucket (``bb``), and
+GitLab (``gl``) projects, but you can also give it the full URL to any
+repository::
 
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
     $ cookiecutter git+ssh://git@github.com/audreyr/cookiecutter-pypackage.git
@@ -68,6 +69,42 @@ type of repo that you want to use prepending `hg+` or `git+` to repo url::
 
     $ cookiecutter hg+https://example.com/repo
 
+Works with Zip files
+--------------------
+
+You can also distribute cookiecutter templates as Zip files. To use a Zip file
+template, point cookiecutter at a Zip file on your local machine::
+
+    $ cookiecutter /path/to/template.zip
+
+Or, if the Zip file is online::
+
+    $ cookiecutter https://example.com/path/to/template.zip
+
+If the template has already been downloaded, or a template with the same name
+has already been downloaded, you will be prompted to delete the existing
+template before proceeding.
+
+The Zip file contents should be the same as a git/hg repository for a template -
+that is, the zipfile should unpack into a top level directory that contains the
+name of the template. The name of the zipfile doesn't have to match the name of
+the template - for example, you can label a zipfile with a version number, but
+omit the version number from the directory inside the Zip file.
+
+If you want to see an example Zipfile, find any Cookiecutter repository on Github
+and download that repository as a zip file - Github repository downloads are in
+a valid format for Cookiecutter.
+
+Password-protected Zip files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your repository Zip file is password protected, Cookiecutter will prompt you
+for that password whenever the template is used.
+
+Alternatively, if you want to use a password-protected Zip file in an
+automated environment, you can export the `COOKIECUTTER_REPO_PASSWORD`
+environment variable; the value of that environment variable will be used
+whenever a password is required.
 
 Keeping your cookiecutters organized
 ------------------------------------
@@ -79,7 +116,7 @@ As of the Cookiecutter 0.7.0 release:
 
 * Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
   directory (or Windows equivalent). The location is configurable: see
-  :doc:`advanced_usage` for details.
+  :doc:`advanced/user_config` for details.
 
 Pre-0.7.0, this is how it worked:
 

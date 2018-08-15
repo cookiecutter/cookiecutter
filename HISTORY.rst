@@ -3,29 +3,193 @@
 History
 -------
 
-1.6.0 (????-??-??) ???????
+1.7.0 (????-??-??) ???????
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Important Changes:
+
+* Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+
+.. _`@hugovk`: https://github.com/hugovk
+
+Other Changes:
+
+* Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
+  `@andreagrandi`_ (#1009)
+* Update docstrings in ``cookiecutter/main.py``, ``cookiecutter/__init__.py``,
+  and ``cookiecutter/log.py`` to follow the PEP 257 style guide, thanks to
+  `@meahow`_ (#998, #999, #1000)
+* Update docstrings in ``cookiecutter/utils.py`` to follow the PEP 257 style
+  guide, thanks to `@dornheimer`_ (#1026)
+* Fix grammar in *Choice Variables* documentation, thanks to `@jubrilissa`_
+  (#1011)
+* Update installation docs with links to the Windows Subsystem and GNU
+  utilities, thanks to `@Nythiennzo`_ for the PR and `@BruceEckel`_ for the
+  review (#1016)
+* Upgrade flake8 to version 3.5.0, thanks to `@cclauss`_ (#1038)
+* Update tutorial with explanation for how cookiecutter finds the template
+  file, thanks to `@accraze`_ (#1025)
+* Update CI config files to use ``TOXENV`` environment variable, thanks to
+  `@asottile`_ (#1019)
+* Improve user documentation for writing hooks, thanks to `@jonathansick`_
+  (#1057)
+* Make sure to preserve the order of items in the generated cookiecutter
+  context, thanks to `@hackebrot`_ (#1074)
+* Add more cookiecutter templates to the mix:
+
+  * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
+  * `cookiecutter-docker-science`_ by `@takahi-i`_ (#1040)
+  * `cookiecutter-flask-skeleton`_ by `@mjhea0`_ (#1052)
+  * `cookiecutter-awesome`_ by `@Pawamoy`_ (#1051)
+  * `cookiecutter-flask-ask`_ by `@machinekoder`_ (#1056)
+  * `cookiecutter-data-driven-journalism`_ by `@JAStark`_ (#1020)
+
+.. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
+.. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
+.. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
+.. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
+.. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
+.. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
+.. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
+
+.. _`@xuanluong`: https://github.com/xuanluong
+.. _`@andreagrandi`: https://github.com/andreagrandi
+.. _`@jubrilissa`: https://github.com/jubrilissa
+.. _`@Nythiennzo`: https://github.com/Nythiennzo
+.. _`@takahi-i`: https://github.com/takahi-i
+.. _`@dornheimer`: https://github.com/dornheimer
+.. _`@Pawamoy`: https://github.com/Pawamoy
+.. _`@cclauss`: https://github.com/cclauss
+.. _`@accraze`: https://github.com/accraze
+.. _`@asottile`: https://github.com/asottile
+.. _`@jonathansick`: https://github.com/jonathansick
+.. _`@machinekoder`: https://github.com/machinekoder
+.. _`@JAStark`: https://github.com/JAStark
+
+
+1.6.0 (2017-10-15) Tim Tam
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 New Features:
 
-* ???
+* Include template path or template URL in cookiecutter context under
+  ``_template``, thanks to `@aroig`_ (#774)
+* Add a URL abbreviation for GitLab template projects, thanks to `@hackebrot`_
+  (#963)
+* Add option to use templates from Zip files or Zip URLs, thanks to
+  `@freakboy3742`_ (#961)
 
 Bug Fixes:
 
-* ???
+* Fix an issue with missing default template abbreviations for when a user
+  defined custom abbreviations, thanks to `@noirbizarre`_ for the issue report
+  and `@hackebrot`_ for the fix (#966, #967)
+* Preserve existing output directory on project generation failure, thanks to
+  `@ionelmc`_ for the report and `@michaeljoseph`_ for the fix (#629, #964)
+* Fix Python 3.x error handling for ``git`` operation failures, thanks to `@jmcarp`_
+  (#905)
 
 Other Changes:
 
+* Fix broken link to *Copy without Render* docs, thanks to `@coreysnyder04`_
+  (#912)
+* Improve debug log message for when a hook is not found, thanks to
+  `@raphigaziano`_ (#160)
+* Fix module summary and ``expand_abbreviations()`` doc string as per pep257,
+  thanks to `@terryjbates`_ (#772)
+* Update doc strings in ``cookiecutter/cli.py`` and ``cookiecutter/config.py``
+  according to pep257, thanks to `@terryjbates`_ (#922, #931)
+* Update doc string for ``is_copy_only_path()`` according to pep257, thanks to
+  `@mathagician`_ and `@terryjbates`_ (#935, #949)
+* Update doc strings in ``cookiecutter/extensions.py`` according to pep257,
+  thanks to `@meahow`_ (#996)
+* Fix miscellaneous issues with building docs, thanks to `@stevepiercy`_ (#889)
+* Re-implement Makefile and update several make rules, thanks to `@hackebrot`_
+  (#930)
+* Fix broken link to pytest docs, thanks to `@eyalev`_ for the issue report and
+  `@devstrat`_ for the fix (#939, #940)
+* Add ``test_requirements.txt`` file for easier testing outside of tox, thanks
+  to `@ramnes`_ (#945)
+* Improve wording in *copy without render* docs, thanks to `@eyalev`_ (#938)
+* Fix a number of typos, thanks to `@delirious-lettuce`_ (#968)
+* Improved *extra context* docs by noting that extra context keys must be
+  present in the template's ``cookiecutter.json``, thanks to `@karantan`_ for
+  the report and fix (#863, #864)
 * Added more cookiecutter templates to the mix:
 
   * `cookiecutter-kata-cpputest`_ by `@13coders`_ (#901)
   * `cookiecutter-kata-gtest`_ by `@13coders`_ (#901)
+  * `cookiecutter-pyramid-talk-python-starter`_ by `@mikeckennedy`_ (#915)
+  * `cookiecutter-android`_ by `@alexfu`_ (#890)
+  * `cookiecutter-lux-python`_ by `@alexkey`_ (#895)
+  * `cookiecutter-git`_ by `@tuxredux`_ (#921)
+  * `cookiecutter-ansible-role-ci`_ by `@ferrarimarco`_ (#903)
+  * `cookiecutter_dotfile`_ by `@bdcaf`_ (#925)
+  * `painless-continuous-delivery`_ by `@painless-software`_ (#927)
+  * `cookiecutter-molecule`_ by `@retr0h`_ (#954)
+  * `sublime-snippet-package-template`_ by `@agenoria`_ (#956)
+  * `cookiecutter-conda-python`_ by `@conda`_ (#969)
+  * `cookiecutter-flask-minimal`_ by `@candidtim`_ (#977)
+  * `cookiecutter-pypackage-rust-cross-platform-publish`_ by `@mckaymatt`_ (#957)
+  * `cookie-cookie`_ by `@tuxredux`_ (#951)
+  * `cookiecutter-telegram-bot`_ by `@Ars2014`_ (#984)
+  * `python-project-template`_ by `@Kwpolska`_ (#986)
+  * `wemake-django-template`_ by `@wemake-services`_ (#990)
+  * `cookiecutter-raml`_ by `@genzj`_ (#994)
+  * `cookiecutter-anyblok-project`_ by `@AnyBlok`_ (#988)
+  * `cookiecutter-devenv`_ by `@greenguavalabs`_ (#991)
 
-.. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
-.. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
+.. _`cookiecutter-kata-gtest`: https://github.com/13coders/cookiecutter-kata-gtest
+.. _`cookiecutter-kata-cpputest`: https://github.com/13coders/cookiecutter-kata-cpputest
+.. _`cookiecutter-pyramid-talk-python-starter`: https://github.com/mikeckennedy/cookiecutter-pyramid-talk-python-starter
+.. _`cookiecutter-android`: https://github.com/alexfu/cookiecutter-android
+.. _`cookiecutter-lux-python`: https://github.com/alexkey/cookiecutter-lux-python
+.. _`cookiecutter-git`: https://github.com/webevllc/cookiecutter-git
+.. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
+.. _`cookiecutter-ansible-role-ci`: https://github.com/ferrarimarco/cookiecutter-ansible-role
+.. _`painless-continuous-delivery`: https://github.com/painless-software/painless-continuous-delivery
+.. _`cookiecutter-molecule`: https://github.com/retr0h/cookiecutter-molecule
+.. _`sublime-snippet-package-template`: https://github.com/agenoria/sublime-snippet-package-template
+.. _`cookiecutter-conda-python`: https://github.com/conda/cookiecutter-conda-python
+.. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
+.. _`cookiecutter-pypackage-rust-cross-platform-publish`: https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish
+.. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
+.. _`cookiecutter-telegram-bot`: https://github.com/Ars2014/cookiecutter-telegram-bot
+.. _`python-project-template`: https://github.com/Kwpolska/python-project-template
+.. _`wemake-django-template`: https://github.com/wemake-services/wemake-django-template
+.. _`cookiecutter-raml`: https://github.com/genzj/cookiecutter-raml
+.. _`cookiecutter-anyblok-project`: https://github.com/AnyBlok/cookiecutter-anyblok-project
+.. _`cookiecutter-devenv`: https://bitbucket.org/greenguavalabs/cookiecutter-devenv.git
 
 .. _`@13coders`: https://github.com/13coders
-
+.. _`@coreysnyder04`: https://github.com/coreysnyder04
+.. _`@mikeckennedy`: https://github.com/mikeckennedy
+.. _`@alexfu`: https://github.com/alexfu
+.. _`@alexkey`: https://github.com/alexkey
+.. _`@tuxredux`: https://github.com/tuxredux
+.. _`@ferrarimarco`: https://github.com/ferrarimarco
+.. _`@eyalev`: https://github.com/eyalev
+.. _`@devstrat`: https://github.com/devstrat
+.. _`@mathagician`: https://github.com/mathagician
+.. _`@bdcaf`: https://github.com/bdcaf
+.. _`@ramnes`: https://github.com/ramnes
+.. _`@painless-software`: https://github.com/painless-software
+.. _`@retr0h`: https://github.com/retr0h
+.. _`@agenoria`: https://github.com/agenoria
+.. _`@noirbizarre`: https://github.com/noirbizarre
+.. _`@delirious-lettuce`: https://github.com/delirious-lettuce
+.. _`@conda`: https://github.com/conda
+.. _`@candidtim`: https://github.com/candidtim
+.. _`@mckaymatt`: https://github.com/mckaymatt
+.. _`@karantan`: https://github.com/karantan
+.. _`@jmcarp`: https://github.com/jmcarp
+.. _`@Ars2014`: https://github.com/Ars2014
+.. _`@Kwpolska`: https://github.com/Kwpolska
+.. _`@wemake-services`: https://github.com/wemake-services
+.. _`@genzj`: https://github.com/genzj
+.. _`@AnyBlok`: https://github.com/AnyBlok
+.. _`@greenguavalabs`: https://bitbucket.org/greenguavalabs
+.. _`@meahow`: https://github.com/meahow
 
 1.5.1 (2017-02-04) Alfajor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

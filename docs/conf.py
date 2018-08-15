@@ -62,7 +62,7 @@ import cookiecutter
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
-              'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.pngmath',
+              'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.imgmath',
               'sphinx.ext.ifconfig', 'sphinx.ext.viewcode', 'docs.ccext']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -127,6 +127,8 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 #keep_warnings = False
 
+# Suppress nonlocal image warnings
+suppress_warnings = ['image.nonlocal_uri']
 
 # -- Options for HTML output ---------------------------------------------------
 

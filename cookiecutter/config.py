@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.config
--------------------
-
-Global configuration handling
-"""
+"""Global configuration handling."""
 
 from __future__ import unicode_literals
 import copy
 import logging
 import os
 import io
+import collections
 
 import poyo
 
@@ -25,13 +21,14 @@ USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
+    'gl': 'https://gitlab.com/{0}.git',
     'bb': 'https://bitbucket.org/{0}',
 }
 
 DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
     'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
-    'default_context': {},
+    'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
 
@@ -43,11 +40,27 @@ def _expand_path(path):
     return path
 
 
-def get_config(config_path):
-    """
-    Retrieve the config from the specified path, returning it as a config dict.
-    """
+def merge_configs(default, overwrite):
+    """Recursively update a dict with the key/value pair of another.
 
+    Dict values that are dictionaries themselves will be updated, whilst
+    preserving existing keys.
+    """
+    new_config = copy.deepcopy(default)
+
+    for k, v in overwrite.items():
+        # Make sure to preserve existing items in
+        # nested dicts, for example `abbreviations`
+        if isinstance(v, dict):
+            new_config[k] = merge_configs(default[k], v)
+        else:
+            new_config[k] = v
+
+    return new_config
+
+
+def get_config(config_path):
+    """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException
 
@@ -61,8 +74,7 @@ def get_config(config_path):
                 ''.format(config_path, e)
             )
 
-    config_dict = copy.copy(DEFAULT_CONFIG)
-    config_dict.update(yaml_dict)
+    config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
     raw_replay_dir = config_dict['replay_dir']
     config_dict['replay_dir'] = _expand_path(raw_replay_dir)
@@ -76,7 +88,7 @@ def get_config(config_path):
 def get_user_config(config_file=None, default_config=False):
     """Return the user config as a dict.
 
-    If ``default_config`` is True, ignore ``config_file and return default
+    If ``default_config`` is True, ignore ``config_file`` and return default
     values for the config parameters.
 
     If a path to a ``config_file`` is given, that is different from the default

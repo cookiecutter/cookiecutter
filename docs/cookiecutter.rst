@@ -36,6 +36,14 @@ cookiecutter.exceptions module
     :undoc-members:
     :show-inheritance:
 
+cookiecutter.extensions module
+------------------------------
+
+.. automodule:: cookiecutter.extensions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 cookiecutter.find module
 ------------------------
 
@@ -56,6 +64,14 @@ cookiecutter.hooks module
 -------------------------
 
 .. automodule:: cookiecutter.hooks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+cookiecutter.log module
+-----------------------
+
+.. automodule:: cookiecutter.log
     :members:
     :undoc-members:
     :show-inheritance:
