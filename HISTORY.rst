@@ -9,8 +9,12 @@ History
 Important Changes:
 
 * Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+* New ``--replay-file`` option to specify a custom replay file, thanks to
+  `@Cadair`_  and `@browniebroke`_ (#906)
 
 .. _`@hugovk`: https://github.com/hugovk
+.. _`@Cadair`: https://github.com/Cadair
+.. _`@browniebroke`: https://github.com/browniebroke
 
 Other Changes:
 
