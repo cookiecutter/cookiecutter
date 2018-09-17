@@ -357,6 +357,7 @@ Python
 * `cookiecutter-tryton`_: A template to create base and external Tryton modules.
 * `cookiecutter-tryton-fulfilio`_: A template for creating tryton modules.
 * `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring `pytest`_ plugins that help you to write better programs.
+* `cookiecutter-tox-plugin`_: Minimal Cookiecutter template for authoring `tox`_ plugins to change or extend the behavior of your test automation.
 * `cookiecutter-tapioca`_: A Template for building `tapioca-wrapper`_ based web API wrappers (clients).
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
@@ -402,6 +403,8 @@ Python
 .. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`pytest`: http://pytest.org/latest/
+.. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+.. _`tox`: https://tox.readthedocs.io/
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 .. _`tapioca-wrapper`: https://github.com/vintasoftware/tapioca-wrapper
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
