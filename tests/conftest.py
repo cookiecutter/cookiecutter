@@ -92,7 +92,6 @@ def clean_system(request):
       `~/.cookiecutter_replay.backup/`
 
     """
-
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
     user_config_path = os.path.expanduser('~/.cookiecutterrc')
     user_config_path_backup = os.path.expanduser(
@@ -151,13 +150,15 @@ def clean_system(request):
 
 @pytest.fixture(scope='session')
 def user_dir(tmpdir_factory):
-    """Fixture that simulates the user's home directory"""
+    """Fixture that simulates the user's home directory."""
     return tmpdir_factory.mktemp('user_dir')
 
 
 @pytest.fixture(scope='session')
 def user_config_data(user_dir):
-    """Fixture that creates 2 Cookiecutter user config dirs in the user's home
+    """Create 2 Cookiecutter user config dirs in the user's home directory.
+
+    Fixture that creates 2 Cookiecutter user config dirs in the user's home
     directory:
     * `cookiecutters_dir`
     * `cookiecutter_replay`
@@ -175,7 +176,9 @@ def user_config_data(user_dir):
 
 @pytest.fixture(scope='session')
 def user_config_file(user_dir, user_config_data):
-    """Fixture that creates a config file called `config` in the user's home
+    """Create a config file called `config`.
+
+    Fixture that creates a config file called `config` in the user's home
     directory, with YAML from `user_config_data`.
 
     :param user_dir: Simulated user's home directory
