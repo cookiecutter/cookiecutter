@@ -57,3 +57,23 @@ def test_cookiecutter_input_extra_context(monkeypatch):
         extra_context={'repo_name': 'fake-project-input-extra'}
     )
     assert os.path.isdir('fake-project-input-extra')
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+def test_cookiecutter_input_extra_context_bad_value(monkeypatch):
+    """
+    `Call cookiecutter()` with `no_input=False` and `extra_context`
+    """
+    monkeypatch.setattr(
+        'cookiecutter.prompt.read_user_variable',
+        lambda var, default: default
+    )
+    main.cookiecutter(
+        'tests/fake-repo-pre',
+        no_input=False,
+        extra_context={
+            'repo_name': 'fake-project-input-extra',
+            'bad_value': 'fake-value-on-bad-key',
+        }
+    )
+    assert os.path.isdir('fake-project-input-extra')
