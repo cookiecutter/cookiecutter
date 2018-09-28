@@ -376,6 +376,8 @@ Python
 * `python-project-template`_: A template for Python projects with sophisticated release automation.
 * `cookiecutter-anyblok-project`_: A template for Anyblok based projects.
 * `cookiecutter-python-cli`_: A cookiecutter template for creating a Python CLI application using click
+* `tiangolo/full-stack`_: Full stack, modern web application generator. Using Flask, PostgreSQL DB, Docker, Swagger, automatic HTTPS and more.
+* `tiangolo/full-stack-flask-couchdb`_: Full stack, modern web application generator. Using Flask, CouchDB as database, Docker, Swagger, automatic HTTPS and more.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -429,6 +431,8 @@ Python
 .. _`python-project-template`: https://github.com/Kwpolska/python-project-template
 .. _`cookiecutter-anyblok-project`: https://github.com/AnyBlok/cookiecutter-anyblok-project
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
+.. _`tiangolo/full-stack`: https://github.com/tiangolo/full-stack
+.. _`tiangolo/full-stack-flask-couchdb`: https://github.com/tiangolo/full-stack-flask-couchdb
 
 Python-Django
 ^^^^^^^^^^^^^
