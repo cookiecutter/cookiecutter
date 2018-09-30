@@ -21,7 +21,7 @@ def test_should_raise_error_without_template_arg(capfd):
         subprocess.check_call(['python', '-m', 'cookiecutter.cli'])
 
     _, err = capfd.readouterr()
-    exp_message = 'Error: Missing argument "template".'
+    exp_message = 'Error: Missing argument "TEMPLATE".'
     assert exp_message in err
 
 
