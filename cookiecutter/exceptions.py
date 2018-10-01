@@ -1,103 +1,88 @@
 # -*- coding: utf-8 -*-
 
 """
+All exceptions used in the Cookiecutter code base are defined here.
+
 cookiecutter.exceptions
 -----------------------
-
-All exceptions used in the Cookiecutter code base are defined here.
 """
 
 
 class CookiecutterException(Exception):
-    """
-    Base exception class. All Cookiecutter-specific exceptions should subclass
-    this class.
-    """
+    """Base exception class. All Cookiecutter-specific exceptions should subclass this class."""
 
 
 class NonTemplatedInputDirException(CookiecutterException):
-    """
-    Raised when a project's input dir is not templated.
+    """Raised when a project's input dir is not templated.
+
     The name of the input directory should always contain a string that is
     rendered to something else, so that input_dir != output_dir.
     """
 
 
 class UnknownTemplateDirException(CookiecutterException):
-    """
+    """Unable to determine template directory.
+
     Raised when Cookiecutter cannot determine which directory is the project
     template, e.g. more than one dir appears to be a template dir.
     """
 
 
 class MissingProjectDir(CookiecutterException):
-    """
-    Raised during cleanup when remove_repo() can't find a generated project
-    directory inside of a repo.
-    """
+    """Raised during cleanup when remove_repo() can't find a generated project directory inside of a repo."""
 
 
 class ConfigDoesNotExistException(CookiecutterException):
-    """
+    """No config file at given path.
+
     Raised when get_config() is passed a path to a config file, but no file
     is found at that path.
     """
 
 
 class InvalidConfiguration(CookiecutterException):
-    """
-    Raised if the global configuration file is not valid YAML or is
-    badly constructed.
-    """
+    """Raised if the global configuration file is not valid YAML or is badly constructed."""
 
 
 class UnknownRepoType(CookiecutterException):
-    """
-    Raised if a repo's type cannot be determined.
-    """
+    """Raised if a repo's type cannot be determined."""
 
 
 class VCSNotInstalled(CookiecutterException):
-    """
-    Raised if the version control system (git or hg) is not installed.
-    """
+    """Raised if the version control system (git or hg) is not installed."""
 
 
 class ContextDecodingException(CookiecutterException):
-    """
-    Raised when a project's JSON context file can not be decoded.
-    """
+    """Raised when a project's JSON context file can not be decoded."""
 
 
 class OutputDirExistsException(CookiecutterException):
-    """
-    Raised when the output directory of the project exists already.
-    """
+    """Raised when the output directory of the project exists already."""
 
 
 class InvalidModeException(CookiecutterException):
-    """
+    """Raised when invalid mode(s).
+
     Raised when cookiecutter is called with both `no_input==True` and
     `replay==True` at the same time.
     """
 
 
 class FailedHookException(CookiecutterException):
-    """
-    Raised when a hook script fails
-    """
+    """Raised when a hook script fails."""
 
 
 class UndefinedVariableInTemplate(CookiecutterException):
-    """Raised when a template uses a variable which is not defined in the
-    context.
-    """
+    """Raised when a template uses variable which is not defined in the context."""
+
     def __init__(self, message, error, context):
+        """Initialize instance with message, error and context."""
         self.message = message
         self.error = error
         self.context = context
 
     def __str__(self):
+        """String Representation of Object."""
         return (
             "{self.message}. "
             "Error message: {self.error.message}. "
@@ -111,6 +96,8 @@ class UnknownExtension(CookiecutterException):
 
 class RepositoryNotFound(CookiecutterException):
     """
+    cookiecutter repository not exist.
+
     Raised when the specified cookiecutter repository doesn't exist.
     """
 
@@ -121,6 +108,8 @@ class RepositoryCloneFailed(CookiecutterException):
 
 class InvalidZipRepository(CookiecutterException):
     """
+    Invalid Zip Archive for specified cookiecutter repository.
+
     Raised when the specified cookiecutter repository isn't a valid
     Zip archive.
     """
