@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
+Functions for prompting the user for project info.
+
 cookiecutter.prompt
 ---------------------
-
-Functions for prompting the user for project info.
 """
 
 from collections import OrderedDict
@@ -22,8 +22,7 @@ from .environment import StrictEnvironment
 
 
 def read_user_variable(var_name, default_value):
-    """Prompt the user for the given variable and return the entered value
-    or the given default.
+    """Prompt the user for the given variable and return the entered value or the given default.
 
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
@@ -50,7 +49,7 @@ def read_user_yes_no(question, default_value):
 
 
 def read_repo_password(question):
-    """Prompt the user to enter a password
+    """Prompt the user to enter a password.
 
     :param str question: Question to the user
     """
@@ -94,6 +93,7 @@ def read_user_choice(var_name, options):
 
 
 def process_json(user_value):
+    """Return user dictionary if valid argument."""
     try:
         user_dict = json.loads(
             user_value,
@@ -137,8 +137,9 @@ def read_user_dict(var_name, default_value):
 
 
 def render_variable(env, raw, cookiecutter_dict):
-    """Inside the prompting taken from the cookiecutter.json file, this renders
-    the next variable. For example, if a project_name is "Peanut Butter
+    """Inside the prompting taken from the cookiecutter.json file, this renders the next variable.
+
+    For example, if a project_name is "Peanut Butter
     Cookie", the repo_name could be be rendered with:
 
         `{{ cookiecutter.project_name.replace(" ", "_") }}`.
@@ -174,8 +175,9 @@ def render_variable(env, raw, cookiecutter_dict):
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
-    """Prompt the user which option to choose from the given. Each of the
-    possible choices is rendered beforehand.
+    """Prompt the user which option to choose from the given.
+
+    Each of the possible choices is rendered beforehand.
     """
     rendered_options = [
         render_variable(env, raw, cookiecutter_dict) for raw in options
@@ -187,9 +189,9 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
 
 def prompt_for_config(context, no_input=False):
-    """
-    Prompts the user to enter new config, using context as a source for the
-    field names and sample values.
+    """Prompt the user to enter new config.
+
+     using context as a source for the field names and sample values.
 
     :param no_input: Prompt the user at command line for manual configuration?
     """
