@@ -757,7 +757,7 @@ Other
 * `cookiecutter-awesome`_: Cookiecutter to create an `awesome`_ list.
 * `cookiecutter_dotfile`_: Template for a folder of dotfiles managed by stow.
 * `cookiecutter-raml`_: Template for RAML v1.0 API documents.
-* `cookiecutter-tm1`_: Cookiecutter Template for deploying TM1 instances.
+* `cookiecutter-tm1`_: Template to create new TM1 instances.
 
 .. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
 .. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
