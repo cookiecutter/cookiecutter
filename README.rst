@@ -639,10 +639,12 @@ LaTeX/XeTeX
 * `pandoc-talk`_: A cookiecutter template for giving talks with pandoc and XeTeX.
 * `cookiecutter-latex-article`_: A LaTeX template geared towards academic use.
 * `cookiecutter-beamer`_: A template for a LaTeX Beamer presentation.
+* `cookiecutter-docker-latex`_: A minimal template for compiling a LaTeX file using Docker.
 
 .. _`pandoc-talk`: https://github.com/larsyencken/pandoc-talk
 .. _`cookiecutter-latex-article`: https://github.com/Kreger51/cookiecutter-latex-article
 .. _`cookiecutter-beamer`: https://github.com/luismartingil/cookiecutter-beamer
+.. _`cookiecutter-docker-latex`: https://github.com/jun-harashima/cookiecutter-docker-latex
 
 
 PHP
