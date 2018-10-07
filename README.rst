@@ -761,7 +761,7 @@ Other
 .. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
 .. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
 .. _`cookiecutter-raml`: https://github.com/genzj/cookiecutter-raml
-.. _`cookiecutter-tm1`: https://github.com/scrambldchannel/cookiecutter
+.. _`cookiecutter-tm1`: https://github.com/scrambldchannel/cookiecutter-tm1
 
 .. _`awesome`: https://github.com/sindresorhus/awesome
 
