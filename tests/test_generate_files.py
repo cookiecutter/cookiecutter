@@ -81,7 +81,8 @@ def test_generate_files():
     simple_file = 'inputpizzä/simple.txt'
     assert os.path.isfile(simple_file)
 
-    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    with io.open(simple_file, 'rt', encoding='utf-8') as f:
+        simple_text = f.read()
     assert simple_text == u'I eat pizzä'
 
 

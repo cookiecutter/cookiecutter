@@ -18,7 +18,7 @@ def cloned_cookiecutter_path(user_config_data, template):
     cloned_template_path = os.path.join(cookiecutters_dir, template)
     os.mkdir(cloned_template_path)
 
-    io.open(os.path.join(cloned_template_path, 'cookiecutter.json'), 'w')
+    io.open(os.path.join(cloned_template_path, 'cookiecutter.json'), 'w').close()
 
     return cloned_template_path
 

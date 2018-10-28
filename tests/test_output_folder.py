@@ -41,11 +41,13 @@ def test_output_folder():
     something = """Hi!
 My name is Audrey Greenfeld.
 It is 2014."""
-    something2 = open('output_folder/something.txt').read()
+    with open('output_folder/something.txt') as f:
+        something2 = f.read()
     assert something == something2
 
     in_folder = "The color is green and the letter is D."
-    in_folder2 = open('output_folder/folder/in_folder.txt').read()
+    with open('output_folder/folder/in_folder.txt') as f:
+        in_folder2 = f.read()
     assert in_folder == in_folder2
 
     assert os.path.isdir('output_folder/im_a.dir')

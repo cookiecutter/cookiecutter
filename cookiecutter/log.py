@@ -31,6 +31,8 @@ def configure_logger(stream_level='DEBUG', debug_file=None):
 
     # Remove all attached handlers, in case there was
     # a logger with using the name 'cookiecutter'
+    for log in logger.handlers:
+        log.close()
     del logger.handlers[:]
 
     # Create a file handler if a log file is provided
