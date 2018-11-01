@@ -338,6 +338,7 @@ Python
   template.
 * `cookiecutter-pipproject`_: Minimal package for pip-installable projects
 * `cookiecutter-pypackage-minimal`_: A minimal Python package template.
+* `cookiecutter-amanita`_: A minimal Python package template with amanita flavor.
 * `cookiecutter-lux-python`_: A boilerplate Python project that aims to create Python package with a convenient Makefile-facility and additional helpers.
 * `cookiecutter-flask`_ : A Flask template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-flask-2`_: A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
@@ -380,6 +381,7 @@ Python
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
 .. _`cookiecutter-pypackage-minimal`: https://github.com/kragniz/cookiecutter-pypackage-minimal
+.. _`cookiecutter-amanita`: https://github.com/constrict0r/cookiecutter-amanita
 .. _`cookiecutter-lux-python`: https://github.com/alexkey/cookiecutter-lux-python
 .. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
