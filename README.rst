@@ -436,6 +436,7 @@ Python-Django
 * `cookiecutter-django`_: A bleeding edge Django project template with Bootstrap 4, customizable users app, starter templates,  working user registration, celery setup, and much more.
 * `cookiecutter-django-rest`_: For creating REST apis for mobile and web applications.
 * `cookiecutter-simple-django`_: A cookiecutter template for creating reusable Django projects quickly.
+* `django-docker`_: A minimalist but comprehensive project template
 * `django-docker-bootstrap`_: Django development/production environment with docker, integrated with Postgres, NodeJS(React), Nginx, uWSGI.
 * `cookiecutter-djangopackage`_: A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * `cookiecutter-django-cms`_: A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
@@ -462,6 +463,7 @@ Python-Django
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
 .. _`cookiecutter-simple-django`: https://github.com/marcofucci/cookiecutter-simple-django
+.. _`django-docker`: https://github.com/evozon/django-docker
 .. _`django-docker-bootstrap`: https://github.com/legios89/django-docker-bootstrap
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`cookiecutter-django-cms`: https://github.com/palazzem/cookiecutter-django-cms
