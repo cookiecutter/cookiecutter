@@ -24,8 +24,18 @@ def remove_test_dir(request):
     request.addfinalizer(fin_remove_test_dir)
 
 
+@pytest.fixture(params=[True, False])
+def overwrite_if_exists(request):
+    return request.param
+
+
 @pytest.mark.usefixtures('clean_system', 'remove_test_dir')
-def test_generate_copy_without_render_extensions():
+def test_generate_copy_without_render_extensions(overwrite_if_exists):
+
+    if overwrite_if_exists:
+        os.makedirs('test_copy_without_render/'
+                    '{{cookiecutter.repo_name}}-not-render/'
+                    'nested')
     generate.generate_files(
         context={
             'cookiecutter': {
@@ -37,7 +47,8 @@ def test_generate_copy_without_render_extensions():
                     '*.txt',
                 ]}
         },
-        repo_dir='tests/test-generate-copy-without-render'
+        repo_dir='tests/test-generate-copy-without-render',
+        overwrite_if_exists=overwrite_if_exists,
     )
 
     dir_contents = os.listdir('test_copy_without_render')
@@ -63,6 +74,18 @@ def test_generate_copy_without_render_extensions():
 
     with open('test_copy_without_render/'
               '{{cookiecutter.repo_name}}-not-rendered/'
+              'README.rst') as f:
+        assert '{{cookiecutter.render_test}}' in f.read()
+
+    with open('test_copy_without_render/'
+              '{{cookiecutter.repo_name}}-not-rendered/'
+              'nested/'
+              'README.rst') as f:
+        assert '{{cookiecutter.render_test}}' in f.read()
+
+    with open('test_copy_without_render/'
+              '{{cookiecutter.repo_name}}-not-rendered/'
+              'nested_linked/'
               'README.rst') as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 

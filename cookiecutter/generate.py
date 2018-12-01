@@ -25,7 +25,7 @@ from .exceptions import (
 )
 from .find import find_template
 from .hooks import run_hook
-from .utils import make_sure_path_exists, work_in, rmtree
+from .utils import make_sure_path_exists, work_in, rmtree, copytree
 
 logger = logging.getLogger(__name__)
 
@@ -325,7 +325,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     'Copying dir {} to {} without rendering'
                     ''.format(indir, outdir)
                 )
-                shutil.copytree(indir, outdir)
+                copytree(indir, outdir, exist_ok=overwrite_if_exists)
 
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively

@@ -110,3 +110,41 @@ def prompt_and_delete(path, no_input=False):
             return False
 
         sys.exit()
+
+
+# Modified from python 3.7.1
+def copytree(src, dst, symlinks=False, exist_ok=False):
+    names = os.listdir(src)
+
+    os.makedirs(dst, exist_ok=exist_ok)
+    errors = []
+    for name in names:
+        srcname = os.path.join(src, name)
+        dstname = os.path.join(dst, name)
+        try:
+            if os.path.islink(srcname):
+                linkto = os.readlink(srcname)
+                if os.path.isdir(srcname):
+                    copytree(srcname, dstname, symlinks)
+                else:
+                    shutil.copy2(srcname, dstname)
+            elif os.path.isdir(srcname):
+                copytree(srcname, dstname, symlinks)
+            else:
+                # Will raise a SpecialFileError for unsupported file types
+                shutil.copy2(srcname, dstname)
+        # catch the Error from the recursive copytree so that we can
+        # continue with other files
+        except shutil.Error as err:  # pragma: nocover
+            errors.extend(err.args[0])
+        except OSError as why:  # pragma: nocover
+            errors.append((srcname, dstname, str(why)))
+    try:
+        shutil.copystat(src, dst)
+    except OSError as why:  # pragma: nocover
+        # Copying file access times may fail on Windows
+        if getattr(why, 'winerror', None) is None:
+            errors.append((src, dst, str(why)))
+    if errors:  # pragma: nocover
+        raise shutil.Error(errors)
+    return dst
