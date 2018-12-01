@@ -1,2 +1,7 @@
 watchdog==0.8.3
 sphinx-rtd-theme==0.1.9
+click==7.0
+poyo==0.4.2
+binaryornot
+future==0.17.1
+whichcraft==0.5.2
