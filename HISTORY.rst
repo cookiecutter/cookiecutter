@@ -6,6 +6,12 @@ History
 1.7.0 (????-??-??) ???????
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Important Changes:
+
+* Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+
+.. _`@hugovk`: https://github.com/hugovk
+
 Other Changes:
 
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
@@ -20,13 +26,33 @@ Other Changes:
 * Update installation docs with links to the Windows Subsystem and GNU
   utilities, thanks to `@Nythiennzo`_ for the PR and `@BruceEckel`_ for the
   review (#1016)
+* Upgrade flake8 to version 3.5.0, thanks to `@cclauss`_ (#1038)
+* Update tutorial with explanation for how cookiecutter finds the template
+  file, thanks to `@accraze`_ (#1025)
+* Update CI config files to use ``TOXENV`` environment variable, thanks to
+  `@asottile`_ (#1019)
+* Improve user documentation for writing hooks, thanks to `@jonathansick`_
+  (#1057)
+* Make sure to preserve the order of items in the generated cookiecutter
+  context, thanks to `@hackebrot`_ (#1074)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
   * `cookiecutter-docker-science`_ by `@takahi-i`_ (#1040)
+  * `cookiecutter-flask-skeleton`_ by `@mjhea0`_ (#1052)
+  * `cookiecutter-awesome`_ by `@Pawamoy`_ (#1051)
+  * `cookiecutter-flask-ask`_ by `@machinekoder`_ (#1056)
+  * `cookiecutter-data-driven-journalism`_ by `@JAStark`_ (#1020)
+  * `cookiecutter-tox-plugin`_ by `@obestwalter`_ (#1103)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
+.. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
+.. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
+.. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
+.. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
+.. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
 .. _`@xuanluong`: https://github.com/xuanluong
@@ -35,6 +61,14 @@ Other Changes:
 .. _`@Nythiennzo`: https://github.com/Nythiennzo
 .. _`@takahi-i`: https://github.com/takahi-i
 .. _`@dornheimer`: https://github.com/dornheimer
+.. _`@Pawamoy`: https://github.com/Pawamoy
+.. _`@cclauss`: https://github.com/cclauss
+.. _`@accraze`: https://github.com/accraze
+.. _`@asottile`: https://github.com/asottile
+.. _`@jonathansick`: https://github.com/jonathansick
+.. _`@machinekoder`: https://github.com/machinekoder
+.. _`@JAStark`: https://github.com/JAStark
+.. _`@obestwalter`: https://github.com/obestwalter
 
 
 1.6.0 (2017-10-15) Tim Tam

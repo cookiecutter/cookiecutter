@@ -5,6 +5,9 @@ Cookiecutter
 .. image:: https://img.shields.io/pypi/v/cookiecutter.svg
         :target: https://pypi.python.org/pypi/cookiecutter
 
+.. image:: https://img.shields.io/pypi/pyversions/cookiecutter.svg
+        :target: https://pypi.python.org/pypi/cookiecutter
+
 .. image:: https://travis-ci.org/audreyr/cookiecutter.svg?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
 
@@ -48,7 +51,7 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.7, 3.3, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
+* Works with Python 2.7, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
   know/write Python code to use Cookiecutter.)*
 
 * Project templates can be in any programming language or markup format:
@@ -284,14 +287,22 @@ maintain and improve Cookiecutter:
 .. _`patreon.com/danielroygreenfeld`: https://www.patreon.com/danielroygreenfeld
 .. _`patreon.com/hackebrot`: https://www.patreon.com/hackebrot
 
-You can also support the maintainers by spreading the word about Two Scoops of
-Django 1.11!
+You can also support this project by taking our Python packaging course:
 
-.. image:: https://cdn.shopify.com/s/files/1/0304/6901/products/tsd-111-alpha_medium.jpg?v=1499531513
-   :name: Two Scoops of Django 1.11 Cover
+.. image:: https://www.pydanny.com/static/packaging-course.jpg
+   :name: Creating and Distributing Python Packages image
    :align: center
-   :alt: Two Scoops of Django
-   :target: http://twoscoopspress.com/products/two-scoops-of-django-1-11
+   :alt: Creating and Distributing Python Packages
+   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages
+
+Also available in Spanish:
+
+.. image:: https://www.pydanny.com/static/packaging-course-es.jpg
+   :name: Creating and Distributing Python Packages ES image
+   :align: center
+   :alt: Creating and Distributing Python Packages ES
+   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages-es
+
 
 Backers
 -------
@@ -332,6 +343,7 @@ Python
 * `cookiecutter-flask-2`_: A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
 * `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * `cookiecutter-flask-minimal`_ : Minimal but production-ready Flask project template with no other dependencies except for Flask itself.
+* `cookiecutter-flask-skeleton`_ : Flask starter project.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
@@ -345,6 +357,7 @@ Python
 * `cookiecutter-tryton`_: A template to create base and external Tryton modules.
 * `cookiecutter-tryton-fulfilio`_: A template for creating tryton modules.
 * `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring `pytest`_ plugins that help you to write better programs.
+* `cookiecutter-tox-plugin`_: Minimal Cookiecutter template for authoring `tox`_ plugins to change or extend the behavior of your test automation.
 * `cookiecutter-tapioca`_: A Template for building `tapioca-wrapper`_ based web API wrappers (clients).
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
@@ -372,6 +385,8 @@ Python
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 .. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
+.. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
+.. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
@@ -388,6 +403,8 @@ Python
 .. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`pytest`: http://pytest.org/latest/
+.. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+.. _`tox`: https://tox.readthedocs.io/
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 .. _`tapioca-wrapper`: https://github.com/vintasoftware/tapioca-wrapper
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
@@ -490,13 +507,12 @@ Cookiecutter (meta)
 
 Meta-templates for generating Cookiecutter project templates.
 
-* `cookiecutter-template`_: A template to help in creating cookiecutter templates.
-* `cookie-cookie`_: A project template for... project templates...
 * `cookiecutter-cookiecutter`_: The cookiecutter that generated itself.
+* `cookiecutter-template`_: Cookiecutter template for creating a... cookiecutter template...
 
+.. _`cookiecutter-cookiecutter`: https://github.com/pawamoy/cookiecutter-cookiecutter
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
-.. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
-.. _`cookiecutter-cookiecutter`: https://github.com/Pawamoy/cookiecutter-cookiecutter
+
 
 Ansible
 ~~~~~~~
@@ -514,9 +530,9 @@ Ansible
 Git
 ~~~
 
-* `cookiecutter-git`_: A git repository project template!
+* `cookiecutter-git`_: Git repo project template :clipboard:
 
-.. _`cookiecutter-git`: https://github.com/tuxredux/cookiecutter-git
+.. _`cookiecutter-git`: https://github.com/NathanUrwin/cookiecutter-git
 
 
 C
@@ -705,6 +721,16 @@ Reproducible Science
 
 .. _`cookiecutter-reproducible-science`: https://github.com/mkrapp/cookiecutter-reproducible-science
 
+Data Driven Journalism
+~~~~~~~~~~~~~~~~~~~~~~
+
+* `cookiecutter-data-driven-journalism`_: A cookiecutter template to facilitate
+  transparency in data journalism with consistant organisation of data
+  journalism projects and some pre-populated files (including .gitignore,
+  README, AUTHORS)
+
+.. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
+
 Continuous Delivery
 ~~~~~~~~~~~~~~~~~~~
 
@@ -731,12 +757,15 @@ Tornado
 Other
 ~~~~~
 
+* `cookiecutter-awesome`_: Cookiecutter to create an `awesome`_ list.
 * `cookiecutter_dotfile`_: Template for a folder of dotfiles managed by stow.
 * `cookiecutter-raml`_: Template for RAML v1.0 API documents.
 
-
+.. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
 .. _`cookiecutter_dotfile`: https://github.com/bdcaf/cookiecutter_dotfile
 .. _`cookiecutter-raml`: https://github.com/genzj/cookiecutter-raml
+
+.. _`awesome`: https://github.com/sindresorhus/awesome
 
 
 Similar projects

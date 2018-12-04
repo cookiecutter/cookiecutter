@@ -153,8 +153,8 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.7, 3.3, 3.4, 3.5, 3.6, and PyPy on
-   Appveyor and Travis CI.
+3. The pull request should work for Python 2.7, 3.4, 3.5, 3.6, and PyPy on
+   AppVeyor and Travis CI.
 4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and 
    https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
@@ -225,17 +225,6 @@ is::
 
 Will run py.test with the python2.7, python3.4 and pypy interpreters, for
 example.
-
-Troubleshooting for Contributors
---------------------------------
-
-Python 3.3 tests fail locally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Try upgrading Tox to the latest version. I noticed that they were failing
-locally with Tox 1.5 but succeeding when I upgraded to Tox 1.7.1.
-
-.. _`pytest usage docs`: https://pytest.org/latest/usage.html#specifying-tests-selecting-tests
 
 
 

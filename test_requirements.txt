@@ -1,5 +1,5 @@
-pytest<3.3.0
+pytest
 pytest-cov
-pytest-mock==1.1
+pytest-mock
 pytest-catchlog
 freezegun
