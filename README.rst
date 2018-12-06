@@ -366,6 +366,7 @@ Python
 * `morepath-cookiecutter`_: Cookiecutter template for Morepath, the web microframework with superpowers.
 * `Springerle/hovercraft-slides`_: A template for new `Hovercraft!`_ presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
 * `cookiecutter-snakemake-analysis-pipeline`_: One way to easily set up `Snakemake`_-based analysis pipelines.
+* `cookiecutter-pyspark`_: Template for packaging jobs and external dependencies for `PySpark`_ framework
 * `cookiecutter-py3tkinter`_: Template for Python 3 Tkinter application gui.
 * `cookiecutter-pyqt5`_: A prebuilt PyQt5 GUI template with a fully featured Pytest test suite and Travis CI integration all in an optimal Python package.
 * `cookiecutter-pyqt4`_: A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
@@ -418,6 +419,8 @@ Python
 .. _`Hovercraft!`: https://hovercraft.readthedocs.io/
 .. _`cookiecutter-snakemake-analysis-pipeline`: https://github.com/xguse/cookiecutter-snakemake-analysis-pipeline
 .. _`Snakemake`: https://bitbucket.org/snakemake/snakemake/wiki/Home
+.. _`cookiecutter-pyspark`: https://github.com/agonopol/cookiecutter-pyspark
+.. _`PySpark`: https://spark.apache.org/docs/latest/api/python/index.html
 .. _`cookiecutter-py3tkinter`: https://github.com/ivanlyon/cookiecutter-py3tkinter
 .. _`cookiecutter-pyqt5`: https://github.com/mandeepbhutani/cookiecutter-pyqt5
 .. _`cookiecutter-pyqt4`: https://github.com/aeroaks/cookiecutter-pyqt4
