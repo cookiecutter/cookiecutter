@@ -550,12 +550,14 @@ C++
 * `cookiecutter-dpf-audiotk`_: An audio plugin project template for the DISTRHO Plugin Framework (DPF) and the Audio Toolkit (ATK) DSP library
 * `cookiecutter-kata-gtest`_: A template for C++ test-driven development katas using the Google Test framework.
 * `cookiecutter-kata-cpputest`_: A template for C++ test-driven-development katas using the CppUTest framework.
+* `cookiecutter-cpp-mobile`_: A template for C++ mobile libraries to be shared from Android and iOS.
 
 .. _`BoilerplatePP`: https://github.com/Paspartout/BoilerplatePP
 .. _cookiecutter-dpf-effect: https://github.com/SpotlightKid/cookiecutter-dpf-effect
 .. _cookiecutter-dpf-audiotk: https://github.com/SpotlightKid/cookiecutter-dpf-audiotk
 .. _cookiecutter-kata-gtest: https://github.com/13coders/cookiecutter-kata-gtest
 .. _cookiecutter-kata-cpputest: https://github.com/13coders/cookiecutter-kata-cpputest
+.. _cookiecutter-cpp-mobile: https://github.com/diegum/cookiecutter-cpp-mobile
 
 
 C#
