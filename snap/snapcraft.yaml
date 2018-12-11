@@ -1,0 +1,39 @@
+name: cookiecutter
+base: core18
+version: git
+summary: A command-line utility that creates projects from cookiecutters
+description: |
+  A command-line utility that creates projects from cookiecutters (project
+  templates), e.g. creating a Python package project from a Python package
+  project template.
+
+  *  Documentation: https://cookiecutter.readthedocs.io
+  *  GitHub: https://github.com/audreyr/cookiecutter
+  *  Free and open source software: BSD license
+
+
+grade: stable
+confinement: strict
+
+parts:
+  cookie:
+    plugin: python
+    python-version: python3
+    source: .
+  git:
+    # To use Git inside the snap.
+    stage-packages: [git]
+    plugin: nil
+    organize:
+      # Because usr/lib/git-core will not be on PATH.
+      usr/lib/git-core/: usr/bin
+
+apps:
+  cookiecutter:
+    command: cookiecutter
+    environment:
+      LC_ALL: C.UTF-8
+      LANG: C.UTF-8
+    plugs: 
+      - network
+      - home
