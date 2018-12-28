@@ -56,3 +56,23 @@ def test_replay_load_template_name(
         user_config_data['replay_dir'],
         'fake-repo-tmpl',
     )
+
+
+def test_cookie_pick_selection(monkeypatch, mocker):
+    """Check that generate_cookie_pick is called
+
+    Change the current working directory temporarily to 'tests/fake-repo-tmpl'
+    for this test and call cookiecutter with '.' for the target template.
+    """
+    monkeypatch.chdir('tests/fake-repo-tmpl')
+
+    mocker.patch('cookiecutter.main.load')
+    mock_cookie_pick = mocker.patch('cookiecutter.main.generate_cookie_pick')
+
+    cookiecutter(
+        '.',
+        replay=True,
+        cookie_pick='0'
+    )
+
+    assert mock_cookie_pick.called

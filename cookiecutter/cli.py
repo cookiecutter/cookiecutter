@@ -69,6 +69,14 @@ def validate_extra_context(ctx, param, value):
          u'previously',
 )
 @click.option(
+    u'--cookie-pick', default=None,
+    help=u'Migrate a template change to an initialized project',
+)
+@click.option(
+    u'--cookie-pick-parent', default=None,
+    help=u'Parent for a cookie-pick change',
+)
+@click.option(
     u'-f', u'--overwrite-if-exists', is_flag=True,
     help=u'Overwrite the contents of the output directory if it already exists'
 )
@@ -90,8 +98,8 @@ def validate_extra_context(ctx, param, value):
 )
 def main(
         template, extra_context, no_input, checkout, verbose,
-        replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file):
+        replay, cookie_pick, cookie_pick_parent, overwrite_if_exists,
+        output_dir, config_file, default_config, debug_file):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -114,6 +122,8 @@ def main(
             template, checkout, no_input,
             extra_context=extra_context,
             replay=replay,
+            cookie_pick=cookie_pick,
+            cookie_pick_parent=cookie_pick_parent,
             overwrite_if_exists=overwrite_if_exists,
             output_dir=output_dir,
             config_file=config_file,

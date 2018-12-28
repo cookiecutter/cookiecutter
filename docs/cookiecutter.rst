@@ -20,6 +20,14 @@ cookiecutter.config module
     :undoc-members:
     :show-inheritance:
 
+cookiecutter.cookie\_pick module
+--------------------------------
+
+.. automodule:: cookiecutter.cookie_pick
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 cookiecutter.environment module
 -------------------------------
 
@@ -120,6 +128,14 @@ cookiecutter.vcs module
 -----------------------
 
 .. automodule:: cookiecutter.vcs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+cookiecutter.zipfile module
+---------------------------
+
+.. automodule:: cookiecutter.zipfile
     :members:
     :undoc-members:
     :show-inheritance:

@@ -163,6 +163,8 @@ Did someone say features?
 
 * Projects are always generated to your current directory.
 
+* Easily migrate changes from template repositories to instantiated projects using generate_cookie_pick
+
 Available Cookiecutters
 -----------------------
 

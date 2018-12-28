@@ -16,6 +16,7 @@ Various advanced topics regarding cookiecutter usage.
    templates_in_context
    copy_without_render
    replay
+   cookie_pick
    cli_options
    choice_variables
    dict_variables

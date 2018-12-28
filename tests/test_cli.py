@@ -92,12 +92,14 @@ def test_cli_replay(mocker, cli_runner):
         None,
         False,
         replay=True,
+        cookie_pick=None,
+        cookie_pick_parent=None,
         overwrite_if_exists=False,
         output_dir='.',
         config_file=None,
         default_config=False,
         extra_context=None,
-        password=None
+        password=None,
     )
 
 
@@ -128,6 +130,8 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         overwrite_if_exists=False,
         output_dir='.',
         config_file=None,
+        cookie_pick=None,
+        cookie_pick_parent=None,
         default_config=False,
         extra_context=None,
         password=None,
@@ -157,6 +161,8 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         None,
         False,
         replay=True,
+        cookie_pick=None,
+        cookie_pick_parent=None,
         overwrite_if_exists=True,
         output_dir='.',
         config_file=None,
@@ -217,6 +223,8 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         None,
         False,
         replay=False,
+        cookie_pick=None,
+        cookie_pick_parent=None,
         overwrite_if_exists=False,
         output_dir=output_dir,
         config_file=None,
@@ -256,6 +264,8 @@ def test_user_config(mocker, cli_runner, user_config_path):
         None,
         False,
         replay=False,
+        cookie_pick=None,
+        cookie_pick_parent=None,
         overwrite_if_exists=False,
         output_dir='.',
         config_file=user_config_path,
@@ -284,6 +294,8 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         None,
         False,
         replay=False,
+        cookie_pick=None,
+        cookie_pick_parent=None,
         overwrite_if_exists=False,
         output_dir='.',
         config_file=user_config_path,
@@ -307,6 +319,8 @@ def test_default_user_config(mocker, cli_runner):
         None,
         False,
         replay=False,
+        cookie_pick=None,
+        cookie_pick_parent=None,
         overwrite_if_exists=False,
         output_dir='.',
         config_file=None,
@@ -390,7 +404,7 @@ def test_cli_extra_context_invalid_format(cli_runner):
         'ExtraContextWithNoEqualsSoInvalid',
     )
     assert result.exit_code == 2
-    assert 'Error: Invalid value for "extra_context"' in result.output
+    assert 'Error: Invalid value for "[EXTRA_CONTEXT]..."' in result.output
     assert 'should contain items of the form key=value' in result.output
 
 

@@ -12,6 +12,7 @@ import logging
 import os
 
 from .config import get_user_config
+from .cookie_pick import generate_cookie_pick
 from .generate import generate_context, generate_files
 from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
@@ -24,8 +25,9 @@ logger = logging.getLogger(__name__)
 
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
-        replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None):
+        replay=False, cookie_pick=None, cookie_pick_parent=None,
+        overwrite_if_exists=False, output_dir='.', config_file=None,
+        default_config=False, password=None):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -35,6 +37,10 @@ def cookiecutter(
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
+    :param replay: Read the values, that were used in a previous run as context
+    :param cookie_pick: Migrate change of the given commit hexsha to the target
+    :param cookie_pick_parent: Use the given commit hexsha as parent for a
+        cookie pick
     :param: overwrite_if_exists: Overwrite the contents of output directory
         if it exists
     :param output_dir: Where to output the generated project dir into.
@@ -87,12 +93,21 @@ def cookiecutter(
         dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
-    result = generate_files(
-        repo_dir=repo_dir,
-        context=context,
-        overwrite_if_exists=overwrite_if_exists,
-        output_dir=output_dir
-    )
+    if cookie_pick:
+        result = generate_cookie_pick(
+            repo_dir=repo_dir,
+            context=context,
+            output_dir=output_dir,
+            cookie_pick=cookie_pick,
+            cookie_pick_parent=cookie_pick_parent
+        )
+    else:
+        result = generate_files(
+            repo_dir=repo_dir,
+            context=context,
+            overwrite_if_exists=overwrite_if_exists,
+            output_dir=output_dir
+        )
 
     # Cleanup (if required)
     if cleanup:
