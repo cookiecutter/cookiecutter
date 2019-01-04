@@ -6,6 +6,12 @@ History
 1.7.0 (????-??-??) ???????
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Important Changes:
+
+* Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+
+.. _`@hugovk`: https://github.com/hugovk
+
 Other Changes:
 
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
@@ -27,6 +33,8 @@ Other Changes:
   `@asottile`_ (#1019)
 * Improve user documentation for writing hooks, thanks to `@jonathansick`_
   (#1057)
+* Make sure to preserve the order of items in the generated cookiecutter
+  context, thanks to `@hackebrot`_ (#1074)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -35,6 +43,7 @@ Other Changes:
   * `cookiecutter-awesome`_ by `@Pawamoy`_ (#1051)
   * `cookiecutter-flask-ask`_ by `@machinekoder`_ (#1056)
   * `cookiecutter-data-driven-journalism`_ by `@JAStark`_ (#1020)
+  * `cookiecutter-tox-plugin`_ by `@obestwalter`_ (#1103)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
@@ -42,6 +51,8 @@ Other Changes:
 .. _`cookiecutter-awesome`: https://github.com/Pawamoy/cookiecutter-awesome
 .. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
 .. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
+.. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
 .. _`@xuanluong`: https://github.com/xuanluong
@@ -57,6 +68,7 @@ Other Changes:
 .. _`@jonathansick`: https://github.com/jonathansick
 .. _`@machinekoder`: https://github.com/machinekoder
 .. _`@JAStark`: https://github.com/JAStark
+.. _`@obestwalter`: https://github.com/obestwalter
 
 
 1.6.0 (2017-10-15) Tim Tam

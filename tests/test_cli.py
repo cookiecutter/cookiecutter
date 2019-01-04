@@ -333,7 +333,10 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     error = "Unable to create file '{{cookiecutter.foobar}}'"
     assert error in result.output
 
-    message = "Error message: 'dict object' has no attribute 'foobar'"
+    message = (
+        "Error message: 'collections.OrderedDict object' "
+        "has no attribute 'foobar'"
+    )
     assert message in result.output
 
     context = {
@@ -387,7 +390,7 @@ def test_cli_extra_context_invalid_format(cli_runner):
         'ExtraContextWithNoEqualsSoInvalid',
     )
     assert result.exit_code == 2
-    assert 'Error: Invalid value for "extra_context"' in result.output
+    assert 'Error: Invalid value for "[EXTRA_CONTEXT]..."' in result.output
     assert 'should contain items of the form key=value' in result.output
 
 

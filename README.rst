@@ -5,6 +5,9 @@ Cookiecutter
 .. image:: https://img.shields.io/pypi/v/cookiecutter.svg
         :target: https://pypi.python.org/pypi/cookiecutter
 
+.. image:: https://img.shields.io/pypi/pyversions/cookiecutter.svg
+        :target: https://pypi.python.org/pypi/cookiecutter
+
 .. image:: https://travis-ci.org/audreyr/cookiecutter.svg?branch=master
         :target: https://travis-ci.org/audreyr/cookiecutter
 
@@ -48,7 +51,7 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.7, 3.3, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
+* Works with Python 2.7, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
   know/write Python code to use Cookiecutter.)*
 
 * Project templates can be in any programming language or markup format:
@@ -354,6 +357,7 @@ Python
 * `cookiecutter-tryton`_: A template to create base and external Tryton modules.
 * `cookiecutter-tryton-fulfilio`_: A template for creating tryton modules.
 * `cookiecutter-pytest-plugin`_: Minimal Cookiecutter template for authoring `pytest`_ plugins that help you to write better programs.
+* `cookiecutter-tox-plugin`_: Minimal Cookiecutter template for authoring `tox`_ plugins to change or extend the behavior of your test automation.
 * `cookiecutter-tapioca`_: A Template for building `tapioca-wrapper`_ based web API wrappers (clients).
 * `cookiecutter-muffin`_: A Muffin template with Bootstrap 3, starter templates, and working user registration.
 * `cookiecutter-octoprint-plugin`_: A template for building plugins for `OctoPrint`_.
@@ -399,6 +403,8 @@ Python
 .. _`cookiecutter-tryton-fulfilio`: https://github.com/fulfilio/cookiecutter-tryton
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`pytest`: http://pytest.org/latest/
+.. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+.. _`tox`: https://tox.readthedocs.io/
 .. _`cookiecutter-tapioca`: https://github.com/vintasoftware/cookiecutter-tapioca
 .. _`tapioca-wrapper`: https://github.com/vintasoftware/tapioca-wrapper
 .. _`cookiecutter-muffin`: https://github.com/drgarcia1986/cookiecutter-muffin
@@ -501,13 +507,9 @@ Cookiecutter (meta)
 
 Meta-templates for generating Cookiecutter project templates.
 
-* `cookiecutter-template`_: A template to help in creating cookiecutter templates.
+* `cookiecutter-template`_: Cookiecutter template for creating a... cookiecutter template...
 
 .. _`cookiecutter-template`: https://github.com/eviweb/cookiecutter-template
-
-* `cookie-cookie`_: A project template for... project templates...
-
-.. _`cookie-cookie`: https://github.com/tuxredux/cookie-cookie
 
 Ansible
 ~~~~~~~
@@ -525,9 +527,9 @@ Ansible
 Git
 ~~~
 
-* `cookiecutter-git`_: A git repository project template!
+* `cookiecutter-git`_: Git repo project template :clipboard:
 
-.. _`cookiecutter-git`: https://github.com/tuxredux/cookiecutter-git
+.. _`cookiecutter-git`: https://github.com/NathanUrwin/cookiecutter-git
 
 
 C

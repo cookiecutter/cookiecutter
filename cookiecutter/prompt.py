@@ -193,7 +193,7 @@ def prompt_for_config(context, no_input=False):
 
     :param no_input: Prompt the user at command line for manual configuration?
     """
-    cookiecutter_dict = {}
+    cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
 
     # First pass: Handle simple and raw variables, plus choices.
