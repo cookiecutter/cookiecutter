@@ -32,6 +32,7 @@ def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
     ordered_load(stream, yaml.SafeLoader)"""
     class OrderedLoader(Loader):
         pass
+
     def construct_mapping(loader, node):
         loader.flatten_mapping(node)
         return object_pairs_hook(loader.construct_pairs(node))
@@ -115,7 +116,7 @@ def generate_context(
         # FIXME handle potential errors
         with open(context_file) as file_handle:
             obj = ordered_load(file_handle, yaml.SafeLoader)
-        
+
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
