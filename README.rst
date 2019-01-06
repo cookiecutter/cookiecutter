@@ -203,6 +203,7 @@ Categories of Cookiecutters
 `Kotlin`_ |
 `LaTeX/XeTeX`_ |
 `PHP`_ |
+`Ruby`_ |
 `Berkshelf-Vagrant`_ |
 `HTML`_ |
 `Scala`_ |
@@ -651,6 +652,13 @@ PHP
 * `cookiecutter-mediawiki-extension`_: A template for MediaWiki extensions.
 
 .. _`cookiecutter-mediawiki-extension`: https://github.com/JonasGroeger/cookiecutter-mediawiki-extension
+
+
+Ruby
+~~~~
+* `cookiecutter-thor-rubygem`_: A Ruby commandline app template using Thor.
+
+.. _`cookiecutter-thor-rubygem`: https://github.com/ConorSheehan1/cookiecutter-thor-rubygem
 
 
 Sublime Text
