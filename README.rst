@@ -656,8 +656,10 @@ PHP
 
 Ruby
 ~~~~
+* `cookiecutter-rubygem`_: A Ruby gem template
 * `cookiecutter-thor-rubygem`_: A Ruby commandline app template using Thor.
 
+.. _`cookiecutter-rubygem`: https://github.com/tjwp/cookiecutter-rubygem
 .. _`cookiecutter-thor-rubygem`: https://github.com/ConorSheehan1/cookiecutter-thor-rubygem
 
 
