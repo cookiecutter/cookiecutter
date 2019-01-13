@@ -210,7 +210,8 @@ Categories of Cookiecutters
 `Data Science`_ |
 `Tornado`_ |
 `Reproducible Science`_ |
-`Continuous Delivery`_
+`Continuous Delivery`_ |
+`Swift`_
 
 If you don't find a cookiecutter that suits your needs here, please consider
 writing or suggesting one. We wish for our users to find a solution for their
@@ -750,6 +751,13 @@ Tornado
 * `cookiecutter-tornado`_: Cookiecutter template for Tornado based projects
 
 .. _`cookiecutter-tornado`: https://github.com/hkage/cookiecutter-tornado
+
+Swift
+~~~~~
+
+* `iOS-project-template`_: A template to jumpstart your next iOS project integrating best practices and tools
+
+..  _`iOS-project-template`: https://github.com/pgorzelany/iOS-project-template
 
 Other
 ~~~~~
