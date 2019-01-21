@@ -345,6 +345,7 @@ Python
 * `cookiecutter-flask-minimal`_ : Minimal but production-ready Flask project template with no other dependencies except for Flask itself.
 * `cookiecutter-flask-skeleton`_ : Flask starter project.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
+* `cookiecutter-chalice`_ : A template to create serverless apps based on AWS Lambda using Chalice microframework.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
@@ -388,6 +389,7 @@ Python
 .. _`cookiecutter-flask-skeleton`: https://github.com/realpython/cookiecutter-flask-skeleton
 .. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
 .. _`cookiecutter-bottle`: https://github.com/avelino/cookiecutter-bottle
+.. _`cookiecutter-chalice`: https://github.com/maxrodrigo/cookiecutter-chalice
 .. _`cookiecutter-openstack`: https://github.com/openstack-dev/cookiecutter
 .. _`cookiecutter-docopt`: https://github.com/sloria/cookiecutter-docopt
 .. _`docopt`: http://docopt.org/
