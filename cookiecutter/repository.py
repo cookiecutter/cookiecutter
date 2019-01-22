@@ -15,7 +15,7 @@ REPO_REGEX = re.compile(r"""
  |                                      # or
  (\w+@[\w\.]+)                          # something like user@...
 )
-""", flags=re.X)
+""", flags=re.VERBOSE)
 
 
 def is_repo_url(value):
