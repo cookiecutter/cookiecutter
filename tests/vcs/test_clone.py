@@ -223,3 +223,35 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
             clone_to_dir=clone_dir,
             no_input=True
         )
+
+
+def test_clone_gitolite_url(mocker, clone_dir):
+    """When `clone()` is called with a gitolite repo, it should return the
+    correct path to the new directory of the repository.
+    """
+
+    mocker.patch(
+        'cookiecutter.vcs.is_vcs_installed',
+        autospec=True,
+        return_value=True
+    )
+
+    mock_check_output = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+    )
+
+    repo_url = 'git@host:gitoliterepo'
+    repo_dir = vcs.clone(
+        repo_url,
+        clone_to_dir=clone_dir,
+        no_input=True
+    )
+
+    assert os.path.basename(repo_dir) == 'gitoliterepo'
+
+    mock_check_output.assert_called_once_with(
+        ['git', 'clone', repo_url],
+        cwd=clone_dir,
+        stderr=subprocess.STDOUT
+    )
