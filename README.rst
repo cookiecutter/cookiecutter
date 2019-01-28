@@ -293,7 +293,7 @@ You can also support this project by taking our Python packaging course:
    :name: Creating and Distributing Python Packages image
    :align: center
    :alt: Creating and Distributing Python Packages
-   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages
+   :target: https://twoscoopspress.thinkific.com/courses/creating-and-distributing-python-packages
 
 Also available in Spanish:
 
@@ -301,7 +301,7 @@ Also available in Spanish:
    :name: Creating and Distributing Python Packages ES image
    :align: center
    :alt: Creating and Distributing Python Packages ES
-   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages-es
+   :target: https://twoscoopspress.thinkific.com/courses/creating-and-distributing-python-packages-es
 
 
 Backers
