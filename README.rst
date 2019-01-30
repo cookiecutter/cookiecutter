@@ -430,7 +430,7 @@ Python
 .. _`python-project-template`: https://github.com/Kwpolska/python-project-template
 .. _`cookiecutter-anyblok-project`: https://github.com/AnyBlok/cookiecutter-anyblok-project
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
-.. _`cookicutter-pypackage-poetry`: https://github.com/wboxx1/cookiecutter-pypackage-poetry
+.. _`cookiecutter-pypackage-poetry`: https://github.com/wboxx1/cookiecutter-pypackage-poetry
 
 Python-Django
 ^^^^^^^^^^^^^
