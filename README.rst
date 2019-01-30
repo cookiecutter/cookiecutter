@@ -376,7 +376,7 @@ Python
 * `python-project-template`_: A template for Python projects with sophisticated release automation.
 * `cookiecutter-anyblok-project`_: A template for Anyblok based projects.
 * `cookiecutter-python-cli`_: A cookiecutter template for creating a Python CLI application using click
-* `cookicutter-pypackage-poetry`_: A template that uses poetry for dependency management, bump2version in place of bumpversion, adds support for appveyor, and allows use of github pages for doc hosting.
+* `cookiecutter-pypackage-poetry`_: A template that uses poetry for dependency management, bump2version in place of bumpversion, adds support for appveyor, and allows use of github pages for doc hosting.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
