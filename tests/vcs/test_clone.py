@@ -188,7 +188,7 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
         side_effect=[
-            None, 
+            None,
             subprocess.CalledProcessError(-1, 'cmd', output=error_message)
         ]
     )
@@ -215,8 +215,8 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
         autospec=True,
         side_effect=[
             subprocess.CalledProcessError(
-                -1, 
-                'cmd', 
+                -1,
+                'cmd',
                 output='Something went wrong'.encode('utf-8')
             ),
         ]
@@ -229,6 +229,7 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
             no_input=True
         )
 
+
 def test_clone_unknown_subprocess_error_on_checkout(mocker, clone_dir):
     """In `clone()`, unknown subprocess errors should be raised."""
     mocker.patch(
@@ -236,7 +237,9 @@ def test_clone_unknown_subprocess_error_on_checkout(mocker, clone_dir):
         autospec=True,
         side_effect=[
             None,
-            subprocess.CalledProcessError(-1, 'cmd', output='Something went wrong'.encode('utf-8'))
+            subprocess.CalledProcessError(
+                -1, 'cmd', output='Something went wrong'.encode('utf-8')
+            )
         ]
     )
 
