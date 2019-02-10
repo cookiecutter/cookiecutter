@@ -344,6 +344,7 @@ Python
 * `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * `cookiecutter-flask-minimal`_ : Minimal but production-ready Flask project template with no other dependencies except for Flask itself.
 * `cookiecutter-flask-skeleton`_ : Flask starter project.
+* `cookiecutter-react-flask`_: A template for creating a modular flask-react application.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
@@ -614,6 +615,7 @@ JS
 * `cookiecutter-es6-package`_: A template for writing node packages using ES6 via babel.
 * `cookiecutter-angular2`_: A template for modular angular2 with typescript apps.
 * `CICADA`_: A template + script that automatically creates list/detail controllers and partials for an AngularJS frontend to connect to a DRF backend. Works well with `cc-automated-drf-template <https://github.com/TAMU-CPT/cc-automated-drf-template>`__.
+* `cookiecutter-react-flask`_: A template for creating a modular flask-react application.
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
@@ -624,6 +626,7 @@ JS
 .. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
 .. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2
 .. _`CICADA`: https://github.com/TAMU-CPT/CICADA
+.. _`cookiecutter-react-flask`: https://github.com/arberx/cookiecutter-react-flask
 
 Kotlin
 ~~~~~~
