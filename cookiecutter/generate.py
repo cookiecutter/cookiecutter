@@ -231,9 +231,11 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
     :param delete_project_on_failure: Delete the project directory on hook
         failure?
     """
+    hook_context = dict(context)
+    hook_context["_repo_dir"] = repo_dir
     with work_in(repo_dir):
         try:
-            run_hook(hook_name, project_dir, context)
+            run_hook(hook_name, project_dir, hook_context)
         except FailedHookException:
             if delete_project_on_failure:
                 rmtree(project_dir)
