@@ -1,6 +1,5 @@
 # Config file for automatic testing at travis-ci.org
 
-sudo: false
 language: python
 
 matrix:
@@ -15,13 +14,11 @@ matrix:
         env: TOXENV=py36
       - python: 3.7
         env: TOXENV=py37
-        sudo: true    # Required for Python 3.7
         dist: xenial  # Required for Python 3.7
       - python: pypy
         env: TOXENV=pypy
       - python: 3.7
         env: TOXENV=flake8
-        sudo: true    # Required for Python 3.7
         dist: xenial  # Required for Python 3.7
 
 install: pip install tox
