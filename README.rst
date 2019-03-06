@@ -376,6 +376,7 @@ Python
 * `python-project-template`_: A template for Python projects with sophisticated release automation.
 * `cookiecutter-anyblok-project`_: A template for Anyblok based projects.
 * `cookiecutter-python-cli`_: A cookiecutter template for creating a Python CLI application using click
+* `cookiecutter-python-aws-lambda`_: A template for creating AWS Lambda functions using Python
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -429,6 +430,7 @@ Python
 .. _`python-project-template`: https://github.com/Kwpolska/python-project-template
 .. _`cookiecutter-anyblok-project`: https://github.com/AnyBlok/cookiecutter-anyblok-project
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
+.. _`cookiecutter-python-aws-lambda`: https://github.com/QuiNovas/cookiecutter-python-aws-lambda
 
 Python-Django
 ^^^^^^^^^^^^^
