@@ -100,6 +100,7 @@ def test_generate_files_with_trailing_newline():
     with io.open(newline_file, 'r', encoding='utf-8') as f:
         simple_text = f.read()
     assert simple_text == u'I eat pizzä\n'
+    assert f.newlines == '\n'
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
