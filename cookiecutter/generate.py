@@ -171,9 +171,14 @@ def generate_file(project_dir, infile, context, env):
             raise
         rendered_file = tmpl.render(**context)
 
+        # Detect original file newline to output the rendered file
+        with io.open(infile, 'r') as rd:
+            rd.readline()  # Read the first line to load 'newlines' value
+            newline = getattr(rd, 'newlines')
+
         logger.debug('Writing contents to file {}'.format(outfile))
 
-        with io.open(outfile, 'w', encoding='utf-8') as fh:
+        with io.open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file

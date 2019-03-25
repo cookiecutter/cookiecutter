@@ -103,6 +103,24 @@ def test_generate_files_with_trailing_newline():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_with_windows_newline():
+    generate.generate_files(
+        context={
+            'cookiecutter': {'food': 'pizzä'}
+        },
+        repo_dir='tests/test-generate-files'
+    )
+
+    newline_file = 'inputpizzä/simple-with-newline-crlf.txt'
+    assert os.path.isfile(newline_file)
+
+    with io.open(newline_file, 'r') as f:
+        f.read()
+
+    assert f.newlines == '\r\n'
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_binaries():
     generate.generate_files(
         context={
