@@ -1,1 +1,2 @@
-*crlf.txt text eol=crlf  # To keep clrf files with windows new line style
+*           text=auto
+*crlf.txt   text eol=crlf
