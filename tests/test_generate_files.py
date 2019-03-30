@@ -103,6 +103,28 @@ def test_generate_files_with_trailing_newline():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_generate_files_with_conditions():
+    generate.generate_files(
+        context={
+            'cookiecutter': {
+                'food': 'pizzä',
+                '_environment': {
+                    'lstrip_blocks': True,
+                    'trim_blocks': True
+                }
+            }
+        },
+        repo_dir='tests/test-generate-files'
+    )
+
+    conditions_file = 'inputpizzä/simple-with-conditions.txt'
+    assert os.path.isfile(conditions_file)
+
+    simple_text = io.open(conditions_file, 'rt', encoding='utf-8').read()
+    assert simple_text == u'I eat pizzä\n'
+
+
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_binaries():
     generate.generate_files(
         context={

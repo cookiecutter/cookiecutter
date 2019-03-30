@@ -13,10 +13,6 @@ class ExtensionLoaderMixin(object):
     The context is being extracted from the keyword arguments before calling
     the next parent class in line of the child.
     """
-    default_extensions = [
-        'cookiecutter.extensions.JsonifyExtension',
-        'jinja2_time.TimeExtension',
-    ]
 
     def __init__(self, **kwargs):
         """Initialize the Jinja2 Environment object while loading extensions.
@@ -27,22 +23,34 @@ class ExtensionLoaderMixin(object):
         2. Reads extensions set in the cookiecutter.json _extensions key.
         3. Attempts to load the extensions. Provides useful error if fails.
         """
-        kwargs.setdefault('extensions', [])
-        kwargs['extensions'] += self.default_extensions
+        context = kwargs.pop('context', {})
 
-        context = kwargs.pop('context', {}).get('cookiecutter')
-        if context:
-            extensions = context.get('_extensions')
-            if extensions:
-                kwargs['extensions'] += extensions
-            environment = context.get('_environment')
-            if environment:
-                kwargs.update(**environment)
+        default_extensions = [
+            'cookiecutter.extensions.JsonifyExtension',
+            'jinja2_time.TimeExtension',
+        ]
+        extensions = default_extensions + self._read_extensions(context)
 
         try:
-            super(ExtensionLoaderMixin, self).__init__(**kwargs)
+            super(ExtensionLoaderMixin, self).__init__(
+                extensions=extensions,
+                **kwargs
+            )
         except ImportError as err:
             raise UnknownExtension('Unable to load extension: {}'.format(err))
+
+    def _read_extensions(self, context):
+        """Return list of extensions as str to be passed on to the Jinja2 env.
+
+        If context does not contain the relevant info, return an empty
+        list instead.
+        """
+        try:
+            extensions = context['cookiecutter']['_extensions']
+        except KeyError:
+            return []
+        else:
+            return [str(ext) for ext in extensions]
 
 
 class StrictEnvironment(ExtensionLoaderMixin, Environment):

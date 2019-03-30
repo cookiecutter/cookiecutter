@@ -258,11 +258,18 @@ def generate_files(repo_dir, context=None, output_dir='.',
     logger.debug('Generating project from {}...'.format(template_dir))
     context = context or OrderedDict([])
 
+    envvars = {}
+    try:
+        envvars = context['cookiecutter'].pop('_environment')
+    except KeyError:
+        pass
+
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
     env = StrictEnvironment(
         context=context,
         keep_trailing_newline=True,
+        **envvars
     )
     try:
         project_dir, output_directory_created = render_and_create_dir(
