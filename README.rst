@@ -344,7 +344,7 @@ Python
 * `cookiecutter-flask-foundation`_ : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * `cookiecutter-flask-minimal`_ : Minimal but production-ready Flask project template with no other dependencies except for Flask itself.
 * `cookiecutter-flask-skeleton`_ : Flask starter project.
-* `cookiecutter-flask-devops`_ : Flask template with peewee, pytest, per-commit, gitlab-ci for vps ci/cd.
+* `cookiecutter-flask-devops`_ : Flask template with html5-boilerplate, peewee, pytest, per-commit, docker-compose, gitlab-ci for vps ci/cd.
 * `cookiecutter-bottle`_ : A cookiecutter template for creating reusable Bottle projects quickly.
 * `cookiecutter-openstack`_: A template for an OpenStack project.
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
