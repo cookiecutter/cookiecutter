@@ -376,6 +376,7 @@ Python
 * `python-project-template`_: A template for Python projects with sophisticated release automation.
 * `cookiecutter-anyblok-project`_: A template for Anyblok based projects.
 * `cookiecutter-python-cli`_: A cookiecutter template for creating a Python CLI application using click
+* `create-aio-app`_: The boilerplate for aiohttp. Quick setup for your asynchronous web service.
 
 .. _`cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
@@ -429,6 +430,7 @@ Python
 .. _`python-project-template`: https://github.com/Kwpolska/python-project-template
 .. _`cookiecutter-anyblok-project`: https://github.com/AnyBlok/cookiecutter-anyblok-project
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
+.. _`create-aio-app`: https://github.com/aio-libs/create-aio-app
 
 Python-Django
 ^^^^^^^^^^^^^
