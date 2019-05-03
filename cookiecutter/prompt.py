@@ -88,7 +88,7 @@ def read_user_choice(var_name, options):
     ))
 
     user_choice = click.prompt(
-        prompt, type=click.Choice(choices), default=default
+        prompt, type=click.Choice(choices), default=default, show_choices=False
     )
     return choice_map[user_choice]
 
