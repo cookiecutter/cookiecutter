@@ -449,3 +449,19 @@ def test_debug_file_verbose(cli_runner, debug_file):
     )
     assert context_log in debug_file.readlines(cr=False)
     assert context_log in result.output
+
+
+def test_update_missing_no_input(cli_runner):
+
+    result = cli_runner(
+        '--verbose',
+        '-u',
+        'fake-project',
+        'tests/fake-repo-pre/',
+    )
+    assert result.exit_code == 1
+
+    context_log = (
+        "You need to use both update and no-input at the same time."
+    )
+    assert context_log in result.output
