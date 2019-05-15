@@ -17,7 +17,8 @@ from .exceptions import InvalidModeException
 from .prompt import prompt_for_config
 from .replay import dump, load
 from .repository import determine_repo_dir
-from .utils import rmtree
+from .update import prepare_update, apply_update
+from .utils import rmtree, get_pardir
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None):
+        config_file=None, default_config=False, password=None,
+        update_dir=None):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -41,11 +43,18 @@ def cookiecutter(
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
+    :param update_dir: Update the project rather than creating a new project.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
             "You can not use both replay and no_input or extra_context "
             "at the same time."
+        )
+        raise InvalidModeException(err_msg)
+
+    if update_dir is not None and no_input is not True:
+        err_msg = (
+            "You need to use both update and no-input at the same time."
         )
         raise InvalidModeException(err_msg)
 
@@ -68,7 +77,11 @@ def cookiecutter(
     if replay:
         context = load(config_dict['replay_dir'], template_name)
     else:
-        context_file = os.path.join(repo_dir, 'cookiecutter.json')
+        # Load context from project to update rather than from template
+        if update_dir:
+            context_file = os.path.join(update_dir, '.cookiecutter.json')
+        else:
+            context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is {}'.format(context_file))
 
         context = generate_context(
@@ -86,6 +99,13 @@ def cookiecutter(
 
         dump(config_dict['replay_dir'], template_name, context)
 
+    if update_dir:
+        logger.debug(update_dir)
+        output_dir = get_pardir(update_dir)
+        logger.debug(output_dir)
+        repo = prepare_update(update_dir)
+        overwrite_if_exists = True
+
     # Create project from local context and project template.
     result = generate_files(
         repo_dir=repo_dir,
@@ -93,6 +113,9 @@ def cookiecutter(
         overwrite_if_exists=overwrite_if_exists,
         output_dir=output_dir
     )
+
+    if update_dir:
+        apply_update(repo)
 
     # Cleanup (if required)
     if cleanup:
