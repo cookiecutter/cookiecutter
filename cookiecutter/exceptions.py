@@ -145,3 +145,7 @@ class RepositoryNotCleanError(CookiecutterException):
     Raised when the specified cookiecutter repository has untracked,
     unstaged or staged elements.
     """
+
+
+class UpdateException(CookiecutterException):
+    """Raised when a project failed to be updated"""
