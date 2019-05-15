@@ -124,3 +124,24 @@ class InvalidZipRepository(CookiecutterException):
     Raised when the specified cookiecutter repository isn't a valid
     Zip archive.
     """
+
+
+class InvalidGitRepository(CookiecutterException):
+    """
+    Raised when the specified cookiecutter repository isn't a valid
+    Git repository.
+    """
+
+
+class RepositoryNoCKBranch(CookiecutterException):
+    """
+    Raised when the specified cookiecutter repository doesn't have
+    the update branch.
+    """
+
+
+class RepositoryNotCleanError(CookiecutterException):
+    """
+    Raised when the specified cookiecutter repository has untracked,
+    unstaged or staged elements.
+    """
