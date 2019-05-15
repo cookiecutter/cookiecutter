@@ -100,7 +100,13 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
-    file_stem = file_name.split('.')[0]
+    # Take care of file name starting with a '.'
+    index = 0
+    if file_name.startswith('.'):
+        index = 1
+    file_stem = file_name.split('.')[index]
+    logger.debug('file_stem: {}\tfrom file_name: {}'.format(
+        file_stem, file_name))
     context[file_stem] = obj
 
     # Overwrite context variable defaults with the default context from the
