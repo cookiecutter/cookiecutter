@@ -185,3 +185,10 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmpdir):
     assert not mock_read_user.called
     assert not repo_file.exists()
     assert deleted
+
+
+def test_parent_dir():
+    dir_slash = '/this/is/a/test/'
+    dir_no_slash = '/this/is/another/test'
+    assert utils.get_pardir(dir_slash) == '/this/is/a'
+    assert utils.get_pardir(dir_no_slash) == '/this/is/another'

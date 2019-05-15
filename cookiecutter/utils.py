@@ -110,3 +110,14 @@ def prompt_and_delete(path, no_input=False):
             return False
 
         sys.exit()
+
+
+def get_pardir(path):
+    """
+    Get the parent directory name of a path
+    """
+    pardir, name = os.path.split(path)
+    if not name:
+        # 'path' has a trailing slash
+        pardir = os.path.dirname(pardir)
+    return pardir
