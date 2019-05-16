@@ -614,6 +614,7 @@ JS
 * `cookiecutter-es6-package`_: A template for writing node packages using ES6 via babel.
 * `cookiecutter-angular2`_: A template for modular angular2 with typescript apps.
 * `CICADA`_: A template + script that automatically creates list/detail controllers and partials for an AngularJS frontend to connect to a DRF backend. Works well with `cc-automated-drf-template <https://github.com/TAMU-CPT/cc-automated-drf-template>`__.
+* `cookiecutter-nodejs-cli`_: A template for creating cross-platform command-line interfaces (CLI), in Node.js on the fly.
 
 .. _`cookiecutter-es6-boilerplate`: https://github.com/agconti/cookiecutter-es6-boilerplate
 .. _`cookiecutter-webpack`: https://github.com/hzdg/cookiecutter-webpack
@@ -624,6 +625,7 @@ JS
 .. _`cookiecutter-es6-package`: https://github.com/ratson/cookiecutter-es6-package
 .. _`cookiecutter-angular2`: https://github.com/matheuspoleza/cookiecutter-angular2
 .. _`CICADA`: https://github.com/TAMU-CPT/CICADA
+.. _`cookiecutter-nodejs-cli`: https://github.com/Jnchi/cookiecutter-nodejs-cli
 
 Kotlin
 ~~~~~~
