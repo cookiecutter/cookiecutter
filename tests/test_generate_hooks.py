@@ -67,7 +67,7 @@ def test_imports_in_hooks():
             repo_dir='tests/test-hook-imports/',
             output_dir='tests/test-hook-imports/')
     except FailedHookException:
-        pytest.fail("Unexpected FailedHookException...")
+        pytest.fail('Unexpected FailedHookException...')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
