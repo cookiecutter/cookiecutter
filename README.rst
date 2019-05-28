@@ -349,6 +349,7 @@ Python
 * `cookiecutter-docopt`_: A template for a Python command-line script that uses `docopt`_ for arguments parsing.
 * `cookiecutter-quokka-module`_: A template to create a blueprint module for Quokka Flask CMS.
 * `cookiecutter-kivy`_: A template for NUI applications built upon the kivy python-framework.
+* `cookiecutter-kivymd`_: A template for NUI applications built upon the kivymd and kivy python-framework.
 * `cookiedozer`_: A template for Python Kivy apps ready to be deployed to android devices with Buildozer.
 * `cookiecutter-pylibrary`_: An intricate template designed to quickly get started with good testing and packaging (working configuration for Tox, Pytest, Travis-CI, Coveralls, AppVeyor, Sphinx docs, isort, bumpversion, packaging checks etc).
 * `cookiecutter-pyvanguard`_: A template for cutting edge Python development. `Invoke`_, pytest, bumpversion, and Python 2/3 compatibility.
