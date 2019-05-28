@@ -394,7 +394,7 @@ Python
 .. _`docopt`: http://docopt.org/
 .. _`cookiecutter-quokka-module`: https://github.com/pythonhub/cookiecutter-quokka-module
 .. _`cookiecutter-kivy`: https://github.com/hackebrot/cookiecutter-kivy
-.. _`cookiecutter-kivymd`: https://github.com/hackebrot/cookiecutter-kivy
+.. _`cookiecutter-kivymd`: https://github.com/Dev-loper0/cookiecutter-kivymd
 .. _`cookiedozer`: https://github.com/hackebrot/cookiedozer
 .. _`cookiecutter-pylibrary`: https://github.com/ionelmc/cookiecutter-pylibrary
 .. _`cookiecutter-pyvanguard`: https://github.com/robinandeer/cookiecutter-pyvanguard
