@@ -20,6 +20,7 @@ _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
 ]
+_PYTHON_HOOK_MODULE = 'python_gen_project'
 EXIT_SUCCESS = 0
 
 
@@ -128,6 +129,67 @@ def run_script_with_context(script_path, cwd, context):
     run_script(temp.name, cwd)
 
 
+def find_python_hook(hook_name, hooks_dir='hooks'):
+    """Search for a python hook.
+
+    This function looks for a file named `python_gen_project.py` in the hook
+    directory. If found, it is imported in place with no templating. Returns
+    a function (or more generally any callable) with the name `hook_name` or
+    None.
+
+    :param hook_name: The hook to find.
+    :param hooks_dir: The hook directory in the template.
+    :return: None or Callable hook.
+    """
+    try:
+        from importlib import reload
+    except ImportError:  # pragma: no cover
+        from imp import reload
+
+    if not os.path.isdir(hooks_dir):
+        return None
+
+    if '{}.py'.format(_PYTHON_HOOK_MODULE) not in os.listdir(hooks_dir):
+        return None
+
+    if _PYTHON_HOOK_MODULE in sys.modules:
+        del sys.modules[_PYTHON_HOOK_MODULE]
+
+    try:
+        sys.path.insert(0, os.path.abspath(hooks_dir))
+        module = __import__(_PYTHON_HOOK_MODULE)
+        reload(module)
+        sys.path.pop(0)
+        logger.debug(
+            'Successfully imported {}.py'.format(_PYTHON_HOOK_MODULE)
+        )
+    except Exception as e:
+        sys.path.pop(0)
+        raise FailedHookException(
+            'Could not import python hook (error: {})'.format(e)
+        )
+
+    hook = getattr(module, hook_name, None)
+    if not hook or not callable(hook):
+        return None
+    return hook
+
+
+def run_python_hook(hook_func, cwd, context):
+    """Execute a python hook.
+
+    :param hook_func: The hook function.
+    :param cwd: The directory to run the script from.
+    :param context: Cookiecutter project template context.
+    """
+    try:
+        hook_func(cwd, context['cookiecutter'])
+    except Exception as e:
+        raise FailedHookException(
+            'Hook function failed (error: {})'.format(e)
+        )
+
+
 def run_hook(hook_name, project_dir, context):
     """
     Try to find and execute a hook from the specified project directory.
@@ -137,8 +199,15 @@ def run_hook(hook_name, project_dir, context):
     :param context: Cookiecutter project context.
     """
     script = find_hook(hook_name)
-    if script is None:
-        logger.debug('No {} hook found'.format(hook_name))
+    if script is not None:
+        logger.debug('Running hook {}'.format(hook_name))
+        run_script_with_context(script, project_dir, context)
         return
-    logger.debug('Running hook {}'.format(hook_name))
-    run_script_with_context(script, project_dir, context)
+
+    python_hook = find_python_hook(hook_name)
+    if python_hook:
+        logger.debug('Running python hook {}'.format(hook_name))
+        run_python_hook(python_hook, project_dir, context)
+        return
+
+    logger.debug('No {} hook found'.format(hook_name))

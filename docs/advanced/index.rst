@@ -9,6 +9,7 @@ Various advanced topics regarding cookiecutter usage.
    :maxdepth: 2
 
    hooks
+   dynamic_python_hooks
    user_config
    calling_from_python
    injecting_content

@@ -9,8 +9,11 @@ History
 Important Changes:
 
 * Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+* Support for python hook as modules, thanks to `@0x0L`_ (#851)
+
 
 .. _`@hugovk`: https://github.com/hugovk
+.. _`@0x0L`: https://github.com/0x0L
 
 Other Changes:
 

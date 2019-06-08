@@ -1,0 +1,3 @@
+Hi!
+{{ cookiecutter.name }} is the sole owner of UUID {{ cookiecutter.uuid }}
+for his new {{ cookiecutter.project_name }} project.

@@ -233,3 +233,33 @@ def test_ignore_hook_backup_files(monkeypatch, dir_with_hooks):
     monkeypatch.chdir(dir_with_hooks)
     assert hooks.find_hook('pre_gen_project') is None
     assert hooks.find_hook('post_gen_project') is None
+
+
+def test_find_dynamic_python_hook():
+    """Finds the specified dynamic python hook."""
+
+    with utils.work_in('tests/fake-repo'):
+        assert None is hooks.find_python_hook('pre_gen_project')
+
+    with utils.work_in('tests/test-dynamic-hooks'):
+        assert callable(hooks.find_python_hook('pre_gen_project'))
+        assert False is callable(hooks.find_python_hook('post_gen_project'))
+
+        assert False is callable(
+            hooks.find_python_hook('pre_gen_project', 'hooks_dir'))
+
+    with utils.work_in('tests/test-pyhooks'):
+        assert False is callable(
+            hooks.find_python_hook('pre_gen_project'))
+
+    with utils.work_in('tests/test-dynamic-hooks-importerror'):
+        with pytest.raises(hooks.FailedHookException):
+            hooks.find_python_hook('pre_gen_project')
+
+    with utils.work_in('tests/test-dynamic-hooks-runtime-exception'):
+        with pytest.raises(hooks.FailedHookException):
+            hook = hooks.find_python_hook('pre_gen_project')
+            hooks.run_python_hook(hook, None, {'cookiecutter': {}})
+
+    with utils.work_in('tests/test-dynamic-hooks'):
+        hooks.run_hook('pre_gen_project', None, {'cookiecutter': {}})
