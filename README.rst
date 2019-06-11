@@ -381,7 +381,7 @@ Python
 .. _`cookiecutter-pipproject`: https://github.com/wdm0006/cookiecutter-pipproject
 .. _`cookiecutter-pypackage-minimal`: https://github.com/kragniz/cookiecutter-pypackage-minimal
 .. _`cookiecutter-lux-python`: https://github.com/alexkey/cookiecutter-lux-python
-.. _`cookiecutter-flask`: https://github.com/sloria/cookiecutter-flask
+.. _`cookiecutter-flask`: https://github.com/cookiecutter-flask/cookiecutter-flask
 .. _`cookiecutter-flask-2`: https://github.com/wdm0006/cookiecutter-flask
 .. _`cookiecutter-flask-foundation`: https://github.com/JackStouffer/cookiecutter-Flask-Foundation
 .. _`cookiecutter-flask-minimal`: https://github.com/candidtim/cookiecutter-flask-minimal
