@@ -7,13 +7,16 @@ Development Leads
 
 * Audrey Roy Greenfeld (`@audreyr`_)
 * Daniel Roy Greenfeld (`@pydanny`_)
+* Raphael Pierzina (`@hackebrot`_)
 
 Core Committers
 ---------------
 
 * Michael Joseph (`@michaeljoseph`_)
 * Paul Moore (`@pfmoore`_)
-* Raphael Pierzina (`@hackebrot`_)
+* Andrey Shpak (@ssbarnea)
+* Sorin Sbarnea (@insspb)
+
 
 Contributors
 ------------

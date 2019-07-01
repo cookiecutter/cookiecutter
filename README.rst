@@ -278,42 +278,8 @@ Waiting for a response to an issue/question?
 Support This Project
 --------------------
 
-This project is run by volunteers. Please support them in their efforts to
-maintain and improve Cookiecutter:
-
-* Daniel Roy Greenfeld (`@pydanny`_): `patreon.com/danielroygreenfeld`_
-* Raphael Pierzina (`@hackebrot`_): `patreon.com/hackebrot`_
-
-.. _`patreon.com/danielroygreenfeld`: https://www.patreon.com/danielroygreenfeld
-.. _`patreon.com/hackebrot`: https://www.patreon.com/hackebrot
-
-You can also support this project by taking our Python packaging course:
-
-.. image:: https://www.pydanny.com/static/packaging-course.jpg
-   :name: Creating and Distributing Python Packages image
-   :align: center
-   :alt: Creating and Distributing Python Packages
-   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages
-
-Also available in Spanish:
-
-.. image:: https://www.pydanny.com/static/packaging-course-es.jpg
-   :name: Creating and Distributing Python Packages ES image
-   :align: center
-   :alt: Creating and Distributing Python Packages ES
-   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages-es
-
-
-Backers
--------
-
-We would like to thank the following people for supporting us:
-
-* Alex DeBrie
-* Alexandre Y. Harano
-* Bruno Alla
-* Carol Willing
-* Russell Keith-Magee
+This project is run by volunteers. Shortly we will be providing means for organizations
+and individuals to support the project. 
 
 Code of Conduct
 ---------------
