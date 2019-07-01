@@ -16,6 +16,7 @@ Core Committers
 * Paul Moore (`@pfmoore`_)
 * Andrey Shpak (@ssbarnea)
 * Sorin Sbarnea (@insspb)
+* Fabio da Luz (@luzfcb)
 
 
 Contributors
