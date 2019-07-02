@@ -9,12 +9,6 @@ environment:
     - PYTHON: "C:\\Python27-x64"
       TOXENV: "py27"
 
-    - PYTHON: "C:\\Python34"
-      TOXENV: "py34"
-
-    - PYTHON: "C:\\Python34-x64"
-      TOXENV: "py34"
-
     - PYTHON: "C:\\Python35"
       TOXENV: "py35"
 
@@ -26,6 +20,12 @@ environment:
 
     - PYTHON: "C:\\Python36-x64"
       TOXENV: "py36"
+
+    - PYTHON: "C:\\Python37"
+      TOXENV: "py37"
+
+    - PYTHON: "C:\\Python37-x64"
+      TOXENV: "py37"
 
 init:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%

@@ -30,7 +30,7 @@ dependency. It generate a coverage report after the tests.
 It is possible to tests with some versions of python, to do this the command
 is::
 
-    $ tox -e py27,py34,pypy
+    $ tox -e py27,py35,pypy
 
-Will run py.test with the python2.7, python3.4 and pypy interpreters, for
+Will run py.test with the python2.7, python3.5 and pypy interpreters, for
 example.
