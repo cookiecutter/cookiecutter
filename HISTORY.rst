@@ -35,6 +35,8 @@ Other Changes:
   (#1057)
 * Make sure to preserve the order of items in the generated cookiecutter
   context, thanks to `@hackebrot`_ (#1074)
+* Fixed DeprecationWarning for a regular expression on python 3.6, thanks to
+  `@reinout`_ (#1124)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -69,6 +71,7 @@ Other Changes:
 .. _`@machinekoder`: https://github.com/machinekoder
 .. _`@JAStark`: https://github.com/JAStark
 .. _`@obestwalter`: https://github.com/obestwalter
+.. _`@reinout`: https://github.com/reinout
 
 
 1.6.0 (2017-10-15) Tim Tam
