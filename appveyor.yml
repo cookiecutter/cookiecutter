@@ -34,9 +34,8 @@ init:
   - "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 install:
-  - "%PYTHON%/Scripts/easy_install -U pip"
-  - "%PYTHON%/Scripts/pip install tox"
-  - "%PYTHON%/Scripts/pip install wheel"
+  - "%PYTHON%/Scripts/pip --upgrade pip"
+  - "%PYTHON%/Scripts/pip install tox wheel"
 
 build: false  # Not a C# project, build stuff at the test step instead.
 
