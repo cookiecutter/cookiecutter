@@ -292,10 +292,13 @@ rooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.
 A Pantry Full of Cookiecutters
 ------------------------------
 
-Here is a list of **cookiecutters** (aka Cookiecutter project templates) for
-you to use or fork.
+You can check all `cookiecutter templates`_ on GitHub. If you are template
+publisher keep in mind to add the ``cookiecutter-template`` topic to your
+repository and the correct language tags.
 
-Make your own, then submit a pull request adding yours to this list!
+Please avoid creating PRs for listing additional templates. We outsourced
+their listing due to extra maintenance required to review them. We will likely
+replace the lists below with links to GitHub queries for each category.
 
 Python
 ~~~~~~
@@ -795,3 +798,4 @@ Similar projects
 .. _`@pfmoore`: https://github.com/pfmoore
 .. _`@hackebrot`: https://github.com/hackebrot
 .. _`Gitter`: https://gitter.im/audreyr/cookiecutter
+.. _`cookiecutter templates`: https://github.com/topics/cookiecutter-template
