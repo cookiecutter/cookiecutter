@@ -46,6 +46,7 @@ Other Changes:
   * `cookiecutter-flask-ask`_ by `@machinekoder`_ (#1056)
   * `cookiecutter-data-driven-journalism`_ by `@JAStark`_ (#1020)
   * `cookiecutter-tox-plugin`_ by `@obestwalter`_ (#1103)
+  * `cookiecutter-django-dokku`_ by `@mashrikt`_ (#1093)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
@@ -54,6 +55,7 @@ Other Changes:
 .. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
 .. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
 .. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+.. _`cookiecutter-django-dokku`: https://github.com/mashrikt/cookiecutter-django-dokku
 
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
@@ -72,6 +74,7 @@ Other Changes:
 .. _`@JAStark`: https://github.com/JAStark
 .. _`@obestwalter`: https://github.com/obestwalter
 .. _`@reinout`: https://github.com/reinout
+.. _`@mashrikt`: https://github.com/mashrikt
 
 
 1.6.0 (2017-10-15) Tim Tam
