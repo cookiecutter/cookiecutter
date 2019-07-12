@@ -30,28 +30,28 @@ environment:
 init:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
   - "git config --system http.sslcainfo \"C:\\Program Files\\Git\\mingw64\\ssl\\certs\\ca-bundle.crt\""
-  - "py -V"
-  - "py -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
+  - "%PYTHON%/python -V"
+  - "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 install:
-  - "py -m pip install --upgrade pip"
-  - "py -m pip install tox wheel"
+  - "%PYTHON%/python -m pip install --upgrade pip"
+  - "%PYTHON%/python -m pip install tox wheel"
 
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
-  - "py -m tox"
+  - "%PYTHON%/python -m tox"
 
 after_test:
-  - "py setup.py bdist_wheel"
+  - "%PYTHON%/python setup.py bdist_wheel"
   - ps: "ls dist"
 
 on_success:
     # Report coverage results to codecov.io
     # and export tox environment variables
-    - "py -m pip install codecov"
+    - "%PYTHON%/python -m pip install codecov"
     - set OS=WINDOWS
-    - "py -e TOXENV OS"
+    - "%PYTHON%/python -e TOXENV OS"
 
 artifacts:
   - path: dist\*
