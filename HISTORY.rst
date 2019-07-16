@@ -8,7 +8,8 @@ History
 
 Important Changes:
 
-* Drop support for EOL Python 3.5 and 3.4 thanks to `@jamescurtin`_ (#1178) and `@insspb` (#1181).
+* Drop support for EOL Python 3.5 and 3.4 thanks to `@jamescurtin`_ (#1178) and
+  `@insspb`_ (#1181).
 * Drop support for EOL Python 3.3 thanks to `@hugovk`_ (#1024)
 
 
@@ -78,6 +79,8 @@ Other Changes:
 .. _`@obestwalter`: https://github.com/obestwalter
 .. _`@reinout`: https://github.com/reinout
 .. _`@mashrikt`: https://github.com/mashrikt
+.. _`@jamescurtin`: https://github.com/jamescurtin
+.. _`@insspb`: https://github.com/insspb
 
 
 1.6.0 (2017-10-15) Tim Tam
