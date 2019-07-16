@@ -27,6 +27,6 @@ Please note that Cookiecutter will **not** install any dependencies on its own!
 As a user you need to make sure you have all the extensions installed, before
 running Cookiecutter on a template that requires custom Jinja2 extensions.
 
-.. _`Jinja2 extensions`: http://jinja.pocoo.org/docs/2.10/extensions/
+.. _`Jinja2 extensions`: http://jinja.pocoo.org/docs/latest/extensions/
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
