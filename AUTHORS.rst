@@ -7,13 +7,16 @@ Development Leads
 
 * Audrey Roy Greenfeld (`@audreyr`_)
 * Daniel Roy Greenfeld (`@pydanny`_)
+* Raphael Pierzina (`@hackebrot`_)
 
 Core Committers
 ---------------
 
 * Michael Joseph (`@michaeljoseph`_)
 * Paul Moore (`@pfmoore`_)
-* Raphael Pierzina (`@hackebrot`_)
+* Andrey Shpak (`@insspb`_)
+* Sorin Sbarnea (`@ssbarnea`_)
+* Fábio C. Barrionuevo da Luz (`@luzfcb`_)
 
 Contributors
 ------------
@@ -84,7 +87,6 @@ Contributors
 * Cédric Krier (`@cedk`_)
 * Tim Osborn (`@ptim`_)
 * Aaron Gallagher (`@habnabit`_)
-* Fábio C. Barrionuevo da Luz (`@luzfcb`_)
 * mozillazg (`@mozillazg`_)
 * Joachim Jablon (`@ewjoachim`_)
 * Andrew Ittner (`@tephyr`_)
@@ -236,4 +238,5 @@ Contributors
 .. _`@asottile`: https://github.com/asottile
 .. _`@jonathansick`: https://github.com/jonathansick
 .. _`@hugovk`: https://github.com/hugovk
-
+.. _`@insspb`: https://github.com/insspb
+.. _`@ssbarnea`: https://github.com/ssbarnea

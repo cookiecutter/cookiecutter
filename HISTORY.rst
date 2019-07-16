@@ -8,7 +8,9 @@ History
 
 Important Changes:
 
-* Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+* Drop support for EOL Python 3.5 and 3.4 thanks to `@jamescurtin`_ (#1178) and `@insspb` (#1181).
+* Drop support for EOL Python 3.3 thanks to `@hugovk`_ (#1024)
+
 
 .. _`@hugovk`: https://github.com/hugovk
 
@@ -35,6 +37,9 @@ Other Changes:
   (#1057)
 * Make sure to preserve the order of items in the generated cookiecutter
   context, thanks to `@hackebrot`_ (#1074)
+* Fixed DeprecationWarning for a regular expression on python 3.6, thanks to
+  `@reinout`_ (#1124)
+* Document use of cookiecutter-template topic on GitHub, thanks to `@ssbarnea` (#1189)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -44,6 +49,7 @@ Other Changes:
   * `cookiecutter-flask-ask`_ by `@machinekoder`_ (#1056)
   * `cookiecutter-data-driven-journalism`_ by `@JAStark`_ (#1020)
   * `cookiecutter-tox-plugin`_ by `@obestwalter`_ (#1103)
+  * `cookiecutter-django-dokku`_ by `@mashrikt`_ (#1093)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
@@ -52,6 +58,7 @@ Other Changes:
 .. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
 .. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
 .. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+.. _`cookiecutter-django-dokku`: https://github.com/mashrikt/cookiecutter-django-dokku
 
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
@@ -69,6 +76,8 @@ Other Changes:
 .. _`@machinekoder`: https://github.com/machinekoder
 .. _`@JAStark`: https://github.com/JAStark
 .. _`@obestwalter`: https://github.com/obestwalter
+.. _`@reinout`: https://github.com/reinout
+.. _`@mashrikt`: https://github.com/mashrikt
 
 
 1.6.0 (2017-10-15) Tim Tam
