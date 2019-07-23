@@ -151,8 +151,8 @@ When you're processing the first change after a release, create boilerplate foll
 
     Other changes:
 
-    * Description of the change, thanks to @contributor (#PR). 
-                      
+    * Description of the change, thanks to @contributor (#PR).
+
     .. _`@contributor`: https://github.com/contributor
 
 Process: Accepting Template Pull Requests
