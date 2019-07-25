@@ -8,7 +8,7 @@ little bit helps, and credit will always be given.
 - [Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
 - [Contributor Guidelines](#Contributor-Guidelines)
 - [Contributor Testing](#Testing-with-tox)
-- [Core Committer Guide](#)
+- [Core Committer Guide](#Core-Committer-Guide)
 
 
 ## Types of Contributions
