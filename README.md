@@ -19,7 +19,7 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 
 ![](https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
 
-We are proud to be an open source sponsor of `PyCon 2016`.
+We are proud to be an open source sponsor of [PyCon 2016](https://us.pycon.org/2016/sponsors/).
 
 
 ## Features
