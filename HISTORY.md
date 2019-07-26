@@ -1,6 +1,6 @@
 # History
 
-## 1.7.0 (????-??-??) ???????
+### 1.7.0 (????-??-??) ???????
 
 
 Important Changes:
@@ -30,7 +30,7 @@ for the PR and [\@BruceEckel](https://github.com/BruceEckel) for the review (\#1
     -   [cookiecutter-data-driven-journalism](https://github.com/jastark/cookiecutter-data-driven-journalism) by [\@JAStark](https://github.com/JAStark) (\#1020)
     -   [cookiecutter-tox-plugin](https://github.com/tox-dev/cookiecutter-tox-plugin) by [\@obestwalter](https://github.com/obestwalter) (\#1103)
 
-## 1.6.0 (2017-10-15) Tim Tam
+### 1.6.0 (2017-10-15) Tim Tam
 
 New Features:
 
@@ -88,7 +88,7 @@ Other Changes:
     -   [cookiecutter-devenv](https://bitbucket.org/greenguavalabs/cookiecutter-devenv.git) by [\@greenguavalabs](https://bitbucket.org/greenguavalabs) (\#991)
 
 
-## 1.5.1 (2017-02-04) Alfajor
+### 1.5.1 (2017-02-04) Alfajor
 
 New Features:
 
@@ -113,7 +113,7 @@ Other Changes:
     -   [cookiecutter-elm](https://github.com/m-x-k/cookiecutter-elm.git), [cookiecutter-java](https://github.com/m-x-k/cookiecutter-java.git) and [cookiecutter-spring-boot](https://github.com/m-x-k/cookiecutter-spring-boot.git) by [\@m-x-k](https://github.com/m-x-k) (\#879)
 
 
-## 1.5.0 (2016-12-18) Alfajor
+### 1.5.0 (2016-12-18) Alfajor
 
 The primary goal of this release was to add command-line support for passing extra context, address minor bugs and make a number of
 improvements.
@@ -228,7 +228,7 @@ Other Changes:
     -   [cookiecutter-reproducible-science](https://github.com/mkrapp/cookiecutter-reproducible-science) by [\@mkrapp](https://github.com/mkrapp) (\#826)
     -   [cc-automated-drf-template](https://github.com/TAMU-CPT/cc-automated-drf-template) by [\@elenimijalis](https://github.com/elenimijalis) (\#832)
 
-## 1.4.0 (2016-03-20) Shortbread
+### 1.4.0 (2016-03-20) Shortbread
 
 The goal of this release is changing to a strict Jinja2 environment, paving the way to more awesome in the future, as well as adding support
 for Jinja2 extensions.
@@ -281,7 +281,7 @@ Other Changes:
     -   [cookiecutter-mediawiki-extension](https://github.com/JonasGroeger/cookiecutter-mediawiki-extension) by [\@JonasGroeger](https://github.com/JonasGroeger) (\#645)
     -   [cookiecutter-django-gulp](https://github.com/valerymelou/cookiecutter-django-gulp) by [\@valerymelou](https://github.com/valerymelou) (\#648)
 
-## 1.3.0 (2015-11-10) Pumpkin Spice
+### 1.3.0 (2015-11-10) Pumpkin Spice
 
 The goal of this release is to extend the user config feature and to make hook execution more robust.
 
@@ -312,7 +312,7 @@ Other Changes:
     -   [wagtail-cookiecutter-foundation](https://github.com/chrisdev/wagtail-cookiecutter-foundation) by [\@chrisdev](https://github.com/chrisdev), et al. (\#566)
 
 
-## 1.2.1 (2015-10-18) Zimtsterne
+### 1.2.1 (2015-10-18) Zimtsterne
 
 *Zimtsterne are cinnamon star cookies*
 
@@ -330,20 +330,20 @@ Other Changes:
 -   If a filename is empty, do not generate. Log instead ([\@iljabauer](https://github.com/iljabauer) / \#444)
 -   Fix tests as per last changes in [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage), thanks to [\@eliasdorneles](https://github.com/eliasdorneles)(\#555).
 -   Removed deprecated cookiecutter-pylibrary-minimal from the list, thanks to [\@ionelmc](https://github.com/ionelmc) (\#556)
--   Moved to using [rualmel.yaml]{.title-ref} instead of [PyYAML]{.title-ref}, except for Windows users on Python 2.7, thanks
+-   Moved to using rualmel.yaml instead of PyYAML, except for Windows users on Python 2.7, thanks
     to [\@pydanny](https://github.com/pydanny) (\#557)
 
 *Why 1.2.1 instead of 1.2.0? There was a problem in the distribution that we pushed to PyPI. Since you can\'t replace previous files uploaded to PyPI, we deleted the files on PyPI and released 1.2.1.*
 
 
-## 1.1.0 (2015-09-26) Snickerdoodle
+### 1.1.0 (2015-09-26) Snickerdoodle
 
 The goals of this release were ```copy without render``` and a few additional command-line options such as ```--overwrite-if-exists```, ```---replay```, and ```output-dir```.
 
 Features:
 
 -   Added [copy without render](http://cookiecutter.readthedocs.io/en/latest/advanced_usage.html#copy-without-render) feature, making it much easier for developers of Ansible, Salt Stack, and other recipe-based tools to work with Cookiecutter. Thanks to [\@osantana](https://github.com/osantana) and [\@LucianU](https://github.com/LucianU) for their innovation, as well as [\@hackebrot](https://github.com/hackebrot) for fixing the Windows problems (\#132, \#184, \#425).
--   Added [specify output directory]{.title-ref}, thanks to [\@tony](https://github.com/tony) and [\@hackebrot](https://github.com/hackebrot) (\#531, \#452).
+-   Added specify output directory, thanks to [\@tony](https://github.com/tony) and [\@hackebrot](https://github.com/hackebrot) (\#531, \#452).
 -   Abort template rendering if the project output directory already exists, thanks to [\@lgp171188](https://github.com/lgp171188)
 (\#470, \#471).
 -   Add a flag to overwrite existing output directory, thanks to [\@lgp171188](https://github.com/lgp171188) for the implementation (\#495) and [\@schacki](https://github.com/schacki), [\@ionelmc](https://github.com/ionelmc), [\@pydanny](https://github.com/pydanny) and [\@hackebrot](https://github.com/hackebrot) for submitting issues and code reviews (\#475, \#493).
@@ -362,9 +362,9 @@ Other Changes:
 -   Added landscape.io flair, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#439).
 -   Descriptions of PEP8 specifications and milestone management, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#440).
     -   Added alternate installation options in the documentation, thanks to [\@pydanny](https://github.com/pydanny) (\#117, \#315).
--   The test of the [which()]{.title-ref} function now tests against the [date]{.title-ref} command, thanks to [\@vincentbernat](https://github.com/vincentbernat) (\#446)
+-   The test of the which() function now tests against the date command, thanks to [\@vincentbernat](https://github.com/vincentbernat) (\#446)
 -   Ensure file handles in setup.py are closed using with statement, thanks to [\@svisser](https://github.com/svisser) (\#280).
--   Removed deprecated and fully extraneous [compat.is\_exe()]{.title-ref} function, thanks to [\@hackebrot](https://github.com/hackebrot) (\#485).
+-   Removed deprecated and fully extraneous compat.is\_exe() function, thanks to [\@hackebrot](https://github.com/hackebrot) (\#485).
 -   Disabled sudo in .travis, thanks to [\@hackebrot](https://github.com/hackebrot) (\#482).
 -   Switched to shields.io for problematic badges, thanks to [\@pydanny](https://github.com/pydanny) (\#491).
 -   Added whichcraft and removed `compat.which()`, thanks to [\@pydanny](https://github.com/pydanny) (\#511).
@@ -372,8 +372,8 @@ Other Changes:
 -   Moved to using click version command, thanks to [\@hackebrot](https://github.com/hackebrot) (\#489).
 -   Don\'t use unicode\_literals to please click, thanks to [\@vincentbernat](https://github.com/vincentbernat) (\#503).
 -   Remove warning for Python 2.6 from \_\_init\_\_.py, thanks to [\@hackebrot](https://github.com/hackebrot).
--   Removed [compat.py]{.title-ref} module, thanks to [\@hackebrot](https://github.com/hackebrot).
--   Added [future]{.title-ref} to requirements, thanks to [\@hackebrot](https://github.com/hackebrot).
+-   Removed compat.py module, thanks to [\@hackebrot](https://github.com/hackebrot).
+-   Added future to requirements, thanks to [\@hackebrot](https://github.com/hackebrot).
 -   Fixed problem where expanduser does not resolve \"\~\" correctly on windows 10 using tox, thanks to [\@maiksensi](https://github.com/maiksensi). (\#527)
 
 -   Added more cookiecutter templates to the mix:
@@ -391,7 +391,7 @@ Other Changes:
     -   [cookiecutter-tampermonkey](https://github.com/christabor/cookiecutter-tampermonkey) by [\@christabor](https://github.com/christabor) (\#516)
     -   [cookiecutter-wagtail](https://github.com/torchbox/cookiecutter-wagtail) by [\@torchbox](https://github.com/torchbox) (\#533)
 
-## 1.0.0 (2015-03-13) Chocolate Chip
+### 1.0.0 (2015-03-13) Chocolate Chip
 
 The goals of this release was to formally remove support for Python 2.6 and continue the move to using py.test.
 
@@ -423,22 +423,22 @@ Other Changes:
     -   [cookiecutter-django-rest-framework](https://github.com/jpadilla/cookiecutter-django-rest-framework) by [\@jpadilla](https://github.com/jpadilla)
     -   [cookiedozer](https://github.com/hackebrot/cookiedozer) by [\@hackebrot](https://github.com/hackebrot)
 
-## 0.9.0 (2015-01-13)
+### 0.9.0 (2015-01-13)
 
 
-The goals of this release were to add the ability to Jinja2ify the [cookiecutter.json]{.title-ref} default values, and formally launch support for Python 3.4.
+The goals of this release were to add the ability to Jinja2ify the cookiecutter.json default values, and formally launch support for Python 3.4.
 
 Features:
 
 -   Python 3.4 is now a first class citizen, thanks to everyone.
--   [cookiecutter.json]{.title-ref} values are now rendered Jinja2 templates, thanks to \@bollwyvl (\#291).
--   Move to [py.test]{.title-ref}, thanks to [\@pfmoore](https://github.com/pfmoore) (\#319) and [\@ramiroluz](https://github.com/ramiroluz) (\#310).
--   Add [PendingDeprecation]{.title-ref} warning for users of Python 2.6, as support for it is gone in Python 2.7, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#201).
+-   cookiecutter.json values are now rendered Jinja2 templates, thanks to \@bollwyvl (\#291).
+-   Move to py.test, thanks to [\@pfmoore](https://github.com/pfmoore) (\#319) and [\@ramiroluz](https://github.com/ramiroluz) (\#310).
+-   Add PendingDeprecation warning for users of Python 2.6, as support for it is gone in Python 2.7, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#201).
 
 Bug Fixes:
 
--   Corrected typo in [Makefile]{.title-ref}, thanks to [\@inglesp](https://github.com/inglesp) (\#297).
--   Raise an exception when users don\'t have [git]{.title-ref} or [hg]{.title-ref} installed, thanks to [\@pydanny](https://github.com/pydanny) (\#303).
+-   Corrected typo in Makefile, thanks to [\@inglesp](https://github.com/inglesp) (\#297).
+-   Raise an exception when users don\'t have git or hg installed, thanks to [\@pydanny](https://github.com/pydanny) (\#303).
 
 Other changes:
 
@@ -447,18 +447,18 @@ Other changes:
 -   Added AppVeyor badge, thanks to [\@pydanny](https://github.com/pydanny)
 -   Documentation and PyPI trove classifier updates, thanks to [\@thedrow](https://github.com/thedrow) (\#323 and \#324)
 
-## 0.8.0 (2014-10-30)
+### 0.8.0 (2014-10-30)
 
 
 The goal of this release was to allow for injection of extra context via the Cookiecutter API, and to fix minor bugs.
 
 Features:
 
--   [cookiecutter()]{.title-ref} now takes an optional [extra\_context]{.title-ref} parameter, thanks to [\@michaeljoseph](https://github.com/michaeljoseph), [\@fcurella](https://github.com/fcurella), [\@aventurella](https://github.com/aventurella),  [\@emonty](https://github.com/emonty), [\@schacki](https://github.com/schacki), [\@ryanolson](https://github.com/ryanolson), [\@pfmoore](https://github.com/pfmoore), [\@pydanny](https://github.com/pydanny), [\@audreyr](https://github.com/audreyr) (\#260).
+-   cookiecutter() now takes an optional extra\_context parameter, thanks to [\@michaeljoseph](https://github.com/michaeljoseph), [\@fcurella](https://github.com/fcurella), [\@aventurella](https://github.com/aventurella),  [\@emonty](https://github.com/emonty), [\@schacki](https://github.com/schacki), [\@ryanolson](https://github.com/ryanolson), [\@pfmoore](https://github.com/pfmoore), [\@pydanny](https://github.com/pydanny), [\@audreyr](https://github.com/audreyr) (\#260).
 -   Context is now injected into hooks, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) and [\@dinopetrone](https://github.com/dinopetrone).
--   Moved all Python 2/3 compatability code into [cookiecutter.compat]{.title-ref}, making the eventual move to [six]{.title-ref} easier, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#60, \#102).
--   Added [cookiecutterrc]{.title-ref} defined aliases for cookiecutters, thanks to [\@pfmoore](https://github.com/pfmoore) (\#246)
--   Added [flake8]{.title-ref} to tox to check for pep8 violations, thanks to [\@natim](https://github.com/Natim).
+-   Moved all Python 2/3 compatability code into cookiecutter.compat, making the eventual move to six easier, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#60, \#102).
+-   Added cookiecutterrc defined aliases for cookiecutters, thanks to [\@pfmoore](https://github.com/pfmoore) (\#246)
+-   Added flake8 to tox to check for pep8 violations, thanks to [\@natim](https://github.com/Natim).
 
 Bug Fixes:
 
@@ -474,286 +474,179 @@ Other Changes:
     -   [cookiecutter-djangocms-plugin](https://github.com/mishbahr/cookiecutter-djangocms-plugin) by [\@mishbahr](https://github.com/mishbahr)
     -   [cookiecutter-pyvanguard](https://github.com/robinandeer/cookiecutter-pyvanguard) by [\@robinandeer](https://github.com/robinandeer)
 
-0.7.2 (2014-08-05)
-------------------
+### 0.7.2 (2014-08-05)
 
-The goal of this release was to fix cross-platform compatibility,
-primarily Windows bugs that had crept in during the addition of new
-features. As of this release, Windows is a first-class citizen again,
-now complete with continuous integration.
+The goal of this release was to fix cross-platform compatibility, primarily Windows bugs that had crept in during the addition of new
+features. As of this release, Windows is a first-class citizen again, now complete with continuous integration.
 
 Bug Fixes:
 
--   Fixed the contributing file so it displays nicely in Github, thanks
-    to [\@pydanny](https://github.com/pydanny).
--   Updates 2.6 requirements to include simplejson, thanks to
-    [\@saxix](https://github.com/saxix).
--   Avoid unwanted extra spaces in string literal, thanks to
-    [\@merwok](https://github.com/merwok).
--   Fix [\@unittest.skipIf]{.title-ref} error on Python 2.6.
--   Let sphinx parse [:param:]{.title-ref} properly by inserting
-    newlines \#213, thanks to [\@mineo](https://github.com/mineo).
--   Fixed Windows test prompt failure by replacing stdin per
-    [\@cjrh](https://github.com/cjrh) in \#195.
--   Made rmtree remove readonly files, thanks to
-    [\@pfmoore](https://github.com/pfmoore).
--   Now using tox to run tests on Appveyor, thanks to
-    [\@pfmoore](https://github.com/pfmoore) (\#241).
--   Fixed tests that assumed the system encoding was utf-8, thanks to
-    [\@pfmoore](https://github.com/pfmoore) (\#242, \#244).
--   Added a tox ini file that uses py.test, thanks to
-    [\@pfmoore](https://github.com/pfmoore) (\#245).
+-   Fixed the contributing file so it displays nicely in Github, thanks to [\@pydanny](https://github.com/pydanny).
+-   Updates 2.6 requirements to include simplejson, thanks to [\@saxix](https://github.com/saxix).
+-   Avoid unwanted extra spaces in string literal, thanks to [\@merwok](https://github.com/merwok).
+-   Fix @unittest.skipIf error on Python 2.6.
+-   Let sphinx parse :param: properly by inserting newlines \#213, thanks to [\@mineo](https://github.com/mineo).
+-   Fixed Windows test prompt failure by replacing stdin per [\@cjrh](https://github.com/cjrh) in \#195.
+-   Made rmtree remove readonly files, thanks to [\@pfmoore](https://github.com/pfmoore).
+-   Now using tox to run tests on Appveyor, thanks to [\@pfmoore](https://github.com/pfmoore) (\#241).
+-   Fixed tests that assumed the system encoding was utf-8, thanks to [\@pfmoore](https://github.com/pfmoore) (\#242, \#244).
+-   Added a tox ini file that uses py.test, thanks to [\@pfmoore](https://github.com/pfmoore) (\#245).
 
 Other Changes:
 
--   [\@audreyr](https://github.com/audreyr) formally accepted position
-    as **BDFL of cookiecutter**.
--   Elevated [\@pydanny](https://github.com/pydanny),
-    [\@michaeljoseph](https://github.com/michaeljoseph), and
-    [\@pfmoore](https://github.com/pfmoore) to core committer status.
--   Added Core Committer guide, by
-    [\@audreyr](https://github.com/audreyr).
--   Generated apidocs from [make docs]{.title-ref}, by
-    [\@audreyr](https://github.com/audreyr).
--   Added [contributing]{.title-ref} command to the [make
-    docs]{.title-ref} function, by
-    [\@pydanny](https://github.com/pydanny).
--   Refactored contributing documentation, included adding core
-    committer instructions, by [\@pydanny](https://github.com/pydanny)
-    and [\@audreyr](https://github.com/audreyr).
--   Do not convert input prompt to bytes, thanks to
-    [\@uranusjr](https://github.com/uranusjr) (\#192).
+-   [\@audreyr](https://github.com/audreyr) formally accepted position as **BDFL of cookiecutter**.
+-   Elevated [\@pydanny](https://github.com/pydanny), [\@michaeljoseph](https://github.com/michaeljoseph), and [\@pfmoore](https://github.com/pfmoore) to core committer status.
+-   Added Core Committer guide, by [\@audreyr](https://github.com/audreyr).
+-   Generated apidocs from make docs, by [\@audreyr](https://github.com/audreyr).
+-   Added contributing command to the makedocs function, by [\@pydanny](https://github.com/pydanny).
+-   Refactored contributing documentation, included adding core committer instructions, by [\@pydanny](https://github.com/pydanny) and [\@audreyr](https://github.com/audreyr).
+-   Do not convert input prompt to bytes, thanks to [\@uranusjr](https://github.com/uranusjr) (\#192).
 -   Added troubleshooting info about Python 3.3 tests and tox.
--   Added documentation about command line arguments, thanks to
-    [\@saxix](https://github.com/saxix).
+-   Added documentation about command line arguments, thanks to [\@saxix](https://github.com/saxix).
 -   Style cleanups.
--   Added environment variable to disable network tests for environments
-    without networking, thanks to
-    [\@vincentbernat](https://github.com/vincentbernat).
--   Added Appveyor support to aid Windows integrations, thanks to
-    [\@pydanny](https://github.com/pydanny) (\#215).
--   CONTRIBUTING.rst is now generated via [make
-    contributing]{.title-ref}, thanks to
-    [\@pydanny](https://github.com/pydanny) (\#220).
--   Removed unnecessary endoing argument to [json.load]{.title-ref},
-    thanks to [\@pfmoore](https://github.com/pfmoore) (\#234).
--   Now generating shell hooks dynamically for Unix/Windows portability,
-    thanks to [\@pfmoore](https://github.com/pfmoore) (\#236).
--   Removed non-portable assumptions about directory structure, thanks
-    to [\@pfmoore](https://github.com/pfmoore) (\#238).
--   Added a note on portability to the hooks documentation, thanks to
-    [\@pfmoore](https://github.com/pfmoore) (\#239).
--   Replaced [unicode\_open]{.title-ref} with direct use of
-    [io.open]{.title-ref}, thanks to
-    [\@pfmoore](https://github.com/pfmoore) (\#229).
+-   Added environment variable to disable network tests for environments without networking, thanks to [\@vincentbernat](https://github.com/vincentbernat).
+-   Added Appveyor support to aid Windows integrations, thanks to [\@pydanny](https://github.com/pydanny) (\#215).
+-   CONTRIBUTING.rst is now generated via make contributing, thanks to [\@pydanny](https://github.com/pydanny) (\#220).
+-   Removed unnecessary endoing argument to json.load, thanks to [\@pfmoore](https://github.com/pfmoore) (\#234).
+-   Now generating shell hooks dynamically for Unix/Windows portability, thanks to [\@pfmoore](https://github.com/pfmoore) (\#236).
+-   Removed non-portable assumptions about directory structure, thanks to [\@pfmoore](https://github.com/pfmoore) (\#238).
+-   Added a note on portability to the hooks documentation, thanks to [\@pfmoore](https://github.com/pfmoore) (\#239).
+-   Replaced unicode\_open with direct use of io.open, thanks to [\@pfmoore](https://github.com/pfmoore) (\#229).
 -   Added more Cookiecutters to the list:
-    -   [cookiecutter-kivy](https://github.com/hackebrot/cookiecutter-kivy)
-        by [\@hackebrot](https://github.com/hackebrot)
-    -   [BoilerplatePP](https://github.com/Paspartout/BoilerplatePP) by
-        [\@Paspartout](https://github.com/Paspartout)
-    -   [cookiecutter-pypackage-minimal](https://github.com/kragniz/cookiecutter-pypackage-minimal)
-        by [\@borntyping](https://github.com/borntyping)
-    -   [cookiecutter-ansible-role](https://github.com/iknite/cookiecutter-ansible-role)
-        by [\@iknite](https://github.com/iknite)
-    -   [cookiecutter-pylibrary](https://github.com/ionelmc/cookiecutter-pylibrary)
-        by [\@ionelmc](https://github.com/ionelmc)
-    -   [cookiecutter-pylibrary-minimal](https://github.com/ionelmc/cookiecutter-pylibrary-minimal)
-        by [\@ionelmc](https://github.com/ionelmc)
+    -   [cookiecutter-kivy](https://github.com/hackebrot/cookiecutter-kivy) by [\@hackebrot](https://github.com/hackebrot)
+    -   [BoilerplatePP](https://github.com/Paspartout/BoilerplatePP) by [\@Paspartout](https://github.com/Paspartout)
+    -   [cookiecutter-pypackage-minimal](https://github.com/kragniz/cookiecutter-pypackage-minimal) by [\@borntyping](https://github.com/borntyping)
+    -   [cookiecutter-ansible-role](https://github.com/iknite/cookiecutter-ansible-role) by [\@iknite](https://github.com/iknite)
+    -   [cookiecutter-pylibrary](https://github.com/ionelmc/cookiecutter-pylibrary) by [\@ionelmc](https://github.com/ionelmc)
+    -   [cookiecutter-pylibrary-minimal](https://github.com/ionelmc/cookiecutter-pylibrary-minimal) by [\@ionelmc](https://github.com/ionelmc)
 
-0.7.1 (2014-04-26)
-------------------
+### 0.7.1 (2014-04-26)
 
 Bug fixes:
 
--   Use the current Python interpreter to run Python hooks, thanks to
-    [\@coderanger](https://github.com/coderanger).
--   Include tests and documentation in source distribution, thanks to
-    [\@vincentbernat](https://github.com/vincentbernat).
--   Fix various warnings and missing things in the docs (\#129, \#130),
-    thanks to [\@nedbat](https://github.com/nedbat).
--   Add command line option to get version (\#89), thanks to
-    [\@davedash](https://github.com/davedash) and
-    [\@cyberj](https://github.com/cyberj).
+-   Use the current Python interpreter to run Python hooks, thanks to [\@coderanger](https://github.com/coderanger).
+-   Include tests and documentation in source distribution, thanks to [\@vincentbernat](https://github.com/vincentbernat).
+-   Fix various warnings and missing things in the docs (\#129, \#130), thanks to [\@nedbat](https://github.com/nedbat).
+-   Add command line option to get version (\#89), thanks to [\@davedash](https://github.com/davedash) and [\@cyberj](https://github.com/cyberj).
 
 Other changes:
 
 -   Add more Cookiecutters to the list:
-    -   [cookiecutter-avr](https://github.com/solarnz/cookiecutter-avr)
-        by [\@solarnz](https://github.com/solarnz)
-    -   [cookiecutter-tumblr-theme](https://github.com/relekang/cookiecutter-tumblr-theme)
-        by [\@relekang](https://github.com/relekang)
-    -   [cookiecutter-django-paas](https://github.com/pbacterio/cookiecutter-django-paas)
-        by [\@pbacterio](https://github.com/pbacterio)
+    -   [cookiecutter-avr](https://github.com/solarnz/cookiecutter-avr) by [\@solarnz](https://github.com/solarnz)
+    -   [cookiecutter-tumblr-theme](https://github.com/relekang/cookiecutter-tumblr-theme) by [\@relekang](https://github.com/relekang)
+    -   [cookiecutter-django-paas](https://github.com/pbacterio/cookiecutter-django-paas) by [\@pbacterio](https://github.com/pbacterio)
 
-0.7.0 (2013-11-09)
-------------------
+### 0.7.0 (2013-11-09)
 
-This is a release with significant improvements and changes. Please read
-through this list before you upgrade.
+This is a release with significant improvements and changes. Please read through this list before you upgrade.
 
 New features:
 
--   Support for \--checkout argument, thanks to
-    [\@foobacca](https://github.com/foobacca/).
--   Support for pre-generate and post-generate hooks, thanks to
-    [\@raphigaziano](https://github.com/raphigaziano/). Hooks are Python
-    or shell scripts that run before and/or after your project is
-    generated.
--   Support for absolute paths to cookiecutters, thanks to
-    [\@krallin](https://github.com/krallin/).
--   Support for Mercurial version control system, thanks to
-    [\@pokoli](https://github.com/pokoli/).
--   When a cookiecutter contains invalid Jinja2 syntax, you get a better
-    message that shows the location of the TemplateSyntaxError. Thanks
-    to [\@benjixx](https://github.com/benjixx/).
--   Can now prompt the user to enter values during generation from a
-    local cookiecutter, thanks to
-    [\@ThomasChiroux](https://github.com/ThomasChiroux/). This is now
-    always the default behavior. Prompts can also be supressed with
-    [\--no-input]{.title-ref}.
--   Your cloned cookiecutters are stored by default in your
-    [\~/.cookiecutters/]{.title-ref} directory (or Windows equivalent).
-    The location is configurable. (This is a major change from the
-    pre-0.7.0 behavior, where cloned cookiecutters were deleted at the
-    end of project generation.) Thanks
-    [\@raphigaziano](https://github.com/raphigaziano/).
--   User config in a [\~/.cookiecutterrc]{.title-ref} file, thanks to
-    [\@raphigaziano](https://github.com/raphigaziano/). Configurable
-    settings are [cookiecutters\_dir]{.title-ref} and
-    [default\_context]{.title-ref}.
--   File permissions are now preserved during project generation, thanks
-    to [\@benjixx](https://github.com/benjixx/).
+-   Support for \--checkout argument, thanks to [\@foobacca](https://github.com/foobacca/).
+-   Support for pre-generate and post-generate hooks, thanks to [\@raphigaziano](https://github.com/raphigaziano/). Hooks are Python or shell scripts that run before and/or after your project is generated.
+-   Support for absolute paths to cookiecutters, thanks to [\@krallin](https://github.com/krallin/).
+-   Support for Mercurial version control system, thanks to [\@pokoli](https://github.com/pokoli/).
+-   When a cookiecutter contains invalid Jinja2 syntax, you get a better message that shows the location of the TemplateSyntaxError. Thanks
+to [\@benjixx](https://github.com/benjixx/).
+-   Can now prompt the user to enter values during generation from a local cookiecutter, thanks to [\@ThomasChiroux](https://github.com/ThomasChiroux/). This is now always the default behavior. Prompts can also be supressed with ```--no-input```.
+-   Your cloned cookiecutters are stored by default in your ~/.cookiecutters/ directory (or Windows equivalent). The location is configurable. (This is a major change from the pre-0.7.0 behavior, where cloned cookiecutters were deleted at the end of project generation.) Thanks [\@raphigaziano](https://github.com/raphigaziano/).
+-   User config in a \~/.cookiecutterrc file, thanks to [\@raphigaziano](https://github.com/raphigaziano/). Configurable settings are cookiecutters\_dir and default\_context.
+-   File permissions are now preserved during project generation, thanks to [\@benjixx](https://github.com/benjixx/).
 
 Bug fixes:
 
--   Unicode issues with prompts and answers are fixed, thanks to
-    [\@s-m-i-t-a](https://github.com/s-m-i-t-a/).
--   The test suite now runs on Windows, which was a major effort. Thanks
-    to [\@pydanny](https://github.com/pydanny), who collaborated on this
-    with me.
+-   Unicode issues with prompts and answers are fixed, thanks to [\@s-m-i-t-a](https://github.com/s-m-i-t-a/).
+-   The test suite now runs on Windows, which was a major effort. Thanks to [\@pydanny](https://github.com/pydanny), who collaborated on this with me.
 
 Other changes:
 
 -   Quite a bit of refactoring and API changes.
--   Lots of documentation improvements. Thanks
-    [\@sloria](https://github.com/sloria/),
-    [\@alex](https://github.com/alex/),
-    [\@pydanny](https://github.com/pydanny),
-    [\@freakboy3742](https://github.com/freakboy3742),
-    [\@es128](https://github.com/es128/),
-    [\@rolo](https://github.com/rolo/).
+-   Lots of documentation improvements. Thanks [\@sloria](https://github.com/sloria/), [\@alex](https://github.com/alex/), [\@pydanny](https://github.com/pydanny), [\@freakboy3742](https://github.com/freakboy3742), [\@es128](https://github.com/es128/), [\@rolo](https://github.com/rolo/).
 -   Better naming and organization of test suite.
--   A [CookiecutterCleanSystemTestCase]{.title-ref} to use for unit
-    tests affected by the user\'s config and cookiecutters directory.
+-   A CookiecutterCleanSystemTestCase to use for unit tests affected by the user\'s config and cookiecutters directory.
 -   Improvements to the project\'s Makefile.
--   Improvements to tests. Thanks
-    [\@gperetin](https://github.com/gperetin/),
-    [\@s-m-i-t-a](https://github.com/s-m-i-t-a/).
--   Removal of [subprocess32]{.title-ref} dependency. Now using
-    non-context manager version of [subprocess.Popen]{.title-ref} for
-    Python 2 compatibility.
--   Removal of cookiecutter\'s [cleanup]{.title-ref} module.
--   A bit of [setup.py]{.title-ref} cleanup, thanks to
-    [\@oubiga](https://github.com/oubiga/).
+-   Improvements to tests. Thanks [\@gperetin](https://github.com/gperetin/), [\@s-m-i-t-a](https://github.com/s-m-i-t-a/).
+-   Removal of subprocess32 dependency. Now using non-context manager version of subprocess.Popen for Python 2 compatibility.
+-   Removal of cookiecutter\'s cleanup module.
+-   A bit of setup.py cleanup, thanks to [\@oubiga](https://github.com/oubiga/).
 -   Now depends on binaryornot 0.2.0.
 
-0.6.4 (2013-08-21)
-------------------
+### 0.6.4 (2013-08-21)
 
 -   Windows support officially added.
 -   Fix TemplateNotFound Exception on Windows (\#37).
 
-0.6.3 (2013-08-20)
-------------------
+### 0.6.3 (2013-08-20)
 
--   Fix copying of binary files in nested paths (\#41), thanks to
-    [\@sloria](https://github.com/sloria/).
+-   Fix copying of binary files in nested paths (\#41), thanks to [\@sloria](https://github.com/sloria/).
 
-0.6.2 (2013-08-19)
-------------------
+### 0.6.2 (2013-08-19)
 
 -   Depend on Jinja2\>=2.4 instead of Jinja2==2.7.
--   Fix errors on attempt to render binary files. Copy them over from
-    the project template without rendering.
--   Fix Python 2.6/2.7 [UnicodeDecodeError]{.title-ref} when values
-    containing Unicode chars are in [cookiecutter.json]{.title-ref}.
--   Set encoding in Python 3 [unicode\_open()]{.title-ref} to always be
-    utf-8.
+-   Fix errors on attempt to render binary files. Copy them over from the project template without rendering.
+-   Fix Python 2.6/2.7 UnicodeDecodeError when values containing Unicode chars are in cookiecutter.json.
+-   Set encoding in Python 3 unicode_open() to always be utf-8.
 
-0.6.1 (2013-08-12)
-------------------
+### 0.6.1 (2013-08-12)
 
--   Improved project template finding. Now looks for the occurrence of
-    [{{]{.title-ref}, [cookiecutter]{.title-ref}, and [}}]{.title-ref}
-    in a directory name.
--   Fix help message for input\_dir arg at command prompt.
--   Minor edge cases found and corrected, as a result of improved test
-    coverage.
+-   Improved project template finding. Now looks for the occurrence of {{,cookiecutter, and }} in a directory name.
+-   Fix help message for input_dir arg at command prompt.
+-   Minor edge cases found and corrected, as a result of improved test coverage.
 
-0.6.0 (2013-08-08)
-------------------
+### 0.6.0 (2013-08-08)
 
--   Config is now in a single [cookiecutter.json]{.title-ref} instead of
-    in [json/]{.title-ref}.
--   When you create a project from a git repo template, Cookiecutter
-    prompts you to enter custom values for the fields defined in
-    [cookiecutter.json]{.title-ref}.
+-   Config is now in a single ```cookiecutter.json``` instead of in ```json/```.
+-   When you create a project from a git repo template, Cookiecutter prompts you to enter custom values for the fields defined in ```cookiecutter.json```.
 
-0.5 (2013-07-28)
-----------------
+### 0.5 (2013-07-28)
 
 -   Friendlier, more simplified command line usage:
 
-        # Create project from the cookiecutter-pypackage/ template
-        $ cookiecutter cookiecutter-pypackage/
-
-        # Create project from the cookiecutter-pypackage.git repo template
-        $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
-
+```console
+    # Create project from the cookiecutter-pypackage/ template
+    $ cookiecutter cookiecutter-pypackage/
+    # Create project from the cookiecutter-pypackage.git repo template
+    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+```  
 -   Can now use Cookiecutter from Python as a package:
 
-        from cookiecutter.main import cookiecutter
+```py
+    from cookiecutter.main import cookiecutter
 
-        # Create project from the cookiecutter-pypackage/ template
-        cookiecutter('cookiecutter-pypackage/')
+    # Create project from the cookiecutter-pypackage/ template
+    cookiecutter('cookiecutter-pypackage/')
 
-        # Create project from the cookiecutter-pypackage.git repo template
-        cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+    # Create project from the cookiecutter-pypackage.git repo template
+    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+```
 
 -   Internal refactor to remove any code that changes the working
     directory.
 
-0.4 (2013-07-22)
-----------------
+### 0.4 (2013-07-22)
 
--   Only takes in one argument now: the input directory. The output
-    directory is generated by rendering the name of the input directory.
+-   Only takes in one argument now: the input directory. The output directory is generated by rendering the name of the input directory.
 -   Output directory cannot be the same as input directory.
 
-0.3 (2013-07-17)
-----------------
+### 0.3 (2013-07-17)
 
 -   Takes in command line args for the input and output directories.
 
-0.2.1 (2013-07-17)
-------------------
+### 0.2.1 (2013-07-17)
 
 -   Minor cleanup.
 
-0.2 (2013-07-17)
-----------------
+### 0.2 (2013-07-17)
 
-Bumped to \"Development Status :: 3 - Alpha\".
+Bumped to "Development Status :: 3 - Alpha".
 
 -   Works with any type of text file.
 -   Directory names and filenames can be templated.
 
-0.1.0 (2013-07-11)
-------------------
+### 0.1.0 (2013-07-11)
 
 -   First release on PyPI.
 
-Roadmap
-=======
+# Roadmap
 
 <https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open>
