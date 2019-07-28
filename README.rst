@@ -279,7 +279,7 @@ Support This Project
 --------------------
 
 This project is run by volunteers. Shortly we will be providing means for organizations
-and individuals to support the project. 
+and individuals to support the project.
 
 Code of Conduct
 ---------------

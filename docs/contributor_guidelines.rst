@@ -12,7 +12,7 @@ Before you submit a pull request, check that it meets these guidelines:
    feature to the list in README.rst.
 3. The pull request should work for Python 2.7, 3.5, 3.6, 3.7, and PyPy on
    Appveyor and Travis CI.
-4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and 
+4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and
    https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
 Coding Standards

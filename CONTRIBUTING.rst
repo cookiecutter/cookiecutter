@@ -3,7 +3,7 @@ Contributing
 ============
 
 Contributions are welcome, and they are greatly appreciated! Every
-little bit helps, and credit will always be given. 
+little bit helps, and credit will always be given.
 
 .. toctree::
    :numbered:
@@ -155,7 +155,7 @@ Before you submit a pull request, check that it meets these guidelines:
    feature to the list in README.rst.
 3. The pull request should work for Python 2.7, 3.5, 3.6, 3.7, and PyPy on
    AppVeyor and Travis CI.
-4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and 
+4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and
    https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
 Coding Standards
@@ -381,8 +381,8 @@ When you're processing the first change after a release, create boilerplate foll
 
     Other changes:
 
-    * Description of the change, thanks to @contributor (#PR). 
-                      
+    * Description of the change, thanks to @contributor (#PR).
+
     .. _`@contributor`: https://github.com/contributor
 
 Process: Accepting Template Pull Requests
