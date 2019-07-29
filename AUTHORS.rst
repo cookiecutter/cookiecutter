@@ -126,7 +126,7 @@ Contributors
 * Anthony Sottile (`@asottile`_)
 * Jonathan Sick (`@jonathansick`_)
 * Hugo (`@hugovk`_)
-* Min ho Kim (`@minho42`_))
+* Min ho Kim (`@minho42`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
