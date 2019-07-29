@@ -693,7 +693,7 @@ Data Driven Journalism
 ~~~~~~~~~~~~~~~~~~~~~~
 
 * `cookiecutter-data-driven-journalism`_: A cookiecutter template to facilitate
-  transparency in data journalism with consistant organisation of data
+  transparency in data journalism with consistent organisation of data
   journalism projects and some pre-populated files (including .gitignore,
   README, AUTHORS)
 
