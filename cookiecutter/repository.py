@@ -11,7 +11,8 @@ from .vcs import clone
 from .zipfile import unzip
 
 REPO_REGEX = re.compile(r"""
-((((git|hg)\+)?(git|ssh|https?):(//)?)  # something like git:// ssh:// etc.
+# something like git:// ssh:// file:// etc.
+((((git|hg)\+)?(git|ssh|file|https?):(//)?)
  |                                      # or
  (\w+@[\w\.]+)                          # something like user@...
 )
