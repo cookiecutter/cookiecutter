@@ -835,7 +835,7 @@ Features:
 
 * `cookiecutter()` now takes an optional `extra_context` parameter, thanks to `@michaeljoseph`_, `@fcurella`_, `@aventurella`_, `@emonty`_, `@schacki`_, `@ryanolson`_, `@pfmoore`_, `@pydanny`_, `@audreyr`_ (#260).
 * Context is now injected into hooks, thanks to `@michaeljoseph`_ and `@dinopetrone`_.
-* Moved all Python 2/3 compatability code into `cookiecutter.compat`, making the eventual move to `six` easier, thanks to `@michaeljoseph`_ (#60, #102).
+* Moved all Python 2/3 compatibility code into `cookiecutter.compat`, making the eventual move to `six` easier, thanks to `@michaeljoseph`_ (#60, #102).
 * Added `cookiecutterrc` defined aliases for cookiecutters, thanks to `@pfmoore`_ (#246)
 * Added `flake8` to tox to check for pep8 violations, thanks to `@natim`_.
 
@@ -1003,7 +1003,7 @@ New features:
   that shows the location of the TemplateSyntaxError. Thanks to `@benjixx`_.
 * Can now prompt the user to enter values during generation from a local
   cookiecutter, thanks to `@ThomasChiroux`_. This is now always the default
-  behavior. Prompts can also be supressed with `--no-input`.
+  behavior. Prompts can also be suppressed with `--no-input`.
 * Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
   directory (or Windows equivalent). The location is configurable. (This is a
   major change from the pre-0.7.0 behavior, where cloned cookiecutters were
