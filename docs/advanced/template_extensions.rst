@@ -27,6 +27,59 @@ Please note that Cookiecutter will **not** install any dependencies on its own!
 As a user you need to make sure you have all the extensions installed, before
 running Cookiecutter on a template that requires custom Jinja2 extensions.
 
+By default Cookiecutter includes the folllowing extensions:
+
+- ``cookiecutter.extensions.JsonifyExtension``
+- ``cookiecutter.extensions.RandomStringExtension``
+- ``jinja2_time.TimeExtension``
+
+Jsonify extension
+~~~~~~~~~~~~~~~~~
+
+The ``cookiecutter.extensions.JsonifyExtension`` extension provides a ``jsonify`` filter in templates
+that converts a Python object to JSON:
+
+.. code-block:: jinja2
+
+    {% {'a': True} | jsonify %}
+
+Would output:
+
+.. code-block:: json
+
+    {"a": true}
+
+Random string extension
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``cookiecutter.extensions.RandomStringExtension`` extension provides a ``random_ascii_string``
+method in templates that generates a random fixed-length string, optionally with punctuation.
+
+To generate a random 12 character string:
+
+.. code-block:: jinja2
+
+    {{ random_ascii_string(12) }}
+
+Outputs:
+
+.. code-block:: text
+
+    bIIUczoNvswh
+
+The second argument controls if punctuation (``'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'``) should be
+present in the result:
+
+.. code-block:: jinja2
+
+    {{ random_ascii_string(12, punctuation=True) }}
+
+Outputs:
+
+.. code-block:: text
+
+    fQupUkY}W!)!
+
 .. _`Jinja2 extensions`: http://jinja.pocoo.org/docs/latest/extensions/
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
