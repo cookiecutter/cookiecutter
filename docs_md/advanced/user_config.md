@@ -58,3 +58,4 @@ Possible settings are:
     (github), [bb]{.title-ref} (bitbucket), and [gl]{.title-ref}
     (gitlab) abbreviations shown above are actually built in, and can be
     used without defining them yourself.
+

@@ -40,3 +40,4 @@ How this works:
 2.  To generate the project, [cookiecutter()]{.title-ref} is called,
     passing the timestamp in as context via the
     [extra\_context]{.title-ref} dict.
+

@@ -15,3 +15,4 @@ You can use Cookiecutter from Python:
 This is useful if, for example, you\'re writing a web framework and need
 to provide developers with a tool similar to [django-admin.py
 startproject]{.title-ref} or [npm init]{.title-ref}.
+

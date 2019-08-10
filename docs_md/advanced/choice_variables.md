@@ -95,3 +95,4 @@ As you can see the order of the options changed from `1 - MIT` to
 `1 - Apache Software License 2.0`. **Cookiecutter** takes the first
 value in the list as the default.
 :::
+

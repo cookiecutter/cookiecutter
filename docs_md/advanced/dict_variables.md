@@ -61,3 +61,4 @@ The above `file_type` dictionary variable creates
 Cookiecutter is using [Jinja2\'s for
 expression](http://jinja.pocoo.org/docs/dev/templates/#for) to iterate
 over the items in the dictionary.
+

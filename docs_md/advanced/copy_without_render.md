@@ -17,3 +17,4 @@ Unix shell-style wildcards:
             "rendered_dir/not_rendered_file.ini"
         ]
     }
+

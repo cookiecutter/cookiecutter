@@ -37,3 +37,4 @@ will be:
 
 -   [yet-another-new-project]{.title-ref}
 -   [yetanothernewproject]{.title-ref}
+

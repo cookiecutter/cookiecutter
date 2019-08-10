@@ -32,3 +32,4 @@ Please note that Cookiecutter will **not** install any dependencies on
 its own! As a user you need to make sure you have all the extensions
 installed, before running Cookiecutter on a template that requires
 custom Jinja2 extensions.
+
