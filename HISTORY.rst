@@ -19,7 +19,8 @@ Important Changes:
 
 Other Changes:
 
-* Prevent ``click`` API v7.0 from showing choices when already shown thanks to `@rly`_ (#1168)
+* Test the codebase with python3.8 beta on tox and travis-ci, thanks to `@mihrab34`_ (#1168)
+* Prevent ``click`` API v7.0 from showing choices when already shown, thanks to `@rly`_ (#1168)
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
   `@andreagrandi`_ (#1009)
 * Update docstrings in ``cookiecutter/main.py``, ``cookiecutter/__init__.py``,
@@ -85,6 +86,7 @@ Other Changes:
 .. _`@jamescurtin`: https://github.com/jamescurtin
 .. _`@insspb`: https://github.com/insspb
 .. _`@rly`: https://github.com/rly
+.. _`@mihrab34`: https://github.com/mihrab34
 
 
 1.6.0 (2017-10-15) Tim Tam
