@@ -49,7 +49,7 @@ repository::
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
     $ cookiecutter git+ssh://git@github.com/audreyr/cookiecutter-pypackage.git
     $ cookiecutter hg+ssh://hg@bitbucket.org/audreyr/cookiecutter-pypackage
-    
+
 You will be prompted to enter a bunch of project config values. (These are
 defined in the project's `cookiecutter.json`.)
 

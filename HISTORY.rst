@@ -12,11 +12,14 @@ Important Changes:
   `@insspb`_ (#1181).
 * Drop support for EOL Python 3.3 thanks to `@hugovk`_ (#1024)
 
+* Increase the minimum ``click`` version to ``7.0`` (#1168)
+
 
 .. _`@hugovk`: https://github.com/hugovk
 
 Other Changes:
 
+* Prevent ``click`` API v7.0 from showing choices when already shown thanks to `@rly`_ (#1168)
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
   `@andreagrandi`_ (#1009)
 * Update docstrings in ``cookiecutter/main.py``, ``cookiecutter/__init__.py``,
@@ -81,6 +84,7 @@ Other Changes:
 .. _`@mashrikt`: https://github.com/mashrikt
 .. _`@jamescurtin`: https://github.com/jamescurtin
 .. _`@insspb`: https://github.com/insspb
+.. _`@rly`: https://github.com/rly
 
 
 1.6.0 (2017-10-15) Tim Tam

@@ -127,6 +127,7 @@ Contributors
 * Jonathan Sick (`@jonathansick`_)
 * Hugo (`@hugovk`_)
 * Min ho Kim (`@minho42`_)
+* Ryan Ly (`@rly`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -242,3 +243,4 @@ Contributors
 .. _`@insspb`: https://github.com/insspb
 .. _`@ssbarnea`: https://github.com/ssbarnea
 .. _`@minho42`: https://github.com/minho42
+.. _`@rly`: https://github.com/rly
