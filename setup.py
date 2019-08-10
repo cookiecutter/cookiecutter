@@ -19,7 +19,7 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-with io.open('README.rst', 'r', encoding='utf-8') as readme_file:
+with io.open('README.md', 'r', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
 requirements = [
