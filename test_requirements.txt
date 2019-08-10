@@ -3,3 +3,4 @@ pytest-cov
 pytest-mock
 pytest-catchlog
 freezegun
+black
