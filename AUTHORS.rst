@@ -128,6 +128,7 @@ Contributors
 * Hugo (`@hugovk`_)
 * Min ho Kim (`@minho42`_)
 * Ryan Ly (`@rly`_)
+* Akintola Rahmat (`@mihrab34`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -244,3 +245,4 @@ Contributors
 .. _`@ssbarnea`: https://github.com/ssbarnea
 .. _`@minho42`: https://github.com/minho42
 .. _`@rly`: https://github.com/rly
+.. _`@mihrab34`: https://github.com/mihrab34
