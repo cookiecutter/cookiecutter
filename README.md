@@ -1,4 +1,3 @@
-
 # Cookiecutter
 
 
@@ -79,7 +78,10 @@ Did someone say features?
     > ```
 
 - Directory names and filenames can be templated. For example:
-  ```{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py```
+
+  ```
+  {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
+  ```
 
 - Supports unlimited levels of directory nesting.
 - 100% of templating is done with Jinja2. This includes file and
@@ -566,7 +568,7 @@ Meta-templates for generating Cookiecutter project templates.
     A template for C++ test-driven-development katas using the CppUTest
     framework.
 
-### C\#
+### C# #
 
 - [cookiecutter-csharp-objc-binding](https://github.com/SandyChapman/cookiecutter-csharp-objc-binding):
     A template for generating a C\# binding project for binding an

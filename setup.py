@@ -45,6 +45,7 @@ setup(
                  'templates, e.g. creating a Python package project from a '
                  'Python package project template.'),
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
     url='https://github.com/cookiecutter/cookiecutter',
