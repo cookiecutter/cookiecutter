@@ -12,14 +12,14 @@ Important Changes:
   `@insspb`_ (#1181).
 * Drop support for EOL Python 3.3 thanks to `@hugovk`_ (#1024)
 
-* Increase the minimum ``click`` version to ``7.0`` (#1168)
+* Increase the minimum ``click`` version to ``7.0`` (#1206)
 
 
 .. _`@hugovk`: https://github.com/hugovk
 
 Other Changes:
 
-* Test the codebase with python3.8 beta on tox and travis-ci, thanks to `@mihrab34`_ (#1168)
+* Test the codebase with python3.8 beta on tox and travis-ci, thanks to `@mihrab34`_ (#1206)
 * Prevent ``click`` API v7.0 from showing choices when already shown, thanks to `@rly`_ (#1168)
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
   `@andreagrandi`_ (#1009)
