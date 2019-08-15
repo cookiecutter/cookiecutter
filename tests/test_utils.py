@@ -185,3 +185,9 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmpdir):
     assert not mock_read_user.called
     assert not repo_file.exists()
     assert deleted
+
+
+def test_jsonify():
+    obj = {'key': 'value'}
+    expected_result = '{\n    "key": "value"\n}'
+    assert utils.jsonify(obj) == expected_result

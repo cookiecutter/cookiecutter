@@ -3,6 +3,7 @@
 """Jinja2 environment and extensions loading."""
 
 from jinja2 import Environment, StrictUndefined
+from jinja2.utils import import_string
 
 from .exceptions import UnknownExtension
 
@@ -26,10 +27,13 @@ class ExtensionLoaderMixin(object):
         context = kwargs.pop('context', {})
 
         default_extensions = [
-            'cookiecutter.extensions.JsonifyExtension',
             'jinja2_time.TimeExtension',
         ]
-        extensions = default_extensions + self._read_extensions(context)
+        function_extensions = [
+            'cookiecutter.extensions.jsonify_extension',
+        ]
+        extensions = default_extensions + self._read_extensions(context) + \
+            self._load_extension_functions(function_extensions)
 
         try:
             super(ExtensionLoaderMixin, self).__init__(
@@ -51,6 +55,22 @@ class ExtensionLoaderMixin(object):
             return []
         else:
             return [str(ext) for ext in extensions]
+
+    def _load_extension_functions(self, extension_strs):
+        """Load custom extensions that have been written as functions.
+
+        At runtime, this imports the relevant extension and sets an
+        identifier attribute which is required by to be run by jinja2
+        via the load_extensions function
+
+        Returns list of loaded extensions.
+        """
+        extensions = []
+        for extension_str in extension_strs:
+            extension = import_string(extension_str)
+            setattr(extension, 'identifier', extension_str)
+            extensions.append(extension)
+        return extensions
 
 
 class StrictEnvironment(ExtensionLoaderMixin, Environment):

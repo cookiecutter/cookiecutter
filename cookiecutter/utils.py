@@ -5,6 +5,7 @@
 from __future__ import unicode_literals
 import contextlib
 import errno
+import json
 import logging
 import os
 import stat
@@ -110,3 +111,12 @@ def prompt_and_delete(path, no_input=False):
             return False
 
         sys.exit()
+
+
+def jsonify(obj):
+    """Create formatted json string from a json object.
+
+    :param obj: The json object to convert
+    :return: The json string equivalent
+    """
+    return json.dumps(obj, sort_keys=True, indent=4)

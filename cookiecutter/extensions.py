@@ -2,19 +2,13 @@
 
 """Jinja2 extensions."""
 
-import json
-
 from jinja2.ext import Extension
 
+from cookiecutter.utils import jsonify
 
-class JsonifyExtension(Extension):
+
+def jsonify_extension(environment):
     """Jinja2 extension to convert a Python object to JSON."""
-
-    def __init__(self, environment):
-        """Initialize the extension with the given environment."""
-        super(JsonifyExtension, self).__init__(environment)
-
-        def jsonify(obj):
-            return json.dumps(obj, sort_keys=True, indent=4)
-
-        environment.filters['jsonify'] = jsonify
+    environment.filters['jsonify'] = jsonify
+    extension = Extension(environment)
+    return extension
