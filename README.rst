@@ -8,14 +8,14 @@ Cookiecutter
 .. image:: https://img.shields.io/pypi/pyversions/cookiecutter.svg
         :target: https://pypi.python.org/pypi/cookiecutter
 
-.. image:: https://travis-ci.org/audreyr/cookiecutter.svg?branch=master
-        :target: https://travis-ci.org/audreyr/cookiecutter
+.. image:: https://travis-ci.com/cookiecutter/cookiecutter.svg?branch=master
+        :target: https://travis-ci.com/cookiecutter/cookiecutter
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
-        :target: https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master
+.. image:: https://ci.appveyor.com/api/projects/status/github/cookiecutter/cookiecutter?branch=master
+        :target: https://ci.appveyor.com/project/cookiecutter/cookiecutter/branch/master
 
-.. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
-        :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
+.. image:: https://codecov.io/github/cookiecutter/cookiecutter/coverage.svg?branch=master
+        :target: https://codecov.io/github/cookiecutter/cookiecutter?branch=master
 
 .. image:: https://badges.gitter.im/Join Chat.svg
         :target: https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
@@ -24,23 +24,19 @@ Cookiecutter
         :target: https://readthedocs.org/projects/cookiecutter/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://landscape.io/github/audreyr/cookiecutter/master/landscape.svg?style=flat
-        :target: https://landscape.io/github/audreyr/cookiecutter/master
-        :alt: Code Health
-
-.. image:: https://img.shields.io/scrutinizer/g/audreyr/cookiecutter.svg
-        :target: https://scrutinizer-ci.com/g/audreyr/cookiecutter/?branch=master
+.. image:: https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg
+        :target: https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master
         :alt: Scrutinizer Code Quality
 
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
 
 * Documentation: https://cookiecutter.readthedocs.io
-* GitHub: https://github.com/audreyr/cookiecutter
+* GitHub: https://github.com/cookiecutter/cookiecutter
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 * Free and open source software: `BSD license`_
 
-.. image:: https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png
+.. image:: https://raw.github.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png
 
 We are proud to be an open source sponsor of `PyCon 2016`_.
 
@@ -784,14 +780,14 @@ Similar projects
 
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
 .. _`PyCon 2016`: https://us.pycon.org/2016/sponsors/
-.. _`BSD license`: https://github.com/audreyr/cookiecutter/blob/master/LICENSE
+.. _`BSD license`: https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE
 
-.. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
+.. _`Cookiecutter on GitHub`: https://github.com/cookiecutter/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.io/en/latest/troubleshooting.html
-.. _`contributors`: https://github.com/audreyr/cookiecutter/blob/master/AUTHORS.rst
-.. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
+.. _`contributors`: https://github.com/cookiecutter/cookiecutter/blob/master/AUTHORS.rst
+.. _`contributing instructions`: https://github.com/cookiecutter/cookiecutter/blob/master/CONTRIBUTING.rst
 .. _`Stack Overflow`: http://stackoverflow.com/
-.. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
+.. _`File an issue`: https://github.com/cookiecutter/cookiecutter/issues?state=open
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
