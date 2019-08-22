@@ -735,8 +735,6 @@ Other
 Similar projects
 ----------------
 
-* `Paste`_ has a create option that creates a skeleton project.
-
 * `Diecutter`_: an API service that will give you back a configuration file from
   a template and variables.
 
