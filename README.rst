@@ -749,8 +749,6 @@ Similar projects
 * `Yeoman`_ has a Rails-inspired generator system that provides scaffolding
   for apps.
 
-* `Pyramid`_'s `pcreate` command for creating Pyramid projects from scaffold templates.
-
 * `mr.bob`_ is a filesystem template renderer, meant to deprecate tools such as
   paster and templer.
 
