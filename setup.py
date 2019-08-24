@@ -19,7 +19,7 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-with io.open('README.rst', 'r', encoding='utf-8') as readme_file:
+with io.open('README.md', 'r', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
 requirements = [
@@ -45,6 +45,7 @@ setup(
                  'templates, e.g. creating a Python package project from a '
                  'Python package project template.'),
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
     url='https://github.com/audreyr/cookiecutter',

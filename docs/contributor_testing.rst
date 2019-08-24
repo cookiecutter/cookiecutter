@@ -34,3 +34,5 @@ is::
 
 Will run py.test with the python2.7, python3.4 and pypy interpreters, for
 example.
+
+.. _`pytest usage docs`: http://pytest.org/en/latest/contents.html
