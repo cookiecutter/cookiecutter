@@ -1,1 +1,1 @@
-.. include:: ../case_studies.rst
+.. mdinclude:: ../case_studies.md
