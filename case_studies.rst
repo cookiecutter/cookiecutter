@@ -35,7 +35,7 @@ OpenStack uses several Cookiecutter templates to generate:
 * `New tempest plugins`_
 
 OpenStack_ is open source software for creating private and public clouds.
-  
+
 .. _OpenStack: http://www.openstack.org/
 .. _`OpenStack compliant puppet-modules`: https://github.com/openstack/puppet-openstack-cookiecutter
 .. _`Install guides`: https://github.com/openstack/installguide-cookiecutter

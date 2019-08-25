@@ -3,7 +3,7 @@ Contributing
 ============
 
 Contributions are welcome, and they are greatly appreciated! Every
-little bit helps, and credit will always be given. 
+little bit helps, and credit will always be given.
 
 .. toctree::
    :numbered:
@@ -153,9 +153,9 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.7, 3.4, 3.5, 3.6, and PyPy on
+3. The pull request should work for Python 2.7, 3.5, 3.6, 3.7, and PyPy on
    AppVeyor and Travis CI.
-4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and 
+4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and
    https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
 Coding Standards
@@ -221,9 +221,9 @@ dependency. It generate a coverage report after the tests.
 It is possible to tests with some versions of python, to do this the command
 is::
 
-    $ tox -e py27,py34,pypy
+    $ tox -e py27,py35,pypy
 
-Will run py.test with the python2.7, python3.4 and pypy interpreters, for
+Will run py.test with the python2.7, python3.5 and pypy interpreters, for
 example.
 
 
@@ -381,8 +381,8 @@ When you're processing the first change after a release, create boilerplate foll
 
     Other changes:
 
-    * Description of the change, thanks to @contributor (#PR). 
-                      
+    * Description of the change, thanks to @contributor (#PR).
+
     .. _`@contributor`: https://github.com/contributor
 
 Process: Accepting Template Pull Requests

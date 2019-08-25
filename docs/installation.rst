@@ -60,7 +60,7 @@ You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/e
 Packaging tools
 ^^^^^^^^^^^^^^^
 
-``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.4. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
+``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.5. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
 
 
 Install cookiecutter

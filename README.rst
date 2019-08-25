@@ -8,14 +8,14 @@ Cookiecutter
 .. image:: https://img.shields.io/pypi/pyversions/cookiecutter.svg
         :target: https://pypi.python.org/pypi/cookiecutter
 
-.. image:: https://travis-ci.org/audreyr/cookiecutter.svg?branch=master
-        :target: https://travis-ci.org/audreyr/cookiecutter
+.. image:: https://travis-ci.com/cookiecutter/cookiecutter.svg?branch=master
+        :target: https://travis-ci.com/cookiecutter/cookiecutter
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master
-        :target: https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master
+.. image:: https://ci.appveyor.com/api/projects/status/github/cookiecutter/cookiecutter?branch=master
+        :target: https://ci.appveyor.com/project/cookiecutter/cookiecutter/branch/master
 
-.. image:: https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master
-        :target: https://codecov.io/github/audreyr/cookiecutter?branch=master
+.. image:: https://codecov.io/github/cookiecutter/cookiecutter/coverage.svg?branch=master
+        :target: https://codecov.io/github/cookiecutter/cookiecutter?branch=master
 
 .. image:: https://badges.gitter.im/Join Chat.svg
         :target: https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
@@ -24,23 +24,19 @@ Cookiecutter
         :target: https://readthedocs.org/projects/cookiecutter/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://landscape.io/github/audreyr/cookiecutter/master/landscape.svg?style=flat
-        :target: https://landscape.io/github/audreyr/cookiecutter/master
-        :alt: Code Health
-
-.. image:: https://img.shields.io/scrutinizer/g/audreyr/cookiecutter.svg
-        :target: https://scrutinizer-ci.com/g/audreyr/cookiecutter/?branch=master
+.. image:: https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg
+        :target: https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master
         :alt: Scrutinizer Code Quality
 
 A command-line utility that creates projects from **cookiecutters** (project
 templates), e.g. creating a Python package project from a Python package project template.
 
 * Documentation: https://cookiecutter.readthedocs.io
-* GitHub: https://github.com/audreyr/cookiecutter
+* GitHub: https://github.com/cookiecutter/cookiecutter
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 * Free and open source software: `BSD license`_
 
-.. image:: https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png
+.. image:: https://raw.github.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png
 
 We are proud to be an open source sponsor of `PyCon 2016`_.
 
@@ -51,7 +47,7 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.7, 3.4, 3.5, 3.6, and PyPy. *(But you don't have to
+* Works with Python 2.7, 3.5, 3.6, 3.7, and PyPy. *(But you don't have to
   know/write Python code to use Cookiecutter.)*
 
 * Project templates can be in any programming language or markup format:
@@ -278,42 +274,8 @@ Waiting for a response to an issue/question?
 Support This Project
 --------------------
 
-This project is run by volunteers. Please support them in their efforts to
-maintain and improve Cookiecutter:
-
-* Daniel Roy Greenfeld (`@pydanny`_): `patreon.com/danielroygreenfeld`_
-* Raphael Pierzina (`@hackebrot`_): `patreon.com/hackebrot`_
-
-.. _`patreon.com/danielroygreenfeld`: https://www.patreon.com/danielroygreenfeld
-.. _`patreon.com/hackebrot`: https://www.patreon.com/hackebrot
-
-You can also support this project by taking our Python packaging course:
-
-.. image:: https://www.pydanny.com/static/packaging-course.jpg
-   :name: Creating and Distributing Python Packages image
-   :align: center
-   :alt: Creating and Distributing Python Packages
-   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages
-
-Also available in Spanish:
-
-.. image:: https://www.pydanny.com/static/packaging-course-es.jpg
-   :name: Creating and Distributing Python Packages ES image
-   :align: center
-   :alt: Creating and Distributing Python Packages ES
-   :target: https://courses.twoscoopspress.com/courses/creating-and-distributing-python-packages-es
-
-
-Backers
--------
-
-We would like to thank the following people for supporting us:
-
-* Alex DeBrie
-* Alexandre Y. Harano
-* Bruno Alla
-* Carol Willing
-* Russell Keith-Magee
+This project is run by volunteers. Shortly we will be providing means for organizations
+and individuals to support the project.
 
 Code of Conduct
 ---------------
@@ -326,10 +288,13 @@ rooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.
 A Pantry Full of Cookiecutters
 ------------------------------
 
-Here is a list of **cookiecutters** (aka Cookiecutter project templates) for
-you to use or fork.
+You can check all `cookiecutter templates`_ on GitHub. If you are template
+publisher keep in mind to add the ``cookiecutter-template`` topic to your
+repository and the correct language tags.
 
-Make your own, then submit a pull request adding yours to this list!
+Please avoid creating PRs for listing additional templates. We outsourced
+their listing due to extra maintenance required to review them. We will likely
+replace the lists below with links to GitHub queries for each category.
 
 Python
 ~~~~~~
@@ -458,6 +423,7 @@ Python-Django
 * `cookiecutter-django-foundation`_: Fork of `cookiecutter-django`_ based on `Zurb Foundation`_ 6 front-end framework
 * `cookiecutter-django-ansible`_: Cookiecutter Django Ansible is a framework for jumpstarting an ansible project for provisioning a server that is ready for your *cookiecutter-django* application.
 * `wemake-django-template`_: Bleeding edge Django template focused on code quality and security.
+* `cookiecutter-django-dokku`_: A template for jumpstarting Django projects and deploying with Dokku.
 
 .. _`cookiecutter-django`: https://github.com/pydanny/cookiecutter-django
 .. _`cookiecutter-django-rest`: https://github.com/agconti/cookiecutter-django-rest
@@ -486,6 +452,7 @@ Python-Django
 .. _`Zurb Foundation`: http://foundation.zurb.com
 .. _`cookiecutter-django-ansible`: https://github.com/HackSoftware/cookiecutter-django-ansible
 .. _`wemake-django-template`: https://github.com/wemake-services/wemake-django-template
+.. _`cookiecutter-django-dokku`: https://github.com/mashrikt/cookiecutter-django-dokku
 
 Python-Pyramid
 ^^^^^^^^^^^^^^
@@ -722,7 +689,7 @@ Data Driven Journalism
 ~~~~~~~~~~~~~~~~~~~~~~
 
 * `cookiecutter-data-driven-journalism`_: A cookiecutter template to facilitate
-  transparency in data journalism with consistant organisation of data
+  transparency in data journalism with consistent organisation of data
   journalism projects and some pre-populated files (including .gitignore,
   README, AUTHORS)
 
@@ -813,17 +780,18 @@ Similar projects
 
 .. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
 .. _`PyCon 2016`: https://us.pycon.org/2016/sponsors/
-.. _`BSD license`: https://github.com/audreyr/cookiecutter/blob/master/LICENSE
+.. _`BSD license`: https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE
 
-.. _`Cookiecutter on GitHub`: https://github.com/audreyr/cookiecutter
+.. _`Cookiecutter on GitHub`: https://github.com/cookiecutter/cookiecutter
 .. _`Troubleshooting`: http://cookiecutter.readthedocs.io/en/latest/troubleshooting.html
-.. _`contributors`: https://github.com/audreyr/cookiecutter/blob/master/AUTHORS.rst
-.. _`contributing instructions`: https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst
+.. _`contributors`: https://github.com/cookiecutter/cookiecutter/blob/master/AUTHORS.rst
+.. _`contributing instructions`: https://github.com/cookiecutter/cookiecutter/blob/master/CONTRIBUTING.rst
 .. _`Stack Overflow`: http://stackoverflow.com/
-.. _`File an issue`: https://github.com/audreyr/cookiecutter/issues?state=open
+.. _`File an issue`: https://github.com/cookiecutter/cookiecutter/issues?state=open
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@michaeljoseph`: https://github.com/michaeljoseph
 .. _`@pfmoore`: https://github.com/pfmoore
 .. _`@hackebrot`: https://github.com/hackebrot
 .. _`Gitter`: https://gitter.im/audreyr/cookiecutter
+.. _`cookiecutter templates`: https://github.com/topics/cookiecutter-template
