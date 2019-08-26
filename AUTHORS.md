@@ -121,13 +121,3 @@
 * Anthony Sottile ([@asottile](https://github.com/asottile))
 * Jonathan Sick ([@jonathansick](https://github.com/jonathansick))
 * Hugo ([@hugovk](https://github.com/hugovk))
-
-
-
-
-
-
-
-
-
-

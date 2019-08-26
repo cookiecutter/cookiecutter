@@ -1,4 +1,5 @@
 # Cookiecutter
+
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
 [![Build Status](https://travis-ci.org/audreyr/cookiecutter.svg?branch=master)](https://travis-ci.org/audreyr/cookiecutter)
@@ -9,7 +10,6 @@
 [![Code Health](https://landscape.io/github/audreyr/cookiecutter/master/landscape.svg?style=flat)](https://landscape.io/github/audreyr/cookiecutter/master)
 [![Code Qaulity](https://img.shields.io/scrutinizer/g/audreyr/cookiecutter.svg)](https://scrutinizer-ci.com/g/audreyr/cookiecutter/?branch=master)
 
-
 A command-line utility that creates projects from **cookiecutters** (project templates), e.g. creating a Python package project from a Python package project template.
 
 * Documentation: https://cookiecutter.readthedocs.io
@@ -17,10 +17,9 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 * Free and open source software: `BSD license`
 
-![](https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
+![Cookiecutter](https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
 
 We are proud to be an open source sponsor of [PyCon 2016](https://us.pycon.org/2016/sponsors/).
-
 
 ## Features
 
@@ -37,7 +36,7 @@ Did someone say features?
 
 * Simple command line usage:
 
-```console
+```bash
     # Create project from the cookiecutter-pypackage.git repo template
     # You'll be prompted to enter values.
     # Then it'll create your Python package in the current working directory,
@@ -49,7 +48,7 @@ Did someone say features?
 
 * Use it at the command line with a local template:
 
-```console
+```bash
     # Create project in the current working directory, from the local
     # cookiecutter-pypackage/ template
     $ cookiecutter cookiecutter-pypackage/
@@ -69,7 +68,7 @@ Did someone say features?
 
 * Directory names and filenames can be templated. For example:
 
-```
+```py
     {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
 ```
 
@@ -94,9 +93,9 @@ Did someone say features?
 
 * Unless you suppress it with ``--no-input``, you are prompted for input:
 
-    - Prompts are the keys in ``cookiecutter.json``.
-    - Default responses are the values in ``cookiecutter.json``.
-    - Prompts are shown in order.
+  * Prompts are the keys in ``cookiecutter.json``.
+  * Default responses are the values in ``cookiecutter.json``.
+  * Prompts are shown in order.
 
 * Cross-platform support for ``~/.cookiecutterrc`` files:
 
@@ -112,7 +111,7 @@ Did someone say features?
 
 * If you have already cloned a cookiecutter into ``~/.cookiecutters/``, you can reference it by directory name:
 
-```console
+```bash
     # Clone cookiecutter-pypackage
     $ cookiecutter gh:audreyr/cookiecutter-pypackage
     # Now you can use the already cloned cookiecutter by name
@@ -125,8 +124,8 @@ Did someone say features?
 
 * Inject extra context with command-line arguments:
 
-```console
-    $ cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
+```bash
+    cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
 ```
 
 * Direct access to the Cookiecutter API allows for injection of extra context.
@@ -149,11 +148,9 @@ These Cookiecutters are maintained by the cookiecutter team:
 * [cookiecutter-django](https://github.com/pydanny/cookiecutter-django): A bleeding edge Django project template with Bootstrap 4, customizable users app, starter templates, working user registration, celery setup, and much more.
 * [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin): Minimal Cookiecutter template for authoring [pytest](http://pytest.org/latest/) plugins that help you to write better programs.
 
-
 ### Categories of Cookiecutters
 
-[Pytho](https://github.com/cookiecutter/cookiecutter#python) |  [Python-Django](https://github.com/cookiecutter/cookiecutter#python-django) | [Python-Pyramid](https://github.com/cookiecutter/cookiecutter#python-pyramid) | [Cookiecutter (meta)](https://github.com/cookiecutter/cookiecutter#cookiecutter-meta) | [Ansible](https://github.com/cookiecutter/cookiecutter#ansible) | [Git](https://github.com/cookiecutter/cookiecutter#git) | [C](https://github.com/cookiecutter/cookiecutter#c) | [C++](https://github.com/cookiecutter/cookiecutter#id1) | [C#](https://github.com/cookiecutter/cookiecutter#id2) | [Common Lisp](https://github.com/cookiecutter/cookiecutter#common-lisp) | [Elm](https://github.com/cookiecutter/cookiecutter#elm) | [Golang](https://github.com/cookiecutter/cookiecutter#golang) | [Java](https://github.com/cookiecutter/cookiecutter#java) | [JS](https://github.com/cookiecutter/cookiecutter#js) | [Kotlin](https://github.com/cookiecutter/cookiecutter#kotlin) | [LaTeX/XeTeX](https://github.com/cookiecutter/cookiecutter#latex-xetex) | [PHP](https://github.com/cookiecutter/cookiecutter#php) | [Berkshelf-Vagrant](https://github.com/cookiecutter/cookiecutter#berkshelf-vagrant) | [HTML](https://github.com/cookiecutter/cookiecutter#html) | [Scala](https://github.com/cookiecutter/cookiecutter#scala) | [6502 Assembly](https://github.com/cookiecutter/cookiecutter#assembly) | [Data Science](https://github.com/cookiecutter/cookiecutter#data-science) | [Tornado](https://github.com/cookiecutter/cookiecutter#tornado) | [Reproducible Science](https://github.com/cookiecutter/cookiecutter#reproducible-science) | [Continuous Delivery](https://github.com/cookiecutter/cookiecutter#continuous-delivery)
-
+[Python](https://github.com/cookiecutter/cookiecutter#python) |  [Python-Django](https://github.com/cookiecutter/cookiecutter#python-django) | [Python-Pyramid](https://github.com/cookiecutter/cookiecutter#python-pyramid) | [Cookiecutter (meta)](https://github.com/cookiecutter/cookiecutter#cookiecutter-meta) | [Ansible](https://github.com/cookiecutter/cookiecutter#ansible) | [Git](https://github.com/cookiecutter/cookiecutter#git) | [C](https://github.com/cookiecutter/cookiecutter#c) | [C++](https://github.com/cookiecutter/cookiecutter#id1) | [C#](https://github.com/cookiecutter/cookiecutter#id2) | [Common Lisp](https://github.com/cookiecutter/cookiecutter#common-lisp) | [Elm](https://github.com/cookiecutter/cookiecutter#elm) | [Golang](https://github.com/cookiecutter/cookiecutter#golang) | [Java](https://github.com/cookiecutter/cookiecutter#java) | [JS](https://github.com/cookiecutter/cookiecutter#js) | [Kotlin](https://github.com/cookiecutter/cookiecutter#kotlin) | [LaTeX/XeTeX](https://github.com/cookiecutter/cookiecutter#latex-xetex) | [PHP](https://github.com/cookiecutter/cookiecutter#php) | [Berkshelf-Vagrant](https://github.com/cookiecutter/cookiecutter#berkshelf-vagrant) | [HTML](https://github.com/cookiecutter/cookiecutter#html) | [Scala](https://github.com/cookiecutter/cookiecutter#scala) | [6502 Assembly](https://github.com/cookiecutter/cookiecutter#assembly) | [Data Science](https://github.com/cookiecutter/cookiecutter#data-science) | [Tornado](https://github.com/cookiecutter/cookiecutter#tornado) | [Reproducible Science](https://github.com/cookiecutter/cookiecutter#reproducible-science) | [Continuous Delivery](https://github.com/cookiecutter/cookiecutter#continuous-delivery)
 
 If you don't find a cookiecutter that suits your needs here, please consider writing or suggesting one. We wish for our users to find a solution for their use cases, and we provide a list of other projects that we do not maintain for your convenience (please see the [Similar Projects](https://github.com/cookiecutter/cookiecutter#similar-projects) section).
 
@@ -198,7 +195,7 @@ Waiting for a response to an issue/question?
 
 ## Support This Project
 
-This project is run by volunteers. Shortly we will be providing means for organizations and individuals to support the project. 
+This project is run by volunteers. Shortly we will be providing means for organizations and individuals to support the project.
 
 ## Code of Conduct
 
@@ -255,7 +252,6 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [python-project-template](https://github.com/Kwpolska/python-project-template): A template for Python projects with sophisticated release automation.
 * [cookiecutter-anyblok-project](https://github.com/AnyBlok/cookiecutter-anyblok-project): A template for Anyblok based projects.
 * [cookiecutter-python-cli](https://github.com/xuanluong/cookiecutter-python-cli): A cookiecutter template for creating a Python CLI application using click.
-
 
 ### Python-Django
 
@@ -323,7 +319,7 @@ Meta-templates for generating Cookiecutter project templates.
 * [cookiecutter-kata-gtest](https://github.com/13coders/cookiecutter-kata-gtest): A template for C++ test-driven development katas using the Google Test framework.
 * [cookiecutter-kata-cpputest](https://github.com/13coders/cookiecutter-kata-cpputest): A template for C++ test-driven-development katas using the CppUTest framework.
 
-### C#
+### C&#35
 
 * [cookiecutter-csharp-objc-binding](https://github.com/SandyChapman/cookiecutter-csharp-objc-binding): A template for generating a C# binding project for binding an Objective-C static library.
 
@@ -334,7 +330,6 @@ Meta-templates for generating Cookiecutter project templates.
 ### Elm
 
 * [cookiecutter-elm](https://github.com/m-x-k/cookiecutter-elm): Elm based cookiecutter with basic html example.
-
 
 ### Golang
 
@@ -363,7 +358,6 @@ Meta-templates for generating Cookiecutter project templates.
 ### Kotlin
 
 * [cookiecutter-kotlin-gradle](https://github.com/thomaslee/cookiecutter-kotlin-gradle): A bare-bones template for Gradle-based Kotlin projects.
-
 
 ### LaTeX/XeTeX
 
@@ -396,6 +390,7 @@ Meta-templates for generating Cookiecutter project templates.
 * [cookiecutter-scala-spark](https://github.com/jpzk/cookiecutter-scala-spark): A cookiecutter template for Apache Spark applications written in Scala.
 
 ### 6502 Assembly
+
 * [cookiecutter-atari2600](https://github.com/joeyjoejoejr/cookiecutter-atari2600): A cookiecutter template for Atari2600 projects.
 
 ### Data Science
@@ -419,6 +414,7 @@ Meta-templates for generating Cookiecutter project templates.
 * [cookiecutter-devenv](https://bitbucket.org/greenguavalabs/cookiecutter-devenv/src/master/): A template to add a development and ci environment to an existing project.
 
 ### Cloud Tools
+
 * [cookiecutter-tf-module](https://github.com/DualSpark/cookiecutter-tf-module): Cookiecutter template for building consistent Terraform modules.
 
 ### Tornado

@@ -1,15 +1,13 @@
 # CONTRIBUTING TO COOKIECUTTER
 
 Contributions are welcome, and they are greatly appreciated! Every
-little bit helps, and credit will always be given. 
+little bit helps, and credit will always be given.
 
-
-- [Types of Contributions](#Types-of-Contributions)
-- [Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
-- [Contributor Guidelines](#Contributor-Guidelines)
-- [Contributor Testing](#Testing-with-tox)
-- [Core Committer Guide](#Core-Committer-Guide)
-
+* [Types of Contributions](#Types-of-Contributions)
+* [Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
+* [Contributor Guidelines](#Contributor-Guidelines)
+* [Contributor Testing](#Testing-with-tox)
+* [Core Committer Guide](#Core-Committer-Guide)
 
 ## Types of Contributions
 
@@ -29,10 +27,10 @@ Report bugs at https://github.com/audreyr/cookiecutter/issues.
 
 If you are reporting a bug, please include:
 
-- Your operating system name and version.
-- Any details about your local setup that might be helpful in troubleshooting.
-- If you can, provide detailed steps to reproduce the bug.
-- If you don't have steps to reproduce the bug, just note your observations in
+* Your operating system name and version.
+* Any details about your local setup that might be helpful in troubleshooting.
+* If you can, provide detailed steps to reproduce the bug.
+* If you don't have steps to reproduce the bug, just note your observations in
   as much detail as you can. Questions to start a discussion about the issue
   are welcome.
 
@@ -61,8 +59,10 @@ articles, and such.
 
 If you want to review your changes on the documentation locally, you can do::
 
+```bash
     pip install -r docs/requirements.txt
     make servedocs
+```
 
 This will compile the documentation, open it in your browser and start
 watching the files for changes, recompiling as you save.
@@ -86,53 +86,56 @@ Here's how to set up `cookiecutter` for local development.
 1. Fork the `cookiecutter` repo on GitHub.
 2. Clone your fork locally:
 
-```
-    $ git clone git@github.com:your_name_here/cookiecutter.git
-```
+    ```bash
+        git clone git@github.com:your_name_here/cookiecutter.git
+    ```
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
- ```
-    $ mkvirtualenv cookiecutter
-    $ cd cookiecutter/
-    $ python setup.py develop
- ```
+
+    ```bash
+        mkvirtualenv cookiecutter
+        cd cookiecutter/
+        python setup.py develop
+    ```
 
 4. Create a branch for local development:
 
-```
-    $ git checkout -b name-of-your-bugfix-or-feature
+```bash
+    git checkout -b name-of-your-bugfix-or-feature
 ```
 
 Now you can make your changes locally.
 
 5. When you're done making changes, check that your changes pass the tests and flake8:
 
-```
-    $ pip install tox
-    $ tox
+```bash
+    pip install tox
+    tox
 ```
 
 Please note that tox runs flake8 automatically, since we have a test environment for it.
 
 If you feel like running only the flake8 environment, please use the following command:
-```
-    $ tox -e flake8
+
+```bash
+    tox -e flake8
 ```
 
 6. Commit your changes and push your branch to GitHub:
-```
-    $ git add .
-    $ git commit -m "Your detailed description of your changes."
-    $ git push origin name-of-your-bugfix-or-feature
+
+```bash
+    git add .
+    git commit -m "Your detailed description of your changes."
+    git push origin name-of-your-bugfix-or-feature
 ```
 
-7. Check that the test coverage hasn't dropped::
-```
-    $ tox -e cov-report
+7. Check that the test coverage hasn't dropped:
+
+```bash
+    tox -e cov-report
 ```
 
 8. Submit a pull request through the GitHub website.
-
 
 ## Contributor Guidelines
 
@@ -156,7 +159,7 @@ Before you submit a pull request, check that it meets these guidelines:
   * Use triple double quotes for docstrings and raw string literals for regular expressions even if they aren't needed.
   * Example:
 
-```py
+```python
     LIGHT_MESSAGES = {
         'English': "There are %(number_of_lights)s lights.",
         'Pirate':  "Arr! Thar be %(number_of_lights)s lights."
@@ -168,8 +171,8 @@ Before you submit a pull request, check that it meets these guidelines:
         """Return True if the given message sounds piratical."""
         return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
 ```
-* Write new code in Python 3.
 
+* Write new code in Python 3.
 
 ## Testing with tox
 
@@ -178,31 +181,40 @@ Tox uses py.test under the hood, hence it supports the same syntax for selecting
 For further information please consult the `pytest usage docs`_.
 
 To run a particular test class with tox:
+
+```bash
+    tox -e py '-k TestFindHooks'
 ```
-    $ tox -e py '-k TestFindHooks'
-```
+
 To run some tests with names matching a string expression:
+
+```bash
+    tox -e py '-k generate'
 ```
-    $ tox -e py '-k generate'
-```
+
 Will run all tests matching "generate", test_generate_files for example.
 
 To run just one method:
+
+```bash
+    tox -e py '-k "TestFindHooks and test_find_hook"'
 ```
-    $ tox -e py '-k "TestFindHooks and test_find_hook"'
+
+To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox:
+
+```bash
+    tox
 ```
-To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox.:
-```
-    $ tox
-```
+
 This configuration file setup the pytest-cov plugin and it is an additional dependency. It generate a coverage report after the tests.
 
 It is possible to tests with some versions of python, to do this the command is:
-```
-    $ tox -e py27,py34,pypy
-```
-Will run py.test with the python2.7, python3.4 and pypy interpreters, for example.
 
+```bash
+    tox -e py27,py34,pypy
+```
+
+Will run py.test with the python2.7, python3.4 and pypy interpreters, for example.
 
 ## Core Committer Guide
 
@@ -306,7 +318,7 @@ New features require a +1 from 2 other core committers (besides yourself).
 
 ### Process: Roadmap
 
-The roadmap is https://github.com/audreyr/cookiecutter/milestones?direction=desc&sort=due_date&state=open
+The roadmap located [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
 
 Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
 
@@ -327,7 +339,7 @@ When you're processing the first change after a release, create boilerplate foll
 
 ```rest
     x.y.z (Development)
-    
+
     The goals of this release are TODO: release summary of features
 
     Features:
@@ -340,7 +352,7 @@ When you're processing the first change after a release, create boilerplate foll
 
     Other changes:
 
-    * Description of the change, thanks to @contributor (#PR). 
+    * Description of the change, thanks to @contributor (#PR).
 
     .. _`@contributor`: https://github.com/contributor
 
@@ -358,11 +370,14 @@ note: Adding a template doesn't give authors credit.
 ### Process: Generating Contributing.md
 
 From the `cookiecutter` project root:
+
+```bash
+    make contributing
 ```
-    $ make contributing
-```
+
 This will generate the following message:
-```
+
+```bash
     rm CONTRIBUTING.md
     touch CONTRIBUTING.md
     cat docs/contributing.md >> CONTRIBUTING.md
@@ -400,8 +415,6 @@ Exceptions:
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
 * Keep feature versions as small as possible, preferably one new feature per version.
 * Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the Python Community Code of Conduct (https://www.python.org/psf/codeofconduct/).
-
-
 
 ### Becoming a Core Committer
 
