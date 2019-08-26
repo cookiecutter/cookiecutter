@@ -129,6 +129,7 @@ Contributors
 * Min ho Kim (`@minho42`_)
 * Ryan Ly (`@rly`_)
 * Akintola Rahmat (`@mihrab34`_)
+* Jai Ram Rideout (`@jairideout`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -246,3 +247,4 @@ Contributors
 .. _`@minho42`: https://github.com/minho42
 .. _`@rly`: https://github.com/rly
 .. _`@mihrab34`: https://github.com/mihrab34
+.. _`@jairideout`: https://github.com/jairideout
