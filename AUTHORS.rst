@@ -130,6 +130,7 @@ Contributors
 * Ryan Ly (`@rly`_)
 * Akintola Rahmat (`@mihrab34`_)
 * Jai Ram Rideout (`@jairideout`_)
+* Diego Carrasco Gubernatis (`@dacog`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -248,3 +249,4 @@ Contributors
 .. _`@rly`: https://github.com/rly
 .. _`@mihrab34`: https://github.com/mihrab34
 .. _`@jairideout`: https://github.com/jairideout
+.. _`@dacog`: https://github.com/dacog
