@@ -47,6 +47,7 @@ Other Changes:
 * Document use of cookiecutter-template topic on GitHub, thanks to `@ssbarnea` (#1189)
 * Update README badge links, thanks to `@luzfcb` (#1207)
 * Update prompt.py to match pep257 guidelines, thanks to `@jairideout` (#1105)
+* Update link to Jinja2 extensions documentation, thanks to `@dacog` (#1193)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -90,6 +91,7 @@ Other Changes:
 .. _`@rly`: https://github.com/rly
 .. _`@mihrab34`: https://github.com/mihrab34
 .. _`@jairideout`: https://github.com/jairideout
+.. _`@dacog`: https://github.com/dacog
 
 
 1.6.0 (2017-10-15) Tim Tam
