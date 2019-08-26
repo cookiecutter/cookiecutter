@@ -46,6 +46,7 @@ Other Changes:
   `@reinout`_ (#1124)
 * Document use of cookiecutter-template topic on GitHub, thanks to `@ssbarnea` (#1189)
 * Update README badge links, thanks to `@luzfcb` (#1207)
+* Update prompt.py to match pep257 guidelines, thanks to `@jairideout` (#1105)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -88,6 +89,7 @@ Other Changes:
 .. _`@insspb`: https://github.com/insspb
 .. _`@rly`: https://github.com/rly
 .. _`@mihrab34`: https://github.com/mihrab34
+.. _`@jairideout`: https://github.com/jairideout
 
 
 1.6.0 (2017-10-15) Tim Tam
