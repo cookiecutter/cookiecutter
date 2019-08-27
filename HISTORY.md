@@ -8,7 +8,7 @@ Important Changes:
 
 * Drop support for EOL Python 3.4, thanks to [\@jamescurtin](https://github.com/jamescurtin) and [\@insspb](https://github.com/insspb) (\#1024)
 * Drop support for EOL Python 3.3, thanks to [\@hugovk](https://github.com/hugovk) (\#1024)
-* Increase the minimum click version to 7.0, thanks to [\@rly](https://github.com/rly) and [\@luzfcb](https://github.com/luzfcb) (#1168)
+* Increase the minimum click version to 7.0, thanks to [\@rly](https://github.com/rly) and [\@luzfcb](https://github.com/luzfcb) (\#1168)
 
 Other Changes:
 

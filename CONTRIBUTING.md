@@ -14,7 +14,7 @@ You can contribute in many ways:
 
 ### Create Cookiecutter Templates
 
-Some other Cookiecutter templates to list in the [README](readme.md) would be great.
+Some other Cookiecutter templates to list in the [README](README.md) would be great.
 
 If you create a Cookiecutter template, submit a pull request adding it to README.md.
 
@@ -370,7 +370,7 @@ Exceptions:
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
 * Keep feature versions as small as possible, preferably one new feature per version.
-* Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. Look at [Code of Conduct](code_of_conduct.md).
+* Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. Look at [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ### Becoming a Core Committer
 
