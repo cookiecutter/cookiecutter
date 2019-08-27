@@ -2,22 +2,21 @@
 
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
-[![Build Status](https://travis-ci.org/audreyr/cookiecutter.svg?branch=master)](https://travis-ci.org/audreyr/cookiecutter)
-[![Appveyor](https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter?branch=master)](https://ci.appveyor.com/project/audreyr/cookiecutter/branch/master)
-[![codecov](https://codecov.io/github/audreyr/cookiecutter/coverage.svg?branch=master)](https://codecov.io/github/audreyr/cookiecutter?branch=master)
+[![Build Status](https://travis-ci.org/cookiecutter/cookiecutter.svg?branch=master)](https://travis-ci.org/cookiecutter/cookiecutter)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/github/cookiecutter/cookiecutter?branch=master)](https://ci.appveyor.com/project/cookiecutter/cookiecutter/branch/master)
+[![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/github/cookiecutter/cookiecutter?branch=master)
 [![gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
-[![Code Health](https://landscape.io/github/audreyr/cookiecutter/master/landscape.svg?style=flat)](https://landscape.io/github/audreyr/cookiecutter/master)
-[![Code Qaulity](https://img.shields.io/scrutinizer/g/audreyr/cookiecutter.svg)](https://scrutinizer-ci.com/g/audreyr/cookiecutter/?branch=master)
+[![Code Qaulity](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master)
 
 A command-line utility that creates projects from **cookiecutters** (project templates), e.g. creating a Python package project from a Python package project template.
 
 * Documentation: https://cookiecutter.readthedocs.io
-* GitHub: https://github.com/audreyr/cookiecutter
+* GitHub: https://github.com/cookiecutter/cookiecutter
 * PyPI: https://pypi.python.org/pypi/cookiecutter
 * Free and open source software: `BSD license`
 
-![Cookiecutter](https://raw.github.com/audreyr/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
+![Cookiecutter](https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
 
 We are proud to be an open source sponsor of [PyCon 2016](https://us.pycon.org/2016/sponsors/).
 
@@ -27,12 +26,10 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 
-* Works with Python 2.7, 3.5, 3.6, 3.7, and PyPy. *(But you don't have to
-  know/write Python code to use Cookiecutter.)*
+* Works with Python 2.7, 3.5, 3.6, 3.7, and PyPy. *(But you don't have to know/write Python code to use Cookiecutter.)*
 
-* Project templates can be in any programming language or markup format:
-  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name
-  it. You can use multiple languages in the same project template.
+* Project templates can be in any programming language or markup format:  
+  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name it. You can use multiple languages in the same project template.
 
 * Simple command line usage:
 
@@ -156,7 +153,7 @@ If you don't find a cookiecutter that suits your needs here, please consider wri
 
 ## Community
 
-The core committer team is [@audreyr](https://github.com/audreyr), [@pydanny](https://github.com/pydanny), [@michaeljoseph](https://github.com/michaeljoseph), [@pfmoore](https://github.com/pfmoore), and [@hackebrot](https://github.com/hackebrot). We welcome you and invite you to participate.
+The core committer team can be found in [authors section](https://github.com/cookiecutter/cookiecutter/blob/master/AUTHORS.md). We are always welcome and invite you to participate.
 
 Stuck? Try one of the following:
 
@@ -345,10 +342,8 @@ Meta-templates for generating Cookiecutter project templates.
 
 * [cookiecutter-es6-boilerplate](https://github.com/agconti/cookiecutter-es6-boilerplate): A cookiecutter for front end projects in ES6.
 * [cookiecutter-webpack](https://github.com/goldhand/cookiecutter-webpack): A template for webpack 2 projects with hot reloading, babel es6 modules, and react.
-* [cookiecutter-jquery](https://github.com/audreyr/cookiecutter-jquery): A jQuery plugin project template based on jQuery
-  Boilerplate.
-* [cookiecutter-jswidget](https://github.com/audreyr/cookiecutter-jswidget): A project template for creating a generic front-end,
-  non-jQuery JS widget packaged for multiple JS packaging systems.
+* [cookiecutter-jquery](https://github.com/audreyr/cookiecutter-jquery): A jQuery plugin project template based on jQuery Boilerplate.
+* [cookiecutter-jswidget](https://github.com/audreyr/cookiecutter-jswidget): A project template for creating a generic front-end, non-jQuery JS widget packaged for multiple JS packaging systems.
 * [cookiecutter-component](https://github.com/audreyr/cookiecutter-component): A template for a Component JS package.
 * [cookiecutter-tampermonkey](https://github.com/christabor/cookiecutter-tampermonkey): A template for a TamperMonkey browser script.
 * [cookiecutter-es6-package](https://github.com/ratson/cookiecutter-es6-package): A template for writing node packages using ES6 via babel.
@@ -429,21 +424,13 @@ Meta-templates for generating Cookiecutter project templates.
 
 ## Similar projects
 
-* [Paste](https://web.archive.org/web20190128062603/http://web.archive.org/web/20190128000000*/https://web.archive.org/) has a create option that creates a skeleton project.
+* [Diecutter](https://github.com/diecutter/diecutter): an API service that will give you back a configuration file from a template and variables.
 
-* [Diecutter](https://github.com/diecutter/diecutter): an API service that will give you back a configuration file from
-  a template and variables.
+* [Django](https://docs.djangoproject.com/en/1.9/ref/django-admin/#cmdoption-startapp--template)'s `startproject` and `startapp` commands can take in a `--template` option.
 
-* [Django](https://docs.djangoproject.com/en/1.9/ref/django-admin/#cmdoption-startapp--template)'s `startproject` and `startapp` commands can take in a `--template`
-  option.
+* [python-packager](https://github.com/fcurella/python-packager): Creates Python packages from its own template, with configurable options.
 
-* [python-packager](https://github.com/fcurella/python-packager): Creates Python packages from its own template, with
-  configurable options.
-
-* [Yeoman](https://github.com/yeoman/generator) has a Rails-inspired generator system that provides scaffolding
-  for apps.
-
-* [Pyramid](https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/scaffolding.html)'s `pcreate` command for creating Pyramid projects from scaffold templates.
+* [Yeoman](https://github.com/yeoman/generator) has a Rails-inspired generator system that provides scaffolding for apps.
 
 * [mr.bob](https://github.com/domenkozar/mr.bob) is a filesystem template renderer, meant to deprecate tools such as
   paster and templer.

@@ -1,7 +1,6 @@
 # CONTRIBUTING TO COOKIECUTTER
 
-Contributions are welcome, and they are greatly appreciated! Every
-little bit helps, and credit will always be given.
+Contributions are welcome, and they are greatly appreciated! Every little bit helps, and credit will always be given.
 
 * [Types of Contributions](#Types-of-Contributions)
 * [Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
@@ -15,69 +14,55 @@ You can contribute in many ways:
 
 ### Create Cookiecutter Templates
 
-Some other Cookiecutter templates to list in the [README](README.md) would
-be great.
+Some other Cookiecutter templates to list in the [README](README.md) would be great.
 
-If you create a Cookiecutter template, submit a pull request adding it to
-README.md.
+If you create a Cookiecutter template, submit a pull request adding it to README.md.
 
 ### Report Bugs
 
-Report bugs at https://github.com/audreyr/cookiecutter/issues.
+Report bugs at https://github.com/cookiecutter/cookiecutter/issues.
 
 If you are reporting a bug, please include:
 
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in troubleshooting.
 * If you can, provide detailed steps to reproduce the bug.
-* If you don't have steps to reproduce the bug, just note your observations in
-  as much detail as you can. Questions to start a discussion about the issue
-  are welcome.
+* If you don't have steps to reproduce the bug, just note your observations in as much detail as you can. Questions to start a discussion about the issue are welcome.
 
 ### Fix Bugs
 
-Look through the GitHub issues for bugs. Anything tagged with "bug"
-is open to whoever wants to implement it.
+Look through the GitHub issues for bugs. Anything tagged with "bug" is open to whoever wants to implement it.
 
 ### Implement Features
 
-Look through the GitHub issues for features. Anything tagged with "enhancement"
-and "please-help" is open to whoever wants to implement it.
+Look through the GitHub issues for features. Anything tagged with "enhancement" and "please-help" is open to whoever wants to implement it.
 
 Please do not combine multiple feature enhancements into a single pull request.
 
-Note: this project is very conservative, so new features that aren't tagged
-with "please-help" might not get into core. We're trying to keep the code base
-small, extensible, and streamlined. Whenever possible, it's best to try and
-implement feature ideas as separate projects outside of the core codebase.
+Note: this project is very conservative, so new features that aren't tagged with "please-help" might not get into core. We're trying to keep the code base small, extensible, and streamlined. Whenever possible, it's best to try and implement feature ideas as separate projects outside of the core codebase.
 
 ### Write Documentation
 
-Cookiecutter could always use more documentation, whether as part of the
-official Cookiecutter docs, in docstrings, or even on the web in blog posts,
-articles, and such.
+Cookiecutter could always use more documentation, whether as part of the official Cookiecutter docs, in docstrings, or even on the web in blog posts, articles, and such.
 
-If you want to review your changes on the documentation locally, you can do::
+If you want to review your changes on the documentation locally, you can do:
 
 ```bash
     pip install -r docs/requirements.txt
     make servedocs
 ```
 
-This will compile the documentation, open it in your browser and start
-watching the files for changes, recompiling as you save.
+This will compile the documentation, open it in your browser and start watching the files for changes, recompiling as you save.
 
 ### Submit Feedback
 
-The best way to send feedback is to file an issue at
-https://github.com/audreyr/cookiecutter/issues.
+The best way to send feedback is to file an issue at https://github.com/cookiecutter/cookiecutter/issues.
 
 If you are proposing a feature:
 
 * Explain in detail how it would work.
 * Keep the scope as narrow as possible, to make it easier to implement.
-* Remember that this is a volunteer-driven project, and that contributions
-  are welcome :)
+* Remember that this is a volunteer-driven project, and that contributions are welcome :)
 
 ## Setting Up the Code for Local Development
 
@@ -86,17 +71,17 @@ Here's how to set up `cookiecutter` for local development.
 1. Fork the `cookiecutter` repo on GitHub.
 2. Clone your fork locally:
 
-    ```bash
-        git clone git@github.com:your_name_here/cookiecutter.git
-    ```
+```bash
+    git clone git@github.com:your_name_here/cookiecutter.git
+```
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
 
-    ```bash
-        mkvirtualenv cookiecutter
-        cd cookiecutter/
-        python setup.py develop
-    ```
+```bash
+    mkvirtualenv cookiecutter
+    cd cookiecutter/
+    python setup.py develop
+```
 
 4. Create a branch for local development:
 
@@ -145,7 +130,7 @@ Before you submit a pull request, check that it meets these guidelines:
 
 1. The pull request should include tests.
 2. If the pull request adds functionality, the docs should be updated. Put your new functionality into a function with a docstring, and add the feature to the list in README.md.
-3. The pull request should work for Python 2.7, 3.4, 3.5, 3.6, and PyPy on AppVeyor and Travis CI.
+3. The pull request should work for Python 2.7, 3.5, 3.6, 3.7 and PyPy on AppVeyor and Travis CI.
 4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
 
 ### Coding Standards
@@ -178,7 +163,7 @@ Before you submit a pull request, check that it meets these guidelines:
 
 Tox uses py.test under the hood, hence it supports the same syntax for selecting tests.
 
-For further information please consult the `pytest usage docs`_.
+For further information please consult the [`pytest usage docs`](http://pytest.org/en/latest/example/index.html).
 
 To run a particular test class with tox:
 
@@ -211,10 +196,10 @@ This configuration file setup the pytest-cov plugin and it is an additional depe
 It is possible to tests with some versions of python, to do this the command is:
 
 ```bash
-    tox -e py27,py34,pypy
+    tox -e py27,py35,pypy
 ```
 
-Will run py.test with the python2.7, python3.4 and pypy interpreters, for example.
+Will run py.test with the python2.7, python3.5 and pypy interpreters, for example.
 
 ## Core Committer Guide
 
@@ -305,11 +290,11 @@ How to prioritize pull requests, from most to least important:
 * Major edits to docs.
 * Features.
 
-Ensure that each pull request meets all requirements in this checklist:https://gist.github.com/audreyr/4feef90445b9680475f2
+Ensure that each pull request meets all requirements in [checklist](https://gist.github.com/audreyr/4feef90445b9680475f2).
 
 ### Process: Issues
 
-If an issue is a bug that needs an urgent fix, mark it for the next patch release.
+If an issue is a bug that needs an urgent fix, mark it for the next patch release.  
 Then either fix it or mark as please-help.
 
 For other issues: encourage friendly discussion, moderate debate, offer your thoughts.
@@ -324,7 +309,7 @@ Due dates are flexible. Core committers can change them as needed. Note that Git
 
 How to number milestones:
 
-* Follow semantic versioning. See http://semver.org
+* Follow semantic versioning. Look at: http://semver.org
 
 Milestone size:
 
@@ -367,38 +352,9 @@ When you're processing the first change after a release, create boilerplate foll
 
 note: Adding a template doesn't give authors credit.
 
-### Process: Generating Contributing.md
-
-From the `cookiecutter` project root:
-
-```bash
-    make contributing
-```
-
-This will generate the following message:
-
-```bash
-    rm CONTRIBUTING.md
-    touch CONTRIBUTING.md
-    cat docs/contributing.md >> CONTRIBUTING.md
-    echo "\n\n" >> CONTRIBUTING.md
-    cat docs/types_of_contributions.md >> CONTRIBUTING.md
-    echo "\n\n" >> CONTRIBUTING.md
-    cat docs/contributor_setup.md >> CONTRIBUTING.md
-    echo "\n\n" >> CONTRIBUTING.md
-    cat docs/contributor_guidelines.md >> CONTRIBUTING.md
-    echo "\n\n" >> CONTRIBUTING.md
-    cat docs/contributor_testing.md >> CONTRIBUTING.md
-    echo "\n\n" >> CONTRIBUTING.md
-    cat docs/core_committer_guide.md >> CONTRIBUTING.md
-    echo "\n\nAutogenerated from the docs via \`make contributing\`" >> CONTRIBUTING.md
-    echo "WARNING: Don't forget to replace any :ref: statements with literal names"
-    WARNING: Don't forget to replace any :ref: statements with literal names
-```
-
 ### Process: Your own code changes
 
-All code changes, regardless of who does them, need to be reviewed and merged by someone else.
+All code changes, regardless of who does them, need to be reviewed and merged by someone else.  
 This rule applies to all the core committers.
 
 Exceptions:
