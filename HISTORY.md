@@ -29,6 +29,8 @@ Other Changes:
 * Update README badge links, thanks to [\@luzfcb](https://github.com/luzfcb) (\#1207)
 * Update prompt.py to match pep257 guidelines, thanks to [\@jairideout](https://github.com/jairideout) (\#1105)
 * Update link to Jinja2 extensions documentation, thanks to [\@dacog](https://github.com/dacog) (\#1193)
+* Require pip 9.0.0 or newer for tox environments, thanks to [\@hackebrot](https://github.com/hackebrot) (\#1215)
+* Use io.open contextmanager when reading hook files, thanks to [\@jcb91](https://github.com/jcb91) (\#1147)
 * Add more cookiecutter templates to the mix:
   * [cookiecutter-python-cli](https://github.com/xuanluong/cookiecutter-python-cli) by [\@xuanluong](https://github.com/xuanluong) (\#1003)
   * [cookiecutter-docker-science](https://github.com/docker-science/cookiecutter-docker-science) by [\@takahi-i](https://github.com/takahi-i) (\#1040)

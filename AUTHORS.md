@@ -127,3 +127,4 @@
 * Jai Ram Rideout ([@jairideout](https://github.com/jairideout))
 * Diego Carrasco Gubernatis ([@dacog](https://github.com/dacog))
 * Wagner Negrão ([@wagnernegrao](https://github.com/wagnernegrao))
+* Josh Barnes ([@jcb91](https://github.com/jcb91))
