@@ -38,7 +38,7 @@ Other Changes:
   * [cookiecutter-data-driven-journalism](https://github.com/jastark/cookiecutter-data-driven-journalism) by [\@JAStark](https://github.com/JAStark) (\#1020)
   * [cookiecutter-tox-plugin](https://github.com/tox-dev/cookiecutter-tox-plugin) by [\@obestwalter](https://github.com/obestwalter) (\#1103)
   * [cookiecutter-django-dokku](https://github.com/mashrikt/cookiecutter-django-dokku) by [\@mashrikt](https://github.com/mashrikt) (\#1093)
-  
+
 ## 1.6.0 (2017-10-15) Tim Tam
 
 New Features:

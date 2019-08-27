@@ -61,11 +61,21 @@ import cookiecutter  # noqa 402
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = '1.0'
 
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
-              'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.imgmath',
-              'sphinx.ext.ifconfig', 'sphinx.ext.viewcode', 'docs.ccext', 'recommonmark']
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or
+# your custom ones.
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.imgmath',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode',
+    'docs.ccext',
+    'recommonmark'
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -231,8 +241,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual])
 latex_documents = [
-  ('index', 'cookiecutter.tex', u'cookiecutter Documentation',
-   u'Audrey Roy and cookiecutter community', 'manual'),
+    ('index', 'cookiecutter.tex', u'cookiecutter Documentation',
+     u'Audrey Roy and cookiecutter community', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -275,9 +285,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'cookiecutter', u'cookiecutter Documentation',
-   u'Audrey Roy and cookiecutter community', 'cookiecutter', 'One line description of project.',
-   'Miscellaneous'),
+    ('index', 'cookiecutter', u'cookiecutter Documentation',
+     u'Audrey Roy and cookiecutter community', 'cookiecutter',
+     'One line description of project.', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
