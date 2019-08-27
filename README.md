@@ -401,7 +401,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 ### Data Driven Journalism
 
-* [cookiecutter-data-driven-journalism](https://github.com/jastark/cookiecutter-data-driven-journalism): A cookiecutter template to facilitate transparency in data journalism with consistant organisation of data journalism projects and some pre-populated files (including .gitignore, README, AUTHORS)
+* [cookiecutter-data-driven-journalism](https://github.com/jastark/cookiecutter-data-driven-journalism): A cookiecutter template to facilitate transparency in data journalism with consistent organisation of data journalism projects and some pre-populated files (including .gitignore, README, AUTHORS)
 
 ### Continuous Delivery
 
