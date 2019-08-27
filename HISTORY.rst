@@ -53,6 +53,8 @@ Other Changes:
 * Update link to Jinja2 extensions documentation, thanks to `@dacog`_ (#1193)
 * Require pip 9.0.0 or newer for tox environments, thanks to `@hackebrot`_
   (#1215)
+* Use io.open contextmanager when reading hook files, thanks to `@jcb91`_
+  (#1147)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -97,6 +99,7 @@ Other Changes:
 .. _`@mihrab34`: https://github.com/mihrab34
 .. _`@jairideout`: https://github.com/jairideout
 .. _`@dacog`: https://github.com/dacog
+.. _`@jcb91`: https://github.com/jcb91
 
 
 1.6.0 (2017-10-15) Tim Tam
