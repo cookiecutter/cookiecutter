@@ -153,7 +153,7 @@ If you don't find a cookiecutter that suits your needs here, please consider wri
 
 ## Community
 
-The core committer team can be found in [authors section](authors.md). We are always welcome and invite you to participate.
+The core committer team can be found in [authors section](AUTHORS.md). We are always welcome and invite you to participate.
 
 Stuck? Try one of the following:
 
@@ -164,8 +164,8 @@ Stuck? Try one of the following:
 
 Development on Cookiecutter is community-driven:
 
-* Huge thanks to all the [contributors](authors.md) who have pitched in to help make Cookiecutter an even better tool.
-* Everyone is invited to contribute. Read the [contributing instructions](contributing.md), then get started.
+* Huge thanks to all the [contributors](AUTHORS.md) who have pitched in to help make Cookiecutter an even better tool.
+* Everyone is invited to contribute. Read the [contributing instructions](CONTRIBUTING.md), then get started.
 
 Connect with other Cookiecutter contributors and users on [Gitter](https://gitter.im/audreyr/cookiecutter):
 
