@@ -46,6 +46,8 @@ Project Info
    sprint-contributors
    history
    case_studies
+   backers
+   code_of_conduct
 
 Index
 -----

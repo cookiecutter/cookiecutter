@@ -65,7 +65,6 @@ docs: ## Generate Sphinx HTML documentation, including API docs
 	@rm -f docs/modules.rst
 	@$(MAKE) -C docs clean
 	@$(MAKE) -C docs html
-	@$(MAKE) contributing
 	@$(BROWSER) docs/_build/html/index.html
 
 .PHONY: servedocs
