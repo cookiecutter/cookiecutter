@@ -6,22 +6,29 @@ History is important, but our current roadmap can be found [here](https://github
 
 Important Changes:
 
+* Drop support for EOL Python 3.4, thanks to [\@jamescurtin](https://github.com/jamescurtin) and [\@insspb](https://github.com/insspb) (\#1024)
 * Drop support for EOL Python 3.3, thanks to [\@hugovk](https://github.com/hugovk) (\#1024)
+* Increase the minimum click version to 7.0, thanks to [\@rly](https://github.com/rly) and [\@luzfcb](https://github.com/luzfcb) (#1168)
 
 Other Changes:
 
+* Prevent `click` API v7.0 from showing choices when already shown, thanks to [\@rly](https://github.com/rly) and [\@luzfcb](https://github.com/luzfcb) (\#1168)
+* Test the codebase with python3.8 beta on tox and travis-ci (\#1206), thanks to [\@mihrab34](https://github.com/mihrab34)
 * Add a [CODE\_OF\_CONDUCT.md](https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md) file to the project, thanks to [\@andreagrandi](https://github.com/andreagrandi) (\#1009)
 * Update docstrings in `cookiecutter/main.py`, `cookiecutter/__init__.py`, and `cookiecutter/log.py` to follow the PEP 257 style guide, thanks to [\@meahow](https://github.com/meahow) (\#998, \#999, \#1000)
 * Update docstrings in `cookiecutter/utils.py` to follow the PEP 257 style guide, thanks to [\@dornheimer](https://github.com/dornheimer)(\#1026)
 * Fix grammar in *Choice Variables* documentation, thanks to [\@jubrilissa](https://github.com/jubrilissa) (\#1011)
-* Update installation docs with links to the Windows Subsystem and GNU utilities, thanks to [\@Nythiennzo](https://github.com/Nythiennzo)
-for the PR and [\@BruceEckel](https://github.com/BruceEckel) for the review (\#1016)
+* Update installation docs with links to the Windows Subsystem and GNU utilities, thanks to [\@Nythiennzo](https://github.com/Nythiennzo) for the PR and [\@BruceEckel](https://github.com/BruceEckel) for the review (\#1016)
 * Upgrade flake8 to version 3.5.0, thanks to [\@cclauss](https://github.com/cclauss) (\#1038)
 * Update tutorial with explanation for how cookiecutter finds the template file, thanks to [\@accraze](https://github.com/accraze)(\#1025)
 * Update CI config files to use `TOXENV` environment variable, thanks to [\@asottile](https://github.com/asottile) (\#1019)
 * Improve user documentation for writing hooks, thanks to [\@jonathansick](https://github.com/jonathansick) (\#1057)
 * Make sure to preserve the order of items in the generated cookiecutter context, thanks to [\@hackebrot](https://github.com/hackebrot) (\#1074)
 * Fixed DeprecationWarning for a regular expression on python 3.6, thanks to [\@reinout](https://github.com/reinout) (\#1124)
+* Document use of cookiecutter-template topic on GitHub, thanks to [\@ssbarnea](https://github.com/ssbarnea) (\#1189)
+* Update README badge links, thanks to [\@luzfcb](https://github.com/luzfcb) (\#1207)
+* Update prompt.py to match pep257 guidelines, thanks to [\@jairideout](https://github.com/jairideout) (\#1105)
+* Update link to Jinja2 extensions documentation, thanks to [\@dacog](https://github.com/dacog) (\#1193)
 * Add more cookiecutter templates to the mix:
   * [cookiecutter-python-cli](https://github.com/xuanluong/cookiecutter-python-cli) by [\@xuanluong](https://github.com/xuanluong) (\#1003)
   * [cookiecutter-docker-science](https://github.com/docker-science/cookiecutter-docker-science) by [\@takahi-i](https://github.com/takahi-i) (\#1040)
@@ -30,7 +37,8 @@ for the PR and [\@BruceEckel](https://github.com/BruceEckel) for the review (\#1
   * [cookiecutter-flask-ask](https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask) by [\@machinekoder](https://github.com/machinekoder) (\#1056)
   * [cookiecutter-data-driven-journalism](https://github.com/jastark/cookiecutter-data-driven-journalism) by [\@JAStark](https://github.com/JAStark) (\#1020)
   * [cookiecutter-tox-plugin](https://github.com/tox-dev/cookiecutter-tox-plugin) by [\@obestwalter](https://github.com/obestwalter) (\#1103)
-
+  * [cookiecutter-django-dokku](https://github.com/mashrikt/cookiecutter-django-dokku) by [\@mashrikt](https://github.com/mashrikt) (\#1093)
+  
 ## 1.6.0 (2017-10-15) Tim Tam
 
 New Features:
@@ -451,7 +459,7 @@ Features:
 
 * cookiecutter() now takes an optional extra\_context parameter, thanks to [\@michaeljoseph](https://github.com/michaeljoseph), [\@fcurella](https://github.com/fcurella), [\@aventurella](https://github.com/aventurella),  [\@emonty](https://github.com/emonty), [\@schacki](https://github.com/schacki), [\@ryanolson](https://github.com/ryanolson), [\@pfmoore](https://github.com/pfmoore), [\@pydanny](https://github.com/pydanny), [\@audreyr](https://github.com/audreyr) (\#260).
 * Context is now injected into hooks, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) and [\@dinopetrone](https://github.com/dinopetrone).
-* Moved all Python 2/3 compatability code into cookiecutter.compat, making the eventual move to six easier, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#60, \#102).
+* Moved all Python 2/3 compatibility code into cookiecutter.compat, making the eventual move to six easier, thanks to [\@michaeljoseph](https://github.com/michaeljoseph) (\#60, \#102).
 * Added cookiecutterrc defined aliases for cookiecutters, thanks to [\@pfmoore](https://github.com/pfmoore) (\#246)
 * Added flake8 to tox to check for pep8 violations, thanks to [\@natim](https://github.com/Natim).
 
@@ -543,7 +551,7 @@ New features:
 * Support for Mercurial version control system, thanks to [\@pokoli](https://github.com/pokoli/).
 * When a cookiecutter contains invalid Jinja2 syntax, you get a better message that shows the location of the TemplateSyntaxError. Thanks
 to [\@benjixx](https://github.com/benjixx/).
-* Can now prompt the user to enter values during generation from a local cookiecutter, thanks to [\@ThomasChiroux](https://github.com/ThomasChiroux/). This is now always the default behavior. Prompts can also be supressed with ```--no-input```.
+* Can now prompt the user to enter values during generation from a local cookiecutter, thanks to [\@ThomasChiroux](https://github.com/ThomasChiroux/). This is now always the default behavior. Prompts can also be suppressed with ```--no-input```.
 * Your cloned cookiecutters are stored by default in your ~/.cookiecutters/ directory (or Windows equivalent). The location is configurable. (This is a major change from the pre-0.7.0 behavior, where cloned cookiecutters were deleted at the end of project generation.) Thanks [\@raphigaziano](https://github.com/raphigaziano/).
 * User config in a \~/.cookiecutterrc file, thanks to [\@raphigaziano](https://github.com/raphigaziano/). Configurable settings are cookiecutters\_dir and default\_context.
 * File permissions are now preserved during project generation, thanks to [\@benjixx](https://github.com/benjixx/).
