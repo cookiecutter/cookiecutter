@@ -210,7 +210,7 @@ Other Changes:
   * [hovercraft-slides](https://github.com/Springerle/hovercraft-slides) by [\@jhermann](https://github.com/jhermann) (\#665)
   * [cookiecutter-es6-package](https://github.com/ratson/cookiecutter-es6-package) by [\@ratson](https://github.com/ratson) (\#667)
   * [cookiecutter-webpack](https://github.com/hzdg/cookiecutter-webpack) by [\@hzdg](https://github.com/hzdg) (\#668)
-  * [cookiecutter-django-herokuapp](https://github.com/dulaccc/cookiecutter-django-herokuapp) by [\@dulaccc](:https://github.com/dulaccc) (\#374)
+  * [cookiecutter-django-herokuapp](https://github.com/dulaccc/cookiecutter-django-herokuapp) by [\@dulaccc](https://github.com/dulaccc) (\#374)
   * [cookiecutter-django-aws-eb](https://github.com/dolphinkiss/cookiecutter-django-aws-eb) by [\@peterlauri](https://github.com/peterlauri) (\#626)
   * [wagtail-starter-kit](https://github.com/tkjone/wagtail-starter-kit) by [\@tkjone](https://github.com/tkjone) (\#658)
   * [cookiecutter-dpf-effect](https://github.com/SpotlightKid/cookiecutter-dpf-effect) by [\@SpotlightKid](https://github.com/SpotlightKid) (\#663)
