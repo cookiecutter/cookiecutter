@@ -1,4 +1,4 @@
-# CONTRIBUTING TO COOKIECUTTER
+# Contributing
 
 Contributions are welcome, and they are greatly appreciated! Every little bit helps, and credit will always be given.
 
@@ -14,13 +14,13 @@ You can contribute in many ways:
 
 ### Create Cookiecutter Templates
 
-Some other Cookiecutter templates to list in the [README](README.md) would be great.
+Some other Cookiecutter templates to list in the [README](readme.md) would be great.
 
 If you create a Cookiecutter template, submit a pull request adding it to README.md.
 
 ### Report Bugs
 
-Report bugs at https://github.com/cookiecutter/cookiecutter/issues.
+Report bugs at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
 
 If you are reporting a bug, please include:
 
@@ -56,7 +56,7 @@ This will compile the documentation, open it in your browser and start watching 
 
 ### Submit Feedback
 
-The best way to send feedback is to file an issue at https://github.com/cookiecutter/cookiecutter/issues.
+The best way to send feedback is to file an issue at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
 
 If you are proposing a feature:
 
@@ -131,13 +131,13 @@ Before you submit a pull request, check that it meets these guidelines:
 1. The pull request should include tests.
 2. If the pull request adds functionality, the docs should be updated. Put your new functionality into a function with a docstring, and add the feature to the list in README.md.
 3. The pull request should work for Python 2.7, 3.5, 3.6, 3.7 and PyPy on AppVeyor and Travis CI.
-4. Check https://travis-ci.org/audreyr/cookiecutter/pull_requests and https://ci.appveyor.com/project/audreyr/cookiecutter/history to ensure the tests pass for all supported Python versions and platforms.
+4. Check [https://travis-ci.org/cookiecutter/cookiecutter/pull_requests](https://travis-ci.org/cookiecutter/cookiecutter/pull_requests) and [https://ci.appveyor.com/project/cookiecutter/cookiecutter/history](https://ci.appveyor.com/project/cookiecutter/cookiecutter/history) to ensure the tests pass for all supported Python versions and platforms.
 
 ### Coding Standards
 
 * PEP8
 * Functions over classes except in tests
-* Quotes via http://stackoverflow.com/a/56190/5549
+* Quotes via [http://stackoverflow.com/a/56190/5549](http://stackoverflow.com/a/56190/5549)
 
   * Use double quotes around strings that are used for interpolation or that are natural language messages
   * Use single quotes for small symbol-like strings (but break the rules if the strings contain quotes)
@@ -309,7 +309,7 @@ Due dates are flexible. Core committers can change them as needed. Note that Git
 
 How to number milestones:
 
-* Follow semantic versioning. Look at: http://semver.org
+* Follow semantic versioning. Look at: [http://semver.org](http://semver.org)
 
 Milestone size:
 
@@ -366,11 +366,11 @@ Exceptions:
 ### Responsibilities
 
 * Ensure cross-platform compatibility for every change that's accepted. Windows, Mac, Debian & Ubuntu Linux.
-* Ensure that code that goes into core meets all requirements in this checklist: https://gist.github.com/audreyr/4feef90445b9680475f2
+* Ensure that code that goes into core meets all requirements in this checklist: [https://gist.github.com/audreyr/4feef90445b9680475f2](https://gist.github.com/audreyr/4feef90445b9680475f2)
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
 * Keep feature versions as small as possible, preferably one new feature per version.
-* Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the Python Community Code of Conduct (https://www.python.org/psf/codeofconduct/).
+* Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. Look at [Code of Conduct](code_of_conduct.md).
 
 ### Becoming a Core Committer
 
