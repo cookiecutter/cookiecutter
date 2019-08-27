@@ -19,8 +19,10 @@ Important Changes:
 
 Other Changes:
 
-* Test the codebase with python3.8 beta on tox and travis-ci, thanks to `@mihrab34`_ (#1206)
-* Prevent ``click`` API v7.0 from showing choices when already shown, thanks to `@rly`_ (#1168)
+* Test the codebase with python3.8 beta on tox and travis-ci, thanks to
+  `@mihrab34`_ (#1206)
+* Prevent ``click`` API v7.0 from showing choices when already shown, thanks to
+  `@rly`_ (#1168)
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
   `@andreagrandi`_ (#1009)
 * Update docstrings in ``cookiecutter/main.py``, ``cookiecutter/__init__.py``,
@@ -44,11 +46,13 @@ Other Changes:
   context, thanks to `@hackebrot`_ (#1074)
 * Fixed DeprecationWarning for a regular expression on python 3.6, thanks to
   `@reinout`_ (#1124)
-* Document use of cookiecutter-template topic on GitHub, thanks to `@ssbarnea` (#1189)
-* Update README badge links, thanks to `@luzfcb` (#1207)
-* Update prompt.py to match pep257 guidelines, thanks to `@jairideout` (#1105)
-* Update link to Jinja2 extensions documentation, thanks to `@dacog` (#1193)
-* Require pip 9.0.0 or newer for tox environments, thanks to `@hackebrot`_ (#1215)
+* Document use of cookiecutter-template topic on GitHub, thanks to `@ssbarnea`_
+  (#1189)
+* Update README badge links, thanks to `@luzfcb`_ (#1207)
+* Update prompt.py to match pep257 guidelines, thanks to `@jairideout`_ (#1105)
+* Update link to Jinja2 extensions documentation, thanks to `@dacog`_ (#1193)
+* Require pip 9.0.0 or newer for tox environments, thanks to `@hackebrot`_
+  (#1215)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
