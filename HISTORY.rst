@@ -48,6 +48,7 @@ Other Changes:
 * Update README badge links, thanks to `@luzfcb` (#1207)
 * Update prompt.py to match pep257 guidelines, thanks to `@jairideout` (#1105)
 * Update link to Jinja2 extensions documentation, thanks to `@dacog` (#1193)
+* Require pip 9.0.0 or newer for tox environments, thanks to `@hackebrot`_ (#1215)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
