@@ -14,7 +14,7 @@ Basics
 .. toctree::
    :maxdepth: 2
 
-   readme
+   README
    overview
    installation
    usage
@@ -41,11 +41,13 @@ Project Info
 .. toctree::
    :maxdepth: 2
 
-   contributing
-   authors
+   CONTRIBUTING
+   AUTHORS
    sprint-contributors
-   history
+   HISTORY
    case_studies
+   BACKERS
+   CODE_OF_CONDUCT
 
 Index
 -----

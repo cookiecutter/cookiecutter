@@ -116,7 +116,7 @@ Alternate installations
 Upgrading from 0.6.4 to 0.7.0 or greater
 ----------------------------------------
 
-First, read :doc:`history` in detail. There are a lot of major
+First, read :doc:`HISTORY` in detail. There are a lot of major
 changes. The big ones are:
 
 * Cookiecutter no longer deletes the cloned repo after generating a project.
