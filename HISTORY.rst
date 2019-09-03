@@ -55,6 +55,8 @@ Other Changes:
   (#1215)
 * Use io.open contextmanager when reading hook files, thanks to `@jcb91`_
   (#1147)
+* Use sys.executable when invoking python interpreter from tests, thanks to
+  `@vincentbernat`_ (#1221)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
