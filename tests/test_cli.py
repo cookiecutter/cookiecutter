@@ -463,4 +463,3 @@ def test_subdirectory_repo(cli_runner):
     assert os.path.isdir('fake-project')
     with open(os.path.join('fake-project', 'README.rst')) as f:
         assert 'Project name: **Fake Project**' in f.read()
-
