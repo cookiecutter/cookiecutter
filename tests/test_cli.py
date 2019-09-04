@@ -449,3 +449,18 @@ def test_debug_file_verbose(cli_runner, debug_file):
     )
     assert context_log in debug_file.readlines(cr=False)
     assert context_log in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_subdirectory_repo(cli_runner):
+    result = cli_runner(
+        'tests/fake-repo-subdir/',
+        '--no-input',
+        '-v',
+        '--subdirectory=my-subdir',
+    )
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Fake Project**' in f.read()
+
