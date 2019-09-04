@@ -1,3 +1,5 @@
+.. _`subdirectories`:
+
 Organizing cookiecutter templates in subdirectories
 ===================================================
 
