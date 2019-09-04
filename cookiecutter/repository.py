@@ -103,8 +103,6 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
             clone_to_dir=clone_to_dir,
             no_input=no_input,
         )
-        if subdir:
-            cloned_repo = os.path.join(cloned_repo, subdir)
         repository_candidates = [cloned_repo]
         cleanup = False
     else:
@@ -115,6 +113,8 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
         cleanup = False
 
     for repo_candidate in repository_candidates:
+        if subdir:
+            repo_candidate = os.path.join(repo_candidate, subdir)
         if repository_has_cookiecutter_json(repo_candidate):
             return repo_candidate, cleanup
 
@@ -122,6 +122,6 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
             template,
-            '\n'.join(repository_candidates)
+            '\n'.join([os.path.join(s, subdir) for s in repository_candidates])
         )
     )
