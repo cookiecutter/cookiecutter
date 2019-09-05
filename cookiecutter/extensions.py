@@ -4,7 +4,11 @@
 
 import json
 import string
-from random import choice
+try:
+    # Python 3.6 and above
+    from secrets import choice
+except ImportError:
+    from random import choice
 
 from jinja2.ext import Extension
 
