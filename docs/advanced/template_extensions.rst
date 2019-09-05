@@ -27,7 +27,7 @@ Please note that Cookiecutter will **not** install any dependencies on its own!
 As a user you need to make sure you have all the extensions installed, before
 running Cookiecutter on a template that requires custom Jinja2 extensions.
 
-By default Cookiecutter includes the folllowing extensions:
+By default Cookiecutter includes the following extensions:
 
 - ``cookiecutter.extensions.JsonifyExtension``
 - ``cookiecutter.extensions.RandomStringExtension``
@@ -39,7 +39,7 @@ Jsonify extension
 The ``cookiecutter.extensions.JsonifyExtension`` extension provides a ``jsonify`` filter in templates
 that converts a Python object to JSON:
 
-.. code-block:: jinja2
+.. code-block:: jinja
 
     {% {'a': True} | jsonify %}
 
@@ -52,12 +52,14 @@ Would output:
 Random string extension
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+*New in Cookiecutter 1.7*
+
 The ``cookiecutter.extensions.RandomStringExtension`` extension provides a ``random_ascii_string``
 method in templates that generates a random fixed-length string, optionally with punctuation.
 
-To generate a random 12 character string:
+Generate a random n-size character string. Example for n=12:
 
-.. code-block:: jinja2
+.. code-block:: jinja
 
     {{ random_ascii_string(12) }}
 
@@ -67,10 +69,10 @@ Outputs:
 
     bIIUczoNvswh
 
-The second argument controls if punctuation (``'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'``) should be
-present in the result:
+The second argument controls if punctuation and special characters
+``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
 
-.. code-block:: jinja2
+.. code-block:: jinja
 
     {{ random_ascii_string(12, punctuation=True) }}
 
