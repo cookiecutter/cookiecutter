@@ -20,4 +20,4 @@ Various advanced topics regarding cookiecutter usage.
    choice_variables
    dict_variables
    template_extensions
-   repo_subdirectories
+   directories

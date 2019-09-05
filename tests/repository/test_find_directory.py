@@ -19,7 +19,7 @@ def cloned_cookiecutter_path(user_config_data, template):
     if not os.path.exists(cloned_template_path):
         os.mkdir(cloned_template_path)  # might exist from other tests.
 
-    subdir_template_path = os.path.join(cloned_template_path, 'my-subdir')
+    subdir_template_path = os.path.join(cloned_template_path, 'my-dir')
     if not os.path.exists(subdir_template_path):
         os.mkdir(subdir_template_path)
     io.open(os.path.join(subdir_template_path, 'cookiecutter.json'), 'w')
@@ -36,7 +36,7 @@ def test_should_find_existing_cookiecutter(
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
         no_input=True,
-        subdir='my-subdir',
+        dir='my-dir',
     )
 
     assert cloned_cookiecutter_path == project_dir
@@ -54,19 +54,19 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
             clone_to_dir=user_config_data['cookiecutters_dir'],
             checkout=None,
             no_input=True,
-            subdir='wrong-subdir',
+            dir='wrong-dir',
         )
 
     wrong_full_cookiecutter_path = os.path.join(
         os.path.dirname(cloned_cookiecutter_path),
-        'wrong-subdir'
+        'wrong-dir'
     )
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
             template,
             '\n'.join([
-                os.path.join(template, 'wrong-subdir'),
+                os.path.join(template, 'wrong-dir'),
                 wrong_full_cookiecutter_path
             ]),
         )
