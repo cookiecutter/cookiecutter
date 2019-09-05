@@ -4,12 +4,7 @@
 
 import json
 import string
-
-try:
-    # Python 3.6 and above
-    from secrets import choice
-except ImportError:
-    from random import choice
+from random import choice
 
 from jinja2.ext import Extension
 
@@ -34,7 +29,6 @@ class RandomStringExtension(Extension):
         super(RandomStringExtension, self).__init__(environment)
 
         def random_ascii_string(length, punctuation=False):
-            corpus = string.ascii_letters
             if punctuation:
                 corpus = "".join((string.ascii_letters, string.punctuation))
             else:
