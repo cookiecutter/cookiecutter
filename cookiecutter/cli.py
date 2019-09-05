@@ -60,8 +60,9 @@ def validate_extra_context(ctx, param, value):
     help=u'branch, tag or commit to checkout after git clone',
 )
 @click.option(
-    u'-cd', u'--subdirectory',
-    help=u'Subdirectory within repo that holds cookiecutter.json file.',
+    u'--directory',
+    help=u'Directory within repo that holds cookiecutter.json file '
+         u'for advanced repositories with multi templates in it',
 )
 @click.option(
     '-v', '--verbose',
@@ -95,7 +96,7 @@ def validate_extra_context(ctx, param, value):
 def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file, subdirectory):
+        default_config, debug_file, directory):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -123,7 +124,7 @@ def main(
             config_file=config_file,
             default_config=default_config,
             password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
-            subdir=subdirectory
+            dir=directory
         )
     except (OutputDirExistsException,
             InvalidModeException,
