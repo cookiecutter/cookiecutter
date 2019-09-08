@@ -48,8 +48,8 @@ Cookiecutter could always use more documentation, whether as part of the officia
 If you want to review your changes on the documentation locally, you can do:
 
 ```bash
-    pip install -r docs/requirements.txt
-    make servedocs
+pip install -r docs/requirements.txt
+make servedocs
 ```
 
 This will compile the documentation, open it in your browser and start watching the files for changes, recompiling as you save.
@@ -72,21 +72,21 @@ Here's how to set up `cookiecutter` for local development.
 2. Clone your fork locally:
 
 ```bash
-    git clone git@github.com:your_name_here/cookiecutter.git
+git clone git@github.com:your_name_here/cookiecutter.git
 ```
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
 
 ```bash
-    mkvirtualenv cookiecutter
-    cd cookiecutter/
-    python setup.py develop
+mkvirtualenv cookiecutter
+cd cookiecutter/
+python setup.py develop
 ```
 
 4. Create a branch for local development:
 
 ```bash
-    git checkout -b name-of-your-bugfix-or-feature
+git checkout -b name-of-your-bugfix-or-feature
 ```
 
 Now you can make your changes locally.
@@ -94,8 +94,8 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and flake8:
 
 ```bash
-    pip install tox
-    tox
+pip install tox
+tox
 ```
 
 Please note that tox runs flake8 automatically, since we have a test environment for it.
@@ -103,21 +103,21 @@ Please note that tox runs flake8 automatically, since we have a test environment
 If you feel like running only the flake8 environment, please use the following command:
 
 ```bash
-    tox -e flake8
+tox -e flake8
 ```
 
 6. Commit your changes and push your branch to GitHub:
 
 ```bash
-    git add .
-    git commit -m "Your detailed description of your changes."
-    git push origin name-of-your-bugfix-or-feature
+git add .
+git commit -m "Your detailed description of your changes."
+git push origin name-of-your-bugfix-or-feature
 ```
 
 7. Check that the test coverage hasn't dropped:
 
 ```bash
-    tox -e cov-report
+tox -e cov-report
 ```
 
 8. Submit a pull request through the GitHub website.
@@ -145,16 +145,16 @@ Before you submit a pull request, check that it meets these guidelines:
   * Example:
 
 ```python
-    LIGHT_MESSAGES = {
-        'English': "There are %(number_of_lights)s lights.",
-        'Pirate':  "Arr! Thar be %(number_of_lights)s lights."
-    }
-    def lights_message(language, number_of_lights):
-        """Return a language-appropriate string reporting the light count."""
-        return LIGHT_MESSAGES[language] % locals()
-    def is_pirate(message):
-        """Return True if the given message sounds piratical."""
-        return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
+LIGHT_MESSAGES = {
+    'English': "There are %(number_of_lights)s lights.",
+    'Pirate':  "Arr! Thar be %(number_of_lights)s lights."
+}
+def lights_message(language, number_of_lights):
+    """Return a language-appropriate string reporting the light count."""
+    return LIGHT_MESSAGES[language] % locals()
+def is_pirate(message):
+    """Return True if the given message sounds piratical."""
+    return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
 ```
 
 * Write new code in Python 3.
@@ -168,13 +168,13 @@ For further information please consult the [`pytest usage docs`](http://pytest.o
 To run a particular test class with tox:
 
 ```bash
-    tox -e py '-k TestFindHooks'
+tox -e py '-k TestFindHooks'
 ```
 
 To run some tests with names matching a string expression:
 
 ```bash
-    tox -e py '-k generate'
+tox -e py '-k generate'
 ```
 
 Will run all tests matching "generate", test_generate_files for example.
@@ -182,13 +182,13 @@ Will run all tests matching "generate", test_generate_files for example.
 To run just one method:
 
 ```bash
-    tox -e py '-k "TestFindHooks and test_find_hook"'
+tox -e py '-k "TestFindHooks and test_find_hook"'
 ```
 
 To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox:
 
 ```bash
-    tox
+tox
 ```
 
 This configuration file setup the pytest-cov plugin and it is an additional dependency. It generate a coverage report after the tests.
@@ -196,7 +196,7 @@ This configuration file setup the pytest-cov plugin and it is an additional depe
 It is possible to tests with some versions of python, to do this the command is:
 
 ```bash
-    tox -e py27,py35,pypy
+tox -e py27,py35,pypy
 ```
 
 Will run py.test with the python2.7, python3.5 and pypy interpreters, for example.
@@ -322,25 +322,22 @@ If you merge a pull request, you're responsible for updating `AUTHORS.md` and `H
 
 When you're processing the first change after a release, create boilerplate following the existing pattern:
 
-```rest
-    x.y.z (Development)
+```md
+## x.y.z (Development)
 
-    The goals of this release are TODO: release summary of features
+The goals of this release are TODO: release summary of features
 
-    Features:
+Features:
 
-    * Feature description, thanks to @contributor (#PR).
+* Feature description, thanks to [@contributor](https://github.com/contributor) (#PR).
 
-    Bug Fixes:
+Bug Fixes:
 
-    * Bug fix description, thanks to @contributor (#PR).
+* Bug fix description, thanks to [@contributor](https://github.com/contributor) (#PR).
 
-    Other changes:
+Other changes:
 
-    * Description of the change, thanks to @contributor (#PR).
-
-    .. _`@contributor`: https://github.com/contributor
-
+* Description of the change, thanks to [@contributor](https://github.com/contributor) (#PR).
 ```
 
 ### Process: Accepting Template Pull Requests
@@ -380,5 +377,3 @@ Contributors may be given core commit privileges. Preference will be given to th
 2. A coding style that the other core committers find simple, minimal, and clean.
 3. Access to resources for cross-platform development and testing.
 4. Time to devote to the project regularly.
-
-Autogenerated from the docs via `make contributing`

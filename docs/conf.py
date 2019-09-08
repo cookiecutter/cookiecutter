@@ -287,7 +287,7 @@ man_pages = [
 texinfo_documents = [
     ('index', 'cookiecutter', u'cookiecutter Documentation',
      u'Audrey Roy and cookiecutter community', 'cookiecutter',
-     'One line description of project.', 'Miscellaneous'),
+     'Creates projects from project templates', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

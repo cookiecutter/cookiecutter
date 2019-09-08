@@ -34,39 +34,39 @@ Did someone say features?
 * Simple command line usage:
 
 ```bash
-    # Create project from the cookiecutter-pypackage.git repo template
-    # You'll be prompted to enter values.
-    # Then it'll create your Python package in the current working directory,
-    # based on those values.
-    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
-    # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-    $ cookiecutter gh:audreyr/cookiecutter-pypackage
+# Create project from the cookiecutter-pypackage.git repo template
+# You'll be prompted to enter values.
+# Then it'll create your Python package in the current working directory,
+# based on those values.
+$ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
+# For the sake of brevity, repos on GitHub can just use the 'gh' prefix
+$ cookiecutter gh:audreyr/cookiecutter-pypackage
 ```
 
 * Use it at the command line with a local template:
 
 ```bash
-    # Create project in the current working directory, from the local
-    # cookiecutter-pypackage/ template
-    $ cookiecutter cookiecutter-pypackage/
+# Create project in the current working directory, from the local
+# cookiecutter-pypackage/ template
+$ cookiecutter cookiecutter-pypackage/
 ```
 
 * Or use it from Python:
 
 ```py
-    from cookiecutter.main import cookiecutter
+from cookiecutter.main import cookiecutter
 
-    # Create project from the cookiecutter-pypackage/ template
-    cookiecutter('cookiecutter-pypackage/')
+# Create project from the cookiecutter-pypackage/ template
+cookiecutter('cookiecutter-pypackage/')
 
-    # Create project from the cookiecutter-pypackage.git repo template
-    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+# Create project from the cookiecutter-pypackage.git repo template
+cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 ```
 
 * Directory names and filenames can be templated. For example:
 
 ```py
-    {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
+{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
 ```
 
 * Supports unlimited levels of directory nesting.
@@ -76,16 +76,16 @@ Did someone say features?
 * Simply define your template variables in a ``cookiecutter.json`` file. For example:
 
 ```json
-    {
-        "full_name": "Audrey Roy",
-        "email": "audreyr@gmail.com",
-        "project_name": "Complexity",
-        "repo_name": "complexity",
-        "project_short_description": "Refreshingly simple static site generator.",
-        "release_date": "2013-07-10",
-        "year": "2013",
-        "version": "0.1.1"
-    }
+{
+    "full_name": "Audrey Roy",
+    "email": "audreyr@gmail.com",
+    "project_name": "Complexity",
+    "repo_name": "complexity",
+    "project_short_description": "Refreshingly simple static site generator.",
+    "release_date": "2013-07-10",
+    "year": "2013",
+    "version": "0.1.1"
+}
 ```
 
 * Unless you suppress it with ``--no-input``, you are prompted for input:
@@ -97,11 +97,11 @@ Did someone say features?
 * Cross-platform support for ``~/.cookiecutterrc`` files:
 
 ```yaml
-    default_context:
-    full_name: "Audrey Roy"
-    email: "audreyr@gmail.com"
-    github_username: "audreyr"
-    cookiecutters_dir: "~/.cookiecutters/"
+default_context:
+full_name: "Audrey Roy"
+email: "audreyr@gmail.com"
+github_username: "audreyr"
+cookiecutters_dir: "~/.cookiecutters/"
 ```
 
 * Cookiecutters (cloned Cookiecutter project templates) are put into ``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
@@ -109,10 +109,10 @@ Did someone say features?
 * If you have already cloned a cookiecutter into ``~/.cookiecutters/``, you can reference it by directory name:
 
 ```bash
-    # Clone cookiecutter-pypackage
-    $ cookiecutter gh:audreyr/cookiecutter-pypackage
-    # Now you can use the already cloned cookiecutter by name
-    $ cookiecutter cookiecutter-pypackage
+# Clone cookiecutter-pypackage
+$ cookiecutter gh:audreyr/cookiecutter-pypackage
+# Now you can use the already cloned cookiecutter by name
+$ cookiecutter cookiecutter-pypackage
 ```
 
 * You can use local cookiecutters, or remote cookiecutters directly from Git repos or from Mercurial repos on Bitbucket.
@@ -122,7 +122,7 @@ Did someone say features?
 * Inject extra context with command-line arguments:
 
 ```bash
-    cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
+cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
 ```
 
 * Direct access to the Cookiecutter API allows for injection of extra context.
