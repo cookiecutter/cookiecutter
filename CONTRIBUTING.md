@@ -91,33 +91,35 @@ git checkout -b name-of-your-bugfix-or-feature
 
 Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass the tests and flake8:
+5. When you're done making changes, check that your changes pass the tests and lint check:
 
 ```bash
 pip install tox
 tox
 ```
 
-Please note that tox runs flake8 automatically, since we have a test environment for it.
+Please note that tox runs lint check automatically, since we have a test environment for it.
 
-If you feel like running only the flake8 environment, please use the following command:
+If you feel like running only the lint environment, please use the following command:
 
 ```bash
-tox -e flake8
+tox -e lint
 ```
 
-6. Commit your changes and push your branch to GitHub:
+6. Ensure that your feature or commit is fully covered by tests. Check report after regular tox run. You can also run coverage only report and get html report with statement by statement highlighting:
+
+```bash
+tox -e cov-report
+```
+
+You report will be placed to `htmlcov` directory. Please do not include this directory to your commits. By default this directory in our `.gitignore` file.
+
+7. Commit your changes and push your branch to GitHub:
 
 ```bash
 git add .
 git commit -m "Your detailed description of your changes."
 git push origin name-of-your-bugfix-or-feature
-```
-
-7. Check that the test coverage hasn't dropped:
-
-```bash
-tox -e cov-report
 ```
 
 8. Submit a pull request through the GitHub website.
