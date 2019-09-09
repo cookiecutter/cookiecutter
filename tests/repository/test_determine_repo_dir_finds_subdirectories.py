@@ -36,7 +36,7 @@ def test_should_find_existing_cookiecutter(
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
         no_input=True,
-        dir='my-dir',
+        directory='my-dir',
     )
 
     assert cloned_cookiecutter_path == project_dir
@@ -54,7 +54,7 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
             clone_to_dir=user_config_data['cookiecutters_dir'],
             checkout=None,
             no_input=True,
-            dir='wrong-dir',
+            directory='wrong-dir',
         )
 
     wrong_full_cookiecutter_path = os.path.join(

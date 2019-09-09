@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None, dir=None):
+        config_file=None, default_config=False, password=None, directory=None):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -41,7 +41,7 @@ def cookiecutter(
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
-    :param dir: Subdirectory within repo where cookiecutter.json lives.
+    :param directory: Subdirectory within repo where cookiecutter.json lives.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -62,7 +62,7 @@ def cookiecutter(
         checkout=checkout,
         no_input=no_input,
         password=password,
-        dir=dir
+        directory=directory
     )
 
     template_name = os.path.basename(os.path.abspath(repo_dir))

@@ -124,7 +124,7 @@ def main(
             config_file=config_file,
             default_config=default_config,
             password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
-            dir=directory
+            directory=directory
         )
     except (OutputDirExistsException,
             InvalidModeException,
