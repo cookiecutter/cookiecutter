@@ -7,7 +7,10 @@ import logging
 import os
 import subprocess
 
-from whichcraft import which
+try:
+    from shutil import which
+except ImportError:
+    from whichcraft import which
 
 from .exceptions import (
     RepositoryNotFound, RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
