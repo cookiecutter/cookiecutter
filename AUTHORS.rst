@@ -7,13 +7,16 @@ Development Leads
 
 * Audrey Roy Greenfeld (`@audreyr`_)
 * Daniel Roy Greenfeld (`@pydanny`_)
+* Raphael Pierzina (`@hackebrot`_)
 
 Core Committers
 ---------------
 
 * Michael Joseph (`@michaeljoseph`_)
 * Paul Moore (`@pfmoore`_)
-* Raphael Pierzina (`@hackebrot`_)
+* Andrey Shpak (`@insspb`_)
+* Sorin Sbarnea (`@ssbarnea`_)
+* Fábio C. Barrionuevo da Luz (`@luzfcb`_)
 
 Contributors
 ------------
@@ -84,7 +87,6 @@ Contributors
 * Cédric Krier (`@cedk`_)
 * Tim Osborn (`@ptim`_)
 * Aaron Gallagher (`@habnabit`_)
-* Fábio C. Barrionuevo da Luz (`@luzfcb`_)
 * mozillazg (`@mozillazg`_)
 * Joachim Jablon (`@ewjoachim`_)
 * Andrew Ittner (`@tephyr`_)
@@ -124,6 +126,12 @@ Contributors
 * Anthony Sottile (`@asottile`_)
 * Jonathan Sick (`@jonathansick`_)
 * Hugo (`@hugovk`_)
+* Min ho Kim (`@minho42`_)
+* Ryan Ly (`@rly`_)
+* Akintola Rahmat (`@mihrab34`_)
+* Jai Ram Rideout (`@jairideout`_)
+* Diego Carrasco Gubernatis (`@dacog`_)
+* Josh Barnes (`@jcb91`_)
 
 .. _`@cedk`: https://github.com/cedk
 .. _`@johtso`: https://github.com/johtso
@@ -236,4 +244,11 @@ Contributors
 .. _`@asottile`: https://github.com/asottile
 .. _`@jonathansick`: https://github.com/jonathansick
 .. _`@hugovk`: https://github.com/hugovk
-
+.. _`@insspb`: https://github.com/insspb
+.. _`@ssbarnea`: https://github.com/ssbarnea
+.. _`@minho42`: https://github.com/minho42
+.. _`@rly`: https://github.com/rly
+.. _`@mihrab34`: https://github.com/mihrab34
+.. _`@jairideout`: https://github.com/jairideout
+.. _`@dacog`: https://github.com/dacog
+.. _`@jcb91`: https://github.com/jcb91

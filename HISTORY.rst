@@ -8,7 +8,12 @@ History
 
 Important Changes:
 
-* Drop support for EOL Python 3.3, thanks to `@hugovk`_ (#1024)
+* Drop support for EOL Python 3.5 and 3.4 thanks to `@jamescurtin`_ (#1178) and
+  `@insspb`_ (#1181).
+* Drop support for EOL Python 3.3 thanks to `@hugovk`_ (#1024)
+
+* Increase the minimum ``click`` version to ``7.0`` (#1206)
+
 * Support for python hook as modules, thanks to `@0x0L`_ (#851)
 
 
@@ -17,6 +22,10 @@ Important Changes:
 
 Other Changes:
 
+* Test the codebase with python3.8 beta on tox and travis-ci, thanks to
+  `@mihrab34`_ (#1206)
+* Prevent ``click`` API v7.0 from showing choices when already shown, thanks to
+  `@rly`_ (#1168)
 * Add a `CODE_OF_CONDUCT.md`_ file to the project, thanks to
   `@andreagrandi`_ (#1009)
 * Update docstrings in ``cookiecutter/main.py``, ``cookiecutter/__init__.py``,
@@ -38,6 +47,19 @@ Other Changes:
   (#1057)
 * Make sure to preserve the order of items in the generated cookiecutter
   context, thanks to `@hackebrot`_ (#1074)
+* Fixed DeprecationWarning for a regular expression on python 3.6, thanks to
+  `@reinout`_ (#1124)
+* Document use of cookiecutter-template topic on GitHub, thanks to `@ssbarnea`_
+  (#1189)
+* Update README badge links, thanks to `@luzfcb`_ (#1207)
+* Update prompt.py to match pep257 guidelines, thanks to `@jairideout`_ (#1105)
+* Update link to Jinja2 extensions documentation, thanks to `@dacog`_ (#1193)
+* Require pip 9.0.0 or newer for tox environments, thanks to `@hackebrot`_
+  (#1215)
+* Use io.open contextmanager when reading hook files, thanks to `@jcb91`_
+  (#1147)
+* Use sys.executable when invoking python interpreter from tests, thanks to
+  `@vincentbernat`_ (#1221)
 * Add more cookiecutter templates to the mix:
 
   * `cookiecutter-python-cli`_ by `@xuanluong`_ (#1003)
@@ -47,6 +69,7 @@ Other Changes:
   * `cookiecutter-flask-ask`_ by `@machinekoder`_ (#1056)
   * `cookiecutter-data-driven-journalism`_ by `@JAStark`_ (#1020)
   * `cookiecutter-tox-plugin`_ by `@obestwalter`_ (#1103)
+  * `cookiecutter-django-dokku`_ by `@mashrikt`_ (#1093)
 
 .. _`cookiecutter-python-cli`: https://github.com/xuanluong/cookiecutter-python-cli
 .. _`cookiecutter-docker-science`: https://github.com/docker-science/cookiecutter-docker-science
@@ -55,6 +78,7 @@ Other Changes:
 .. _`cookiecutter-flask-ask`: https://github.com/chrisvoncsefalvay/cookiecutter-flask-ask
 .. _`cookiecutter-data-driven-journalism`: https://github.com/jastark/cookiecutter-data-driven-journalism
 .. _`cookiecutter-tox-plugin`: https://github.com/tox-dev/cookiecutter-tox-plugin
+.. _`cookiecutter-django-dokku`: https://github.com/mashrikt/cookiecutter-django-dokku
 
 .. _`CODE_OF_CONDUCT.md`: https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md
 
@@ -72,6 +96,15 @@ Other Changes:
 .. _`@machinekoder`: https://github.com/machinekoder
 .. _`@JAStark`: https://github.com/JAStark
 .. _`@obestwalter`: https://github.com/obestwalter
+.. _`@reinout`: https://github.com/reinout
+.. _`@mashrikt`: https://github.com/mashrikt
+.. _`@jamescurtin`: https://github.com/jamescurtin
+.. _`@insspb`: https://github.com/insspb
+.. _`@rly`: https://github.com/rly
+.. _`@mihrab34`: https://github.com/mihrab34
+.. _`@jairideout`: https://github.com/jairideout
+.. _`@dacog`: https://github.com/dacog
+.. _`@jcb91`: https://github.com/jcb91
 
 
 1.6.0 (2017-10-15) Tim Tam
@@ -826,7 +859,7 @@ Features:
 
 * `cookiecutter()` now takes an optional `extra_context` parameter, thanks to `@michaeljoseph`_, `@fcurella`_, `@aventurella`_, `@emonty`_, `@schacki`_, `@ryanolson`_, `@pfmoore`_, `@pydanny`_, `@audreyr`_ (#260).
 * Context is now injected into hooks, thanks to `@michaeljoseph`_ and `@dinopetrone`_.
-* Moved all Python 2/3 compatability code into `cookiecutter.compat`, making the eventual move to `six` easier, thanks to `@michaeljoseph`_ (#60, #102).
+* Moved all Python 2/3 compatibility code into `cookiecutter.compat`, making the eventual move to `six` easier, thanks to `@michaeljoseph`_ (#60, #102).
 * Added `cookiecutterrc` defined aliases for cookiecutters, thanks to `@pfmoore`_ (#246)
 * Added `flake8` to tox to check for pep8 violations, thanks to `@natim`_.
 
@@ -994,7 +1027,7 @@ New features:
   that shows the location of the TemplateSyntaxError. Thanks to `@benjixx`_.
 * Can now prompt the user to enter values during generation from a local
   cookiecutter, thanks to `@ThomasChiroux`_. This is now always the default
-  behavior. Prompts can also be supressed with `--no-input`.
+  behavior. Prompts can also be suppressed with `--no-input`.
 * Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
   directory (or Windows equivalent). The location is configurable. (This is a
   major change from the pre-0.7.0 behavior, where cloned cookiecutters were
