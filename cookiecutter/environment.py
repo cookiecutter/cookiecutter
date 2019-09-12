@@ -2,6 +2,8 @@
 
 """Jinja2 environment and extensions loading."""
 
+import os
+
 from jinja2 import Environment, StrictUndefined
 
 from .exceptions import UnknownExtension
@@ -23,7 +25,7 @@ class ExtensionLoaderMixin(object):
         2. Reads extensions set in the cookiecutter.json _extensions key.
         3. Attempts to load the extensions. Provides useful error if fails.
         """
-        context = kwargs.pop('context', {})
+        context = kwargs.get('context', {})
 
         default_extensions = [
             'cookiecutter.extensions.JsonifyExtension',
@@ -52,8 +54,40 @@ class ExtensionLoaderMixin(object):
         else:
             return [str(ext) for ext in extensions]
 
+class CustomDelimiterConfigurerMixin(object):
+    """Mixin to initialize the Jinja2 Environment with custom delimiters
+    """
+    def __init__(self, **kwargs):
+        """Initialize the Jinja2 Environment with custom delimiters
+        """
+        context = kwargs.pop('context', {})
 
-class StrictEnvironment(ExtensionLoaderMixin, Environment):
+        kwargs.update(self._read_delimiters(context))
+
+        super(CustomDelimiterConfigurerMixin, self).__init__(
+            **kwargs
+        )
+
+    def _read_delimiters(self, context):
+        """Return dict of delimiters to be used to configure the Jinja2 env.
+        """
+        delimiters = {}
+
+        j2_delimiter_params = [
+            'variable_start_string', 'variable_end_string',
+            'block_start_string', 'block_end_string',
+            'comment_start_string', 'comment_end_string'
+        ]
+
+        for param in j2_delimiter_params:
+            env_key = 'J2_' + param.upper()
+            delimiter = os.environ.get(env_key)
+            if delimiter:
+                delimiters[param] = delimiter
+
+        return delimiters
+
+class StrictEnvironment(ExtensionLoaderMixin, CustomDelimiterConfigurerMixin, Environment):
     """Create strict Jinja2 environment.
 
     Jinja2 environment will raise error on undefined variable in template-

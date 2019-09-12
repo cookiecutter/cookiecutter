@@ -214,7 +214,9 @@ def render_and_create_dir(dirname, context, output_dir, environment,
 
 def ensure_dir_is_templated(dirname):
     """Ensure that dirname is a templated directory name."""
-    if '{{' in dirname and '}}' in dirname:
+    variable_start = os.environ.get('J2_VARIABLE_START_STRING', '{{')
+    variable_end = os.environ.get('J2_VARIABLE_END_STRING', '}}')
+    if variable_start in dirname and variable_end in dirname:
         return True
     else:
         raise NonTemplatedInputDirException
