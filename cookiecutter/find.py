@@ -22,9 +22,9 @@ def find_template(repo_dir):
 
     project_template = None
     for item in repo_dir_contents:
-        variable_start = os.environ.get('J2_VARIABLE_START_STRING', '{{')
-        variable_end = os.environ.get('J2_VARIABLE_END_STRING', '}}')
-        if 'cookiecutter' in item and variable_start in item and variable_end in item:
+        var_start = os.environ.get('J2_VARIABLE_START_STRING', '{{')
+        var_end = os.environ.get('J2_VARIABLE_END_STRING', '}}')
+        if 'cookiecutter' in item and var_start in item and var_end in item:
             project_template = item
             break
 

@@ -54,7 +54,8 @@ class ExtensionLoaderMixin(object):
         else:
             return [str(ext) for ext in extensions]
 
-class CustomDelimiterConfigurerMixin(object):
+
+class DelimiterMixin(object):
     """Mixin to initialize the Jinja2 Environment with custom delimiters
     """
     def __init__(self, **kwargs):
@@ -64,7 +65,7 @@ class CustomDelimiterConfigurerMixin(object):
 
         kwargs.update(self._read_delimiters(context))
 
-        super(CustomDelimiterConfigurerMixin, self).__init__(
+        super(DelimiterMixin, self).__init__(
             **kwargs
         )
 
@@ -87,7 +88,8 @@ class CustomDelimiterConfigurerMixin(object):
 
         return delimiters
 
-class StrictEnvironment(ExtensionLoaderMixin, CustomDelimiterConfigurerMixin, Environment):
+
+class StrictEnvironment(ExtensionLoaderMixin, DelimiterMixin, Environment):
     """Create strict Jinja2 environment.
 
     Jinja2 environment will raise error on undefined variable in template-
