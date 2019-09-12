@@ -23,6 +23,7 @@ def test_env_should_come_with_jinja2_time_extension():
     env = StrictEnvironment(keep_trailing_newline=True)
     assert 'jinja2_time.jinja2_time.TimeExtension' in env.extensions
 
+
 @pytest.fixture(autouse=True)
 def test_env_should_contain_delimiter_overrides(monkeypatch):
     monkeypatch.setenv('J2_VARIABLE_START_STRING', '<<')
