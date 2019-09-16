@@ -41,7 +41,7 @@ def cookiecutter(
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
-    :param directory: Subdirectory within repo where cookiecutter.json lives.
+    :param directory: A relative path to a cookiecutter template in a repository.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
