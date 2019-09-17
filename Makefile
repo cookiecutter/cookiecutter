@@ -82,7 +82,7 @@ submodules: ## Pull and update git submodules recursively
 .PHONY: release
 release: clean ## Package and upload release
 	@echo "+ $@"
-	@python setup.py sdist bdist_wheel
+	@python setup.py sdist 
 	@twine upload -r $(PYPI_SERVER) dist/*
 
 .PHONY: sdist
