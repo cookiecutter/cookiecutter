@@ -94,7 +94,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'cookiecutter'
-copyright = u'2013-2019, Audrey Roy and cookiecutter community'
+copyright = u'2013-2019, Audrey Roy and Cookiecutter community'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -242,7 +242,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual])
 latex_documents = [
     ('index', 'cookiecutter.tex', u'cookiecutter Documentation',
-     u'Audrey Roy and cookiecutter community', 'manual'),
+     u'Audrey Roy and Cookiecutter community', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -272,7 +272,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'cookiecutter', u'cookiecutter Documentation',
-     [u'Audrey Roy and cookiecutter community'], 1)
+     [u'Audrey Roy and Cookiecutter community'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -286,7 +286,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'cookiecutter', u'cookiecutter Documentation',
-     u'Audrey Roy and cookiecutter community', 'cookiecutter',
+     u'Audrey Roy and Cookiecutter community', 'cookiecutter',
      'Creates projects from project templates', 'Miscellaneous'),
 ]
 
@@ -308,8 +308,8 @@ texinfo_documents = [
 # Bibliographic Dublin Core info.
 epub_title = u'cookiecutter'
 epub_author = u'Audrey Roy'
-epub_publisher = u'Audrey Roy and cookiecutter community'
-epub_copyright = u'2013-2019, Audrey Roy and cookiecutter community'
+epub_publisher = u'Audrey Roy and Cookiecutter community'
+epub_copyright = u'2013-2019, Audrey Roy and Cookiecutter community'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
