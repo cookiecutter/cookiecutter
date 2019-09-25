@@ -12,6 +12,7 @@ Important Changes:
 
 Other Changes:
 
+* Core documentation converted to Markdown format thanks to [@wagnernegrao](https://github.com/wagnernegrao), [@insspb](https://github.com/insspb) (#1216)
 * Tests update: use sys.executable when invoking python in python 3 only environment thanks to [@vincentbernat](https://github.com/vincentbernat) (#1221)
 * Prevent `click` API v7.0 from showing choices when already shown, thanks to [@rly](https://github.com/rly) and [@luzfcb](https://github.com/luzfcb) (#1168)
 * Test the codebase with python3.8 beta on tox and travis-ci (#1206), thanks to [@mihrab34](https://github.com/mihrab34)
