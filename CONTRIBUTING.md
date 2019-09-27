@@ -160,6 +160,7 @@ def is_pirate(message):
 ```
 
 * Write new code in Python 3.
+* If you are using VS Code with the Python extension, it's a good idea to set it up to use `flake8` for linting and `black` for formatting. Once your virtualenv is set up, run `pip install flake8 black`. Then in VS Code, go to Settings > Workspace, look for "python linting flake8" and check the "Python > Linting: Flake8 Enabled" checkbox. Look for "python black" and make sure the "Python > Formatting: Provider" setting is set to "black". In the "Python > Formatting: Black Args", add the following command-line arguments: `--skip-string-normalization` and `--line-length 79` to make it conform to the above standard for string quotes, and to flake8 settings.
 
 ## Testing with tox
 
@@ -296,7 +297,7 @@ Ensure that each pull request meets all requirements in [checklist](https://gist
 
 ### Process: Issues
 
-If an issue is a bug that needs an urgent fix, mark it for the next patch release.  
+If an issue is a bug that needs an urgent fix, mark it for the next patch release.
 Then either fix it or mark as please-help.
 
 For other issues: encourage friendly discussion, moderate debate, offer your thoughts.
@@ -353,7 +354,7 @@ note: Adding a template doesn't give authors credit.
 
 ### Process: Your own code changes
 
-All code changes, regardless of who does them, need to be reviewed and merged by someone else.  
+All code changes, regardless of who does them, need to be reviewed and merged by someone else.
 This rule applies to all the core committers.
 
 Exceptions:
