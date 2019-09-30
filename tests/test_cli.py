@@ -97,7 +97,8 @@ def test_cli_replay(mocker, cli_runner):
         config_file=None,
         default_config=False,
         extra_context=None,
-        password=None
+        password=None,
+        namespace='cookiecutter',
     )
 
 
@@ -131,6 +132,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         default_config=False,
         extra_context=None,
         password=None,
+        namespace='cookiecutter',
     )
 
 
@@ -163,6 +165,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         default_config=False,
         extra_context=None,
         password=None,
+        namespace='cookiecutter',
     )
 
 
@@ -223,6 +226,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         default_config=False,
         extra_context=None,
         password=None,
+        namespace='cookiecutter',
     )
 
 
@@ -262,6 +266,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         default_config=False,
         extra_context=None,
         password=None,
+        namespace='cookiecutter',
     )
 
 
@@ -290,6 +295,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         default_config=True,
         extra_context=None,
         password=None,
+        namespace='cookiecutter',
     )
 
 
@@ -313,6 +319,7 @@ def test_default_user_config(mocker, cli_runner):
         default_config=True,
         extra_context=None,
         password=None,
+        namespace='cookiecutter',
     )
 
 

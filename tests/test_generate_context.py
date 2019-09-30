@@ -24,7 +24,8 @@ from cookiecutter.exceptions import ContextDecodingException
 def context_data():
     context = (
         {
-            'context_file': 'tests/test-generate-context/test.json'
+            'context_file': 'tests/test-generate-context/test.json',
+            'namespace': 'test'
         },
         {
             'test': {'1': 2, 'some_key': 'some_val'}
@@ -34,7 +35,8 @@ def context_data():
     context_with_default = (
         {
             'context_file': 'tests/test-generate-context/test.json',
-            'default_context': {'1': 3}
+            'default_context': {'1': 3},
+            'namespace': 'test'
         },
         {
             'test': {'1': 3, 'some_key': 'some_val'}
@@ -45,6 +47,7 @@ def context_data():
         {
             'context_file': 'tests/test-generate-context/test.json',
             'extra_context': {'1': 4},
+            'namespace': 'test'
         },
         {
             'test': {'1': 4, 'some_key': 'some_val'}
@@ -56,6 +59,7 @@ def context_data():
             'context_file': 'tests/test-generate-context/test.json',
             'default_context': {'1': 3},
             'extra_context': {'1': 5},
+            'namespace': 'test'
         },
         {
             'test': {'1': 5, 'some_key': 'some_val'}
@@ -122,7 +126,12 @@ def context_file():
     return 'tests/test-generate-context/choices_template.json'
 
 
-def test_choices(context_file, default_context, extra_context):
+@pytest.fixture
+def namespace():
+    return 'choices_template'
+
+
+def test_choices(context_file, default_context, extra_context, namespace):
     """Make sure that the default for list variables is based on the user
     config and the list as such is not changed to a single value.
     """
@@ -137,7 +146,7 @@ def test_choices(context_file, default_context, extra_context):
     }
 
     generated_context = generate.generate_context(
-        context_file, default_context, extra_context
+        context_file, default_context, extra_context, namespace
     )
 
     assert generated_context == expected_context
