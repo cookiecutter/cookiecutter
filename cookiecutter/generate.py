@@ -30,7 +30,7 @@ from .utils import make_sure_path_exists, work_in, rmtree
 logger = logging.getLogger(__name__)
 
 
-def is_copy_only_path(path, context):
+def is_copy_only_path(path, context, namespace='cookiecutter'):
     """Check whether the given `path` should only be copied and not rendered.
 
     Returns True if `path` matches a pattern in the given `context` dict,
@@ -41,7 +41,7 @@ def is_copy_only_path(path, context):
     :param context: cookiecutter context.
     """
     try:
-        for dont_render in context['cookiecutter']['_copy_without_render']:
+        for dont_render in context[namespace]['_copy_without_render']:
             if fnmatch.fnmatch(path, dont_render):
                 return True
     except KeyError:
@@ -73,7 +73,7 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 
 def generate_context(context_file='cookiecutter.json', default_context=None,
-                     extra_context=None):
+                     extra_context=None, namespace='cookiecutter'):
     """Generate the context for a Cookiecutter project template.
 
     Loads the JSON file as a Python object, with key being the JSON filename.
@@ -99,9 +99,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
         raise ContextDecodingException(our_exc_message)
 
     # Add the Python object to the context dictionary
-    file_name = os.path.split(context_file)[1]
-    file_stem = file_name.split('.')[0]
-    context[file_stem] = obj
+    context[namespace] = obj
 
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
@@ -245,7 +243,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
 
 
 def generate_files(repo_dir, context=None, output_dir='.',
-                   overwrite_if_exists=False):
+                   overwrite_if_exists=False, namespace='cookiecutter'):
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -254,7 +252,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
     """
-    template_dir = find_template(repo_dir)
+    template_dir = find_template(repo_dir, namespace)
     logger.debug('Generating project from {}...'.format(template_dir))
     context = context or OrderedDict([])
 
@@ -313,7 +311,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 # We check the full path, because that's how it can be
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
-                if is_copy_only_path(d_, context):
+                if is_copy_only_path(d_, context, namespace):
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -349,7 +347,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
-                if is_copy_only_path(infile, context):
+                if is_copy_only_path(infile, context, namespace):
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)

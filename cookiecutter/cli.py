@@ -118,7 +118,8 @@ def main(
             output_dir=output_dir,
             config_file=config_file,
             default_config=default_config,
-            password=os.environ.get('COOKIECUTTER_REPO_PASSWORD')
+            password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
+            namespace='cookiecutter'
         )
     except (OutputDirExistsException,
             InvalidModeException,

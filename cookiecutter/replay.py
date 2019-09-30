@@ -19,7 +19,7 @@ def get_file_name(replay_dir, template_name):
     return os.path.join(replay_dir, file_name)
 
 
-def dump(replay_dir, template_name, context):
+def dump(replay_dir, template_name, context, namespace='cookiecutter'):
     if not make_sure_path_exists(replay_dir):
         raise IOError('Unable to create replay dir at {}'.format(replay_dir))
 
@@ -29,8 +29,8 @@ def dump(replay_dir, template_name, context):
     if not isinstance(context, dict):
         raise TypeError('Context is required to be of type dict')
 
-    if 'cookiecutter' not in context:
-        raise ValueError('Context is required to contain a cookiecutter key')
+    if namespace not in context:
+        raise ValueError('Context is required to contain a {} key'.format(namespace))  # noqa: E501
 
     replay_file = get_file_name(replay_dir, template_name)
 
@@ -38,7 +38,7 @@ def dump(replay_dir, template_name, context):
         json.dump(context, outfile)
 
 
-def load(replay_dir, template_name):
+def load(replay_dir, template_name, namespace='cookiecutter'):
     if not isinstance(template_name, basestring):
         raise TypeError('Template name is required to be of type str')
 
@@ -47,7 +47,7 @@ def load(replay_dir, template_name):
     with open(replay_file, 'r') as infile:
         context = json.load(infile)
 
-    if 'cookiecutter' not in context:
-        raise ValueError('Context is required to contain a cookiecutter key')
+    if namespace not in context:
+        raise ValueError('Context is required to contain a {} key'.format(namespace))  # noqa: E501
 
     return context

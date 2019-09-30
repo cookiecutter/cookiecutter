@@ -25,7 +25,8 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None):
+        config_file=None, default_config=False, password=None,
+        namespace='cookiecutter'):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -66,7 +67,7 @@ def cookiecutter(
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
     if replay:
-        context = load(config_dict['replay_dir'], template_name)
+        context = load(config_dict['replay_dir'], template_name, namespace)
     else:
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is {}'.format(context_file))
@@ -75,23 +76,29 @@ def cookiecutter(
             context_file=context_file,
             default_context=config_dict['default_context'],
             extra_context=extra_context,
+            namespace=namespace,
         )
 
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
-        context['cookiecutter'] = prompt_for_config(context, no_input)
+        context[namespace] = prompt_for_config(
+            context,
+            no_input=no_input,
+            namespace=namespace,
+        )
 
         # include template dir or url in the context dict
-        context['cookiecutter']['_template'] = template
+        context[namespace]['_template'] = template
 
-        dump(config_dict['replay_dir'], template_name, context)
+        dump(config_dict['replay_dir'], template_name, context, namespace)
 
     # Create project from local context and project template.
     result = generate_files(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
-        output_dir=output_dir
+        output_dir=output_dir,
+        namespace=namespace,
     )
 
     # Cleanup (if required)

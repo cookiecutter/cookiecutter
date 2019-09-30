@@ -187,7 +187,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
     return read_user_choice(key, rendered_options)
 
 
-def prompt_for_config(context, no_input=False):
+def prompt_for_config(context, no_input=False, namespace='cookiecutter'):
     """Prompt user to enter a new config.
 
     :param dict context: Source for field names and sample values.
@@ -199,7 +199,7 @@ def prompt_for_config(context, no_input=False):
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    for key, raw in iteritems(context[u'cookiecutter']):
+    for key, raw in iteritems(context[namespace]):
         if key.startswith(u'_'):
             cookiecutter_dict[key] = raw
             continue
@@ -224,7 +224,7 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
-    for key, raw in iteritems(context[u'cookiecutter']):
+    for key, raw in iteritems(context[namespace]):
 
         try:
             if isinstance(raw, dict):
