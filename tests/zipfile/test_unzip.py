@@ -103,7 +103,7 @@ def test_unzip_protected_local_file_user_password_with_noinput(mocker, tmpdir):
 def test_unzip_protected_local_file_user_password(mocker, tmpdir):
     """
     In `unzip()`.
- 
+
     A password-protected local file reference can be unzipped.
 
     """
@@ -131,10 +131,10 @@ def test_unzip_protected_local_file_user_password(mocker, tmpdir):
 
 def test_unzip_protected_local_file_user_bad_password(mocker, tmpdir):
     """
-    In `unzip()`. 
- 
+    In `unzip()`.
+
     If you can't provide a valid password, you get an error.
- 
+
     """
     mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete',
@@ -242,9 +242,9 @@ def test_unzip_url(mocker, tmpdir):
 def test_unzip_url_existing_cache(mocker, tmpdir):
     """
     In `unzip()`, a url will be downloaded and unzipped.
- 
+
     An existing zip file will be removed.
- 
+
     """
     mock_prompt_and_delete = mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete',
@@ -278,7 +278,12 @@ def test_unzip_url_existing_cache(mocker, tmpdir):
 
 
 def test_unzip_url_existing_cache_no_input(mocker, tmpdir):
-    """In `unzip()`, if no_input is provided, the existing file will be removed."""
+    """
+    In `unzip()`.
+
+    if no_input is provided, the existing file will be removed.
+
+    """
     request = mocker.MagicMock()
     request.iter_content.return_value = mock_download()
 
@@ -310,7 +315,7 @@ def test_unzip_should_abort_if_no_redownload(mocker, tmpdir):
 
     If user doesn't want to download, Cookiecutter should exit without cloning
     anything.
- 
+
     """
     mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete',
