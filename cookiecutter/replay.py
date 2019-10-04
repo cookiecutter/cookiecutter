@@ -2,6 +2,7 @@
 
 """
 cookiecutter.replay
+
 -------------------
 """
 
@@ -13,6 +14,7 @@ from past.builtins import basestring
 
 from .utils import make_sure_path_exists
 
+## TODO: Add docstrings for public functions
 
 def get_file_name(replay_dir, template_name):
     file_name = '{}.json'.format(template_name)
