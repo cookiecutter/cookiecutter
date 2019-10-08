@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-cookiecutter.replay
+cookiecutter.replay.
 
 -------------------
 """
@@ -14,14 +14,17 @@ from past.builtins import basestring
 
 from .utils import make_sure_path_exists
 
-## TODO: Add docstrings for public functions
+# TODO: Add docstrings for public functions
+
 
 def get_file_name(replay_dir, template_name):
+    """Join directory path and template file name."""
     file_name = '{}.json'.format(template_name)
     return os.path.join(replay_dir, file_name)
 
 
 def dump(replay_dir, template_name, context):
+    """Load a json file to presist your input for a template."""
     if not make_sure_path_exists(replay_dir):
         raise IOError('Unable to create replay dir at {}'.format(replay_dir))
 
@@ -41,6 +44,7 @@ def dump(replay_dir, template_name, context):
 
 
 def load(replay_dir, template_name):
+    """Dump a json file to ~/.cookiecutter_replay/ to be replayed later on."""
     if not isinstance(template_name, basestring):
         raise TypeError('Template name is required to be of type str')
 
