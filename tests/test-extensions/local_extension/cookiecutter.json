@@ -1,0 +1,6 @@
+{
+    "project_slug": "Foobar",
+    "test_value": "{{cookiecutter.project_slug | foobar}}",
+    "_local_extensions": ["local_extensions.FoobarExtension"]
+}
+
