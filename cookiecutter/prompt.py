@@ -169,7 +169,7 @@ def render_variable(env, raw, cookiecutter_dict):
 
     template = env.from_string(raw)
 
-    rendered_template = template.render(cookiecutter=cookiecutter_dict)
+    rendered_template = template.render(cookiecutter=cookiecutter_dict, cc=cookiecutter_dict)
     return rendered_template
 
 
