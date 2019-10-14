@@ -83,6 +83,7 @@ def cookiecutter(
 
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
+        context['cc'] = context['cookiecutter']
 
         dump(config_dict['replay_dir'], template_name, context)
 
