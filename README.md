@@ -160,7 +160,7 @@ Stuck? Try one of the following:
 * See the [Troubleshooting](https://cookiecutter.readthedocs.io/en/latest/troubleshooting.html) page.
 * Ask for help on [Stack Overflow](https://stackoverflow.com/).
 * You are strongly encouraged to [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) about the problem, even if it's just "I can't get it to work on this cookiecutter" with a link to your cookiecutter. Don't worry about naming/pinpointing the issue properly.
-* Ask for help on [Gitter](https://gitter.im/audreyr/cookiecutter) if you must (but please try one of the other options first, so that others can benefit from the discussion)
+* Ask for help on [Gitter](https://gitter.im/audreyr/cookiecutter) if you must (but please try one of the other options first, so that others can benefit from the discussion).
 
 Development on Cookiecutter is community-driven:
 
@@ -207,11 +207,11 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 ### Python
 
 * [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage): [@audreyr](https://github.com/audreyr)'s ultimate Python package project template.
-* [cookiecutter-pipproject](https://github.com/wdm0006/cookiecutter-pipproject): Minimal package for pip-installable projects
+* [cookiecutter-pipproject](https://github.com/wdm0006/cookiecutter-pipproject): Minimal package for pip-installable projects.
 * [cookiecutter-pypackage-minimal](https://github.com/kragniz/cookiecutter-pypackage-minimal): A minimal Python package template.
 * [cookiecutter-lux-python](https://github.com/alexkey/cookiecutter-lux-python): A boilerplate Python project that aims to create Python package with a convenient Makefile-facility and additional helpers.
 * [cookiecutter-flask](https://github.com/cookiecutter-flask/cookiecutter-flask) : A Flask template with Bootstrap 3, starter templates, and working user registration.
-* [cookiecutter-flask-2](https://github.com/wdm0006/cookiecutter-flask): A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration
+* [cookiecutter-flask-2](https://github.com/wdm0006/cookiecutter-flask): A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration.
 * [cookiecutter-flask-foundation](https://github.com/JackStouffer/cookiecutter-Flask-Foundation) : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * [cookiecutter-flask-minimal](https://github.com/candidtim/cookiecutter-flask-minimal) : Minimal but production-ready Flask project template with no other dependencies except for Flask itself.
 * [cookiecutter-flask-skeleton](https://github.com/realpython/cookiecutter-flask-skeleton) : Flask starter project.
@@ -241,8 +241,8 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [cookiecutter-py3tkinter](https://github.com/ivanlyon/cookiecutter-py3tkinter): Template for Python 3 Tkinter application gui.
 * [cookiecutter-pyqt5](https://github.com/mandeep/cookiecutter-pyqt5): A prebuilt PyQt5 GUI template with a fully featured Pytest test suite and Travis CI integration all in an optimal Python package.
 * [cookiecutter-pyqt4](https://github.com/aeroaks/cookiecutter-pyqt4): A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
-* [cookiecutter-xontrib](https://github.com/laerus/cookiecutter-xontrib): A template for building xontribs, a.k.a [xonsh](https://github.com/xonsh/xonsh) contributions
-* [cookiecutter-conda-python](https://github.com/conda/cookiecutter-conda-python): A template for building Conda Python packages
+* [cookiecutter-xontrib](https://github.com/laerus/cookiecutter-xontrib): A template for building xontribs, a.k.a [xonsh](https://github.com/xonsh/xonsh) contributions.
+* [cookiecutter-conda-python](https://github.com/conda/cookiecutter-conda-python): A template for building Conda Python packages.
 * [cookiecutter-pypackage-rust-cross-platform-publish](https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish): A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux.
 * [cookiecutter-telegram-bot](https://github.com/Ars2014/cookiecutter-telegram-bot): A template project for Telegram bots with webhooks on CherryPy.
 * [python-project-template](https://github.com/Kwpolska/python-project-template): A template for Python projects with sophisticated release automation.
@@ -258,7 +258,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [cookiecutter-djangopackage](https://github.com/pydanny/cookiecutter-djangopackage): A template designed to create reusable third-party PyPI friendly Django apps. Documentation is written in tutorial format.
 * [cookiecutter-django-cms](https://github.com/palazzem/cookiecutter-django-cms): A template for Django CMS with simple Bootstrap 3 template. It has a quick start and deploy documentation.
 * [cookiecutter-django-crud](https://github.com/wildfish/cookiecutter-django-crud): A template to create a Django app with boilerplate CRUD around a model including a factory and tests.
-* [cookiecutter-django-lborgav](https://github.com/lborgav/cookiecutter-django): Another cookiecutter template for Django project with Bootstrap 3 and FontAwesome 4
+* [cookiecutter-django-lborgav](https://github.com/lborgav/cookiecutter-django): Another cookiecutter template for Django project with Bootstrap 3 and FontAwesome 4.
 * [cookiecutter-django-paas](https://github.com/pbacterio/cookiecutter-django-paas): Django template ready to use in PAAS platforms like Heroku, OpenShift, etc..
 * [cookiecutter-django-rest-framework](https://github.com/jpadilla/cookiecutter-django-rest-framework): A template for creating reusable Django REST Framework packages.
 * [cookiecutter-django-aws-eb](https://github.com/dolphinkiss/cookiecutter-django-aws-eb): Get up and running with Django on AWS Elastic Beanstalk.
@@ -269,9 +269,9 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [wagtail-starter-kit](https://github.com/tkjone/starterkit-wagtail): A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
 * [cookiecutter-django-herokuapp](https://github.com/dulacp/cookiecutter-django-herokuapp): A Django 1.7+ template optimized for Python 3 on Heroku.
 * [cookiecutter-simple-django-cn](https://github.com/shenyushun/cookiecutter-simple-django-cn): A simple Django templates for chinese.
-* [cc_django_ember_app](https://bitbucket.org/levit_scs/cc_django_ember_app/src/master/): For creating applications with Django and EmberJS
-* [cc_project_app_drf](https://bitbucket.org/levit_scs/cc_project_app_drf/src/master/): For creating REST apis based on the "project app" project architecture
-* [cc_project_app_full_with_hooks](https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks/src/master/): For creating Django projects using the "project app" project architecture
+* [cc_django_ember_app](https://bitbucket.org/levit_scs/cc_django_ember_app/src/master/): For creating applications with Django and EmberJS.
+* [cc_project_app_drf](https://bitbucket.org/levit_scs/cc_project_app_drf/src/master/): For creating REST apis based on the "project app" project architecture.
+* [cc_project_app_full_with_hooks](https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks/src/master/): For creating Django projects using the "project app" project architecture.
 * [cc-automated-drf-template](https://github.com/TAMU-CPT/cc-automated-drf-template): A template + script that automatically creates your Django REST project with serializers, views, urls, and admin files based on your models file as input.
 * [cookiecutter-django-foundation](https://github.com/Parbhat/cookiecutter-django-foundation): Fork of [cookiecutter-django](https://github.com/pydanny/cookiecutter-django) based on [Zurb Foundation](https://foundation.zurb.com/) 6 front-end framework.
 * [cookiecutter-django-ansible](https://github.com/HackSoftware/cookiecutter-django-ansible): Cookiecutter Django Ansible is a framework for jumpstarting an ansible project for provisioning a server that is ready for your *cookiecutter-django* application.
@@ -300,7 +300,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 ### Git
 
-* [cookiecutter-git](https://github.com/NathanUrwin/cookiecutter-git): Git repo project template :clipboard:
+* [cookiecutter-git](https://github.com/NathanUrwin/cookiecutter-git): Git repo project template :clipboard.
 
 ### C
 
@@ -310,7 +310,7 @@ Meta-templates for generating Cookiecutter project templates.
 ### C++
 
 * [BoilerplatePP](https://github.com/Paspartout/BoilerplatePP): A simple cmake template with unit testing for projects written in C++.
-* [cookiecutter-dpf-effect](https://github.com/SpotlightKid/cookiecutter-dpf-effect): An audio plugin project template for the DISTRHO Plugin Framework (DPF)
+* [cookiecutter-dpf-effect](https://github.com/SpotlightKid/cookiecutter-dpf-effect): An audio plugin project template for the DISTRHO Plugin Framework (DPF).
 * [cookiecutter-dpf-audiotk](https://github.com/SpotlightKid/cookiecutter-dpf-audiotk): An audio plugin project template for the DISTRHO Plugin Framework (DPF) and the Audio Toolkit (ATK) DSP library
 * [cookiecutter-kata-gtest](https://github.com/13coders/cookiecutter-kata-gtest): A template for C++ test-driven development katas using the Google Test framework.
 * [cookiecutter-kata-cpputest](https://github.com/13coders/cookiecutter-kata-cpputest): A template for C++ test-driven-development katas using the CppUTest framework.
@@ -333,9 +333,9 @@ Meta-templates for generating Cookiecutter project templates.
 
 ### Java
 
-* [cookiecutter-java](https://github.com/m-x-k/cookiecutter-java): Cookiecutter for basic java application setup with gradle
-* [cookiecutter-spring-boot](https://github.com/m-x-k/cookiecutter-spring-boot): Cookiecutter for standard java spring boot gradle application
-* [cookiecutter-android](https://github.com/alexfu/cookiecutter-android): Cookiecutter for Gradle-based Android projects
+* [cookiecutter-java](https://github.com/m-x-k/cookiecutter-java): Cookiecutter for basic java application setup with gradle.
+* [cookiecutter-spring-boot](https://github.com/m-x-k/cookiecutter-spring-boot): Cookiecutter for standard java spring boot gradle application.
+* [cookiecutter-android](https://github.com/alexfu/cookiecutter-android): Cookiecutter for Gradle-based Android projects.
 
 ### JS
 
@@ -400,7 +400,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 ### Data Driven Journalism
 
-* [cookiecutter-data-driven-journalism](https://github.com/jastark/cookiecutter-data-driven-journalism): A cookiecutter template to facilitate transparency in data journalism with consistent organisation of data journalism projects and some pre-populated files (including .gitignore, README, AUTHORS)
+* [cookiecutter-data-driven-journalism](https://github.com/jastark/cookiecutter-data-driven-journalism): A cookiecutter template to facilitate transparency in data journalism with consistent organisation of data journalism projects and some pre-populated files (including .gitignore, README, AUTHORS).
 
 ### Continuous Delivery
 
@@ -413,7 +413,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 ### Tornado
 
-* [cookiecutter-tornado](https://github.com/hkage/cookiecutter-tornado): Cookiecutter template for Tornado based projects
+* [cookiecutter-tornado](https://github.com/hkage/cookiecutter-tornado): Cookiecutter template for Tornado based projects.
 
 ### Other
 
@@ -434,7 +434,7 @@ Meta-templates for generating Cookiecutter project templates.
 * [mr.bob](https://github.com/domenkozar/mr.bob) is a filesystem template renderer, meant to deprecate tools such as
   paster and templer.
 
-* [grunt-init](https://github.com/gruntjs/grunt-init) used to be built into Grunt and is now a standalone scaffolding tool
+* [grunt-init](https://github.com/gruntjs/grunt-init) is used to be built into Grunt and is now a standalone scaffolding tool
   to automate project creation.
 
 * [scaffolt](https://github.com/paulmillr/scaffolt) consumes JSON generators with Handlebars support.
