@@ -27,6 +27,7 @@ class UnknownTemplateDirException(CookiecutterException):
     Raised when Cookiecutter cannot determine which directory is the project
     template, e.g. more than one dir appears to be a template dir.
     """
+    # unused locally
 
 
 class MissingProjectDir(CookiecutterException):
@@ -36,6 +37,7 @@ class MissingProjectDir(CookiecutterException):
     Raised during cleanup when remove_repo() can't find a generated project
     directory inside of a repo.
     """
+    # unused locally
 
 
 class ConfigDoesNotExistException(CookiecutterException):
@@ -49,7 +51,7 @@ class ConfigDoesNotExistException(CookiecutterException):
 
 class InvalidConfiguration(CookiecutterException):
     """
-    Exemption for invalid configuration file.
+    Exception for invalid configuration file.
 
     Raised if the global configuration file is not valid YAML or is
     badly constructed.
@@ -66,7 +68,7 @@ class UnknownRepoType(CookiecutterException):
 
 class VCSNotInstalled(CookiecutterException):
     """
-    Exemption when version control is unavailable.
+    Exception when version control is unavailable.
 
     Raised if the version control system (git or hg) is not installed.
     """
@@ -74,7 +76,7 @@ class VCSNotInstalled(CookiecutterException):
 
 class ContextDecodingException(CookiecutterException):
     """
-    Exemption for failed JSON decoding.
+    Exception for failed JSON decoding.
 
     Raised when a project's JSON context file can not be decoded.
     """
@@ -82,7 +84,7 @@ class ContextDecodingException(CookiecutterException):
 
 class OutputDirExistsException(CookiecutterException):
     """
-    Exemption for existing output directory.
+    Exception for existing output directory.
 
     Raised when the output directory of the project exists already.
     """
@@ -99,7 +101,7 @@ class InvalidModeException(CookiecutterException):
 
 class FailedHookException(CookiecutterException):
     """
-    Exemption for hook failures.
+    Exception for hook failures.
 
     Raised when a hook script fails.
     """
@@ -107,14 +109,14 @@ class FailedHookException(CookiecutterException):
 
 class UndefinedVariableInTemplate(CookiecutterException):
     """
-    Exemption for out-of-scope variables.
+    Exception for out-of-scope variables.
 
     Raised when a template uses a variable which is not defined in the
     context.
     """
 
     def __init__(self, message, error, context):
-        """Exemption for out-of-scope variables."""
+        """Exception for out-of-scope variables."""
         self.message = message
         self.error = error
         self.context = context
@@ -130,7 +132,7 @@ class UndefinedVariableInTemplate(CookiecutterException):
 
 class UnknownExtension(CookiecutterException):
     """
-    Exemption for un-importable extention.
+    Exception for un-importable extention.
 
     Raised when an environment is unable to import a required extension.
     """
@@ -138,7 +140,7 @@ class UnknownExtension(CookiecutterException):
 
 class RepositoryNotFound(CookiecutterException):
     """
-    Exemption for missing repo.
+    Exception for missing repo.
 
     Raised when the specified cookiecutter repository doesn't exist.
     """
@@ -146,7 +148,7 @@ class RepositoryNotFound(CookiecutterException):
 
 class RepositoryCloneFailed(CookiecutterException):
     """
-    Exemption for un-cloneable repo.
+    Exception for un-cloneable repo.
 
     Raised when a cookiecutter template can't be cloned.
     """
@@ -154,7 +156,7 @@ class RepositoryCloneFailed(CookiecutterException):
 
 class InvalidZipRepository(CookiecutterException):
     """
-    Exemption for bad zip repo.
+    Exception for bad zip repo.
 
     Raised when the specified cookiecutter repository isn't a valid
     Zip archive.
