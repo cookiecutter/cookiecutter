@@ -4,6 +4,7 @@
 
 import logging
 import os
+import re
 
 from .exceptions import NonTemplatedInputDirException
 
@@ -22,7 +23,7 @@ def find_template(repo_dir):
 
     project_template = None
     for item in repo_dir_contents:
-        if ('cookiecutter' in item or 'cc' in item) and '{{' in item and '}}' in item:
+        if re.search(r'{{(cookiecutter|cc).*}}', item):
             project_template = item
             break
 
