@@ -84,7 +84,7 @@ cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
     "project_short_description": "Refreshingly simple static site generator.",
     "release_date": "2013-07-10",
     "year": "2013",
-    "version": "0.1.1"
+    "current version": "0.1.1"
 }
 ```
 
