@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 """
 Main entry point for the `cookiecutter` command.
 
@@ -27,7 +28,7 @@ def cookiecutter(
         replay=False, overwrite_if_exists=False, output_dir='.',
         config_file=None, default_config=False, password=None):
     """
-    Run Cookiecutter just as if using it from the command line.
+    Run cookiecutter just as if using from command line.
 
     :param template: A directory containing a project template directory,
         or a URL to a git repository.
@@ -36,11 +37,11 @@ def cookiecutter(
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
     :param: overwrite_if_exists: Overwrite the contents of output directory
-        if it exists
+        if it exists.
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
-    :param default_config: Use default values rather than a config file.
-    :param password: The password to use when extracting the repository.
+    :param default_config: Use default values rather than config file.
+    :param password: The password to use when extracting the repo.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
