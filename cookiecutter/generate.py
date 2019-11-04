@@ -172,7 +172,7 @@ def generate_file(project_dir, infile, context, env):
         rendered_file = tmpl.render(**context)
 
         # Detect original file newline to output the rendered file
-        with io.open(infile, 'r') as rd:
+        with io.open(infile, 'r', encoding='utf-8') as rd:
             rd.readline()  # Read the first line to load 'newlines' value
             newline = getattr(rd, 'newlines')
 
