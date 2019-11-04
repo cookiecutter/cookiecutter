@@ -16,9 +16,11 @@ import sys
 from cookiecutter import utils
 
 
-def test_should_raise_error_without_template_arg(capfd):
+def test_should_raise_error_without_template_arg(monkeypatch, capfd):
+    monkeypatch.setenv('PYTHONPATH', '.')
+
     with pytest.raises(subprocess.CalledProcessError):
-        subprocess.check_call(['python', '-m', 'cookiecutter.cli'])
+        subprocess.check_call([sys.executable, '-m', 'cookiecutter.cli'])
 
     _, err = capfd.readouterr()
     exp_message = 'Error: Missing argument "TEMPLATE".'
