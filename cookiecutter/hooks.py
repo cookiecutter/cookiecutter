@@ -110,7 +110,8 @@ def run_script_with_context(script_path, cwd, context):
     """
     _, extension = os.path.splitext(script_path)
 
-    contents = io.open(script_path, 'r', encoding='utf-8').read()
+    with io.open(script_path, 'r', encoding='utf-8') as file:
+        contents = file.read()
 
     with tempfile.NamedTemporaryFile(
         delete=False,

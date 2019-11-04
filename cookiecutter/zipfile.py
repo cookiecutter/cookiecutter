@@ -25,7 +25,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     :param is_url: Is the zip URI a URL or a file?
     :param clone_to_dir: The cookiecutter repository directory
         to put the archive into.
-    :param no_input: Supress any prompts
+    :param no_input: Suppress any prompts
     :param password: The password to use when unpacking the repository.
     """
     # Ensure that clone_to_dir exists

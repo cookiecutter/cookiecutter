@@ -19,14 +19,14 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-with io.open('README.rst', 'r', encoding='utf-8') as readme_file:
+with io.open('README.md', 'r', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
 requirements = [
     'future>=0.15.2',
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
-    'click>=5.0',
+    'click>=7.0',
     'whichcraft>=0.4.0',
     'poyo>=0.1.0',
     'jinja2-time>=0.1.0',
@@ -45,9 +45,10 @@ setup(
                  'templates, e.g. creating a Python package project from a '
                  'Python package project template.'),
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
-    url='https://github.com/audreyr/cookiecutter',
+    url='https://github.com/cookiecutter/cookiecutter',
     packages=[
         'cookiecutter',
     ],
@@ -58,7 +59,7 @@ setup(
         ]
     },
     include_package_data=True,
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     install_requires=requirements,
     license='BSD',
     zip_safe=False,
@@ -72,9 +73,9 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',

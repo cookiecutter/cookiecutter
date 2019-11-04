@@ -63,5 +63,5 @@ target/
 .idea/
 .env
 
-# VSCode
-.vscode/
+# VS code
+.vscode
