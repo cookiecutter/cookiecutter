@@ -248,6 +248,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [python-project-template](https://github.com/Kwpolska/python-project-template): A template for Python projects with sophisticated release automation.
 * [cookiecutter-anyblok-project](https://github.com/AnyBlok/cookiecutter-anyblok-project): A template for Anyblok based projects.
 * [cookiecutter-python-cli](https://github.com/xuanluong/cookiecutter-python-cli): A cookiecutter template for creating a Python CLI application using click.
+* [scientific-python-cookiecutter](https://nsls-ii.github.io/scientific-python-cookiecutter/): A cookiecutter with extensive documentation on common practices in Scientific Python projects.
 
 ### Python-Django
 
