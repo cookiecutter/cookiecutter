@@ -3,7 +3,7 @@
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
 [![Build Status](https://travis-ci.org/cookiecutter/cookiecutter.svg?branch=master)](https://travis-ci.org/cookiecutter/cookiecutter)
-[![Appveyor](https://ci.appveyor.com/api/projects/status/github/cookiecutter/cookiecutter?branch=master)](https://ci.appveyor.com/project/cookiecutter/cookiecutter/branch/master)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/github/cookiecutter/cookiecutter?branch=master&svg=true)](https://ci.appveyor.com/project/cookiecutter/cookiecutter/branch/master)
 [![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/github/cookiecutter/cookiecutter?branch=master)
 [![gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
