@@ -130,3 +130,4 @@
 * Josh Barnes ([@jcb91](https://github.com/jcb91))
 * Nikita Sobolev ([@sobolevn](https://github.com/sobolevn))
 * Matt Stibbs ([@mattstibbs](https://github.com/mattstibbs))
+* MinchinWeb ([@MinchinWeb](https://github.com/MinchinWeb))

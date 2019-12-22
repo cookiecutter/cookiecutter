@@ -12,6 +12,7 @@ Important Changes:
 
 Other Changes:
 
+* PEP257 fixing docstrings in exceptions.py. Thanks to [@MinchinWeb](https://github.com/MinchinWeb) (#1237)
 * Fixed tests sequence for appveyor, to exclude file not found bug. Thanks to [@insspb](https://github.com/insspb) (#1257)
 * Updates REAMDE.md with svg badge for appveyor. Thanks to [@sobolevn](https://github.com/sobolevn) (#1254)
 * Add missing {% endif %} to Choice Variables example. Thanks to [@mattstibbs](https://github.com/mattstibbs) (#1249)
