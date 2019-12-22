@@ -37,6 +37,8 @@ can be used like this::
   {%- elif cookiecutter.license == "BSD-3" -%}
   # More possible license content here
 
+  {% endif %}
+
 Cookiecutter is using `Jinja2's if conditional expression <http://jinja.pocoo.org/docs/dev/templates/#if>`_ to determine the correct license.
 
 The created choice variable is still a regular Cookiecutter variable and can be used like this::
