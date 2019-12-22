@@ -120,7 +120,7 @@ class UndefinedVariableInTemplate(CookiecutterException):
         self.context = context
 
     def __str__(self):
-        """String representation of UndefinedVariableInTemplate."""
+        """Text representation of UndefinedVariableInTemplate."""
         return (
             "{self.message}. "
             "Error message: {self.error.message}. "
