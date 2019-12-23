@@ -2,7 +2,7 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
 
-## 1.7.0 (????-??-??) ???????
+## 1.7.0 (2019-12-22) Old friend
 
 Important Changes:
 
@@ -12,6 +12,12 @@ Important Changes:
 
 Other Changes:
 
+* PEP257 fixing docstrings in exceptions.py. Thanks to [@MinchinWeb](https://github.com/MinchinWeb) (#1237)
+* PEP257 fixing docstrings in replay.py. Thanks to [@kishan](https://github.com/kishan3) (#1234)
+* PEP257 fixing docstrings in test_unzip.py. Thanks to [@tonytheleg](https://github.com/tonytheleg) and [@insspb](https://github.com/insspb) (#1236, #1262)
+* Fixed tests sequence for appveyor, to exclude file not found bug. Thanks to [@insspb](https://github.com/insspb) (#1257)
+* Updates REAMDE.md with svg badge for appveyor. Thanks to [@sobolevn](https://github.com/sobolevn) (#1254)
+* Add missing {% endif %} to Choice Variables example. Thanks to [@mattstibbs](https://github.com/mattstibbs) (#1249)
 * Core documentation converted to Markdown format thanks to [@wagnernegrao](https://github.com/wagnernegrao), [@insspb](https://github.com/insspb) (#1216)
 * Tests update: use sys.executable when invoking python in python 3 only environment thanks to [@vincentbernat](https://github.com/vincentbernat) (#1221)
 * Prevent `click` API v7.0 from showing choices when already shown, thanks to [@rly](https://github.com/rly) and [@luzfcb](https://github.com/luzfcb) (#1168)

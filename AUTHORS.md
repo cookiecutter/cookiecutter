@@ -128,3 +128,8 @@
 * Diego Carrasco Gubernatis ([@dacog](https://github.com/dacog))
 * Wagner Negrão ([@wagnernegrao](https://github.com/wagnernegrao))
 * Josh Barnes ([@jcb91](https://github.com/jcb91))
+* Nikita Sobolev ([@sobolevn](https://github.com/sobolevn))
+* Matt Stibbs ([@mattstibbs](https://github.com/mattstibbs))
+* MinchinWeb ([@MinchinWeb](https://github.com/MinchinWeb))
+* kishan ([@kishan](https://github.com/kishan3))
+* tonytheleg ([@tonytheleg](https://github.com/tonytheleg))
