@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-conftest
---------
+conftest.
 
+--------
 Contains pytest fixtures which are globally available throughout the suite.
 """
 
@@ -23,6 +23,7 @@ replay_dir: "{replay_dir}"
 
 
 def backup_dir(original_dir, backup_dir):
+    """Method to generate backup directory based on original directory."""
     # If the default original_dir is pre-existing, move it to a temp location
     if not os.path.isdir(original_dir):
         return False
@@ -36,6 +37,7 @@ def backup_dir(original_dir, backup_dir):
 
 
 def restore_backup_dir(original_dir, backup_dir, original_dir_found):
+    """Method restores default contents."""
     # Carefully delete the created original_dir only in certain
     # conditions.
     original_dir_is_dir = os.path.isdir(original_dir)
@@ -92,7 +94,6 @@ def clean_system(request):
       `~/.cookiecutter_replay.backup/`
 
     """
-
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
     user_config_path = os.path.expanduser('~/.cookiecutterrc')
     user_config_path_backup = os.path.expanduser(
@@ -151,14 +152,16 @@ def clean_system(request):
 
 @pytest.fixture(scope='session')
 def user_dir(tmpdir_factory):
-    """Fixture that simulates the user's home directory"""
+    """Fixture that simulates the user's home directory."""
     return tmpdir_factory.mktemp('user_dir')
 
 
 @pytest.fixture(scope='session')
 def user_config_data(user_dir):
-    """Fixture that creates 2 Cookiecutter user config dirs in the user's home
-    directory:
+    """Fixture that creates 2 Cookiecutter user config dirs.
+
+     It will create it in the user's home directory.
+
     * `cookiecutters_dir`
     * `cookiecutter_replay`
 
@@ -175,8 +178,10 @@ def user_config_data(user_dir):
 
 @pytest.fixture(scope='session')
 def user_config_file(user_dir, user_config_data):
-    """Fixture that creates a config file called `config` in the user's home
-    directory, with YAML from `user_config_data`.
+    """Fixture that creates a config file called `config`.
+
+     It will create it in the user's home directory, with YAML from
+     `user_config_data`.
 
     :param user_dir: Simulated user's home directory
     :param user_config_data: Dict of config values
@@ -191,4 +196,5 @@ def user_config_file(user_dir, user_config_data):
 
 @pytest.fixture(autouse=True)
 def disable_poyo_logging():
+    """Fixture that disables poyo logging."""
     logging.getLogger('poyo').setLevel(logging.WARNING)
