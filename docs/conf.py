@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""cookiecutter documentation build configuration file."""
 #
 # cookiecutter documentation build configuration file, created by
 # sphinx-quickstart on Thu Jul 11 11:31:49 2013.
@@ -26,14 +27,19 @@ import sys
 
 
 class Mock(object):
+    """Mock."""
+
     def __init__(self, *args, **kwargs):
+        """__init__."""
         pass
 
     def __call__(self, *args, **kwargs):
+        """__call__."""
         return Mock()
 
     @classmethod
     def __getattr__(cls, name):
+        """__getattr__."""
         if name in ('__file__', '__path__'):
             return '/dev/null'
         elif name[0] == name[0].upper():
