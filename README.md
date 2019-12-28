@@ -147,7 +147,7 @@ These Cookiecutters are maintained by the cookiecutter team:
 
 ### Categories of Cookiecutters
 
-[Python](#python) | [Python-Django](#python-django) | [Python-Pyramid](#python-pyramid) | [Cookiecutter (meta)](#cookiecutter-meta) | [Ansible](#ansible) | [Git](#git) | [C](#c) | [C++](#c-1) | [C#](#c-sharp) | [Common Lisp](#common-lisp) | [Elm](#elm) | [Golang](#golang) | [Java](#java) | [JS](#js) | [Kotlin](#kotlin) | [LaTeX/XeTeX](#latexxetex) | [PHP](#php) | [Berkshelf-Vagrant](#berkshelf-vagrant) | [HTML](#html) | [Scala](#scala) | [6502 Assembly](#6502-Assembly) | [Data Science](#data-science) | [Tornado](#tornado) | [Reproducible Science](#reproducible-science) | [Continuous Delivery](#continuous-delivery)
+[Python](#python) | [Python-Django](#python-django) | [Python-Pyramid](#python-pyramid) | [Cookiecutter (meta)](#cookiecutter-meta) | [Ansible](#ansible) | [Git](#git) | [C](#c) | [C++](#c-1) | [C#](#c-sharp) | [Common Lisp](#common-lisp) | [Elm](#elm) | [Golang](#golang) | [Java](#java) | [JS](#js) | [Kotlin](#kotlin) | [LaTeX/XeTeX/Pandoc](#latexxetexpandoc) | [PHP](#php) | [Berkshelf-Vagrant](#berkshelf-vagrant) | [HTML](#html) | [Scala](#scala) | [6502 Assembly](#6502-Assembly) | [Data Science](#data-science) | [Tornado](#tornado) | [Reproducible Science](#reproducible-science) | [Continuous Delivery](#continuous-delivery)
 
 If you don't find a cookiecutter that suits your needs here, please consider writing or suggesting one. We wish for our users to find a solution for their use cases, and we provide a list of other projects that we do not maintain for your convenience (please see the [Similar Projects](#similar-projects) section).
 
@@ -353,7 +353,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 * [cookiecutter-kotlin-gradle](https://github.com/thomaslee/cookiecutter-kotlin-gradle): A bare-bones template for Gradle-based Kotlin projects.
 
-### LaTeX/XeTeX
+### LaTeX/XeTeX/Pandoc
 
 * [cookiecutter-pandoc-paper](https://github.com/Benjamin-Lee/cookiecutter-pandoc-paper): A template for writing academic papers in Markdown using pandoc
 * [pandoc-talk](https://github.com/larsyencken/pandoc-talk): A cookiecutter template for giving talks with pandoc and XeTeX.
