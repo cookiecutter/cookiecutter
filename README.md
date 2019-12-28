@@ -355,6 +355,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 ### LaTeX/XeTeX
 
+* [cookiecutter-pandoc-paper](https://github.com/Benjamin-Lee/cookiecutter-pandoc-paper): A template for writing academic papers in Markdown using pandoc
 * [pandoc-talk](https://github.com/larsyencken/pandoc-talk): A cookiecutter template for giving talks with pandoc and XeTeX.
 * [cookiecutter-latex-article](https://github.com/selimb/cookiecutter-latex-article): A LaTeX template geared towards academic use.
 * [cookiecutter-beamer](https://github.com/luismartingil/cookiecutter-beamer): A template for a LaTeX Beamer presentation.
