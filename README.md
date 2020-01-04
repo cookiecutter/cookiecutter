@@ -248,6 +248,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [python-project-template](https://github.com/Kwpolska/python-project-template): A template for Python projects with sophisticated release automation.
 * [cookiecutter-anyblok-project](https://github.com/AnyBlok/cookiecutter-anyblok-project): A template for Anyblok based projects.
 * [cookiecutter-python-cli](https://github.com/xuanluong/cookiecutter-python-cli): A cookiecutter template for creating a Python CLI application using click.
+* [cookiecutter-aiohttp-uvloop](https://github.com/osminogin/cookiecutter-aiohttp-uvloop): A template for aiohttp projects with [uvloop](https://github.com/MagicStack/uvloop) (ultra fast asyncio event loop).
 
 ### Python-Django
 
