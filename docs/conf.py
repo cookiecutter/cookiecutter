@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa D
 #
 # cookiecutter documentation build configuration file, created by
 # sphinx-quickstart on Thu Jul 11 11:31:49 2013.

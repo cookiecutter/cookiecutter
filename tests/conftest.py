@@ -92,7 +92,6 @@ def clean_system(request):
       `~/.cookiecutter_replay.backup/`
 
     """
-
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
     user_config_path = os.path.expanduser('~/.cookiecutterrc')
     user_config_path_backup = os.path.expanduser(

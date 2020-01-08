@@ -118,7 +118,6 @@ def test_debug_file_logging(
     """Test that logging to stdout uses a different format and level than
     the the file handler.
     """
-
     [file_handler, stream_handler] = info_logger_with_file.handlers
     assert isinstance(file_handler, logging.FileHandler)
     assert isinstance(stream_handler, logging.StreamHandler)

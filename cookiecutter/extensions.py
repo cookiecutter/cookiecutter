@@ -30,6 +30,7 @@ class RandomStringExtension(Extension):
     """Jinja2 extension to create a random string."""
 
     def __init__(self, environment):
+        """Initialize the extension with the given environment."""
         super(RandomStringExtension, self).__init__(environment)
 
         def random_ascii_string(length, punctuation=False):

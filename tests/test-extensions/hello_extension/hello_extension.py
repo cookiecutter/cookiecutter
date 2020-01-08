@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa D104
 
 from jinja2 import nodes
 from jinja2.ext import Extension

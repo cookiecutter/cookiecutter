@@ -16,7 +16,6 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
     `determine_repo_dir()` is passed a zipfile, or a URL
     to a zipfile.
     """
-
     mock_clone = mocker.patch(
         'cookiecutter.repository.unzip',
         return_value='tests/fake-repo-tmpl',
@@ -59,7 +58,6 @@ def test_repository_url_should_clone(
     """`clone()` should be called with correct args when
     `determine_repo_dir()` is passed a repository template url.
     """
-
     mock_clone = mocker.patch(
         'cookiecutter.repository.clone',
         return_value='tests/fake-repo-tmpl',

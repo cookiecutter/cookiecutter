@@ -16,8 +16,7 @@ from cookiecutter import utils
 
 
 def make_readonly(path):
-    """Helper function that is called in the tests to change the access
-    permissions of the given file.
+    """Change the permissions of the given file to read-only.
     """
     mode = os.stat(path).st_mode
     os.chmod(path, mode & ~stat.S_IWRITE)

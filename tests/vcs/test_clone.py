@@ -9,8 +9,8 @@ from cookiecutter import exceptions, vcs
 
 @pytest.fixture
 def clone_dir(tmpdir):
-    """Simulates creation of a directory called `clone_dir` inside of `tmpdir`.
-    Returns a str to said directory.
+    """Simulate creation of a directory called `clone_dir` inside of `tmpdir`.
+    Return a str to said directory.
     """
     return str(tmpdir.mkdir('clone_dir'))
 
