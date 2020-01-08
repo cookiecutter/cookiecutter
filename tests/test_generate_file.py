@@ -83,6 +83,29 @@ def test_generate_file_jsonify_filter(env):
 
 
 @pytest.mark.usefixtures('remove_cheese_file')
+@pytest.mark.parametrize("length", (10, 40))
+@pytest.mark.parametrize("punctuation", (True, False))
+def test_generate_file_random_ascii_string(env, length, punctuation):
+    infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
+    data = {'random_string_file': 'cheese'}
+    context = {
+        "cookiecutter": data,
+        "length": length,
+        "punctuation": punctuation
+    }
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context=context,
+        env=env
+    )
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
+        generated_text = f.read()
+        assert len(generated_text) == length
+
+
+@pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_with_true_conditional(env):
     infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
     generate.generate_file(
