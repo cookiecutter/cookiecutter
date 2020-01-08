@@ -27,7 +27,6 @@ requirements = [
     'binaryornot>=0.2.0',
     'jinja2>=2.7',
     'click>=7.0',
-    'whichcraft>=0.4.0',
     'poyo>=0.1.0',
     'jinja2-time>=0.1.0',
     'requests>=2.18.0',
@@ -61,6 +60,9 @@ setup(
     include_package_data=True,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     install_requires=requirements,
+    extras_require={
+        ':python_version<"3.3"': ['whichcraft>=0.4.0'],
+    },
     license='BSD',
     zip_safe=False,
     classifiers=[
