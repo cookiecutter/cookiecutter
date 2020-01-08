@@ -97,7 +97,8 @@ def test_cli_replay(mocker, cli_runner):
         config_file=None,
         default_config=False,
         extra_context=None,
-        password=None
+        password=None,
+        directory=None,
     )
 
 
@@ -131,6 +132,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         default_config=False,
         extra_context=None,
         password=None,
+        directory=None,
     )
 
 
@@ -163,6 +165,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         default_config=False,
         extra_context=None,
         password=None,
+        directory=None,
     )
 
 
@@ -223,6 +226,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         default_config=False,
         extra_context=None,
         password=None,
+        directory=None,
     )
 
 
@@ -262,6 +266,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         default_config=False,
         extra_context=None,
         password=None,
+        directory=None,
     )
 
 
@@ -290,6 +295,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         default_config=True,
         extra_context=None,
         password=None,
+        directory=None,
     )
 
 
@@ -313,6 +319,7 @@ def test_default_user_config(mocker, cli_runner):
         default_config=True,
         extra_context=None,
         password=None,
+        directory=None,
     )
 
 
@@ -442,3 +449,17 @@ def test_debug_file_verbose(cli_runner, debug_file):
     )
     assert context_log in debug_file.readlines(cr=False)
     assert context_log in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_directory_repo(cli_runner):
+    result = cli_runner(
+        'tests/fake-repo-dir/',
+        '--no-input',
+        '-v',
+        '--directory=my-dir',
+    )
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Fake Project**' in f.read()

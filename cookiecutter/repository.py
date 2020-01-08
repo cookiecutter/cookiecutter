@@ -62,7 +62,7 @@ def repository_has_cookiecutter_json(repo_directory):
 
 
 def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
-                       no_input, password=None):
+                       no_input, password=None, directory=None):
     """
     Locate the repository directory from a template reference.
 
@@ -78,6 +78,7 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
     :param password: The password to use when extracting the repository.
+    :param directory: Directory within repo where cookiecutter.json lives.
     :return: A tuple containing the cookiecutter template directory, and
         a boolean descriving whether that directory should be cleaned up
         after the template has been instantiated.
@@ -110,6 +111,10 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
             os.path.join(clone_to_dir, template)
         ]
         cleanup = False
+
+    if directory:
+        repository_candidates = [os.path.join(s, directory)
+                                 for s in repository_candidates]
 
     for repo_candidate in repository_candidates:
         if repository_has_cookiecutter_json(repo_candidate):
