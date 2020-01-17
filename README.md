@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/cookiecutter/cookiecutter.svg?branch=master)](https://travis-ci.org/cookiecutter/cookiecutter)
 [![Appveyor](https://ci.appveyor.com/api/projects/status/github/cookiecutter/cookiecutter?branch=master&svg=true)](https://ci.appveyor.com/project/cookiecutter/cookiecutter/branch/master)
 [![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/github/cookiecutter/cookiecutter?branch=master)
-[![gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/audreyr/cookiecutter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![slack](https://img.shields.io/badge/cookiecutter-Join%20on%20Slack-green?style=flat&logo=slack)](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U)
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
 [![Code Qaulity](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master)
 
@@ -160,16 +160,16 @@ Stuck? Try one of the following:
 * See the [Troubleshooting](https://cookiecutter.readthedocs.io/en/latest/troubleshooting.html) page.
 * Ask for help on [Stack Overflow](https://stackoverflow.com/).
 * You are strongly encouraged to [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) about the problem, even if it's just "I can't get it to work on this cookiecutter" with a link to your cookiecutter. Don't worry about naming/pinpointing the issue properly.
-* Ask for help on [Gitter](https://gitter.im/audreyr/cookiecutter) if you must (but please try one of the other options first, so that others can benefit from the discussion).
+* Ask for help on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U) if you must (but please try one of the other options first, so that others can benefit from the discussion).
 
 Development on Cookiecutter is community-driven:
 
 * Huge thanks to all the [contributors](AUTHORS.md) who have pitched in to help make Cookiecutter an even better tool.
 * Everyone is invited to contribute. Read the [contributing instructions](CONTRIBUTING.md), then get started.
 
-Connect with other Cookiecutter contributors and users on [Gitter](https://gitter.im/audreyr/cookiecutter):
+Connect with other Cookiecutter contributors and users on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U):
 
-* [https://gitter.im/audreyr/cookiecutter](https://gitter.im/audreyr/cookiecutter) (note: due to work and commitments, a core committer might not always be available)
+* [https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U) (note: due to work and commitments, a core committer might not always be available)
 
 Encouragement is unbelievably motivating. If you want more work done on Cookiecutter, show support:
 
