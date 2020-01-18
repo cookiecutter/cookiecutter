@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import os
+"""Collection of tests around cookiecutter's command-line interface."""
+
 import json
+import os
 
-from click.testing import CliRunner
 import pytest
+from click.testing import CliRunner
 
+from cookiecutter import utils
 from cookiecutter.__main__ import main
 from cookiecutter.main import cookiecutter
-from cookiecutter import utils
 
 
 @pytest.fixture(scope="session")
@@ -178,7 +180,6 @@ def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
 
 @pytest.mark.usefixtures("make_fake_project_dir", "remove_fake_project_dir")
 def test_cli_overwrite_if_exists_when_output_dir_exists(cli_runner, overwrite_cli_flag):
-
     result = cli_runner("tests/fake-repo-pre/", "--no-input", overwrite_cli_flag,)
     assert result.exit_code == 0
     assert os.path.isdir("fake-project")

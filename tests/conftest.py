@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-conftest.
-
---------
-Contains pytest fixtures which are globally available throughout the suite.
-"""
+"""pytest fixtures which are globally available throughout the suite."""
 
 import logging
 import os

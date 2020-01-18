@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+
+"""Tests around locally cached cookiecutter template repositories."""
+
 import io
 import os
+
 import pytest
 
 from cookiecutter import repository, exceptions
@@ -30,7 +34,6 @@ def cloned_cookiecutter_path(user_config_data, template):
 def test_should_find_existing_cookiecutter(
     template, user_config_data, cloned_cookiecutter_path
 ):
-
     project_dir, cleanup = repository.determine_repo_dir(
         template,
         abbreviations={},
@@ -45,8 +48,7 @@ def test_should_find_existing_cookiecutter(
 
 
 def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
-    """An unknown local repository should raise a `RepositoryNotFound` \
-    exception."""
+    """An unknown local repo should raise a `RepositoryNotFound` exception."""
     with pytest.raises(exceptions.RepositoryNotFound) as err:
         repository.determine_repo_dir(
             template,

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import locale
+"""Collection of tests around character encodings."""
+
 import codecs
-import pytest
+import locale
 import sys
+
+import pytest
 
 PY3 = sys.version_info[0] == 3
 

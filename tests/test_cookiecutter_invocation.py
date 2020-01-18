@@ -8,9 +8,10 @@ using the entry point set up for the package.
 """
 
 import os
-import pytest
 import subprocess
 import sys
+
+import pytest
 
 from cookiecutter import utils
 

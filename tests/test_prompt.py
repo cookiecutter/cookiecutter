@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_prompt
+"""Tests for `cookiecutter.prompt` module."""
 
-Tests for `cookiecutter.prompt` module.
-"""
-
-from collections import OrderedDict
 import platform
+from collections import OrderedDict
 
 import pytest
 import six

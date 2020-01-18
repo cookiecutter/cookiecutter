@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+"""Tests around prompting for and handling of choice variables."""
+
 import click
 import pytest
 
 from cookiecutter.prompt import read_user_choice
 
 OPTIONS = ["hello", "world", "foo", "bar"]
-
 
 EXPECTED_PROMPT = """Select varname:
 1 - hello

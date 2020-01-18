@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Testing invalid cookiecutter template repositories."""
+
 import pytest
 
 from cookiecutter import main, exceptions
