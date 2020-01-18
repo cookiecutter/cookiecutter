@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_hooks
-
-Tests for `cookiecutter.hooks` module.
-"""
+"""Tests for `cookiecutter.hooks` module."""
 
 import os
 import pytest

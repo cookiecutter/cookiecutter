@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+"""Tests for all supported cookiecutter template repository locations."""
+
 import pytest
 
 from cookiecutter.config import BUILTIN_ABBREVIATIONS

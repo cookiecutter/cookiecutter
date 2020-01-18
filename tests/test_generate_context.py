@@ -11,10 +11,12 @@ TestGenerateContext.test_generate_context_with_default_and_extra
 """
 
 from __future__ import unicode_literals
-import pytest
+
 import os
 import re
 from collections import OrderedDict
+
+import pytest
 
 from cookiecutter import generate
 from cookiecutter.exceptions import ContextDecodingException

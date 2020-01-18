@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+
+"""Tests around detection whether cookiecutter templates are cached locally."""
+
 import io
 import os
+
 import pytest
 
 from cookiecutter import repository

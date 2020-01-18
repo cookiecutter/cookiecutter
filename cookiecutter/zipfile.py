@@ -1,9 +1,12 @@
+"""Utility functions for handling and fetching repo archives in zip format."""
+
 from __future__ import absolute_import
 
 import os
-import requests
 import tempfile
 from zipfile import ZipFile
+
+import requests
 
 try:
     # BadZipfile was renamed to BadZipFile in Python 3.2.

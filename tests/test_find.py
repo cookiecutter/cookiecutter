@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_find
-
-Tests for `cookiecutter.find` module.
-"""
+"""Tests for `cookiecutter.find` module."""
 
 import os
+
 import pytest
 
 from cookiecutter import find

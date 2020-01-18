@@ -1,1 +1,1 @@
-"""Cookiecutter Test Suites"""
+"""Cookiecutter integration tests"""

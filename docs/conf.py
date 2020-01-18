@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+"""Documentation build configuration file."""
+
 #
 # cookiecutter documentation build configuration file, created by
 # sphinx-quickstart on Thu Jul 11 11:31:49 2013.

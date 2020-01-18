@@ -23,12 +23,14 @@ clean_system teardown code
 """
 
 from __future__ import unicode_literals
-import os
+
 import io
+import os
+
 import pytest
 
-from cookiecutter import generate
 from cookiecutter import exceptions
+from cookiecutter import generate
 from cookiecutter import utils
 
 

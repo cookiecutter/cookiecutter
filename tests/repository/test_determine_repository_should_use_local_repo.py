@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+
+"""Tests around using locally cached cookiecutter template repositories."""
+
 import os
-from cookiecutter import repository, exceptions
 
 import pytest
+
+from cookiecutter import repository, exceptions
 
 
 def test_finds_local_repo(tmpdir):

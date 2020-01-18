@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+"""Collection of tests around cloning cookiecutter template repositories."""
+
 import os
 
 import pytest

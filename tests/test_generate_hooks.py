@@ -11,10 +11,12 @@ TestHooks.test_run_shell_hooks
 """
 
 from __future__ import unicode_literals
+
 import errno
 import os
-import sys
 import stat
+import sys
+
 import pytest
 
 from cookiecutter import generate
@@ -90,7 +92,6 @@ def test_empty_hooks():
 
 @pytest.mark.usefixtures("clean_system", "remove_additional_folders")
 def test_oserror_hooks(mocker):
-
     message = "Out of memory"
 
     err = OSError(message)

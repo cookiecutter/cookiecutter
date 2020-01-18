@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_utils
-
-Tests for `cookiecutter.utils` module.
-"""
+"""Tests for `cookiecutter.utils` module."""
 
 import os
-import pytest
 import stat
 import sys
+
+import pytest
 
 from cookiecutter import utils
 

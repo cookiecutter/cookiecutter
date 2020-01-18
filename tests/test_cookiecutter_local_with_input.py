@@ -7,7 +7,9 @@ Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalWithInput.test_cookiecutter_local_with_input
 TestCookiecutterLocalWithInput.test_cookiecutter_input_extra_context
 """
+
 import os
+
 import pytest
 
 from cookiecutter import main, utils

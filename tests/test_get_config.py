@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+
+"""Collection of tests around loading cookiecutter config if present."""
+
 import os
+
 import pytest
 
 from cookiecutter import config
