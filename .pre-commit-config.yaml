@@ -16,3 +16,4 @@ repos:
       - id: flake8
         additional_dependencies:
           - flake8-black
+          - flake8-docstrings
