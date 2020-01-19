@@ -90,7 +90,6 @@ def test_should_call_prompt_with_process_json(mocker):
 
     Verifies generation of a processor for the user input.
     """
-
     mock_prompt = mocker.patch(
         'cookiecutter.prompt.click.prompt',
         autospec=True,

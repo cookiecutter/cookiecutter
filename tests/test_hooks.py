@@ -68,7 +68,6 @@ class TestFindHooks(object):
 
     def test_find_hook(self):
         """Finds the specified hook."""
-
         with utils.work_in(self.repo_path):
             expected_pre = os.path.abspath('hooks/pre_gen_project.py')
             actual_hook_path = hooks.find_hook('pre_gen_project')
@@ -80,7 +79,6 @@ class TestFindHooks(object):
 
     def test_no_hooks(self):
         """find_hooks should return None if the hook could not be found."""
-
         with utils.work_in('tests/fake-repo'):
             assert None is hooks.find_hook('pre_gen_project')
 
@@ -136,7 +134,6 @@ class TestExternalHooks(object):
 
     def test_run_script_with_context(self):
         """Execute a hook script, passing a context"""
-
         hook_path = os.path.join(self.hooks_path, 'post_gen_project.sh')
 
         if sys.platform.startswith('win'):
@@ -195,7 +192,6 @@ class TestExternalHooks(object):
 @pytest.yield_fixture
 def dir_with_hooks(tmpdir):
     """Yield a directory that contains hook backup files."""
-
     hooks_dir = tmpdir.mkdir('hooks')
 
     pre_hook_content = textwrap.dedent(
