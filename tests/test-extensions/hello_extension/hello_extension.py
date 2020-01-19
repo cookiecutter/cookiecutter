@@ -8,6 +8,7 @@ class HelloExtension(Extension):
     tags = set(['hello'])
 
     def __init__(self, environment):
+        """Hello Extension Constructor"""
         super(HelloExtension, self).__init__(environment)
 
     def _hello(self, name):

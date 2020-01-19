@@ -25,6 +25,8 @@ import sys
 # see: https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules  # noqa
 
 
+# flake8: noqa D107,D105
+
 class Mock(object):
     def __init__(self, *args, **kwargs):
         pass
