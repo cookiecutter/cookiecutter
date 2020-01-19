@@ -4,6 +4,7 @@
 
 import json
 import string
+
 try:
     # Python 3.6 and above
     from secrets import choice
@@ -23,7 +24,7 @@ class JsonifyExtension(Extension):
         def jsonify(obj):
             return json.dumps(obj, sort_keys=True, indent=4)
 
-        environment.filters['jsonify'] = jsonify
+        environment.filters["jsonify"] = jsonify
 
 
 class RandomStringExtension(Extension):
@@ -39,4 +40,5 @@ class RandomStringExtension(Extension):
             else:
                 corpus = string.ascii_letters
             return "".join(choice(corpus) for _ in range(length))
+
         environment.globals.update(random_ascii_string=random_ascii_string)
