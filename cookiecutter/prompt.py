@@ -12,8 +12,8 @@ from future.utils import iteritems
 
 from jinja2.exceptions import UndefinedError
 
-from .exceptions import UndefinedVariableInTemplate
-from .environment import StrictEnvironment
+from cookiecutter.exceptions import UndefinedVariableInTemplate
+from cookiecutter.environment import StrictEnvironment
 
 
 def read_user_variable(var_name, default_value):

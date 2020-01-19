@@ -11,7 +11,7 @@ import stat
 import shutil
 import sys
 
-from .prompt import read_user_yes_no
+from cookiecutter.prompt import read_user_yes_no
 
 logger = logging.getLogger(__name__)
 
