@@ -2,7 +2,6 @@
 
 """
 test_read_user_yes_no
----------------------
 """
 
 from __future__ import unicode_literals

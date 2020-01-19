@@ -2,7 +2,6 @@
 
 """
 test_generate_files
--------------------
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateFiles.test_generate_files_nontemplated_exception
@@ -166,7 +165,7 @@ def test_return_rendered_project_dir():
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_permissions():
     """
-    simple.txt and script.sh should retain their respective 0o644 and
+    simple.txt and script.sh should retain their respective 0o644 and \
     0o755 permissions
     """
     generate.generate_files(

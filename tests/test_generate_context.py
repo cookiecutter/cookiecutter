@@ -2,7 +2,6 @@
 
 """
 test_generate_context
----------------------
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateContext.test_generate_context
@@ -72,7 +71,7 @@ def context_data():
 @pytest.mark.parametrize('input_params, expected_context', context_data())
 def test_generate_context(input_params, expected_context):
     """
-    Test the generated context for several input parameters against the
+    Test the generated context for several input parameters against the \
     according expected context.
     """
     assert generate.generate_context(**input_params) == expected_context
@@ -123,7 +122,7 @@ def context_file():
 
 
 def test_choices(context_file, default_context, extra_context):
-    """Make sure that the default for list variables is based on the user
+    """Make sure that the default for list variables is based on the user \
     config and the list as such is not changed to a single value.
     """
     expected_context = {

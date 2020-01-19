@@ -2,7 +2,6 @@
 
 """
 test_dump
----------
 """
 
 import json
@@ -47,7 +46,7 @@ def test_type_error_if_not_dict_context(replay_test_dir, template_name):
 
 
 def test_value_error_if_key_missing_in_context(replay_test_dir, template_name):
-    """Test that replay.dump raises if the context does not contain a key
+    """Test that replay.dump raises if the context does not contain a key \
     named 'cookiecutter'.
     """
     with pytest.raises(ValueError):
@@ -85,7 +84,7 @@ def test_ioerror_if_replay_dir_creation_fails(
 
 def test_run_json_dump(mocker, mock_ensure_success, mock_user_config,
                        template_name, context, replay_test_dir, replay_file):
-    """Test that replay.dump runs json.dump under the hood and that the context
+    """Test that replay.dump runs json.dump under the hood and that the context \
     is correctly written to the expected file in the replay_dir.
     """
     spy_get_replay_file = mocker.spy(replay, 'get_file_name')

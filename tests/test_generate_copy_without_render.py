@@ -2,7 +2,6 @@
 
 """
 test_generate_copy_without_render
----------------------------------
 """
 
 from __future__ import unicode_literals

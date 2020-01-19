@@ -74,7 +74,7 @@ def test_get_config():
 
 def test_get_config_does_not_exist():
     """
-    Check that `exceptions.ConfigDoesNotExistException` is raised when
+    Check that `exceptions.ConfigDoesNotExistException` is raised when \
     attempting to get a non-existent config file.
     """
     with pytest.raises(ConfigDoesNotExistException):

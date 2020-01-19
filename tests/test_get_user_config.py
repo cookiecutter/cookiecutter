@@ -2,7 +2,6 @@
 
 """
 test_get_user_config
---------------------
 
 Tests formerly known from a unittest residing in test_config.py named
 TestGetUserConfig.test_get_user_config_valid
@@ -27,6 +26,7 @@ def user_config_path():
 def back_up_rc(request, user_config_path):
     """
     Back up an existing cookiecutter rc and restore it after the test.
+
     If ~/.cookiecutterrc is pre-existing, move it to a temp location
     """
     user_config_path_backup = os.path.expanduser('~/.cookiecutterrc.backup')

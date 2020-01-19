@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_read_user_dict
--------------------
-"""
+"""test_read_user_dict"""
 
 from __future__ import unicode_literals
 
@@ -90,7 +87,8 @@ def test_should_raise_type_error(mocker):
 
 def test_should_call_prompt_with_process_json(mocker):
     """Test to make sure that process_jon is actually being used
-    to generate a processor for the user input.
+
+    Verifies generation of a processor for the user input.
     """
 
     mock_prompt = mocker.patch(
@@ -109,8 +107,9 @@ def test_should_call_prompt_with_process_json(mocker):
 
 
 def test_read_user_dict_default_value(mocker):
-    """Test to make sure that read_user_dict returns the default value for a
-    dict variable rather than the display value.
+    """Make sure that read_user_dict returns the default value
+
+    Verify return of a dict variable rather than the display value.
     """
     mock_prompt = mocker.patch(
         'cookiecutter.prompt.click.prompt',

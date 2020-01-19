@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_read_user_variable
------------------------
-"""
+"""test_read_user_variable"""
 
 from __future__ import unicode_literals
 

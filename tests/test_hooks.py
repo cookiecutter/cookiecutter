@@ -2,7 +2,6 @@
 
 """
 test_hooks
-------------
 
 Tests for `cookiecutter.hooks` module.
 """
@@ -168,7 +167,7 @@ class TestExternalHooks(object):
         assert 'tests' not in os.getcwd()
 
     def test_run_hook(self):
-        """Execute hook from specified template in specified output
+        """Execute hook from specified template in specified output \
         directory.
         """
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')

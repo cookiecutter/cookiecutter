@@ -2,7 +2,6 @@
 
 """
 test_find
----------
 
 Tests for `cookiecutter.find` module.
 """
