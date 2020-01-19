@@ -5,13 +5,12 @@ import pytest
 
 
 def test_valid_repository():
-    assert repository_has_cookiecutter_json('tests/fake-repo')
+    assert repository_has_cookiecutter_json("tests/fake-repo")
 
 
-@pytest.fixture(params=[
-    'tests/fake-repo-bad',
-    'tests/unknown-repo',
-])
+@pytest.fixture(
+    params=["tests/fake-repo-bad", "tests/unknown-repo",]
+)
 def invalid_repository(request):
     return request.param
 
