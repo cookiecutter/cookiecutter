@@ -72,7 +72,6 @@ def mock_ensure_success(mocker):
 def test_ioerror_if_replay_dir_creation_fails(
         mock_ensure_failure, replay_test_dir):
     """Test that replay.dump raises when the replay_dir cannot be created."""
-
     with pytest.raises(IOError):
         replay.dump(
             replay_test_dir,
