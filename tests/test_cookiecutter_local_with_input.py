@@ -2,7 +2,6 @@
 
 """
 test_cookiecutter_local_with_input
-----------------------------------
 
 Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalWithInput.test_cookiecutter_local_with_input

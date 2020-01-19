@@ -2,7 +2,6 @@
 
 """
 test_utils
-------------
 
 Tests for `cookiecutter.utils` module.
 """
@@ -68,7 +67,7 @@ def test_workin():
 
 
 def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
-    """In `prompt_and_delete()`, if the user agrees to delete/reclone the
+    """In `prompt_and_delete()`, if the user agrees to delete/reclone the \
     repo, the repo should be deleted.
     """
     mock_read_user = mocker.patch(
@@ -86,7 +85,7 @@ def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
 
 
 def test_prompt_should_ask_and_rm_repo_file(mocker, tmpdir):
-    """In `prompt_and_delete()`, if the user agrees to delete/reclone a
+    """In `prompt_and_delete()`, if the user agrees to delete/reclone a \
     repo file, the repo should be deleted.
     """
     mock_read_user = mocker.patch(
@@ -106,7 +105,7 @@ def test_prompt_should_ask_and_rm_repo_file(mocker, tmpdir):
 
 
 def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmpdir):
-    """In `prompt_and_delete()`, if the user wants to keep their old
+    """In `prompt_and_delete()`, if the user wants to keep their old \
     cloned template repo, it should not be deleted.
     """
     mock_read_user = mocker.patch(
@@ -124,7 +123,7 @@ def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmpdir):
 
 
 def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmpdir):
-    """In `prompt_and_delete()`, if the user wants to keep their old
+    """In `prompt_and_delete()`, if the user wants to keep their old \
     cloned template repo, it should not be deleted.
     """
     def answer(question, default):
@@ -148,7 +147,9 @@ def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmpdir):
 
 
 def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
-    """In `prompt_and_delete()`, if `no_input` is True, the call to
+    """Prompt shoul dnot ask if no input and rm dir
+
+    In `prompt_and_delete()`, if `no_input` is True, the call to
     `prompt.read_user_yes_no()` should be suppressed.
     """
     mock_read_user = mocker.patch(
@@ -166,7 +167,9 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
 
 
 def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmpdir):
-    """In `prompt_and_delete()`, if `no_input` is True, the call to
+    """Prompt should not ask if no input and rm file
+
+    In `prompt_and_delete()`, if `no_input` is True, the call to
     `prompt.read_user_yes_no()` should be suppressed.
     """
     mock_read_user = mocker.patch(

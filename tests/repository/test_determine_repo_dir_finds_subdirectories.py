@@ -44,7 +44,7 @@ def test_should_find_existing_cookiecutter(
 
 
 def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
-    """An unknown local repository should raise a `RepositoryNotFound`
+    """An unknown local repository should raise a `RepositoryNotFound` \
     exception.
     """
     with pytest.raises(exceptions.RepositoryNotFound) as err:

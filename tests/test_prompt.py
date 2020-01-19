@@ -2,7 +2,6 @@
 
 """
 test_prompt
------------
 
 Tests for `cookiecutter.prompt` module.
 """

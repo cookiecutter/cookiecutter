@@ -20,7 +20,7 @@ def test_finds_local_repo(tmpdir):
 
 
 def test_local_repo_with_no_context_raises(tmpdir):
-    """A local repository without a cookiecutter.json should raise a
+    """A local repository without a cookiecutter.json should raise a \
     `RepositoryNotFound` exception.
     """
     template_path = os.path.join('tests', 'fake-repo-bad')
@@ -46,8 +46,7 @@ def test_local_repo_with_no_context_raises(tmpdir):
 
 
 def test_local_repo_typo(tmpdir):
-    """An unknown local repository should raise a `RepositoryNotFound`
-    exception.
+    """An unknown local repository should raise a `RepositoryNotFound` exception.
     """
     template_path = os.path.join('tests', 'unknown-repo')
     with pytest.raises(exceptions.RepositoryNotFound) as err:
