@@ -23,7 +23,7 @@ replay_dir: "{replay_dir}"
 
 
 def backup_dir(original_dir, backup_dir):
-    """Method to generate backup directory based on original directory."""
+    """Generate backup directory based on original directory."""
     # If the default original_dir is pre-existing, move it to a temp location
     if not os.path.isdir(original_dir):
         return False
@@ -37,7 +37,7 @@ def backup_dir(original_dir, backup_dir):
 
 
 def restore_backup_dir(original_dir, backup_dir, original_dir_found):
-    """Method restores default contents."""
+    """Restore default contents."""
     # Carefully delete the created original_dir only in certain
     # conditions.
     original_dir_is_dir = os.path.isdir(original_dir)
