@@ -5,6 +5,8 @@ from jinja2.ext import Extension
 
 
 class HelloExtension(Extension):
+    """Hello Extension Class"""
+
     tags = set(['hello'])
 
     def __init__(self, environment):
@@ -15,6 +17,7 @@ class HelloExtension(Extension):
         return 'Hello {name}!'.format(name=name)
 
     def parse(self, parser):
+        """Parse method"""
         lineno = next(parser.stream).lineno
         node = parser.parse_expression()
         call_method = self.call_method('_hello', [node], lineno=lineno)
