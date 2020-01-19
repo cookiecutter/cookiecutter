@@ -15,17 +15,17 @@ from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
-from .environment import StrictEnvironment
-from .exceptions import (
+from cookiecutter.environment import StrictEnvironment
+from cookiecutter.exceptions import (
     NonTemplatedInputDirException,
     ContextDecodingException,
     FailedHookException,
     OutputDirExistsException,
     UndefinedVariableInTemplate
 )
-from .find import find_template
-from .hooks import run_hook
-from .utils import make_sure_path_exists, work_in, rmtree
+from cookiecutter.find import find_template
+from cookiecutter.hooks import run_hook
+from cookiecutter.utils import make_sure_path_exists, work_in, rmtree
 
 logger = logging.getLogger(__name__)
 

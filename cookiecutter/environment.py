@@ -4,7 +4,7 @@
 
 from jinja2 import Environment, StrictUndefined
 
-from .exceptions import UnknownExtension
+from cookiecutter.exceptions import UnknownExtension
 
 
 class ExtensionLoaderMixin(object):

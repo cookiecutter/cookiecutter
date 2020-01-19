@@ -15,5 +15,6 @@ repos:
     hooks:
       - id: flake8
         additional_dependencies:
+          - flake8-absolute-import
           - flake8-black
           - flake8-docstrings

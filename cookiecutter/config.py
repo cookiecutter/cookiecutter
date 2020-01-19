@@ -11,8 +11,8 @@ import collections
 
 import poyo
 
-from .exceptions import ConfigDoesNotExistException
-from .exceptions import InvalidConfiguration
+from cookiecutter.exceptions import ConfigDoesNotExistException
+from cookiecutter.exceptions import InvalidConfiguration
 
 
 logger = logging.getLogger(__name__)

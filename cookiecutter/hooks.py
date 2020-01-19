@@ -12,7 +12,7 @@ import tempfile
 
 from cookiecutter import utils
 from cookiecutter.environment import StrictEnvironment
-from .exceptions import FailedHookException
+from cookiecutter.exceptions import FailedHookException
 
 logger = logging.getLogger(__name__)
 

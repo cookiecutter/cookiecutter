@@ -6,9 +6,9 @@ from __future__ import unicode_literals
 import os
 import re
 
-from .exceptions import RepositoryNotFound
-from .vcs import clone
-from .zipfile import unzip
+from cookiecutter.exceptions import RepositoryNotFound
+from cookiecutter.vcs import clone
+from cookiecutter.zipfile import unzip
 
 REPO_REGEX = re.compile(r"""
 # something like git:// ssh:// file:// etc.
