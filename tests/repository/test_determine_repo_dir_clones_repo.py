@@ -55,8 +55,7 @@ def template_url():
 def test_repository_url_should_clone(
         mocker, template_url, user_config_data):
     """`clone()` should be called with correct args when \
-    `determine_repo_dir()` is passed a repository template url.
-    """
+    `determine_repo_dir()` is passed a repository template url."""
     mock_clone = mocker.patch(
         'cookiecutter.repository.clone',
         return_value='tests/fake-repo-tmpl',

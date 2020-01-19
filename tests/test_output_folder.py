@@ -18,9 +18,7 @@ from cookiecutter import exceptions
 
 @pytest.fixture(scope='function')
 def remove_output_folder(request):
-    """
-    Remove the output folder in case it exists on disk.
-    """
+    """Remove the output folder in case it exists on disk."""
     def finalizer_remove_output_folder():
         if os.path.exists('output_folder'):
             utils.rmtree('output_folder')

@@ -22,9 +22,7 @@ from cookiecutter.environment import StrictEnvironment
 
 @pytest.fixture(scope='function')
 def remove_cheese_file(request):
-    """
-    Remove the cheese text file which is created by the tests.
-    """
+    """Remove the cheese text file which is created by the tests."""
     def fin_remove_cheese_file():
         if os.path.exists('tests/files/cheese.txt'):
             os.remove('tests/files/cheese.txt')
