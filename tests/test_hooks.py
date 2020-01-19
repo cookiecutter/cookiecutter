@@ -165,8 +165,7 @@ class TestExternalHooks(object):
 
     def test_run_hook(self):
         """Execute hook from specified template in specified output \
-        directory.
-        """
+        directory."""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
             hooks.run_hook('pre_gen_project', tests_dir, {})

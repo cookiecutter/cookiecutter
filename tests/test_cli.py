@@ -25,9 +25,7 @@ def cli_runner():
 
 @pytest.fixture
 def remove_fake_project_dir(request):
-    """
-    Remove the fake project directory created during the tests.
-    """
+    """Remove the fake project directory created during the tests."""
     def fin_remove_fake_project_dir():
         if os.path.isdir('fake-project'):
             utils.rmtree('fake-project')

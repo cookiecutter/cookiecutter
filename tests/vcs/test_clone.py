@@ -10,15 +10,13 @@ from cookiecutter import exceptions, vcs
 @pytest.fixture
 def clone_dir(tmpdir):
     """Simulate creation of a directory called `clone_dir` inside of `tmpdir`. \
-    Returns a str to said directory.
-    """
+    Returns a str to said directory."""
     return str(tmpdir.mkdir('clone_dir'))
 
 
 def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
     """In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS \
-    is installed.
-    """
+    is installed."""
     mocker.patch(
         'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
@@ -33,8 +31,7 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
 
 def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
     """In `clone()`, repo URL's trailing slash should be stripped if one is \
-    present.
-    """
+    present."""
     mocker.patch(
         'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
@@ -61,8 +58,7 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
 
 def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
     """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
-    without cloning anything.
-    """
+    without cloning anything."""
     mocker.patch(
         'cookiecutter.vcs.is_vcs_installed',
         autospec=True,
@@ -147,8 +143,7 @@ def test_clone_should_invoke_vcs_command(
 ])
 def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
     """In `clone()`, repository not found errors should raise an \
-    appropriate exception.
-    """
+    appropriate exception."""
     # side_effect is set to an iterable here (and below),
     # because of a Python 3.4 unittest.mock regression
     # http://bugs.python.org/issue23661
@@ -182,8 +177,7 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
 ])
 def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
     """In `clone()`, branch not found errors should raise an \
-    appropriate exception.
-    """
+    appropriate exception."""
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,

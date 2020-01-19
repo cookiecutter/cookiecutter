@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_replay
-"""
+"""test_replay"""
 
 import os
 import pytest

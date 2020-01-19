@@ -26,9 +26,7 @@ WINDOWS = sys.platform.startswith('win')
 
 @pytest.fixture(scope='function')
 def remove_additional_folders(request):
-    """
-    Remove some special folders which are created by the tests.
-    """
+    """Remove some special folders which are created by the tests."""
     def fin_remove_additional_folders():
         directories_to_delete = [
             'tests/test-pyhooks/inputpyhooks',
