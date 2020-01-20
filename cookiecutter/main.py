@@ -8,12 +8,14 @@ library rather than a script.
 """
 
 from __future__ import unicode_literals
+
 import logging
 import os
+import sys
 
 from cookiecutter.config import get_user_config
-from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.exceptions import InvalidModeException
+from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.prompt import prompt_for_config
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
@@ -74,6 +76,10 @@ def cookiecutter(
     )
 
     template_name = os.path.basename(os.path.abspath(repo_dir))
+
+    # Prepend `repo_dir` to `sys.path` to make template-local extensions
+    # available and loadable to cookiecutter.
+    sys.path.insert(0, repo_dir)
 
     if replay:
         context = load(config_dict["replay_dir"], template_name)
