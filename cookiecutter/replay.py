@@ -39,7 +39,7 @@ def dump(replay_dir, template_name, context):
     replay_file = get_file_name(replay_dir, template_name)
 
     with open(replay_file, "w") as outfile:
-        json.dump(context, outfile)
+        json.dump(context, outfile, indent=2)
 
 
 def load(replay_dir, template_name):
