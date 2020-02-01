@@ -27,6 +27,12 @@ environment:
     - PYTHON: "C:\\Python37-x64"
       TOXENV: "py37"
 
+    - PYTHON: "C:\\Python38"
+      TOXENV: "py38"
+
+    - PYTHON: "C:\\Python38-x64"
+      TOXENV: "py38"
+
 init:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
   - "git config --system http.sslcainfo \"C:\\Program Files\\Git\\mingw64\\ssl\\certs\\ca-bundle.crt\""

@@ -341,8 +341,7 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     assert error in result.output
 
     message = (
-        "Error message: 'collections.OrderedDict object' "
-        "has no attribute 'foobar'"
+        "Error message: 'collections.OrderedDict object' has no attribute 'foobar'"
     )
     assert message in result.output
 
