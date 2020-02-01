@@ -7,6 +7,7 @@ History is important, but our current roadmap can be found [here](https://github
 Important Changes:
 
 * Multiple templates per one repository feature added. [@RomHartmann](https://github.com/RomHartmann) (#1224, #1063)
+* Update replay.py json.dump indent for easy viewing [@nicain](https://github.com/nicain) (#1293)
 
 Internal CI/CD changes:
 

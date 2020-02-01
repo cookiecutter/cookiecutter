@@ -137,3 +137,4 @@
 * DSEnvel ([@DSEnvel](https://github.com/DSEnvel))
 * kishan ([@kishan](https://github.com/kishan3))
 * Bruno Alla ([@browniebroke](https://github.com/browniebroke))
+* nicain ([@nicain](https://github.com/nicain))
