@@ -1,6 +1,24 @@
 # History
 
-History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
+History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
+
+## 1.7.1 (Current master, in development)
+
+Important Changes:
+
+* Multiple templates per one repository feature added. [@RomHartmann](https://github.com/RomHartmann) (#1224, #1063)
+
+Internal CI/CD changes:
+
+* Coverage comment in future merge requests disabled [@ssbarnea](https://github.com/ssbarnea) (#1279)
+
+Code style and docs changes:
+
+* Added pep257 docstring for tests/conftests.py [@kishan](https://github.com/kishan3) (#1272, #1263)
+* Added pep257 docstring for tests/replay/conftest.py [@kishan](https://github.com/kishan3) (#1270, #1268)
+* Added pep257 docstring for docs/__init__.py [@kishan](https://github.com/kishan3) (#1273, #1265)
+* Gitter links replaced by Slack in README [@browniebroke](https://github.com/browniebroke) (#1282)
+* flake8-docstrings tests added to CI/CD [@ssbarnea](https://github.com/ssbarnea) (#1284)
 
 ## 1.7.0 (2019-12-22) Old friend
 

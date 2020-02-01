@@ -133,3 +133,7 @@
 * MinchinWeb ([@MinchinWeb](https://github.com/MinchinWeb))
 * kishan ([@kishan](https://github.com/kishan3))
 * tonytheleg ([@tonytheleg](https://github.com/tonytheleg))
+* Roman Hartmann ([@RomHartmann](https://github.com/RomHartmann))
+* DSEnvel ([@DSEnvel](https://github.com/DSEnvel))
+* kishan ([@kishan](https://github.com/kishan3))
+* Bruno Alla ([@browniebroke](https://github.com/browniebroke))
