@@ -18,33 +18,33 @@ def make_readonly(path):
 
 
 def test_rmtree():
-    os.mkdir("foo")
-    with open("foo/bar", "w") as f:
+    os.mkdir('foo')
+    with open('foo/bar', "w") as f:
         f.write("Test data")
-    make_readonly("foo/bar")
-    utils.rmtree("foo")
-    assert not os.path.exists("foo")
+    make_readonly('foo/bar')
+    utils.rmtree('foo')
+    assert not os.path.exists('foo')
 
 
 def test_make_sure_path_exists():
-    if sys.platform.startswith("win"):
+    if sys.platform.startswith('win'):
         existing_directory = os.path.abspath(os.curdir)
-        uncreatable_directory = "a*b"
+        uncreatable_directory = 'a*b'
     else:
-        existing_directory = "/usr/"
-        uncreatable_directory = "/this-doesnt-exist-and-cant-be-created/"
+        existing_directory = '/usr/'
+        uncreatable_directory = '/this-doesnt-exist-and-cant-be-created/'
 
     assert utils.make_sure_path_exists(existing_directory)
-    assert utils.make_sure_path_exists("tests/blah")
-    assert utils.make_sure_path_exists("tests/trailingslash/")
+    assert utils.make_sure_path_exists('tests/blah')
+    assert utils.make_sure_path_exists('tests/trailingslash/')
     assert not utils.make_sure_path_exists(uncreatable_directory)
-    utils.rmtree("tests/blah/")
-    utils.rmtree("tests/trailingslash/")
+    utils.rmtree('tests/blah/')
+    utils.rmtree('tests/trailingslash/')
 
 
 def test_workin():
     cwd = os.getcwd()
-    ch_to = "tests/files"
+    ch_to = 'tests/files'
 
     class TestException(Exception):
         pass
@@ -67,9 +67,11 @@ def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user agrees to delete/reclone the \
     repo, the repo should be deleted."""
     mock_read_user = mocker.patch(
-        "cookiecutter.utils.read_user_yes_no", return_value=True, autospec=True
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=True,
+        autospec=True
     )
-    repo_dir = tmpdir.mkdir("repo")
+    repo_dir = tmpdir.mkdir('repo')
 
     deleted = utils.prompt_and_delete(str(repo_dir))
 
@@ -82,11 +84,13 @@ def test_prompt_should_ask_and_rm_repo_file(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user agrees to delete/reclone a \
     repo file, the repo should be deleted."""
     mock_read_user = mocker.patch(
-        "cookiecutter.utils.read_user_yes_no", return_value=True, autospec=True
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=True,
+        autospec=True
     )
 
-    repo_file = tmpdir.join("repo.zip")
-    repo_file.write("this is zipfile content")
+    repo_file = tmpdir.join('repo.zip')
+    repo_file.write('this is zipfile content')
 
     deleted = utils.prompt_and_delete(str(repo_file))
 
@@ -99,9 +103,11 @@ def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user wants to keep their old \
     cloned template repo, it should not be deleted."""
     mock_read_user = mocker.patch(
-        "cookiecutter.utils.read_user_yes_no", return_value=False, autospec=True,
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=False,
+        autospec=True
     )
-    repo_dir = tmpdir.mkdir("repo")
+    repo_dir = tmpdir.mkdir('repo')
 
     with pytest.raises(SystemExit):
         utils.prompt_and_delete(str(repo_dir))
@@ -113,17 +119,18 @@ def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmpdir):
 def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user wants to keep their old \
     cloned template repo, it should not be deleted."""
-
     def answer(question, default):
-        if "okay to delete" in question:
+        if 'okay to delete' in question:
             return False
         else:
             return True
 
     mock_read_user = mocker.patch(
-        "cookiecutter.utils.read_user_yes_no", side_effect=answer, autospec=True,
+        'cookiecutter.utils.read_user_yes_no',
+        side_effect=answer,
+        autospec=True
     )
-    repo_dir = tmpdir.mkdir("repo")
+    repo_dir = tmpdir.mkdir('repo')
 
     deleted = utils.prompt_and_delete(str(repo_dir))
 
@@ -139,9 +146,11 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
     `prompt.read_user_yes_no()` should be suppressed.
     """
     mock_read_user = mocker.patch(
-        "cookiecutter.prompt.read_user_yes_no", return_value=True, autospec=True,
+        'cookiecutter.prompt.read_user_yes_no',
+        return_value=True,
+        autospec=True
     )
-    repo_dir = tmpdir.mkdir("repo")
+    repo_dir = tmpdir.mkdir('repo')
 
     deleted = utils.prompt_and_delete(str(repo_dir), no_input=True)
 
@@ -157,11 +166,13 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmpdir):
     `prompt.read_user_yes_no()` should be suppressed.
     """
     mock_read_user = mocker.patch(
-        "cookiecutter.prompt.read_user_yes_no", return_value=True, autospec=True,
+        'cookiecutter.prompt.read_user_yes_no',
+        return_value=True,
+        autospec=True
     )
 
-    repo_file = tmpdir.join("repo.zip")
-    repo_file.write("this is zipfile content")
+    repo_file = tmpdir.join('repo.zip')
+    repo_file.write('this is zipfile content')
 
     deleted = utils.prompt_and_delete(str(repo_file), no_input=True)
 

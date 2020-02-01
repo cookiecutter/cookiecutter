@@ -13,7 +13,7 @@ from cookiecutter.__main__ import main
 from cookiecutter.main import cookiecutter
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope='session')
 def cli_runner():
     """Fixture that returns a helper function to run the cookiecutter cli."""
     runner = CliRunner()
@@ -28,21 +28,19 @@ def cli_runner():
 @pytest.fixture
 def remove_fake_project_dir(request):
     """Remove the fake project directory created during the tests."""
-
     def fin_remove_fake_project_dir():
-        if os.path.isdir("fake-project"):
-            utils.rmtree("fake-project")
-
+        if os.path.isdir('fake-project'):
+            utils.rmtree('fake-project')
     request.addfinalizer(fin_remove_fake_project_dir)
 
 
 @pytest.fixture
 def make_fake_project_dir(request):
     """Create a fake project to be overwritten in the according tests."""
-    os.makedirs("fake-project")
+    os.makedirs('fake-project')
 
 
-@pytest.fixture(params=["-V", "--version"])
+@pytest.fixture(params=['-V', '--version'])
 def version_cli_flag(request):
     return request.param
 
@@ -50,41 +48,43 @@ def version_cli_flag(request):
 def test_cli_version(cli_runner, version_cli_flag):
     result = cli_runner(version_cli_flag)
     assert result.exit_code == 0
-    assert result.output.startswith("Cookiecutter")
+    assert result.output.startswith('Cookiecutter')
 
 
-@pytest.mark.usefixtures("make_fake_project_dir", "remove_fake_project_dir")
+@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
 def test_cli_error_on_existing_output_directory(cli_runner):
-    result = cli_runner("tests/fake-repo-pre/", "--no-input")
+    result = cli_runner('tests/fake-repo-pre/', '--no-input')
     assert result.exit_code != 0
     expected_error_msg = 'Error: "fake-project" directory already exists\n'
     assert result.output == expected_error_msg
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli(cli_runner):
-    result = cli_runner("tests/fake-repo-pre/", "--no-input")
+    result = cli_runner('tests/fake-repo-pre/', '--no-input')
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
-    with open(os.path.join("fake-project", "README.rst")) as f:
-        assert "Project name: **Fake Project**" in f.read()
+    assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Fake Project**' in f.read()
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_verbose(cli_runner):
-    result = cli_runner("tests/fake-repo-pre/", "--no-input", "-v")
+    result = cli_runner('tests/fake-repo-pre/', '--no-input', '-v')
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
-    with open(os.path.join("fake-project", "README.rst")) as f:
-        assert "Project name: **Fake Project**" in f.read()
+    assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Fake Project**' in f.read()
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_replay(mocker, cli_runner):
-    mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
 
-    template_path = "tests/fake-repo-pre/"
-    result = cli_runner(template_path, "--replay", "-v")
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--replay', '-v')
 
     assert result.exit_code == 0
     mock_cookiecutter.assert_called_once_with(
@@ -93,7 +93,7 @@ def test_cli_replay(mocker, cli_runner):
         False,
         replay=True,
         overwrite_if_exists=False,
-        output_dir=".",
+        output_dir='.',
         config_file=None,
         default_config=False,
         extra_context=None,
@@ -102,19 +102,21 @@ def test_cli_replay(mocker, cli_runner):
     )
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
     mock_cookiecutter = mocker.patch(
-        "cookiecutter.cli.cookiecutter", side_effect=cookiecutter
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter
     )
 
-    template_path = "tests/fake-repo-pre/"
-    result = cli_runner(template_path, "--no-input", "--replay", "-v")
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--no-input', '--replay', '-v')
 
     assert result.exit_code == 1
 
     expected_error_msg = (
-        "You can not use both replay and no_input or extra_context " "at the same time."
+        "You can not use both replay and no_input or extra_context "
+        "at the same time."
     )
 
     assert expected_error_msg in result.output
@@ -125,7 +127,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         True,
         replay=True,
         overwrite_if_exists=False,
-        output_dir=".",
+        output_dir='.',
         config_file=None,
         default_config=False,
         extra_context=None,
@@ -134,21 +136,21 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
     )
 
 
-@pytest.fixture(params=["-f", "--overwrite-if-exists"])
+@pytest.fixture(params=['-f', '--overwrite-if-exists'])
 def overwrite_cli_flag(request):
     return request.param
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
-    mocker, cli_runner, overwrite_cli_flag
-):
+        mocker, cli_runner, overwrite_cli_flag):
     mock_cookiecutter = mocker.patch(
-        "cookiecutter.cli.cookiecutter", side_effect=cookiecutter
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter
     )
 
-    template_path = "tests/fake-repo-pre/"
-    result = cli_runner(template_path, "--replay", "-v", overwrite_cli_flag)
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--replay', '-v', overwrite_cli_flag)
 
     assert result.exit_code == 0
 
@@ -158,7 +160,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         False,
         replay=True,
         overwrite_if_exists=True,
-        output_dir=".",
+        output_dir='.',
         config_file=None,
         default_config=False,
         extra_context=None,
@@ -167,38 +169,49 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
     )
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
-    cli_runner, overwrite_cli_flag
-):
+        cli_runner, overwrite_cli_flag):
 
-    result = cli_runner("tests/fake-repo-pre/", "--no-input", overwrite_cli_flag,)
+    result = cli_runner(
+        'tests/fake-repo-pre/',
+        '--no-input',
+        overwrite_cli_flag,
+    )
 
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
+    assert os.path.isdir('fake-project')
 
 
-@pytest.mark.usefixtures("make_fake_project_dir", "remove_fake_project_dir")
-def test_cli_overwrite_if_exists_when_output_dir_exists(cli_runner, overwrite_cli_flag):
-    result = cli_runner("tests/fake-repo-pre/", "--no-input", overwrite_cli_flag,)
+@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
+def test_cli_overwrite_if_exists_when_output_dir_exists(
+        cli_runner, overwrite_cli_flag):
+
+    result = cli_runner(
+        'tests/fake-repo-pre/',
+        '--no-input',
+        overwrite_cli_flag,
+    )
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
+    assert os.path.isdir('fake-project')
 
 
-@pytest.fixture(params=["-o", "--output-dir"])
+@pytest.fixture(params=['-o', '--output-dir'])
 def output_dir_flag(request):
     return request.param
 
 
 @pytest.fixture
 def output_dir(tmpdir):
-    return str(tmpdir.mkdir("output"))
+    return str(tmpdir.mkdir('output'))
 
 
 def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
-    mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
 
-    template_path = "tests/fake-repo-pre/"
+    template_path = 'tests/fake-repo-pre/'
     result = cli_runner(template_path, output_dir_flag, output_dir)
 
     assert result.exit_code == 0
@@ -217,7 +230,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
     )
 
 
-@pytest.fixture(params=["-h", "--help", "help"])
+@pytest.fixture(params=['-h', '--help', 'help'])
 def help_cli_flag(request):
     return request.param
 
@@ -225,19 +238,21 @@ def help_cli_flag(request):
 def test_cli_help(cli_runner, help_cli_flag):
     result = cli_runner(help_cli_flag)
     assert result.exit_code == 0
-    assert result.output.startswith("Usage")
+    assert result.output.startswith('Usage')
 
 
 @pytest.fixture
 def user_config_path(tmpdir):
-    return str(tmpdir.join("tests/config.yaml"))
+    return str(tmpdir.join('tests/config.yaml'))
 
 
 def test_user_config(mocker, cli_runner, user_config_path):
-    mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
 
-    template_path = "tests/fake-repo-pre/"
-    result = cli_runner(template_path, "--config-file", user_config_path)
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--config-file', user_config_path)
 
     assert result.exit_code == 0
     mock_cookiecutter.assert_called_once_with(
@@ -246,7 +261,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         False,
         replay=False,
         overwrite_if_exists=False,
-        output_dir=".",
+        output_dir='.',
         config_file=user_config_path,
         default_config=False,
         extra_context=None,
@@ -256,11 +271,16 @@ def test_user_config(mocker, cli_runner, user_config_path):
 
 
 def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
-    mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
 
-    template_path = "tests/fake-repo-pre/"
+    template_path = 'tests/fake-repo-pre/'
     result = cli_runner(
-        template_path, "--config-file", user_config_path, "--default-config",
+        template_path,
+        '--config-file',
+        user_config_path,
+        '--default-config',
     )
 
     assert result.exit_code == 0
@@ -270,7 +290,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         False,
         replay=False,
         overwrite_if_exists=False,
-        output_dir=".",
+        output_dir='.',
         config_file=user_config_path,
         default_config=True,
         extra_context=None,
@@ -280,10 +300,12 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
 
 
 def test_default_user_config(mocker, cli_runner):
-    mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
+    mock_cookiecutter = mocker.patch(
+        'cookiecutter.cli.cookiecutter'
+    )
 
-    template_path = "tests/fake-repo-pre/"
-    result = cli_runner(template_path, "--default-config")
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--default-config')
 
     assert result.exit_code == 0
     mock_cookiecutter.assert_called_once_with(
@@ -292,7 +314,7 @@ def test_default_user_config(mocker, cli_runner):
         False,
         replay=False,
         overwrite_if_exists=False,
-        output_dir=".",
+        output_dir='.',
         config_file=None,
         default_config=True,
         extra_context=None,
@@ -302,11 +324,15 @@ def test_default_user_config(mocker, cli_runner):
 
 
 def test_echo_undefined_variable_error(tmpdir, cli_runner):
-    output_dir = str(tmpdir.mkdir("output"))
-    template_path = "tests/undefined-variable/file-name/"
+    output_dir = str(tmpdir.mkdir('output'))
+    template_path = 'tests/undefined-variable/file-name/'
 
     result = cli_runner(
-        "--no-input", "--default-config", "--output-dir", output_dir, template_path,
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
     )
 
     assert result.exit_code == 1
@@ -315,15 +341,16 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     assert error in result.output
 
     message = (
-        "Error message: 'collections.OrderedDict object' " "has no attribute 'foobar'"
+        "Error message: 'collections.OrderedDict object' "
+        "has no attribute 'foobar'"
     )
     assert message in result.output
 
     context = {
-        "cookiecutter": {
-            "github_username": "hackebrot",
-            "project_slug": "testproject",
-            "_template": template_path,
+        'cookiecutter': {
+            'github_username': 'hackebrot',
+            'project_slug': 'testproject',
+            '_template': template_path
         }
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
@@ -331,50 +358,63 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
 
 
 def test_echo_unknown_extension_error(tmpdir, cli_runner):
-    output_dir = str(tmpdir.mkdir("output"))
-    template_path = "tests/test-extensions/unknown/"
+    output_dir = str(tmpdir.mkdir('output'))
+    template_path = 'tests/test-extensions/unknown/'
 
     result = cli_runner(
-        "--no-input", "--default-config", "--output-dir", output_dir, template_path,
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
     )
 
     assert result.exit_code == 1
 
-    assert "Unable to load extension: " in result.output
+    assert 'Unable to load extension: ' in result.output
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_extra_context(cli_runner):
     result = cli_runner(
-        "tests/fake-repo-pre/", "--no-input", "-v", "project_name=Awesomez",
+        'tests/fake-repo-pre/',
+        '--no-input',
+        '-v',
+        'project_name=Awesomez',
     )
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
-    with open(os.path.join("fake-project", "README.rst")) as f:
-        assert "Project name: **Awesomez**" in f.read()
+    assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Awesomez**' in f.read()
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_extra_context_invalid_format(cli_runner):
     result = cli_runner(
-        "tests/fake-repo-pre/", "--no-input", "-v", "ExtraContextWithNoEqualsSoInvalid",
+        'tests/fake-repo-pre/',
+        '--no-input',
+        '-v',
+        'ExtraContextWithNoEqualsSoInvalid',
     )
     assert result.exit_code == 2
     assert 'Error: Invalid value for "[EXTRA_CONTEXT]..."' in result.output
-    assert "should contain items of the form key=value" in result.output
+    assert 'should contain items of the form key=value' in result.output
 
 
 @pytest.fixture
 def debug_file(tmpdir):
-    return tmpdir / "fake-repo.log"
+    return tmpdir / 'fake-repo.log'
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_debug_file_non_verbose(cli_runner, debug_file):
     assert not debug_file.exists()
 
     result = cli_runner(
-        "--no-input", "--debug-file", str(debug_file), "tests/fake-repo-pre/",
+        '--no-input',
+        '--debug-file',
+        str(debug_file),
+        'tests/fake-repo-pre/',
     )
     assert result.exit_code == 0
 
@@ -388,16 +428,16 @@ def test_debug_file_non_verbose(cli_runner, debug_file):
     assert context_log not in result.output
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_debug_file_verbose(cli_runner, debug_file):
     assert not debug_file.exists()
 
     result = cli_runner(
-        "--verbose",
-        "--no-input",
-        "--debug-file",
+        '--verbose',
+        '--no-input',
+        '--debug-file',
         str(debug_file),
-        "tests/fake-repo-pre/",
+        'tests/fake-repo-pre/',
     )
     assert result.exit_code == 0
 
@@ -411,12 +451,15 @@ def test_debug_file_verbose(cli_runner, debug_file):
     assert context_log in result.output
 
 
-@pytest.mark.usefixtures("remove_fake_project_dir")
+@pytest.mark.usefixtures('remove_fake_project_dir')
 def test_directory_repo(cli_runner):
     result = cli_runner(
-        "tests/fake-repo-dir/", "--no-input", "-v", "--directory=my-dir",
+        'tests/fake-repo-dir/',
+        '--no-input',
+        '-v',
+        '--directory=my-dir',
     )
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
-    with open(os.path.join("fake-project", "README.rst")) as f:
-        assert "Project name: **Fake Project**" in f.read()
+    assert os.path.isdir('fake-project')
+    with open(os.path.join('fake-project', 'README.rst')) as f:
+        assert 'Project name: **Fake Project**' in f.read()

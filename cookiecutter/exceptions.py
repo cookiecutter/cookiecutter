@@ -27,7 +27,6 @@ class UnknownTemplateDirException(CookiecutterException):
     Raised when Cookiecutter cannot determine which directory is the project
     template, e.g. more than one dir appears to be a template dir.
     """
-
     # unused locally
 
 
@@ -38,7 +37,6 @@ class MissingProjectDir(CookiecutterException):
     Raised during cleanup when remove_repo() can't find a generated project
     directory inside of a repo.
     """
-
     # unused locally
 
 

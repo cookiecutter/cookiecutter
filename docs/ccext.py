@@ -18,7 +18,7 @@ class CcCommandLineOptions(rst.Directive):
             ".. option:: " + ", ".join(option.opts),
             "",
             option.help,
-            "",
+            ""
         ]
 
     def process_actions(self):
@@ -37,4 +37,4 @@ class CcCommandLineOptions(rst.Directive):
 
 
 def setup(app):
-    app.add_directive("cc-command-line-options", CcCommandLineOptions)
+    app.add_directive('cc-command-line-options', CcCommandLineOptions)
