@@ -23,6 +23,11 @@ Code style and docs changes:
 * Added missing docstring headers to all files [@croesnick](https://github.com/croesnick) (#1269, #1283)
 * Gitter links replaced by Slack in README [@browniebroke](https://github.com/browniebroke) (#1282)
 * flake8-docstrings tests added to CI/CD [@ssbarnea](https://github.com/ssbarnea) (#1284)
+* Activated pydocstyle rule: D401 - First line should be in imperative mood [@ssbarnea](https://github.com/ssbarnea) (#1285)
+* Activated pydocstyle rule: D200 - One-line docstring should fit on one line with quotes [@ssbarnea](https://github.com/ssbarnea) (#1288)
+* Activated pydocstyle rule: D202 - No blank lines allowed after function docstring [@ssbarnea](https://github.com/ssbarnea) (#1288)
+* Activated pydocstyle rule: D205 - 1 blank line required between summary line and description [@ssbarnea](https://github.com/ssbarnea) (#1286, #1287)
+* Activated pydocstyle rule: ABS101 [@ssbarnea](https://github.com/ssbarnea) (#1288)
 
 ## 1.7.0 (2019-12-22) Old friend
 
