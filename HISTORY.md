@@ -14,6 +14,7 @@ Internal CI/CD changes:
 
 * Coverage comment in future merge requests disabled [@ssbarnea](https://github.com/ssbarnea) (#1279)
 * Fixed Python 3.8 travis tests and setup.py message [@insspb](https://github.com/insspb) (#1295, #1297)
+* Travis builds extended with Windows setup for all supported python versions [@insspb](https://github.com/insspb) (#1300, #1301)
 
 Code style and docs changes:
 
