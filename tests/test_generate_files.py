@@ -158,7 +158,7 @@ def test_return_rendered_project_dir():
         output_dir='tests/custom_output_dir'
     )
     assert project_dir == os.path.abspath(
-        'tests/custom_output_dir/inputpizzä/'
+        'tests/custom_output_dir/inputpizzä'
     )
 
 
