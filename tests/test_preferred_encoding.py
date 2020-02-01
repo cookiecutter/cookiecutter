@@ -11,7 +11,7 @@ import pytest
 PY3 = sys.version_info[0] == 3
 
 
-@pytest.mark.skipif(not PY3, reason="Only necessary on Python3")
+@pytest.mark.skipif(not PY3, reason='Only necessary on Python3')
 def test_not_ascii():
     """Make sure that the systems preferred encoding is not `ascii`.
 
@@ -26,5 +26,5 @@ def test_not_ascii():
         preferred_encoding = locale.getpreferredencoding()
         fs_enc = codecs.lookup(preferred_encoding).name
     except Exception:
-        fs_enc = "ascii"
-    assert fs_enc != "ascii"
+        fs_enc = 'ascii'
+    assert fs_enc != 'ascii'

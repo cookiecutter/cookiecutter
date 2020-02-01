@@ -23,18 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 def cookiecutter(
-    template,
-    checkout=None,
-    no_input=False,
-    extra_context=None,
-    replay=False,
-    overwrite_if_exists=False,
-    output_dir=".",
-    config_file=None,
-    default_config=False,
-    password=None,
-    directory=None,
-):
+        template, checkout=None, no_input=False, extra_context=None,
+        replay=False, overwrite_if_exists=False, output_dir='.',
+        config_file=None, default_config=False, password=None, directory=None):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -60,48 +51,49 @@ def cookiecutter(
         raise InvalidModeException(err_msg)
 
     config_dict = get_user_config(
-        config_file=config_file, default_config=default_config,
+        config_file=config_file,
+        default_config=default_config,
     )
 
     repo_dir, cleanup = determine_repo_dir(
         template=template,
-        abbreviations=config_dict["abbreviations"],
-        clone_to_dir=config_dict["cookiecutters_dir"],
+        abbreviations=config_dict['abbreviations'],
+        clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,
         password=password,
-        directory=directory,
+        directory=directory
     )
 
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
     if replay:
-        context = load(config_dict["replay_dir"], template_name)
+        context = load(config_dict['replay_dir'], template_name)
     else:
-        context_file = os.path.join(repo_dir, "cookiecutter.json")
-        logger.debug("context_file is {}".format(context_file))
+        context_file = os.path.join(repo_dir, 'cookiecutter.json')
+        logger.debug('context_file is {}'.format(context_file))
 
         context = generate_context(
             context_file=context_file,
-            default_context=config_dict["default_context"],
+            default_context=config_dict['default_context'],
             extra_context=extra_context,
         )
 
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
-        context["cookiecutter"] = prompt_for_config(context, no_input)
+        context['cookiecutter'] = prompt_for_config(context, no_input)
 
         # include template dir or url in the context dict
-        context["cookiecutter"]["_template"] = template
+        context['cookiecutter']['_template'] = template
 
-        dump(config_dict["replay_dir"], template_name, context)
+        dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
     result = generate_files(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
-        output_dir=output_dir,
+        output_dir=output_dir
     )
 
     # Cleanup (if required)

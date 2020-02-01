@@ -6,8 +6,7 @@ from cookiecutter.main import cookiecutter
 
 
 def test_replay_dump_template_name(
-    monkeypatch, mocker, user_config_data, user_config_file
-):
+        monkeypatch, mocker, user_config_data, user_config_file):
     """Check that replay_dump is called with a valid template_name
 
     Template name must not be a relative path.
@@ -19,23 +18,27 @@ def test_replay_dump_template_name(
     Change the current working directory temporarily to 'tests/fake-repo-tmpl'
     for this test and call cookiecutter with '.' for the target template.
     """
-    monkeypatch.chdir("tests/fake-repo-tmpl")
+    monkeypatch.chdir('tests/fake-repo-tmpl')
 
-    mock_replay_dump = mocker.patch("cookiecutter.main.dump")
-    mocker.patch("cookiecutter.main.generate_files")
+    mock_replay_dump = mocker.patch('cookiecutter.main.dump')
+    mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
-        ".", no_input=True, replay=False, config_file=user_config_file,
+        '.',
+        no_input=True,
+        replay=False,
+        config_file=user_config_file,
     )
 
     mock_replay_dump.assert_called_once_with(
-        user_config_data["replay_dir"], "fake-repo-tmpl", mocker.ANY,
+        user_config_data['replay_dir'],
+        'fake-repo-tmpl',
+        mocker.ANY,
     )
 
 
 def test_replay_load_template_name(
-    monkeypatch, mocker, user_config_data, user_config_file
-):
+        monkeypatch, mocker, user_config_data, user_config_file):
     """Check that replay_load is called correctly
 
     Calls require valid template_name that is not a relative path.
@@ -43,15 +46,18 @@ def test_replay_load_template_name(
     Change the current working directory temporarily to 'tests/fake-repo-tmpl'
     for this test and call cookiecutter with '.' for the target template.
     """
-    monkeypatch.chdir("tests/fake-repo-tmpl")
+    monkeypatch.chdir('tests/fake-repo-tmpl')
 
-    mock_replay_load = mocker.patch("cookiecutter.main.load")
-    mocker.patch("cookiecutter.main.generate_files")
+    mock_replay_load = mocker.patch('cookiecutter.main.load')
+    mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
-        ".", replay=True, config_file=user_config_file,
+        '.',
+        replay=True,
+        config_file=user_config_file,
     )
 
     mock_replay_load.assert_called_once_with(
-        user_config_data["replay_dir"], "fake-repo-tmpl",
+        user_config_data['replay_dir'],
+        'fake-repo-tmpl',
     )

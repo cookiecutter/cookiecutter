@@ -6,27 +6,27 @@ import logging
 import sys
 
 LOG_LEVELS = {
-    "DEBUG": logging.DEBUG,
-    "INFO": logging.INFO,
-    "WARNING": logging.WARNING,
-    "ERROR": logging.ERROR,
-    "CRITICAL": logging.CRITICAL,
+    'DEBUG': logging.DEBUG,
+    'INFO': logging.INFO,
+    'WARNING': logging.WARNING,
+    'ERROR': logging.ERROR,
+    'CRITICAL': logging.CRITICAL,
 }
 
 LOG_FORMATS = {
-    "DEBUG": u"%(levelname)s %(name)s: %(message)s",
-    "INFO": u"%(levelname)s: %(message)s",
+    'DEBUG': u'%(levelname)s %(name)s: %(message)s',
+    'INFO': u'%(levelname)s: %(message)s',
 }
 
 
-def configure_logger(stream_level="DEBUG", debug_file=None):
+def configure_logger(stream_level='DEBUG', debug_file=None):
     """Configure logging for cookiecutter.
 
     Set up logging to stdout with given level. If ``debug_file`` is given set
     up logging to file with DEBUG level.
     """
     # Set up 'cookiecutter' logger
-    logger = logging.getLogger("cookiecutter")
+    logger = logging.getLogger('cookiecutter')
     logger.setLevel(logging.DEBUG)
 
     # Remove all attached handlers, in case there was
@@ -35,9 +35,9 @@ def configure_logger(stream_level="DEBUG", debug_file=None):
 
     # Create a file handler if a log file is provided
     if debug_file is not None:
-        debug_formatter = logging.Formatter(LOG_FORMATS["DEBUG"])
+        debug_formatter = logging.Formatter(LOG_FORMATS['DEBUG'])
         file_handler = logging.FileHandler(debug_file)
-        file_handler.setLevel(LOG_LEVELS["DEBUG"])
+        file_handler.setLevel(LOG_LEVELS['DEBUG'])
         file_handler.setFormatter(debug_formatter)
         logger.addHandler(file_handler)
 

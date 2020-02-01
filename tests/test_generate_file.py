@@ -21,110 +21,125 @@ from cookiecutter import generate
 from cookiecutter.environment import StrictEnvironment
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope='function')
 def remove_cheese_file(request):
     """Remove the cheese text file which is created by the tests."""
-
     def fin_remove_cheese_file():
-        if os.path.exists("tests/files/cheese.txt"):
-            os.remove("tests/files/cheese.txt")
-
+        if os.path.exists('tests/files/cheese.txt'):
+            os.remove('tests/files/cheese.txt')
     request.addfinalizer(fin_remove_cheese_file)
 
 
 @pytest.fixture
 def env():
     environment = StrictEnvironment()
-    environment.loader = FileSystemLoader(".")
+    environment.loader = FileSystemLoader('.')
     return environment
 
 
-@pytest.mark.usefixtures("remove_cheese_file")
+@pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file(env):
-    infile = "tests/files/{{generate_file}}.txt"
+    infile = 'tests/files/{{generate_file}}.txt'
     generate.generate_file(
-        project_dir=".", infile=infile, context={"generate_file": "cheese"}, env=env,
+        project_dir=".",
+        infile=infile,
+        context={'generate_file': 'cheese'},
+        env=env
     )
-    assert os.path.isfile("tests/files/cheese.txt")
-    with open("tests/files/cheese.txt", "rt") as f:
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
-        assert generated_text == "Testing cheese"
+        assert generated_text == 'Testing cheese'
 
 
-@pytest.mark.usefixtures("remove_cheese_file")
+@pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_with_false_condition(env):
-    infile = "tests/files/{% if generate_file == 'y' %}cheese.txt{% endif %}"
+    infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
     generate.generate_file(
-        project_dir=".", infile=infile, context={"generate_file": "n"}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'generate_file': 'n'},
+        env=env
     )
-    assert not os.path.exists("tests/files/cheese.txt")
+    assert not os.path.exists('tests/files/cheese.txt')
 
 
-@pytest.mark.usefixtures("remove_cheese_file")
+@pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_jsonify_filter(env):
-    infile = "tests/files/{{cookiecutter.jsonify_file}}.txt"
-    data = {"jsonify_file": "cheese", "type": "roquefort"}
+    infile = 'tests/files/{{cookiecutter.jsonify_file}}.txt'
+    data = {'jsonify_file': 'cheese', 'type': 'roquefort'}
     generate.generate_file(
-        project_dir=".", infile=infile, context={"cookiecutter": data}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': data},
+        env=env
     )
-    assert os.path.isfile("tests/files/cheese.txt")
-    with open("tests/files/cheese.txt", "rt") as f:
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
         assert json.loads(generated_text) == data
 
 
-@pytest.mark.usefixtures("remove_cheese_file")
+@pytest.mark.usefixtures('remove_cheese_file')
 @pytest.mark.parametrize("length", (10, 40))
 @pytest.mark.parametrize("punctuation", (True, False))
 def test_generate_file_random_ascii_string(env, length, punctuation):
-    infile = "tests/files/{{cookiecutter.random_string_file}}.txt"
-    data = {"random_string_file": "cheese"}
+    infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
+    data = {'random_string_file': 'cheese'}
     context = {
         "cookiecutter": data,
         "length": length,
-        "punctuation": punctuation,
+        "punctuation": punctuation
     }
-    generate.generate_file(project_dir=".", infile=infile, context=context, env=env)
-    assert os.path.isfile("tests/files/cheese.txt")
-    with open("tests/files/cheese.txt", "rt") as f:
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context=context,
+        env=env
+    )
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
         assert len(generated_text) == length
 
 
-@pytest.mark.usefixtures("remove_cheese_file")
+@pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_with_true_conditional(env):
-    infile = "tests/files/{% if generate_file == 'y' %}cheese.txt{% endif %}"
+    infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
     generate.generate_file(
-        project_dir=".", infile=infile, context={"generate_file": "y"}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'generate_file': 'y'},
+        env=env
     )
-    assert os.path.isfile("tests/files/cheese.txt")
-    with open("tests/files/cheese.txt", "rt") as f:
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
-        assert generated_text == "Testing that generate_file was y"
+        assert generated_text == 'Testing that generate_file was y'
 
 
 @pytest.fixture
 def expected_msg():
     msg = (
-        "Missing end of comment tag\n"
+        'Missing end of comment tag\n'
         '  File "./tests/files/syntax_error.txt", line 1\n'
-        "    I eat {{ syntax_error }} {# this comment is not closed}"
+        '    I eat {{ syntax_error }} {# this comment is not closed}'
     )
     return msg.replace("/", os.sep)
 
 
-@pytest.mark.usefixtures("remove_cheese_file")
+@pytest.mark.usefixtures('remove_cheese_file')
 def test_generate_file_verbose_template_syntax_error(env, expected_msg):
     try:
         generate.generate_file(
             project_dir=".",
-            infile="tests/files/syntax_error.txt",
-            context={"syntax_error": "syntax_error"},
-            env=env,
+            infile='tests/files/syntax_error.txt',
+            context={'syntax_error': 'syntax_error'},
+            env=env
         )
     except TemplateSyntaxError as exception:
         assert str(exception) == expected_msg
     except Exception as exception:
-        pytest.fail("Unexpected exception thrown: {0}".format(exception))
+        pytest.fail('Unexpected exception thrown: {0}'.format(exception))
     else:
-        pytest.fail("TemplateSyntaxError not thrown")
+        pytest.fail('TemplateSyntaxError not thrown')

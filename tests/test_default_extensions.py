@@ -26,21 +26,23 @@ def freeze():
 
 def test_jinja2_time_extension(tmpdir):
     project_dir = cookiecutter(
-        "tests/test-extensions/default/", no_input=True, output_dir=str(tmpdir)
+        'tests/test-extensions/default/',
+        no_input=True,
+        output_dir=str(tmpdir)
     )
-    changelog_file = os.path.join(project_dir, "HISTORY.rst")
+    changelog_file = os.path.join(project_dir, 'HISTORY.rst')
     assert os.path.isfile(changelog_file)
 
-    with io.open(changelog_file, "r", encoding="utf-8") as f:
+    with io.open(changelog_file, 'r', encoding='utf-8') as f:
         changelog_lines = f.readlines()
 
     expected_lines = [
-        "History\n",
-        "-------\n",
-        "\n",
-        "0.1.0 (2015-12-09)\n",
-        "---------------------\n",
-        "\n",
-        "First release on PyPI.\n",
+        'History\n',
+        '-------\n',
+        '\n',
+        '0.1.0 (2015-12-09)\n',
+        '---------------------\n',
+        '\n',
+        'First release on PyPI.\n'
     ]
     assert expected_lines == changelog_lines

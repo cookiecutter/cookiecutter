@@ -34,7 +34,11 @@ def read_user_yes_no(question, default_value):
     :param default_value: Value that will be returned if no input happens
     """
     # Please see http://click.pocoo.org/4/api/#click.prompt
-    return click.prompt(question, default=default_value, type=click.BOOL)
+    return click.prompt(
+        question,
+        default=default_value,
+        type=click.BOOL
+    )
 
 
 def read_repo_password(question):
@@ -63,19 +67,17 @@ def read_user_choice(var_name, options):
         raise ValueError
 
     choice_map = OrderedDict(
-        (u"{}".format(i), value) for i, value in enumerate(options, 1)
+        (u'{}'.format(i), value) for i, value in enumerate(options, 1)
     )
     choices = choice_map.keys()
-    default = u"1"
+    default = u'1'
 
-    choice_lines = [u"{} - {}".format(*c) for c in choice_map.items()]
-    prompt = u"\n".join(
-        (
-            u"Select {}:".format(var_name),
-            u"\n".join(choice_lines),
-            u"Choose from {}".format(u", ".join(choices)),
-        )
-    )
+    choice_lines = [u'{} - {}'.format(*c) for c in choice_map.items()]
+    prompt = u'\n'.join((
+        u'Select {}:'.format(var_name),
+        u'\n'.join(choice_lines),
+        u'Choose from {}'.format(u', '.join(choices))
+    ))
 
     user_choice = click.prompt(
         prompt, type=click.Choice(choices), default=default, show_choices=False
@@ -89,14 +91,17 @@ def process_json(user_value):
     :param str user_value: User-supplied value to load as a JSON dict
     """
     try:
-        user_dict = json.loads(user_value, object_pairs_hook=OrderedDict,)
+        user_dict = json.loads(
+            user_value,
+            object_pairs_hook=OrderedDict,
+        )
     except Exception:
         # Leave it up to click to ask the user again
-        raise click.UsageError("Unable to decode to JSON.")
+        raise click.UsageError('Unable to decode to JSON.')
 
     if not isinstance(user_dict, dict):
         # Leave it up to click to ask the user again
-        raise click.UsageError("Requires JSON dict.")
+        raise click.UsageError('Requires JSON dict.')
 
     return user_dict
 
@@ -112,10 +117,13 @@ def read_user_dict(var_name, default_value):
     if not isinstance(default_value, dict):
         raise TypeError
 
-    default_display = "default"
+    default_display = 'default'
 
     user_value = click.prompt(
-        var_name, default=default_display, type=click.STRING, value_proc=process_json,
+        var_name,
+        default=default_display,
+        type=click.STRING,
+        value_proc=process_json,
     )
 
     if user_value == default_display:
@@ -145,15 +153,16 @@ def render_variable(env, raw, cookiecutter_dict):
         return None
     elif isinstance(raw, dict):
         return {
-            render_variable(env, k, cookiecutter_dict): render_variable(
-                env, v, cookiecutter_dict
-            )
+            render_variable(env, k, cookiecutter_dict):
+                render_variable(env, v, cookiecutter_dict)
             for k, v in raw.items()
         }
     elif isinstance(raw, list):
-        return [render_variable(env, v, cookiecutter_dict) for v in raw]
+        return [
+            render_variable(env, v, cookiecutter_dict)
+            for v in raw
+        ]
     elif not isinstance(raw, six.string_types):
-
         raw = str(raw)
 
     template = env.from_string(raw)
@@ -167,7 +176,9 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
     Each of the possible choices is rendered beforehand.
     """
-    rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
+    rendered_options = [
+        render_variable(env, raw, cookiecutter_dict) for raw in options
+    ]
 
     if no_input:
         return rendered_options[0]
@@ -186,9 +197,8 @@ def prompt_for_config(context, no_input=False):
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    for key, raw in context[u"cookiecutter"].items():
-        if key.startswith(u"_"):
-
+    for key, raw in context[u'cookiecutter'].items():
+        if key.startswith(u'_'):
             cookiecutter_dict[key] = raw
             continue
 
@@ -212,7 +222,7 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
-    for key, raw in context[u"cookiecutter"].items():
+    for key, raw in context[u'cookiecutter'].items():
 
         try:
             if isinstance(raw, dict):

@@ -9,9 +9,9 @@ from cookiecutter import exceptions
 
 def test_undefined_variable_to_str():
     undefined_var_error = exceptions.UndefinedVariableInTemplate(
-        "Beautiful is better than ugly",
-        UndefinedError("Errors should never pass silently"),
-        {"cookiecutter": {"foo": "bar"}},
+        'Beautiful is better than ugly',
+        UndefinedError('Errors should never pass silently'),
+        {'cookiecutter': {'foo': 'bar'}}
     )
 
     expected_str = (
