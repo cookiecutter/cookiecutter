@@ -20,6 +20,7 @@ Code style and docs changes:
 * Added pep257 docstring for tests/conftests.py [@kishan](https://github.com/kishan3) (#1272, #1263)
 * Added pep257 docstring for tests/replay/conftest.py [@kishan](https://github.com/kishan3) (#1270, #1268)
 * Added pep257 docstring for docs/__init__.py [@kishan](https://github.com/kishan3) (#1273, #1265)
+* Added missing docstring headers to all files [@croesnick](https://github.com/croesnick) (#1269, #1283)
 * Gitter links replaced by Slack in README [@browniebroke](https://github.com/browniebroke) (#1282)
 * flake8-docstrings tests added to CI/CD [@ssbarnea](https://github.com/ssbarnea) (#1284)
 
