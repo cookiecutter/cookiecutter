@@ -53,16 +53,16 @@ def make_test_repo(name):
 
 
 class TestFindHooks(object):
-    """Class to unite find hooks related tests in one place"""
+    """Class to unite find hooks related tests in one place."""
 
     repo_path = 'tests/test-hooks'
 
     def setup_method(self, method):
-        """Find hooks related tests setup fixture"""
+        """Find hooks related tests setup fixture."""
         self.post_hook = make_test_repo(self.repo_path)
 
     def teardown_method(self, method):
-        """Find hooks related tests teardown fixture"""
+        """Find hooks related tests teardown fixture."""
         utils.rmtree(self.repo_path)
 
     def test_find_hook(self):
@@ -94,17 +94,17 @@ class TestFindHooks(object):
 
 
 class TestExternalHooks(object):
-    """Class to unite tests for hooks with different project paths"""
+    """Class to unite tests for hooks with different project paths."""
 
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
     def setup_method(self, method):
-        """External hooks related tests setup fixture"""
+        """External hooks related tests setup fixture."""
         self.post_hook = make_test_repo(self.repo_path)
 
     def teardown_method(self, method):
-        """External hooks related tests teardown fixture"""
+        """External hooks related tests teardown fixture."""
         utils.rmtree(self.repo_path)
 
         if os.path.exists('python_pre.txt'):
@@ -121,12 +121,12 @@ class TestExternalHooks(object):
             os.remove('tests/context_post.txt')
 
     def test_run_script(self):
-        """Execute a hook script, independently of project generation"""
+        """Execute a hook script, independently of project generation."""
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert os.path.isfile('shell_post.txt')
 
     def test_run_script_cwd(self):
-        """Change directory before running hook"""
+        """Change directory before running hook."""
         hooks.run_script(
             os.path.join(self.hooks_path, self.post_hook),
             'tests'
@@ -135,7 +135,7 @@ class TestExternalHooks(object):
         assert 'tests' not in os.getcwd()
 
     def test_run_script_with_context(self):
-        """Execute a hook script, passing a context"""
+        """Execute a hook script, passing a context."""
         hook_path = os.path.join(self.hooks_path, 'post_gen_project.sh')
 
         if sys.platform.startswith('win'):

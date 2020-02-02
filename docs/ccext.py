@@ -11,7 +11,7 @@ from cookiecutter import cli
 
 
 class CcCommandLineOptions(rst.Directive):
-    """Custom docutils extension class to parse cli commands from code"""
+    """Custom docutils extension class to parse cli commands from code."""
 
     def _format_option(self, option):
         return [

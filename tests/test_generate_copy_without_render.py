@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""test_generate_copy_without_render"""
+"""test_generate_copy_without_render."""
 
 from __future__ import unicode_literals
 import os

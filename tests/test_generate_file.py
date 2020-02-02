@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_generate_file
+test_generate_file.
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateFile.test_generate_file

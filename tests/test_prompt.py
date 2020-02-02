@@ -45,7 +45,7 @@ def patch_readline_on_win(monkeypatch):
 
 
 class TestPrompt(object):
-    """Class to unite user prompt related tests"""
+    """Class to unite user prompt related tests."""
 
     def test_prompt_for_config_simple(self, monkeypatch):
         monkeypatch.setattr(
@@ -262,7 +262,7 @@ class TestPrompt(object):
 
 
 class TestReadUserChoice(object):
-    """Class to unite choices prompt related tests"""
+    """Class to unite choices prompt related tests."""
 
     def test_should_invoke_read_user_choice(self, mocker):
         prompt_choice = mocker.patch(
@@ -346,7 +346,7 @@ class TestReadUserChoice(object):
 
 
 class TestPromptChoiceForConfig(object):
-    """Class to unite choices prompt related tests with config test"""
+    """Class to unite choices prompt related tests with config test."""
 
     @pytest.fixture
     def choices(self):

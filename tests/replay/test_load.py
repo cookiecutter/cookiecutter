@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""test_load"""
+"""test_load."""
 
 import json
 import os

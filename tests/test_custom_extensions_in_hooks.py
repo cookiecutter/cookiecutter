@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_custom_extension_in_hooks
+test_custom_extension_in_hooks.
 
 Tests to ensure custom cookiecutter extensions are properly made available to
 pre- and post-gen hooks.

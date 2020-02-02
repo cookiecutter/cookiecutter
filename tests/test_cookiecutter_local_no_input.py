@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_cookiecutter_local_no_input
+test_cookiecutter_local_no_input.
 
 Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalNoInput.test_cookiecutter
@@ -51,7 +51,7 @@ def test_cookiecutter():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_no_input_extra_context():
-    """Call `cookiecutter()` with `no_input=True` and `extra_context"""
+    """Call `cookiecutter()` with `no_input=True` and `extra_context."""
     main.cookiecutter(
         'tests/fake-repo-pre',
         no_input=True,
@@ -63,7 +63,7 @@ def test_cookiecutter_no_input_extra_context():
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_templated_context():
     """Call `cookiecutter()` with `no_input=True` and templates in the \
-    cookiecutter.json file"""
+    cookiecutter.json file."""
     main.cookiecutter(
         'tests/fake-repo-tmpl',
         no_input=True
@@ -127,7 +127,7 @@ def test_cookiecutter_dict_values_in_context():
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_template_cleanup(mocker):
     """Call `cookiecutter()` with `no_input=True` and templates in the \
-    cookiecutter.json file"""
+    cookiecutter.json file."""
     mocker.patch(
         'tempfile.mkdtemp',
         return_value='fake-tmp',

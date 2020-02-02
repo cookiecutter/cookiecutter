@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""cookiecutter distutils configuration"""
+"""cookiecutter distutils configuration."""
 
 import os
 import io

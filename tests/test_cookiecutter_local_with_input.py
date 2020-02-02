@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_cookiecutter_local_with_input
+test_cookiecutter_local_with_input.
 
 Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalWithInput.test_cookiecutter_local_with_input
@@ -42,7 +42,7 @@ def test_cookiecutter_local_with_input(monkeypatch):
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_input_extra_context(monkeypatch):
-    """Call `cookiecutter()` with `no_input=False` and `extra_context`"""
+    """Call `cookiecutter()` with `no_input=False` and `extra_context`."""
     monkeypatch.setattr(
         'cookiecutter.prompt.read_user_variable',
         lambda var, default: default

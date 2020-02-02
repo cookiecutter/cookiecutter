@@ -54,7 +54,7 @@ def test_merge_configs():
 
 
 def test_get_config():
-    """Opening and reading config file"""
+    """Opening and reading config file."""
     conf = config.get_config('tests/test-config/valid-config.yaml')
     expected_conf = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
@@ -96,7 +96,7 @@ def test_invalid_config():
 
 
 def test_get_config_with_defaults():
-    """A config file that overrides 1 of 3 defaults"""
+    """A config file that overrides 1 of 3 defaults."""
     conf = config.get_config('tests/test-config/valid-partial-config.yaml')
     default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
     default_replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
