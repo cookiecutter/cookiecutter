@@ -13,6 +13,10 @@ DEFAULT = 'y'
 
 
 def test_click_invocation(mocker):
+    """Test click function called correctly by cookiecutter.
+
+    Test for boolean type invocation.
+    """
     prompt = mocker.patch('click.prompt')
     prompt.return_value = DEFAULT
 

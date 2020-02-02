@@ -77,11 +77,12 @@ class TestFindHooks(object):
             assert expected_post == actual_hook_path
 
     def test_no_hooks(self):
-        """find_hooks should return None if the hook could not be found."""
+        """`find_hooks` should return None if the hook could not be found."""
         with utils.work_in('tests/fake-repo'):
             assert None is hooks.find_hook('pre_gen_project')
 
     def test_unknown_hooks_dir(self):
+        """`find_hooks` should return None if hook directory not found."""
         with utils.work_in(self.repo_path):
             assert hooks.find_hook(
                 'pre_gen_project',
@@ -89,6 +90,7 @@ class TestFindHooks(object):
             ) is None
 
     def test_hook_not_found(self):
+        """`find_hooks` should return None if the hook could not be found."""
         with utils.work_in(self.repo_path):
             assert hooks.find_hook('unknown_hook') is None
 
@@ -177,6 +179,7 @@ class TestExternalHooks(object):
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
 
     def test_run_failing_hook(self):
+        """Test correct exception raise if hook exit code is not zero."""
         hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
 
@@ -190,7 +193,7 @@ class TestExternalHooks(object):
             assert 'Hook script failed' in str(excinfo.value)
 
 
-@pytest.yield_fixture
+@pytest.fixture()
 def dir_with_hooks(tmpdir):
     """Yield a directory that contains hook backup files."""
     hooks_dir = tmpdir.mkdir('hooks')
@@ -225,6 +228,7 @@ def dir_with_hooks(tmpdir):
 
 
 def test_ignore_hook_backup_files(monkeypatch, dir_with_hooks):
+    """Test `find_hook` correctly use `valid_hook` verification function."""
     # Change the current working directory that contains `hooks/`
     monkeypatch.chdir(dir_with_hooks)
     assert hooks.find_hook('pre_gen_project') is None

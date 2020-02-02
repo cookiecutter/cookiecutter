@@ -19,6 +19,10 @@ Choose from 1, 2, 3, 4"""
 
 @pytest.mark.parametrize('user_choice, expected_value', enumerate(OPTIONS, 1))
 def test_click_invocation(mocker, user_choice, expected_value):
+    """Test click function called correctly by cookiecutter.
+
+    Test for choice type invocation.
+    """
     choice = mocker.patch('click.Choice')
     choice.return_value = click.Choice(OPTIONS)
 
@@ -36,6 +40,10 @@ def test_click_invocation(mocker, user_choice, expected_value):
 
 
 def test_raise_if_options_is_not_a_non_empty_list():
+    """Test function called by cookiecutter raise expected errors.
+
+    Test for choice type invocation.
+    """
     with pytest.raises(TypeError):
         read_user_choice('foo', 'NOT A LIST')
 

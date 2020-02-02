@@ -13,6 +13,10 @@ DEFAULT = 'Kivy Project'
 
 
 def test_click_invocation(mocker):
+    """Test click function called correctly by cookiecutter.
+
+    Test for string type invocation.
+    """
     prompt = mocker.patch('click.prompt')
     prompt.return_value = DEFAULT
 
