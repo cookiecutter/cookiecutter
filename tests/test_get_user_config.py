@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_get_user_config
+test_get_user_config.
 
 Tests formerly known from a unittest residing in test_config.py named
 TestGetUserConfig.test_get_user_config_valid
@@ -41,7 +41,7 @@ def back_up_rc(request, user_config_path):
             os.remove(user_config_path)
 
     def restore_original_rc():
-        """If it existed, restore the original ~/.cookiecutterrc"""
+        """If it existed, restore the original ~/.cookiecutterrc."""
         if os.path.exists(user_config_path_backup):
             shutil.copy(user_config_path_backup, user_config_path)
             os.remove(user_config_path_backup)
@@ -74,7 +74,7 @@ def custom_config():
 
 @pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_valid(user_config_path, custom_config):
-    """Get config from a valid ~/.cookiecutterrc file"""
+    """Get config from a valid ~/.cookiecutterrc file."""
     shutil.copy('tests/test-config/valid-config.yaml', user_config_path)
     conf = config.get_user_config()
 
@@ -83,7 +83,7 @@ def test_get_user_config_valid(user_config_path, custom_config):
 
 @pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_invalid(user_config_path):
-    """Get config from an invalid ~/.cookiecutterrc file"""
+    """Get config from an invalid ~/.cookiecutterrc file."""
     shutil.copy('tests/test-config/invalid-config.yaml', user_config_path)
     with pytest.raises(InvalidConfiguration):
         config.get_user_config()
@@ -91,7 +91,7 @@ def test_get_user_config_invalid(user_config_path):
 
 @pytest.mark.usefixtures('back_up_rc')
 def test_get_user_config_nonexistent():
-    """Get config from a nonexistent ~/.cookiecutterrc file"""
+    """Get config from a nonexistent ~/.cookiecutterrc file."""
     assert config.get_user_config() == config.DEFAULT_CONFIG
 
 

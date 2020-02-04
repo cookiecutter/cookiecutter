@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_default_extensions
+test_default_extensions.
 
 Tests to ensure Jinja2 filters/extensions are available from within pre- and
 post-gen hooks.

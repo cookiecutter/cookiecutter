@@ -6,6 +6,10 @@ from cookiecutter.prompt import read_repo_password
 
 
 def test_click_invocation(mocker):
+    """Test click function called correctly by cookiecutter.
+
+    Test for password (hidden input) type invocation.
+    """
     prompt = mocker.patch('click.prompt')
     prompt.return_value = 'sekrit'
 

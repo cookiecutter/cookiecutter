@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_generate_context
+test_generate_context.
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateContext.test_generate_context

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""test_dump"""
+"""test_dump."""
 
 import json
 import os
@@ -52,6 +52,11 @@ def test_value_error_if_key_missing_in_context(replay_test_dir, template_name):
 
 @pytest.fixture
 def mock_ensure_failure(mocker):
+    """Replace cookiecutter.replay.make_sure_path_exists function.
+
+    Used to mock internal function and limit test scope.
+    Always return expected value: False
+    """
     return mocker.patch(
         'cookiecutter.replay.make_sure_path_exists',
         return_value=False
@@ -60,6 +65,11 @@ def mock_ensure_failure(mocker):
 
 @pytest.fixture
 def mock_ensure_success(mocker):
+    """Replace cookiecutter.replay.make_sure_path_exists function.
+
+    Used to mock internal function and limit test scope.
+    Always return expected value: True
+    """
     return mocker.patch(
         'cookiecutter.replay.make_sure_path_exists',
         return_value=True

@@ -140,7 +140,7 @@ def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmpdir):
 
 
 def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
-    """Prompt shoul dnot ask if no input and rm dir
+    """Prompt should not ask if no input and rm dir.
 
     In `prompt_and_delete()`, if `no_input` is True, the call to
     `prompt.read_user_yes_no()` should be suppressed.
@@ -160,7 +160,7 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
 
 
 def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmpdir):
-    """Prompt should not ask if no input and rm file
+    """Prompt should not ask if no input and rm file.
 
     In `prompt_and_delete()`, if `no_input` is True, the call to
     `prompt.read_user_yes_no()` should be suppressed.

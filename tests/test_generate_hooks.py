@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_generate_hooks
+test_generate_hooks.
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestHooks.test_ignore_hooks_dirs

@@ -45,6 +45,8 @@ def patch_readline_on_win(monkeypatch):
 
 
 class TestPrompt(object):
+    """Class to unite user prompt related tests."""
+
     def test_prompt_for_config_simple(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
@@ -260,6 +262,8 @@ class TestPrompt(object):
 
 
 class TestReadUserChoice(object):
+    """Class to unite choices prompt related tests."""
+
     def test_should_invoke_read_user_choice(self, mocker):
         prompt_choice = mocker.patch(
             'cookiecutter.prompt.prompt_choice_for_config',
@@ -342,6 +346,8 @@ class TestReadUserChoice(object):
 
 
 class TestPromptChoiceForConfig(object):
+    """Class to unite choices prompt related tests with config test."""
+
     @pytest.fixture
     def choices(self):
         return ['landscape', 'portrait', 'all']

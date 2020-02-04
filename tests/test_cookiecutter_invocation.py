@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_cookiecutter_invocation
+test_cookiecutter_invocation.
 
 Tests to make sure that cookiecutter can be called from the cli without
 using the entry point set up for the package.
