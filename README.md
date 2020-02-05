@@ -425,7 +425,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 * [Diecutter](https://github.com/diecutter/diecutter): an API service that will give you back a configuration file from a template and variables.
 
-* [Django](https://docs.djangoproject.com/en/1.9/ref/django-admin/#cmdoption-startapp--template)'s `startproject` and `startapp` commands can take in a `--template` option.
+* [Django](https://docs.djangoproject.com/en/3.0/ref/django-admin/#cmdoption-startapp-template)'s `startproject` and `startapp` commands can take in a `--template` option.
 
 * [python-packager](https://github.com/fcurella/python-packager): Creates Python packages from its own template, with configurable options.
 
