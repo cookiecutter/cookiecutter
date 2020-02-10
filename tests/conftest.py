@@ -162,8 +162,9 @@ def user_config_data(user_dir):
 
     :returns: Dict with name of both user config dirs
     """
-    cookiecutters_dir = user_dir.mkdir('cookiecutters')
-    replay_dir = user_dir.mkdir('cookiecutter_replay')
+    cache = os.getenv("XDG_CACHE_HOME", default='~/.cache/')
+    cookiecutters_dir = user_dir.mkdir(os.path.join(cache, 'cookiecutters'))
+    replay_dir = user_dir.mkdir(os.path.join(cache, 'cookiecutter_replay'))
 
     return {
         'cookiecutters_dir': str(cookiecutters_dir),

@@ -26,8 +26,8 @@ BUILTIN_ABBREVIATIONS = {
 }
 
 DEFAULT_CONFIG = {
-    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
-    'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
+    'cookiecutters_dir': os.path.expanduser('$XDG_CACHE_HOME/cookiecutters/'),
+    'replay_dir': os.path.expanduser('$XDG_CACHE_HOME/cookiecutter_replay/'),
     'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }

@@ -101,12 +101,12 @@ default_context:
 full_name: "Audrey Roy"
 email: "audreyr@gmail.com"
 github_username: "audreyr"
-cookiecutters_dir: "~/.cookiecutters/"
+cookiecutters_dir: "~/$XDG_CACHE_HOME/cookiecutters/"
 ```
 
-* Cookiecutters (cloned Cookiecutter project templates) are put into ``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
+* Cookiecutters (cloned Cookiecutter project templates) are put into ``$XDG_CACHE_HOME`` by default, or cookiecutters_dir if specified.
 
-* If you have already cloned a cookiecutter into ``~/.cookiecutters/``, you can reference it by directory name:
+* If you have already cloned a cookiecutter into ``$XDG_CACHE_HOME``, you can reference it by directory name:
 
 ```bash
 # Clone cookiecutter-pypackage
