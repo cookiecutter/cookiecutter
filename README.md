@@ -101,12 +101,12 @@ default_context:
     full_name: "Audrey Roy"
     email: "audreyr@gmail.com"
     github_username: "audreyr"
-cookiecutters_dir: "~/.cookiecutters/"
+cookiecutters_dir: "$XDG_CACHE_HOME/cookiecutters/"
 ```
 
-* Cookiecutters (cloned Cookiecutter project templates) are put into ``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
+* Cloned [cookiecutter templates](https://github.com/topics/cookiecutter-template) are cached into ``$XDG_CACHE_HOME/cookiecutters/`` by default, or ``cookiecutters_dir`` if specified. The implicit value of ``XDG_CACHE_HOME`` is assumed to be `~/.cache` as mentioned by its [specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html).
 
-* If you have already cloned a cookiecutter into ``~/.cookiecutters/``, you can reference it by directory name:
+* If you have already cached cookiecutters, you can reference them by their directory names:
 
 ```bash
 # Clone cookiecutter-pypackage

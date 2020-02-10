@@ -118,7 +118,7 @@ As of the Cookiecutter 0.7.0 release:
 * Whenever you generate a project with a cookiecutter, the resulting project
   is output to your current directory.
 
-* Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
+* Your cloned cookiecutters are stored by default in your `~/.cache/cookiecutters/`
   directory (or Windows equivalent). The location is configurable: see
   :doc:`advanced/user_config` for details.
 

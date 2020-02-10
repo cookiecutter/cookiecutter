@@ -120,7 +120,7 @@ First, read :doc:`HISTORY` in detail. There are a lot of major
 changes. The big ones are:
 
 * Cookiecutter no longer deletes the cloned repo after generating a project.
-* Cloned repos are saved into `~/.cookiecutters/`.
+* Cloned repos are saved into `~/.cache/cookiecutters/`.
 * You can optionally create a `~/.cookiecutterrc` config file.
 
 Upgrade Cookiecutter either with easy_install:

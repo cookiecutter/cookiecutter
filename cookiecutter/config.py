@@ -26,8 +26,8 @@ BUILTIN_ABBREVIATIONS = {
 }
 
 DEFAULT_CONFIG = {
-    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
-    'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
+    'cookiecutters_dir': '$XDG_CACHE_HOME/cookiecutters/',
+    'replay_dir': '$XDG_CACHE_HOME/cookiecutter_replay/',
     'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
@@ -76,6 +76,7 @@ def get_config(config_path):
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
+    os.environ['XDG_CACHE_HOME'] = os.environ.get('XDG_CACHE_HOME', '~/.cache')
     raw_replay_dir = config_dict['replay_dir']
     config_dict['replay_dir'] = _expand_path(raw_replay_dir)
 

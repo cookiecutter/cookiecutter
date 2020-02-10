@@ -35,8 +35,8 @@ cookiecutter-pypackage's HTTPS clone URL like this:
 Local Cloning of Project Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, cookiecutter-pypackage gets cloned to `~/.cookiecutters/` (or equivalent
-on Windows). Cookiecutter does this for you, so sit back and wait.
+First, cookiecutter-pypackage gets cloned to `~/.cache/cookiecutters/` (or
+equivalent on Windows). Cookiecutter does this for you, so sit back and wait.
 
 Local Generation of Project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

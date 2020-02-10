@@ -70,23 +70,23 @@ def clean_system(request):
     During setup:
 
     * Back up the `~/.cookiecutterrc` config file to `~/.cookiecutterrc.backup`
-    * Back up the `~/.cookiecutters/` dir to `~/.cookiecutters.backup/`
-    * Back up the `~/.cookiecutter_replay/` dir to
-      `~/.cookiecutter_replay.backup/`
+    * Back up the `~/.cache/cookiecutters/` dir to `~/.cache/cookiecutters.backup/`
+    * Back up the `~/.cache/cookiecutter_replay/` dir to
+      `~/.cache/cookiecutter_replay.backup/`
     * Starts off a test case with no pre-existing `~/.cookiecutterrc` or
-      `~/.cookiecutters/` or `~/.cookiecutter_replay/`
+      `~/.cache/cookiecutters/` or `~/.cache/cookiecutter_replay/`
 
     During teardown:
 
-    * Delete `~/.cookiecutters/` only if a backup is present at
-      `~/.cookiecutters.backup/`
-    * Delete `~/.cookiecutter_replay/` only if a backup is present at
+    * Delete `~/.cache/cookiecutters/` only if a backup is present at
+      `~/.cache/cookiecutters.backup/`
+    * Delete `~/.cache/cookiecutter_replay/` only if a backup is present at
       `~/.cookiecutter_replay.backup/`
-    * Restore the `~/.cookiecutterrc` config file from
+    * Restore the `~/.cache/cookiecutterrc` config file from
       `~/.cookiecutterrc.backup`
-    * Restore the `~/.cookiecutters/` dir from `~/.cookiecutters.backup/`
-    * Restore the `~/.cookiecutter_replay/` dir from
-      `~/.cookiecutter_replay.backup/`
+    * Restore the `~/.cache/cookiecutters/` dir from `~/.cache/cookiecutters.backup/`
+    * Restore the `~/.cache/cookiecutter_replay/` dir from
+      `~/.cache/cookiecutter_replay.backup/`
 
     """
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
@@ -103,17 +103,17 @@ def clean_system(request):
 
     # If the default cookiecutters_dir is pre-existing, move it to a
     # temp location
-    cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
-    cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
+    cookiecutters_dir = os.path.expanduser('~/.cache/cookiecutters')
+    cookiecutters_dir_backup = os.path.expanduser('~/.cache/cookiecutters.backup')
     cookiecutters_dir_found = backup_dir(
         cookiecutters_dir, cookiecutters_dir_backup
     )
 
     # If the default cookiecutter_replay_dir is pre-existing, move it to a
     # temp location
-    cookiecutter_replay_dir = os.path.expanduser('~/.cookiecutter_replay')
+    cookiecutter_replay_dir = os.path.expanduser('~/.cache/cookiecutter_replay')
     cookiecutter_replay_dir_backup = os.path.expanduser(
-        '~/.cookiecutter_replay.backup'
+        '~/.cache/cookiecutter_replay.backup'
     )
     cookiecutter_replay_dir_found = backup_dir(
         cookiecutter_replay_dir, cookiecutter_replay_dir_backup
@@ -126,7 +126,7 @@ def clean_system(request):
             shutil.copy(user_config_path_backup, user_config_path)
             os.remove(user_config_path_backup)
 
-        # Carefully delete the created ~/.cookiecutters dir only in certain
+        # Carefully delete the created ~/.cache/cookiecutters dir only in certain
         # conditions.
         restore_backup_dir(
             cookiecutters_dir,
@@ -134,7 +134,7 @@ def clean_system(request):
             cookiecutters_dir_found
         )
 
-        # Carefully delete the created ~/.cookiecutter_replay dir only in
+        # Carefully delete the created ~/.cache/cookiecutter_replay dir only in
         # certain conditions.
         restore_backup_dir(
             cookiecutter_replay_dir,
@@ -162,6 +162,7 @@ def user_config_data(user_dir):
 
     :returns: Dict with name of both user config dirs
     """
+    # cache = os.path.expanduser(os.getenv("XDG_CACHE_HOME", default='~/.cache/'))
     cookiecutters_dir = user_dir.mkdir('cookiecutters')
     replay_dir = user_dir.mkdir('cookiecutter_replay')
 
