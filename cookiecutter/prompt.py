@@ -20,7 +20,7 @@ def read_user_variable(var_name, default_value):
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(var_name, default=default_value)
 
 
@@ -33,7 +33,7 @@ def read_user_yes_no(question, default_value):
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(
         question,
         default=default_value,
@@ -46,7 +46,7 @@ def read_repo_password(question):
 
     :param str question: Question to the user
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(question, hide_input=True)
 
 
@@ -59,7 +59,7 @@ def read_user_choice(var_name, options):
     :param list options: Sequence of options that are available to select from
     :return: Exactly one item of ``options`` that has been chosen by the user
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     if not isinstance(options, list):
         raise TypeError
 
@@ -113,7 +113,7 @@ def read_user_dict(var_name, default_value):
     :param default_value: Value that will be returned if no input is provided
     :return: A Python dictionary to use in the context.
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     if not isinstance(default_value, dict):
         raise TypeError
 
