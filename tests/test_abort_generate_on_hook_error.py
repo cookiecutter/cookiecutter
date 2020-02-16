@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 
+"""
+test_abort_generate_on_hook_error.
+
+Tests to ensure cookiecutter properly exits with a non-zero exit code whenever
+errors occur in (optional) pre- or pos-gen hooks.
+"""
+
 import pytest
 
-from cookiecutter import generate
 from cookiecutter import exceptions
+from cookiecutter import generate
 
 
 @pytest.mark.usefixtures('clean_system')

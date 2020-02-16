@@ -5,6 +5,7 @@
 import os
 import sys
 import json
+import collections
 
 import click
 
@@ -42,7 +43,7 @@ def validate_extra_context(ctx, param, value):
 
     # Convert tuple -- e.g.: (u'program_name=foobar', u'startsecs=66')
     # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
-    return dict(s.split('=', 1) for s in value) or None
+    return collections.OrderedDict(s.split('=', 1) for s in value) or None
 
 
 @click.command(context_settings=dict(help_option_names=[u'-h', u'--help']))
@@ -57,6 +58,11 @@ def validate_extra_context(ctx, param, value):
 @click.option(
     u'-c', u'--checkout',
     help=u'branch, tag or commit to checkout after git clone',
+)
+@click.option(
+    u'--directory',
+    help=u'Directory within repo that holds cookiecutter.json file '
+         u'for advanced repositories with multi templates in it',
 )
 @click.option(
     '-v', '--verbose',
@@ -95,7 +101,7 @@ def validate_extra_context(ctx, param, value):
 def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file, skip_if_file_exists):
+        default_config, debug_file, directory, skip_if_file_exists):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -123,6 +129,7 @@ def main(
             config_file=config_file,
             default_config=default_config,
             password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
+            directory=directory,
             skip_if_file_exists=skip_if_file_exists
         )
     except (OutputDirExistsException,

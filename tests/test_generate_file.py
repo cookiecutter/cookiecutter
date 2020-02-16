@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_generate_file
-------------------
+test_generate_file.
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateFile.test_generate_file
@@ -10,12 +9,13 @@ TestGenerateFile.test_generate_file_verbose_template_syntax_error
 """
 
 from __future__ import unicode_literals
+
 import json
 import os
 
+import pytest
 from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError
-import pytest
 
 from cookiecutter import generate
 from cookiecutter.environment import StrictEnvironment
@@ -23,9 +23,7 @@ from cookiecutter.environment import StrictEnvironment
 
 @pytest.fixture(scope='function')
 def remove_cheese_file(request):
-    """
-    Remove the cheese text file which is created by the tests.
-    """
+    """Remove the cheese text file which is created by the tests."""
     def fin_remove_cheese_file():
         if os.path.exists('tests/files/cheese.txt'):
             os.remove('tests/files/cheese.txt')
@@ -80,6 +78,29 @@ def test_generate_file_jsonify_filter(env):
     with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
         assert json.loads(generated_text) == data
+
+
+@pytest.mark.usefixtures('remove_cheese_file')
+@pytest.mark.parametrize("length", (10, 40))
+@pytest.mark.parametrize("punctuation", (True, False))
+def test_generate_file_random_ascii_string(env, length, punctuation):
+    infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
+    data = {'random_string_file': 'cheese'}
+    context = {
+        "cookiecutter": data,
+        "length": length,
+        "punctuation": punctuation
+    }
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context=context,
+        env=env
+    )
+    assert os.path.isfile('tests/files/cheese.txt')
+    with open('tests/files/cheese.txt', 'rt') as f:
+        generated_text = f.read()
+        assert len(generated_text) == length
 
 
 @pytest.mark.usefixtures('remove_cheese_file')

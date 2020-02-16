@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_cookiecutter_local_no_input
---------------------------------
+test_cookiecutter_local_no_input.
 
 Tests formerly known from a unittest residing in test_main.py named
 TestCookiecutterLocalNoInput.test_cookiecutter
@@ -20,9 +19,7 @@ from cookiecutter import main, utils
 
 @pytest.fixture(scope='function')
 def remove_additional_dirs(request):
-    """
-    Remove special directories which are created during the tests.
-    """
+    """Remove special directories which are created during the tests."""
     def fin_remove_additional_dirs():
         if os.path.isdir('fake-project'):
             utils.rmtree('fake-project')
@@ -39,9 +36,7 @@ def remove_additional_dirs(request):
 
 @pytest.fixture(params=['tests/fake-repo-pre/', 'tests/fake-repo-pre'])
 def bake(request):
-    """
-    Run cookiecutter with the given input_dir path.
-    """
+    """Run cookiecutter with the given input_dir path."""
     main.cookiecutter(request.param, no_input=True)
 
 
@@ -56,9 +51,7 @@ def test_cookiecutter():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_no_input_extra_context():
-    """
-    `Call cookiecutter()` with `no_input=True` and `extra_context
-    """
+    """Call `cookiecutter()` with `no_input=True` and `extra_context."""
     main.cookiecutter(
         'tests/fake-repo-pre',
         no_input=True,
@@ -69,10 +62,8 @@ def test_cookiecutter_no_input_extra_context():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_templated_context():
-    """
-    `Call cookiecutter()` with `no_input=True` and templates in the
-    cookiecutter.json file
-    """
+    """Call `cookiecutter()` with `no_input=True` and templates in the \
+    cookiecutter.json file."""
     main.cookiecutter(
         'tests/fake-repo-tmpl',
         no_input=True
@@ -135,10 +126,8 @@ def test_cookiecutter_dict_values_in_context():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_template_cleanup(mocker):
-    """
-    `Call cookiecutter()` with `no_input=True` and templates in the
-    cookiecutter.json file
-    """
+    """Call `cookiecutter()` with `no_input=True` and templates in the \
+    cookiecutter.json file."""
     mocker.patch(
         'tempfile.mkdtemp',
         return_value='fake-tmp',

@@ -1,27 +1,29 @@
 # -*- coding: utf-8 -*-
 
 """
-test_cookiecutter_invocation
-----------------------------
+test_cookiecutter_invocation.
 
 Tests to make sure that cookiecutter can be called from the cli without
 using the entry point set up for the package.
 """
 
 import os
-import pytest
 import subprocess
 import sys
+
+import pytest
 
 from cookiecutter import utils
 
 
-def test_should_raise_error_without_template_arg(capfd):
+def test_should_raise_error_without_template_arg(monkeypatch, capfd):
+    monkeypatch.setenv('PYTHONPATH', '.')
+
     with pytest.raises(subprocess.CalledProcessError):
-        subprocess.check_call(['python', '-m', 'cookiecutter.cli'])
+        subprocess.check_call([sys.executable, '-m', 'cookiecutter.cli'])
 
     _, err = capfd.readouterr()
-    exp_message = 'Error: Missing argument "template".'
+    exp_message = 'Error: Missing argument "TEMPLATE".'
     assert exp_message in err
 
 

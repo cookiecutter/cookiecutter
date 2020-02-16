@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Collection of tests around loading extensions."""
+
 import pytest
 
 from cookiecutter.environment import StrictEnvironment

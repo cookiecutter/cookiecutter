@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+"""Tests for all supported cookiecutter template repository locations."""
+
 import pytest
 
 from cookiecutter.config import BUILTIN_ABBREVIATIONS
@@ -28,6 +31,7 @@ def test_is_zip_file(zipfile):
     'git+https://private.com/gitrepo',
     'hg+https://private.com/mercurialrepo',
     'https://bitbucket.org/pokoli/cookiecutter.hg',
+    'file://server/path/to/repo.git',
 ])
 def remote_repo_url(request):
     return request.param

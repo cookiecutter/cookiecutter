@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Collection of tests around log handling."""
+
 import logging
 
 import pytest
@@ -115,10 +117,8 @@ def test_debug_stdout_logging(caplog, debug_logger, debug_messages):
 
 def test_debug_file_logging(
         caplog, info_logger_with_file, debug_file, debug_messages):
-    """Test that logging to stdout uses a different format and level than
-    the the file handler.
-    """
-
+    """Test that logging to stdout uses a different format and level than \
+    the the file handler."""
     [file_handler, stream_handler] = info_logger_with_file.handlers
     assert isinstance(file_handler, logging.FileHandler)
     assert isinstance(stream_handler, logging.StreamHandler)

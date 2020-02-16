@@ -4,7 +4,7 @@
 
 from jinja2 import Environment, StrictUndefined
 
-from .exceptions import UnknownExtension
+from cookiecutter.exceptions import UnknownExtension
 
 
 class ExtensionLoaderMixin(object):
@@ -27,6 +27,7 @@ class ExtensionLoaderMixin(object):
 
         default_extensions = [
             'cookiecutter.extensions.JsonifyExtension',
+            'cookiecutter.extensions.RandomStringExtension',
             'jinja2_time.TimeExtension',
         ]
         extensions = default_extensions + self._read_extensions(context)

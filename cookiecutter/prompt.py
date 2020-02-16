@@ -1,29 +1,21 @@
 # -*- coding: utf-8 -*-
 
-"""
-cookiecutter.prompt
----------------------
-
-Functions for prompting the user for project info.
-"""
+"""Functions for prompting the user for project info."""
 
 from collections import OrderedDict
 import json
 
 import click
-from past.builtins import basestring
-
-from future.utils import iteritems
+import six
 
 from jinja2.exceptions import UndefinedError
 
-from .exceptions import UndefinedVariableInTemplate
-from .environment import StrictEnvironment
+from cookiecutter.exceptions import UndefinedVariableInTemplate
+from cookiecutter.environment import StrictEnvironment
 
 
 def read_user_variable(var_name, default_value):
-    """Prompt the user for the given variable and return the entered value
-    or the given default.
+    """Prompt user for variable and return the entered value or given default.
 
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
@@ -50,7 +42,7 @@ def read_user_yes_no(question, default_value):
 
 
 def read_repo_password(question):
-    """Prompt the user to enter a password
+    """Prompt the user to enter a password.
 
     :param str question: Question to the user
     """
@@ -88,12 +80,16 @@ def read_user_choice(var_name, options):
     ))
 
     user_choice = click.prompt(
-        prompt, type=click.Choice(choices), default=default
+        prompt, type=click.Choice(choices), default=default, show_choices=False
     )
     return choice_map[user_choice]
 
 
 def process_json(user_value):
+    """Load user-supplied value as a JSON dict.
+
+    :param str user_value: User-supplied value to load as a JSON dict
+    """
     try:
         user_dict = json.loads(
             user_value,
@@ -137,7 +133,9 @@ def read_user_dict(var_name, default_value):
 
 
 def render_variable(env, raw, cookiecutter_dict):
-    """Inside the prompting taken from the cookiecutter.json file, this renders
+    """Render the next variable to be displayed in the user prompt.
+
+    Inside the prompting taken from the cookiecutter.json file, this renders
     the next variable. For example, if a project_name is "Peanut Butter
     Cookie", the repo_name could be be rendered with:
 
@@ -164,7 +162,7 @@ def render_variable(env, raw, cookiecutter_dict):
             render_variable(env, v, cookiecutter_dict)
             for v in raw
         ]
-    elif not isinstance(raw, basestring):
+    elif not isinstance(raw, six.string_types):
         raw = str(raw)
 
     template = env.from_string(raw)
@@ -174,8 +172,9 @@ def render_variable(env, raw, cookiecutter_dict):
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
-    """Prompt the user which option to choose from the given. Each of the
-    possible choices is rendered beforehand.
+    """Prompt user with a set of options to choose from.
+
+    Each of the possible choices is rendered beforehand.
     """
     rendered_options = [
         render_variable(env, raw, cookiecutter_dict) for raw in options
@@ -187,19 +186,18 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
 
 def prompt_for_config(context, no_input=False):
-    """
-    Prompts the user to enter new config, using context as a source for the
-    field names and sample values.
+    """Prompt user to enter a new config.
 
+    :param dict context: Source for field names and sample values.
     :param no_input: Prompt the user at command line for manual configuration?
     """
-    cookiecutter_dict = {}
+    cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    for key, raw in iteritems(context[u'cookiecutter']):
+    for key, raw in context[u'cookiecutter'].items():
         if key.startswith(u'_'):
             cookiecutter_dict[key] = raw
             continue
@@ -224,7 +222,7 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
-    for key, raw in iteritems(context[u'cookiecutter']):
+    for key, raw in context[u'cookiecutter'].items():
 
         try:
             if isinstance(raw, dict):

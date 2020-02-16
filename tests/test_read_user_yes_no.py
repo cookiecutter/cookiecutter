@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_read_user_yes_no
----------------------
-"""
+"""test_read_user_yes_no."""
 
 from __future__ import unicode_literals
 
@@ -16,6 +13,10 @@ DEFAULT = 'y'
 
 
 def test_click_invocation(mocker):
+    """Test click function called correctly by cookiecutter.
+
+    Test for boolean type invocation.
+    """
     prompt = mocker.patch('click.prompt')
     prompt.return_value = DEFAULT
 

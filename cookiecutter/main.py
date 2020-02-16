@@ -11,13 +11,13 @@ from __future__ import unicode_literals
 import logging
 import os
 
-from .config import get_user_config
-from .generate import generate_context, generate_files
-from .exceptions import InvalidModeException
-from .prompt import prompt_for_config
-from .replay import dump, load
-from .repository import determine_repo_dir
-from .utils import rmtree
+from cookiecutter.config import get_user_config
+from cookiecutter.generate import generate_context, generate_files
+from cookiecutter.exceptions import InvalidModeException
+from cookiecutter.prompt import prompt_for_config
+from cookiecutter.replay import dump, load
+from cookiecutter.repository import determine_repo_dir
+from cookiecutter.utils import rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None,
+        config_file=None, default_config=False, password=None, directory=None,
         skip_if_file_exists=False):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -42,6 +42,7 @@ def cookiecutter(
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
+    :param directory: Relative path to a cookiecutter template in a repository.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -61,7 +62,8 @@ def cookiecutter(
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,
-        password=password
+        password=password,
+        directory=directory
     )
 
     template_name = os.path.basename(os.path.abspath(repo_dir))

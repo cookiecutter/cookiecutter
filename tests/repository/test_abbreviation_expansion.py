@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Collection of tests around common path and url shorthands."""
+
 from __future__ import unicode_literals
 import pytest
 

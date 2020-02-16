@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import os
+"""
+test_custom_extension_in_hooks.
+
+Tests to ensure custom cookiecutter extensions are properly made available to
+pre- and post-gen hooks.
+"""
+
 import codecs
+import os
 
 import pytest
 

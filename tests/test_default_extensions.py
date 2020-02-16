@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import os
-import io
+"""
+test_default_extensions.
 
-import pytest
+Tests to ensure Jinja2 filters/extensions are available from within pre- and
+post-gen hooks.
+"""
+
+import io
+import os
+
 import freezegun
+import pytest
 
 from cookiecutter.main import cookiecutter
 

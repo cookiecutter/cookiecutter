@@ -15,17 +15,17 @@ from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
-from .environment import StrictEnvironment
-from .exceptions import (
+from cookiecutter.environment import StrictEnvironment
+from cookiecutter.exceptions import (
     NonTemplatedInputDirException,
     ContextDecodingException,
     FailedHookException,
     OutputDirExistsException,
     UndefinedVariableInTemplate
 )
-from .find import find_template
-from .hooks import run_hook
-from .utils import make_sure_path_exists, work_in, rmtree
+from cookiecutter.find import find_template
+from cookiecutter.hooks import run_hook
+from cookiecutter.utils import make_sure_path_exists, work_in, rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +83,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
     """
-    context = {}
+    context = OrderedDict([])
 
     try:
         with open(context_file) as file_handle:
@@ -261,7 +261,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from {}...'.format(template_dir))
-    context = context or {}
+    context = context or OrderedDict([])
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_generate_files
--------------------
+test_generate_files.
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateFiles.test_generate_files_nontemplated_exception
@@ -24,12 +23,14 @@ clean_system teardown code
 """
 
 from __future__ import unicode_literals
-import os
+
 import io
+import os
+
 import pytest
 
-from cookiecutter import generate
 from cookiecutter import exceptions
+from cookiecutter import generate
 from cookiecutter import utils
 
 
@@ -41,9 +42,7 @@ def test_ensure_dir_is_templated_raises(invalid_dirname):
 
 @pytest.fixture(scope='function')
 def remove_additional_folders(request):
-    """
-    Remove some special folders which are created by the tests.
-    """
+    """Remove some special folders which are created by the tests."""
     def fin_remove_additional_folders():
         if os.path.exists('inputpizzä'):
             utils.rmtree('inputpizzä')
@@ -159,16 +158,14 @@ def test_return_rendered_project_dir():
         output_dir='tests/custom_output_dir'
     )
     assert project_dir == os.path.abspath(
-        'tests/custom_output_dir/inputpizzä/'
+        'tests/custom_output_dir/inputpizzä'
     )
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_permissions():
-    """
-    simple.txt and script.sh should retain their respective 0o644 and
-    0o755 permissions
-    """
+    """simple.txt and script.sh should retain their respective 0o644 and \
+    0o755 permissions."""
     generate.generate_files(
         context={
             'cookiecutter': {'permissions': 'permissions'}

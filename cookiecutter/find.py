@@ -5,7 +5,7 @@
 import logging
 import os
 
-from .exceptions import NonTemplatedInputDirException
+from cookiecutter.exceptions import NonTemplatedInputDirException
 
 logger = logging.getLogger(__name__)
 

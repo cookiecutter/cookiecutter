@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_generate_hooks
--------------------
+test_generate_hooks.
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestHooks.test_ignore_hooks_dirs
@@ -12,10 +11,12 @@ TestHooks.test_run_shell_hooks
 """
 
 from __future__ import unicode_literals
+
 import errno
 import os
-import sys
 import stat
+import sys
+
 import pytest
 
 from cookiecutter import generate
@@ -27,9 +28,7 @@ WINDOWS = sys.platform.startswith('win')
 
 @pytest.fixture(scope='function')
 def remove_additional_folders(request):
-    """
-    Remove some special folders which are created by the tests.
-    """
+    """Remove some special folders which are created by the tests."""
     def fin_remove_additional_folders():
         directories_to_delete = [
             'tests/test-pyhooks/inputpyhooks',
@@ -99,7 +98,6 @@ def test_empty_hooks():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_oserror_hooks(mocker):
-
     message = 'Out of memory'
 
     err = OSError(message)

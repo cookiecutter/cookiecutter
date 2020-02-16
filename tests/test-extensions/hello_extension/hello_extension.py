@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 
+"""Provides custom extension, exposing a ``hello`` command."""
+
 from jinja2 import nodes
 from jinja2.ext import Extension
 
 
 class HelloExtension(Extension):
+    """Simple jinja2 extension for cookiecutter test purposes."""
+
     tags = set(['hello'])
 
     def __init__(self, environment):
+        """Hello Extension Constructor."""
         super(HelloExtension, self).__init__(environment)
 
     def _hello(self, name):

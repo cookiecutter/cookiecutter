@@ -1,18 +1,22 @@
+"""Utility functions for handling and fetching repo archives in zip format."""
+
 from __future__ import absolute_import
 
 import os
-import requests
 import tempfile
 from zipfile import ZipFile
+
+import requests
+
 try:
     # BadZipfile was renamed to BadZipFile in Python 3.2.
     from zipfile import BadZipFile
 except ImportError:
     from zipfile import BadZipfile as BadZipFile
 
-from .exceptions import InvalidZipRepository
-from .prompt import read_repo_password
-from .utils import make_sure_path_exists, prompt_and_delete
+from cookiecutter.exceptions import InvalidZipRepository
+from cookiecutter.prompt import read_repo_password
+from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
 
 def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
@@ -25,7 +29,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     :param is_url: Is the zip URI a URL or a file?
     :param clone_to_dir: The cookiecutter repository directory
         to put the archive into.
-    :param no_input: Supress any prompts
+    :param no_input: Suppress any prompts
     :param password: The password to use when unpacking the repository.
     """
     # Ensure that clone_to_dir exists

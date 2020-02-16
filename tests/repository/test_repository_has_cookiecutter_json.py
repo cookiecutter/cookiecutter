@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-from cookiecutter.repository import repository_has_cookiecutter_json
+
+"""Tests around validation if a given repository contains a (valid) config."""
 
 import pytest
+
+from cookiecutter.repository import repository_has_cookiecutter_json
 
 
 def test_valid_repository():

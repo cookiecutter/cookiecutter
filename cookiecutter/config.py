@@ -7,11 +7,12 @@ import copy
 import logging
 import os
 import io
+import collections
 
 import poyo
 
-from .exceptions import ConfigDoesNotExistException
-from .exceptions import InvalidConfiguration
+from cookiecutter.exceptions import ConfigDoesNotExistException
+from cookiecutter.exceptions import InvalidConfiguration
 
 
 logger = logging.getLogger(__name__)
@@ -27,7 +28,7 @@ BUILTIN_ABBREVIATIONS = {
 DEFAULT_CONFIG = {
     'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
     'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
-    'default_context': {},
+    'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
 

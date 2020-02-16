@@ -1,27 +1,26 @@
 # -*- coding: utf-8 -*-
 
 """
-test_output_folder
-------------------
+tests_output_folder.
 
 Test formerly known from a unittest residing in test_generate.py named
 TestOutputFolder.test_output_folder
 """
 
 from __future__ import unicode_literals
+
 import os
+
 import pytest
 
+from cookiecutter import exceptions
 from cookiecutter import generate
 from cookiecutter import utils
-from cookiecutter import exceptions
 
 
 @pytest.fixture(scope='function')
 def remove_output_folder(request):
-    """
-    Remove the output folder in case it exists on disk.
-    """
+    """Remove the output folder in case it exists on disk."""
     def finalizer_remove_output_folder():
         if os.path.exists('output_folder'):
             utils.rmtree('output_folder')

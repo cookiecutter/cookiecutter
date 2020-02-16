@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_generate_copy_without_render
----------------------------------
-"""
+"""test_generate_copy_without_render."""
 
 from __future__ import unicode_literals
 import os
@@ -15,9 +12,7 @@ from cookiecutter import utils
 
 @pytest.fixture(scope='function')
 def remove_test_dir(request):
-    """
-    Remove the folder that is created by the test.
-    """
+    """Remove the folder that is created by the test."""
     def fin_remove_test_dir():
         if os.path.exists('test_copy_without_render'):
             utils.rmtree('test_copy_without_render')

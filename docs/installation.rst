@@ -60,7 +60,7 @@ You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/e
 Packaging tools
 ^^^^^^^^^^^^^^^
 
-``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.4. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
+``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.5. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
 
 
 Install cookiecutter
@@ -116,7 +116,7 @@ Alternate installations
 Upgrading from 0.6.4 to 0.7.0 or greater
 ----------------------------------------
 
-First, read :doc:`history` in detail. There are a lot of major
+First, read :doc:`HISTORY` in detail. There are a lot of major
 changes. The big ones are:
 
 * Cookiecutter no longer deletes the cloned repo after generating a project.

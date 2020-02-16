@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_generate_context
----------------------
+test_generate_context.
 
 Tests formerly known from a unittest residing in test_generate.py named
 TestGenerateContext.test_generate_context
@@ -12,10 +11,12 @@ TestGenerateContext.test_generate_context_with_default_and_extra
 """
 
 from __future__ import unicode_literals
-import pytest
+
 import os
 import re
 from collections import OrderedDict
+
+import pytest
 
 from cookiecutter import generate
 from cookiecutter.exceptions import ContextDecodingException
@@ -71,10 +72,8 @@ def context_data():
 @pytest.mark.usefixtures('clean_system')
 @pytest.mark.parametrize('input_params, expected_context', context_data())
 def test_generate_context(input_params, expected_context):
-    """
-    Test the generated context for several input parameters against the
-    according expected context.
-    """
+    """Test the generated context for several input parameters against the \
+    according expected context."""
     assert generate.generate_context(**input_params) == expected_context
 
 
@@ -87,7 +86,7 @@ def test_generate_context_with_json_decoding_error():
     # original message from json module should be included
     pattern = (
         'Expecting \'{0,1}:\'{0,1} delimiter: '
-        'line 1 column (19|20) \(char 19\)'
+        'line 1 column (19|20) \\(char 19\\)'
     )
     assert re.search(pattern, str(excinfo.value))
     # File name should be included too...for testing purposes, just test the
@@ -123,9 +122,8 @@ def context_file():
 
 
 def test_choices(context_file, default_context, extra_context):
-    """Make sure that the default for list variables is based on the user
-    config and the list as such is not changed to a single value.
-    """
+    """Make sure that the default for list variables is based on the user \
+    config and the list as such is not changed to a single value."""
     expected_context = {
         'choices_template': OrderedDict([
             ('full_name', 'Raphael Pierzina'),

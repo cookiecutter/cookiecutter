@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_prompt
------------
+"""Tests for `cookiecutter.prompt` module."""
 
-Tests for `cookiecutter.prompt` module.
-"""
-
-from collections import OrderedDict
 import platform
+from collections import OrderedDict
 
 import pytest
-from past.builtins import basestring
+import six
 
 from cookiecutter import prompt, exceptions, environment
 
@@ -36,7 +31,7 @@ def test_convert_to_str(mocker, raw_var, rendered_var):
 
     # Make sure that non None non str variables are converted beforehand
     if raw_var is not None:
-        if not isinstance(raw_var, basestring):
+        if not isinstance(raw_var, six.string_types):
             raw_var = str(raw_var)
         from_string.assert_called_once_with(raw_var)
     else:
@@ -50,6 +45,8 @@ def patch_readline_on_win(monkeypatch):
 
 
 class TestPrompt(object):
+    """Class to unite user prompt related tests."""
+
     def test_prompt_for_config_simple(self, monkeypatch):
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
@@ -265,6 +262,8 @@ class TestPrompt(object):
 
 
 class TestReadUserChoice(object):
+    """Class to unite choices prompt related tests."""
+
     def test_should_invoke_read_user_choice(self, mocker):
         prompt_choice = mocker.patch(
             'cookiecutter.prompt.prompt_choice_for_config',
@@ -347,6 +346,8 @@ class TestReadUserChoice(object):
 
 
 class TestPromptChoiceForConfig(object):
+    """Class to unite choices prompt related tests with config test."""
+
     @pytest.fixture
     def choices(self):
         return ['landscape', 'portrait', 'all']

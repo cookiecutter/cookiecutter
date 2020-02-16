@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Collection of tests around general exception handling."""
+
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter import exceptions
