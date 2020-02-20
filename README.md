@@ -248,6 +248,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [python-project-template](https://github.com/Kwpolska/python-project-template): A template for Python projects with sophisticated release automation.
 * [cookiecutter-anyblok-project](https://github.com/AnyBlok/cookiecutter-anyblok-project): A template for Anyblok based projects.
 * [cookiecutter-python-cli](https://github.com/xuanluong/cookiecutter-python-cli): A cookiecutter template for creating a Python CLI application using click.
+* [cookiecutter-ubc-mds](https://github.com/UBC-MDS/cookiecutter-ubc-mds): A cookiecutter template for creating Python packages using Python poetry, GitHub Actions, Sphinx & Read the Docs and automatic version bumping via python-semantic-release. Default behaviour is to publish to testPyPI, however docs explain how to modify this to PyPI.
 
 ### Python-Django
 
