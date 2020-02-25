@@ -53,8 +53,7 @@ class ExtensionLoaderMixin(object):
             return [str(ext) for ext in extensions]
 
     def _read_local_extensions(self, context):
-        """Return list of extension modules in the template,
-        to be passed on to the Jinja2 env.
+        """Return list of extension modules in the template, to be passed on to the Jinja2 env.
 
         If context does not contain the relevant info, return an empty
         list instead.

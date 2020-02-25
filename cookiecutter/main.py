@@ -75,7 +75,7 @@ def cookiecutter(
         password=password,
         directory=directory,
     )
-    import_patch = patch_import_path_for_repo(repo_dir)
+    import_patch = _patch_import_path_for_repo(repo_dir)
 
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
@@ -127,7 +127,7 @@ def cookiecutter(
     return result
 
 
-class patch_import_path_for_repo:
+class _patch_import_path_for_repo:
     def __init__(self, repo_dir):
         self._repo_dir = repo_dir
         self._path = None
