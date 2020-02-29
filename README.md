@@ -214,7 +214,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [cookiecutter-flask-2](https://github.com/wdm0006/cookiecutter-flask): A heavier weight fork of cookiecutter-flask, with more boilerplate including forgotten password and Heroku integration.
 * [cookiecutter-flask-foundation](https://github.com/JackStouffer/cookiecutter-Flask-Foundation) : Flask Template with caching, forms, sqlalchemy and unit-testing.
 * [cookiecutter-flask-minimal](https://github.com/candidtim/cookiecutter-flask-minimal) : Minimal but production-ready Flask project template with no other dependencies except for Flask itself.
-* [cookiecutter-flask-skeleton](https://github.com/realpython/cookiecutter-flask-skeleton) : Flask starter project.
+* [cookiecutter-flask-skeleton](https://github.com/testdrivenio/cookiecutter-flask-skeleton) : Flask starter project.
 * [cookiecutter-bottle](https://github.com/avelino/cookiecutter-bottle) : A cookiecutter template for creating reusable Bottle projects quickly.
 * [cookiecutter-openstack](https://github.com/openstack/cookiecutter): A template for an OpenStack project.
 * [cookiecutter-docopt](https://github.com/sloria/cookiecutter-docopt): A template for a Python command-line script that uses [docopt](http://docopt.org/) for arguments parsing.
