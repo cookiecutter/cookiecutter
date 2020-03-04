@@ -98,9 +98,9 @@ cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
 ```yaml
 default_context:
-full_name: "Audrey Roy"
-email: "audreyr@gmail.com"
-github_username: "audreyr"
+    full_name: "Audrey Roy"
+    email: "audreyr@gmail.com"
+    github_username: "audreyr"
 cookiecutters_dir: "~/.cookiecutters/"
 ```
 
