@@ -35,7 +35,7 @@ def cookiecutter(
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
-    :param: overwrite_if_exists: Overwrite the contents of output directory
+    :param overwrite_if_exists: Overwrite the contents of output directory
         if it exists
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
