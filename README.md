@@ -314,6 +314,7 @@ Meta-templates for generating Cookiecutter project templates.
 * [cookiecutter-dpf-audiotk](https://github.com/SpotlightKid/cookiecutter-dpf-audiotk): An audio plugin project template for the DISTRHO Plugin Framework (DPF) and the Audio Toolkit (ATK) DSP library
 * [cookiecutter-kata-gtest](https://github.com/13coders/cookiecutter-kata-gtest): A template for C++ test-driven development katas using the Google Test framework.
 * [cookiecutter-kata-cpputest](https://github.com/13coders/cookiecutter-kata-cpputest): A template for C++ test-driven-development katas using the CppUTest framework.
+* [cpp-template](https://github.com/tarcisioe/cpp-template): This is a cookiecutter template for a C++ project using CMake and Conan. It is heavily influenced by a similar project by Jason Turner.
 
 ### C-Sharp
 
