@@ -290,7 +290,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     # if rendering fails
     delete_project_on_failure = output_directory_created
 
-    if skip_hooks:
+    if not skip_hooks:
         _run_hook_from_repo_dir(
             repo_dir,
             'pre_gen_project',
@@ -371,7 +371,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    if skip_hooks:
+    if not skip_hooks:
         _run_hook_from_repo_dir(
             repo_dir,
             'post_gen_project',
