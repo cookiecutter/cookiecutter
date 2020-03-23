@@ -138,20 +138,44 @@ hope you find a cookiecutter that is just right for your needs.
 
 ## A Pantry Full of Cookiecutters
 
-The best place to start searching for specific and ready to use cookiecutter
-template is [Github search](https://github.com/search?q=cookiecutter&type=Repositories).
-Just type `cookiecutter` and you will discover over 4000 related repositories.
-
 We also recommend you to check related GitHub topics. For general search use
 [cookiecutter-template](https://github.com/topics/cookiecutter-template).
-For specific topics try to use `cookiecutter-yourtopic`, like
-`cookiecutter-python` or `cookiecutter-datascience`. This is new GitHub feature,
-so not all active repositories use it at the moment.
+For specific topics try to use one of those from the list below. As this is a
+relativel new GitHub feature,, not all active repositories use it at the moment.
+If you fail to find any, you can always rely to standard
+[Github search](https://github.com/search?q=cookiecutter&type=Repositories).
 
 If you are template developer please add related
 [topics](https://help.github.com/en/github/administering-a-repository/classifying-your-repository-with-topics)
-with `cookiecutter` prefix to you repository. We believe it will make it more
-discoverable. You are almost not limited in topics amount, use it!
+with `cookiecutter` prefix to you repository. Assign at least `cookiecutter-template`
+topics and a more specific one from the list below. `cookiecutter-other` should also be
+added if your template does not fit any of the categories below:
+
+* [cookiecutter-ansible](https://github.com/topics/cookiecutter-ansible)
+* [cookiecutter-c](https://github.com/topics/cookiecutter-c)
+* [cookiecutter-csharp](https://github.com/topics/cookiecutter-csharp)
+* [cookiecutter-cpp](https://github.com/topics/cookiecutter-cpp)
+* [cookiecutter-common-lisp](https://github.com/topics/cookiecutter-common-lisp)
+* [cookiecutter-datascience](https://github.com/topics/cookiecutter-datascience)
+* [cookiecutter-django](https://github.com/topics/cookiecutter-django)
+* [cookiecutter-elm](https://github.com/topics/cookiecutter-elm)
+* [cookiecutter-go](https://github.com/topics/cookiecutter-go)
+* [cookiecutter-git](https://github.com/topics/cookiecutter-git)
+* [cookiecutter-html](https://github.com/topics/cookiecutter-html)
+* [cookiecutter-java](https://github.com/topics/cookiecutter-java)
+* [cookiecutter-javascript](https://github.com/topics/cookiecutter-javascript)
+* [cookiecutter-kotin](https://github.com/topics/cookiecutter-kotlin)
+* [cookiecutter-latex](https://github.com/topics/cookiecutter-latex)
+* [cookiecutter-lisp](https://github.com/topics/cookiecutter-lisp)
+* [cookiecutter-meta](https://github.com/topics/cookiecutter-meta)
+* [cookiecutter-php](https://github.com/topics/cookiecutter-php)
+* [cookiecutter-pyramid](https://github.com/topics/cookiecutter-pyramid)
+* [cookiecutter-python](https://github.com/topics/cookiecutter-python)
+* [cookiecutter-scala](https://github.com/topics/cookiecutter-scala)
+* [cookiecutter-sublime](https://github.com/topics/cookiecutter-sublime)
+* [cookiecutter-tornado](https://github.com/topics/cookiecutter-tornado)
+* **[cookiecutter-other](https://github.com/topics/cookiecutter-other)**
+  for projects not matcing any category listed above.
 
 ## Cookiecutter Specials
 
