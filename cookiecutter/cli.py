@@ -65,6 +65,10 @@ def validate_extra_context(ctx, param, value):
          u'for advanced repositories with multi templates in it',
 )
 @click.option(
+    u'--skip-hooks', is_flag=True,
+    help=u'Do not run hooks',
+)
+@click.option(
     '-v', '--verbose',
     is_flag=True, help='Print debug information', default=False
 )
@@ -96,7 +100,7 @@ def validate_extra_context(ctx, param, value):
 def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file, directory):
+        default_config, debug_file, directory, skip_hooks):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -124,7 +128,8 @@ def main(
             config_file=config_file,
             default_config=default_config,
             password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
-            directory=directory
+            directory=directory,
+            skip_hooks=skip_hooks
         )
     except (OutputDirExistsException,
             InvalidModeException,

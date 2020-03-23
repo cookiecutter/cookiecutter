@@ -245,7 +245,7 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
 
 
 def generate_files(repo_dir, context=None, output_dir='.',
-                   overwrite_if_exists=False):
+                   overwrite_if_exists=False, skip_hooks=False):
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -290,13 +290,16 @@ def generate_files(repo_dir, context=None, output_dir='.',
     # if rendering fails
     delete_project_on_failure = output_directory_created
 
-    _run_hook_from_repo_dir(
-        repo_dir,
-        'pre_gen_project',
-        project_dir,
-        context,
-        delete_project_on_failure
-    )
+    if skip_hooks:
+        _run_hook_from_repo_dir(
+            repo_dir,
+            'pre_gen_project',
+            project_dir,
+            context,
+            delete_project_on_failure
+        )
+    else:
+        logging.info('Skipping pre-gen hooks')
 
     with work_in(template_dir):
         env.loader = FileSystemLoader('.')
@@ -368,12 +371,15 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    _run_hook_from_repo_dir(
-        repo_dir,
-        'post_gen_project',
-        project_dir,
-        context,
-        delete_project_on_failure
-    )
+    if skip_hooks:
+        _run_hook_from_repo_dir(
+            repo_dir,
+            'post_gen_project',
+            project_dir,
+            context,
+            delete_project_on_failure
+        )
+    else:
+        logging.info('Skipping post-gen hooks')
 
     return project_dir

@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
         template, checkout=None, no_input=False, extra_context=None,
         replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None, directory=None):
+        config_file=None, default_config=False, password=None, directory=None, skip_hooks=False):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -42,6 +42,7 @@ def cookiecutter(
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
     :param directory: Relative path to a cookiecutter template in a repository.
+    :param skip_hooks: A boolean option for skipping running the hooks
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -93,7 +94,8 @@ def cookiecutter(
         repo_dir=repo_dir,
         context=context,
         overwrite_if_exists=overwrite_if_exists,
-        output_dir=output_dir
+        output_dir=output_dir,
+        skip_hooks=skip_hooks
     )
 
     # Cleanup (if required)
