@@ -67,7 +67,7 @@ value of the ``cookiecutter.module_name`` template variable:
 Example: Validating template variables
 --------------------------------------
 
-Here is an example of script that validates a template variable
+Here is an example of a script that validates a template variable
 before generating the project, to be used as ``hooks/pre_gen_project.py``:
 
 .. code-block:: python
