@@ -431,7 +431,7 @@ def test_cli_extra_context_invalid_format(cli_runner):
         'ExtraContextWithNoEqualsSoInvalid',
     )
     assert result.exit_code == 2
-    assert 'Error: Invalid value for "[EXTRA_CONTEXT]..."' in result.output
+    assert "Error: Invalid value for '[EXTRA_CONTEXT]...'" in result.output
     assert 'should contain items of the form key=value' in result.output
 
 
