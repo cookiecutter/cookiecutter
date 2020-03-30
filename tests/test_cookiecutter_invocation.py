@@ -23,8 +23,8 @@ def test_should_raise_error_without_template_arg(monkeypatch, capfd):
         subprocess.check_call([sys.executable, '-m', 'cookiecutter.cli'])
 
     _, err = capfd.readouterr()
-    exp_message = 'Error: Missing argument "TEMPLATE".'
-    assert exp_message in err
+    exp_message = "Error: Missing argument"
+    assert exp_message in err and "TEMPLATE" in err
 
 
 @pytest.fixture
