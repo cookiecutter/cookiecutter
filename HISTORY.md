@@ -2,7 +2,10 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 1.7.1 (Current master, in development)
+## 1.7.2 (Current master, in development)
+* ...
+
+## 1.7.1 ((2020-03-30)
 
 Important Changes:
 
