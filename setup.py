@@ -30,6 +30,7 @@ requirements = [
     'click>=7.0',
     'poyo>=0.1.0',
     'jinja2-time>=0.1.0',
+    'python-slugify>=4.0.0',
     'requests>=2.18.0',
     'six>=1.10',
 ]
