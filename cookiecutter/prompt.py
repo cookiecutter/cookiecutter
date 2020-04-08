@@ -199,7 +199,7 @@ def prompt_for_config(context, no_input=False):
     # values might refer to them.
     for key, raw in context[u'cookiecutter'].items():
         if key.startswith(u'_'):
-            cookiecutter_dict[key] = raw
+            cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
         try:
