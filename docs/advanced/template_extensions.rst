@@ -15,13 +15,33 @@ To do so, a template author must specify the required extensions in ``cookiecutt
     {
         "project_slug": "Foobar",
         "year": "{% now 'utc', '%Y' %}",
-        "_extensions": ["jinja2_time.TimeExtension"]
+        "_extensions": ["jinja2_time.TimeExtension", "myext.RegexReplace"]
     }
 
 On invocation Cookiecutter tries to import the extensions and add them to its environment respectively.
 
 In the above example, Cookiecutter provides the additional tag `now`_, after
 installing the `jinja2_time.TimeExtension`_ and enabling it in ``cookiecutter.json``.
+
+You can place small custom extensions in your cookiecutter's ``./extensions`` directory 
+(*New in Cookiecutter ???*).
+It is similar to placing post and pre hook scripts in ``./hooks``.
+For that you need to `write a Jinja2 extension`_ file, let's call it ``myext.py`` like so:
+
+.. code-block:: python
+
+	import re
+	from jinja2.ext import Extension
+
+	def regex_replace(value, regex, replacement):
+		return re.sub(regex, replacement, value)
+
+	class RegexReplace(Extension):
+		def __init__(self, environment):
+		    super(ExtTest, self).__init__(environment)
+		    environment.filters['regex_replace'] = regex_replace
+            
+It is also imported in the example ``cookiecutter.json`` from above.
 
 Please note that Cookiecutter will **not** install any dependencies on its own!
 As a user you need to make sure you have all the extensions installed, before
@@ -105,6 +125,7 @@ the `slugify` function of python-slugify. For example to change the output from
 be passed to `slugify()`.
 
 .. _`Jinja2 extensions`: http://jinja.pocoo.org/docs/latest/extensions/
+.. _`write a Jinja2 extension`: http://jinja.pocoo.org/docs/latest/extensions/#module-jinja2.ext
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
 .. _`python-slugify`: https://github.com/un33k/python-slugify
