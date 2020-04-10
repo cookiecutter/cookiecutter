@@ -23,7 +23,7 @@ On invocation Cookiecutter tries to import the extensions and add them to its en
 In the above example, Cookiecutter provides the additional tag `now`_, after
 installing the `jinja2_time.TimeExtension`_ and enabling it in ``cookiecutter.json``.
 
-You can place small custom extensions in your cookiecutter's ``./extensions`` directory 
+You can place small custom extensions in your cookiecutter's ``./extensions`` directory
 (*New in Cookiecutter ???*).
 It is similar to placing post and pre hook scripts in ``./hooks``.
 For that you need to `write a Jinja2 extension`_ file, let's call it ``myext.py`` like so:
@@ -40,7 +40,7 @@ For that you need to `write a Jinja2 extension`_ file, let's call it ``myext.py`
 		def __init__(self, environment):
 		    super(ExtTest, self).__init__(environment)
 		    environment.filters['regex_replace'] = regex_replace
-            
+
 It is also imported in the example ``cookiecutter.json`` from above.
 
 Please note that Cookiecutter will **not** install any dependencies on its own!
