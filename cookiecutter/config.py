@@ -62,7 +62,7 @@ def merge_configs(default, overwrite):
 def get_config(config_path):
     """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
-        raise ConfigDoesNotExistException
+        raise ConfigDoesNotExistException(config_path)
 
     logger.debug('config_path is {0}'.format(config_path))
     with io.open(config_path, encoding='utf-8') as file_handle:
