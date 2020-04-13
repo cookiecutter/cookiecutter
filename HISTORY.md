@@ -9,6 +9,7 @@ Important Changes:
 * Multiple templates per one repository feature added. [@RomHartmann](https://github.com/RomHartmann) (#1224, #1063)
 * Update replay.py json.dump indent for easy viewing [@nicain](https://github.com/nicain) (#1293)
 * 'future' library replaced with 'six' as a more lightweight python porting library [@asottile](https://github.com/asottile) (#941)
+* Added extension: Slugify template filter [@ppanero](https://github.com/ppanero) (#1336)
 
 Internal CI/CD changes:
 
