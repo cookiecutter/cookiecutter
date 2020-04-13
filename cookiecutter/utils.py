@@ -39,10 +39,10 @@ def make_sure_path_exists(path):
 
     :param path: A directory path.
     """
-    logger.debug('Making sure path exists: {}'.format(path))
+    logger.debug('Making sure path exists: %s', path)
     try:
         os.makedirs(path)
-        logger.debug('Created directory at: {}'.format(path))
+        logger.debug('Created directory at: %s', path)
     except OSError as exception:
         if exception.errno != errno.EEXIST:
             return False

@@ -31,6 +31,7 @@ Code style and docs changes:
 * Activated pydocstyle rule: ABS101 [@ssbarnea](https://github.com/ssbarnea) (#1288)
 * Updated submodule link to latest version with documentation links fix [@DanBoothDev](https://github.com/DanBoothDev) (#1388)
 * Fixed links in main README file. [@insspb](https://github.com/insspb) (#1342)
+* Changed format of loggers invocation [@insspb](https://github.com/insspb) (#1307)
 
 ## 1.7.0 (2019-12-22) Old friend
 
