@@ -29,6 +29,7 @@ Code style and docs changes:
 * Activated pydocstyle rule: D202 - No blank lines allowed after function docstring [@ssbarnea](https://github.com/ssbarnea) (#1288)
 * Activated pydocstyle rule: D205 - 1 blank line required between summary line and description [@ssbarnea](https://github.com/ssbarnea) (#1286, #1287)
 * Activated pydocstyle rule: ABS101 [@ssbarnea](https://github.com/ssbarnea) (#1288)
+* Replaced click documentation links to point to version 7 [@igorbasko01](https://github.com/igorbasko01) (#1303) 
 
 ## 1.7.0 (2019-12-22) Old friend
 
