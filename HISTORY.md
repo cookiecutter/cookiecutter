@@ -10,6 +10,7 @@ Important Changes:
 * Update replay.py json.dump indent for easy viewing [@nicain](https://github.com/nicain) (#1293)
 * 'future' library replaced with 'six' as a more lightweight python porting library [@asottile](https://github.com/asottile) (#941)
 * Added extension: Slugify template filter [@ppanero](https://github.com/ppanero) (#1336)
+* Added command line option: `--skip-if-file-exists`, allow to skip the existing files when doing `overwrite_if_exists`. [@chhsiao1981](https://github.com/chhsiao1981) (#1076)
 
 Internal CI/CD changes:
 
@@ -33,6 +34,7 @@ Code style and docs changes:
 * Replaced click documentation links to point to version 7 [@igorbasko01](https://github.com/igorbasko01) (#1303)
 * Updated submodule link to latest version with documentation links fix [@DanBoothDev](https://github.com/DanBoothDev) (#1388)
 * Fixed links in main README file. [@insspb](https://github.com/insspb) (#1342)
+* Fix indentation of .cookiecutterrc in README.md [@mhsekhavat](https://github.com/mhsekhavat) (#1322)
 
 ## 1.7.0 (2019-12-22) Old friend
 
