@@ -143,7 +143,7 @@ These Cookiecutters are maintained by the cookiecutter team:
 
 * [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage): [@audreyr's](https://github.com/audreyr) ultimate Python package project template.
 * [cookiecutter-django](https://github.com/pydanny/cookiecutter-django): A bleeding edge Django project template with Bootstrap 4, customizable users app, starter templates, working user registration, celery setup, and much more.
-* [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin): Minimal Cookiecutter template for authoring [pytest](http://pytest.org/latest/) plugins that help you to write better programs.
+* [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin): Minimal Cookiecutter template for authoring [pytest](https://docs.pytest.org/) plugins that help you to write better programs.
 
 ### Categories of Cookiecutters
 
@@ -158,7 +158,7 @@ The core committer team can be found in [authors section](AUTHORS.md). We are al
 Stuck? Try one of the following:
 
 * See the [Troubleshooting](https://cookiecutter.readthedocs.io/en/latest/troubleshooting.html) page.
-* Ask for help on [Stack Overflow](https://stackoverflow.com/).
+* Ask for help on [Stack Overflow](https://stackoverflow.com/questions/tagged/cookiecutter).
 * You are strongly encouraged to [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) about the problem, even if it's just "I can't get it to work on this cookiecutter" with a link to your cookiecutter. Don't worry about naming/pinpointing the issue properly.
 * Ask for help on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U) if you must (but please try one of the other options first, so that others can benefit from the discussion).
 
@@ -166,10 +166,7 @@ Development on Cookiecutter is community-driven:
 
 * Huge thanks to all the [contributors](AUTHORS.md) who have pitched in to help make Cookiecutter an even better tool.
 * Everyone is invited to contribute. Read the [contributing instructions](CONTRIBUTING.md), then get started.
-
-Connect with other Cookiecutter contributors and users on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U):
-
-* [https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U) (note: due to work and commitments, a core committer might not always be available)
+* Connect with other Cookiecutter contributors and users on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U) (note: due to work and commitments, a core committer might not always be available)
 
 Encouragement is unbelievably motivating. If you want more work done on Cookiecutter, show support:
 
@@ -227,7 +224,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [Python-Android-template](https://github.com/beeware/Python-Android-template): A template to create a Python project that will run on Android devices.
 * [cookiecutter-tryton](https://bitbucket.org/tryton/cookiecutter-tryton/src/default/): A template to create base and external Tryton modules.
 * [cookiecutter-tryton-fulfilio](https://github.com/trytonus/cookiecutter-tryton): A template for creating tryton modules.
-* [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin): Minimal Cookiecutter template for authoring [pytest](http://pytest.org/latest/) plugins that help you to write better programs.
+* [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin): Minimal Cookiecutter template for authoring [pytest](https://docs.pytest.org/) plugins that help you to write better programs.
 * [cookiecutter-tox-plugin](https://github.com/tox-dev/cookiecutter-tox-plugin): Minimal Cookiecutter template for authoring [tox](https://tox.readthedocs.io/en/latest/) plugins to change or extend the behavior of your test automation.
 * [cookiecutter-tapioca](https://github.com/vintasoftware/cookiecutter-tapioca): A Template for building [tapioca-wrapper](https://github.com/vintasoftware/tapioca-wrapper) based web API wrappers (clients).
 
@@ -237,14 +234,12 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [cookiecutter-python-app](https://github.com/mdklatt/cookiecutter-python-app): A template to create a Python CLI application with subcommands, logging, YAML configuration, pytest tests, and Virtualenv deployment.
 * [morepath-cookiecutter](https://github.com/morepath/morepath-cookiecutter): Cookiecutter template for Morepath, the web microframework with superpowers.
 * [Springerle/hovercraft-slides](https://github.com/Springerle/hovercraft-slides): A template for new [Hovercraft!](https://hovercraft.readthedocs.io/en/latest/) presentation projects (``impress.js`` slides in *re*\ Structured\ *Text*).
-* [cookiecutter-snakemake-analysis-pipeline](https://github.com/xguse/cookiecutter-snakemake-analysis-pipeline): One way to easily set up [Snakemake](https://bitbucket.org/snakemake/snakemake/wiki/Home)-based analysis pipelines.
+* [cookiecutter-snakemake-analysis-pipeline](https://github.com/xguse/cookiecutter-snakemake-analysis-pipeline): One way to easily set up [Snakemake](https://snakemake.readthedocs.io/en/stable/)-based analysis pipelines.
 * [cookiecutter-py3tkinter](https://github.com/ivanlyon/cookiecutter-py3tkinter): Template for Python 3 Tkinter application gui.
 * [cookiecutter-pyqt5](https://github.com/mandeep/cookiecutter-pyqt5): A prebuilt PyQt5 GUI template with a fully featured Pytest test suite and Travis CI integration all in an optimal Python package.
 * [cookiecutter-pyqt4](https://github.com/aeroaks/cookiecutter-pyqt4): A prebuilt PyQt4 GUI template with a logging support, structure for tests and separation of ui and worker components.
-* [cookiecutter-xontrib](https://github.com/laerus/cookiecutter-xontrib): A template for building xontribs, a.k.a [xonsh](https://github.com/xonsh/xonsh) contributions.
 * [cookiecutter-conda-python](https://github.com/conda/cookiecutter-conda-python): A template for building Conda Python packages.
 * [cookiecutter-pypackage-rust-cross-platform-publish](https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish): A template for a Python wheel containing a Rust binary module that supports releasing on Windows, OSX and Linux.
-* [cookiecutter-telegram-bot](https://github.com/Ars2014/cookiecutter-telegram-bot): A template project for Telegram bots with webhooks on CherryPy.
 * [python-project-template](https://github.com/Kwpolska/python-project-template): A template for Python projects with sophisticated release automation.
 * [cookiecutter-anyblok-project](https://github.com/AnyBlok/cookiecutter-anyblok-project): A template for Anyblok based projects.
 * [cookiecutter-python-cli](https://github.com/xuanluong/cookiecutter-python-cli): A cookiecutter template for creating a Python CLI application using click.
@@ -263,7 +258,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [cookiecutter-django-rest-framework](https://github.com/jpadilla/cookiecutter-django-rest-framework): A template for creating reusable Django REST Framework packages.
 * [cookiecutter-django-aws-eb](https://github.com/dolphinkiss/cookiecutter-django-aws-eb): Get up and running with Django on AWS Elastic Beanstalk.
 * [cookiecutter-wagtail](https://github.com/torchbox/cookiecutter-wagtail): A cookiecutter template for [Wagtail](https://github.com/wagtail/wagtail) CMS based sites.
-* [wagtail-cookiecutter-foundation](https://github.com/chrisdev/wagtail-cookiecutter-foundation): A complete template for Wagtail CMS projects featuring [Zurb Foundation](https://foundation.zurb.com/) 6, ansible provisioning and deployment , front-end dependency management with bower, modular apps to get your site up and running including photo_gallery, RSS feed etc.
+* [wagtail-cookiecutter-foundation](https://github.com/chrisdev/wagtail-cookiecutter-foundation): A complete template for Wagtail CMS projects featuring [Foundation](https://get.foundation/) 6, ansible provisioning and deployment , front-end dependency management with bower, modular apps to get your site up and running including photo_gallery, RSS feed etc.
 * [django-starter](https://github.com/tkjone/starterkit-django): A Django template complete with vagrant and provisioning scripts - inspired by 12 factor apps and cookiecutter-django.
 * [cookiecutter-django-gulp](https://github.com/valerymelou/cookiecutter-django-gulp): A Cookiecutter template for integrating frontend development tools in Django projects.
 * [wagtail-starter-kit](https://github.com/tkjone/starterkit-wagtail): A cookiecutter complete with wagtail, django layout, vagrant, provisioning scripts, front end build system and more!
@@ -273,7 +268,7 @@ Please avoid creating PRs for listing additional templates. We outsourced their 
 * [cc_project_app_drf](https://bitbucket.org/levit_scs/cc_project_app_drf/src/master/): For creating REST apis based on the "project app" project architecture.
 * [cc_project_app_full_with_hooks](https://bitbucket.org/levit_scs/cc_project_app_full_with_hooks/src/master/): For creating Django projects using the "project app" project architecture.
 * [cc-automated-drf-template](https://github.com/TAMU-CPT/cc-automated-drf-template): A template + script that automatically creates your Django REST project with serializers, views, urls, and admin files based on your models file as input.
-* [cookiecutter-django-foundation](https://github.com/Parbhat/cookiecutter-django-foundation): Fork of [cookiecutter-django](https://github.com/pydanny/cookiecutter-django) based on [Zurb Foundation](https://foundation.zurb.com/) 6 front-end framework.
+* [cookiecutter-django-foundation](https://github.com/Parbhat/cookiecutter-django-foundation): Fork of [cookiecutter-django](https://github.com/pydanny/cookiecutter-django) based on [Foundation](https://get.foundation/) 6 front-end framework.
 * [cookiecutter-django-ansible](https://github.com/HackSoftware/cookiecutter-django-ansible): Cookiecutter Django Ansible is a framework for jumpstarting an ansible project for provisioning a server that is ready for your *cookiecutter-django* application.
 * [wemake-django-template](https://github.com/wemake-services/wemake-django-template): Bleeding edge Django template focused on code quality and security.
 * [cookiecutter-django-dokku](https://github.com/mashrikt/cookiecutter-django-dokku): A template for jumpstarting Django projects and deploying with Dokku.
@@ -425,7 +420,7 @@ Meta-templates for generating Cookiecutter project templates.
 
 * [Diecutter](https://github.com/diecutter/diecutter): an API service that will give you back a configuration file from a template and variables.
 
-* [Django](https://docs.djangoproject.com/en/1.9/ref/django-admin/#cmdoption-startapp--template)'s `startproject` and `startapp` commands can take in a `--template` option.
+* [Django](https://docs.djangoproject.com/)'s `startproject` and `startapp` commands can take in a `--template` option.
 
 * [python-packager](https://github.com/fcurella/python-packager): Creates Python packages from its own template, with configurable options.
 

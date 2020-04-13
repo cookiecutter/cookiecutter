@@ -30,6 +30,7 @@ Code style and docs changes:
 * Activated pydocstyle rule: D205 - 1 blank line required between summary line and description [@ssbarnea](https://github.com/ssbarnea) (#1286, #1287)
 * Activated pydocstyle rule: ABS101 [@ssbarnea](https://github.com/ssbarnea) (#1288)
 * Updated submodule link to latest version with documentation links fix [@DanBoothDev](https://github.com/DanBoothDev) (#1388)
+* Fixed links in main README file. [@insspb](https://github.com/insspb) (#1342)
 
 ## 1.7.0 (2019-12-22) Old friend
 
