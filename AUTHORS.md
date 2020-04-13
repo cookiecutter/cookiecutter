@@ -139,3 +139,4 @@
 * Bruno Alla ([@browniebroke](https://github.com/browniebroke))
 * nicain ([@nicain](https://github.com/nicain))
 * Carsten Rösnick-Neugebauer ([@croesnick](https://github.com/croesnick))
+* Dan Booth Dev [@DanBoothDev](https://github.com/DanBoothDev)
