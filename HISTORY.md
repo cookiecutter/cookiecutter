@@ -18,6 +18,7 @@ Internal CI/CD changes:
 * Fixed Python 3.8 travis tests and setup.py message [@insspb](https://github.com/insspb) (#1295, #1297)
 * Travis builds extended with Windows setup for all supported python versions [@insspb](https://github.com/insspb) (#1300, #1301)
 * Update .travis.yml to be compatible with latest travis cfg specs [@luzfcb](https://github.com/luzfcb) (#1346)
+* Add new test to improve tests coverage [@amey589](https://github.com/amey589) (#1023)
 
 Code style and docs changes:
 
