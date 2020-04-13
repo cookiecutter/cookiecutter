@@ -79,6 +79,10 @@ def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
     assert not repo_dir.exists()
     assert deleted
 
+
+def test_prompt_should_ask_and_exit_on_user_no_answer(mocker, tmpdir):
+    """In `prompt_and_delete()`, if the user decline to delete/reclone the \
+    repo, cookiecutter should exit."""
     mock_read_user = mocker.patch(
         'cookiecutter.utils.read_user_yes_no',
         return_value=False,
