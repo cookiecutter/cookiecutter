@@ -64,7 +64,7 @@ def get_config(config_path):
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException
 
-    logger.debug('config_path is {0}'.format(config_path))
+    logger.debug('config_path is %s', config_path)
     with io.open(config_path, encoding='utf-8') as file_handle:
         try:
             yaml_dict = poyo.parse_string(file_handle.read())

@@ -17,6 +17,7 @@ Internal CI/CD changes:
 * Coverage comment in future merge requests disabled [@ssbarnea](https://github.com/ssbarnea) (#1279)
 * Fixed Python 3.8 travis tests and setup.py message [@insspb](https://github.com/insspb) (#1295, #1297)
 * Travis builds extended with Windows setup for all supported python versions [@insspb](https://github.com/insspb) (#1300, #1301)
+* Update .travis.yml to be compatible with latest travis cfg specs [@luzfcb](https://github.com/luzfcb) (#1346)
 
 Code style and docs changes:
 
@@ -35,6 +36,7 @@ Code style and docs changes:
 * Updated submodule link to latest version with documentation links fix [@DanBoothDev](https://github.com/DanBoothDev) (#1388)
 * Fixed links in main README file. [@insspb](https://github.com/insspb) (#1342)
 * Fix indentation of .cookiecutterrc in README.md [@mhsekhavat](https://github.com/mhsekhavat) (#1322)
+* Changed format of loggers invocation [@insspb](https://github.com/insspb) (#1307)
 
 ## 1.7.0 (2019-12-22) Old friend
 
