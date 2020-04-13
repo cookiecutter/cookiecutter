@@ -140,3 +140,5 @@
 * nicain ([@nicain](https://github.com/nicain))
 * Carsten Rösnick-Neugebauer ([@croesnick](https://github.com/croesnick))
 * igorbasko01 ([@igorbasko01](https://github.com/igorbasko01))
+* Dan Booth Dev [@DanBoothDev](https://github.com/DanBoothDev)
+* Pablo Panero [@ppanero](https://github.com/ppanero)

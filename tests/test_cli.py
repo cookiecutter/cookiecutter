@@ -99,6 +99,7 @@ def test_cli_replay(mocker, cli_runner):
         False,
         replay=True,
         overwrite_if_exists=False,
+        skip_if_file_exists=False,
         output_dir='.',
         config_file=None,
         default_config=False,
@@ -134,6 +135,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         True,
         replay=True,
         overwrite_if_exists=False,
+        skip_if_file_exists=False,
         output_dir='.',
         config_file=None,
         default_config=False,
@@ -169,6 +171,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         False,
         replay=True,
         overwrite_if_exists=True,
+        skip_if_file_exists=False,
         output_dir='.',
         config_file=None,
         default_config=False,
@@ -239,6 +242,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         False,
         replay=False,
         overwrite_if_exists=False,
+        skip_if_file_exists=False,
         output_dir=output_dir,
         config_file=None,
         default_config=False,
@@ -283,6 +287,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         False,
         replay=False,
         overwrite_if_exists=False,
+        skip_if_file_exists=False,
         output_dir='.',
         config_file=user_config_path,
         default_config=False,
@@ -313,6 +318,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         False,
         replay=False,
         overwrite_if_exists=False,
+        skip_if_file_exists=False,
         output_dir='.',
         config_file=user_config_path,
         default_config=True,
@@ -338,6 +344,7 @@ def test_default_user_config(mocker, cli_runner):
         False,
         replay=False,
         overwrite_if_exists=False,
+        skip_if_file_exists=False,
         output_dir='.',
         config_file=None,
         default_config=True,
@@ -424,7 +431,7 @@ def test_cli_extra_context_invalid_format(cli_runner):
         'ExtraContextWithNoEqualsSoInvalid',
     )
     assert result.exit_code == 2
-    assert 'Error: Invalid value for "[EXTRA_CONTEXT]..."' in result.output
+    assert "Error: Invalid value for '[EXTRA_CONTEXT]...'" in result.output
     assert 'should contain items of the form key=value' in result.output
 
 

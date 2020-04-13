@@ -78,6 +78,11 @@ def validate_extra_context(ctx, param, value):
     help=u'Overwrite the contents of the output directory if it already exists'
 )
 @click.option(
+    u'-s', u'--skip-if-file-exists', is_flag=True,
+    help=u'Skip the files in the corresponding directories if they already '
+         u'exist', default=False
+)
+@click.option(
     u'-o', u'--output-dir', default='.', type=click.Path(),
     help=u'Where to output the generated project dir into'
 )
@@ -96,7 +101,7 @@ def validate_extra_context(ctx, param, value):
 def main(
         template, extra_context, no_input, checkout, verbose,
         replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file, directory):
+        default_config, debug_file, directory, skip_if_file_exists):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -124,7 +129,8 @@ def main(
             config_file=config_file,
             default_config=default_config,
             password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
-            directory=directory
+            directory=directory,
+            skip_if_file_exists=skip_if_file_exists
         )
     except (OutputDirExistsException,
             InvalidModeException,

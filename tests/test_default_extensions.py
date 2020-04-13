@@ -46,3 +46,13 @@ def test_jinja2_time_extension(tmpdir):
         'First release on PyPI.\n'
     ]
     assert expected_lines == changelog_lines
+
+
+def test_jinja2_slugify_extension(tmpdir):
+    project_dir = cookiecutter(
+        'tests/test-extensions/default/',
+        no_input=True,
+        output_dir=str(tmpdir)
+    )
+
+    assert os.path.basename(project_dir) == "it-s-slugified-foobar"

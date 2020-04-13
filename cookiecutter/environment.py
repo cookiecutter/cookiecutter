@@ -28,6 +28,7 @@ class ExtensionLoaderMixin(object):
         default_extensions = [
             'cookiecutter.extensions.JsonifyExtension',
             'cookiecutter.extensions.RandomStringExtension',
+            'cookiecutter.extensions.SlugifyExtension',
             'jinja2_time.TimeExtension',
         ]
         extensions = default_extensions + self._read_extensions(context)
