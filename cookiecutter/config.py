@@ -103,10 +103,12 @@ def get_user_config(config_file=None, default_config=False):
     """
     # Do NOT load a config. Return defaults instead.
     if default_config:
+        logger.debug("Loaded default config due to user request.")
         return copy.copy(DEFAULT_CONFIG)
 
     # Load the given config file
     if config_file and config_file is not USER_CONFIG_PATH:
+        logger.debug("Loaded custom config from %s.", config_file)
         return get_config(config_file)
 
     try:
@@ -116,8 +118,10 @@ def get_user_config(config_file=None, default_config=False):
         # Load an optional user config if it exists
         # otherwise return the defaults
         if os.path.exists(USER_CONFIG_PATH):
+            logger.debug("Loaded config from %s.", USER_CONFIG_PATH)
             return get_config(USER_CONFIG_PATH)
         else:
+            logger.debug("Loaded default config.")
             return copy.copy(DEFAULT_CONFIG)
     else:
         # There is a config environment variable. Try to load it.
