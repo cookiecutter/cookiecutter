@@ -80,6 +80,27 @@ def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
     assert deleted
 
 
+def test_prompt_should_ask_and_exit_on_user_no_answer(mocker, tmpdir):
+    """In `prompt_and_delete()`, if the user decline to delete/reclone the \
+    repo, cookiecutter should exit."""
+    mock_read_user = mocker.patch(
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=False,
+    )
+    mock_sys_exit = mocker.patch(
+        'sys.exit',
+        return_value=True,
+    )
+    repo_dir = tmpdir.mkdir('repo')
+
+    deleted = utils.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+    assert not deleted
+    assert mock_sys_exit.called
+
+
 def test_prompt_should_ask_and_rm_repo_file(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user agrees to delete/reclone a \
     repo file, the repo should be deleted."""

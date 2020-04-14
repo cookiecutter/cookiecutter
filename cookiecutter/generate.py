@@ -110,7 +110,7 @@ def generate_context(context_file='cookiecutter.json', default_context=None,
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
 
-    logger.debug('Context generated is {}'.format(context))
+    logger.debug('Context generated is %s', context)
     return context
 
 
@@ -136,7 +136,7 @@ def generate_file(project_dir, infile, context, env,
     :param context: Dict for populating the cookiecutter's variables.
     :param env: Jinja2 template execution environment.
     """
-    logger.debug('Processing file {}'.format(infile))
+    logger.debug('Processing file %s', infile)
 
     # Render the path to the output file (not including the root project dir)
     outfile_tmpl = env.from_string(infile)
@@ -144,21 +144,20 @@ def generate_file(project_dir, infile, context, env,
     outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
     file_name_is_empty = os.path.isdir(outfile)
     if file_name_is_empty:
-        logger.debug('The resulting file name is empty: {0}'.format(outfile))
+        logger.debug('The resulting file name is empty: %s', outfile)
         return
 
     if skip_if_file_exists and os.path.exists(outfile):
-        logger.debug('The resulting file already exists: {0}'.format(outfile))
+        logger.debug('The resulting file already exists: %s', outfile)
         return
 
-    logger.debug('Created file at {0}'.format(outfile))
+    logger.debug('Created file at %s', outfile)
 
     # Just copy over binary files. Don't render.
-    logger.debug("Check {} to see if it's a binary".format(infile))
+    logger.debug("Check %s to see if it's a binary", infile)
     if is_binary(infile):
         logger.debug(
-            'Copying binary {} to {} without rendering'
-            ''.format(infile, outfile)
+            'Copying binary %s to %s without rendering', infile, outfile
         )
         shutil.copyfile(infile, outfile)
     else:
@@ -176,7 +175,7 @@ def generate_file(project_dir, infile, context, env,
             raise
         rendered_file = tmpl.render(**context)
 
-        logger.debug('Writing contents to file {}'.format(outfile))
+        logger.debug('Writing contents to file %s', outfile)
 
         with io.open(outfile, 'w', encoding='utf-8') as fh:
             fh.write(rendered_file)
@@ -195,18 +194,17 @@ def render_and_create_dir(dirname, context, output_dir, environment,
         os.path.join(output_dir, rendered_dirname)
     )
 
-    logger.debug('Rendered dir {} must exist in output_dir {}'.format(
-        dir_to_create,
-        output_dir
-    ))
+    logger.debug('Rendered dir %s must exist in output_dir %s',
+                 dir_to_create,
+                 output_dir
+                 )
 
     output_dir_exists = os.path.exists(dir_to_create)
 
     if output_dir_exists:
         if overwrite_if_exists:
             logger.debug(
-                'Output directory {} already exists,'
-                'overwriting it'.format(dir_to_create)
+                'Output directory %s already exists, overwriting it', dir_to_create
             )
         else:
             msg = 'Error: "{}" directory already exists'.format(dir_to_create)
@@ -243,8 +241,8 @@ def _run_hook_from_repo_dir(repo_dir, hook_name, project_dir, context,
             if delete_project_on_failure:
                 rmtree(project_dir)
             logger.error(
-                "Stopping generation because {} hook "
-                "script didn't exit successfully".format(hook_name)
+                "Stopping generation because %s hook "
+                "script didn't exit successfully", hook_name
             )
             raise
 
@@ -260,7 +258,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
         if it exists.
     """
     template_dir = find_template(repo_dir)
-    logger.debug('Generating project from {}...'.format(template_dir))
+    logger.debug('Generating project from %s...', template_dir)
     context = context or OrderedDict([])
 
     unrendered_dir = os.path.split(template_dir)[1]
@@ -289,7 +287,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
     # absolute path for the target folder (project_dir)
 
     project_dir = os.path.abspath(project_dir)
-    logger.debug('Project directory is {}'.format(project_dir))
+    logger.debug('Project directory is %s', project_dir)
 
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
@@ -327,8 +325,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                 indir = os.path.normpath(os.path.join(root, copy_dir))
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 logger.debug(
-                    'Copying dir {} to {} without rendering'
-                    ''.format(indir, outdir)
+                    'Copying dir %s to %s without rendering', indir, outdir
                 )
                 shutil.copytree(indir, outdir)
 
@@ -359,8 +356,7 @@ def generate_files(repo_dir, context=None, output_dir='.',
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
                     logger.debug(
-                        'Copying file {} to {} without rendering'
-                        ''.format(infile, outfile)
+                        'Copying file %s to %s without rendering', infile, outfile
                     )
                     shutil.copyfile(infile, outfile)
                     shutil.copymode(infile, outfile)

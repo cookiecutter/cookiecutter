@@ -1,9 +1,9 @@
 # Config file for automatic testing at travis-ci.org
 dist: xenial
-sudo: false
+os: linux
 language: python
 
-matrix:
+jobs:
     include:
       - python: 3.7
         env: TOXENV=lint
