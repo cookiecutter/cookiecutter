@@ -19,7 +19,7 @@
   description: "This issue/PR relates to a feature request."
 - name: feature
   color: "006b75"
-  description: "This issue/PR relates to a feature request."
+  description: "This issue/PR relates to major feature request."
 - name: major
   color: "c6476b"
   description: "Marks an important and likely breaking change."
