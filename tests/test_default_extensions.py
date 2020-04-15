@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_default_extensions.
-
-Tests to ensure Jinja2 filters/extensions are available from within pre- and
-post-gen hooks.
-"""
+"""Verify Jinja2 filters/extensions are available from pre-gen/post-gen hooks."""
 
 import io
 import os
@@ -16,8 +11,9 @@ import pytest
 from cookiecutter.main import cookiecutter
 
 
-@pytest.yield_fixture(autouse=True)
+@pytest.fixture(autouse=True)
 def freeze():
+    """Fixture. Make time stating during all tests in this file."""
     freezer = freezegun.freeze_time("2015-12-09 23:33:01")
     freezer.start()
     yield
@@ -25,6 +21,7 @@ def freeze():
 
 
 def test_jinja2_time_extension(tmpdir):
+    """Verify Jinja2 time extension work correctly."""
     project_dir = cookiecutter(
         'tests/test-extensions/default/',
         no_input=True,
@@ -49,6 +46,7 @@ def test_jinja2_time_extension(tmpdir):
 
 
 def test_jinja2_slugify_extension(tmpdir):
+    """Verify Jinja2 slugify extension work correctly."""
     project_dir = cookiecutter(
         'tests/test-extensions/default/',
         no_input=True,
