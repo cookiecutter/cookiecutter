@@ -37,7 +37,7 @@
   description: "Not updated in long time, will be closed soon."
 - name: wontfix
   color: "eeeeee"
-  description: "This will not be worked on"
+  description: "The problem described is a bug which will never be fixed"
 - name: test
   color: "0e8a16"
   description: "This PR relates to tests, QA, CI."
