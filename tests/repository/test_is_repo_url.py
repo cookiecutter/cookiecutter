@@ -16,6 +16,7 @@ from cookiecutter.repository import (
     'http://example.com/path/to/zipfile.zip',
 ])
 def zipfile(request):
+    """Fixture. Represent possible paths to zip file."""
     return request.param
 
 
@@ -34,6 +35,7 @@ def test_is_zip_file(zipfile):
     'file://server/path/to/repo.git',
 ])
 def remote_repo_url(request):
+    """Fixture. Represent possible URI to different repositories types."""
     return request.param
 
 
@@ -51,6 +53,7 @@ def test_is_repo_url_for_remote_urls(remote_repo_url):
     ),
 ])
 def local_repo_url(request):
+    """Fixture. Represent possible paths to local resources."""
     return request.param
 
 
@@ -60,6 +63,7 @@ def test_is_repo_url_for_local_urls(local_repo_url):
 
 
 def test_expand_abbreviations():
+    """Validate `repository.expand_abbreviations` correctly translate url."""
     template = 'gh:audreyr/cookiecutter-pypackage'
 
     # This is not a valid repo url just yet!
