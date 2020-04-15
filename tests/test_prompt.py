@@ -261,6 +261,15 @@ class TestPrompt(object):
         assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
 
     def test_render_hidden_variables(self):
+        """Test rendering of hidden variables.
+
+        There are three cases:
+        1. Variables beginning with a single underscore are hidden and not rendered.
+        2. Variables beginning with a double underscore are hidden and rendered with
+           Jinja2.
+        3. Variables beginning with anything other than underscores are not hidden and
+           are rendered
+        """
         context = {
             'cookiecutter': OrderedDict([
                 ('foo', 'Hello world'),
