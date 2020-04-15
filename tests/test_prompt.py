@@ -263,24 +263,26 @@ class TestPrompt(object):
     def test_render_hidden_variables(self):
         context = {
             'cookiecutter': {
-                'var': 'Hello world',
-                'int_var': 123,
-                'rendered_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
-                '_hidden_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
-                '_hidden_int_var': 123,
-                '__rendered_hidden_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
-                '__rendered_hidden_int_var': 123,
+                'foo': 'Hello world',
+                'bar': 123,
+                'rendered_foo': u'{{ cookiecutter.foo|lower }}',
+                'rendered_bar': 123,
+                '_hidden_foo': u'{{ cookiecutter.foo|lower }}',
+                '_hidden_bar': 123,
+                '__rendered_hidden_foo': u'{{ cookiecutter.foo|lower }}',
+                '__rendered_hidden_bar': 123,
             }
         }
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
         assert cookiecutter_dict == {
-            'var': 'Hello world',
-            'int_var': '123',
-            'rendered_var': 'hello-world',
-            '_hidden_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
-            '_hidden_int_var': 123,
-            '__rendered_hidden_var': 'hello-world',
-            '__rendered_hidden_int_var': '123',
+            'foo': 'Hello world',
+            'bar': '123',
+            'rendered_foo': 'hello world',
+            'rendered_bar': '123',
+            '_hidden_foo': u'{{ cookiecutter.foo|lower }}',
+            '_hidden_bar': 123,
+            '__rendered_hidden_foo': 'hello world',
+            '__rendered_hidden_bar': '123',
         }
 
 
