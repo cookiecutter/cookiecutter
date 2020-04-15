@@ -77,17 +77,14 @@ class TestPrompt(object):
         'context',
         [
             {'cookiecutter': {'full_name': 'Your Name'}},
-            {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}}
-
-        ], ids=[
-            'ASCII default prompt/input', 'Unicode default prompt/input'
-        ]
+            {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}},
+        ],
+        ids=['ASCII default prompt/input', 'Unicode default prompt/input'],
     )
     def test_prompt_for_config(self, monkeypatch, context):
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable',
-            lambda var, default: default,
+            'cookiecutter.prompt.read_user_variable', lambda var, default: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -343,7 +340,7 @@ class TestPromptChoiceForConfig(object):
             env=environment.StrictEnvironment(),
             key='orientation',
             options=choices,
-            no_input=False,   # Ask the user for input
+            no_input=False,  # Ask the user for input
         )
         read_user_choice.assert_called_once_with('orientation', choices)
         assert expected_choice == actual_choice
