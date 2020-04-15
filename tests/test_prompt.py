@@ -262,28 +262,28 @@ class TestPrompt(object):
 
     def test_render_hidden_variables(self):
         context = {
-            'cookiecutter': {
-                'foo': 'Hello world',
-                'bar': 123,
-                'rendered_foo': u'{{ cookiecutter.foo|lower }}',
-                'rendered_bar': 123,
-                '_hidden_foo': u'{{ cookiecutter.foo|lower }}',
-                '_hidden_bar': 123,
-                '__rendered_hidden_foo': u'{{ cookiecutter.foo|lower }}',
-                '__rendered_hidden_bar': 123,
-            }
+            'cookiecutter': OrderedDict([
+                ('foo', 'Hello world'),
+                ('bar', 123),
+                ('rendered_foo', u'{{ cookiecutter.foo|lower }}'),
+                ('rendered_bar', 123),
+                ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                ('_hidden_bar', 123),
+                ('__rendered_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                ('__rendered_hidden_bar', 123),
+            ])
         }
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
-        assert cookiecutter_dict == {
-            'foo': 'Hello world',
-            'bar': '123',
-            'rendered_foo': 'hello world',
-            'rendered_bar': '123',
-            '_hidden_foo': u'{{ cookiecutter.foo|lower }}',
-            '_hidden_bar': 123,
-            '__rendered_hidden_foo': 'hello world',
-            '__rendered_hidden_bar': '123',
-        }
+        assert cookiecutter_dict == OrderedDict([
+            ('foo', 'Hello world'),
+            ('bar', '123'),
+            ('rendered_foo', 'hello world'),
+            ('rendered_bar', '123'),
+            ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+            ('_hidden_bar', 123),
+            ('__rendered_hidden_foo', 'hello world'),
+            ('__rendered_hidden_bar', '123'),
+        ])
 
 
 class TestReadUserChoice(object):
