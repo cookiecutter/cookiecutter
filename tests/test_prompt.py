@@ -260,6 +260,29 @@ class TestPrompt(object):
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
 
+    def test_render_hidden_variables(self):
+        context = {
+            'cookiecutter': {
+                'var': 'Hello world',
+                'int_var': 123,
+                'rendered_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
+                '_hidden_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
+                '_hidden_int_var': 123,
+                '__rendered_hidden_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
+                '__rendered_hidden_int_var': 123,
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == {
+            'var': 'Hello world',
+            'int_var': '123',
+            'rendered_var': 'hello-world',
+            '_hidden_var': u'{{ cookiecutter.var|lower|replace(" ", "-") }}',
+            '_hidden_int_var': 123,
+            '__rendered_hidden_var': 'hello-world',
+            '__rendered_hidden_int_var': '123',
+        }
+
 
 class TestReadUserChoice(object):
     """Class to unite choices prompt related tests."""
