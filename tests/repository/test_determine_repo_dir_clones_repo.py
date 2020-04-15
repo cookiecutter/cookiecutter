@@ -15,9 +15,11 @@ from cookiecutter import repository, exceptions
     ('http://example.com/path/to/zipfile.zip', True),
 ])
 def test_zipfile_unzip(mocker, template, is_url, user_config_data):
-    """`unzip()` should be called with correct args when \
-    `determine_repo_dir()` is passed a zipfile, or a URL \
-    to a zipfile."""
+    """Verify zip files correctly handled for different source locations.
+
+    `unzip()` should be called with correct args when `determine_repo_dir()`
+    is passed a zipfile, or a URL to a zipfile.
+    """
     mock_clone = mocker.patch(
         'cookiecutter.repository.unzip',
         return_value='tests/fake-repo-tmpl',
@@ -57,8 +59,11 @@ def template_url():
 
 def test_repository_url_should_clone(
         mocker, template_url, user_config_data):
-    """`clone()` should be called with correct args when \
-    `determine_repo_dir()` is passed a repository template url."""
+    """Verify repository url triggers clone function.
+
+    `clone()` should be called with correct args when `determine_repo_dir()` is
+    passed a repository template url.
+    """
     mock_clone = mocker.patch(
         'cookiecutter.repository.clone',
         return_value='tests/fake-repo-tmpl',
@@ -87,6 +92,7 @@ def test_repository_url_should_clone(
 
 def test_repository_url_with_no_context_file(
         mocker, template_url, user_config_data):
+    """Verify cloned repository without `cookiecutter.json` file raises error."""
     mocker.patch(
         'cookiecutter.repository.clone',
         return_value='tests/fake-repo-bad',
