@@ -87,7 +87,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                                                  tail.rsplit('.git')[0]))
     elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail))
-    logger.debug('repo_dir is {0}'.format(repo_dir))
+    logger.debug('repo_dir is %s', repo_dir)
 
     if os.path.isdir(repo_dir):
         clone = prompt_and_delete(repo_dir, no_input=no_input)

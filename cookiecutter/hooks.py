@@ -52,10 +52,10 @@ def find_hook(hook_name, hooks_dir='hooks'):
     :param hooks_dir: The hook directory in the template
     :return: The absolute path to the hook script or None
     """
-    logger.debug('hooks_dir is {}'.format(os.path.abspath(hooks_dir)))
+    logger.debug('hooks_dir is %s', os.path.abspath(hooks_dir))
 
     if not os.path.isdir(hooks_dir):
-        logger.debug('No hooks/ dir in template_dir')
+        logger.debug('No hooks/dir in template_dir')
         return None
 
     for hook_file in os.listdir(hooks_dir):
@@ -139,7 +139,7 @@ def run_hook(hook_name, project_dir, context):
     """
     script = find_hook(hook_name)
     if script is None:
-        logger.debug('No {} hook found'.format(hook_name))
+        logger.debug('No %s hook found', hook_name)
         return
-    logger.debug('Running hook {}'.format(hook_name))
+    logger.debug('Running hook %s', hook_name)
     run_script_with_context(script, project_dir, context)
