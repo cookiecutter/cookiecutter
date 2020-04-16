@@ -40,8 +40,6 @@ jobs:
           - "windows-py36"
           - "windows-py37"
           - "windows-py38"
-          - "windows-pypy"
-          - "windows-pypy3"
 
         include:
           - name: "linting"
@@ -127,14 +125,6 @@ jobs:
             python: "3.8"
             os: windows-latest
             tox_env: "py38"
-          - name: "windows-pypy"
-            python: "pypy2"
-            os: windows-latest
-            tox_env: "pypy"
-          - name: "windows-pypy3"
-            python: "pypy3"
-            os: windows-latest
-            tox_env: "pypy3"
 
     steps:
     - uses: actions/checkout@v2
