@@ -6,6 +6,7 @@ History is important, but our current roadmap can be found [here](https://github
 
 Important Changes:
 
+* Added: Added debug messages for get_user_config [@ssbarnea](https://github.com/ssbarnea) (#1357)
 * Multiple templates per one repository feature added. [@RomHartmann](https://github.com/RomHartmann) (#1224, #1063)
 * Update replay.py json.dump indent for easy viewing [@nicain](https://github.com/nicain) (#1293)
 * 'future' library replaced with 'six' as a more lightweight python porting library [@asottile](https://github.com/asottile) (#941)
