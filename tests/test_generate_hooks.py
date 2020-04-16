@@ -24,7 +24,7 @@ def remove_additional_folders(tmpdir):
         'tests/test-pyhooks/inputpyhooks',
         'inputpyhooks',
         'inputhooks',
-        os.path.join(tmpdir, 'test-shellhooks'),
+        os.path.join(str(tmpdir), 'test-shellhooks'),
         'tests/test-hooks',
     ]
     for directory in directories_to_delete:
@@ -179,13 +179,13 @@ def test_run_shell_hooks(tmpdir):
     generate.generate_files(
         context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks/',
-        output_dir=os.path.join(tmpdir, 'test-shellhooks/'),
+        output_dir=os.path.join(str(tmpdir), 'test-shellhooks/'),
     )
     shell_pre_file = os.path.join(
-        tmpdir, 'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
+        str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
     )
     shell_post_file = os.path.join(
-        tmpdir, 'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
+        str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
     )
     assert os.path.exists(shell_pre_file)
     assert os.path.exists(shell_post_file)
