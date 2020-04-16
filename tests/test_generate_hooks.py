@@ -179,7 +179,7 @@ def test_run_shell_hooks(tmpdir):
     generate.generate_files(
         context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks/',
-        output_dir=os.path.join(str(tmpdir), 'test-shellhooks/'),
+        output_dir=os.path.join(str(tmpdir), 'test-shellhooks'),
     )
     shell_pre_file = os.path.join(
         str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
