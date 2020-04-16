@@ -1,0 +1,27 @@
+# Format and labels used aim to match those used by Ansible project
+categories:
+  - title: 'Major Changes'
+    labels:
+      - 'major'  # c6476b
+  - title: 'Minor Changes'
+    labels:
+      - 'feature'  # 006b75
+      - 'enhancement'  # ededed
+      - 'performance'  # 555555
+  - title: 'Bugfixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'  # fbca04
+      - 'docs'  # 4071a5
+      - 'packaging'  # 4071a5
+      - 'test'  # #0e8a16
+  - title: 'Deprecations'
+    labels:
+      - 'deprecated'  # fef2c0
+exclude-labels:
+  - 'skip-changelog'
+template: |
+  ## Changes
+
+  $CHANGES
