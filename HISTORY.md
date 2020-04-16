@@ -25,6 +25,7 @@ Internal CI/CD and tests changes:
 * pytest-catchlog package removed from test_requirements, as now it is included in pytest [@insspb](https://github.com/insspb) (#1347)
 * Fixed `cov-report` tox invocation environment [@insspb](https://github.com/insspb) (#1350)
 * Added: Release drafter support and configuration to exclude changelog update work and focus on development [@ssbarnea](https://github.com/ssbarnea) (#1356)
+* Added: CI/CD steps for Github actions to speedup CI/CD [@insspb](https://github.com/insspb) (#1360)
 
 Code style and docs changes:
 
