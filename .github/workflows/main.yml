@@ -70,7 +70,7 @@ jobs:
             os: ubuntu-latest
             tox_env: "py38"
           - name: "ubuntu-pypy"
-            python: "pypy"
+            python: "pypy2"
             os: ubuntu-latest
             tox_env: "pypy"
           - name: "ubuntu-pypy3"
@@ -99,7 +99,7 @@ jobs:
             os: macos-latest
             tox_env: "py38"
           - name: "macos-pypy"
-            python: "pypy"
+            python: "pypy2"
             os: macos-latest
             tox_env: "pypy"
           - name: "macos-pypy3"
@@ -128,7 +128,7 @@ jobs:
             os: windows-latest
             tox_env: "py38"
           - name: "windows-pypy"
-            python: "pypy"
+            python: "pypy2"
             os: windows-latest
             tox_env: "pypy"
           - name: "windows-pypy3"
