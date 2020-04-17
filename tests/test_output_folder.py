@@ -32,10 +32,7 @@ def test_output_folder():
     context = generate.generate_context(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
-    generate.generate_files(
-        context=context,
-        repo_dir='tests/test-output-folder'
-    )
+    generate.generate_files(context=context, repo_dir='tests/test-output-folder')
 
     something = """Hi!
 My name is Audrey Greenfeld.
@@ -62,7 +59,4 @@ def test_exception_when_output_folder_exists():
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     with pytest.raises(exceptions.OutputDirExistsException):
-        generate.generate_files(
-            context=context,
-            repo_dir='tests/test-output-folder'
-        )
+        generate.generate_files(context=context, repo_dir='tests/test-output-folder')

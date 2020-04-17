@@ -41,8 +41,9 @@ def test_io_error_if_no_replay_file(mocker, replay_test_dir):
         replay.load(replay_test_dir, 'no_replay')
 
 
-def test_run_json_load(mocker, mock_user_config, template_name,
-                       context, replay_test_dir, replay_file):
+def test_run_json_load(
+    mocker, mock_user_config, template_name, context, replay_test_dir, replay_file
+):
     """Test that replay.load runs json.load under the hood and that the context \
     is correctly loaded from the file in replay_dir."""
     spy_get_replay_file = mocker.spy(replay, 'get_file_name')

@@ -23,9 +23,7 @@ def freeze():
 def test_jinja2_time_extension(tmpdir):
     """Verify Jinja2 time extension work correctly."""
     project_dir = cookiecutter(
-        'tests/test-extensions/default/',
-        no_input=True,
-        output_dir=str(tmpdir)
+        'tests/test-extensions/default/', no_input=True, output_dir=str(tmpdir)
     )
     changelog_file = os.path.join(project_dir, 'HISTORY.rst')
     assert os.path.isfile(changelog_file)
@@ -40,7 +38,7 @@ def test_jinja2_time_extension(tmpdir):
         '0.1.0 (2015-12-09)\n',
         '---------------------\n',
         '\n',
-        'First release on PyPI.\n'
+        'First release on PyPI.\n',
     ]
     assert expected_lines == changelog_lines
 
@@ -48,9 +46,7 @@ def test_jinja2_time_extension(tmpdir):
 def test_jinja2_slugify_extension(tmpdir):
     """Verify Jinja2 slugify extension work correctly."""
     project_dir = cookiecutter(
-        'tests/test-extensions/default/',
-        no_input=True,
-        output_dir=str(tmpdir)
+        'tests/test-extensions/default/', no_input=True, output_dir=str(tmpdir)
     )
 
     assert os.path.basename(project_dir) == "it-s-slugified-foobar"

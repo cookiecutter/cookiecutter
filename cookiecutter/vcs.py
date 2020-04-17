@@ -13,7 +13,10 @@ except ImportError:
     from whichcraft import which
 
 from cookiecutter.exceptions import (
-    RepositoryNotFound, RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
+    RepositoryNotFound,
+    RepositoryCloneFailed,
+    UnknownRepoType,
+    VCSNotInstalled,
 )
 from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
@@ -83,8 +86,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     repo_url = repo_url.rstrip('/')
     tail = os.path.split(repo_url)[1]
     if repo_type == 'git':
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir,
-                                                 tail.rsplit('.git')[0]))
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail.rsplit('.git')[0]))
     elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail))
     logger.debug('repo_dir is %s', repo_dir)

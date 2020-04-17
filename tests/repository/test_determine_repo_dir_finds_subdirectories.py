@@ -63,16 +63,14 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
         )
 
     wrong_full_cookiecutter_path = os.path.join(
-        os.path.dirname(cloned_cookiecutter_path),
-        'wrong-dir'
+        os.path.dirname(cloned_cookiecutter_path), 'wrong-dir'
     )
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
             template,
-            '\n'.join([
-                os.path.join(template, 'wrong-dir'),
-                wrong_full_cookiecutter_path
-            ]),
+            '\n'.join(
+                [os.path.join(template, 'wrong-dir'), wrong_full_cookiecutter_path]
+            ),
         )
     )

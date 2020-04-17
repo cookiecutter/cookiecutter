@@ -1,0 +1,3 @@
+[tool.black]
+skip-string-normalization = true
+exclude = '/(tests/hooks-abort-render/hooks|docs\/HelloCookieCutter1)/'

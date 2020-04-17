@@ -4,6 +4,7 @@
 
 import json
 import string
+
 try:
     # Python 3.6 and above
     from secrets import choice
@@ -40,6 +41,7 @@ class RandomStringExtension(Extension):
             else:
                 corpus = string.ascii_letters
             return "".join(choice(corpus) for _ in range(length))
+
         environment.globals.update(random_ascii_string=random_ascii_string)
 
 

@@ -30,7 +30,8 @@ def cloned_cookiecutter_path(user_config_data, template):
 
 
 def test_should_find_existing_cookiecutter(
-        template, user_config_data, cloned_cookiecutter_path):
+    template, user_config_data, cloned_cookiecutter_path
+):
     """
     Should find folder created by `cloned_cookiecutter_path` and return it.
 

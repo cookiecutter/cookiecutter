@@ -34,10 +34,7 @@ class ExtensionLoaderMixin(object):
         extensions = default_extensions + self._read_extensions(context)
 
         try:
-            super(ExtensionLoaderMixin, self).__init__(
-                extensions=extensions,
-                **kwargs
-            )
+            super(ExtensionLoaderMixin, self).__init__(extensions=extensions, **kwargs)
         except ImportError as err:
             raise UnknownExtension('Unable to load extension: {}'.format(err))
 
@@ -67,7 +64,4 @@ class StrictEnvironment(ExtensionLoaderMixin, Environment):
 
         Also loading extensions defined in cookiecutter.json's _extensions key.
         """
-        super(StrictEnvironment, self).__init__(
-            undefined=StrictUndefined,
-            **kwargs
-        )
+        super(StrictEnvironment, self).__init__(undefined=StrictUndefined, **kwargs)

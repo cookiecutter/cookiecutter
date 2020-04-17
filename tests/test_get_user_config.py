@@ -57,7 +57,7 @@ def custom_config():
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
             'helloworld': 'https://github.com/hackebrot/helloworld',
-        }
+        },
     }
 
 
@@ -106,7 +106,8 @@ def test_default_config_path(user_config_path):
 
 
 def test_default_config_from_env_variable(
-        monkeypatch, custom_config_path, custom_config):
+    monkeypatch, custom_config_path, custom_config
+):
     """Validate app configuration. User config path should be parsed from sys env."""
     monkeypatch.setenv('COOKIECUTTER_CONFIG', custom_config_path)
 
@@ -126,8 +127,10 @@ def test_force_default_config(mocker, custom_config_path):
 
 def test_expand_user_for_directories_in_config(monkeypatch):
     """Validate user pointers expanded in user configs."""
+
     def _expanduser(path):
         return path.replace('~', 'Users/bob')
+
     monkeypatch.setattr('os.path.expanduser', _expanduser)
 
     config_file = 'tests/test-config/config-expand-user.yaml'

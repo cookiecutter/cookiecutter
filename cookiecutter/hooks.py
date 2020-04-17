@@ -80,11 +80,7 @@ def run_script(script_path, cwd='.'):
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(
-            script_command,
-            shell=run_thru_shell,
-            cwd=cwd
-        )
+        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
@@ -93,12 +89,9 @@ def run_script(script_path, cwd='.'):
     except OSError as os_error:
         if os_error.errno == errno.ENOEXEC:
             raise FailedHookException(
-                'Hook script failed, might be an '
-                'empty file or missing a shebang'
+                'Hook script failed, might be an ' 'empty file or missing a shebang'
             )
-        raise FailedHookException(
-            'Hook script failed (error: {})'.format(os_error)
-        )
+        raise FailedHookException('Hook script failed (error: {})'.format(os_error))
 
 
 def run_script_with_context(script_path, cwd, context):
@@ -113,15 +106,8 @@ def run_script_with_context(script_path, cwd, context):
     with io.open(script_path, 'r', encoding='utf-8') as file:
         contents = file.read()
 
-    with tempfile.NamedTemporaryFile(
-        delete=False,
-        mode='wb',
-        suffix=extension
-    ) as temp:
-        env = StrictEnvironment(
-            context=context,
-            keep_trailing_newline=True,
-        )
+    with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
+        env = StrictEnvironment(context=context, keep_trailing_newline=True)
         template = env.from_string(contents)
         output = template.render(**context)
         temp.write(output.encode('utf-8'))
