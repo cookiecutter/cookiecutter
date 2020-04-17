@@ -1,4 +1,4 @@
-name: "Pull Request Docs Check"
+name: "Documentation build check"
 on:
   pull_request:
     branches:
