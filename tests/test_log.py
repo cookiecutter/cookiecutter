@@ -10,6 +10,7 @@ from cookiecutter.log import configure_logger
 
 
 def create_log_records():
+    """Test function, create log entries in expected stage of test."""
     cookiecutter_logger = logging.getLogger('cookiecutter')
     foo_logger = logging.getLogger('cookiecutter.foo')
     foobar_logger = logging.getLogger('cookiecutter.foo.bar')
@@ -25,6 +26,7 @@ def create_log_records():
 
 @pytest.fixture
 def info_messages():
+    """Fixture. List of test info messages."""
     return [
         'INFO: Welcome to Cookiecutter',
         'INFO: Loading user config from home dir',
@@ -34,6 +36,7 @@ def info_messages():
 
 @pytest.fixture
 def debug_messages():
+    """Fixture. List of test debug messages."""
     return [
         'INFO cookiecutter: '
         'Welcome to Cookiecutter',
@@ -60,21 +63,25 @@ def debug_messages():
 
 @pytest.fixture
 def info_logger():
+    """Fixture. Call cookiecutter logger setup with `info` debug level."""
     return configure_logger(stream_level='INFO')
 
 
 @pytest.fixture
 def debug_logger():
+    """Fixture. Call cookiecutter logger setup with `debug` debug level."""
     return configure_logger(stream_level='DEBUG')
 
 
 @pytest.fixture
 def debug_file(tmpdir):
+    """Fixture. Generate debug file location for tests."""
     return tmpdir / 'pytest-plugin.log'
 
 
 @pytest.fixture
 def info_logger_with_file(debug_file):
+    """Fixture. Call cookiecutter logger setup with `info` debug level + `file`."""
     return configure_logger(
         stream_level='INFO',
         debug_file=str(debug_file),
