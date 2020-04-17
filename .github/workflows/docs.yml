@@ -1,0 +1,18 @@
+name: "Pull Request Docs Check"
+on:
+- pull_request
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          - submodules: 'recursive'
+      - uses: ammaraskar/sphinx-action@0.4
+        with:
+          docs-folder: "docs/"
+      - uses: actions/upload-artifact@v1
+        with:
+          name: DocumentationHTML
+          path: docs/_build/html/
