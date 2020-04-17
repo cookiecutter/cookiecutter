@@ -144,7 +144,7 @@ def render_variable(env, raw, cookiecutter_dict):
     This is then presented to the user as the default.
 
     :param Environment env: A Jinja2 Environment object.
-    :param str raw: The next value to be prompted for by the user.
+    :param raw: The next value to be prompted for by the user.
     :param dict cookiecutter_dict: The current context as it's gradually
         being populated with variables.
     :return: The rendered value for the default variable.
