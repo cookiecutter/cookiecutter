@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          - submodules: 'recursive'
+          submodules: 'recursive'
       - uses: ammaraskar/sphinx-action@0.4
         with:
           docs-folder: "docs/"
