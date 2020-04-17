@@ -24,8 +24,9 @@ Internal CI/CD and tests changes:
 * Added missed coverage lines highlight to pytest-coverage report [@insspb](https://github.com/insspb) (#1352)
 * pytest-catchlog package removed from test_requirements, as now it is included in pytest [@insspb](https://github.com/insspb) (#1347)
 * Fixed `cov-report` tox invocation environment [@insspb](https://github.com/insspb) (#1350)
-* Added: Release drafter support and configuration to exclude changelog update work and focus on development [@ssbarnea](https://github.com/ssbarnea) (#1356)
+* Added: Release drafter support and configuration to exclude changelog update work and focus on development [@ssbarnea](https://github.com/ssbarnea) [@insspb](https://github.com/insspb) (#1356, #1362)
 * Added: CI/CD steps for Github actions to speedup CI/CD [@insspb](https://github.com/insspb) (#1360)
+* Removed: Appveyor CI/CD completely removed [@insspb](https://github.com/insspb) (#1363)
 
 Code style and docs changes:
 
