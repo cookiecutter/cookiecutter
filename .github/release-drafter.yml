@@ -1,27 +1,35 @@
-# Format and labels used aim to match those used by Ansible project
 categories:
-  - title: 'Major Changes'
+  - title: 'Breaking Changes'
     labels:
-      - 'major'  # c6476b
+      - 'breaking-change'
+  - title: 'Major Non-Breaking Changes'
+    labels:
+      - 'major'
   - title: 'Minor Changes'
     labels:
-      - 'feature'  # 006b75
-      - 'enhancement'  # ededed
-      - 'performance'  # 555555
+      - 'feature'
+      - 'enhancement'
+  - title: 'CI/CD and QA changes'
+    labels:
+      - 'CI/CD'
+      - 'tests'
+      - 'code style'
+  - title: 'Documentation updates'
+    labels:
+      - 'documentation'
   - title: 'Bugfixes'
     labels:
-      - 'fix'
-      - 'bugfix'
-      - 'bug'  # fbca04
-      - 'docs'  # 4071a5
-      - 'packaging'  # 4071a5
-      - 'test'  # #0e8a16
+      - 'bug'
   - title: 'Deprecations'
     labels:
-      - 'deprecated'  # fef2c0
+      - 'deprecated'
 exclude-labels:
   - 'skip-changelog'
 template: |
   ## Changes
 
   $CHANGES
+
+  ## This release is made by wonderfull contributors:
+
+  $CONTRIBUTORS
