@@ -132,8 +132,8 @@ Before you submit a pull request, check that it meets these guidelines:
 
 1. The pull request should include tests.
 2. If the pull request adds functionality, the docs should be updated. Put your new functionality into a function with a docstring, and add the feature to the list in README.md.
-3. The pull request should work for Python 2.7, 3.5, 3.6, 3.7 and PyPy on AppVeyor and Travis CI.
-4. Check [https://travis-ci.org/cookiecutter/cookiecutter/pull_requests](https://travis-ci.org/cookiecutter/cookiecutter/pull_requests) and [https://ci.appveyor.com/project/cookiecutter/cookiecutter/history](https://ci.appveyor.com/project/cookiecutter/cookiecutter/history) to ensure the tests pass for all supported Python versions and platforms.
+3. The pull request must pass all CI/CD jobs before being ready for review.
+4. If one CI/CD job is failing for unrelated reasons you may want to create another PR to fix that first.
 
 ### Coding Standards
 
