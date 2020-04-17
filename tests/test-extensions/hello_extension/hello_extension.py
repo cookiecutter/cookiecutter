@@ -16,9 +16,11 @@ class HelloExtension(Extension):
         super(HelloExtension, self).__init__(environment)
 
     def _hello(self, name):
+        """Do actual tag replace when invoked by parser."""
         return 'Hello {name}!'.format(name=name)
 
     def parse(self, parser):
+        """Work when something match `tags` variable."""
         lineno = next(parser.stream).lineno
         node = parser.parse_expression()
         call_method = self.call_method('_hello', [node], lineno=lineno)

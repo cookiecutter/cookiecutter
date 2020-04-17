@@ -23,23 +23,30 @@ from cookiecutter import main
     'post_gen_hook',
 ])
 def template(request):
+    """Fixture. Allows to split pre and post hooks test directories."""
     return 'tests/test-extensions/' + request.param
 
 
 @pytest.fixture
 def output_dir(tmpdir):
+    """Fixture. Create and return custom temp directory for test."""
     return str(tmpdir.mkdir('hello'))
 
 
 @pytest.fixture(autouse=True)
 def modify_syspath(monkeypatch):
-    # Make sure that the custom extension can be loaded
+    """Fixture. Make sure that the custom extension can be loaded."""
     monkeypatch.syspath_prepend(
         'tests/test-extensions/hello_extension'
     )
 
 
 def test_hook_with_extension(template, output_dir):
+    """Verify custom Jinja2 extension correctly work in hooks and file rendering.
+
+    Each file in hooks has simple tests inside and will raise error if not
+    correctly rendered.
+    """
     project_dir = main.cookiecutter(
         template,
         no_input=True,
