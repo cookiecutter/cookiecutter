@@ -46,7 +46,7 @@ def test_is_repo_url_for_remote_urls(remote_repo_url):
     '/audreyr/cookiecutter.git',
     '/home/audreyr/cookiecutter',
     (
-        'c:\\users\\appveyor\\appdata\\local\\temp\\1\\pytest-0\\'
+        'c:\\users\\foo\\appdata\\local\\temp\\1\\pytest-0\\'
         'test_default_output_dir0\\template'
     ),
 ])
