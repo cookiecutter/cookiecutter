@@ -13,7 +13,7 @@ jobs:
           submodules: 'recursive'
       - uses: ammaraskar/sphinx-action@0.4
         with:
-          pre-build-command: "cd .. && pip install . && pip install -r test_requirements.txt && cd docs"
+          pre-build-command: "pwd && pip install . && pip install -r test_requirements.txt"
           docs-folder: "docs/"
       - uses: actions/upload-artifact@v1
         with:
