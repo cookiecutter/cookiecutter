@@ -1,0 +1,140 @@
+name: CI Tests
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        name:
+          - "linting"
+
+          - "ubuntu-py27"
+          - "ubuntu-py35"
+          - "ubuntu-py36"
+          - "ubuntu-py37"
+          - "ubuntu-py38"
+          - "ubuntu-pypy"
+          - "ubuntu-pypy3"
+
+          - "macos-py27"
+          - "macos-py35"
+          - "macos-py36"
+          - "macos-py37"
+          - "macos-py38"
+          - "macos-pypy"
+          - "macos-pypy3"
+
+          - "windows-py27"
+          - "windows-py35"
+          - "windows-py36"
+          - "windows-py37"
+          - "windows-py38"
+
+        include:
+          - name: "linting"
+            python: "3.8"
+            os: ubuntu-latest
+            tox_env: "lint"
+
+          - name: "ubuntu-py27"
+            python: "2.7"
+            os: ubuntu-latest
+            tox_env: "py27"
+          - name: "ubuntu-py35"
+            python: "3.5"
+            os: ubuntu-latest
+            tox_env: "py35"
+          - name: "ubuntu-py36"
+            python: "3.6"
+            os: ubuntu-latest
+            tox_env: "py36"
+          - name: "ubuntu-py37"
+            python: "3.7"
+            os: ubuntu-latest
+            tox_env: "py37"
+          - name: "ubuntu-py38"
+            python: "3.8"
+            os: ubuntu-latest
+            tox_env: "py38"
+          - name: "ubuntu-pypy"
+            python: "pypy2"
+            os: ubuntu-latest
+            tox_env: "pypy"
+          - name: "ubuntu-pypy3"
+            python: "pypy3"
+            os: ubuntu-latest
+            tox_env: "pypy3"
+
+          - name: "macos-py27"
+            python: "2.7"
+            os: macos-latest
+            tox_env: "py27"
+          - name: "macos-py35"
+            python: "3.5"
+            os: macos-latest
+            tox_env: "py35"
+          - name: "macos-py36"
+            python: "3.6"
+            os: macos-latest
+            tox_env: "py36"
+          - name: "macos-py37"
+            python: "3.7"
+            os: macos-latest
+            tox_env: "py37"
+          - name: "macos-py38"
+            python: "3.8"
+            os: macos-latest
+            tox_env: "py38"
+          - name: "macos-pypy"
+            python: "pypy2"
+            os: macos-latest
+            tox_env: "pypy"
+          - name: "macos-pypy3"
+            python: "pypy3"
+            os: macos-latest
+            tox_env: "pypy3"
+
+          - name: "windows-py27"
+            python: "2.7"
+            os: windows-latest
+            tox_env: "py27"
+          - name: "windows-py35"
+            python: "3.5"
+            os: windows-latest
+            tox_env: "py35"
+          - name: "windows-py36"
+            python: "3.6"
+            os: windows-latest
+            tox_env: "py36"
+          - name: "windows-py37"
+            python: "3.7"
+            os: windows-latest
+            tox_env: "py37"
+          - name: "windows-py38"
+            python: "3.8"
+            os: windows-latest
+            tox_env: "py38"
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox virtualenv
+    - name: Test build
+      run: "tox -e ${{ matrix.tox_env }}"

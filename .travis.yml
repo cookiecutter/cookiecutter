@@ -19,6 +19,8 @@ jobs:
         env: TOXENV=py38
       - python: pypy
         env: TOXENV=pypy
+      - python: pypy3
+        env: TOXENV=pypy3
       - name: "Python 2.7 on Windows"
         os: windows
         language: shell
