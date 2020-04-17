@@ -173,9 +173,13 @@ def test_run_failing_hook_preserves_existing_output_directory():
     assert os.path.exists('inputhooks')
 
 
+@pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux only test")
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_run_shell_hooks(tmpdir):
-    """Verify pre and post generate project shell hooks executed."""
+    """Verify pre and post generate project shell hooks executed.
+
+    This test for .sh files.
+    """
     generate.generate_files(
         context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks/',
@@ -186,6 +190,28 @@ def test_run_shell_hooks(tmpdir):
     )
     shell_post_file = os.path.join(
         str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
+    )
+    assert os.path.exists(shell_pre_file)
+    assert os.path.exists(shell_post_file)
+
+
+@pytest.mark.skipif(not sys.platform.startswith('win'), reason="Win only test")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_run_shell_hooks_win(tmpdir):
+    """Verify pre and post generate project shell hooks executed.
+
+    This test for .bat files.
+    """
+    generate.generate_files(
+        context={'cookiecutter': {'shellhooks': 'shellhooks'}},
+        repo_dir='tests/test-shellhooks-win/',
+        output_dir=os.path.join(str(tmpdir), 'test-shellhooks-win'),
+    )
+    shell_pre_file = os.path.join(
+        str(tmpdir), 'test-shellhooks-win', 'inputshellhooks', 'shell_pre.txt'
+    )
+    shell_post_file = os.path.join(
+        str(tmpdir), 'test-shellhooks-win', 'inputshellhooks', 'shell_post.txt'
     )
     assert os.path.exists(shell_pre_file)
     assert os.path.exists(shell_post_file)
