@@ -1,6 +1,8 @@
 name: "Pull Request Docs Check"
 on:
-- pull_request
+  pull_request:
+    branches:
+      - "*"
 
 jobs:
   docs:
