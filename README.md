@@ -9,7 +9,9 @@
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
 [![Code Qaulity](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master)
 
-A command-line utility that creates projects from **cookiecutters** (project templates), e.g. creating a Python package project from a Python package project template.
+A command-line utility that creates projects from **cookiecutters** (project
+templates), e.g. creating a Python package project from a Python package project
+template.
 
 * Documentation: [https://cookiecutter.readthedocs.io](https://cookiecutter.readthedocs.io)
 * GitHub: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
@@ -18,19 +20,19 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 
 ![Cookiecutter](https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
 
-We are proud to be an open source sponsor of [PyCon 2016](https://us.pycon.org/2016/sponsors/).
+We are proud to be an open source sponsor of
+[PyCon 2016](https://us.pycon.org/2016/sponsors/).
 
 ## Features
 
 Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
-
-* Works with Python 2.7, 3.5, 3.6, 3.7, 3.8 ,PyPy and PyPy3. *(But you don't have to know/write Python code to use Cookiecutter.)*
-
+* You don't have to know/write Python code to use Cookiecutter
+* Works with Python 2.7, 3.5, 3.6, 3.7, 3.8 ,PyPy and PyPy3.
 * Project templates can be in any programming language or markup format:  
-  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name it. You can use multiple languages in the same project template.
-
+  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name it.  
+  You can use multiple languages in the same project template.
 * Simple command line usage:
 
 ```bash
@@ -70,9 +72,7 @@ cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 ```
 
 * Supports unlimited levels of directory nesting.
-
 * 100% of templating is done with Jinja2. This includes file and directory names.
-
 * Simply define your template variables in a ``cookiecutter.json`` file. For example:
 
 ```json
@@ -89,11 +89,9 @@ cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 ```
 
 * Unless you suppress it with ``--no-input``, you are prompted for input:
-
   * Prompts are the keys in ``cookiecutter.json``.
   * Default responses are the values in ``cookiecutter.json``.
   * Prompts are shown in order.
-
 * Cross-platform support for ``~/.cookiecutterrc`` files:
 
 ```yaml
@@ -104,9 +102,10 @@ default_context:
 cookiecutters_dir: "~/.cookiecutters/"
 ```
 
-* Cookiecutters (cloned Cookiecutter project templates) are put into ``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
-
-* If you have already cloned a cookiecutter into ``~/.cookiecutters/``, you can reference it by directory name:
+* Cookiecutters (cloned Cookiecutter project templates) are put into
+``~/.cookiecutters/`` by default, or cookiecutters_dir if specified.
+* If you have already cloned a cookiecutter into ``~/.cookiecutters/``,
+you can reference it by directory name:
 
 ```bash
 # Clone cookiecutter-pypackage
@@ -115,10 +114,10 @@ $ cookiecutter gh:audreyr/cookiecutter-pypackage
 $ cookiecutter cookiecutter-pypackage
 ```
 
-* You can use local cookiecutters, or remote cookiecutters directly from Git repos or from Mercurial repos on Bitbucket.
-
-* Default context: specify key/value pairs that you want used as defaults whenever you generate a project.
-
+* You can use local cookiecutters, or remote cookiecutters directly from Git
+repos or from Mercurial repos on Bitbucket.
+* Default context: specify key/value pairs that you want used as defaults
+whenever you generate a project.
 * Inject extra context with command-line arguments:
 
 ```bash
@@ -126,49 +125,78 @@ cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar 
 ```
 
 * Direct access to the Cookiecutter API allows for injection of extra context.
-
-* Pre- and post-generate hooks: Python or shell scripts to run before or after generating a project.
-
+* Pre- and post-generate hooks: Python or shell scripts to run before or after
+generating a project.
 * Paths to local projects can be specified as absolute or relative.
-
-* Projects are always generated to your current directory.
+* Projects generated to your current directory or to target directory if
+specified with `-o` option.
 
 ## Available Cookiecutters
 
-Making great cookies takes a lot of cookiecutters and contributors. We're so pleased that there are many Cookiecutter project templates to choose from. We hope you find a cookiecutter that is just right for your needs.
+Making great cookies takes a lot of cookiecutters and contributors. We're so
+pleased that there are many Cookiecutter project templates to choose from. We
+hope you find a cookiecutter that is just right for your needs.
 
-### Cookiecutter Specials
+## A Pantry Full of Cookiecutters
+
+The best place to start searching for specific and ready to use cookiecutter
+template is [Github search](https://github.com/search?q=cookiecutter&type=Repositories).
+Just type `cookiecutter` and you will discover over 4000 related repositories.
+
+We also recommend you to check related GitHub topics. For general search use
+[cookiecutter-template](https://github.com/topics/cookiecutter-template).
+For specific topics try to use `cookiecutter-yourtopic`, like
+`cookiecutter-python` or `cookiecutter-datascience`. This is new GitHub feature,
+so not all active repositories use it at the moment.
+
+If you are template developer please add related
+[topics](https://help.github.com/en/github/administering-a-repository/classifying-your-repository-with-topics)
+with `cookiecutter` prefix to you repository. We believe it will make it more
+discoverable. You are almost not limited in topics amount, use it!
+
+## Cookiecutter Specials
 
 These Cookiecutters are maintained by the cookiecutter team:
 
-* [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage): [@audreyr's](https://github.com/audreyr) ultimate Python package project template.
-* [cookiecutter-django](https://github.com/pydanny/cookiecutter-django): A bleeding edge Django project template with Bootstrap 4, customizable users app, starter templates, working user registration, celery setup, and much more.
-* [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin): Minimal Cookiecutter template for authoring [pytest](https://docs.pytest.org/) plugins that help you to write better programs.
-
-### Categories of Cookiecutters
-
-[Python](#python) | [Python-Django](#python-django) | [Python-Pyramid](#python-pyramid) | [Cookiecutter (meta)](#cookiecutter-meta) | [Ansible](#ansible) | [Git](#git) | [C](#c) | [C++](#c-1) | [C#](#c-sharp) | [Common Lisp](#common-lisp) | [Elm](#elm) | [Golang](#golang) | [Java](#java) | [JS](#js) | [Kotlin](#kotlin) | [LaTeX/XeTeX](#latexxetex) | [PHP](#php) | [Berkshelf-Vagrant](#berkshelf-vagrant) | [HTML](#html) | [Scala](#scala) | [6502 Assembly](#6502-Assembly) | [Data Science](#data-science) | [Tornado](#tornado) | [Reproducible Science](#reproducible-science) | [Continuous Delivery](#continuous-delivery)
-
-If you don't find a cookiecutter that suits your needs here, please consider writing or suggesting one. We wish for our users to find a solution for their use cases, and we provide a list of other projects that we do not maintain for your convenience (please see the [Similar Projects](#similar-projects) section).
+* [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage):
+[@audreyr's](https://github.com/audreyr) ultimate Python package project template.
+* [cookiecutter-django](https://github.com/pydanny/cookiecutter-django):
+A bleeding edge Django project template with Bootstrap 4, customizable users app,
+starter templates, working user registration, celery setup, and much more.
+* [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin):
+Minimal Cookiecutter template for authoring [pytest](https://docs.pytest.org/)
+plugins that help you to write better programs.
 
 ## Community
 
-The core committer team can be found in [authors section](AUTHORS.md). We are always welcome and invite you to participate.
+The core committer team can be found in [authors section](AUTHORS.md).
+We are always welcome and invite you to participate.
 
 Stuck? Try one of the following:
 
 * See the [Troubleshooting](https://cookiecutter.readthedocs.io/en/latest/troubleshooting.html) page.
 * Ask for help on [Stack Overflow](https://stackoverflow.com/questions/tagged/cookiecutter).
-* You are strongly encouraged to [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) about the problem, even if it's just "I can't get it to work on this cookiecutter" with a link to your cookiecutter. Don't worry about naming/pinpointing the issue properly.
-* Ask for help on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U) if you must (but please try one of the other options first, so that others can benefit from the discussion).
+* You are strongly encouraged to
+[file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
+about the problem, even if it's just "I can't get it to work on this cookiecutter"
+with a link to your cookiecutter. Don't worry about naming/pinpointing the issue
+properly.
+* Ask for help on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U)
+if you must (but please try one of the other options first, so that others
+can benefit from the discussion).
 
 Development on Cookiecutter is community-driven:
 
-* Huge thanks to all the [contributors](AUTHORS.md) who have pitched in to help make Cookiecutter an even better tool.
-* Everyone is invited to contribute. Read the [contributing instructions](CONTRIBUTING.md), then get started.
-* Connect with other Cookiecutter contributors and users on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U) (note: due to work and commitments, a core committer might not always be available)
+* Huge thanks to all the [contributors](AUTHORS.md) who have pitched in to help
+make Cookiecutter an even better tool.
+* Everyone is invited to contribute. Read the
+[contributing instructions](CONTRIBUTING.md), then get started.
+* Connect with other Cookiecutter contributors and users on
+[Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U)
+(note: due to work and commitments, a core committer might not always be available)
 
-Encouragement is unbelievably motivating. If you want more work done on Cookiecutter, show support:
+Encouragement is unbelievably motivating. If you want more work done on
+Cookiecutter, show support:
 
 * Thank a core committer for their efforts.
 * Star [Cookiecutter on GitHub](https://github.com/cookiecutter/cookiecutter).
@@ -176,82 +204,35 @@ Encouragement is unbelievably motivating. If you want more work done on Cookiecu
 
 Got criticism or complaints?
 
-* [File an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) so that Cookiecutter can be improved. Be friendly and constructive about what could be better. Make detailed suggestions.
-* **Keep us in the loop so that we can help.** For example, if you are discussing problems with Cookiecutter on a mailing list, [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) where you link to the discussion thread and/or cc at least 1 core committer on the email.
-* Be encouraging. A comment like "This function ought to be rewritten like this" is much more likely to result in action than a comment like "Eww, look how bad this function is."
+* [File an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
+so that Cookiecutter can be improved. Be friendly and constructive about what
+could be better. Make detailed suggestions.
+* **Keep us in the loop so that we can help.** For example, if you are
+discussing problems with Cookiecutter on a mailing list,
+[file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
+where you link to the discussion thread and/or cc at least 1 core committer on the email.
+* Be encouraging. A comment like "This function ought to be rewritten like this"
+is much more likely to result in action than a comment like "Eww, look how bad
+this function is."
 
 Waiting for a response to an issue/question?
 
-* Be patient and persistent. All issues are on the core committer team's radar and will be considered thoughtfully, but we have a lot of issues to work through. If urgent, it's fine to ping a core committer in the issue with a reminder.
+* Be patient and persistent. All issues are on the core committer team's radar
+and will be considered thoughtfully, but we have a lot of issues to work through.
+If urgent, it's fine to ping a core committer in the issue with a reminder.
 * Ask others to comment, discuss, review, etc.
 * Search the Cookiecutter repo for issues related to yours.
-* Need a fix/feature/release/help urgently, and can't wait? [@audreyr](https://github.com/audreyr) is available for hire for consultation or custom development.
+* Need a fix/feature/release/help urgently, and can't wait?
+[@audreyr](https://github.com/audreyr) is available for hire for consultation
+or custom development.
 
 ## Support This Project
 
-This project is run by volunteers. Shortly we will be providing means for organizations and individuals to support the project.
+This project is run by volunteers. Shortly we will be providing means for
+organizations and individuals to support the project.
 
 ## Code of Conduct
 
-Everyone interacting in the Cookiecutter project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
-
-## A Pantry Full of Cookiecutters
-
-You can check all [cookiecutter templates](https://github.com/topics/cookiecutter-template) on GitHub. If you are template publisher keep in mind to add the ``cookiecutter-template`` topic to your repository and the correct language tags. Few non language topics have their
-own custom topics, which you will find on links below.
-
-To make your own templates easily discoverable, assign at least `cookiecutter-template` topics and a more specific one
-from the list below. `cookiecutter-other` should also be added if your template does not fit any of the categories
-below.
-
-Feel free to propose listing new topics but only once github reports at least
-three templates using these topics.
-
-* [cookiecutter-ansible](https://github.com/topics/cookiecutter-ansible)
-* [cookiecutter-c](https://github.com/topics/cookiecutter-c)
-* [cookiecutter-csharp](https://github.com/topics/cookiecutter-csharp)
-* [cookiecutter-cpp](https://github.com/topics/cookiecutter-cpp)
-* [cookiecutter-common-lisp](https://github.com/topics/cookiecutter-common-lisp)
-* [cookiecutter-datascience](https://github.com/topics/cookiecutter-datascience)
-* [cookiecutter-django](https://github.com/topics/cookiecutter-django)
-* [cookiecutter-elm](https://github.com/topics/cookiecutter-elm)
-* [cookiecutter-go](https://github.com/topics/cookiecutter-go)
-* [cookiecutter-git](https://github.com/topics/cookiecutter-git)
-* [cookiecutter-html](https://github.com/topics/cookiecutter-html)
-* [cookiecutter-java](https://github.com/topics/cookiecutter-java)
-* [cookiecutter-javascript](https://github.com/topics/cookiecutter-javascript)
-* [cookiecutter-kotin](https://github.com/topics/cookiecutter-kotlin)
-* [cookiecutter-latex](https://github.com/topics/cookiecutter-latex)
-* [cookiecutter-lisp](https://github.com/topics/cookiecutter-lisp)
-* [cookiecutter-meta](https://github.com/topics/cookiecutter-meta)
-* [cookiecutter-php](https://github.com/topics/cookiecutter-php)
-* [cookiecutter-pyramid](https://github.com/topics/cookiecutter-pyramid)
-* [cookiecutter-python](https://github.com/topics/cookiecutter-python)
-* [cookiecutter-scala](https://github.com/topics/cookiecutter-scala)
-* [cookiecutter-sublime](https://github.com/topics/cookiecutter-sublime)
-* [cookiecutter-tornado](https://github.com/topics/cookiecutter-tornado)
-* **[cookiecutter-other](https://github.com/topics/cookiecutter-other)** for projects not matcing any category listed above.
-
-## Similar projects
-
-* [Diecutter](https://github.com/diecutter/diecutter): an API service that will give you back a configuration file from a template and variables.
-
-* [Django](https://docs.djangoproject.com/)'s `startproject` and `startapp` commands can take in a `--template` option.
-
-* [python-packager](https://github.com/fcurella/python-packager): Creates Python packages from its own template, with configurable options.
-
-* [Yeoman](https://github.com/yeoman/generator) has a Rails-inspired generator system that provides scaffolding for apps.
-
-* [mr.bob](https://github.com/domenkozar/mr.bob) is a filesystem template renderer, meant to deprecate tools such as
-  paster and templer.
-
-* [grunt-init](https://github.com/gruntjs/grunt-init) is used to be built into Grunt and is now a standalone scaffolding tool
-  to automate project creation.
-
-* [scaffolt](https://github.com/paulmillr/scaffolt) consumes JSON generators with Handlebars support.
-
-* [init-skeleton](https://github.com/brunch/init-skeleton) clones or copies a repository, executes npm install and bower install and removes the .git directory.
-
-* [Cog](https://bitbucket.org/ned/cog/src/default/) python-based code generation toolkit developed by Ned Batchelder
-
-* [Skaffold](https://github.com/christabor/Skaffold) python and json config based django/MVC generator, with some add-ons and integrations.
+Everyone interacting in the Cookiecutter project's codebases, issue trackers,
+chat rooms, and mailing lists is expected to follow the
+[PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
