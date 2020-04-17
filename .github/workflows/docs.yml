@@ -19,7 +19,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox virtualenv
       - name: Build docs
-        run: make docs
+        run: tox -e docs
       - uses: actions/upload-artifact@v1
         with:
           name: DocumentationHTML
