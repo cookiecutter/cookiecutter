@@ -56,8 +56,7 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found):
 
 @pytest.fixture(scope='function')
 def clean_system(request):
-    """
-    Fixture that simulates a clean system with no config/cloned cookiecutters.
+    """Fixture. Simulates a clean system with no configured or cloned cookiecutters.
 
     It runs code which can be regarded as setup code as known from a unittest
     TestCase. Additionally it defines a local function referring to values

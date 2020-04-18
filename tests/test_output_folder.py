@@ -20,15 +20,15 @@ from cookiecutter import utils
 
 @pytest.fixture(scope='function')
 def remove_output_folder(request):
-    """Remove the output folder in case it exists on disk."""
-    def finalizer_remove_output_folder():
-        if os.path.exists('output_folder'):
-            utils.rmtree('output_folder')
-    request.addfinalizer(finalizer_remove_output_folder)
+    """Remove the output folder after test."""
+    yield
+    if os.path.exists('output_folder'):
+        utils.rmtree('output_folder')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_output_folder():
+    """Tests should correctly create content, as output_folder does not yet exist."""
     context = generate.generate_context(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
@@ -53,6 +53,7 @@ It is 2014."""
 
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_exception_when_output_folder_exists():
+    """Tests should raise error as output folder created before `generate_files`."""
     context = generate.generate_context(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
