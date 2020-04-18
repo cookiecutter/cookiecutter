@@ -16,8 +16,8 @@ from cookiecutter import main
 
 
 @pytest.fixture(
-    params=['custom-extension-pre', 'custom-extension-post',],
-    ids=['pre_gen_hook', 'post_gen_hook',],
+    params=['custom-extension-pre', 'custom-extension-post'],
+    ids=['pre_gen_hook', 'post_gen_hook'],
 )
 def template(request):
     """Fixture. Allows to split pre and post hooks test directories."""
@@ -46,7 +46,7 @@ def test_hook_with_extension(template, output_dir):
         template,
         no_input=True,
         output_dir=output_dir,
-        extra_context={'project_slug': 'foobar', 'name': 'Cookiemonster',},
+        extra_context={'project_slug': 'foobar', 'name': 'Cookiemonster'},
     )
 
     readme_file = os.path.join(project_dir, 'README.rst')

@@ -111,5 +111,5 @@ def test_repository_url_with_no_context_file(mocker, template_url, user_config_d
 
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
-        'locations:\n{}'.format(template_url, 'tests/fake-repo-bad',)
+        'locations:\n{}'.format(template_url, 'tests/fake-repo-bad')
     )

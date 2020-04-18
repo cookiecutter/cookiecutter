@@ -69,7 +69,7 @@ def debug_file(tmpdir):
 @pytest.fixture
 def info_logger_with_file(debug_file):
     """Fixture. Call cookiecutter logger setup with `info` debug level + `file`."""
-    return configure_logger(stream_level='INFO', debug_file=str(debug_file),)
+    return configure_logger(stream_level='INFO', debug_file=str(debug_file))
 
 
 def test_info_stdout_logging(caplog, info_logger, info_messages):
