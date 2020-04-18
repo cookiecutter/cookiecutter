@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Collection of tests around loading cookiecutter config if present."""
+"""Collection of tests around loading cookiecutter config."""
 
 import os
 
@@ -13,6 +13,7 @@ from cookiecutter.exceptions import (
 
 
 def test_merge_configs():
+    """Verify default and user config merged in expected way."""
     default = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
         'replay_dir': '/home/example/some-path-to-replay-files',
@@ -54,7 +55,7 @@ def test_merge_configs():
 
 
 def test_get_config():
-    """Opening and reading config file."""
+    """Verify valid config opened and rendered correctly."""
     conf = config.get_config('tests/test-config/valid-config.yaml')
     expected_conf = {
         'cookiecutters_dir': '/home/example/some-path-to-templates',
@@ -77,14 +78,16 @@ def test_get_config():
 def test_get_config_does_not_exist():
     """Check that `exceptions.ConfigDoesNotExistException` is raised when \
     attempting to get a non-existent config file."""
-    with pytest.raises(ConfigDoesNotExistException):
-        config.get_config('tests/test-config/this-does-not-exist.yaml')
+    expected_error_msg = 'Config file tests/not-exist.yaml does not exist.'
+    with pytest.raises(ConfigDoesNotExistException) as exc_info:
+        config.get_config('tests/not-exist.yaml')
+    assert str(exc_info.value) == expected_error_msg
 
 
 def test_invalid_config():
     """An invalid config file should raise an `InvalidConfiguration` \
     exception."""
-    with pytest.raises(InvalidConfiguration) as excinfo:
+    with pytest.raises(InvalidConfiguration) as exc_info:
         config.get_config('tests/test-config/invalid-config.yaml')
 
     expected_error_msg = (
@@ -92,7 +95,7 @@ def test_invalid_config():
         'tests/test-config/invalid-config.yaml. '
         'Error: '
     )
-    assert expected_error_msg in str(excinfo.value)
+    assert expected_error_msg in str(exc_info.value)
 
 
 def test_get_config_with_defaults():
