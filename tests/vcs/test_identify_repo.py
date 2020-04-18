@@ -43,6 +43,7 @@ from cookiecutter import exceptions, vcs
     )
 ])
 def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
+    """Verify different correct repositories url syntax is correctly transformed."""
     assert vcs.identify_repo(repo_url) == (exp_repo_type, exp_repo_url)
 
 
@@ -54,9 +55,11 @@ def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
     'http://norepotypespecified.com'
 ])
 def unknown_repo_type_url(request):
+    """Fixture. Return wrong formatted repository url."""
     return request.param
 
 
 def test_identify_raise_on_unknown_repo(unknown_repo_type_url):
+    """Verify different incorrect repositories url syntax trigger error raising."""
     with pytest.raises(exceptions.UnknownRepoType):
         vcs.identify_repo(unknown_repo_type_url)

@@ -18,6 +18,7 @@ def make_readonly(path):
 
 
 def test_rmtree():
+    """Verify `utils.rmtree` remove files marked as read-only."""
     os.mkdir('foo')
     with open('foo/bar', "w") as f:
         f.write("Test data")
@@ -27,6 +28,11 @@ def test_rmtree():
 
 
 def test_make_sure_path_exists():
+    """Verify correct True/False response from `utils.make_sure_path_exists`.
+
+    Should return True if directory exist or created.
+    Should return False if impossible to create directory (for example protected)
+    """
     if sys.platform.startswith('win'):
         existing_directory = os.path.abspath(os.curdir)
         uncreatable_directory = 'a*b'
@@ -43,6 +49,7 @@ def test_make_sure_path_exists():
 
 
 def test_workin():
+    """Verify returning to original folder after `utils.work_in` use."""
     cwd = os.getcwd()
     ch_to = 'tests/files'
 
