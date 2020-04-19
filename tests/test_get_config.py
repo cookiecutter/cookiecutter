@@ -7,9 +7,7 @@ import os
 import pytest
 
 from cookiecutter import config
-from cookiecutter.exceptions import (
-    ConfigDoesNotExistException, InvalidConfiguration
-)
+from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 
 def test_merge_configs():
@@ -22,7 +20,7 @@ def test_merge_configs():
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
-        }
+        },
     }
 
     user_config = {
@@ -33,7 +31,7 @@ def test_merge_configs():
         'abbreviations': {
             'gl': 'https://gitlab.com/hackebrot/{0}.git',
             'pytest-plugin': 'https://github.com/pytest-dev/pytest-plugin.git',
-        }
+        },
     }
 
     expected_config = {
@@ -48,7 +46,7 @@ def test_merge_configs():
             'gl': 'https://gitlab.com/hackebrot/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
             'pytest-plugin': 'https://github.com/pytest-dev/pytest-plugin.git',
-        }
+        },
     }
 
     assert config.merge_configs(default, user_config) == expected_config
@@ -63,14 +61,14 @@ def test_get_config():
         'default_context': {
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
-            'github_username': 'example'
+            'github_username': 'example',
         },
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
-            'helloworld': 'https://github.com/hackebrot/helloworld'
-        }
+            'helloworld': 'https://github.com/hackebrot/helloworld',
+        },
     }
     assert conf == expected_conf
 
@@ -91,9 +89,7 @@ def test_invalid_config():
         config.get_config('tests/test-config/invalid-config.yaml')
 
     expected_error_msg = (
-        'Unable to parse YAML file '
-        'tests/test-config/invalid-config.yaml. '
-        'Error: '
+        'Unable to parse YAML file ' 'tests/test-config/invalid-config.yaml. ' 'Error: '
     )
     assert expected_error_msg in str(exc_info.value)
 
@@ -109,12 +105,12 @@ def test_get_config_with_defaults():
         'default_context': {
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
-            'github_username': 'example'
+            'github_username': 'example',
         },
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
-        }
+        },
     }
     assert conf == expected_conf

@@ -33,7 +33,7 @@ requirements = [
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
     'six>=1.14',
-    'MarkupSafe<2.0.0'
+    'MarkupSafe<2.0.0',
 ]
 
 if sys.argv[-1] == 'readme':
@@ -44,29 +44,23 @@ if sys.argv[-1] == 'readme':
 setup(
     name='cookiecutter',
     version=version,
-    description=('A command-line utility that creates projects from project '
-                 'templates, e.g. creating a Python package project from a '
-                 'Python package project template.'),
+    description=(
+        'A command-line utility that creates projects from project '
+        'templates, e.g. creating a Python package project from a '
+        'Python package project template.'
+    ),
     long_description=readme,
     long_description_content_type='text/markdown',
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
     url='https://github.com/cookiecutter/cookiecutter',
-    packages=[
-        'cookiecutter',
-    ],
+    packages=['cookiecutter'],
     package_dir={'cookiecutter': 'cookiecutter'},
-    entry_points={
-        'console_scripts': [
-            'cookiecutter = cookiecutter.__main__:main',
-        ]
-    },
+    entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
     include_package_data=True,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     install_requires=requirements,
-    extras_require={
-        ':python_version<"3.3"': ['whichcraft>=0.4.0'],
-    },
+    extras_require={':python_version<"3.3"': ['whichcraft>=0.4.0']},
     license='BSD',
     zip_safe=False,
     classifiers=[

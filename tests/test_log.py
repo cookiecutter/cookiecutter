@@ -38,26 +38,13 @@ def info_messages():
 def debug_messages():
     """Fixture. List of test debug messages."""
     return [
-        'INFO cookiecutter: '
-        'Welcome to Cookiecutter',
-
-        'DEBUG cookiecutter: '
-        'Generating project from pytest-plugin',
-
-        'INFO cookiecutter.foo: '
-        'Loading user config from home dir',
-
-        "DEBUG cookiecutter.foo.bar: "
-        "I don't know.",
-
-        'DEBUG cookiecutter.foo.bar: '
-        'I wanted to save the world.',
-
-        'ERROR cookiecutter.foo: '
-        'Aw, snap! Something went wrong',
-
-        'DEBUG cookiecutter: '
-        'Successfully generated project',
+        'INFO cookiecutter: ' 'Welcome to Cookiecutter',
+        'DEBUG cookiecutter: ' 'Generating project from pytest-plugin',
+        'INFO cookiecutter.foo: ' 'Loading user config from home dir',
+        "DEBUG cookiecutter.foo.bar: " "I don't know.",
+        'DEBUG cookiecutter.foo.bar: ' 'I wanted to save the world.',
+        'ERROR cookiecutter.foo: ' 'Aw, snap! Something went wrong',
+        'DEBUG cookiecutter: ' 'Successfully generated project',
     ]
 
 
@@ -82,10 +69,7 @@ def debug_file(tmpdir):
 @pytest.fixture
 def info_logger_with_file(debug_file):
     """Fixture. Call cookiecutter logger setup with `info` debug level + `file`."""
-    return configure_logger(
-        stream_level='INFO',
-        debug_file=str(debug_file),
-    )
+    return configure_logger(stream_level='INFO', debug_file=str(debug_file))
 
 
 def test_info_stdout_logging(caplog, info_logger, info_messages):
@@ -122,8 +106,7 @@ def test_debug_stdout_logging(caplog, debug_logger, debug_messages):
     assert stream_messages == debug_messages
 
 
-def test_debug_file_logging(
-        caplog, info_logger_with_file, debug_file, debug_messages):
+def test_debug_file_logging(caplog, info_logger_with_file, debug_file, debug_messages):
     """Test that logging to stdout uses a different format and level than \
     the the file handler."""
     [file_handler, stream_handler] = info_logger_with_file.handlers

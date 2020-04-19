@@ -42,12 +42,8 @@ def test_should_invoke_main(monkeypatch, project_dir):
     """Should create a project and exit with 0 code on cli invocation."""
     monkeypatch.setenv('PYTHONPATH', '.')
 
-    exit_code = subprocess.check_call([
-        sys.executable,
-        '-m',
-        'cookiecutter.cli',
-        'tests/fake-repo-tmpl',
-        '--no-input'
-    ])
+    exit_code = subprocess.check_call(
+        [sys.executable, '-m', 'cookiecutter.cli', 'tests/fake-repo-tmpl', '--no-input']
+    )
     assert exit_code == 0
     assert os.path.isdir(project_dir)

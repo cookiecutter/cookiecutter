@@ -115,7 +115,7 @@ class TestPrompt(object):
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
         assert cookiecutter_dict == {
             'project_name': 'Slartibartfast',
-            'details': {'Slartibartfast': u'Slartibartfast',},
+            'details': {'Slartibartfast': u'Slartibartfast'},
         }
 
     def test_should_render_deep_dict(self):
@@ -157,9 +157,9 @@ class TestPrompt(object):
                     "deep_key": "deep_value",
                     "deep_integer": "42",
                     "deep_other_name": "Slartibartfast",
-                    "deep_list": ["deep value 1", "Slartibartfast", "deep value 3",],
+                    "deep_list": ["deep value 1", "Slartibartfast", "deep value 3"],
                 },
-                "list_key": ["value 1", "Slartibartfast", "value 3",],
+                "list_key": ["value 1", "Slartibartfast", "value 3"],
             },
         }
 

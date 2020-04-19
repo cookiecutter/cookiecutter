@@ -72,8 +72,7 @@ def get_config(config_path):
             yaml_dict = poyo.parse_string(file_handle.read())
         except poyo.exceptions.PoyoException as e:
             raise InvalidConfiguration(
-                'Unable to parse YAML file {}. Error: {}'
-                ''.format(config_path, e)
+                'Unable to parse YAML file {}. Error: {}' ''.format(config_path, e)
             )
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)

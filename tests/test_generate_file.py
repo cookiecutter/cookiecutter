@@ -39,10 +39,7 @@ def test_generate_file(env):
     """Verify simple file is generated with rendered context data."""
     infile = 'tests/files/{{generate_file}}.txt'
     generate.generate_file(
-        project_dir=".",
-        infile=infile,
-        context={'generate_file': 'cheese'},
-        env=env
+        project_dir=".", infile=infile, context={'generate_file': 'cheese'}, env=env
     )
     assert os.path.isfile('tests/files/cheese.txt')
     with open('tests/files/cheese.txt', 'rt') as f:
@@ -55,10 +52,7 @@ def test_generate_file_jsonify_filter(env):
     infile = 'tests/files/{{cookiecutter.jsonify_file}}.txt'
     data = {'jsonify_file': 'cheese', 'type': 'roquefort'}
     generate.generate_file(
-        project_dir=".",
-        infile=infile,
-        context={'cookiecutter': data},
-        env=env
+        project_dir=".", infile=infile, context={'cookiecutter': data}, env=env
     )
     assert os.path.isfile('tests/files/cheese.txt')
     with open('tests/files/cheese.txt', 'rt') as f:
@@ -72,17 +66,8 @@ def test_generate_file_random_ascii_string(env, length, punctuation):
     """Verify correct work of random_ascii_string extension on file generation."""
     infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
     data = {'random_string_file': 'cheese'}
-    context = {
-        "cookiecutter": data,
-        "length": length,
-        "punctuation": punctuation
-    }
-    generate.generate_file(
-        project_dir=".",
-        infile=infile,
-        context=context,
-        env=env
-    )
+    context = {"cookiecutter": data, "length": length, "punctuation": punctuation}
+    generate.generate_file(project_dir=".", infile=infile, context=context, env=env)
     assert os.path.isfile('tests/files/cheese.txt')
     with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
@@ -96,10 +81,7 @@ def test_generate_file_with_true_condition(env):
     """
     infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
     generate.generate_file(
-        project_dir=".",
-        infile=infile,
-        context={'generate_file': 'y'},
-        env=env
+        project_dir=".", infile=infile, context={'generate_file': 'y'}, env=env
     )
     assert os.path.isfile('tests/files/cheese.txt')
     with open('tests/files/cheese.txt', 'rt') as f:
@@ -114,10 +96,7 @@ def test_generate_file_with_false_condition(env):
     """
     infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
     generate.generate_file(
-        project_dir=".",
-        infile=infile,
-        context={'generate_file': 'n'},
-        env=env
+        project_dir=".", infile=infile, context={'generate_file': 'n'}, env=env
     )
     assert not os.path.isfile('tests/files/cheese.txt')
 
@@ -140,6 +119,6 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg):
             project_dir=".",
             infile='tests/files/syntax_error.txt',
             context={'syntax_error': 'syntax_error'},
-            env=env
+            env=env,
         )
     assert str(exception.value) == expected_msg

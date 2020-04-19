@@ -63,7 +63,7 @@ def test_api_invocation(mocker, template, output_dir, context):
         context=context,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
-        output_dir=output_dir
+        output_dir=output_dir,
     )
 
 
@@ -78,5 +78,5 @@ def test_default_output_dir(mocker, template, context):
         context=context,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
-        output_dir='.'
+        output_dir='.',
     )
