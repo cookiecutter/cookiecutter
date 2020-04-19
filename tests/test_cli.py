@@ -188,7 +188,7 @@ def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
 
     Case when output dir not exist.
     """
-    result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag,)
+    result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag)
 
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
@@ -200,7 +200,7 @@ def test_cli_overwrite_if_exists_when_output_dir_exists(cli_runner, overwrite_cl
 
     Case when output dir already exist.
     """
-    result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag,)
+    result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag)
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
 

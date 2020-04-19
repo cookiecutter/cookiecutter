@@ -72,9 +72,9 @@ def test_process_json_deep_dict():
         "dict_key": {
             "deep_key": "deep_value",
             "deep_integer": 42,
-            "deep_list": ["deep value 1", "deep value 2", "deep value 3",],
+            "deep_list": ["deep value 1", "deep value 2", "deep value 3"],
         },
-        "list_key": ["value 1", "value 2", "value 3",],
+        "list_key": ["value 1", "value 2", "value 3"],
     }
 
 
@@ -93,7 +93,7 @@ def test_should_call_prompt_with_process_json(mocker):
 
     Verifies generation of a processor for the user input.
     """
-    mock_prompt = mocker.patch('cookiecutter.prompt.click.prompt', autospec=True,)
+    mock_prompt = mocker.patch('cookiecutter.prompt.click.prompt', autospec=True)
 
     read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
