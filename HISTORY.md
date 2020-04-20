@@ -2,7 +2,18 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 1.7.1 (Current master, in development)
+## 1.8.0 (Current master, in development)
+
+* Do not modify this file, since 1.7.1 Changes are generated on Pull request
+title and will be added before release.
+
+## 1.7.1 (2019-04-22)
+
+This release was focused on internal code and CI/CD changes. During this release
+all code was verified to match pep8, pep257 and other code-styling guides.  
+Project CI/CD was significantly changed, Windows platform checks based on Appveyor
+engine was replaced by GitHub actions tests. Appveyor was removed. Also our
+CI/CD was extended with Mac builds, to verify project builds on Apple devices.
 
 Important Changes:
 
@@ -26,10 +37,12 @@ Internal CI/CD and tests changes:
 * Fixed `cov-report` tox invocation environment [@insspb](https://github.com/insspb) (#1350)
 * Added: Release drafter support and configuration to exclude changelog update work and focus on development [@ssbarnea](https://github.com/ssbarnea) [@insspb](https://github.com/insspb) (#1356, #1362)
 * Added: CI/CD steps for Github actions to speedup CI/CD [@insspb](https://github.com/insspb) (#1360)
-* Removed: Appveyor CI/CD completely removed [@insspb](https://github.com/insspb) (#1363)
+* Removed: Appveyor CI/CD completely removed [@insspb](https://github.com/insspb) [@ssbarnea](https://github.com/ssbarnea) [@insspb](https://github.com/insspb) (#1363, #1367)
 
 Code style and docs changes:
 
+* Added black formatting verification on lint stage + project files reformatting [@ssbarnea](https://github.com/ssbarnea) [@insspb](https://github.com/insspb) (#1368)
+* Added pep257 docstring for tests/* files [@insspb](https://github.com/insspb) (#1369, #1370, #1371, #1372, #1373, #1374, #1375, #1376, #1377, #1378, #1380, #1381)
 * Added pep257 docstring for tests/conftests.py [@kishan](https://github.com/kishan3) (#1272, #1263)
 * Added pep257 docstring for tests/replay/conftest.py [@kishan](https://github.com/kishan3) (#1270, #1268)
 * Added pep257 docstring for docs/__init__.py [@kishan](https://github.com/kishan3) (#1273, #1265)
