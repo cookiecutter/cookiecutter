@@ -2,7 +2,7 @@ categories:
   - title: 'Breaking Changes'
     labels:
       - 'breaking-change'
-  - title: 'Major Non-Breaking Changes'
+  - title: 'Non-Breaking Changes'
     labels:
       - 'major'
   - title: 'Minor Changes'
