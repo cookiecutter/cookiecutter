@@ -198,10 +198,10 @@ This configuration file setup the pytest-cov plugin and it is an additional depe
 It is possible to tests with some versions of python, to do this the command is:
 
 ```bash
-tox -e py27,py35,pypy
+tox -e py36,pypy3
 ```
 
-Will run py.test with the python2.7, python3.5 and pypy interpreters, for example.
+Will run py.test with the python3.6 and pypy3 interpreters, for example.
 
 ## Core Committer Guide
 
