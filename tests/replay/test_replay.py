@@ -15,9 +15,12 @@ def test_get_replay_file_name():
 
 
 @pytest.mark.parametrize(
-    'invalid_kwargs', ({'no_input': True},
-                       {'extra_context': {}},
-                       {'no_input': True, 'extra_context': {}},)
+    'invalid_kwargs',
+    (
+        {'no_input': True},
+        {'extra_context': {}},
+        {'no_input': True, 'extra_context': {}},
+    ),
 )
 def test_raise_on_invalid_mode(invalid_kwargs):
     """Test `cookiecutter` raise exception on unacceptable `replay` request."""

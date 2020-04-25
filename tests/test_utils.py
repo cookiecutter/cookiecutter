@@ -18,6 +18,7 @@ def make_readonly(path):
 
 
 def test_rmtree():
+    """Verify `utils.rmtree` remove files marked as read-only."""
     os.mkdir('foo')
     with open('foo/bar', "w") as f:
         f.write("Test data")
@@ -27,6 +28,11 @@ def test_rmtree():
 
 
 def test_make_sure_path_exists():
+    """Verify correct True/False response from `utils.make_sure_path_exists`.
+
+    Should return True if directory exist or created.
+    Should return False if impossible to create directory (for example protected)
+    """
     if sys.platform.startswith('win'):
         existing_directory = os.path.abspath(os.curdir)
         uncreatable_directory = 'a*b'
@@ -43,6 +49,7 @@ def test_make_sure_path_exists():
 
 
 def test_workin():
+    """Verify returning to original folder after `utils.work_in` use."""
     cwd = os.getcwd()
     ch_to = 'tests/files'
 
@@ -67,9 +74,7 @@ def test_prompt_should_ask_and_rm_repo_dir(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user agrees to delete/reclone the \
     repo, the repo should be deleted."""
     mock_read_user = mocker.patch(
-        'cookiecutter.utils.read_user_yes_no',
-        return_value=True,
-        autospec=True
+        'cookiecutter.utils.read_user_yes_no', return_value=True, autospec=True
     )
     repo_dir = tmpdir.mkdir('repo')
 
@@ -84,13 +89,9 @@ def test_prompt_should_ask_and_exit_on_user_no_answer(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user decline to delete/reclone the \
     repo, cookiecutter should exit."""
     mock_read_user = mocker.patch(
-        'cookiecutter.utils.read_user_yes_no',
-        return_value=False,
+        'cookiecutter.utils.read_user_yes_no', return_value=False,
     )
-    mock_sys_exit = mocker.patch(
-        'sys.exit',
-        return_value=True,
-    )
+    mock_sys_exit = mocker.patch('sys.exit', return_value=True)
     repo_dir = tmpdir.mkdir('repo')
 
     deleted = utils.prompt_and_delete(str(repo_dir))
@@ -105,9 +106,7 @@ def test_prompt_should_ask_and_rm_repo_file(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user agrees to delete/reclone a \
     repo file, the repo should be deleted."""
     mock_read_user = mocker.patch(
-        'cookiecutter.utils.read_user_yes_no',
-        return_value=True,
-        autospec=True
+        'cookiecutter.utils.read_user_yes_no', return_value=True, autospec=True
     )
 
     repo_file = tmpdir.join('repo.zip')
@@ -124,9 +123,7 @@ def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user wants to keep their old \
     cloned template repo, it should not be deleted."""
     mock_read_user = mocker.patch(
-        'cookiecutter.utils.read_user_yes_no',
-        return_value=False,
-        autospec=True
+        'cookiecutter.utils.read_user_yes_no', return_value=False, autospec=True
     )
     repo_dir = tmpdir.mkdir('repo')
 
@@ -140,6 +137,7 @@ def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmpdir):
 def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmpdir):
     """In `prompt_and_delete()`, if the user wants to keep their old \
     cloned template repo, it should not be deleted."""
+
     def answer(question, default):
         if 'okay to delete' in question:
             return False
@@ -147,9 +145,7 @@ def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmpdir):
             return True
 
     mock_read_user = mocker.patch(
-        'cookiecutter.utils.read_user_yes_no',
-        side_effect=answer,
-        autospec=True
+        'cookiecutter.utils.read_user_yes_no', side_effect=answer, autospec=True
     )
     repo_dir = tmpdir.mkdir('repo')
 
@@ -167,9 +163,7 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmpdir):
     `prompt.read_user_yes_no()` should be suppressed.
     """
     mock_read_user = mocker.patch(
-        'cookiecutter.prompt.read_user_yes_no',
-        return_value=True,
-        autospec=True
+        'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
     )
     repo_dir = tmpdir.mkdir('repo')
 
@@ -187,9 +181,7 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmpdir):
     `prompt.read_user_yes_no()` should be suppressed.
     """
     mock_read_user = mocker.patch(
-        'cookiecutter.prompt.read_user_yes_no',
-        return_value=True,
-        autospec=True
+        'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
     )
 
     repo_file = tmpdir.join('repo.zip')

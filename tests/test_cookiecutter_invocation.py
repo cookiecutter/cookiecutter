@@ -16,7 +16,17 @@ import pytest
 from cookiecutter import utils
 
 
+@pytest.fixture
+def project_dir():
+    """Return test project folder name and remove it after the test."""
+    yield 'fake-project-templated'
+
+    if os.path.isdir('fake-project-templated'):
+        utils.rmtree('fake-project-templated')
+
+
 def test_should_raise_error_without_template_arg(monkeypatch, capfd):
+    """Verify expected error in command line on invocation without arguments."""
     monkeypatch.setenv('PYTHONPATH', '.')
 
     with pytest.raises(subprocess.CalledProcessError):
@@ -27,29 +37,13 @@ def test_should_raise_error_without_template_arg(monkeypatch, capfd):
     assert exp_message in err and "TEMPLATE" in err
 
 
-@pytest.fixture
-def project_dir(request):
-    """Remove the rendered project directory created by the test."""
-    rendered_dir = 'fake-project-templated'
-
-    def remove_generated_project():
-        if os.path.isdir(rendered_dir):
-            utils.rmtree(rendered_dir)
-    request.addfinalizer(remove_generated_project)
-
-    return rendered_dir
-
-
 @pytest.mark.usefixtures('clean_system')
 def test_should_invoke_main(monkeypatch, project_dir):
+    """Should create a project and exit with 0 code on cli invocation."""
     monkeypatch.setenv('PYTHONPATH', '.')
 
-    subprocess.check_call([
-        sys.executable,
-        '-m',
-        'cookiecutter.cli',
-        'tests/fake-repo-tmpl',
-        '--no-input'
-    ])
-
+    exit_code = subprocess.check_call(
+        [sys.executable, '-m', 'cookiecutter.cli', 'tests/fake-repo-tmpl', '--no-input']
+    )
+    assert exit_code == 0
     assert os.path.isdir(project_dir)

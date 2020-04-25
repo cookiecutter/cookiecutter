@@ -24,10 +24,19 @@ logger = logging.getLogger(__name__)
 
 
 def cookiecutter(
-        template, checkout=None, no_input=False, extra_context=None,
-        replay=False, overwrite_if_exists=False, output_dir='.',
-        config_file=None, default_config=False, password=None, directory=None,
-        skip_if_file_exists=False):
+    template,
+    checkout=None,
+    no_input=False,
+    extra_context=None,
+    replay=False,
+    overwrite_if_exists=False,
+    output_dir='.',
+    config_file=None,
+    default_config=False,
+    password=None,
+    directory=None,
+    skip_if_file_exists=False,
+):
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -53,8 +62,7 @@ def cookiecutter(
         raise InvalidModeException(err_msg)
 
     config_dict = get_user_config(
-        config_file=config_file,
-        default_config=default_config,
+        config_file=config_file, default_config=default_config,
     )
 
     repo_dir, cleanup = determine_repo_dir(
@@ -64,7 +72,7 @@ def cookiecutter(
         checkout=checkout,
         no_input=no_input,
         password=password,
-        directory=directory
+        directory=directory,
     )
     sys.path.append(os.path.join(repo_dir, "extensions"))
 
@@ -97,7 +105,7 @@ def cookiecutter(
         context=context,
         overwrite_if_exists=overwrite_if_exists,
         skip_if_file_exists=skip_if_file_exists,
-        output_dir=output_dir
+        output_dir=output_dir,
     )
 
     # Cleanup (if required)

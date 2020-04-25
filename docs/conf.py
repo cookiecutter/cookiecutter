@@ -30,6 +30,7 @@ import sys
 
 # flake8: noqa D107,D105
 
+
 class Mock(object):
     def __init__(self, *args, **kwargs):
         pass
@@ -79,17 +80,14 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'docs.ccext',
-    'recommonmark'
+    'recommonmark',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix of source filenames.
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
-}
+source_suffix = {'.rst': 'restructuredtext', '.md': 'markdown'}
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
@@ -235,10 +233,8 @@ htmlhelp_basename = 'cookiecutterdoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     # 'preamble': '',
 }
@@ -246,8 +242,13 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual])
 latex_documents = [
-    ('index', 'cookiecutter.tex', u'cookiecutter Documentation',
-     u'Audrey Roy and Cookiecutter community', 'manual'),
+    (
+        'index',
+        'cookiecutter.tex',
+        u'cookiecutter Documentation',
+        u'Audrey Roy and Cookiecutter community',
+        'manual',
+    ),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -276,8 +277,13 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'cookiecutter', u'cookiecutter Documentation',
-     [u'Audrey Roy and Cookiecutter community'], 1)
+    (
+        'index',
+        'cookiecutter',
+        u'cookiecutter Documentation',
+        [u'Audrey Roy and Cookiecutter community'],
+        1,
+    )
 ]
 
 # If true, show URL addresses after external links.
@@ -290,9 +296,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'cookiecutter', u'cookiecutter Documentation',
-     u'Audrey Roy and Cookiecutter community', 'cookiecutter',
-     'Creates projects from project templates', 'Miscellaneous'),
+    (
+        'index',
+        'cookiecutter',
+        u'cookiecutter Documentation',
+        u'Audrey Roy and Cookiecutter community',
+        'cookiecutter',
+        'Creates projects from project templates',
+        'Miscellaneous',
+    ),
 ]
 
 # Documents to append as an appendix to all manuals.
