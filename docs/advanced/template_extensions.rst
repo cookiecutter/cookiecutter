@@ -23,8 +23,7 @@ On invocation Cookiecutter tries to import the extensions and add them to its en
 In the above example, Cookiecutter provides the additional tag `now`_, after
 installing the `jinja2_time.TimeExtension`_ and enabling it in ``cookiecutter.json``.
 
-You can place custom Jinja2 extensions in your cookiecutter's ``./extensions`` directory
-(*New in Cookiecutter ???*).
+You can place custom Jinja2 extensions in your cookiecutter's ``./extensions`` directory.
 It is similar to placing post and pre hook scripts in ``./hooks``.
 For that you need to `write a Jinja2 extension`_ file, let's call it ``myext.py`` like so:
 
