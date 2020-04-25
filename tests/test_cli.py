@@ -415,15 +415,12 @@ def test_echo_unknown_extension_error(tmpdir, cli_runner):
 
 
 def test_local_extension(tmpdir, cli_runner):
+    """Test to verify correct work of extension, included in template."""
     output_dir = str(tmpdir.mkdir('output'))
     template_path = 'tests/test-extensions/local_extension/'
 
     result = cli_runner(
-        '--no-input',
-        '--default-config',
-        '--output-dir',
-        output_dir,
-        template_path,
+        '--no-input', '--default-config', '--output-dir', output_dir, template_path,
     )
     assert result.exit_code == 0
     with open(os.path.join(output_dir, 'Foobar', 'HISTORY.rst')) as f:
