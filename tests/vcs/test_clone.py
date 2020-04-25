@@ -74,6 +74,9 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, tmpdir):
     [
         ('git', 'https://github.com/hello/world.git', 'world'),
         ('hg', 'https://bitbucket.org/foo/bar', 'bar'),
+        ('git', 'git@host:gitoliterepo', 'gitoliterepo'),
+        ('git', 'git@gitlab.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
+        ('git', 'git@github.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
     ],
 )
 def test_clone_should_invoke_vcs_command(
