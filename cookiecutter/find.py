@@ -5,7 +5,7 @@
 import logging
 import os
 
-from .exceptions import NonTemplatedInputDirException
+from cookiecutter.exceptions import NonTemplatedInputDirException
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ def find_template(repo_dir):
     :param repo_dir: Local directory of newly cloned repo.
     :returns project_template: Relative path to project template.
     """
-    logger.debug('Searching {} for the project template.'.format(repo_dir))
+    logger.debug('Searching %s for the project template.', repo_dir)
 
     repo_dir_contents = os.listdir(repo_dir)
 
@@ -28,9 +28,7 @@ def find_template(repo_dir):
 
     if project_template:
         project_template = os.path.join(repo_dir, project_template)
-        logger.debug(
-            'The project template appears to be {}'.format(project_template)
-        )
+        logger.debug('The project template appears to be %s', project_template)
         return project_template
     else:
         raise NonTemplatedInputDirException

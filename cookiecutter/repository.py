@@ -6,17 +6,20 @@ from __future__ import unicode_literals
 import os
 import re
 
-from .exceptions import RepositoryNotFound
-from .vcs import clone
-from .zipfile import unzip
+from cookiecutter.exceptions import RepositoryNotFound
+from cookiecutter.vcs import clone
+from cookiecutter.zipfile import unzip
 
-REPO_REGEX = re.compile(r"""
-(?x)
-((((git|hg)\+)?(git|ssh|https?):(//)?)  # something like git:// ssh:// etc.
+REPO_REGEX = re.compile(
+    r"""
+# something like git:// ssh:// file:// etc.
+((((git|hg)\+)?(git|ssh|file|https?):(//)?)
  |                                      # or
  (\w+@[\w\.]+)                          # something like user@...
 )
-""")
+""",
+    re.VERBOSE,
+)
 
 
 def is_repo_url(value):
@@ -61,8 +64,15 @@ def repository_has_cookiecutter_json(repo_directory):
     return repo_directory_exists and repo_config_exists
 
 
-def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
-                       no_input, password=None):
+def determine_repo_dir(
+    template,
+    abbreviations,
+    clone_to_dir,
+    checkout,
+    no_input,
+    password=None,
+    directory=None,
+):
     """
     Locate the repository directory from a template reference.
 
@@ -78,6 +88,7 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
     :param password: The password to use when extracting the repository.
+    :param directory: Directory within repo where cookiecutter.json lives.
     :return: A tuple containing the cookiecutter template directory, and
         a boolean descriving whether that directory should be cleaned up
         after the template has been instantiated.
@@ -91,7 +102,7 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
             is_url=is_repo_url(template),
             clone_to_dir=clone_to_dir,
             no_input=no_input,
-            password=password
+            password=password,
         )
         repository_candidates = [unzipped_dir]
         cleanup = True
@@ -105,11 +116,13 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
         repository_candidates = [cloned_repo]
         cleanup = False
     else:
-        repository_candidates = [
-            template,
-            os.path.join(clone_to_dir, template)
-        ]
+        repository_candidates = [template, os.path.join(clone_to_dir, template)]
         cleanup = False
+
+    if directory:
+        repository_candidates = [
+            os.path.join(s, directory) for s in repository_candidates
+        ]
 
     for repo_candidate in repository_candidates:
         if repository_has_cookiecutter_json(repo_candidate):
@@ -117,8 +130,5 @@ def determine_repo_dir(template, abbreviations, clone_to_dir, checkout,
 
     raise RepositoryNotFound(
         'A valid repository for "{}" could not be found in the following '
-        'locations:\n{}'.format(
-            template,
-            '\n'.join(repository_candidates)
-        )
+        'locations:\n{}'.format(template, '\n'.join(repository_candidates))
     )

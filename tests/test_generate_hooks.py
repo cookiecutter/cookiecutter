@@ -1,69 +1,59 @@
 # -*- coding: utf-8 -*-
 
-"""
-test_generate_hooks
--------------------
-
-Tests formerly known from a unittest residing in test_generate.py named
-TestHooks.test_ignore_hooks_dirs
-TestHooks.test_run_python_hooks
-TestHooks.test_run_python_hooks_cwd
-TestHooks.test_run_shell_hooks
-"""
+"""Test work of python and shell hooks for generated projects."""
 
 from __future__ import unicode_literals
+
 import errno
 import os
 import sys
-import stat
+
 import pytest
 
-from cookiecutter import generate
-from cookiecutter import utils
+from cookiecutter import generate, utils
 from cookiecutter.exceptions import FailedHookException
 
 WINDOWS = sys.platform.startswith('win')
 
 
 @pytest.fixture(scope='function')
-def remove_additional_folders(request):
-    """
-    Remove some special folders which are created by the tests.
-    """
-    def fin_remove_additional_folders():
-        directories_to_delete = [
-            'tests/test-pyhooks/inputpyhooks',
-            'inputpyhooks',
-            'inputhooks',
-            'tests/test-shellhooks',
-            'tests/test-hooks',
-        ]
-        for directory in directories_to_delete:
-            if os.path.exists(directory):
-                utils.rmtree(directory)
-    request.addfinalizer(fin_remove_additional_folders)
+def remove_additional_folders(tmpdir):
+    """Remove some special folders which are created by the tests."""
+    yield
+    directories_to_delete = [
+        'tests/test-pyhooks/inputpyhooks',
+        'inputpyhooks',
+        'inputhooks',
+        os.path.join(str(tmpdir), 'test-shellhooks'),
+        'tests/test-hooks',
+    ]
+    for directory in directories_to_delete:
+        if os.path.exists(directory):
+            utils.rmtree(directory)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_ignore_hooks_dirs():
+    """Verify hooks directory not created in target location on files generation."""
     generate.generate_files(
-        context={
-            'cookiecutter': {'pyhooks': 'pyhooks'}
-        },
+        context={'cookiecutter': {'pyhooks': 'pyhooks'}},
         repo_dir='tests/test-pyhooks/',
-        output_dir='tests/test-pyhooks/'
+        output_dir='tests/test-pyhooks/',
     )
     assert not os.path.exists('tests/test-pyhooks/inputpyhooks/hooks')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_run_python_hooks():
+    """Verify pre and post generation python hooks executed and result in output_dir.
+
+    Each hook should create in target directory. Test verifies that these files
+    created.
+    """
     generate.generate_files(
-        context={
-            'cookiecutter': {'pyhooks': 'pyhooks'}
-        },
-        repo_dir='tests/test-pyhooks/'.replace("/", os.sep),
-        output_dir='tests/test-pyhooks/'.replace("/", os.sep)
+        context={'cookiecutter': {'pyhooks': 'pyhooks'}},
+        repo_dir='tests/test-pyhooks/',
+        output_dir='tests/test-pyhooks/',
     )
     assert os.path.exists('tests/test-pyhooks/inputpyhooks/python_pre.txt')
     assert os.path.exists('tests/test-pyhooks/inputpyhooks/python_post.txt')
@@ -71,11 +61,13 @@ def test_run_python_hooks():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_run_python_hooks_cwd():
+    """Verify pre and post generation python hooks executed and result in current dir.
+
+    Each hook should create in target directory. Test verifies that these files
+    created.
+    """
     generate.generate_files(
-        context={
-            'cookiecutter': {'pyhooks': 'pyhooks'}
-        },
-        repo_dir='tests/test-pyhooks/'
+        context={'cookiecutter': {'pyhooks': 'pyhooks'}}, repo_dir='tests/test-pyhooks/'
     )
     assert os.path.exists('inputpyhooks/python_pre.txt')
     assert os.path.exists('inputpyhooks/python_post.txt')
@@ -84,22 +76,27 @@ def test_run_python_hooks_cwd():
 @pytest.mark.skipif(WINDOWS, reason='OSError.errno=8 is not thrown on Windows')
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_empty_hooks():
-    # OSError.errno=8 is not thrown on Windows when the script is empty
-    # because it always runs through shell instead of needing a shebang.
+    """Verify error is raised on empty hook script. Ignored on windows.
+
+    OSError.errno=8 is not thrown on Windows when the script is empty
+    because it always runs through shell instead of needing a shebang.
+    """
     with pytest.raises(FailedHookException) as excinfo:
         generate.generate_files(
-            context={
-                'cookiecutter': {'shellhooks': 'shellhooks'}
-            },
+            context={'cookiecutter': {'shellhooks': 'shellhooks'}},
             repo_dir='tests/test-shellhooks-empty/',
-            overwrite_if_exists=True
+            overwrite_if_exists=True,
         )
     assert 'shebang' in str(excinfo.value)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_oserror_hooks(mocker):
+    """Verify script error passed correctly to cookiecutter error.
 
+    Here subprocess.Popen function mocked, ie we do not call hook script,
+    just produce expected error.
+    """
     message = 'Out of memory'
 
     err = OSError(message)
@@ -110,17 +107,16 @@ def test_oserror_hooks(mocker):
 
     with pytest.raises(FailedHookException) as excinfo:
         generate.generate_files(
-            context={
-                'cookiecutter': {'shellhooks': 'shellhooks'}
-            },
+            context={'cookiecutter': {'shellhooks': 'shellhooks'}},
             repo_dir='tests/test-shellhooks-empty/',
-            overwrite_if_exists=True
+            overwrite_if_exists=True,
         )
     assert message in str(excinfo.value)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_run_failing_hook_removes_output_directory():
+    """Verify project directory not created or removed if hook failed."""
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
@@ -138,11 +134,9 @@ def test_run_failing_hook_removes_output_directory():
 
     with pytest.raises(FailedHookException) as excinfo:
         generate.generate_files(
-            context={
-                'cookiecutter': {'hooks': 'hooks'}
-            },
+            context={'cookiecutter': {'hooks': 'hooks'}},
             repo_dir='tests/test-hooks/',
-            overwrite_if_exists=True
+            overwrite_if_exists=True,
         )
 
     assert 'Hook script failed' in str(excinfo.value)
@@ -151,6 +145,7 @@ def test_run_failing_hook_removes_output_directory():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_run_failing_hook_preserves_existing_output_directory():
+    """Verify project directory not removed if exist before hook failed."""
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
@@ -169,72 +164,54 @@ def test_run_failing_hook_preserves_existing_output_directory():
     os.mkdir('inputhooks')
     with pytest.raises(FailedHookException) as excinfo:
         generate.generate_files(
-            context={
-                'cookiecutter': {'hooks': 'hooks'}
-            },
+            context={'cookiecutter': {'hooks': 'hooks'}},
             repo_dir='tests/test-hooks/',
-            overwrite_if_exists=True
+            overwrite_if_exists=True,
         )
 
     assert 'Hook script failed' in str(excinfo.value)
     assert os.path.exists('inputhooks')
 
 
-def make_test_repo(name):
-    hooks = os.path.join(name, 'hooks')
-    template = os.path.join(name, 'input{{cookiecutter.shellhooks}}')
-    os.mkdir(name)
-    os.mkdir(hooks)
-    os.mkdir(template)
-
-    with open(os.path.join(template, 'README.rst'), 'w') as f:
-        f.write("foo\n===\n\nbar\n")
-
-    if sys.platform.startswith('win'):
-        filename = os.path.join(hooks, 'pre_gen_project.bat')
-        with open(filename, 'w') as f:
-            f.write("@echo off\n")
-            f.write("\n")
-            f.write("echo pre generation hook\n")
-            f.write("echo. >shell_pre.txt\n")
-
-        filename = os.path.join(hooks, 'post_gen_project.bat')
-        with open(filename, 'w') as f:
-            f.write("@echo off\n")
-            f.write("\n")
-            f.write("echo post generation hook\n")
-            f.write("echo. >shell_post.txt\n")
-    else:
-        filename = os.path.join(hooks, 'pre_gen_project.sh')
-        with open(filename, 'w') as f:
-            f.write("#!/bin/bash\n")
-            f.write("\n")
-            f.write("echo 'pre generation hook';\n")
-            f.write("touch 'shell_pre.txt'\n")
-        # Set the execute bit
-        os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
-
-        filename = os.path.join(hooks, 'post_gen_project.sh')
-        with open(filename, 'w') as f:
-            f.write("#!/bin/bash\n")
-            f.write("\n")
-            f.write("echo 'post generation hook';\n")
-            f.write("touch 'shell_post.txt'\n")
-        # Set the execute bit
-        os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
-
-
+@pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux only test")
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_shell_hooks():
-    make_test_repo('tests/test-shellhooks')
+def test_run_shell_hooks(tmpdir):
+    """Verify pre and post generate project shell hooks executed.
+
+    This test for .sh files.
+    """
     generate.generate_files(
-        context={
-            'cookiecutter': {'shellhooks': 'shellhooks'}
-        },
+        context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks/',
-        output_dir='tests/test-shellhooks/'
+        output_dir=os.path.join(str(tmpdir), 'test-shellhooks'),
     )
-    shell_pre_file = 'tests/test-shellhooks/inputshellhooks/shell_pre.txt'
-    shell_post_file = 'tests/test-shellhooks/inputshellhooks/shell_post.txt'
+    shell_pre_file = os.path.join(
+        str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
+    )
+    shell_post_file = os.path.join(
+        str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
+    )
+    assert os.path.exists(shell_pre_file)
+    assert os.path.exists(shell_post_file)
+
+
+@pytest.mark.skipif(not sys.platform.startswith('win'), reason="Win only test")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_run_shell_hooks_win(tmpdir):
+    """Verify pre and post generate project shell hooks executed.
+
+    This test for .bat files.
+    """
+    generate.generate_files(
+        context={'cookiecutter': {'shellhooks': 'shellhooks'}},
+        repo_dir='tests/test-shellhooks-win/',
+        output_dir=os.path.join(str(tmpdir), 'test-shellhooks-win'),
+    )
+    shell_pre_file = os.path.join(
+        str(tmpdir), 'test-shellhooks-win', 'inputshellhooks', 'shell_pre.txt'
+    )
+    shell_post_file = os.path.join(
+        str(tmpdir), 'test-shellhooks-win', 'inputshellhooks', 'shell_post.txt'
+    )
     assert os.path.exists(shell_pre_file)
     assert os.path.exists(shell_post_file)

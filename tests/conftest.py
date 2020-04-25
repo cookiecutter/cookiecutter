@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-conftest
---------
-
-Contains pytest fixtures which are globally available throughout the suite.
-"""
+"""pytest fixtures which are globally available throughout the suite."""
 
 import logging
 import os
@@ -23,6 +18,7 @@ replay_dir: "{replay_dir}"
 
 
 def backup_dir(original_dir, backup_dir):
+    """Generate backup directory based on original directory."""
     # If the default original_dir is pre-existing, move it to a temp location
     if not os.path.isdir(original_dir):
         return False
@@ -36,6 +32,7 @@ def backup_dir(original_dir, backup_dir):
 
 
 def restore_backup_dir(original_dir, backup_dir, original_dir_found):
+    """Restore default contents."""
     # Carefully delete the created original_dir only in certain
     # conditions.
     original_dir_is_dir = os.path.isdir(original_dir)
@@ -59,8 +56,7 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found):
 
 @pytest.fixture(scope='function')
 def clean_system(request):
-    """
-    Fixture that simulates a clean system with no config/cloned cookiecutters.
+    """Fixture. Simulates a clean system with no configured or cloned cookiecutters.
 
     It runs code which can be regarded as setup code as known from a unittest
     TestCase. Additionally it defines a local function referring to values
@@ -92,12 +88,9 @@ def clean_system(request):
       `~/.cookiecutter_replay.backup/`
 
     """
-
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
     user_config_path = os.path.expanduser('~/.cookiecutterrc')
-    user_config_path_backup = os.path.expanduser(
-        '~/.cookiecutterrc.backup'
-    )
+    user_config_path_backup = os.path.expanduser('~/.cookiecutterrc.backup')
     if os.path.exists(user_config_path):
         user_config_found = True
         shutil.copy(user_config_path, user_config_path_backup)
@@ -109,16 +102,12 @@ def clean_system(request):
     # temp location
     cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
     cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
-    cookiecutters_dir_found = backup_dir(
-        cookiecutters_dir, cookiecutters_dir_backup
-    )
+    cookiecutters_dir_found = backup_dir(cookiecutters_dir, cookiecutters_dir_backup)
 
     # If the default cookiecutter_replay_dir is pre-existing, move it to a
     # temp location
     cookiecutter_replay_dir = os.path.expanduser('~/.cookiecutter_replay')
-    cookiecutter_replay_dir_backup = os.path.expanduser(
-        '~/.cookiecutter_replay.backup'
-    )
+    cookiecutter_replay_dir_backup = os.path.expanduser('~/.cookiecutter_replay.backup')
     cookiecutter_replay_dir_found = backup_dir(
         cookiecutter_replay_dir, cookiecutter_replay_dir_backup
     )
@@ -133,9 +122,7 @@ def clean_system(request):
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.
         restore_backup_dir(
-            cookiecutters_dir,
-            cookiecutters_dir_backup,
-            cookiecutters_dir_found
+            cookiecutters_dir, cookiecutters_dir_backup, cookiecutters_dir_found
         )
 
         # Carefully delete the created ~/.cookiecutter_replay dir only in
@@ -143,7 +130,7 @@ def clean_system(request):
         restore_backup_dir(
             cookiecutter_replay_dir,
             cookiecutter_replay_dir_backup,
-            cookiecutter_replay_dir_found
+            cookiecutter_replay_dir_found,
         )
 
     request.addfinalizer(restore_backup)
@@ -151,14 +138,16 @@ def clean_system(request):
 
 @pytest.fixture(scope='session')
 def user_dir(tmpdir_factory):
-    """Fixture that simulates the user's home directory"""
+    """Fixture that simulates the user's home directory."""
     return tmpdir_factory.mktemp('user_dir')
 
 
 @pytest.fixture(scope='session')
 def user_config_data(user_dir):
-    """Fixture that creates 2 Cookiecutter user config dirs in the user's home
-    directory:
+    """Fixture that creates 2 Cookiecutter user config dirs.
+
+     It will create it in the user's home directory.
+
     * `cookiecutters_dir`
     * `cookiecutter_replay`
 
@@ -175,8 +164,10 @@ def user_config_data(user_dir):
 
 @pytest.fixture(scope='session')
 def user_config_file(user_dir, user_config_data):
-    """Fixture that creates a config file called `config` in the user's home
-    directory, with YAML from `user_config_data`.
+    """Fixture that creates a config file called `config`.
+
+     It will create it in the user's home directory, with YAML from
+     `user_config_data`.
 
     :param user_dir: Simulated user's home directory
     :param user_config_data: Dict of config values
@@ -191,4 +182,5 @@ def user_config_file(user_dir, user_config_data):
 
 @pytest.fixture(autouse=True)
 def disable_poyo_logging():
+    """Fixture that disables poyo logging."""
     logging.getLogger('poyo').setLevel(logging.WARNING)

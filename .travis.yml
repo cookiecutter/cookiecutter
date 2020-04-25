@@ -1,26 +1,93 @@
 # Config file for automatic testing at travis-ci.org
-
-sudo: false
+dist: xenial
+os: linux
 language: python
 
-matrix:
+jobs:
     include:
+      - python: 3.7
+        env: TOXENV=lint
       - python: 2.7
-        env: TOX_ENV=py27
-      - python: 3.3
-        env: TOX_ENV=py33
-      - python: 3.4
-        env: TOX_ENV=py34
+        env: TOXENV=py27
       - python: 3.5
-        env: TOX_ENV=py35
+        env: TOXENV=py35
       - python: 3.6
-        env: TOX_ENV=py36
+        env: TOXENV=py36
+      - python: 3.7
+        env: TOXENV=py37
+      - python: 3.8
+        env: TOXENV=py38
       - python: pypy
-        env: TOX_ENV=pypy
-      - python: 3.5
-        env: TOX_ENV=flake8
+        env: TOXENV=pypy
+      - python: pypy3
+        env: TOXENV=pypy3
+      - name: "Python 2.7 on Windows"
+        os: windows
+        language: shell
+        before_install:
+          - choco install python2
+          - python --version
+          - python -m pip install --upgrade pip
+          - pip install --upgrade virtualenv wheel
+          - virtualenv $HOME/venv
+          - source $HOME/venv/Scripts/activate
+        env:
+          - TOXENV=py27
+          - PATH=/c/Python27:/c/Python27/Scripts:$PATH
+      - name: "Python 3.5 on Windows"
+        os: windows
+        language: shell
+        before_install:
+          - choco install python --version 3.5.4
+          - python --version
+          - python -m pip install --upgrade pip
+          - pip3 install --upgrade virtualenv wheel
+          - virtualenv $HOME/venv
+          - source $HOME/venv/Scripts/activate
+        env:
+          - TOXENV=py35
+          - PATH=/c/Python35:/c/Python35/Scripts:$PATH
+      - name: "Python 3.6 on Windows"
+        os: windows
+        language: shell
+        before_install:
+          - choco install python --version 3.6.7
+          - python --version
+          - python -m pip install --upgrade pip
+          - pip3 install --upgrade virtualenv wheel
+          - virtualenv $HOME/venv
+          - source $HOME/venv/Scripts/activate
+        env:
+          - TOXENV=py36
+          - PATH=/c/Python36:/c/Python36/Scripts:$PATH
+      - name: "Python 3.7 on Windows"
+        os: windows
+        language: shell
+        before_install:
+          - choco install python --version 3.7.2
+          - python --version
+          - python -m pip install --upgrade pip
+          - pip3 install --upgrade virtualenv wheel
+          - virtualenv $HOME/venv
+          - source $HOME/venv/Scripts/activate
+        env:
+          - TOXENV=py37
+          - PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      - name: "Python 3.8 on Windows"
+        os: windows
+        language: shell
+        before_install:
+          - choco install python --version 3.8.0
+          - python --version
+          - python -m pip install --upgrade pip
+          - pip3 install --upgrade virtualenv wheel
+          - virtualenv $HOME/venv
+          - source $HOME/venv/Scripts/activate
+        env:
+          - TOXENV=py38
+          - PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
-script: tox -e $TOX_ENV
+script: tox
 
 install:
     - pip install tox
@@ -30,4 +97,4 @@ after_success:
     # Report coverage results to codecov.io
     # and export tox environment variables
     - pip install codecov
-    - codecov -e TOX_ENV TRAVIS_OS_NAME
+    - codecov -e TOXENV TRAVIS_OS_NAME
