@@ -11,7 +11,7 @@ Various advanced topics regarding cookiecutter usage.
    hooks
    user_config
    calling_from_python
-   injecting_content
+   injecting_context
    suppressing_prompts
    templates_in_context
    copy_without_render
@@ -20,3 +20,4 @@ Various advanced topics regarding cookiecutter usage.
    choice_variables
    dict_variables
    template_extensions
+   directories

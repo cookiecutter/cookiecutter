@@ -7,12 +7,18 @@ import logging
 import os
 import subprocess
 
-from whichcraft import which
+try:
+    from shutil import which
+except ImportError:
+    from whichcraft import which
 
-from .exceptions import (
-    RepositoryNotFound, RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
+from cookiecutter.exceptions import (
+    RepositoryNotFound,
+    RepositoryCloneFailed,
+    UnknownRepoType,
+    VCSNotInstalled,
 )
-from .utils import make_sure_path_exists, prompt_and_delete
+from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
 logger = logging.getLogger(__name__)
 
