@@ -101,11 +101,11 @@ Alternate installations
 
     $ brew install cookiecutter
 
-**Pipsi (Linux/OSX only):**
+**Pipx (Linux, OSX and Windows):**
 
 .. code-block:: bash
 
-    $ pipsi install cookiecutter
+    $ pipx install cookiecutter
 
 **Debian/Ubuntu:**
 
