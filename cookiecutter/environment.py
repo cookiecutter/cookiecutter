@@ -4,7 +4,7 @@
 
 from jinja2 import Environment, StrictUndefined
 
-from .exceptions import UnknownExtension
+from cookiecutter.exceptions import UnknownExtension
 
 
 class ExtensionLoaderMixin(object):
@@ -27,15 +27,14 @@ class ExtensionLoaderMixin(object):
 
         default_extensions = [
             'cookiecutter.extensions.JsonifyExtension',
+            'cookiecutter.extensions.RandomStringExtension',
+            'cookiecutter.extensions.SlugifyExtension',
             'jinja2_time.TimeExtension',
         ]
         extensions = default_extensions + self._read_extensions(context)
 
         try:
-            super(ExtensionLoaderMixin, self).__init__(
-                extensions=extensions,
-                **kwargs
-            )
+            super(ExtensionLoaderMixin, self).__init__(extensions=extensions, **kwargs)
         except ImportError as err:
             raise UnknownExtension('Unable to load extension: {}'.format(err))
 
@@ -65,7 +64,4 @@ class StrictEnvironment(ExtensionLoaderMixin, Environment):
 
         Also loading extensions defined in cookiecutter.json's _extensions key.
         """
-        super(StrictEnvironment, self).__init__(
-            undefined=StrictUndefined,
-            **kwargs
-        )
+        super(StrictEnvironment, self).__init__(undefined=StrictUndefined, **kwargs)

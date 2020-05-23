@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+"""pytest fixtures for testing cookiecutter's replay feature."""
+
 import pytest
 
 
@@ -17,9 +20,11 @@ def context():
 
 @pytest.fixture
 def replay_test_dir():
+    """Fixture to test directory."""
     return 'tests/test-replay/'
 
 
 @pytest.fixture
 def mock_user_config(mocker):
+    """Fixture to mock user config."""
     return mocker.patch('cookiecutter.main.get_user_config')

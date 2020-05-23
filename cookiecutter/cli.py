@@ -20,7 +20,7 @@ from cookiecutter.exceptions import (
     UnknownExtension,
     InvalidZipRepository,
     RepositoryNotFound,
-    RepositoryCloneFailed
+    RepositoryCloneFailed,
 )
 
 
@@ -51,47 +51,77 @@ def validate_extra_context(ctx, param, value):
 @click.argument(u'template')
 @click.argument(u'extra_context', nargs=-1, callback=validate_extra_context)
 @click.option(
-    u'--no-input', is_flag=True,
+    u'--no-input',
+    is_flag=True,
     help=u'Do not prompt for parameters and only use cookiecutter.json '
-         u'file content',
+    u'file content',
 )
 @click.option(
-    u'-c', u'--checkout',
-    help=u'branch, tag or commit to checkout after git clone',
+    u'-c', u'--checkout', help=u'branch, tag or commit to checkout after git clone',
 )
 @click.option(
-    '-v', '--verbose',
-    is_flag=True, help='Print debug information', default=False
+    u'--directory',
+    help=u'Directory within repo that holds cookiecutter.json file '
+    u'for advanced repositories with multi templates in it',
 )
 @click.option(
-    u'--replay', is_flag=True,
+    '-v', '--verbose', is_flag=True, help='Print debug information', default=False
+)
+@click.option(
+    u'--replay',
+    is_flag=True,
     help=u'Do not prompt for parameters and only use information entered '
-         u'previously',
+    u'previously',
 )
 @click.option(
-    u'-f', u'--overwrite-if-exists', is_flag=True,
-    help=u'Overwrite the contents of the output directory if it already exists'
+    u'-f',
+    u'--overwrite-if-exists',
+    is_flag=True,
+    help=u'Overwrite the contents of the output directory if it already exists',
 )
 @click.option(
-    u'-o', u'--output-dir', default='.', type=click.Path(),
-    help=u'Where to output the generated project dir into'
+    u'-s',
+    u'--skip-if-file-exists',
+    is_flag=True,
+    help=u'Skip the files in the corresponding directories if they already ' u'exist',
+    default=False,
 )
 @click.option(
-    u'--config-file', type=click.Path(), default=None,
-    help=u'User configuration file'
+    u'-o',
+    u'--output-dir',
+    default='.',
+    type=click.Path(),
+    help=u'Where to output the generated project dir into',
 )
 @click.option(
-    u'--default-config', is_flag=True,
-    help=u'Do not load a config file. Use the defaults instead'
+    u'--config-file', type=click.Path(), default=None, help=u'User configuration file'
 )
 @click.option(
-    u'--debug-file', type=click.Path(), default=None,
+    u'--default-config',
+    is_flag=True,
+    help=u'Do not load a config file. Use the defaults instead',
+)
+@click.option(
+    u'--debug-file',
+    type=click.Path(),
+    default=None,
     help=u'File to be used as a stream for DEBUG logging',
 )
 def main(
-        template, extra_context, no_input, checkout, verbose,
-        replay, overwrite_if_exists, output_dir, config_file,
-        default_config, debug_file):
+    template,
+    extra_context,
+    no_input,
+    checkout,
+    verbose,
+    replay,
+    overwrite_if_exists,
+    output_dir,
+    config_file,
+    default_config,
+    debug_file,
+    directory,
+    skip_if_file_exists,
+):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -104,40 +134,39 @@ def main(
         click.echo(click.get_current_context().get_help())
         sys.exit(0)
 
-    configure_logger(
-        stream_level='DEBUG' if verbose else 'INFO',
-        debug_file=debug_file,
-    )
+    configure_logger(stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file)
 
     try:
         cookiecutter(
-            template, checkout, no_input,
+            template,
+            checkout,
+            no_input,
             extra_context=extra_context,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
             output_dir=output_dir,
             config_file=config_file,
             default_config=default_config,
-            password=os.environ.get('COOKIECUTTER_REPO_PASSWORD')
+            password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
+            directory=directory,
+            skip_if_file_exists=skip_if_file_exists,
         )
-    except (OutputDirExistsException,
-            InvalidModeException,
-            FailedHookException,
-            UnknownExtension,
-            InvalidZipRepository,
-            RepositoryNotFound,
-            RepositoryCloneFailed) as e:
+    except (
+        OutputDirExistsException,
+        InvalidModeException,
+        FailedHookException,
+        UnknownExtension,
+        InvalidZipRepository,
+        RepositoryNotFound,
+        RepositoryCloneFailed,
+    ) as e:
         click.echo(e)
         sys.exit(1)
     except UndefinedVariableInTemplate as undefined_err:
         click.echo('{}'.format(undefined_err.message))
         click.echo('Error message: {}'.format(undefined_err.error.message))
 
-        context_str = json.dumps(
-            undefined_err.context,
-            indent=4,
-            sort_keys=True
-        )
+        context_str = json.dumps(undefined_err.context, indent=4, sort_keys=True)
         click.echo('Context: {}'.format(context_str))
         sys.exit(1)
 

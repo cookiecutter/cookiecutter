@@ -11,7 +11,7 @@ import stat
 import shutil
 import sys
 
-from .prompt import read_user_yes_no
+from cookiecutter.prompt import read_user_yes_no
 
 logger = logging.getLogger(__name__)
 
@@ -39,10 +39,10 @@ def make_sure_path_exists(path):
 
     :param path: A directory path.
     """
-    logger.debug('Making sure path exists: {}'.format(path))
+    logger.debug('Making sure path exists: %s', path)
     try:
         os.makedirs(path)
-        logger.debug('Created directory at: {}'.format(path))
+        logger.debug('Created directory at: %s', path)
     except OSError as exception:
         if exception.errno != errno.EEXIST:
             return False
@@ -89,8 +89,7 @@ def prompt_and_delete(path, no_input=False):
         ok_to_delete = True
     else:
         question = (
-            "You've downloaded {} before. "
-            "Is it okay to delete and re-download it?"
+            "You've downloaded {} before. " "Is it okay to delete and re-download it?"
         ).format(path)
 
         ok_to_delete = read_user_yes_no(question, 'yes')
