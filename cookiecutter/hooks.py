@@ -64,6 +64,16 @@ def find_hook(hook_name, hooks_dir='hooks'):
 
     return None
 
+def run_python_script(script_path, cwd='.'):
+    """Execute a python script from a working directory.
+
+    :param script_path: Absolute path to the script to run.
+    :param cwd: The directory to run the script from.
+    """
+    old_cwd = os.getcwd()
+    os.chdir(cwd)
+    exec(open(script_path).read())
+    os.chdir(old_cwd)
 
 def run_script(script_path, cwd='.'):
     """Execute a script from a working directory.
@@ -73,7 +83,8 @@ def run_script(script_path, cwd='.'):
     """
     run_thru_shell = sys.platform.startswith('win')
     if script_path.endswith('.py'):
-        script_command = [sys.executable, script_path]
+        run_python_script(script_path, cwd)
+        return
     else:
         script_command = [script_path]
 
