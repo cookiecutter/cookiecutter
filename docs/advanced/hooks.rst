@@ -85,3 +85,30 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
 
         # exits with status 1 to indicate failure
         sys.exit(1)
+
+Example: Conditional files / directories
+----------------------------------------
+This is another example of ``hooks/pre_gen_project.py`` to demonstrate
+how to use post-processing hooks to achieve conditional control of files,
+directories.
+
+The script ensures that the directory structure is as expected by
+removing unwanted files and directories:
+
+.. code-block:: python
+
+   import os
+   import sys
+
+   REMOVE_PATHS = [
+       '{% if cookiecutter.packaging != "pip" %} requirements.txt {% endif %}',
+       '{% if cookiecutter.packaging != "poetry" %} poetry.lock {% endif %}',
+   ]
+
+   for path in REMOVE_PATHS:
+       path = path.strip()
+       if path and os.path.exists(path):
+           if os.path.isdir(path):
+               os.rmdir(path)
+           else:
+               os.unlink(path)
