@@ -9,7 +9,7 @@ import sys
 
 from setuptools import setup
 
-version = "1.7.0"
+version = "2.0.0"
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -26,14 +26,14 @@ with io.open('README.md', 'r', encoding='utf-8') as readme_file:
 
 requirements = [
     'binaryornot>=0.4.4',
-    'Jinja2<=2.11.0',
-    'click>=7.1.1',
+    'Jinja2<3.0.0',
+    'click>=7.0',
     'poyo>=0.5.0',
     'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
-    'six>=1.14',
-    'MarkupSafe<2.0.0'
+    'six>=1.10',
+    'MarkupSafe<2.0.0',
 ]
 
 if sys.argv[-1] == 'readme':
@@ -44,29 +44,22 @@ if sys.argv[-1] == 'readme':
 setup(
     name='cookiecutter',
     version=version,
-    description=('A command-line utility that creates projects from project '
-                 'templates, e.g. creating a Python package project from a '
-                 'Python package project template.'),
+    description=(
+        'A command-line utility that creates projects from project '
+        'templates, e.g. creating a Python package project from a '
+        'Python package project template.'
+    ),
     long_description=readme,
     long_description_content_type='text/markdown',
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
     url='https://github.com/cookiecutter/cookiecutter',
-    packages=[
-        'cookiecutter',
-    ],
+    packages=['cookiecutter'],
     package_dir={'cookiecutter': 'cookiecutter'},
-    entry_points={
-        'console_scripts': [
-            'cookiecutter = cookiecutter.__main__:main',
-        ]
-    },
+    entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
     include_package_data=True,
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
+    python_requires='>=3.6',
     install_requires=requirements,
-    extras_require={
-        ':python_version<"3.3"': ['whichcraft>=0.4.0'],
-    },
     license='BSD',
     zip_safe=False,
     classifiers=[
@@ -75,21 +68,26 @@ setup(
         "Intended Audience :: Developers",
         "Natural Language :: English",
         "License :: OSI Approved :: BSD License",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: Python",
         "Topic :: Software Development",
     ],
-    keywords=(
-        'cookiecutter, Python, projects, project templates, Jinja2, '
-        'skeleton, scaffolding, project directory, setup.py, package, '
-        'packaging'
-    ),
+    keywords=[
+        "cookiecutter",
+        "Python",
+        "projects",
+        "project templates",
+        "Jinja2",
+        "skeleton",
+        "scaffolding",
+        "project directory",
+        "package",
+        "packaging",
+    ],
 )

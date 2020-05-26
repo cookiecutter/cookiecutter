@@ -8,7 +8,7 @@
 import sys
 
 {% if cookiecutter.abort_pre_gen == "yes" %}
-sys.exit(1)
+sys.exit(5)
 {% else %}
 sys.exit(0)
 {% endif %}

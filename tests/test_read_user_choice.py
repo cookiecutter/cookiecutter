@@ -32,10 +32,7 @@ def test_click_invocation(mocker, user_choice, expected_value):
     assert read_user_choice('varname', OPTIONS) == expected_value
 
     prompt.assert_called_once_with(
-        EXPECTED_PROMPT,
-        type=click.Choice(OPTIONS),
-        default='1',
-        show_choices=False
+        EXPECTED_PROMPT, type=click.Choice(OPTIONS), default='1', show_choices=False
     )
 
 
