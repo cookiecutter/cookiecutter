@@ -1,27 +1,24 @@
-# -*- coding: utf-8 -*-
-
 """Main `cookiecutter` CLI."""
-
+import collections
+import json
 import os
 import sys
-import json
-import collections
 
 import click
 
 from cookiecutter import __version__
-from cookiecutter.log import configure_logger
-from cookiecutter.main import cookiecutter
 from cookiecutter.exceptions import (
-    OutputDirExistsException,
-    InvalidModeException,
     FailedHookException,
+    InvalidModeException,
+    InvalidZipRepository,
+    OutputDirExistsException,
+    RepositoryCloneFailed,
+    RepositoryNotFound,
     UndefinedVariableInTemplate,
     UnknownExtension,
-    InvalidZipRepository,
-    RepositoryNotFound,
-    RepositoryCloneFailed,
 )
+from cookiecutter.log import configure_logger
+from cookiecutter.main import cookiecutter
 
 
 def version_msg():

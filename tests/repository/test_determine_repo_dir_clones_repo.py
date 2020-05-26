@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around cloning cookiecutter template repositories."""
-
 import os
 
 import pytest
 
-from cookiecutter import repository, exceptions
+from cookiecutter import exceptions, repository
 
 
 @pytest.mark.parametrize(

@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `cookiecutter.utils` module."""
-
 import os
 import stat
 import sys

@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 # flake8: noqa
 
 """Simple post-gen hook for testing the handling of different exit codes."""

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests around using locally cached cookiecutter template repositories."""
 
 import os

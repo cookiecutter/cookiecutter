@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Test `process_json`, `read_user_dict` functions in `cookiecutter.prompt`."""
-
-from __future__ import unicode_literals
-
 import click
 import pytest
 

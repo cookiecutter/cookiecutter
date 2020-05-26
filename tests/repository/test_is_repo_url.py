@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-
 """Tests for all supported cookiecutter template repository locations."""
-
 import pytest
 
 from cookiecutter.config import BUILTIN_ABBREVIATIONS
-from cookiecutter.repository import is_zip_file, is_repo_url, expand_abbreviations
+from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_file
 
 
 @pytest.fixture(

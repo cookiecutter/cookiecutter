@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Cookiecutter repository functions."""
-
-from __future__ import unicode_literals
 import os
 import re
 

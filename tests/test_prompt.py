@@ -1,12 +1,8 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `cookiecutter.prompt` module."""
-
 import platform
 from collections import OrderedDict
 
 import pytest
-import six
 
 from cookiecutter import prompt, exceptions, environment
 
@@ -44,7 +40,7 @@ class TestRenderVariable:
 
         # Make sure that non None non str variables are converted beforehand
         if raw_var is not None:
-            if not isinstance(raw_var, six.string_types):
+            if not isinstance(raw_var, str):
                 raw_var = str(raw_var)
             from_string.assert_called_once_with(raw_var)
         else:

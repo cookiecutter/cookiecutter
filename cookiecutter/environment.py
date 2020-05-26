@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Jinja2 environment and extensions loading."""
-
 from jinja2 import Environment, StrictUndefined
 
 from cookiecutter.exceptions import UnknownExtension

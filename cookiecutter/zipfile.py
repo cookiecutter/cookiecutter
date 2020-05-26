@@ -1,7 +1,4 @@
 """Utility functions for handling and fetching repo archives in zip format."""
-
-from __future__ import absolute_import
-
 import os
 import tempfile
 from zipfile import BadZipFile, ZipFile

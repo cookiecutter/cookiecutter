@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """Tests around locally cached cookiecutter template repositories."""
-
 import io
 import os
 
 import pytest
 
-from cookiecutter import repository, exceptions
+from cookiecutter import exceptions, repository
 
 
 @pytest.fixture
