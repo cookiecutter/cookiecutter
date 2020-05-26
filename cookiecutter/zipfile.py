@@ -4,10 +4,9 @@ from __future__ import absolute_import
 
 import os
 import tempfile
-from zipfile import BadZipFile
-from zipfile import ZipFile
-import requests
+from zipfile import BadZipFile, ZipFile
 
+import requests
 
 from cookiecutter.exceptions import InvalidZipRepository
 from cookiecutter.prompt import read_repo_password

@@ -58,7 +58,7 @@ setup(
     package_dir={'cookiecutter': 'cookiecutter'},
     entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
     include_package_data=True,
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     install_requires=requirements,
     license='BSD',
     zip_safe=False,
@@ -70,7 +70,6 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
@@ -79,9 +78,16 @@ setup(
         "Programming Language :: Python",
         "Topic :: Software Development",
     ],
-    keywords=(
-        'cookiecutter, Python, projects, project templates, Jinja2, '
-        'skeleton, scaffolding, project directory, setup.py, package, '
-        'packaging'
-    ),
+    keywords=[
+        "cookiecutter",
+        "Python",
+        "projects",
+        "project templates",
+        "Jinja2",
+        "skeleton",
+        "scaffolding",
+        "project directory",
+        "package",
+        "packaging",
+    ],
 )

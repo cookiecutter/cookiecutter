@@ -7,8 +7,6 @@ jobs:
     include:
       - python: 3.7
         env: TOXENV=lint
-      - python: 3.5
-        env: TOXENV=py35
       - python: 3.6
         env: TOXENV=py36
       - python: 3.7
@@ -17,19 +15,6 @@ jobs:
         env: TOXENV=py38
       - python: pypy3
         env: TOXENV=pypy3
-      - name: "Python 3.5 on Windows"
-        os: windows
-        language: shell
-        before_install:
-          - choco install python --version 3.5.4
-          - python --version
-          - python -m pip install --upgrade pip
-          - python -m pip install --upgrade virtualenv wheel
-          - python -m virtualenv $HOME/venv
-          - source $HOME/venv/Scripts/activate
-        env:
-          - TOXENV=py35
-          - PATH=/c/Python35:/c/Python35/Scripts:$PATH
       - name: "Python 3.6 on Windows"
         os: windows
         language: shell
@@ -74,9 +59,3 @@ script: tox
 
 install:
     - python -m pip install tox
-
-after_success:
-    # Report coverage results to codecov.io
-    # and export tox environment variables
-    - python -m pip install codecov
-    - codecov -e TOXENV TRAVIS_OS_NAME

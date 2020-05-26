@@ -19,19 +19,16 @@ jobs:
         name:
           - "linting"
 
-          - "ubuntu-py35"
           - "ubuntu-py36"
           - "ubuntu-py37"
           - "ubuntu-py38"
           - "ubuntu-pypy3"
 
-          - "macos-py35"
           - "macos-py36"
           - "macos-py37"
           - "macos-py38"
           - "macos-pypy3"
 
-          - "windows-py35"
           - "windows-py36"
           - "windows-py37"
           - "windows-py38"
@@ -42,10 +39,6 @@ jobs:
             os: ubuntu-latest
             tox_env: "lint"
 
-          - name: "ubuntu-py35"
-            python: "3.5"
-            os: ubuntu-latest
-            tox_env: "py35"
           - name: "ubuntu-py36"
             python: "3.6"
             os: ubuntu-latest
@@ -63,10 +56,6 @@ jobs:
             os: ubuntu-latest
             tox_env: "pypy3"
 
-          - name: "macos-py35"
-            python: "3.5"
-            os: macos-latest
-            tox_env: "py35"
           - name: "macos-py36"
             python: "3.6"
             os: macos-latest
@@ -84,10 +73,6 @@ jobs:
             os: macos-latest
             tox_env: "pypy3"
 
-          - name: "windows-py35"
-            python: "3.5"
-            os: windows-latest
-            tox_env: "py35"
           - name: "windows-py36"
             python: "3.6"
             os: windows-latest
