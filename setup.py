@@ -9,7 +9,7 @@ import sys
 
 from setuptools import setup
 
-version = "1.7.2"
+version = "2.0.0"
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -58,9 +58,8 @@ setup(
     package_dir={'cookiecutter': 'cookiecutter'},
     entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
     include_package_data=True,
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
+    python_requires='>=3.6',
     install_requires=requirements,
-    extras_require={':python_version<"3.3"': ['whichcraft>=0.4.0']},
     license='BSD',
     zip_safe=False,
     classifiers=[
@@ -69,21 +68,26 @@ setup(
         "Intended Audience :: Developers",
         "Natural Language :: English",
         "License :: OSI Approved :: BSD License",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: Python",
         "Topic :: Software Development",
     ],
-    keywords=(
-        'cookiecutter, Python, projects, project templates, Jinja2, '
-        'skeleton, scaffolding, project directory, setup.py, package, '
-        'packaging'
-    ),
+    keywords=[
+        "cookiecutter",
+        "Python",
+        "projects",
+        "project templates",
+        "Jinja2",
+        "skeleton",
+        "scaffolding",
+        "project directory",
+        "package",
+        "packaging",
+    ],
 )

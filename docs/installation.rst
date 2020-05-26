@@ -18,7 +18,6 @@ You can install the Python binaries from `python.org <https://www.python.org/dow
 
 .. code-block:: bash
 
-    # for python 3.x
     $ brew install python3
 
 
@@ -60,7 +59,7 @@ You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/e
 Packaging tools
 ^^^^^^^^^^^^^^^
 
-``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.5. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
+``pip`` and ``setuptools`` now come with Python 3 >=3.6. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
 
 
 Install cookiecutter
@@ -70,7 +69,7 @@ At the command line:
 
 .. code-block:: bash
 
-    $ pip install --user cookiecutter
+    $ python3 -m pip install --user cookiecutter
 
 Or, if you do not have pip:
 
@@ -133,6 +132,6 @@ Or with pip:
 
 .. code-block:: bash
 
-    $ pip install --upgrade cookiecutter
+    $ python3 -m pip install --upgrade cookiecutter
 
 Then you should be good to go.
