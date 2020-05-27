@@ -58,17 +58,17 @@ def read_user_choice(var_name, options):
         raise ValueError
 
     choice_map = OrderedDict(
-        (u'{}'.format(i), value) for i, value in enumerate(options, 1)
+        ('{}'.format(i), value) for i, value in enumerate(options, 1)
     )
     choices = choice_map.keys()
-    default = u'1'
+    default = '1'
 
-    choice_lines = [u'{} - {}'.format(*c) for c in choice_map.items()]
-    prompt = u'\n'.join(
+    choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
+    prompt = '\n'.join(
         (
-            u'Select {}:'.format(var_name),
-            u'\n'.join(choice_lines),
-            u'Choose from {}'.format(u', '.join(choices)),
+            'Select {}:'.format(var_name),
+            '\n'.join(choice_lines),
+            'Choose from {}'.format(', '.join(choices)),
         )
     )
 
@@ -180,11 +180,11 @@ def prompt_for_config(context, no_input=False):
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    for key, raw in context[u'cookiecutter'].items():
-        if key.startswith(u'_') and not key.startswith(u'__'):
+    for key, raw in context['cookiecutter'].items():
+        if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
-        elif key.startswith(u'__'):
+        elif key.startswith('__'):
             cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
@@ -208,7 +208,7 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
-    for key, raw in context[u'cookiecutter'].items():
+    for key, raw in context['cookiecutter'].items():
 
         try:
             if isinstance(raw, dict):

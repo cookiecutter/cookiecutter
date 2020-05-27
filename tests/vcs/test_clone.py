@@ -113,7 +113,7 @@ def test_clone_should_invoke_vcs_command(
     'error_message',
     [
         (
-            "fatal: repository 'https://github.com/hackebro/cookiedozer' " "not found"
+            "fatal: repository 'https://github.com/hackebro/cookiedozer' not found"
         ).encode('utf-8'),
         'hg: abort: HTTP Error 404: Not Found'.encode('utf-8'),
     ],
@@ -143,7 +143,7 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
     'error_message',
     [
         (
-            "error: pathspec 'unknown_branch' did not match any file(s) known " "to git"
+            "error: pathspec 'unknown_branch' did not match any file(s) known to git"
         ).encode('utf-8'),
         "hg: abort: unknown revision 'unknown_branch'!".encode('utf-8'),
     ],

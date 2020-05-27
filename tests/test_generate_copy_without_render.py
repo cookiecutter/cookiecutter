@@ -49,19 +49,17 @@ def test_generate_copy_without_render_extensions():
         assert 'I have been rendered!' in f.read()
 
     with open(
-        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.txt'
+        'test_copy_without_render/test_copy_without_render-rendered/README.txt'
     ) as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 
     with open(
-        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.rst'
+        'test_copy_without_render/test_copy_without_render-rendered/README.rst'
     ) as f:
         assert 'I have been rendered' in f.read()
 
     with open(
-        'test_copy_without_render/'
-        '{{cookiecutter.repo_name}}-not-rendered/'
-        'README.rst'
+        'test_copy_without_render/{{cookiecutter.repo_name}}-not-rendered/README.rst'
     ) as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 

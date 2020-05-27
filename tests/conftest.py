@@ -7,7 +7,8 @@ import pytest
 
 from cookiecutter import utils
 
-USER_CONFIG = u"""
+
+USER_CONFIG = """
 cookiecutters_dir: "{cookiecutters_dir}"
 replay_dir: "{replay_dir}"
 """

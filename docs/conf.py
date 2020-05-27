@@ -94,8 +94,8 @@ source_suffix = {'.rst': 'restructuredtext', '.md': 'markdown'}
 master_doc = 'index'
 
 # General information about the project.
-project = u'cookiecutter'
-copyright = u'2013-2019, Audrey Roy and Cookiecutter community'
+project = 'cookiecutter'
+copyright = '2013-2019, Audrey Roy and Cookiecutter community'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -243,8 +243,8 @@ latex_documents = [
     (
         'index',
         'cookiecutter.tex',
-        u'cookiecutter Documentation',
-        u'Audrey Roy and Cookiecutter community',
+        'cookiecutter Documentation',
+        'Audrey Roy and Cookiecutter community',
         'manual',
     ),
 ]
@@ -278,8 +278,8 @@ man_pages = [
     (
         'index',
         'cookiecutter',
-        u'cookiecutter Documentation',
-        [u'Audrey Roy and Cookiecutter community'],
+        'cookiecutter Documentation',
+        ['Audrey Roy and Cookiecutter community'],
         1,
     )
 ]
@@ -297,8 +297,8 @@ texinfo_documents = [
     (
         'index',
         'cookiecutter',
-        u'cookiecutter Documentation',
-        u'Audrey Roy and Cookiecutter community',
+        'cookiecutter Documentation',
+        'Audrey Roy and Cookiecutter community',
         'cookiecutter',
         'Creates projects from project templates',
         'Miscellaneous',
@@ -321,10 +321,10 @@ texinfo_documents = [
 # -- Options for Epub output --------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'cookiecutter'
-epub_author = u'Audrey Roy'
-epub_publisher = u'Audrey Roy and Cookiecutter community'
-epub_copyright = u'2013-2019, Audrey Roy and Cookiecutter community'
+epub_title = 'cookiecutter'
+epub_author = 'Audrey Roy'
+epub_publisher = 'Audrey Roy and Cookiecutter community'
+epub_copyright = '2013-2019, Audrey Roy and Cookiecutter community'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

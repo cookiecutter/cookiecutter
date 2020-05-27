@@ -86,7 +86,7 @@ def run_script(script_path, cwd='.'):
     except OSError as os_error:
         if os_error.errno == errno.ENOEXEC:
             raise FailedHookException(
-                'Hook script failed, might be an ' 'empty file or missing a shebang'
+                'Hook script failed, might be an empty file or missing a shebang'
             )
         raise FailedHookException('Hook script failed (error: {})'.format(os_error))
 

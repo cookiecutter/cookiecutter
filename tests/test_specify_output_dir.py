@@ -8,11 +8,11 @@ from cookiecutter import main
 def context():
     """Fixture to return a valid context as known from a cookiecutter.json."""
     return {
-        u'cookiecutter': {
-            u'email': u'raphael@hackebrot.de',
-            u'full_name': u'Raphael Pierzina',
-            u'github_username': u'hackebrot',
-            u'version': u'0.1.0',
+        'cookiecutter': {
+            'email': 'raphael@hackebrot.de',
+            'full_name': 'Raphael Pierzina',
+            'github_username': 'hackebrot',
+            'version': '0.1.0',
         }
     }
 

@@ -67,7 +67,7 @@ def test_generate_files():
     assert os.path.isfile(simple_file)
 
     simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
-    assert simple_text == u'I eat pizzä'
+    assert simple_text == 'I eat pizzä'
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
@@ -83,7 +83,7 @@ def test_generate_files_with_trailing_newline():
 
     with io.open(newline_file, 'r', encoding='utf-8') as f:
         simple_text = f.read()
-    assert simple_text == u'I eat pizzä\n'
+    assert simple_text == 'I eat pizzä\n'
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
@@ -192,7 +192,7 @@ def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists():
     assert os.path.isfile(simple_with_new_line_file)
 
     simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
-    assert simple_text == u'temp'
+    assert simple_text == 'temp'
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
@@ -216,7 +216,7 @@ def test_generate_files_with_skip_if_file_exists():
     assert not os.path.exists(simple_with_new_line_file)
 
     simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
-    assert simple_text == u'temp'
+    assert simple_text == 'temp'
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
@@ -239,7 +239,7 @@ def test_generate_files_with_overwrite_if_exists():
     assert os.path.isfile(simple_with_new_line_file)
 
     simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
-    assert simple_text == u'I eat pizzä'
+    assert simple_text == 'I eat pizzä'
 
 
 @pytest.fixture

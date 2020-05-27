@@ -121,7 +121,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
     assert result.exit_code == 1
 
     expected_error_msg = (
-        "You can not use both replay and no_input or extra_context " "at the same time."
+        "You can not use both replay and no_input or extra_context at the same time."
     )
 
     assert expected_error_msg in result.output
