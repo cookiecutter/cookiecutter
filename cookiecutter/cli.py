@@ -61,7 +61,7 @@ def validate_extra_context(ctx, param, value):
     'for advanced repositories with multi templates in it',
 )
 @click.option(
-    '--skip-hooks', is_flag=True, help='Do not run hooks',
+    '--skip-hooks', is_flag=True, default=False, help='Do not run hooks',
 )
 @click.option(
     '-v', '--verbose', is_flag=True, help='Print debug information', default=False

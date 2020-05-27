@@ -105,6 +105,7 @@ def test_cli_replay(mocker, cli_runner):
         extra_context=None,
         password=None,
         directory=None,
+        skip_hooks=False,
     )
 
 
@@ -139,6 +140,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         extra_context=None,
         password=None,
         directory=None,
+        skip_hooks=False,
     )
 
 
@@ -175,6 +177,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         extra_context=None,
         password=None,
         directory=None,
+        skip_hooks=False,
     )
 
 
@@ -236,6 +239,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         extra_context=None,
         password=None,
         directory=None,
+        skip_hooks=False,
     )
 
 
@@ -279,6 +283,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         extra_context=None,
         password=None,
         directory=None,
+        skip_hooks=False,
     )
 
 
@@ -305,6 +310,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         extra_context=None,
         password=None,
         directory=None,
+        skip_hooks=False,
     )
 
 
@@ -329,6 +335,7 @@ def test_default_user_config(mocker, cli_runner):
         extra_context=None,
         password=None,
         directory=None,
+        skip_hooks=False,
     )
 
 

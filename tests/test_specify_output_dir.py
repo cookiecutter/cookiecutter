@@ -61,6 +61,7 @@ def test_api_invocation(mocker, template, output_dir, context):
         overwrite_if_exists=False,
         skip_if_file_exists=False,
         output_dir=output_dir,
+        skip_hooks=False,
     )
 
 
@@ -76,4 +77,5 @@ def test_default_output_dir(mocker, template, context):
         overwrite_if_exists=False,
         skip_if_file_exists=False,
         output_dir='.',
+        skip_hooks=False,
     )
