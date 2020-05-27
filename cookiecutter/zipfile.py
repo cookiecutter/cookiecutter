@@ -4,15 +4,9 @@ from __future__ import absolute_import
 
 import os
 import tempfile
-from zipfile import ZipFile
+from zipfile import BadZipFile, ZipFile
 
 import requests
-
-try:
-    # BadZipfile was renamed to BadZipFile in Python 3.2.
-    from zipfile import BadZipFile
-except ImportError:
-    from zipfile import BadZipfile as BadZipFile
 
 from cookiecutter.exceptions import InvalidZipRepository
 from cookiecutter.prompt import read_repo_password

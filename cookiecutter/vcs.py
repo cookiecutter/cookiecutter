@@ -6,11 +6,8 @@ from __future__ import unicode_literals
 import logging
 import os
 import subprocess
+from shutil import which
 
-try:
-    from shutil import which
-except ImportError:
-    from whichcraft import which
 
 from cookiecutter.exceptions import (
     RepositoryNotFound,
