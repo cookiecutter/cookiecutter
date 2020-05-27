@@ -1,0 +1,35 @@
+categories:
+  - title: 'Breaking Changes'
+    labels:
+      - 'breaking-change'
+  - title: 'Non-Breaking Changes'
+    labels:
+      - 'major'
+  - title: 'Minor Changes'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: 'CI/CD and QA changes'
+    labels:
+      - 'CI/CD'
+      - 'tests'
+      - 'code style'
+  - title: 'Documentation updates'
+    labels:
+      - 'documentation'
+  - title: 'Bugfixes'
+    labels:
+      - 'bug'
+  - title: 'Deprecations'
+    labels:
+      - 'deprecated'
+exclude-labels:
+  - 'skip-changelog'
+template: |
+  ## Changes
+
+  $CHANGES
+
+  ## This release is made by wonderfull contributors:
+
+  $CONTRIBUTORS
