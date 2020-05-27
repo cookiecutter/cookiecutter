@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """pytest fixtures for testing cookiecutter's replay feature."""
-
 import pytest
 
 

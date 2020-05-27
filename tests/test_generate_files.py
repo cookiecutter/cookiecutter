@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `generate_files` function and related errors raising.
 
 Use the global clean_system fixture and run additional teardown code to remove
@@ -11,14 +9,12 @@ remove_additional_folders setup code
 remove_additional_folders teardown code
 clean_system teardown code
 """
-
-from __future__ import unicode_literals
-
 import io
 import os
 
 import pytest
 from binaryornot.check import is_binary
+
 from cookiecutter import exceptions, generate, utils
 
 

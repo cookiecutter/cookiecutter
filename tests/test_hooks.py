@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `cookiecutter.hooks` module."""
-
 import os
-import pytest
 import stat
 import sys
 import textwrap
+
+import pytest
 
 from cookiecutter import hooks, utils, exceptions
 

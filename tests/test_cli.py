@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around cookiecutter's command-line interface."""
 
 import json

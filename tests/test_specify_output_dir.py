@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests for cookiecutter's output directory customization feature."""
-
 import pytest
 
 from cookiecutter import main

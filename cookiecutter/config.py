@@ -1,19 +1,13 @@
-# -*- coding: utf-8 -*-
-
 """Global configuration handling."""
-
-from __future__ import unicode_literals
+import collections
 import copy
+import io
 import logging
 import os
-import io
-import collections
 
 import poyo
 
-from cookiecutter.exceptions import ConfigDoesNotExistException
-from cookiecutter.exceptions import InvalidConfiguration
-
+from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 

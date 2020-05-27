@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around log handling."""
-
 import logging
 
 import pytest

@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
-
 """
 Main entry point for the `cookiecutter` command.
 
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
-
-from __future__ import unicode_literals
 import logging
 import os
 
 from cookiecutter.config import get_user_config
-from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.exceptions import InvalidModeException
+from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.prompt import prompt_for_config
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir

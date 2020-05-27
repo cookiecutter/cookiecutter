@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around loading cookiecutter config."""
-
 import os
 
 import pytest

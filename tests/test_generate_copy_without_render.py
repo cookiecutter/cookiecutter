@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-
 """Verify correct work of `_copy_without_render` context option."""
-
-from __future__ import unicode_literals
 import os
+
 import pytest
 
 from cookiecutter import generate

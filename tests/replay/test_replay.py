@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-
 """test_replay."""
-
 import os
+
 import pytest
 
-from cookiecutter import replay, main, exceptions
+from cookiecutter import exceptions, main, replay
 
 
 def test_get_replay_file_name():

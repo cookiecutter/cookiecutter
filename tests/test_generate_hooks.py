@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Test work of python and shell hooks for generated projects."""
-
-from __future__ import unicode_literals
-
 import errno
 import os
 import sys

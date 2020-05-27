@@ -1,13 +1,9 @@
-# -*- coding: utf-8 -*-
-
 """Tests for function unzip() from zipfile module."""
-
 import tempfile
 
 import pytest
 
 from cookiecutter import zipfile
-
 from cookiecutter.exceptions import InvalidZipRepository
 
 

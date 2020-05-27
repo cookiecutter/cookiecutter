@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `generate_file` function, part of `generate_files` function workflow."""
-
-from __future__ import unicode_literals
-
 import json
 import os
 

@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Verify Jinja2 filters/extensions are available from pre-gen/post-gen hooks."""
-
 import io
 import os
 

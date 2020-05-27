@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests around prompting for and handling of choice variables."""
-
 import click
 import pytest
 

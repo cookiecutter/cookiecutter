@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Verify generate context behaviour and context overwrite priorities."""
-
-from __future__ import unicode_literals
-
 import os
 import re
 from collections import OrderedDict
