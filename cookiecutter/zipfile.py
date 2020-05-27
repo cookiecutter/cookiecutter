@@ -1,18 +1,13 @@
-from __future__ import absolute_import
-
+"""Utility functions for handling and fetching repo archives in zip format."""
 import os
-import requests
 import tempfile
-from zipfile import ZipFile
-try:
-    # BadZipfile was renamed to BadZipFile in Python 3.2.
-    from zipfile import BadZipFile
-except ImportError:
-    from zipfile import BadZipfile as BadZipFile
+from zipfile import BadZipFile, ZipFile
 
-from .exceptions import InvalidZipRepository
-from .prompt import read_repo_password
-from .utils import make_sure_path_exists, prompt_and_delete
+import requests
+
+from cookiecutter.exceptions import InvalidZipRepository
+from cookiecutter.prompt import read_repo_password
+from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
 
 def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
@@ -60,9 +55,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
         zip_file = ZipFile(zip_path)
 
         if len(zip_file.namelist()) == 0:
-            raise InvalidZipRepository(
-                'Zip repository {} is empty'.format(zip_uri)
-            )
+            raise InvalidZipRepository('Zip repository {} is empty'.format(zip_uri))
 
         # The first record in the zipfile should be the directory entry for
         # the archive. If it isn't a directory, there's a problem.
@@ -86,10 +79,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
             # environment; if that doesn't work, ask the user.
             if password is not None:
                 try:
-                    zip_file.extractall(
-                        path=unzip_base,
-                        pwd=password.encode('utf-8')
-                    )
+                    zip_file.extractall(path=unzip_base, pwd=password.encode('utf-8'))
                 except RuntimeError:
                     raise InvalidZipRepository(
                         'Invalid password provided for protected repository'
@@ -104,16 +94,14 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
                     try:
                         password = read_repo_password('Repo password')
                         zip_file.extractall(
-                            path=unzip_base,
-                            pwd=password.encode('utf-8')
+                            path=unzip_base, pwd=password.encode('utf-8')
                         )
                         retry = None
                     except RuntimeError:
                         retry += 1
                         if retry == 3:
                             raise InvalidZipRepository(
-                                'Invalid password provided '
-                                'for protected repository'
+                                'Invalid password provided for protected repository'
                             )
 
     except BadZipFile:

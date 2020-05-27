@@ -14,9 +14,11 @@ Various advanced topics regarding cookiecutter usage.
    injecting_context
    suppressing_prompts
    templates_in_context
+   private_variables
    copy_without_render
    replay
    cli_options
    choice_variables
    dict_variables
    template_extensions
+   directories

@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+"""Documentation build configuration file."""
+
 #
 # cookiecutter documentation build configuration file, created by
 # sphinx-quickstart on Thu Jul 11 11:31:49 2013.
@@ -23,6 +24,9 @@ import sys
 # For building docs in foreign environments where we don't have all our
 # dependencies (like readthedocs), mock out imports that cause sphinx to fail.
 # see: https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules  # noqa
+
+
+# flake8: noqa D107,D105
 
 
 class Mock(object):
@@ -74,17 +78,14 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'docs.ccext',
-    'recommonmark'
+    'recommonmark',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix of source filenames.
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
-}
+source_suffix = {'.rst': 'restructuredtext', '.md': 'markdown'}
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
@@ -93,8 +94,8 @@ source_suffix = {
 master_doc = 'index'
 
 # General information about the project.
-project = u'cookiecutter'
-copyright = u'2013-2019, Audrey Roy and Cookiecutter community'
+project = 'cookiecutter'
+copyright = '2013-2019, Audrey Roy and Cookiecutter community'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -230,10 +231,8 @@ htmlhelp_basename = 'cookiecutterdoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     # 'preamble': '',
 }
@@ -241,8 +240,13 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual])
 latex_documents = [
-    ('index', 'cookiecutter.tex', u'cookiecutter Documentation',
-     u'Audrey Roy and Cookiecutter community', 'manual'),
+    (
+        'index',
+        'cookiecutter.tex',
+        'cookiecutter Documentation',
+        'Audrey Roy and Cookiecutter community',
+        'manual',
+    ),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -271,8 +275,13 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'cookiecutter', u'cookiecutter Documentation',
-     [u'Audrey Roy and Cookiecutter community'], 1)
+    (
+        'index',
+        'cookiecutter',
+        'cookiecutter Documentation',
+        ['Audrey Roy and Cookiecutter community'],
+        1,
+    )
 ]
 
 # If true, show URL addresses after external links.
@@ -285,9 +294,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'cookiecutter', u'cookiecutter Documentation',
-     u'Audrey Roy and Cookiecutter community', 'cookiecutter',
-     'Creates projects from project templates', 'Miscellaneous'),
+    (
+        'index',
+        'cookiecutter',
+        'cookiecutter Documentation',
+        'Audrey Roy and Cookiecutter community',
+        'cookiecutter',
+        'Creates projects from project templates',
+        'Miscellaneous',
+    ),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -306,10 +321,10 @@ texinfo_documents = [
 # -- Options for Epub output --------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'cookiecutter'
-epub_author = u'Audrey Roy'
-epub_publisher = u'Audrey Roy and Cookiecutter community'
-epub_copyright = u'2013-2019, Audrey Roy and Cookiecutter community'
+epub_title = 'cookiecutter'
+epub_author = 'Audrey Roy'
+epub_publisher = 'Audrey Roy and Cookiecutter community'
+epub_copyright = '2013-2019, Audrey Roy and Cookiecutter community'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
