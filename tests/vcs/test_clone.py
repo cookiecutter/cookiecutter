@@ -190,4 +190,3 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
             clone_to_dir=clone_dir,
             no_input=True,
         )
-

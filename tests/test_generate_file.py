@@ -124,12 +124,10 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg):
 
 
 def test_generate_file_does_not_translate_lf_newlines_to_crlf(env):
+    """Verify that file generation use same line ending, as in source file."""
     infile = 'tests/files/{{generate_file}}_lf_newlines.txt'
     generate.generate_file(
-        project_dir=".",
-        infile=infile,
-        context={'generate_file': 'cheese'},
-        env=env
+        project_dir=".", infile=infile, context={'generate_file': 'cheese'}, env=env
     )
     # this generated file should not have a CRLF line ending
     gf = 'tests/files/cheese_lf_newlines.txt'
@@ -141,12 +139,10 @@ def test_generate_file_does_not_translate_lf_newlines_to_crlf(env):
 
 
 def test_generate_file_does_translate_crlf_newlines_to_lf(env):
+    """Verify that file generation use same line ending, as in source file."""
     infile = 'tests/files/{{generate_file}}_crlf_newlines.txt'
     generate.generate_file(
-        project_dir=".",
-        infile=infile,
-        context={'generate_file': 'cheese'},
-        env=env
+        project_dir=".", infile=infile, context={'generate_file': 'cheese'}, env=env
     )
 
     # this generated file should not have a CRLF line ending

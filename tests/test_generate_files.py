@@ -175,6 +175,7 @@ def test_generate_files_permissions():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_does_not_change_line_endings():
+    """Verify that template generation use same line ending, as in source file."""
     context = generate.generate_context(
         context_file='tests/test-generate-files-line-end/cookiecutter.json'
     )
@@ -200,6 +201,7 @@ def test_generate_files_does_not_change_line_endings():
             assert not line.endswith('\r\n'), msg.format(**locals())
 
 
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists():
     """Verify `skip_if_file_exist` has priority over `overwrite_if_exists`."""
     simple_file = 'inputpizzä/simple.txt'
