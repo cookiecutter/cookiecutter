@@ -91,11 +91,10 @@ def test_generate_files_with_trailing_newline():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_generate_files_with_windows_newline():
+    """Verify windows source line end not changed during files generation."""
     generate.generate_files(
-        context={
-            'cookiecutter': {'food': 'pizzä'}
-        },
-        repo_dir='tests/test-generate-files'
+        context={'cookiecutter': {'food': 'pizzä'}},
+        repo_dir='tests/test-generate-files',
     )
 
     newline_file = 'inputpizzä/simple-with-newline-crlf.txt'
