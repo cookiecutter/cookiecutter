@@ -1,1 +1,2 @@
-I eat {{ cookiecutter.food }}
+newline is LF
+newline is LF

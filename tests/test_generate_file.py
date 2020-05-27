@@ -36,9 +36,12 @@ def env():
 
 def test_generate_file(env):
     """Verify simple file is generated with rendered context data."""
-    infile = 'tests/files/{{generate_file}}.txt'
+    infile = 'tests/files/{{cookiecutter.generate_file}}.txt'
     generate.generate_file(
-        project_dir=".", infile=infile, context={'generate_file': 'cheese'}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': {'generate_file': 'cheese'}},
+        env=env,
     )
     assert os.path.isfile('tests/files/cheese.txt')
     with open('tests/files/cheese.txt', 'rt') as f:
@@ -78,9 +81,14 @@ def test_generate_file_with_true_condition(env):
 
     This test has positive answer, so file should be rendered.
     """
-    infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
+    infile = (
+        'tests/files/{% if cookiecutter.generate_file == \'y\' %}cheese.txt{% endif %}'
+    )
     generate.generate_file(
-        project_dir=".", infile=infile, context={'generate_file': 'y'}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': {'generate_file': 'y'}},
+        env=env,
     )
     assert os.path.isfile('tests/files/cheese.txt')
     with open('tests/files/cheese.txt', 'rt') as f:
@@ -93,9 +101,14 @@ def test_generate_file_with_false_condition(env):
 
     This test has negative answer, so file should not be rendered.
     """
-    infile = 'tests/files/{% if generate_file == \'y\' %}cheese.txt{% endif %}'
+    infile = (
+        'tests/files/{% if cookiecutter.generate_file == \'y\' %}cheese.txt{% endif %}'
+    )
     generate.generate_file(
-        project_dir=".", infile=infile, context={'generate_file': 'n'}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': {'generate_file': 'n'}},
+        env=env,
     )
     assert not os.path.isfile('tests/files/cheese.txt')
 
@@ -123,32 +136,37 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg):
     assert str(exception.value) == expected_msg
 
 
-def test_generate_file_does_not_translate_lf_newlines_to_crlf(env):
+def test_generate_file_does_not_translate_lf_newlines_to_crlf(env, tmp_path):
     """Verify that file generation use same line ending, as in source file."""
-    infile = 'tests/files/{{generate_file}}_lf_newlines.txt'
+    infile = 'tests/files/{{cookiecutter.generate_file}}_lf_newlines.txt'
     generate.generate_file(
-        project_dir=".", infile=infile, context={'generate_file': 'cheese'}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': {'generate_file': 'cheese'}},
+        env=env,
     )
-    # this generated file should not have a CRLF line ending
+
+    # this generated file should have a LF line ending
     gf = 'tests/files/cheese_lf_newlines.txt'
-    for line in open(gf):
-        msg = 'Missing LF line ending for generated file: {gf}'
-        assert line.endswith('\n'), msg.format(**locals())
-        msg = 'Incorrect CRLF line ending for generated file: {gf}'
-        assert not line.endswith('\r\n'), msg.format(**locals())
+    with open(gf, 'r', encoding='utf-8', newline='') as f:
+        simple_text = f.readline()
+    assert simple_text == 'newline is LF\n'
+    assert f.newlines == '\n'
 
 
-def test_generate_file_does_translate_crlf_newlines_to_lf(env):
+def test_generate_file_does_not_translate_crlf_newlines_to_lf(env):
     """Verify that file generation use same line ending, as in source file."""
-    infile = 'tests/files/{{generate_file}}_crlf_newlines.txt'
+    infile = 'tests/files/{{cookiecutter.generate_file}}_crlf_newlines.txt'
     generate.generate_file(
-        project_dir=".", infile=infile, context={'generate_file': 'cheese'}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': {'generate_file': 'cheese'}},
+        env=env,
     )
 
-    # this generated file should not have a CRLF line ending
+    # this generated file should have a CRLF line ending
     gf = 'tests/files/cheese_crlf_newlines.txt'
-    for line in open(gf):
-        msg = 'Missing LF line ending for generated file: {gf}'
-        assert line.endswith('\n'), msg.format(**locals())
-        msg = 'Incorrect CRLF line ending for generated file: {gf}'
-        assert not line.endswith('\r\n'), msg.format(**locals())
+    with open(gf, 'r', encoding='utf-8', newline='') as f:
+        simple_text = f.readline()
+    assert simple_text == 'newline is CRLF\r\n'
+    assert f.newlines == '\r\n'

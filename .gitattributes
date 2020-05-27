@@ -1,3 +1,4 @@
 *           text=auto
 *crlf.txt   text eol=crlf
+simple-with-newline-crlf.txt text eol=crlf
 simple-with-newline.txt text eol=lf
