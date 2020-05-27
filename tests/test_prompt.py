@@ -199,6 +199,43 @@ class TestPrompt(object):
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
 
+    def test_should_render_private_variables_with_two_underscores(self):
+        """Test rendering of private variables with two underscores.
+
+        There are three cases:
+        1. Variables beginning with a single underscore are private and not rendered.
+        2. Variables beginning with a double underscore are private and are rendered.
+        3. Variables beginning with anything other than underscores are not private and
+           are rendered.
+        """
+        context = {
+            'cookiecutter': OrderedDict(
+                [
+                    ('foo', 'Hello world'),
+                    ('bar', 123),
+                    ('rendered_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('rendered_bar', 123),
+                    ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('_hidden_bar', 123),
+                    ('__rendered_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('__rendered_hidden_bar', 123),
+                ]
+            )
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == OrderedDict(
+            [
+                ('foo', 'Hello world'),
+                ('bar', '123'),
+                ('rendered_foo', 'hello world'),
+                ('rendered_bar', '123'),
+                ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                ('_hidden_bar', 123),
+                ('__rendered_hidden_foo', 'hello world'),
+                ('__rendered_hidden_bar', '123'),
+            ]
+        )
+
     def test_should_not_render_private_variables(self):
         """Verify private(underscored) variables not rendered by `prompt_for_config`.
 

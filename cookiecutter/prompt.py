@@ -186,8 +186,11 @@ def prompt_for_config(context, no_input=False):
     # These must be done first because the dictionaries keys and
     # values might refer to them.
     for key, raw in context[u'cookiecutter'].items():
-        if key.startswith(u'_'):
+        if key.startswith(u'_') and not key.startswith(u'__'):
             cookiecutter_dict[key] = raw
+            continue
+        elif key.startswith(u'__'):
+            cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
         try:

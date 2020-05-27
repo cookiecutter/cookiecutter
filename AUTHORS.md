@@ -145,3 +145,4 @@
 * Chuan-Heng Hsiao ([@chhsiao1981](https://github.com/chhsiao1981))
 * Mohammad Hossein Sekhavat ([@mhsekhavat](https://github.com/mhsekhavat))
 * Amey Joshi ([@amey589](https://github.com/amey589))
+* Paul Harrison ([@smoothml](https://github.com/smoothml))
