@@ -170,10 +170,15 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
             raise
         rendered_file = tmpl.render(**context)
 
+        # Detect original file newline to output the rendered file
+        # note: newline='' ensures newlines are not converted
+        with io.open(infile, 'r', encoding='utf-8', newline='') as rd:
+            rd.readline()  # Read the first line to load 'newlines' value
+            newline = getattr(rd, 'newlines')
+
         logger.debug('Writing contents to file %s', outfile)
 
-        # note: newline='' ensures newlines are not converted
-        with io.open(outfile, 'w', encoding='utf-8', newline='') as fh:
+        with io.open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file
