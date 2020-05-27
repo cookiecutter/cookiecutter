@@ -1,25 +1,10 @@
 #!/usr/bin/env python
 """cookiecutter distutils configuration."""
-
-import io
-import os
-import sys
-
 from setuptools import setup
 
 version = "2.0.0"
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    os.system('python setup.py bdist_wheel upload')
-    sys.exit()
-
-if sys.argv[-1] == 'tag':
-    os.system("git tag -a %s -m 'version %s'" % (version, version))
-    os.system("git push --tags")
-    sys.exit()
-
-with io.open('README.md', 'r', encoding='utf-8') as readme_file:
+with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
 requirements = [
@@ -32,11 +17,6 @@ requirements = [
     'requests>=2.23.0',
     'MarkupSafe<2.0.0',
 ]
-
-if sys.argv[-1] == 'readme':
-    print(readme)
-    sys.exit()
-
 
 setup(
     name='cookiecutter',
