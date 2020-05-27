@@ -1,14 +1,9 @@
-# -*- coding: utf-8 -*-
-
 """
 tests_output_folder.
 
 Test formerly known from a unittest residing in test_generate.py named
 TestOutputFolder.test_output_folder
 """
-
-from __future__ import unicode_literals
-
 import os
 
 import pytest
@@ -20,22 +15,19 @@ from cookiecutter import utils
 
 @pytest.fixture(scope='function')
 def remove_output_folder(request):
-    """Remove the output folder in case it exists on disk."""
-    def finalizer_remove_output_folder():
-        if os.path.exists('output_folder'):
-            utils.rmtree('output_folder')
-    request.addfinalizer(finalizer_remove_output_folder)
+    """Remove the output folder after test."""
+    yield
+    if os.path.exists('output_folder'):
+        utils.rmtree('output_folder')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_output_folder():
+    """Tests should correctly create content, as output_folder does not yet exist."""
     context = generate.generate_context(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
-    generate.generate_files(
-        context=context,
-        repo_dir='tests/test-output-folder'
-    )
+    generate.generate_files(context=context, repo_dir='tests/test-output-folder')
 
     something = """Hi!
 My name is Audrey Greenfeld.
@@ -53,6 +45,7 @@ It is 2014."""
 
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_exception_when_output_folder_exists():
+    """Tests should raise error as output folder created before `generate_files`."""
     context = generate.generate_context(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
@@ -61,7 +54,4 @@ def test_exception_when_output_folder_exists():
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     with pytest.raises(exceptions.OutputDirExistsException):
-        generate.generate_files(
-            context=context,
-            repo_dir='tests/test-output-folder'
-        )
+        generate.generate_files(context=context, repo_dir='tests/test-output-folder')

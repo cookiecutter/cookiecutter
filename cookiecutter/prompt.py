@@ -1,17 +1,12 @@
-# -*- coding: utf-8 -*-
-
 """Functions for prompting the user for project info."""
-
-from collections import OrderedDict
 import json
+from collections import OrderedDict
 
 import click
-import six
-
 from jinja2.exceptions import UndefinedError
 
-from cookiecutter.exceptions import UndefinedVariableInTemplate
 from cookiecutter.environment import StrictEnvironment
+from cookiecutter.exceptions import UndefinedVariableInTemplate
 
 
 def read_user_variable(var_name, default_value):
@@ -20,7 +15,7 @@ def read_user_variable(var_name, default_value):
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(var_name, default=default_value)
 
 
@@ -33,12 +28,8 @@ def read_user_yes_no(question, default_value):
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
-    return click.prompt(
-        question,
-        default=default_value,
-        type=click.BOOL
-    )
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
+    return click.prompt(question, default=default_value, type=click.BOOL)
 
 
 def read_repo_password(question):
@@ -46,7 +37,7 @@ def read_repo_password(question):
 
     :param str question: Question to the user
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(question, hide_input=True)
 
 
@@ -59,7 +50,7 @@ def read_user_choice(var_name, options):
     :param list options: Sequence of options that are available to select from
     :return: Exactly one item of ``options`` that has been chosen by the user
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     if not isinstance(options, list):
         raise TypeError
 
@@ -67,17 +58,19 @@ def read_user_choice(var_name, options):
         raise ValueError
 
     choice_map = OrderedDict(
-        (u'{}'.format(i), value) for i, value in enumerate(options, 1)
+        ('{}'.format(i), value) for i, value in enumerate(options, 1)
     )
     choices = choice_map.keys()
-    default = u'1'
+    default = '1'
 
-    choice_lines = [u'{} - {}'.format(*c) for c in choice_map.items()]
-    prompt = u'\n'.join((
-        u'Select {}:'.format(var_name),
-        u'\n'.join(choice_lines),
-        u'Choose from {}'.format(u', '.join(choices))
-    ))
+    choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
+    prompt = '\n'.join(
+        (
+            'Select {}:'.format(var_name),
+            '\n'.join(choice_lines),
+            'Choose from {}'.format(', '.join(choices)),
+        )
+    )
 
     user_choice = click.prompt(
         prompt, type=click.Choice(choices), default=default, show_choices=False
@@ -91,10 +84,7 @@ def process_json(user_value):
     :param str user_value: User-supplied value to load as a JSON dict
     """
     try:
-        user_dict = json.loads(
-            user_value,
-            object_pairs_hook=OrderedDict,
-        )
+        user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
     except Exception:
         # Leave it up to click to ask the user again
         raise click.UsageError('Unable to decode to JSON.')
@@ -113,17 +103,14 @@ def read_user_dict(var_name, default_value):
     :param default_value: Value that will be returned if no input is provided
     :return: A Python dictionary to use in the context.
     """
-    # Please see http://click.pocoo.org/4/api/#click.prompt
+    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     if not isinstance(default_value, dict):
         raise TypeError
 
     default_display = 'default'
 
     user_value = click.prompt(
-        var_name,
-        default=default_display,
-        type=click.STRING,
-        value_proc=process_json,
+        var_name, default=default_display, type=click.STRING, value_proc=process_json
     )
 
     if user_value == default_display:
@@ -144,7 +131,7 @@ def render_variable(env, raw, cookiecutter_dict):
     This is then presented to the user as the default.
 
     :param Environment env: A Jinja2 Environment object.
-    :param str raw: The next value to be prompted for by the user.
+    :param raw: The next value to be prompted for by the user.
     :param dict cookiecutter_dict: The current context as it's gradually
         being populated with variables.
     :return: The rendered value for the default variable.
@@ -153,16 +140,14 @@ def render_variable(env, raw, cookiecutter_dict):
         return None
     elif isinstance(raw, dict):
         return {
-            render_variable(env, k, cookiecutter_dict):
-                render_variable(env, v, cookiecutter_dict)
+            render_variable(env, k, cookiecutter_dict): render_variable(
+                env, v, cookiecutter_dict
+            )
             for k, v in raw.items()
         }
     elif isinstance(raw, list):
-        return [
-            render_variable(env, v, cookiecutter_dict)
-            for v in raw
-        ]
-    elif not isinstance(raw, six.string_types):
+        return [render_variable(env, v, cookiecutter_dict) for v in raw]
+    elif not isinstance(raw, str):
         raw = str(raw)
 
     template = env.from_string(raw)
@@ -176,9 +161,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
 
     Each of the possible choices is rendered beforehand.
     """
-    rendered_options = [
-        render_variable(env, raw, cookiecutter_dict) for raw in options
-    ]
+    rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
 
     if no_input:
         return rendered_options[0]
@@ -197,9 +180,12 @@ def prompt_for_config(context, no_input=False):
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    for key, raw in context[u'cookiecutter'].items():
-        if key.startswith(u'_'):
+    for key, raw in context['cookiecutter'].items():
+        if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
+            continue
+        elif key.startswith('__'):
+            cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
         try:
@@ -222,7 +208,7 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
-    for key, raw in context[u'cookiecutter'].items():
+    for key, raw in context['cookiecutter'].items():
 
         try:
             if isinstance(raw, dict):

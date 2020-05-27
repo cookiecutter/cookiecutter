@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `cookiecutter.find` module."""
-
 import os
 
 import pytest

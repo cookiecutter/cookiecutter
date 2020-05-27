@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """pytest fixtures which are globally available throughout the suite."""
-
 import logging
 import os
 import shutil
@@ -11,7 +8,7 @@ import pytest
 from cookiecutter import utils
 
 
-USER_CONFIG = u"""
+USER_CONFIG = """
 cookiecutters_dir: "{cookiecutters_dir}"
 replay_dir: "{replay_dir}"
 """
@@ -56,8 +53,7 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found):
 
 @pytest.fixture(scope='function')
 def clean_system(request):
-    """
-    Fixture that simulates a clean system with no config/cloned cookiecutters.
+    """Fixture. Simulates a clean system with no configured or cloned cookiecutters.
 
     It runs code which can be regarded as setup code as known from a unittest
     TestCase. Additionally it defines a local function referring to values
@@ -91,9 +87,7 @@ def clean_system(request):
     """
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
     user_config_path = os.path.expanduser('~/.cookiecutterrc')
-    user_config_path_backup = os.path.expanduser(
-        '~/.cookiecutterrc.backup'
-    )
+    user_config_path_backup = os.path.expanduser('~/.cookiecutterrc.backup')
     if os.path.exists(user_config_path):
         user_config_found = True
         shutil.copy(user_config_path, user_config_path_backup)
@@ -105,16 +99,12 @@ def clean_system(request):
     # temp location
     cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
     cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
-    cookiecutters_dir_found = backup_dir(
-        cookiecutters_dir, cookiecutters_dir_backup
-    )
+    cookiecutters_dir_found = backup_dir(cookiecutters_dir, cookiecutters_dir_backup)
 
     # If the default cookiecutter_replay_dir is pre-existing, move it to a
     # temp location
     cookiecutter_replay_dir = os.path.expanduser('~/.cookiecutter_replay')
-    cookiecutter_replay_dir_backup = os.path.expanduser(
-        '~/.cookiecutter_replay.backup'
-    )
+    cookiecutter_replay_dir_backup = os.path.expanduser('~/.cookiecutter_replay.backup')
     cookiecutter_replay_dir_found = backup_dir(
         cookiecutter_replay_dir, cookiecutter_replay_dir_backup
     )
@@ -129,9 +119,7 @@ def clean_system(request):
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.
         restore_backup_dir(
-            cookiecutters_dir,
-            cookiecutters_dir_backup,
-            cookiecutters_dir_found
+            cookiecutters_dir, cookiecutters_dir_backup, cookiecutters_dir_found
         )
 
         # Carefully delete the created ~/.cookiecutter_replay dir only in
@@ -139,7 +127,7 @@ def clean_system(request):
         restore_backup_dir(
             cookiecutter_replay_dir,
             cookiecutter_replay_dir_backup,
-            cookiecutter_replay_dir_found
+            cookiecutter_replay_dir_found,
         )
 
     request.addfinalizer(restore_backup)

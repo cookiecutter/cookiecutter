@@ -1,19 +1,14 @@
-# -*- coding: utf-8 -*-
-
 """Helper functions for working with version control systems."""
-
-from __future__ import unicode_literals
 import logging
 import os
 import subprocess
-
-try:
-    from shutil import which
-except ImportError:
-    from whichcraft import which
+from shutil import which
 
 from cookiecutter.exceptions import (
-    RepositoryNotFound, RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled
+    RepositoryCloneFailed,
+    RepositoryNotFound,
+    UnknownRepoType,
+    VCSNotInstalled,
 )
 from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
@@ -67,6 +62,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     :param clone_to_dir: The directory to clone to.
                          Defaults to the current directory.
     :param no_input: Suppress all user prompts when calling via API.
+    :returns: str with path to the new directory of the repository.
     """
     # Ensure that clone_to_dir exists
     clone_to_dir = os.path.expanduser(clone_to_dir)
@@ -81,12 +77,12 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
         raise VCSNotInstalled(msg)
 
     repo_url = repo_url.rstrip('/')
-    tail = os.path.split(repo_url)[1]
+    repo_name = os.path.split(repo_url)[1]
     if repo_type == 'git':
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir,
-                                                 tail.rsplit('.git')[0]))
+        repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     elif repo_type == 'hg':
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir, tail))
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):

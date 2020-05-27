@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
+"""Test pre-gen hook in extensions are available and exposed methods are callable."""
+import sys
 
-# flake8: noqa
-
-"""Sample pre-gen hook for testing that custom extensions are available and exposed methods are callable."""
-
-print('{% hello cookiecutter.name %}')
+if '{% hello cookiecutter.name %}' == 'Hello Cookiemonster!':
+    sys.exit(0)
+else:
+    sys.exit(1)

@@ -82,6 +82,29 @@ Outputs:
 
     fQupUkY}W!)!
 
+Slugify extension
+~~~~~~~~~~~~~~~~~
+
+The ``cookiecutter.extensions.SlugifyExtension`` extension provides a ``slugify`` filter in templates
+that converts string into its underscored ("slugified") version:
+
+.. code-block:: jinja
+
+    {% "It's a random version" | slugify %}
+
+Would output:
+
+.. code-block:: json
+
+    it-s-a-random-version
+
+It is diferent from a mere replace of spaces since it also trates some special characters
+such as `'` in the example above. The function accepts all arguments that can be passed to
+the `slugify` function of python-slugify. For example to change the output from
+`it-s-a-random-version` to `it_s_a_random_version`, the parameter `separator='_'` would
+be passed to `slugify()`.
+
 .. _`Jinja2 extensions`: http://jinja.pocoo.org/docs/latest/extensions/
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
+.. _`python-slugify`: https://github.com/un33k/python-slugify

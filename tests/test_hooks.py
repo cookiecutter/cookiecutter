@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `cookiecutter.hooks` module."""
-
 import os
-import pytest
 import stat
 import sys
 import textwrap
+
+import pytest
 
 from cookiecutter import hooks, utils, exceptions
 
@@ -84,10 +82,7 @@ class TestFindHooks(object):
     def test_unknown_hooks_dir(self):
         """`find_hooks` should return None if hook directory not found."""
         with utils.work_in(self.repo_path):
-            assert hooks.find_hook(
-                'pre_gen_project',
-                hooks_dir='hooks_dir'
-            ) is None
+            assert hooks.find_hook('pre_gen_project', hooks_dir='hooks_dir') is None
 
     def test_hook_not_found(self):
         """`find_hooks` should return None if the hook could not be found."""
@@ -129,10 +124,7 @@ class TestExternalHooks(object):
 
     def test_run_script_cwd(self):
         """Change directory before running hook."""
-        hooks.run_script(
-            os.path.join(self.hooks_path, self.post_hook),
-            'tests'
-        )
+        hooks.run_script(os.path.join(self.hooks_path, self.post_hook), 'tests')
         assert os.path.isfile('tests/shell_post.txt')
         assert 'tests' not in os.getcwd()
 
@@ -159,11 +151,8 @@ class TestExternalHooks(object):
         hooks.run_script_with_context(
             os.path.join(self.hooks_path, self.post_hook),
             'tests',
-            {
-                'cookiecutter': {
-                    'file': 'context_post.txt'
-                }
-            })
+            {'cookiecutter': {'file': 'context_post.txt'}},
+        )
         assert os.path.isfile('tests/context_post.txt')
         assert 'tests' not in os.getcwd()
 
@@ -199,7 +188,7 @@ def dir_with_hooks(tmpdir):
     hooks_dir = tmpdir.mkdir('hooks')
 
     pre_hook_content = textwrap.dedent(
-        u"""
+        """
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('pre_gen_project.py~')
@@ -209,7 +198,7 @@ def dir_with_hooks(tmpdir):
     pre_gen_hook_file.write_text(pre_hook_content, encoding='utf8')
 
     post_hook_content = textwrap.dedent(
-        u"""
+        """
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('post_gen_project.py~')

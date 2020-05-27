@@ -2,22 +2,51 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 1.7.1 (Current master, in development)
+## 1.8.0 (Current master, in development)
+
+* Do not modify this file, since 1.7.1 Changes are generated on Pull request
+title and will be added before release.
+
+## 1.7.2 (2019-04-21)
+
+* Fixed: Jinja2&Six version limits causing build errors with ansible project [@insspb](https://github.com/insspb) (#1385)
+
+## 1.7.1 (2019-04-21)
+
+This release was focused on internal code and CI/CD changes. During this release
+all code was verified to match pep8, pep257 and other code-styling guides.  
+Project CI/CD was significantly changed, Windows platform checks based on Appveyor
+engine was replaced by GitHub actions tests. Appveyor was removed. Also our
+CI/CD was extended with Mac builds, to verify project builds on Apple devices.
 
 Important Changes:
 
+* Added: Added debug messages for get_user_config [@ssbarnea](https://github.com/ssbarnea) (#1357)
 * Multiple templates per one repository feature added. [@RomHartmann](https://github.com/RomHartmann) (#1224, #1063)
 * Update replay.py json.dump indent for easy viewing [@nicain](https://github.com/nicain) (#1293)
 * 'future' library replaced with 'six' as a more lightweight python porting library [@asottile](https://github.com/asottile) (#941)
+* Added extension: Slugify template filter [@ppanero](https://github.com/ppanero) (#1336)
+* Added command line option: `--skip-if-file-exists`, allow to skip the existing files when doing `overwrite_if_exists`. [@chhsiao1981](https://github.com/chhsiao1981) (#1076)
+* Some packages versions limited to be compatible with python2.7 and python 3.5 [@insspb](https://github.com/insspb) (#1349)
 
-Internal CI/CD changes:
+Internal CI/CD and tests changes:
 
 * Coverage comment in future merge requests disabled [@ssbarnea](https://github.com/ssbarnea) (#1279)
 * Fixed Python 3.8 travis tests and setup.py message [@insspb](https://github.com/insspb) (#1295, #1297)
 * Travis builds extended with Windows setup for all supported python versions [@insspb](https://github.com/insspb) (#1300, #1301)
+* Update .travis.yml to be compatible with latest travis cfg specs [@luzfcb](https://github.com/luzfcb) (#1346)
+* Added new test to improve tests coverage [@amey589](https://github.com/amey589) (#1023)
+* Added missed coverage lines highlight to pytest-coverage report [@insspb](https://github.com/insspb) (#1352)
+* pytest-catchlog package removed from test_requirements, as now it is included in pytest [@insspb](https://github.com/insspb) (#1347)
+* Fixed `cov-report` tox invocation environment [@insspb](https://github.com/insspb) (#1350)
+* Added: Release drafter support and configuration to exclude changelog update work and focus on development [@ssbarnea](https://github.com/ssbarnea) [@insspb](https://github.com/insspb) (#1356, #1362)
+* Added: CI/CD steps for Github actions to speedup CI/CD [@insspb](https://github.com/insspb) (#1360)
+* Removed: Appveyor CI/CD completely removed [@insspb](https://github.com/insspb) [@ssbarnea](https://github.com/ssbarnea) [@insspb](https://github.com/insspb) (#1363, #1367)
 
 Code style and docs changes:
 
+* Added black formatting verification on lint stage + project files reformatting [@ssbarnea](https://github.com/ssbarnea) [@insspb](https://github.com/insspb) (#1368)
+* Added pep257 docstring for tests/* files [@insspb](https://github.com/insspb) (#1369, #1370, #1371, #1372, #1373, #1374, #1375, #1376, #1377, #1378, #1380, #1381)
 * Added pep257 docstring for tests/conftests.py [@kishan](https://github.com/kishan3) (#1272, #1263)
 * Added pep257 docstring for tests/replay/conftest.py [@kishan](https://github.com/kishan3) (#1270, #1268)
 * Added pep257 docstring for docs/__init__.py [@kishan](https://github.com/kishan3) (#1273, #1265)
@@ -29,6 +58,11 @@ Code style and docs changes:
 * Activated pydocstyle rule: D202 - No blank lines allowed after function docstring [@ssbarnea](https://github.com/ssbarnea) (#1288)
 * Activated pydocstyle rule: D205 - 1 blank line required between summary line and description [@ssbarnea](https://github.com/ssbarnea) (#1286, #1287)
 * Activated pydocstyle rule: ABS101 [@ssbarnea](https://github.com/ssbarnea) (#1288)
+* Replaced click documentation links to point to version 7 [@igorbasko01](https://github.com/igorbasko01) (#1303)
+* Updated submodule link to latest version with documentation links fix [@DanBoothDev](https://github.com/DanBoothDev) (#1388)
+* Fixed links in main README file. [@insspb](https://github.com/insspb) (#1342)
+* Fix indentation of .cookiecutterrc in README.md [@mhsekhavat](https://github.com/mhsekhavat) (#1322)
+* Changed format of loggers invocation [@insspb](https://github.com/insspb) (#1307)
 
 ## 1.7.0 (2019-12-22) Old friend
 

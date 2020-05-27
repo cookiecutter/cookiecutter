@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around character encodings."""
-
 import codecs
 import locale
 import sys
