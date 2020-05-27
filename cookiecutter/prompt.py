@@ -1,17 +1,12 @@
-# -*- coding: utf-8 -*-
-
 """Functions for prompting the user for project info."""
-
-from collections import OrderedDict
 import json
+from collections import OrderedDict
 
 import click
-import six
-
 from jinja2.exceptions import UndefinedError
 
-from cookiecutter.exceptions import UndefinedVariableInTemplate
 from cookiecutter.environment import StrictEnvironment
+from cookiecutter.exceptions import UndefinedVariableInTemplate
 
 
 def read_user_variable(var_name, default_value):
@@ -152,7 +147,7 @@ def render_variable(env, raw, cookiecutter_dict):
         }
     elif isinstance(raw, list):
         return [render_variable(env, v, cookiecutter_dict) for v in raw]
-    elif not isinstance(raw, six.string_types):
+    elif not isinstance(raw, str):
         raw = str(raw)
 
     template = env.from_string(raw)

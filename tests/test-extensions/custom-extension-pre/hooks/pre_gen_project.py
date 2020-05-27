@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# flake8: noqa
-
-"""Sample pre-gen hook for testing that custom extensions are available and exposed methods are callable."""
-
+"""Test pre-gen hook in extensions are available and exposed methods are callable."""
 import sys
 
 if '{% hello cookiecutter.name %}' == 'Hello Cookiemonster!':

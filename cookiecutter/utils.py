@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """Helper functions used throughout Cookiecutter."""
-
-from __future__ import unicode_literals
 import contextlib
 import errno
 import logging
 import os
-import stat
 import shutil
+import stat
 import sys
 
 from cookiecutter.prompt import read_user_yes_no

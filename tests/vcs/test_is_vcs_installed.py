@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around VCS detection."""
-
 import pytest
 
 from cookiecutter import vcs

@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Functions for discovering and executing various cookiecutter hooks."""
-
 import errno
 import io
 import logging

@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Functions for generating a project from a project template."""
-from __future__ import unicode_literals
-
 import fnmatch
 import io
 import json
@@ -17,15 +13,15 @@ from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
-    NonTemplatedInputDirException,
     ContextDecodingException,
     FailedHookException,
+    NonTemplatedInputDirException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
 from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook
-from cookiecutter.utils import make_sure_path_exists, work_in, rmtree
+from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
 logger = logging.getLogger(__name__)
 

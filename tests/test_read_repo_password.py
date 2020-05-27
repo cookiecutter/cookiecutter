@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests around handling repositories which require authentication."""
-
 from cookiecutter.prompt import read_repo_password
 
 

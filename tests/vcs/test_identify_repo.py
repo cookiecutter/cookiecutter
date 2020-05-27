@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around repository type identification."""
-
 import pytest
 
 from cookiecutter import exceptions, vcs

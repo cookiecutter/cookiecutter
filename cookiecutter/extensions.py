@@ -1,15 +1,7 @@
-# -*- coding: utf-8 -*-
-
 """Jinja2 extensions."""
-
 import json
 import string
-
-try:
-    # Python 3.6 and above
-    from secrets import choice
-except ImportError:
-    from random import choice
+from secrets import choice
 
 from jinja2.ext import Extension
 from slugify import slugify as pyslugify

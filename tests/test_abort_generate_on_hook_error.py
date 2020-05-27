@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 test_abort_generate_on_hook_error.
 

@@ -1,17 +1,12 @@
-# -*- coding: utf-8 -*-
-
 """Helper functions for working with version control systems."""
-
-from __future__ import unicode_literals
 import logging
 import os
 import subprocess
 from shutil import which
 
-
 from cookiecutter.exceptions import (
-    RepositoryNotFound,
     RepositoryCloneFailed,
+    RepositoryNotFound,
     UnknownRepoType,
     VCSNotInstalled,
 )
