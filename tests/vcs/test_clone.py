@@ -191,26 +191,3 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
             no_input=True,
         )
 
-
-def test_git_clone_does_not_change_line_endings_on_win():
-    repo_dir = vcs.clone(
-        'https://github.com/audreyr/cookiecutter-pypackage.git'
-    )
-    readme = open(os.path.join(repo_dir, 'README.rst'), 'rb').readlines()
-    first_line = readme[0]
-    assert first_line.endswith('\n')
-    assert not first_line.endswith('\r\n')
-    if os.path.isdir('cookiecutter-pypackage'):
-        utils.rmtree('cookiecutter-pypackage')
-
-
-def test_hg_clone_does_not_change_line_endings_on_win():
-    repo_dir = vcs.clone(
-        'https://bitbucket.org/pokoli/cookiecutter-trytonmodule'
-    )
-    readme = open(os.path.join(repo_dir, 'README.rst'), 'rb').readlines()
-    first_line = readme[0]
-    assert first_line.endswith('\n')
-    assert not first_line.endswith('\r\n')
-    if os.path.isdir('cookiecutter-pypackage'):
-        utils.rmtree('cookiecutter-pypackage')
