@@ -1,5 +1,4 @@
 """Tests for `cookiecutter.utils` module."""
-import os
 import stat
 import sys
 from pathlib import Path
