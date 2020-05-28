@@ -1,5 +1,4 @@
 """Verify Jinja2 filters/extensions are available from pre-gen/post-gen hooks."""
-import io
 import os
 
 import freezegun
@@ -25,7 +24,7 @@ def test_jinja2_time_extension(tmpdir):
     changelog_file = os.path.join(project_dir, 'HISTORY.rst')
     assert os.path.isfile(changelog_file)
 
-    with io.open(changelog_file, 'r', encoding='utf-8') as f:
+    with open(changelog_file, 'r', encoding='utf-8') as f:
         changelog_lines = f.readlines()
 
     expected_lines = [

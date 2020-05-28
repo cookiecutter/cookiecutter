@@ -1,6 +1,5 @@
 """Functions for generating a project from a project template."""
 import fnmatch
-import io
 import json
 import logging
 import os
@@ -172,7 +171,7 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
         # Detect original file newline to output the rendered file
         # note: newline='' ensures newlines are not converted
-        with io.open(infile, 'r', encoding='utf-8', newline='') as rd:
+        with open(infile, 'r', encoding='utf-8', newline='') as rd:
             rd.readline()  # Read the first line to load 'newlines' value
 
             # Use `_new_lines` overwrite from context, if configured.
@@ -183,7 +182,7 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
         logger.debug('Writing contents to file %s', outfile)
 
-        with io.open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
+        with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file
