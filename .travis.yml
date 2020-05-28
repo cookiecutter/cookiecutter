@@ -13,8 +13,10 @@ jobs:
         env: TOXENV=py37
       - python: 3.8
         env: TOXENV=py38
-      - python: pypy3
-        env: TOXENV=pypy3
+# Travis pypy3 excluded as outdated.
+# Currently done on github, will be resumed after Travis update.
+#      - python: pypy3
+#        env: TOXENV=pypy3
       - name: "Python 3.6 on Windows"
         os: windows
         language: shell
