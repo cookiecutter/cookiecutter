@@ -22,3 +22,4 @@ Various advanced topics regarding cookiecutter usage.
    dict_variables
    template_extensions
    directories
+   new_line_characters
