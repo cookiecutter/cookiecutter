@@ -32,16 +32,42 @@ hooks, as these can be run on any platform. However, if you intend for your
 template to only be run on a single platform, a shell script (or `.bat` file
 on Windows) can be a quicker alternative.
 
-.. note::
-    Make sure your hook scripts work in a robust manner. If a hook script fails
-    (that is, `if it finishes with a nonzero exit status
-    <https://docs.python.org/3/library/sys.html#sys.exit>`_), the project
-    generation will stop and the generated directory will be cleaned up.
+Writing hooks
+-------------
+
+Here are some details on how to write pre/post-generate hook scripts.
+
+Exit with an appropriate status
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Make sure your hook scripts work in a robust manner. If a hook script fails
+(that is, `if it finishes with a nonzero exit status
+<https://docs.python.org/3/library/sys.html#sys.exit>`_), the project
+generation will stop and the generated directory will be cleaned up.
+
+Current working directory
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When the hook scripts script are run, their current working directory is the
+root of the generated project. This makes it easy for a post-generate hook to
+find generated files using relative paths.
+
+Template variables are rendered in the script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Just like your project template, Cookiecutter also renders Jinja template
+syntax in your scripts. This lets you incorporate Jinja template variables in
+your scripts. For example, this line of Python sets ``module_name`` to the
+value of the ``cookiecutter.module_name`` template variable:
+
+.. code-block:: python
+
+    module_name = '{{ cookiecutter.module_name }}'
 
 Example: Validating template variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
-Here is an example of script that validates a template variable
+Here is an example of a script that validates a template variable
 before generating the project, to be used as ``hooks/pre_gen_project.py``:
 
 .. code-block:: python
@@ -59,3 +85,30 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
 
         # exits with status 1 to indicate failure
         sys.exit(1)
+
+Example: Conditional files / directories
+----------------------------------------
+This is another example of ``hooks/pre_gen_project.py`` to demonstrate
+how to use post-processing hooks to achieve conditional control of files,
+directories.
+
+The script ensures that the directory structure is as expected by
+removing unwanted files and directories:
+
+.. code-block:: python
+
+   import os
+   import sys
+
+   REMOVE_PATHS = [
+       '{% if cookiecutter.packaging != "pip" %} requirements.txt {% endif %}',
+       '{% if cookiecutter.packaging != "poetry" %} poetry.lock {% endif %}',
+   ]
+
+   for path in REMOVE_PATHS:
+       path = path.strip()
+       if path and os.path.exists(path):
+           if os.path.isdir(path):
+               os.rmdir(path)
+           else:
+               os.unlink(path)
