@@ -3,7 +3,6 @@
 Use the global clean_system fixture and run additional teardown code to remove
 some special folders.
 """
-import io
 import os
 from pathlib import Path
 
@@ -62,7 +61,7 @@ def test_generate_files_with_linux_newline(tmp_path):
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with io.open(newline_file, 'r', encoding='utf-8', newline='') as f:
+    with open(newline_file, 'r', encoding='utf-8', newline='') as f:
         simple_text = f.readline()
     assert simple_text == 'newline is LF\n'
     assert f.newlines == '\n'
@@ -81,7 +80,7 @@ def test_generate_files_with_trailing_newline_forced_to_linux_by_context(tmp_pat
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with io.open(newline_file, 'r', encoding='utf-8', newline='') as f:
+    with open(newline_file, 'r', encoding='utf-8', newline='') as f:
         simple_text = f.readline()
     assert simple_text == 'newline is LF\r\n'
     assert f.newlines == '\r\n'
@@ -99,7 +98,7 @@ def test_generate_files_with_windows_newline(tmp_path):
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with io.open(newline_file, 'r', encoding='utf-8', newline='') as f:
+    with open(newline_file, 'r', encoding='utf-8', newline='') as f:
         simple_text = f.readline()
     assert simple_text == 'newline is CRLF\r\n'
     assert f.newlines == '\r\n'
@@ -117,7 +116,7 @@ def test_generate_files_with_windows_newline_forced_to_linux_by_context(tmp_path
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with io.open(newline_file, 'r', encoding='utf-8', newline='') as f:
+    with open(newline_file, 'r', encoding='utf-8', newline='') as f:
         simple_text = f.readline()
 
     assert simple_text == 'newline is CRLF\n'
@@ -238,7 +237,7 @@ def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists(tmp_pa
     assert Path(simple_with_new_line_file).is_file()
     assert Path(simple_with_new_line_file).exists()
 
-    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    simple_text = open(simple_file, 'rt', encoding='utf-8').read()
     assert simple_text == 'temp'
 
 
@@ -264,7 +263,7 @@ def test_generate_files_with_skip_if_file_exists(tmp_path):
     assert not Path(simple_with_new_line_file).is_file()
     assert not Path(simple_with_new_line_file).exists()
 
-    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    simple_text = open(simple_file, 'rt', encoding='utf-8').read()
     assert simple_text == 'temp'
 
 
@@ -289,7 +288,7 @@ def test_generate_files_with_overwrite_if_exists(tmp_path):
     assert Path(simple_with_new_line_file).is_file()
     assert Path(simple_with_new_line_file).exists()
 
-    simple_text = io.open(simple_file, 'rt', encoding='utf-8').read()
+    simple_text = open(simple_file, 'rt', encoding='utf-8').read()
     assert simple_text == 'I eat pizzä'
 
 

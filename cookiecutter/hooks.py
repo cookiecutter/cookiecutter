@@ -1,6 +1,5 @@
 """Functions for discovering and executing various cookiecutter hooks."""
 import errno
-import io
 import logging
 import os
 import subprocess
@@ -100,7 +99,7 @@ def run_script_with_context(script_path, cwd, context):
     """
     _, extension = os.path.splitext(script_path)
 
-    with io.open(script_path, 'r', encoding='utf-8') as file:
+    with open(script_path, 'r', encoding='utf-8') as file:
         contents = file.read()
 
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
