@@ -498,6 +498,7 @@ def test_cli_accept_hooks(
     user_input,
     expected,
 ):
+    """Test cli invocation works with `accept-hooks` option."""
     mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
 
     template_path = "tests/fake-repo-pre/"

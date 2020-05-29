@@ -2,7 +2,7 @@
 import errno
 import os
 import sys
-from pathlib import Path
+
 import pytest
 
 from cookiecutter import generate, utils
@@ -214,6 +214,7 @@ def test_run_shell_hooks_win(tmpdir):
 
 @pytest.mark.usefixtures("clean_system", "remove_additional_folders")
 def test_ignore_shell_hooks(tmp_path):
+    """Verify *.txt files not created, when accept_hooks=False."""
     generate.generate_files(
         context={"cookiecutter": {"shellhooks": "shellhooks"}},
         repo_dir="tests/test-shellhooks/",
@@ -221,6 +222,8 @@ def test_ignore_shell_hooks(tmp_path):
         accept_hooks=False,
     )
     shell_pre_file = tmp_path.joinpath("test-shellhooks/inputshellhooks/shell_pre.txt")
-    shell_post_file = tmp_path.joinpath("test-shellhooks/inputshellhooks/shell_post.txt")
+    shell_post_file = tmp_path.joinpath(
+        "test-shellhooks/inputshellhooks/shell_post.txt"
+    )
     assert not shell_pre_file.exists()
     assert not shell_post_file.exists()
