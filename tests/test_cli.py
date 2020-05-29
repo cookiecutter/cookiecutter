@@ -518,5 +518,6 @@ def test_cli_accept_hooks(
         extra_context=None,
         password=None,
         directory=None,
+        skip_if_file_exists=False,
         accept_hooks=expected,
     )

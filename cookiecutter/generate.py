@@ -370,7 +370,11 @@ def generate_files(
 
     if accept_hooks:
         _run_hook_from_repo_dir(
-            repo_dir, 'post_gen_project', project_dir, context, delete_project_on_failure
+            repo_dir,
+            'post_gen_project',
+            project_dir,
+            context,
+            delete_project_on_failure,
         )
 
     return project_dir
