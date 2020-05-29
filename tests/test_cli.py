@@ -127,11 +127,14 @@ def test_cli_replay_file(mocker, cli_runner):
         False,
         replay='~/custom-replay-file',
         overwrite_if_exists=False,
+        skip_if_file_exists=False,
         output_dir='.',
         config_file=None,
         default_config=False,
         extra_context=None,
-        password=None
+        password=None,
+        directory=None,
+        accept_hooks=True,
     )
 
 
