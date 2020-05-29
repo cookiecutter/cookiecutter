@@ -1,5 +1,4 @@
 """Tests around detection whether cookiecutter templates are cached locally."""
-import io
 import os
 
 import pytest
@@ -21,7 +20,7 @@ def cloned_cookiecutter_path(user_config_data, template):
     cloned_template_path = os.path.join(cookiecutters_dir, template)
     os.mkdir(cloned_template_path)
 
-    io.open(os.path.join(cloned_template_path, 'cookiecutter.json'), 'w')
+    open(os.path.join(cloned_template_path, 'cookiecutter.json'), 'w')
 
     return cloned_template_path
 

@@ -1,7 +1,6 @@
 """Global configuration handling."""
 import collections
 import copy
-import io
 import logging
 import os
 
@@ -61,7 +60,7 @@ def get_config(config_path):
         )
 
     logger.debug('config_path is %s', config_path)
-    with io.open(config_path, encoding='utf-8') as file_handle:
+    with open(config_path, encoding='utf-8') as file_handle:
         try:
             yaml_dict = poyo.parse_string(file_handle.read())
         except poyo.exceptions.PoyoException as e:

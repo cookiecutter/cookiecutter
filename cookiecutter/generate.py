@@ -1,6 +1,5 @@
 """Functions for generating a project from a project template."""
 import fnmatch
-import io
 import json
 import logging
 import os
@@ -170,9 +169,20 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
             raise
         rendered_file = tmpl.render(**context)
 
+        # Detect original file newline to output the rendered file
+        # note: newline='' ensures newlines are not converted
+        with open(infile, 'r', encoding='utf-8', newline='') as rd:
+            rd.readline()  # Read the first line to load 'newlines' value
+
+            # Use `_new_lines` overwrite from context, if configured.
+            newline = rd.newlines
+            if context['cookiecutter'].get('_new_lines', False):
+                newline = context['cookiecutter']['_new_lines']
+                logger.debug('Overwriting end line character with %s', newline)
+
         logger.debug('Writing contents to file %s', outfile)
 
-        with io.open(outfile, 'w', encoding='utf-8') as fh:
+        with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -317,6 +327,7 @@ def generate_files(
             for copy_dir in copy_dirs:
                 indir = os.path.normpath(os.path.join(root, copy_dir))
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
+                outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
                 shutil.copytree(indir, outdir)
 
