@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-
-"""
-test_read_user_variable
------------------------
-"""
-
-from __future__ import unicode_literals
-
+"""test_read_user_variable."""
 import click
 
 from cookiecutter.prompt import read_user_variable
@@ -16,6 +8,10 @@ DEFAULT = 'Kivy Project'
 
 
 def test_click_invocation(mocker):
+    """Test click function called correctly by cookiecutter.
+
+    Test for string type invocation.
+    """
     prompt = mocker.patch('click.prompt')
     prompt.return_value = DEFAULT
 
