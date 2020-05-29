@@ -41,6 +41,7 @@ def test_ignore_hooks_dirs():
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_imports_in_hooks():
+    """Verify hooks are able to do loal imports."""
     try:
         generate.generate_files(
             context={'cookiecutter': {'pyhooks': 'pyhooks'}},
@@ -124,6 +125,7 @@ def test_oserror_hooks(mocker):
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
 def test_popen_includes_hooks_in_python_path(mocker):
+    """Test Popen receives a env copy with the hooks folder included in PYTHONPATH."""
     repo_path = os.path.abspath('tests/test-hook-imports/')
     hook_dir = os.path.join(repo_path, 'hooks')
 
