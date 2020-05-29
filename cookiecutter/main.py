@@ -94,7 +94,7 @@ def cookiecutter(
         context['cookiecutter']['_template'] = template
 
         # include output+dir in the context dict
-        context['cookiecutter']['_root'] = os.path.abspath(output_dir)
+        context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
 
         dump(config_dict['replay_dir'], template_name, context)
 
