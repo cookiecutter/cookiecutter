@@ -50,7 +50,6 @@ repository::
     $ cookiecutter git+ssh://git@github.com/audreyr/cookiecutter-pypackage.git
     $ cookiecutter hg+ssh://hg@bitbucket.org/audreyr/cookiecutter-pypackage
 
-
 You will be prompted to enter a bunch of project config values. (These are
 defined in the project's `cookiecutter.json`.)
 
@@ -68,6 +67,11 @@ If you want to work with repos that are not hosted in github or bitbucket you ca
 type of repo that you want to use prepending `hg+` or `git+` to repo url::
 
     $ cookiecutter hg+https://example.com/repo
+
+In addition, one can provide a path to the cookiecutter stored
+on a local server::
+
+    $ cookiecutter file://server/folder/project.git
 
 Works with Zip files
 --------------------
