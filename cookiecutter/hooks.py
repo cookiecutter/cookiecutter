@@ -54,11 +54,14 @@ def find_hook(hook_name, hooks_dir='hooks'):
         logger.debug('No hooks/dir in template_dir')
         return None
 
+    scripts = []
     for hook_file in os.listdir(hooks_dir):
         if valid_hook(hook_file, hook_name):
-            return os.path.abspath(os.path.join(hooks_dir, hook_file))
+            scripts.append(os.path.abspath(os.path.join(hooks_dir, hook_file)))
 
-    return None
+    if len(scripts) == 0:
+        return None
+    return scripts
 
 
 def run_script(script_path, cwd='.'):
@@ -119,9 +122,10 @@ def run_hook(hook_name, project_dir, context):
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
     """
-    script = find_hook(hook_name)
-    if script is None:
+    scripts = find_hook(hook_name)
+    if not scripts:
         logger.debug('No %s hook found', hook_name)
         return
     logger.debug('Running hook %s', hook_name)
-    run_script_with_context(script, project_dir, context)
+    for script in scripts:
+        run_script_with_context(script, project_dir, context)

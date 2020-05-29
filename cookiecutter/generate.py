@@ -258,6 +258,7 @@ def generate_files(
     output_dir='.',
     overwrite_if_exists=False,
     skip_if_file_exists=False,
+    accept_hooks=True,
 ):
     """Render the templates and saves them to files.
 
@@ -266,6 +267,7 @@ def generate_files(
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param accept_hooks: Accept pre and post hooks if set to `True`.
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
@@ -296,9 +298,10 @@ def generate_files(
     # if rendering fails
     delete_project_on_failure = output_directory_created
 
-    _run_hook_from_repo_dir(
-        repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
-    )
+    if accept_hooks:
+        _run_hook_from_repo_dir(
+            repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
+        )
 
     with work_in(template_dir):
         env.loader = FileSystemLoader('.')
@@ -365,8 +368,13 @@ def generate_files(
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    _run_hook_from_repo_dir(
-        repo_dir, 'post_gen_project', project_dir, context, delete_project_on_failure
-    )
+    if accept_hooks:
+        _run_hook_from_repo_dir(
+            repo_dir,
+            'post_gen_project',
+            project_dir,
+            context,
+            delete_project_on_failure,
+        )
 
     return project_dir
