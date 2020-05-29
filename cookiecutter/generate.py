@@ -82,7 +82,7 @@ def generate_context(
     context = OrderedDict([])
 
     try:
-        with open(context_file) as file_handle:
+        with open(context_file, encoding='utf-8') as file_handle:
             obj = json.load(file_handle, object_pairs_hook=OrderedDict)
     except ValueError as e:
         # JSON decoding error.  Let's throw a new exception that is more
