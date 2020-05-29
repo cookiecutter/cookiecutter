@@ -17,9 +17,9 @@ def cli_runner():
     """Fixture that returns a helper function to run the cookiecutter cli."""
     runner = CliRunner()
 
-    def cli_main(*cli_args):
+    def cli_main(*cli_args, **cli_kwargs):
         """Run cookiecutter cli main with the given args."""
-        return runner.invoke(main, cli_args)
+        return runner.invoke(main, cli_args, **cli_kwargs)
 
     return cli_main
 
@@ -105,6 +105,7 @@ def test_cli_replay(mocker, cli_runner):
         extra_context=None,
         password=None,
         directory=None,
+        accept_hooks=True,
     )
 
 
@@ -139,6 +140,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         extra_context=None,
         password=None,
         directory=None,
+        accept_hooks=True,
     )
 
 
@@ -175,6 +177,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         extra_context=None,
         password=None,
         directory=None,
+        accept_hooks=True,
     )
 
 
@@ -236,6 +239,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         extra_context=None,
         password=None,
         directory=None,
+        accept_hooks=True,
     )
 
 
@@ -279,6 +283,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         extra_context=None,
         password=None,
         directory=None,
+        accept_hooks=True,
     )
 
 
@@ -305,6 +310,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         extra_context=None,
         password=None,
         directory=None,
+        accept_hooks=True,
     )
 
 
@@ -329,6 +335,7 @@ def test_default_user_config(mocker, cli_runner):
         extra_context=None,
         password=None,
         directory=None,
+        accept_hooks=True,
     )
 
 
@@ -466,6 +473,52 @@ def test_directory_repo(cli_runner):
         'tests/fake-repo-dir/', '--no-input', '-v', '--directory=my-dir',
     )
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
-    with open(os.path.join('fake-project', 'README.rst')) as f:
-        assert 'Project name: **Fake Project**' in f.read()
+    assert os.path.isdir("fake-project")
+    with open(os.path.join("fake-project", "README.rst")) as f:
+        assert "Project name: **Fake Project**" in f.read()
+
+
+cli_accept_hook_arg_testdata = [
+    ("--accept-hooks=yes", None, True),
+    ("--accept-hooks=no", None, False),
+    ("--accept-hooks=ask", "yes", True),
+    ("--accept-hooks=ask", "no", False),
+]
+
+
+@pytest.mark.parametrize(
+    "accept_hooks_arg,user_input,expected", cli_accept_hook_arg_testdata
+)
+def test_cli_accept_hooks(
+    mocker,
+    cli_runner,
+    output_dir_flag,
+    output_dir,
+    accept_hooks_arg,
+    user_input,
+    expected,
+):
+    """Test cli invocation works with `accept-hooks` option."""
+    mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
+
+    template_path = "tests/fake-repo-pre/"
+    result = cli_runner(
+        template_path, output_dir_flag, output_dir, accept_hooks_arg, input=user_input
+    )
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        output_dir=output_dir,
+        config_file=None,
+        default_config=False,
+        extra_context=None,
+        password=None,
+        directory=None,
+        skip_if_file_exists=False,
+        accept_hooks=expected,
+    )
