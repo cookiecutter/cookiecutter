@@ -1,12 +1,8 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `cookiecutter.prompt` module."""
-
 import platform
 from collections import OrderedDict
 
 import pytest
-import six
 
 from cookiecutter import prompt, exceptions, environment
 
@@ -44,7 +40,7 @@ class TestRenderVariable:
 
         # Make sure that non None non str variables are converted beforehand
         if raw_var is not None:
-            if not isinstance(raw_var, six.string_types):
+            if not isinstance(raw_var, str):
                 raw_var = str(raw_var)
             from_string.assert_called_once_with(raw_var)
         else:
@@ -77,7 +73,7 @@ class TestPrompt(object):
         'context',
         [
             {'cookiecutter': {'full_name': 'Your Name'}},
-            {'cookiecutter': {'full_name': u'Řekni či napiš své jméno'}},
+            {'cookiecutter': {'full_name': 'Řekni či napiš své jméno'}},
         ],
         ids=['ASCII default prompt/input', 'Unicode default prompt/input'],
     )
@@ -99,7 +95,7 @@ class TestPrompt(object):
         context = {'cookiecutter': {'details': {}}}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
-        assert cookiecutter_dict == {'details': {'key': u'value', 'integer': 37}}
+        assert cookiecutter_dict == {'details': {'key': 'value', 'integer': 37}}
 
     def test_should_render_dict(self):
         """Verify template inside dictionary variable rendered."""
@@ -115,7 +111,7 @@ class TestPrompt(object):
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
         assert cookiecutter_dict == {
             'project_name': 'Slartibartfast',
-            'details': {'Slartibartfast': u'Slartibartfast'},
+            'details': {'Slartibartfast': 'Slartibartfast'},
         }
 
     def test_should_render_deep_dict(self):
@@ -171,18 +167,18 @@ class TestPrompt(object):
         context = {
             'cookiecutter': OrderedDict(
                 [
-                    ('project_name', u'A New Project'),
+                    ('project_name', 'A New Project'),
                     (
                         'pkg_name',
-                        u'{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                        '{{ cookiecutter.project_name|lower|replace(" ", "") }}',
                     ),
                 ]
             )
         }
 
         exp_cookiecutter_dict = {
-            'project_name': u'A New Project',
-            'pkg_name': u'anewproject',
+            'project_name': 'A New Project',
+            'pkg_name': 'anewproject',
         }
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == exp_cookiecutter_dict
@@ -198,6 +194,43 @@ class TestPrompt(object):
         context = {'cookiecutter': {'_copy_without_render': ['*.html']}}
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'_copy_without_render': ['*.html']}
+
+    def test_should_render_private_variables_with_two_underscores(self):
+        """Test rendering of private variables with two underscores.
+
+        There are three cases:
+        1. Variables beginning with a single underscore are private and not rendered.
+        2. Variables beginning with a double underscore are private and are rendered.
+        3. Variables beginning with anything other than underscores are not private and
+           are rendered.
+        """
+        context = {
+            'cookiecutter': OrderedDict(
+                [
+                    ('foo', 'Hello world'),
+                    ('bar', 123),
+                    ('rendered_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('rendered_bar', 123),
+                    ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('_hidden_bar', 123),
+                    ('__rendered_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('__rendered_hidden_bar', 123),
+                ]
+            )
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == OrderedDict(
+            [
+                ('foo', 'Hello world'),
+                ('bar', '123'),
+                ('rendered_foo', 'hello world'),
+                ('rendered_bar', '123'),
+                ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                ('_hidden_bar', 123),
+                ('__rendered_hidden_foo', 'hello world'),
+                ('__rendered_hidden_bar', '123'),
+            ]
+        )
 
     def test_should_not_render_private_variables(self):
         """Verify private(underscored) variables not rendered by `prompt_for_config`.
@@ -246,7 +279,7 @@ class TestReadUserChoice(object):
     def test_should_invoke_read_user_variable(self, mocker):
         """Verify correct function called for string input variables."""
         read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
-        read_user_variable.return_value = u'Audrey Roy'
+        read_user_variable.return_value = 'Audrey Roy'
 
         prompt_choice = mocker.patch('cookiecutter.prompt.prompt_choice_for_config')
 
@@ -259,28 +292,28 @@ class TestReadUserChoice(object):
         assert not prompt_choice.called
         assert not read_user_choice.called
         read_user_variable.assert_called_once_with('full_name', 'Your Name')
-        assert cookiecutter_dict == {'full_name': u'Audrey Roy'}
+        assert cookiecutter_dict == {'full_name': 'Audrey Roy'}
 
     def test_should_render_choices(self, mocker):
         """Verify Jinja2 templating engine works inside choices variables."""
         read_user_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
-        read_user_choice.return_value = u'anewproject'
+        read_user_choice.return_value = 'anewproject'
 
         read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
-        read_user_variable.return_value = u'A New Project'
+        read_user_variable.return_value = 'A New Project'
 
-        rendered_choices = [u'foo', u'anewproject', u'bar']
+        rendered_choices = ['foo', 'anewproject', 'bar']
 
         context = {
             'cookiecutter': OrderedDict(
                 [
-                    ('project_name', u'A New Project'),
+                    ('project_name', 'A New Project'),
                     (
                         'pkg_name',
                         [
-                            u'foo',
-                            u'{{ cookiecutter.project_name|lower|replace(" ", "") }}',
-                            u'bar',
+                            'foo',
+                            '{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                            'bar',
                         ],
                     ),
                 ]
@@ -288,12 +321,12 @@ class TestReadUserChoice(object):
         }
 
         expected = {
-            'project_name': u'A New Project',
-            'pkg_name': u'anewproject',
+            'project_name': 'A New Project',
+            'pkg_name': 'anewproject',
         }
         cookiecutter_dict = prompt.prompt_for_config(context)
 
-        read_user_variable.assert_called_once_with('project_name', u'A New Project')
+        read_user_variable.assert_called_once_with('project_name', 'A New Project')
         read_user_choice.assert_called_once_with('pkg_name', rendered_choices)
         assert cookiecutter_dict == expected
 

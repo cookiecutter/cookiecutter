@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """test_read_user_variable."""
-
-from __future__ import unicode_literals
-
 import click
 
 from cookiecutter.prompt import read_user_variable

@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-
 """Test cookiecutter for work without any input.
 
 Tests in this file execute `cookiecutter()` with `no_input=True` flag and
 verify result with different settings in `cookiecutter.json`.
 """
-
 import os
 import textwrap
+
 import pytest
 
 from cookiecutter import main, utils

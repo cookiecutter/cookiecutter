@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around log handling."""
-
 import logging
 
 import pytest
@@ -38,13 +35,13 @@ def info_messages():
 def debug_messages():
     """Fixture. List of test debug messages."""
     return [
-        'INFO cookiecutter: ' 'Welcome to Cookiecutter',
-        'DEBUG cookiecutter: ' 'Generating project from pytest-plugin',
-        'INFO cookiecutter.foo: ' 'Loading user config from home dir',
-        "DEBUG cookiecutter.foo.bar: " "I don't know.",
-        'DEBUG cookiecutter.foo.bar: ' 'I wanted to save the world.',
-        'ERROR cookiecutter.foo: ' 'Aw, snap! Something went wrong',
-        'DEBUG cookiecutter: ' 'Successfully generated project',
+        "INFO cookiecutter: Welcome to Cookiecutter",
+        "DEBUG cookiecutter: Generating project from pytest-plugin",
+        "INFO cookiecutter.foo: Loading user config from home dir",
+        "DEBUG cookiecutter.foo.bar: I don't know.",
+        "DEBUG cookiecutter.foo.bar: I wanted to save the world.",
+        "ERROR cookiecutter.foo: Aw, snap! Something went wrong",
+        "DEBUG cookiecutter: Successfully generated project",
     ]
 
 

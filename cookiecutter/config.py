@@ -1,19 +1,12 @@
-# -*- coding: utf-8 -*-
-
 """Global configuration handling."""
-
-from __future__ import unicode_literals
+import collections
 import copy
 import logging
 import os
-import io
-import collections
 
 import poyo
 
-from cookiecutter.exceptions import ConfigDoesNotExistException
-from cookiecutter.exceptions import InvalidConfiguration
-
+from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 
@@ -67,12 +60,12 @@ def get_config(config_path):
         )
 
     logger.debug('config_path is %s', config_path)
-    with io.open(config_path, encoding='utf-8') as file_handle:
+    with open(config_path, encoding='utf-8') as file_handle:
         try:
             yaml_dict = poyo.parse_string(file_handle.read())
         except poyo.exceptions.PoyoException as e:
             raise InvalidConfiguration(
-                'Unable to parse YAML file {}. Error: {}' ''.format(config_path, e)
+                'Unable to parse YAML file {}. Error: {}'.format(config_path, e)
             )
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)

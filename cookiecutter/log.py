@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Module for setting up logging."""
-
 import logging
 import sys
 
@@ -14,8 +11,8 @@ LOG_LEVELS = {
 }
 
 LOG_FORMATS = {
-    'DEBUG': u'%(levelname)s %(name)s: %(message)s',
-    'INFO': u'%(levelname)s: %(message)s',
+    'DEBUG': '%(levelname)s %(name)s: %(message)s',
+    'INFO': '%(levelname)s: %(message)s',
 }
 
 

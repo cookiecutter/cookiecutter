@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """pytest fixtures which are globally available throughout the suite."""
-
 import logging
 import os
 import shutil
@@ -11,7 +8,7 @@ import pytest
 from cookiecutter import utils
 
 
-USER_CONFIG = u"""
+USER_CONFIG = """
 cookiecutters_dir: "{cookiecutters_dir}"
 replay_dir: "{replay_dir}"
 """

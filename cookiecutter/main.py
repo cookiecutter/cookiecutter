@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
-
 """
 Main entry point for the `cookiecutter` command.
 
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
-
-from __future__ import unicode_literals
 import logging
 import os
 
 from cookiecutter.config import get_user_config
-from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.exceptions import InvalidModeException
+from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.prompt import prompt_for_config
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
@@ -35,6 +31,7 @@ def cookiecutter(
     password=None,
     directory=None,
     skip_if_file_exists=False,
+    accept_hooks=True,
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -52,6 +49,7 @@ def cookiecutter(
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
     :param directory: Relative path to a cookiecutter template in a repository.
+    :param accept_hooks: Accept pre and post hooks if set to `True`.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -107,6 +105,7 @@ def cookiecutter(
         overwrite_if_exists=overwrite_if_exists,
         skip_if_file_exists=skip_if_file_exists,
         output_dir=output_dir,
+        accept_hooks=accept_hooks,
     )
 
     # Cleanup (if required)

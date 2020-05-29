@@ -1,17 +1,12 @@
-# -*- coding: utf-8 -*-
-
 """Functions for prompting the user for project info."""
-
-from collections import OrderedDict
 import json
+from collections import OrderedDict
 
 import click
-import six
-
 from jinja2.exceptions import UndefinedError
 
-from cookiecutter.exceptions import UndefinedVariableInTemplate
 from cookiecutter.environment import StrictEnvironment
+from cookiecutter.exceptions import UndefinedVariableInTemplate
 
 
 def read_user_variable(var_name, default_value):
@@ -63,17 +58,17 @@ def read_user_choice(var_name, options):
         raise ValueError
 
     choice_map = OrderedDict(
-        (u'{}'.format(i), value) for i, value in enumerate(options, 1)
+        ('{}'.format(i), value) for i, value in enumerate(options, 1)
     )
     choices = choice_map.keys()
-    default = u'1'
+    default = '1'
 
-    choice_lines = [u'{} - {}'.format(*c) for c in choice_map.items()]
-    prompt = u'\n'.join(
+    choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
+    prompt = '\n'.join(
         (
-            u'Select {}:'.format(var_name),
-            u'\n'.join(choice_lines),
-            u'Choose from {}'.format(u', '.join(choices)),
+            'Select {}:'.format(var_name),
+            '\n'.join(choice_lines),
+            'Choose from {}'.format(', '.join(choices)),
         )
     )
 
@@ -152,7 +147,7 @@ def render_variable(env, raw, cookiecutter_dict):
         }
     elif isinstance(raw, list):
         return [render_variable(env, v, cookiecutter_dict) for v in raw]
-    elif not isinstance(raw, six.string_types):
+    elif not isinstance(raw, str):
         raw = str(raw)
 
     template = env.from_string(raw)
@@ -185,9 +180,12 @@ def prompt_for_config(context, no_input=False):
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    for key, raw in context[u'cookiecutter'].items():
-        if key.startswith(u'_'):
+    for key, raw in context['cookiecutter'].items():
+        if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
+            continue
+        elif key.startswith('__'):
+            cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
         try:
@@ -210,7 +208,7 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
-    for key, raw in context[u'cookiecutter'].items():
+    for key, raw in context['cookiecutter'].items():
 
         try:
             if isinstance(raw, dict):

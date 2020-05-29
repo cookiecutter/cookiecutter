@@ -1,10 +1,5 @@
-# -*- coding: utf-8 -*-
-
 """Functions for generating a project from a project template."""
-from __future__ import unicode_literals
-
 import fnmatch
-import io
 import json
 import logging
 import os
@@ -17,15 +12,15 @@ from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
-    NonTemplatedInputDirException,
     ContextDecodingException,
     FailedHookException,
+    NonTemplatedInputDirException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
 from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook
-from cookiecutter.utils import make_sure_path_exists, work_in, rmtree
+from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
 logger = logging.getLogger(__name__)
 
@@ -174,9 +169,20 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
             raise
         rendered_file = tmpl.render(**context)
 
+        # Detect original file newline to output the rendered file
+        # note: newline='' ensures newlines are not converted
+        with open(infile, 'r', encoding='utf-8', newline='') as rd:
+            rd.readline()  # Read the first line to load 'newlines' value
+
+            # Use `_new_lines` overwrite from context, if configured.
+            newline = rd.newlines
+            if context['cookiecutter'].get('_new_lines', False):
+                newline = context['cookiecutter']['_new_lines']
+                logger.debug('Overwriting end line character with %s', newline)
+
         logger.debug('Writing contents to file %s', outfile)
 
-        with io.open(outfile, 'w', encoding='utf-8') as fh:
+        with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -252,6 +258,7 @@ def generate_files(
     output_dir='.',
     overwrite_if_exists=False,
     skip_if_file_exists=False,
+    accept_hooks=True,
 ):
     """Render the templates and saves them to files.
 
@@ -260,6 +267,7 @@ def generate_files(
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param accept_hooks: Accept pre and post hooks if set to `True`.
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
@@ -290,9 +298,10 @@ def generate_files(
     # if rendering fails
     delete_project_on_failure = output_directory_created
 
-    _run_hook_from_repo_dir(
-        repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
-    )
+    if accept_hooks:
+        _run_hook_from_repo_dir(
+            repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
+        )
 
     with work_in(template_dir):
         env.loader = FileSystemLoader('.')
@@ -317,6 +326,7 @@ def generate_files(
             for copy_dir in copy_dirs:
                 indir = os.path.normpath(os.path.join(root, copy_dir))
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
+                outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
                 shutil.copytree(indir, outdir)
 
@@ -358,8 +368,13 @@ def generate_files(
                     msg = "Unable to create file '{}'".format(infile)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
-    _run_hook_from_repo_dir(
-        repo_dir, 'post_gen_project', project_dir, context, delete_project_on_failure
-    )
+    if accept_hooks:
+        _run_hook_from_repo_dir(
+            repo_dir,
+            'post_gen_project',
+            project_dir,
+            context,
+            delete_project_on_failure,
+        )
 
     return project_dir

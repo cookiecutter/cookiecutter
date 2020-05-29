@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Collection of tests around loading cookiecutter config."""
-
 import os
 
 import pytest
@@ -89,7 +86,7 @@ def test_invalid_config():
         config.get_config('tests/test-config/invalid-config.yaml')
 
     expected_error_msg = (
-        'Unable to parse YAML file ' 'tests/test-config/invalid-config.yaml. ' 'Error: '
+        'Unable to parse YAML file tests/test-config/invalid-config.yaml. Error: '
     )
     assert expected_error_msg in str(exc_info.value)
 

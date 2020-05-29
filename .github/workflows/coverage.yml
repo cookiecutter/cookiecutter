@@ -1,0 +1,38 @@
+name: Coverage reporter
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: "3.8"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox virtualenv
+    - name: Test build with coverage
+      run: "tox -e cov-report"
+    - name: Send coverage report to codeclimate
+      uses: paambaati/codeclimate-action@v2.6.0
+      with:
+        coverageCommand: echo "Ignore rerun"
+        coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
+      env:
+        CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+    - name: Send coverage report to codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml

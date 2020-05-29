@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Custom Sphinx extension to build a list of all of cookiecutter's cli."""
-
 import click
 from docutils import nodes
 from docutils.parsers import rst

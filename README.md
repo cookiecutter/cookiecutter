@@ -1,7 +1,7 @@
 # Cookiecutter
 
-[![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
-[![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.python.org/pypi/cookiecutter)
+[![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
+[![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![Build Status](https://travis-ci.org/cookiecutter/cookiecutter.svg?branch=master)](https://travis-ci.org/cookiecutter/cookiecutter)
 [![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/github/cookiecutter/cookiecutter?branch=master)
 [![slack](https://img.shields.io/badge/cookiecutter-Join%20on%20Slack-green?style=flat&logo=slack)](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U)
@@ -14,7 +14,7 @@ template.
 
 * Documentation: [https://cookiecutter.readthedocs.io](https://cookiecutter.readthedocs.io)
 * GitHub: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
-* PyPI: [https://pypi.python.org/pypi/cookiecutter](https://pypi.python.org/pypi/cookiecutter)
+* PyPI: [https://pypi.org/project/cookiecutter/](https://pypi.org/project/cookiecutter/)
 * Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE)
 
 ![Cookiecutter](https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
@@ -28,9 +28,9 @@ Did someone say features?
 
 * Cross-platform: Windows, Mac, and Linux are officially supported.
 * You don't have to know/write Python code to use Cookiecutter
-* Works with Python 2.7, 3.5, 3.6, 3.7, 3.8 ,PyPy and PyPy3.
-* Project templates can be in any programming language or markup format:  
-  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name it.  
+* Works with Python 3.6, 3.7, 3.8 and PyPy3.
+* Project templates can be in any programming language or markup format:
+  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name it.
   You can use multiple languages in the same project template.
 * Simple command line usage:
 

@@ -1,17 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """
 cookiecutter.replay.
 
 -------------------
 """
-
-from __future__ import unicode_literals
-
 import json
 import os
-
-import six
 
 from cookiecutter.utils import make_sure_path_exists
 
@@ -27,7 +20,7 @@ def dump(replay_dir, template_name, context):
     if not make_sure_path_exists(replay_dir):
         raise IOError('Unable to create replay dir at {}'.format(replay_dir))
 
-    if not isinstance(template_name, six.string_types):
+    if not isinstance(template_name, str):
         raise TypeError('Template name is required to be of type str')
 
     if not isinstance(context, dict):
@@ -44,7 +37,7 @@ def dump(replay_dir, template_name, context):
 
 def load(replay_dir, template_name):
     """Read json data from file."""
-    if not isinstance(template_name, six.string_types):
+    if not isinstance(template_name, str):
         raise TypeError('Template name is required to be of type str')
 
     replay_file = get_file_name(replay_dir, template_name)

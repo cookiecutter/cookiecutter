@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-
 """test_dump."""
-
 import json
 import os
+
 import pytest
 
 from cookiecutter import replay

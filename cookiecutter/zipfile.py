@@ -1,18 +1,9 @@
 """Utility functions for handling and fetching repo archives in zip format."""
-
-from __future__ import absolute_import
-
 import os
 import tempfile
-from zipfile import ZipFile
+from zipfile import BadZipFile, ZipFile
 
 import requests
-
-try:
-    # BadZipfile was renamed to BadZipFile in Python 3.2.
-    from zipfile import BadZipFile
-except ImportError:
-    from zipfile import BadZipfile as BadZipFile
 
 from cookiecutter.exceptions import InvalidZipRepository
 from cookiecutter.prompt import read_repo_password
@@ -110,7 +101,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
                         retry += 1
                         if retry == 3:
                             raise InvalidZipRepository(
-                                'Invalid password provided ' 'for protected repository'
+                                'Invalid password provided for protected repository'
                             )
 
     except BadZipFile:

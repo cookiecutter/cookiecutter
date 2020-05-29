@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests for `repository_has_cookiecutter_json` function."""
-
 import pytest
 
 from cookiecutter.repository import repository_has_cookiecutter_json

@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Verify generate context behaviour and context overwrite priorities."""
-
-from __future__ import unicode_literals
-
 import os
 import re
 from collections import OrderedDict
@@ -68,9 +63,7 @@ def test_generate_context_with_json_decoding_error():
     with pytest.raises(ContextDecodingException) as excinfo:
         generate.generate_context('tests/test-generate-context/invalid-syntax.json')
     # original message from json module should be included
-    pattern = (
-        'Expecting \'{0,1}:\'{0,1} delimiter: ' 'line 1 column (19|20) \\(char 19\\)'
-    )
+    pattern = 'Expecting \'{0,1}:\'{0,1} delimiter: line 1 column (19|20) \\(char 19\\)'
     assert re.search(pattern, str(excinfo.value))
     # File name should be included too...for testing purposes, just test the
     # last part of the file. If we wanted to test the absolute path, we'd have

@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Tests for cookiecutter's output directory customization feature."""
-
 import pytest
 
 from cookiecutter import main
@@ -11,11 +8,11 @@ from cookiecutter import main
 def context():
     """Fixture to return a valid context as known from a cookiecutter.json."""
     return {
-        u'cookiecutter': {
-            u'email': u'raphael@hackebrot.de',
-            u'full_name': u'Raphael Pierzina',
-            u'github_username': u'hackebrot',
-            u'version': u'0.1.0',
+        'cookiecutter': {
+            'email': 'raphael@hackebrot.de',
+            'full_name': 'Raphael Pierzina',
+            'github_username': 'hackebrot',
+            'version': '0.1.0',
         }
     }
 
@@ -64,6 +61,7 @@ def test_api_invocation(mocker, template, output_dir, context):
         overwrite_if_exists=False,
         skip_if_file_exists=False,
         output_dir=output_dir,
+        accept_hooks=True,
     )
 
 
@@ -79,4 +77,5 @@ def test_default_output_dir(mocker, template, context):
         overwrite_if_exists=False,
         skip_if_file_exists=False,
         output_dir='.',
+        accept_hooks=True,
     )

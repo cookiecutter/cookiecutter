@@ -20,6 +20,7 @@ lib64/
 parts/
 sdist/
 var/
+venv/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -44,6 +45,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.pytest_cache
 
 # Translations
 *.mo

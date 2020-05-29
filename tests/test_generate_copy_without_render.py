@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-
 """Verify correct work of `_copy_without_render` context option."""
-
-from __future__ import unicode_literals
 import os
+
 import pytest
 
 from cookiecutter import generate
@@ -34,6 +31,7 @@ def test_generate_copy_without_render_extensions():
                     '*not-rendered',
                     'rendered/not_rendered.yml',
                     '*.txt',
+                    '{{cookiecutter.repo_name}}-rendered/README.md',
                 ],
             }
         },
@@ -42,7 +40,7 @@ def test_generate_copy_without_render_extensions():
 
     dir_contents = os.listdir('test_copy_without_render')
 
-    assert '{{cookiecutter.repo_name}}-not-rendered' in dir_contents
+    assert 'test_copy_without_render-not-rendered' in dir_contents
     assert 'test_copy_without_render-rendered' in dir_contents
 
     with open('test_copy_without_render/README.txt') as f:
@@ -52,21 +50,26 @@ def test_generate_copy_without_render_extensions():
         assert 'I have been rendered!' in f.read()
 
     with open(
-        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.txt'
+        'test_copy_without_render/test_copy_without_render-rendered/README.txt'
     ) as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 
     with open(
-        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.rst'
+        'test_copy_without_render/test_copy_without_render-rendered/README.rst'
     ) as f:
         assert 'I have been rendered' in f.read()
 
     with open(
         'test_copy_without_render/'
-        '{{cookiecutter.repo_name}}-not-rendered/'
+        'test_copy_without_render-not-rendered/'
         'README.rst'
     ) as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 
     with open('test_copy_without_render/rendered/not_rendered.yml') as f:
+        assert '{{cookiecutter.render_test}}' in f.read()
+
+    with open(
+        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md'
+    ) as f:
         assert '{{cookiecutter.render_test}}' in f.read()

@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 """Functions for finding Cookiecutter templates and other components."""
-
 import logging
 import os
 
