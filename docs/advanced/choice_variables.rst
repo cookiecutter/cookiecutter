@@ -3,7 +3,7 @@
 Choice Variables (1.1+)
 -----------------------
 
-Choice variables provide different choices when creating a project. Depending on an user's choice
+Choice variables provide different choices when creating a project. Depending on a user's choice
 the template renders things differently.
 
 Basic Usage
@@ -36,6 +36,8 @@ can be used like this::
 
   {%- elif cookiecutter.license == "BSD-3" -%}
   # More possible license content here
+
+  {% endif %}
 
 Cookiecutter is using `Jinja2's if conditional expression <http://jinja.pocoo.org/docs/dev/templates/#if>`_ to determine the correct license.
 

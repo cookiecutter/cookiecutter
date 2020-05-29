@@ -18,7 +18,6 @@ You can install the Python binaries from `python.org <https://www.python.org/dow
 
 .. code-block:: bash
 
-    # for python 3.x
     $ brew install python3
 
 
@@ -52,11 +51,15 @@ You may need to restart your command prompt session to load the environment vari
 
 .. seealso:: See `Configuring Python (on Windows) <https://docs.python.org/3/using/windows.html#configuring-python>`_ for full details.
 
+**Unix on Windows**
+
+
+You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10>`_ or `GNU utilities for Win32 <http://unxutils.sourceforge.net>`_ to use Unix commands on Windows.
 
 Packaging tools
 ^^^^^^^^^^^^^^^
 
-``pip`` and ``setuptools`` now come with Python 2 >=2.7.9 or Python 3 >=3.4. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
+``pip`` and ``setuptools`` now come with Python 3 >=3.6. See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
 
 
 Install cookiecutter
@@ -66,7 +69,7 @@ At the command line:
 
 .. code-block:: bash
 
-    $ pip install --user cookiecutter
+    $ python3 -m pip install --user cookiecutter
 
 Or, if you do not have pip:
 
@@ -97,11 +100,11 @@ Alternate installations
 
     $ brew install cookiecutter
 
-**Pipsi (Linux/OSX only):**
+**Pipx (Linux, OSX and Windows):**
 
 .. code-block:: bash
 
-    $ pipsi install cookiecutter
+    $ pipx install cookiecutter
 
 **Debian/Ubuntu:**
 
@@ -112,7 +115,7 @@ Alternate installations
 Upgrading from 0.6.4 to 0.7.0 or greater
 ----------------------------------------
 
-First, read :doc:`history` in detail. There are a lot of major
+First, read :doc:`HISTORY` in detail. There are a lot of major
 changes. The big ones are:
 
 * Cookiecutter no longer deletes the cloned repo after generating a project.
@@ -129,6 +132,6 @@ Or with pip:
 
 .. code-block:: bash
 
-    $ pip install --upgrade cookiecutter
+    $ python3 -m pip install --upgrade cookiecutter
 
 Then you should be good to go.

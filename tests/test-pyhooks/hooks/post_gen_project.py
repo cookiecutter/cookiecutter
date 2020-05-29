@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from __future__ import print_function
+"""Simple post-gen hook for testing project folder and custom file creation."""
 
 print('pre generation hook')
 f = open('python_post.txt', 'w')
