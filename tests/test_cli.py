@@ -111,14 +111,11 @@ def test_cli_replay(mocker, cli_runner):
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_replay_file(mocker, cli_runner):
-    mock_cookiecutter = mocker.patch(
-        'cookiecutter.cli.cookiecutter'
-    )
+    """Test cli invocation correctly pass --replay-file option."""
+    mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
     template_path = 'tests/fake-repo-pre/'
-    result = cli_runner(
-        template_path, '--replay-file', '~/custom-replay-file', '-v'
-    )
+    result = cli_runner(template_path, '--replay-file', '~/custom-replay-file', '-v')
 
     assert result.exit_code == 0
     mock_cookiecutter.assert_called_once_with(

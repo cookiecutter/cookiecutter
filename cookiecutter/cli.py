@@ -69,8 +69,10 @@ def validate_extra_context(ctx, param, value):
     help='Do not prompt for parameters and only use information entered previously',
 )
 @click.option(
-    '--replay-file', type=click.Path(), default=None,
-    help=u'Use this file for replay instead of the default.'
+    '--replay-file',
+    type=click.Path(),
+    default=None,
+    help=u'Use this file for replay instead of the default.',
 )
 @click.option(
     '-f',
