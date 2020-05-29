@@ -44,7 +44,7 @@ This feature is comes in handy if, for instance, you want to create a new projec
 Custom replay file
 ~~~~~~~~~~~~~~~~~~
 
-*New in Cookiecutter 1.7*
+*New in Cookiecutter 2.0*
 
 To specify a custom filename, you can use the ``--replay-file`` option::
 
