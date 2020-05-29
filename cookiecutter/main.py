@@ -93,6 +93,9 @@ def cookiecutter(
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
 
+        # include output+dir in the context dict
+        context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
+
         dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.

@@ -367,6 +367,7 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
             'github_username': 'hackebrot',
             'project_slug': 'testproject',
             '_template': template_path,
+            '_output_dir': output_dir,
         }
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
