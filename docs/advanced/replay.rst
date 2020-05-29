@@ -40,3 +40,15 @@ Or use the Python API::
 
 
 This feature is comes in handy if, for instance, you want to create a new project from an updated template.
+
+Custom replay file
+~~~~~~~~~~~~~~~~~~
+
+*New in Cookiecutter 2.0*
+
+To specify a custom filename, you can use the ``--replay-file`` option::
+
+    cookiecutter --replay-file ./cookiedozer.json gh:hackebrot/cookiedozer
+
+This may be useful to run the same replay file over several machines, in tests
+or when a user of the template reports a problem

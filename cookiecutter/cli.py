@@ -69,6 +69,12 @@ def validate_extra_context(ctx, param, value):
     help='Do not prompt for parameters and only use information entered previously',
 )
 @click.option(
+    '--replay-file',
+    type=click.Path(),
+    default=None,
+    help=u'Use this file for replay instead of the default.',
+)
+@click.option(
     '-f',
     '--overwrite-if-exists',
     is_flag=True,
@@ -123,6 +129,7 @@ def main(
     directory,
     skip_if_file_exists,
     accept_hooks,
+    replay_file,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -144,6 +151,9 @@ def main(
         _accept_hooks = click.confirm("Do you want to execute hooks?")
     else:
         _accept_hooks = accept_hooks == "yes"
+
+    if replay_file:
+        replay = replay_file
 
     try:
         cookiecutter(

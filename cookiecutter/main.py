@@ -23,7 +23,7 @@ def cookiecutter(
     checkout=None,
     no_input=False,
     extra_context=None,
-    replay=False,
+    replay=None,
     overwrite_if_exists=False,
     output_dir='.',
     config_file=None,
@@ -42,7 +42,8 @@ def cookiecutter(
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
-    :param overwrite_if_exists: Overwrite the contents of output directory
+    :param replay: Do not prompt for input, instead read from saved json. If
+        ``True`` read from the ``replay_dir``.
         if it exists
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
@@ -75,7 +76,11 @@ def cookiecutter(
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
     if replay:
-        context = load(config_dict['replay_dir'], template_name)
+        if isinstance(replay, bool):
+            context = load(config_dict['replay_dir'], template_name)
+        else:
+            path, template_name = os.path.split(os.path.splitext(replay)[0])
+            context = load(path, template_name)
     else:
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is %s', context_file)
