@@ -19,6 +19,7 @@ from cookiecutter.exceptions import (
 )
 from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
+from cookiecutter.config import get_user_config
 
 
 def version_msg():
@@ -43,9 +44,32 @@ def validate_extra_context(ctx, param, value):
     return collections.OrderedDict(s.split('=', 1) for s in value) or None
 
 
+def list_installed_templates(default_config, passed_config_file):
+    """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
+    config = get_user_config(passed_config_file, default_config)
+    cookiecutter_folder = config.get('cookiecutters_dir')
+    if not os.path.exists(cookiecutter_folder):
+        click.echo(
+            'Error: Cannot list installed templates. Folder does not exist: '
+            '{}'.format(cookiecutter_folder)
+        )
+        sys.exit(-1)
+
+    template_names = [
+        folder
+        for folder in os.listdir(cookiecutter_folder)
+        if os.path.exists(
+            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
+        )
+    ]
+    click.echo('{} installed templates: '.format(len(template_names)))
+    for name in template_names:
+        click.echo(' * {}'.format(name))
+
+
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.version_option(__version__, '-V', '--version', message=version_msg())
-@click.argument('template')
+@click.argument('template', required=False)
 @click.argument('extra_context', nargs=-1, callback=validate_extra_context)
 @click.option(
     '--no-input',
@@ -72,7 +96,7 @@ def validate_extra_context(ctx, param, value):
     '--replay-file',
     type=click.Path(),
     default=None,
-    help=u'Use this file for replay instead of the default.',
+    help='Use this file for replay instead of the default.',
 )
 @click.option(
     '-f',
@@ -109,10 +133,13 @@ def validate_extra_context(ctx, param, value):
     help='File to be used as a stream for DEBUG logging',
 )
 @click.option(
-    u"--accept-hooks",
-    type=click.Choice(["yes", "ask", "no"]),
-    default="yes",
-    help=u"Accept pre/post hooks",
+    '--accept-hooks',
+    type=click.Choice(['yes', 'ask', 'no']),
+    default='yes',
+    help='Accept pre/post hooks',
+)
+@click.option(
+    '-l', '--list-installed', is_flag=True, help='List currently installed templates.'
 )
 def main(
     template,
@@ -130,6 +157,7 @@ def main(
     skip_if_file_exists,
     accept_hooks,
     replay_file,
+    list_installed,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -137,9 +165,13 @@ def main(
     volunteers. If you would like to help out or fund the project, please get
     in touch at https://github.com/audreyr/cookiecutter.
     """
-    # If you _need_ to support a local template in a directory
-    # called 'help', use a qualified path to the directory.
-    if template == 'help':
+    # Commands that should work without arguments
+    if list_installed:
+        list_installed_templates(default_config, config_file)
+        sys.exit(0)
+
+    # Raising usage, after all commands that should work without args.
+    if not template or template.lower() == 'help':
         click.echo(click.get_current_context().get_help())
         sys.exit(0)
 
