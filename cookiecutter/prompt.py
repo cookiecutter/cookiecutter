@@ -209,6 +209,9 @@ def prompt_for_config(context, no_input=False):
 
     # Second pass; handle the dictionaries.
     for key, raw in context['cookiecutter'].items():
+        # Skip private type dicts
+        if key.startswith('_') and not key.startswith('__'):
+            continue
 
         try:
             if isinstance(raw, dict):
