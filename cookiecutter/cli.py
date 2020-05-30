@@ -22,7 +22,6 @@ from cookiecutter.main import cookiecutter
 from cookiecutter.config import get_user_config
 
 
-
 def version_msg():
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version[:3]
@@ -46,9 +45,7 @@ def validate_extra_context(ctx, param, value):
 
 
 def list_installed_templates(default_config, passed_config_file):
-    """
-    Lists installed (locally cloned) templates. Use cookiecutter --list
-    """
+    """List installed (locally cloned) templates. Use cookiecutter --list."""
     config = get_user_config(passed_config_file, default_config)
     cookiecutter_folder = config.get('cookiecutters_dir')
     if not os.path.exists(cookiecutter_folder):
@@ -59,9 +56,11 @@ def list_installed_templates(default_config, passed_config_file):
         sys.exit(-1)
 
     template_names = [
-        folder for folder in os.listdir(cookiecutter_folder)
+        folder
+        for folder in os.listdir(cookiecutter_folder)
         if os.path.exists(
-            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json'))
+            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
+        )
     ]
     click.echo('{} installed templates: '.format(len(template_names)))
     for name in template_names:
@@ -140,8 +139,7 @@ def list_installed_templates(default_config, passed_config_file):
     help=u"Accept pre/post hooks",
 )
 @click.option(
-    u'-l', u'--list', is_flag=True,
-    help=u'List currently installed templates.'
+    u'-l', u'--list', is_flag=True, help=u'List currently installed templates.'
 )
 def main(
     template,
@@ -178,8 +176,7 @@ def main(
         sys.exit(0)
 
     configure_logger(
-        stream_level='DEBUG' if verbose else 'INFO',
-        debug_file=debug_file,
+        stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file,
     )
     configure_logger(stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file)
 
