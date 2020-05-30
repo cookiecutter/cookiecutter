@@ -17,7 +17,7 @@ Python packages show some patterns for their naming conventions:
 * a lowercase, dashed repository name
 * an importable, dash-less package name
 
-Here is a `cookiecuttter.json` with templated values for this pattern::
+Here is a `cookiecutter.json` with templated values for this pattern::
 
     {
       "project_name": "My New Project",
