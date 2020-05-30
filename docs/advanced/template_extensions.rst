@@ -27,6 +27,84 @@ Please note that Cookiecutter will **not** install any dependencies on its own!
 As a user you need to make sure you have all the extensions installed, before
 running Cookiecutter on a template that requires custom Jinja2 extensions.
 
-.. _`Jinja2 extensions`: http://jinja2.readthedocs.io/en/latest/extensions.html#extensions
+By default Cookiecutter includes the following extensions:
+
+- ``cookiecutter.extensions.JsonifyExtension``
+- ``cookiecutter.extensions.RandomStringExtension``
+- ``jinja2_time.TimeExtension``
+
+Jsonify extension
+~~~~~~~~~~~~~~~~~
+
+The ``cookiecutter.extensions.JsonifyExtension`` extension provides a ``jsonify`` filter in templates
+that converts a Python object to JSON:
+
+.. code-block:: jinja
+
+    {% {'a': True} | jsonify %}
+
+Would output:
+
+.. code-block:: json
+
+    {"a": true}
+
+Random string extension
+~~~~~~~~~~~~~~~~~~~~~~~
+
+*New in Cookiecutter 1.7*
+
+The ``cookiecutter.extensions.RandomStringExtension`` extension provides a ``random_ascii_string``
+method in templates that generates a random fixed-length string, optionally with punctuation.
+
+Generate a random n-size character string. Example for n=12:
+
+.. code-block:: jinja
+
+    {{ random_ascii_string(12) }}
+
+Outputs:
+
+.. code-block:: text
+
+    bIIUczoNvswh
+
+The second argument controls if punctuation and special characters
+``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
+
+.. code-block:: jinja
+
+    {{ random_ascii_string(12, punctuation=True) }}
+
+Outputs:
+
+.. code-block:: text
+
+    fQupUkY}W!)!
+
+Slugify extension
+~~~~~~~~~~~~~~~~~
+
+The ``cookiecutter.extensions.SlugifyExtension`` extension provides a ``slugify`` filter in templates
+that converts string into its underscored ("slugified") version:
+
+.. code-block:: jinja
+
+    {% "It's a random version" | slugify %}
+
+Would output:
+
+.. code-block:: json
+
+    it-s-a-random-version
+
+It is diferent from a mere replace of spaces since it also trates some special characters
+such as `'` in the example above. The function accepts all arguments that can be passed to
+the `slugify` function of python-slugify. For example to change the output from
+`it-s-a-random-version` to `it_s_a_random_version`, the parameter `separator='_'` would
+be passed to `slugify()`.
+
+.. _`Jinja2 extensions`: http://jinja.pocoo.org/docs/latest/extensions/
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
+.. _`python-slugify`: https://github.com/un33k/python-slugify

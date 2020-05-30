@@ -6,8 +6,8 @@ PyCon 2016 Sprint
 -----------------
 
 The following people made contributions to the cookiecutter project
-at the PyCon sprints in Portland, OR from June 2-5 2016. 
-Contributions include user testing, debugging, improving documentation, 
+at the PyCon sprints in Portland, OR from June 2-5 2016.
+Contributions include user testing, debugging, improving documentation,
 reviewing issues, writing tutorials, creating and updating project
 templates, and teaching each other.
 

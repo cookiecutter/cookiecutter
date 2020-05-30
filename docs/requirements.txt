@@ -1,2 +1,3 @@
-watchdog==0.8.3
-sphinx-rtd-theme==0.1.9
+watchdog>=0.8.3
+sphinx-rtd-theme>=0.4.3
+recommonmark>=0.6.0
