@@ -45,7 +45,7 @@ def validate_extra_context(ctx, param, value):
 
 
 def list_installed_templates(default_config, passed_config_file):
-    """List installed (locally cloned) templates. Use cookiecutter --list."""
+    """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
     config = get_user_config(passed_config_file, default_config)
     cookiecutter_folder = config.get('cookiecutters_dir')
     if not os.path.exists(cookiecutter_folder):
@@ -96,7 +96,7 @@ def list_installed_templates(default_config, passed_config_file):
     '--replay-file',
     type=click.Path(),
     default=None,
-    help=u'Use this file for replay instead of the default.',
+    help='Use this file for replay instead of the default.',
 )
 @click.option(
     '-f',
@@ -133,13 +133,13 @@ def list_installed_templates(default_config, passed_config_file):
     help='File to be used as a stream for DEBUG logging',
 )
 @click.option(
-    u"--accept-hooks",
-    type=click.Choice(["yes", "ask", "no"]),
-    default="yes",
-    help=u"Accept pre/post hooks",
+    '--accept-hooks',
+    type=click.Choice(['yes', 'ask', 'no']),
+    default='yes',
+    help='Accept pre/post hooks',
 )
 @click.option(
-    u'-l', u'--list', is_flag=True, help=u'List currently installed templates.'
+    '-l', '--list-installed', is_flag=True, help='List currently installed templates.'
 )
 def main(
     template,
@@ -157,7 +157,7 @@ def main(
     skip_if_file_exists,
     accept_hooks,
     replay_file,
-    list,
+    list_installed,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -171,7 +171,7 @@ def main(
         click.echo(click.get_current_context().get_help())
         sys.exit(0)
 
-    if list:
+    if list_installed:
         list_installed_templates(default_config, config_file)
         sys.exit(0)
 
