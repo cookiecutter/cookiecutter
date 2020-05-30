@@ -273,11 +273,7 @@ def generate_files(
     logger.debug('Generating project from %s...', template_dir)
     context = context or OrderedDict([])
 
-    envvars = {}
-    try:
-        envvars = context['cookiecutter'].pop('_environment')
-    except KeyError:
-        pass
+    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)

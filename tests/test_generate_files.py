@@ -67,25 +67,24 @@ def test_generate_files_with_linux_newline(tmp_path):
     assert f.newlines == '\n'
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_generate_files_with_conditions():
+def test_generate_files_with_jinja2_environment(tmp_path):
+    """Extend StrictEnvironment with _jinja2_env_vars cookiecutter template option."""
     generate.generate_files(
         context={
             'cookiecutter': {
                 'food': 'pizzä',
-                '_environment': {
-                    'lstrip_blocks': True,
-                    'trim_blocks': True
-                }
+                '_jinja2_env_vars': {'lstrip_blocks': True, 'trim_blocks': True},
             }
         },
-        repo_dir='tests/test-generate-files'
+        repo_dir='tests/test-generate-files',
+        output_dir=tmp_path,
     )
 
-    conditions_file = 'inputpizzä/simple-with-conditions.txt'
-    assert os.path.isfile(conditions_file)
+    conditions_file = tmp_path.joinpath('inputpizzä/simple-with-conditions.txt')
+    assert conditions_file.is_file()
+    assert conditions_file.exists()
 
-    simple_text = io.open(conditions_file, 'rt', encoding='utf-8').read()
+    simple_text = conditions_file.open('rt', encoding='utf-8').read()
     assert simple_text == u'I eat pizzä\n'
 
 

@@ -209,9 +209,12 @@ def prompt_for_config(context, no_input=False):
 
     # Second pass; handle the dictionaries.
     for key, raw in context['cookiecutter'].items():
+        # Skip private type dicts
+        if key.startswith('_') and not key.startswith('__'):
+            continue
 
         try:
-            if isinstance(raw, dict) and not key.startswith(u'_'):
+            if isinstance(raw, dict):
                 # We are dealing with a dict variable
                 val = render_variable(env, raw, cookiecutter_dict)
 
