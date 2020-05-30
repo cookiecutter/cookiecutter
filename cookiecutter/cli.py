@@ -69,7 +69,7 @@ def list_installed_templates(default_config, passed_config_file):
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.version_option(__version__, '-V', '--version', message=version_msg())
-@click.argument('template')
+@click.argument('template', required=False)
 @click.argument('extra_context', nargs=-1, callback=validate_extra_context)
 @click.option(
     '--no-input',
@@ -165,19 +165,16 @@ def main(
     volunteers. If you would like to help out or fund the project, please get
     in touch at https://github.com/audreyr/cookiecutter.
     """
-    # If you _need_ to support a local template in a directory
-    # called 'help', use a qualified path to the directory.
-    if template == 'help':
-        click.echo(click.get_current_context().get_help())
-        sys.exit(0)
-
+    # Commands that should work without arguments
     if list_installed:
         list_installed_templates(default_config, config_file)
         sys.exit(0)
 
-    configure_logger(
-        stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file,
-    )
+    # Raising usage, after all commands that should work without args.
+    if not template or template.lower() == 'help':
+        click.echo(click.get_current_context().get_help())
+        sys.exit(0)
+
     configure_logger(stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file)
 
     # If needed, prompt the user to ask whether or not they want to execute
