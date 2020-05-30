@@ -77,7 +77,7 @@ extensions = [
     'sphinx.ext.imgmath',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'docs.ccext',
+    'sphinx_click.ext',
     'recommonmark',
 ]
 
