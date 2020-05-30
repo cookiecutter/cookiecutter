@@ -67,6 +67,27 @@ def test_generate_files_with_linux_newline(tmp_path):
     assert f.newlines == '\n'
 
 
+def test_generate_files_with_jinja2_environment(tmp_path):
+    """Extend StrictEnvironment with _jinja2_env_vars cookiecutter template option."""
+    generate.generate_files(
+        context={
+            'cookiecutter': {
+                'food': 'pizzä',
+                '_jinja2_env_vars': {'lstrip_blocks': True, 'trim_blocks': True},
+            }
+        },
+        repo_dir='tests/test-generate-files',
+        output_dir=tmp_path,
+    )
+
+    conditions_file = tmp_path.joinpath('inputpizzä/simple-with-conditions.txt')
+    assert conditions_file.is_file()
+    assert conditions_file.exists()
+
+    simple_text = conditions_file.open('rt', encoding='utf-8').read()
+    assert simple_text == u'I eat pizzä\n'
+
+
 def test_generate_files_with_trailing_newline_forced_to_linux_by_context(tmp_path):
     """Verify new line not removed by templating engine after folder generation."""
     generate.generate_files(

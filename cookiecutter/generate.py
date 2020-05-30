@@ -273,9 +273,11 @@ def generate_files(
     logger.debug('Generating project from %s...', template_dir)
     context = context or OrderedDict([])
 
+    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
-    env = StrictEnvironment(context=context, keep_trailing_newline=True)
+    env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
