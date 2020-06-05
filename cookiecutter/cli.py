@@ -163,7 +163,7 @@ def main(
 
     Cookiecutter is free and open source software, developed and managed by
     volunteers. If you would like to help out or fund the project, please get
-    in touch at https://github.com/audreyr/cookiecutter.
+    in touch at https://github.com/cookiecutter/cookiecutter.
     """
     # Commands that should work without arguments
     if list_installed:
