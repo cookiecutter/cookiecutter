@@ -1,5 +1,5 @@
 ====================
-Additional Tutorials
+Tutorials
 ====================
 
 Learn How to Use Cookiecutter
@@ -12,6 +12,10 @@ Create Your Very Own Cookiecutter Project Template
 --------------------------------------------------
 
 * :doc:`tutorial2` by `@audreyr`_
+
+
+External Links
+--------------------------------------------------
 
 * `Project Templates Made Easy`_ by `@pydanny`_
 
