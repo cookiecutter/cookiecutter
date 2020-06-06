@@ -3,4 +3,5 @@
 Command Line Options
 --------------------
 
-.. cc-command-line-options::
+.. click:: cookiecutter.__main__:main
+  :prog: cookiecutter
