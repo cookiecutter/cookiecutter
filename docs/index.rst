@@ -18,7 +18,6 @@ Basics
    overview
    installation
    usage
-   first_steps
    tutorials/index
    advanced/index
    troubleshooting

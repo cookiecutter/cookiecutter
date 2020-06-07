@@ -2,16 +2,12 @@
 Tutorials
 ====================
 
-Learn How to Use Cookiecutter
------------------------------
+.. toctree::
+   :maxdepth: 2
 
-* :doc:`tutorial1` by `@audreyr`_
-
-
-Create Your Very Own Cookiecutter Project Template
---------------------------------------------------
-
-* :doc:`tutorial2` by `@audreyr`_
+   first_steps
+   tutorial1
+   tutorial2
 
 
 External Links
