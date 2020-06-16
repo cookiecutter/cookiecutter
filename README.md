@@ -145,7 +145,7 @@ Just type `cookiecutter` and you will discover over 4000 related repositories.
 We also recommend you to check related GitHub topics. For general search use
 [cookiecutter-template](https://github.com/topics/cookiecutter-template).
 For specific topics try to use `cookiecutter-yourtopic`, like
-`cookiecutter-python` or `cookiecutter-datascience`. This is new GitHub feature,
+`cookiecutter-python` or `cookiecutter-datascience`. This is a new GitHub feature,
 so not all active repositories use it at the moment.
 
 If you are template developer please add related
