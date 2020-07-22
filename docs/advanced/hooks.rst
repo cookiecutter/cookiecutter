@@ -88,9 +88,9 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
 
 Example: Conditional files / directories
 ----------------------------------------
-This is another example of ``hooks/pre_gen_project.py`` to demonstrate
-how to use post-processing hooks to achieve conditional control of files,
-directories.
+
+Here is another example on how to achieve conditional control of files and directories
+after generating the project, to be used as ``hooks/post_gen_project.py``.
 
 The script ensures that the directory structure is as expected by
 removing unwanted files and directories:
