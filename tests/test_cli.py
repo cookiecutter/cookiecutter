@@ -9,6 +9,8 @@ from click.testing import CliRunner
 
 from cookiecutter import utils
 from cookiecutter.__main__ import main
+from cookiecutter.environment import StrictEnvironment
+from cookiecutter.exceptions import UnknownExtension
 from cookiecutter.main import cookiecutter
 
 
@@ -424,7 +426,19 @@ def test_local_extension(tmpdir, cli_runner):
     )
     assert result.exit_code == 0
     with open(os.path.join(output_dir, 'Foobar', 'HISTORY.rst')) as f:
-        assert 'FoobarFoobar' in f.read()
+        data = f.read()
+        assert 'FoobarFoobar' in data
+        assert 'FOOBAR' in data
+
+
+def test_local_extension_not_available(tmpdir, cli_runner):
+    """Test handling of included but unavailable local extension."""
+    context = {'cookiecutter': {'_local_extensions': ['foobar']}}
+
+    with pytest.raises(UnknownExtension) as err:
+        StrictEnvironment(context=context, keep_trailing_newline=True)
+
+    assert 'Unable to load extension: ' in str(err.value)
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')

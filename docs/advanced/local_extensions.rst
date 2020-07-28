@@ -34,3 +34,27 @@ It will contain a ``main.py`` file, containing the following (for instance):
             environment.filters['foobar'] = lambda v: v * 2
 
 This will register the ``foobar`` filter for the template.
+
+For many cases, this will be unneccessarily complicated. It's likely that we'd only want to register a single function
+as a filter. For this, we can use the ``simple_filter`` decorator:
+
+.. code-block:: json
+
+    {
+        "project_slug": "Foobar",
+        "year": "{% now 'utc', '%Y' %}",
+        "_local_extensions": ["local_extensions.foobarextension"]
+    }
+
+.. code-block:: python
+
+    # -*- coding: utf-8 -*-
+
+    from cookiecutter.utils import simple_filter
+
+
+    @simple_filter
+    def simplefilterextension(v):
+        return v * 2
+
+This snippet will achieve the exact same result as the previous one.
