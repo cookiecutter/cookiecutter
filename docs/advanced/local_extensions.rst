@@ -15,7 +15,7 @@ To do so, a template author must specify the required extensions in ``cookiecutt
     {
         "project_slug": "Foobar",
         "year": "{% now 'utc', '%Y' %}",
-        "_local_extensions": ["local_extensions.FoobarExtension"]
+        "_extensions": ["local_extensions.FoobarExtension"]
     }
 
 This example assumes that a ``local_extensions`` folder (python module) exists in the template root.
@@ -43,7 +43,7 @@ as a filter. For this, we can use the ``simple_filter`` decorator:
     {
         "project_slug": "Foobar",
         "year": "{% now 'utc', '%Y' %}",
-        "_local_extensions": ["local_extensions.foobarextension"]
+        "_extensions": ["local_extensions.simplefilterextension"]
     }
 
 .. code-block:: python

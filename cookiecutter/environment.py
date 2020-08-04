@@ -28,11 +28,7 @@ class ExtensionLoaderMixin(object):
             'cookiecutter.extensions.SlugifyExtension',
             'jinja2_time.TimeExtension',
         ]
-        extensions = (
-            default_extensions
-            + self._read_extensions(context)
-            + self._read_local_extensions(context)
-        )
+        extensions = default_extensions + self._read_extensions(context)
 
         try:
             super(ExtensionLoaderMixin, self).__init__(extensions=extensions, **kwargs)
@@ -47,19 +43,6 @@ class ExtensionLoaderMixin(object):
         """
         try:
             extensions = context['cookiecutter']['_extensions']
-        except KeyError:
-            return []
-        else:
-            return [str(ext) for ext in extensions]
-
-    def _read_local_extensions(self, context):
-        """Return list of extension modules in the template, to be passed on to the Jinja2 env.
-
-        If context does not contain the relevant info, return an empty
-        list instead.
-        """
-        try:
-            extensions = context['cookiecutter']['_local_extensions']
         except KeyError:
             return []
         else:

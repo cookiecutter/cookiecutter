@@ -433,7 +433,7 @@ def test_local_extension(tmpdir, cli_runner):
 
 def test_local_extension_not_available(tmpdir, cli_runner):
     """Test handling of included but unavailable local extension."""
-    context = {'cookiecutter': {'_local_extensions': ['foobar']}}
+    context = {'cookiecutter': {'_extensions': ['foobar']}}
 
     with pytest.raises(UnknownExtension) as err:
         StrictEnvironment(context=context, keep_trailing_newline=True)
