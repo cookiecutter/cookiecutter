@@ -18,7 +18,6 @@ Basics
    overview
    installation
    usage
-   first_steps
    tutorials
    tutorial1
    tutorial2
