@@ -1,5 +1,5 @@
-cookiecutter package
-====================
+API
+===
 
 Submodules
 ----------
