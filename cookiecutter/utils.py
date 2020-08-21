@@ -5,7 +5,6 @@ import logging
 import os
 import shutil
 import stat
-import sys
 
 from cookiecutter.prompt import read_user_yes_no
 
@@ -69,16 +68,13 @@ def make_executable(script_path):
     os.chmod(script_path, status.st_mode | stat.S_IEXEC)
 
 
-def prompt_and_delete(path, no_input=False):
+def prompt_ok_to_delete(path, no_input=False):
     """
     Ask user if it's okay to delete the previously-downloaded file/directory.
 
-    If yes, delete it. If no, checks to see if the old version should be
-    reused. If yes, it's reused; otherwise, Cookiecutter exits.
-
     :param path: Previously downloaded zipfile.
-    :param no_input: Suppress prompt to delete repo and just delete it.
-    :return: True if the content was deleted
+    :param no_input: Suppress prompt.
+    :return: True if the content will be deleted.
     """
     # Suppress prompt if called via API
     if no_input:
@@ -89,19 +85,21 @@ def prompt_and_delete(path, no_input=False):
         ).format(path)
 
         ok_to_delete = read_user_yes_no(question, 'yes')
+    return ok_to_delete
 
-    if ok_to_delete:
-        if os.path.isdir(path):
-            rmtree(path)
-        else:
-            os.remove(path)
-        return True
+
+def prompt_ok_to_reuse(path, no_input=False):
+    """
+    Ask user if it's okay to reuse the previously-downloaded file/directory.
+
+    :param path: Previously downloaded zipfile.
+    :param no_input: Suppress prompt.
+    :return: True if the content will be re-used.
+    """
+    if no_input:
+        ok_to_reuse = False
     else:
         ok_to_reuse = read_user_yes_no(
             "Do you want to re-use the existing version?", 'yes'
         )
-
-        if ok_to_reuse:
-            return False
-
-        sys.exit()
+    return ok_to_reuse

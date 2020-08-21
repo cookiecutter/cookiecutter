@@ -7,7 +7,7 @@ import requests
 
 from cookiecutter.exceptions import InvalidZipRepository
 from cookiecutter.prompt import read_repo_password
-from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
+from cookiecutter.utils import make_sure_path_exists, prompt_ok_to_delete
 
 
 def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
@@ -34,7 +34,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
-            download = prompt_and_delete(zip_path, no_input=no_input)
+            download = prompt_ok_to_delete(zip_path, no_input=no_input)
         else:
             download = True
 

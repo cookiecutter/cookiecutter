@@ -2,7 +2,12 @@
 import logging
 import os
 import subprocess
-from shutil import which
+from shutil import (
+    which,
+    move,
+)
+import sys
+import tempfile
 
 from cookiecutter.exceptions import (
     RepositoryCloneFailed,
@@ -10,7 +15,12 @@ from cookiecutter.exceptions import (
     UnknownRepoType,
     VCSNotInstalled,
 )
-from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
+from cookiecutter.utils import (
+    make_sure_path_exists,
+    prompt_ok_to_delete,
+    prompt_ok_to_reuse,
+    rmtree,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -85,36 +95,81 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
-    if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
-    else:
-        clone = True
-
-    if clone:
-        try:
-            subprocess.check_output(
-                [repo_type, 'clone', repo_url],
-                cwd=clone_to_dir,
-                stderr=subprocess.STDOUT,
-            )
-            if checkout is not None:
-                subprocess.check_output(
-                    [repo_type, 'checkout', checkout],
-                    cwd=repo_dir,
-                    stderr=subprocess.STDOUT,
-                )
-        except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output.decode('utf-8')
-            if 'not found' in output.lower():
-                raise RepositoryNotFound(
-                    'The repository {} could not be found, '
-                    'have you made a typo?'.format(repo_url)
-                )
-            if any(error in output for error in BRANCH_ERRORS):
-                raise RepositoryCloneFailed(
-                    'The {} branch of repository {} could not found, '
-                    'have you made a typo?'.format(checkout, repo_url)
-                )
-            raise
-
+    if _need_to_clone(repo_dir, no_input):
+        _delete_old_and_clone_new(
+            repo_dir, repo_url, repo_type, clone_to_dir, checkout,
+        )
     return repo_dir
+
+
+def _need_to_clone(repo_dir, no_input):
+    ok_to_delete = prompt_ok_to_delete(repo_dir, no_input=no_input)
+
+    if ok_to_delete:
+        ok_to_reuse = False
+    else:
+        ok_to_reuse = prompt_ok_to_reuse(repo_dir, no_input=no_input)
+
+    if not ok_to_delete and not ok_to_reuse:
+        sys.exit()
+
+    need_to_clone = ok_to_delete and not ok_to_reuse
+    return need_to_clone
+
+
+def _delete_old_and_clone_new(repo_dir, repo_url, repo_type, clone_to_dir, checkout):
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        backup_performed = os.path.exists(repo_dir)
+        if backup_performed:
+            backup_dir = os.path.join(tmp_dir, os.path.basename(repo_dir))
+            _backup_and_delete_repo(repo_dir, backup_dir)
+
+        try:
+            _clone_repo(repo_dir, repo_url, repo_type, clone_to_dir, checkout)
+        except subprocess.CalledProcessError as clone_error:
+            if backup_performed:
+                _restore_old_repo(repo_dir, backup_dir)
+            _handle_clone_error(clone_error, repo_url, checkout)
+
+
+def _clone_repo(repo_dir, repo_url, repo_type, clone_to_dir, checkout):
+    subprocess.check_output(
+        [repo_type, 'clone', repo_url], cwd=clone_to_dir, stderr=subprocess.STDOUT,
+    )
+    if checkout is not None:
+        subprocess.check_output(
+            [repo_type, 'checkout', checkout], cwd=repo_dir, stderr=subprocess.STDOUT,
+        )
+
+
+def _handle_clone_error(clone_error, repo_url, checkout):
+    output = clone_error.output.decode('utf-8')
+    if 'not found' in output.lower():
+        raise RepositoryNotFound(
+            'The repository {} could not be found, '
+            'have you made a typo?'.format(repo_url)
+        )
+    if any(error in output for error in BRANCH_ERRORS):
+        raise RepositoryCloneFailed(
+            'The {} branch of repository {} could not found, '
+            'have you made a typo?'.format(checkout, repo_url)
+        )
+    raise
+
+
+def _backup_and_delete_repo(path, backup_path):
+    logger.info('Backing up repo {} to {}'.format(path, backup_path))
+    move(path, backup_path)
+    logger.info('Moving repo {} to {}'.format(path, backup_path))
+
+
+def _restore_old_repo(path, backup_path):
+    try:
+        rmtree(path)
+        logger.info('Cleaning {}'.format(path))
+    except FileNotFoundError:
+        pass
+
+    logger.info('Restoring backup repo {}'.format(backup_path))
+    move(backup_path, path)
+    logger.info('Restored {} successfully'.format(path))

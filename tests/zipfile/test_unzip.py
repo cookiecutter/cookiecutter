@@ -18,8 +18,8 @@ def mock_download():
 
 def test_unzip_local_file(mocker, tmpdir):
     """Local file reference can be unzipped."""
-    mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    mock_prompt_ok_to_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -29,13 +29,13 @@ def test_unzip_local_file(mocker, tmpdir):
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
-    assert not mock_prompt_and_delete.called
+    assert not mock_prompt_ok_to_delete.called
 
 
 def test_unzip_protected_local_file_environment_password(mocker, tmpdir):
     """In `unzip()`, the environment can be used to provide a repo password."""
-    mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    mock_prompt_ok_to_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -48,13 +48,13 @@ def test_unzip_protected_local_file_environment_password(mocker, tmpdir):
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
-    assert not mock_prompt_and_delete.called
+    assert not mock_prompt_ok_to_delete.called
 
 
 def test_unzip_protected_local_file_bad_environment_password(mocker, tmpdir):
     """In `unzip()`, an error occurs if the environment has a bad password."""
     mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -71,7 +71,7 @@ def test_unzip_protected_local_file_bad_environment_password(mocker, tmpdir):
 def test_unzip_protected_local_file_user_password_with_noinput(mocker, tmpdir):
     """Can't unpack a password-protected repo in no_input mode."""
     mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -87,8 +87,8 @@ def test_unzip_protected_local_file_user_password_with_noinput(mocker, tmpdir):
 
 def test_unzip_protected_local_file_user_password(mocker, tmpdir):
     """A password-protected local file reference can be unzipped."""
-    mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    mock_prompt_ok_to_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
     mocker.patch('cookiecutter.zipfile.read_repo_password', return_value='sekrit')
 
@@ -101,13 +101,13 @@ def test_unzip_protected_local_file_user_password(mocker, tmpdir):
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
-    assert not mock_prompt_and_delete.called
+    assert not mock_prompt_ok_to_delete.called
 
 
 def test_unzip_protected_local_file_user_bad_password(mocker, tmpdir):
     """Error in `unzip()`, if user can't provide a valid password."""
     mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
     mocker.patch(
         'cookiecutter.zipfile.read_repo_password', return_value='not-the-right-password'
@@ -126,7 +126,7 @@ def test_unzip_protected_local_file_user_bad_password(mocker, tmpdir):
 def test_empty_zip_file(mocker, tmpdir):
     """In `unzip()`, an empty file raises an error."""
     mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -140,7 +140,7 @@ def test_empty_zip_file(mocker, tmpdir):
 def test_non_repo_zip_file(mocker, tmpdir):
     """In `unzip()`, a repository must have a top level directory."""
     mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -154,7 +154,7 @@ def test_non_repo_zip_file(mocker, tmpdir):
 def test_bad_zip_file(mocker, tmpdir):
     """In `unzip()`, a corrupted zip file raises an error."""
     mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -167,8 +167,8 @@ def test_bad_zip_file(mocker, tmpdir):
 
 def test_unzip_url(mocker, tmpdir):
     """In `unzip()`, a url will be downloaded and unzipped."""
-    mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    mock_prompt_ok_to_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     request = mocker.MagicMock()
@@ -187,13 +187,13 @@ def test_unzip_url(mocker, tmpdir):
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
-    assert not mock_prompt_and_delete.called
+    assert not mock_prompt_ok_to_delete.called
 
 
 def test_unzip_url_existing_cache(mocker, tmpdir):
     """Url should be downloaded and unzipped, old zip file will be removed."""
-    mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    mock_prompt_ok_to_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_ok_to_delete', return_value=True, autospec=True
     )
 
     request = mocker.MagicMock()
@@ -216,7 +216,7 @@ def test_unzip_url_existing_cache(mocker, tmpdir):
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
-    assert mock_prompt_and_delete.call_count == 1
+    assert mock_prompt_ok_to_delete.call_count == 1
 
 
 def test_unzip_url_existing_cache_no_input(mocker, tmpdir):
@@ -247,7 +247,9 @@ def test_unzip_url_existing_cache_no_input(mocker, tmpdir):
 def test_unzip_should_abort_if_no_redownload(mocker, tmpdir):
     """Should exit without cloning anything If no redownload."""
     mocker.patch(
-        'cookiecutter.zipfile.prompt_and_delete', side_effect=SystemExit, autospec=True
+        'cookiecutter.zipfile.prompt_ok_to_delete',
+        side_effect=SystemExit,
+        autospec=True,
     )
 
     mock_requests_get = mocker.patch(
