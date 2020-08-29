@@ -139,14 +139,14 @@ class TestExternalHooks(object):
         if os.path.exists('tests/context_post.txt'):
             os.remove('tests/context_post.txt')
 
-    def test_run_script(self):
+    def test_run_script_in_subprocess(self):
         """Execute a hook script, independently of project generation."""
-        hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
+        hooks.run_script_in_subprocess(os.path.join(self.hooks_path, self.post_hook))
         assert os.path.isfile('shell_post.txt')
 
     def test_run_script_cwd(self):
         """Change directory before running hook."""
-        hooks.run_script(os.path.join(self.hooks_path, self.post_hook), 'tests')
+        hooks.run_script_in_subprocess(os.path.join(self.hooks_path, self.post_hook), 'tests')
         assert os.path.isfile('tests/shell_post.txt')
         assert 'tests' not in os.getcwd()
 

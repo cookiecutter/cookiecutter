@@ -9,8 +9,7 @@ import os
 
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
-from cookiecutter.generate import generate_context, generate_files
-from cookiecutter.prompt import prompt_for_config
+from cookiecutter.generate import generate_files, generate_context
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
@@ -82,18 +81,7 @@ def cookiecutter(
             path, template_name = os.path.split(os.path.splitext(replay)[0])
             context = load(path, template_name)
     else:
-        context_file = os.path.join(repo_dir, 'cookiecutter.json')
-        logger.debug('context_file is %s', context_file)
-
-        context = generate_context(
-            context_file=context_file,
-            default_context=config_dict['default_context'],
-            extra_context=extra_context,
-        )
-
-        # prompt the user to manually configure at the command line.
-        # except when 'no-input' flag is set
-        context['cookiecutter'] = prompt_for_config(context, no_input)
+        context = generate_context(repo_dir, config_dict, extra_context, no_input)
 
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
@@ -118,3 +106,5 @@ def cookiecutter(
         rmtree(repo_dir)
 
     return result
+
+
