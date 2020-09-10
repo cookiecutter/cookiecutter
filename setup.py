@@ -37,6 +37,7 @@ setup(
     include_package_data=True,
     python_requires='>=3.6',
     install_requires=requirements,
+    extras_require={'s3': ['boto3']},
     license='BSD',
     zip_safe=False,
     classifiers=[

@@ -1,4 +1,6 @@
+boto3
 pytest
 pytest-cov
 pytest-mock
 freezegun
+moto

@@ -23,6 +23,11 @@ def is_repo_url(value):
     return bool(REPO_REGEX.match(value))
 
 
+def is_s3_url(value):
+    """Return True if the value is a URL to an S3 resource."""
+    return value.startswith('s3://')
+
+
 def is_zip_file(value):
     """Return True if value is a zip file."""
     return value.lower().endswith('.zip')
@@ -95,7 +100,7 @@ def determine_repo_dir(
     if is_zip_file(template):
         unzipped_dir = unzip(
             zip_uri=template,
-            is_url=is_repo_url(template),
+            is_url=is_repo_url(template) or is_s3_url(template),
             clone_to_dir=clone_to_dir,
             no_input=no_input,
             password=password,

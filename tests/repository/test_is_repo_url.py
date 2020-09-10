@@ -2,7 +2,12 @@
 import pytest
 
 from cookiecutter.config import BUILTIN_ABBREVIATIONS
-from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_file
+from cookiecutter.repository import (
+    expand_abbreviations,
+    is_repo_url,
+    is_s3_url,
+    is_zip_file,
+)
 
 
 @pytest.fixture(
@@ -10,6 +15,7 @@ from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_fi
         '/path/to/zipfile.zip',
         'https://example.com/path/to/zipfile.zip',
         'http://example.com/path/to/zipfile.zip',
+        's3://example-bucket/path/to/object.zip',
     ]
 )
 def zipfile(request):
@@ -20,6 +26,19 @@ def zipfile(request):
 def test_is_zip_file(zipfile):
     """Verify is_repo_url works."""
     assert is_zip_file(zipfile) is True
+
+
+@pytest.mark.parametrize(
+    'url,expected',
+    [
+        ('s3://example-bucket/path/to/object.zip', True),
+        ('https://example.com/path/to/zipfile.zip', False),
+        ('http://example.com/path/to/zipfile.zip', False),
+    ],
+)
+def test_is_s3_url(url, expected):
+    """Verify that S3 URLs are properly identified."""
+    assert is_s3_url(url) is expected
 
 
 @pytest.fixture(

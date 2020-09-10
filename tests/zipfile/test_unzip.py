@@ -1,6 +1,8 @@
 """Tests for function unzip() from zipfile module."""
 import tempfile
 
+import boto3
+import moto
 import pytest
 
 from cookiecutter import zipfile
@@ -165,8 +167,18 @@ def test_bad_zip_file(mocker, tmpdir):
         )
 
 
-def test_unzip_url(mocker, tmpdir):
+@pytest.mark.parametrize(
+    'url',
+    [
+        'https://example.com/path/to/fake-repo-tmpl.zip',
+        's3://example-bucket/path/to/fake-repo-tmpl.zip',
+    ],
+)
+@moto.mock_s3
+def test_unzip_url(mocker, tmpdir, url):
     """In `unzip()`, a url will be downloaded and unzipped."""
+    boto3.resource('s3').create_bucket(Bucket='example-bucket')
+
     mock_prompt_and_delete = mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
     )
@@ -180,11 +192,7 @@ def test_unzip_url(mocker, tmpdir):
 
     clone_to_dir = tmpdir.mkdir('clone')
 
-    output_dir = zipfile.unzip(
-        'https://example.com/path/to/fake-repo-tmpl.zip',
-        is_url=True,
-        clone_to_dir=str(clone_to_dir),
-    )
+    output_dir = zipfile.unzip(url, is_url=True, clone_to_dir=str(clone_to_dir))
 
     assert output_dir.startswith(tempfile.gettempdir())
     assert not mock_prompt_and_delete.called

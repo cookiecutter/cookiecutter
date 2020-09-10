@@ -9,6 +9,36 @@ from cookiecutter.exceptions import InvalidZipRepository
 from cookiecutter.prompt import read_repo_password
 from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
+try:
+    import boto3
+except ImportError:
+    pass
+
+
+def is_s3_uri(zip_uri):
+    """Return True if the ZIP file's URI points to S3."""
+    return zip_uri.startswith('s3://')
+
+
+def s3_paths(s3_uri):
+    """Split an S3 URI into a bucket name and object name."""
+    return s3_uri.replace('s3://', '').split('/', 1)
+
+
+def s3_identifier(s3_uri):
+    """Return the basename of an S3 URL."""
+    _, obj = s3_paths(s3_uri)
+    return obj.rsplit('/', 1)[1]
+
+
+def presign_s3_uri(s3_uri, expiration=600):
+    """Return a presigned URI for an S3 object."""
+    s3 = boto3.client('s3')
+    bucket, obj = s3_paths(s3_uri)
+    return s3.generate_presigned_url(
+        'get_object', Params={'Bucket': bucket, 'Key': obj}, ExpiresIn=expiration,
+    )
+
 
 def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     """Download and unpack a zipfile at a given URI.
@@ -30,7 +60,11 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     if is_url:
         # Build the name of the cached zipfile,
         # and prompt to delete if it already exists.
-        identifier = zip_uri.rsplit('/', 1)[1]
+        if is_s3_uri(zip_uri):
+            identifier = s3_identifier(zip_uri)
+            zip_uri = presign_s3_uri(zip_uri)
+        else:
+            identifier = zip_uri.rsplit('/', 1)[1]
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
