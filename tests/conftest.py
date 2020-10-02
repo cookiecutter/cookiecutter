@@ -1,4 +1,4 @@
-"""pytest fixtures which are globally available throughout the suite."""
+"""pytest fixtures which are globally available throughout the suite"""
 import logging
 import os
 import shutil
@@ -15,7 +15,7 @@ replay_dir: "{replay_dir}"
 
 
 def backup_dir(original_dir, backup_dir):
-    """Generate backup directory based on original directory."""
+    """Generate backup directory based on original directory"""
     # If the default original_dir is pre-existing, move it to a temp location
     if not os.path.isdir(original_dir):
         return False
@@ -39,7 +39,7 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found):
         if original_dir_is_dir and os.path.isdir(backup_dir):
             utils.rmtree(original_dir)
     else:
-        # Delete the created original_dir.
+        # Delete the created original_dir
         # There's no backup because it never existed
         if original_dir_is_dir:
             utils.rmtree(original_dir)
