@@ -24,7 +24,7 @@ def remove_output_folder(request):
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_output_folder():
     """Tests should correctly create content, as output_folder does not yet exist."""
-    context = generate.generate_context(
+    context = generate.merge_contexts(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
     generate.generate_files(context=context, repo_dir='tests/test-output-folder')
@@ -46,7 +46,7 @@ It is 2014."""
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
 def test_exception_when_output_folder_exists():
     """Tests should raise error as output folder created before `generate_files`."""
-    context = generate.generate_context(
+    context = generate.merge_contexts(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
     output_folder = context['cookiecutter']['test_name']

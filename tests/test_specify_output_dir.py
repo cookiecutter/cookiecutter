@@ -38,12 +38,6 @@ def mock_gen_context(mocker, context):
 
 
 @pytest.fixture(autouse=True)
-def mock_prompt(mocker):
-    """Fixture. Automatically mock cookiecutter's function with expected output."""
-    mocker.patch('cookiecutter.main.prompt_for_config')
-
-
-@pytest.fixture(autouse=True)
 def mock_replay(mocker):
     """Fixture. Automatically mock cookiecutter's function with expected output."""
     mocker.patch('cookiecutter.main.dump')

@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 _HOOKS = [
     'pre_gen_project',
     'post_gen_project',
+    'pre_context_prompt',
+    'post_context_prompt',
 ]
 EXIT_SUCCESS = 0
 
@@ -64,7 +66,7 @@ def find_hook(hook_name, hooks_dir='hooks'):
     return scripts
 
 
-def run_script(script_path, cwd='.'):
+def run_script_in_subprocess(script_path, cwd='.'):
     """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
@@ -93,12 +95,37 @@ def run_script(script_path, cwd='.'):
         raise FailedHookException('Hook script failed (error: {})'.format(os_error))
 
 
-def run_script_with_context(script_path, cwd, context):
+def run_scrip_in_current_process(script_path, cwd='.', context=None):
+    """Execute a script in the same interpreter.
+
+    Executing script in the same interpreter makes it possible to mutate some internal
+    objects, like context.
+
+    :param script_path: Absolute path to the script to run.
+    :param cwd: The directory to run the script from.
+    :param context: Cookiecutter project template context.
+    """
+    with open(script_path) as f:
+        code = f.read()
+
+    ns = {
+        'context': context,
+    }
+
+    try:
+        with utils.work_in(cwd):
+            exec(code, ns)
+    except Exception as error:
+        raise FailedHookException('Hook script failed (error: {})'.format(error))
+
+
+def run_script_with_context(script_path, cwd, context, isolate=True):
     """Execute a script after rendering it with Jinja.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
+    :param isolate: If True, run script in isolated environment (subprocess).
     """
     _, extension = os.path.splitext(script_path)
 
@@ -111,16 +138,20 @@ def run_script_with_context(script_path, cwd, context):
         output = template.render(**context)
         temp.write(output.encode('utf-8'))
 
-    run_script(temp.name, cwd)
+    if isolate:
+        run_script_in_subprocess(temp.name, cwd)
+    else:
+        run_scrip_in_current_process(temp.name, cwd, context)
 
 
-def run_hook(hook_name, project_dir, context):
+def run_hook(hook_name, project_dir, context, isolate=True):
     """
     Try to find and execute a hook from the specified project directory.
 
     :param hook_name: The hook to execute.
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
+    :param isolate: If True, run script in isolated environment (subprocess).
     """
     scripts = find_hook(hook_name)
     if not scripts:
@@ -128,4 +159,4 @@ def run_hook(hook_name, project_dir, context):
         return
     logger.debug('Running hook %s', hook_name)
     for script in scripts:
-        run_script_with_context(script, project_dir, context)
+        run_script_with_context(script, project_dir, context, isolate)

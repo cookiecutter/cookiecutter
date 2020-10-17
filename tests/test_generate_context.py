@@ -52,16 +52,16 @@ def context_data():
 
 @pytest.mark.usefixtures('clean_system')
 @pytest.mark.parametrize('input_params, expected_context', context_data())
-def test_generate_context(input_params, expected_context):
+def test_merge_contexts(input_params, expected_context):
     """Verify input contexts combinations result in expected content on output."""
-    assert generate.generate_context(**input_params) == expected_context
+    assert generate.merge_contexts(**input_params) == expected_context
 
 
 @pytest.mark.usefixtures('clean_system')
-def test_generate_context_with_json_decoding_error():
+def test_merge_contexts_with_json_decoding_error():
     """Verify malformed JSON file generates expected error output."""
     with pytest.raises(ContextDecodingException) as excinfo:
-        generate.generate_context('tests/test-generate-context/invalid-syntax.json')
+        generate.merge_contexts('tests/test-generate-context/invalid-syntax.json')
     # original message from json module should be included
     pattern = 'Expecting \'{0,1}:\'{0,1} delimiter: line 1 column (19|20) \\(char 19\\)'
     assert re.search(pattern, str(excinfo.value))
@@ -73,7 +73,7 @@ def test_generate_context_with_json_decoding_error():
     assert path in str(excinfo.value)
 
 
-def test_default_context_replacement_in_generate_context():
+def test_default_context_replacement_in_merge_contexts():
     """Verify default content settings are correctly replaced by template settings.
 
     Make sure that the default for list variables of `orientation` is based on
@@ -92,7 +92,7 @@ def test_default_context_replacement_in_generate_context():
         )
     }
 
-    generated_context = generate.generate_context(
+    generated_context = generate.merge_contexts(
         context_file='tests/test-generate-context/choices_template.json',
         default_context={
             'not_in_template': 'foobar',
@@ -108,11 +108,11 @@ def test_default_context_replacement_in_generate_context():
     assert generated_context == expected_context
 
 
-def test_generate_context_decodes_non_ascii_chars():
-    """Verify `generate_context` correctly decodes non-ascii chars."""
+def test_merge_contexts_decodes_non_ascii_chars():
+    """Verify `merge_contexts` correctly decodes non-ascii chars."""
     expected_context = {'non_ascii': OrderedDict([('full_name', 'éèà'),])}
 
-    generated_context = generate.generate_context(
+    generated_context = generate.merge_contexts(
         context_file='tests/test-generate-context/non_ascii.json'
     )
 

@@ -20,6 +20,7 @@ from cookiecutter.exceptions import (
 )
 from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook
+from cookiecutter.prompt import prompt_for_config
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
 logger = logging.getLogger(__name__)
@@ -67,10 +68,37 @@ def apply_overwrites_to_context(context, overwrite_context):
             context[variable] = overwrite
 
 
-def generate_context(
+def generate_context(repo_dir, config_dict, extra_context=None, no_input=False):
+    """Generate the context for a Cookiecutter project template.
+
+    :param repo_dir: Project's repository directory.
+    :param config_dict: User config as a dict.
+    :param extra_context:A dictionary of context that overrides default
+        and user configuration.
+    :param no_input: Prompt the user at command line for manual configuration?
+    """
+    context_file = os.path.join(repo_dir, 'cookiecutter.json')
+    logger.debug('context_file is %s', context_file)
+    context = merge_contexts(
+        context_file=context_file,
+        default_context=config_dict['default_context'],
+        extra_context=extra_context,
+    )
+    _run_hook_from_repo_dir(repo_dir, 'pre_context_prompt', context, isolate=False)
+
+    # prompt the user to manually configure at the command line.
+    # except when 'no-input' flag is set
+    context['cookiecutter'] = prompt_for_config(context, no_input)
+
+    _run_hook_from_repo_dir(repo_dir, 'post_context_prompt', context, isolate=False)
+
+    return context
+
+
+def merge_contexts(
     context_file='cookiecutter.json', default_context=None, extra_context=None
 ):
-    """Generate the context for a Cookiecutter project template.
+    """Merge multiple contexts sources into one context.
 
     Loads the JSON file as a Python object, with key being the JSON filename.
 
@@ -109,6 +137,20 @@ def generate_context(
 
     logger.debug('Context generated is %s', context)
     return context
+
+
+def _run_hook_from_repo_dir(repo_dir, hook_name, context, hook_cwd=None, isolate=True):
+    hook_cwd = hook_cwd or repo_dir
+    with work_in(repo_dir):
+        try:
+            run_hook(hook_name, hook_cwd, context, isolate)
+        except FailedHookException:
+            logger.error(
+                "Stopping generation because %s hook "
+                "script didn't exit successfully",
+                hook_name,
+            )
+            raise
 
 
 def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
@@ -226,7 +268,7 @@ def ensure_dir_is_templated(dirname):
         raise NonTemplatedInputDirException
 
 
-def _run_hook_from_repo_dir(
+def _run_hook_for_project(
     repo_dir, hook_name, project_dir, context, delete_project_on_failure
 ):
     """Run hook from repo directory, clean project directory if hook fails.
@@ -238,18 +280,12 @@ def _run_hook_from_repo_dir(
     :param delete_project_on_failure: Delete the project directory on hook
         failure?
     """
-    with work_in(repo_dir):
-        try:
-            run_hook(hook_name, project_dir, context)
-        except FailedHookException:
-            if delete_project_on_failure:
-                rmtree(project_dir)
-            logger.error(
-                "Stopping generation because %s hook "
-                "script didn't exit successfully",
-                hook_name,
-            )
-            raise
+    try:
+        _run_hook_from_repo_dir(repo_dir, hook_name, context, hook_cwd=project_dir)
+    except FailedHookException:
+        if delete_project_on_failure:
+            rmtree(project_dir)
+        raise
 
 
 def generate_files(
@@ -301,7 +337,7 @@ def generate_files(
     delete_project_on_failure = output_directory_created
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        _run_hook_for_project(
             repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
         )
 
@@ -371,7 +407,7 @@ def generate_files(
                     raise UndefinedVariableInTemplate(msg, err, context)
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        _run_hook_for_project(
             repo_dir,
             'post_gen_project',
             project_dir,
