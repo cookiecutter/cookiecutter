@@ -37,7 +37,7 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
     vcs.clone('https://github.com/foo/bar/', clone_to_dir=clone_dir, no_input=True)
 
     mock_subprocess.assert_called_once_with(
-        ['git', 'clone', 'https://github.com/foo/bar'],
+        ['git', 'clone', '--recurse-submodules', 'https://github.com/foo/bar'],
         cwd=clone_dir,
         stderr=subprocess.STDOUT,
     )
@@ -101,9 +101,17 @@ def test_clone_should_invoke_vcs_command(
 
     assert repo_dir == expected_repo_dir
 
-    mock_subprocess.assert_any_call(
-        [repo_type, 'clone', repo_url], cwd=clone_dir, stderr=subprocess.STDOUT
-    )
+    if repo_type == 'git':
+        mock_subprocess.assert_any_call(
+            [repo_type, 'clone', '--recurse-submodules', repo_url],
+            cwd=clone_dir,
+            stderr=subprocess.STDOUT,
+        )
+    elif repo_type == 'hg':
+        mock_subprocess.assert_any_call(
+            [repo_type, 'clone', repo_url], cwd=clone_dir, stderr=subprocess.STDOUT
+        )
+
     mock_subprocess.assert_any_call(
         [repo_type, 'checkout', branch], cwd=expected_repo_dir, stderr=subprocess.STDOUT
     )
