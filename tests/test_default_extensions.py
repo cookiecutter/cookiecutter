@@ -32,7 +32,7 @@ def test_jinja2_time_extension(tmpdir):
         '-------\n',
         '\n',
         '0.1.0 (2015-12-09)\n',
-        '---------------------\n',
+        '------------------\n',
         '\n',
         'First release on PyPI.\n',
     ]
