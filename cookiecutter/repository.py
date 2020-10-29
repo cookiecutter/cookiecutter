@@ -68,10 +68,14 @@ def repository_has_cookiecutter_yaml(repo_directory):
     """
     repo_directory_exists = os.path.isdir(repo_directory)
 
-    repo_config_exists = os.path.isfile(
+    repo_yml_config_exists = os.path.isfile(
         os.path.join(repo_directory, 'cookiecutter.yml')
     )
-    return repo_directory_exists and repo_config_exists
+    repo_yaml_config_exists = os.path.isfile(
+        os.path.join(repo_directory, 'cookiecutter.yaml')
+    )
+
+    return repo_directory_exists and (repo_yml_config_exists or repo_yaml_config_exists)
 
 
 def determine_repo_dir(
