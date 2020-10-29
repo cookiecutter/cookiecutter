@@ -526,16 +526,32 @@ def test_debug_list_installed_templates_failure(
     assert result.exit_code == -1
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
-def test_directory_repo(cli_runner):
-    """Test cli invocation works with `directory` option."""
+def _test_directory_repo(directory, cli_runner):
     result = cli_runner(
-        'tests/fake-repo-dir/', '--no-input', '-v', '--directory=my-dir',
+        directory, '--no-input', '-v', '--directory=my-dir',
     )
     assert result.exit_code == 0
     assert os.path.isdir("fake-project")
     with open(os.path.join("fake-project", "README.rst")) as f:
         assert "Project name: **Fake Project**" in f.read()
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_json_directory_repo(cli_runner):
+    """Test cli invocation works with `directory` option."""
+    _test_directory_repo('tests/fake-repo-dir/', cli_runner)
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_yaml_directory_repo(cli_runner):
+    """Test cli invocation works with `directory` option and cookiecutter.yaml."""
+    _test_directory_repo('tests/fake-repo-yaml-dir/', cli_runner)
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_yml_directory_repo(cli_runner):
+    """Test cli invocation works with `directory` option and cookiecutter.yml."""
+    _test_directory_repo('tests/fake-repo-yml-dir/', cli_runner)
 
 
 cli_accept_hook_arg_testdata = [
