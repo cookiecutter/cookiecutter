@@ -72,7 +72,7 @@ cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
 * Supports unlimited levels of directory nesting.
 * 100% of templating is done with Jinja2. This includes file and directory names.
-* Simply define your template variables in a ``cookiecutter.json`` file. For example:
+* Simply define your template variables in a ``cookiecutter.json`` or ``cookiecutter.yaml`` file. For example:
 
 ```json
 {
