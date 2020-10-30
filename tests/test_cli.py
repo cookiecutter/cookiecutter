@@ -319,7 +319,10 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
 
     template_path = 'tests/fake-repo-pre/'
     result = cli_runner(
-        template_path, '--config-file', user_config_path, '--default-config',
+        template_path,
+        '--config-file',
+        user_config_path,
+        '--default-config',
     )
 
     assert result.exit_code == 0
@@ -375,7 +378,11 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     template_path = 'tests/undefined-variable/file-name/'
 
     result = cli_runner(
-        '--no-input', '--default-config', '--output-dir', output_dir, template_path,
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
     )
 
     assert result.exit_code == 1
@@ -406,7 +413,11 @@ def test_echo_unknown_extension_error(tmpdir, cli_runner):
     template_path = 'tests/test-extensions/unknown/'
 
     result = cli_runner(
-        '--no-input', '--default-config', '--output-dir', output_dir, template_path,
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
     )
 
     assert result.exit_code == 1
@@ -418,7 +429,10 @@ def test_echo_unknown_extension_error(tmpdir, cli_runner):
 def test_cli_extra_context(cli_runner):
     """Cli invocation replace content if called with replacement pairs."""
     result = cli_runner(
-        'tests/fake-repo-pre/', '--no-input', '-v', 'project_name=Awesomez',
+        'tests/fake-repo-pre/',
+        '--no-input',
+        '-v',
+        'project_name=Awesomez',
     )
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
@@ -430,7 +444,10 @@ def test_cli_extra_context(cli_runner):
 def test_cli_extra_context_invalid_format(cli_runner):
     """Cli invocation raise error if called with unknown argument."""
     result = cli_runner(
-        'tests/fake-repo-pre/', '--no-input', '-v', 'ExtraContextWithNoEqualsSoInvalid',
+        'tests/fake-repo-pre/',
+        '--no-input',
+        '-v',
+        'ExtraContextWithNoEqualsSoInvalid',
     )
     assert result.exit_code == 2
     assert "Error: Invalid value for '[EXTRA_CONTEXT]...'" in result.output
@@ -452,7 +469,10 @@ def test_debug_file_non_verbose(cli_runner, debug_file):
     assert not debug_file.exists()
 
     result = cli_runner(
-        '--no-input', '--debug-file', str(debug_file), 'tests/fake-repo-pre/',
+        '--no-input',
+        '--debug-file',
+        str(debug_file),
+        'tests/fake-repo-pre/',
     )
     assert result.exit_code == 0
 
@@ -503,7 +523,10 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
     open(os.path.join('fake-project', 'cookiecutter.json'), 'w').write('{}')
 
     result = cli_runner(
-        '--list-installed', '--config-file', user_config_path, str(debug_file),
+        '--list-installed',
+        '--config-file',
+        user_config_path,
+        str(debug_file),
     )
 
     assert "1 installed templates:" in result.output
@@ -528,7 +551,10 @@ def test_debug_list_installed_templates_failure(
 
 def _test_directory_repo(directory, cli_runner):
     result = cli_runner(
-        directory, '--no-input', '-v', '--directory=my-dir',
+        directory,
+        '--no-input',
+        '-v',
+        '--directory=my-dir',
     )
     assert result.exit_code == 0
     assert os.path.isdir("fake-project")
