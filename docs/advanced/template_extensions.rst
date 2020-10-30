@@ -31,6 +31,7 @@ By default Cookiecutter includes the following extensions:
 
 - ``cookiecutter.extensions.JsonifyExtension``
 - ``cookiecutter.extensions.RandomStringExtension``
+- ``cookiecutter.extensions.SlugifyExtension``
 - ``jinja2_time.TimeExtension``
 
 Jsonify extension
