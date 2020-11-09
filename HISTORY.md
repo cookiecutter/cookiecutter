@@ -7,11 +7,11 @@ History is important, but our current roadmap can be found [here](https://github
 * Do not modify this file, since 1.7.1 Changes are generated on Pull request
 title and will be added before release.
 
-## 1.7.2 (2019-04-21)
+## 1.7.2 (2020-04-21)
 
 * Fixed: Jinja2&Six version limits causing build errors with ansible project [@insspb](https://github.com/insspb) (#1385)
 
-## 1.7.1 (2019-04-21)
+## 1.7.1 (2020-04-21)
 
 This release was focused on internal code and CI/CD changes. During this release
 all code was verified to match pep8, pep257 and other code-styling guides.  
