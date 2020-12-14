@@ -35,6 +35,7 @@ def cookiecutter(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    hooks_dir='hooks',
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -58,6 +59,7 @@ def cookiecutter(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
+    :param hooks_dir: Path where hooks are located.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -124,6 +126,7 @@ def cookiecutter(
             output_dir=output_dir,
             accept_hooks=accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            hooks_dir=hooks_dir,
         )
 
     # Cleanup (if required)

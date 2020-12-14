@@ -114,15 +114,16 @@ def run_script_with_context(script_path, cwd, context):
     run_script(temp.name, cwd)
 
 
-def run_hook(hook_name, project_dir, context):
+def run_hook(hook_name, hooks_dir, project_dir, context):
     """
     Try to find and execute a hook from the specified project directory.
 
     :param hook_name: The hook to execute.
+    :param hooks_dir: Absolute path where hooks are located.
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
     """
-    scripts = find_hook(hook_name)
+    scripts = find_hook(hook_name, hooks_dir=hooks_dir)
     if not scripts:
         logger.debug('No %s hook found', hook_name)
         return
