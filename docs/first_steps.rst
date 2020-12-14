@@ -1,1 +1,0 @@
-.. include:: HelloCookieCutter1/Readme.rst
