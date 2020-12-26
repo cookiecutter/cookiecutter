@@ -67,8 +67,9 @@ value of the ``cookiecutter.module_name`` template variable:
 Example: Validating template variables
 --------------------------------------
 
-Here is an example of a script that validates a template variable
-before generating the project, to be used as ``hooks/pre_gen_project.py``:
+Here is an example of a pre-generate hook script, defined at
+``hooks/pre_gen_project.py``, that validates a template variable before generating the
+project:
 
 .. code-block:: python
 
@@ -88,9 +89,10 @@ before generating the project, to be used as ``hooks/pre_gen_project.py``:
 
 Example: Conditional files / directories
 ----------------------------------------
-This is another example of ``hooks/pre_gen_project.py`` to demonstrate
-how to use post-processing hooks to achieve conditional control of files,
-directories.
+
+Here is an example of a post-generate hook script, defined at
+``hooks/post_gen_project.py``, on how to achieve conditional control of files and
+directories after generating the project.
 
 The script ensures that the directory structure is as expected by
 removing unwanted files and directories:
