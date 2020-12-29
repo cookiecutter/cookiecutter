@@ -4,7 +4,7 @@ from jinja2 import Environment, StrictUndefined
 from cookiecutter.exceptions import UnknownExtension
 
 
-class ExtensionLoaderMixin(object):
+class ExtensionLoaderMixin:
     """Mixin providing sane loading of extensions specified in a given context.
 
     The context is being extracted from the keyword arguments before calling

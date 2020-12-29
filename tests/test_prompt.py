@@ -66,7 +66,7 @@ class TestRenderVariable:
         assert result == rendered_var
 
 
-class TestPrompt(object):
+class TestPrompt:
     """Class to unite user prompt related tests."""
 
     @pytest.mark.parametrize(
@@ -80,7 +80,8 @@ class TestPrompt(object):
     def test_prompt_for_config(self, monkeypatch, context):
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable', lambda var, default: default,
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -251,7 +252,7 @@ class TestPrompt(object):
         assert cookiecutter_dict == context['cookiecutter']
 
 
-class TestReadUserChoice(object):
+class TestReadUserChoice:
     """Class to unite choices prompt related tests."""
 
     def test_should_invoke_read_user_choice(self, mocker):
@@ -331,7 +332,7 @@ class TestReadUserChoice(object):
         assert cookiecutter_dict == expected
 
 
-class TestPromptChoiceForConfig(object):
+class TestPromptChoiceForConfig:
     """Class to unite choices prompt related tests with config test."""
 
     @pytest.fixture

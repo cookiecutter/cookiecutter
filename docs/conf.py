@@ -29,7 +29,7 @@ import sys
 # flake8: noqa D107,D105
 
 
-class Mock(object):
+class Mock:
     def __init__(self, *args, **kwargs):
         pass
 

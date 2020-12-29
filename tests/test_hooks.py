@@ -70,7 +70,7 @@ def make_test_repo(name, multiple_hooks=False):
     return post
 
 
-class TestFindHooks(object):
+class TestFindHooks:
     """Class to unite find hooks related tests in one place."""
 
     repo_path = 'tests/test-hooks'
@@ -110,7 +110,7 @@ class TestFindHooks(object):
             assert hooks.find_hook('unknown_hook') is None
 
 
-class TestExternalHooks(object):
+class TestExternalHooks:
     """Class to unite tests for hooks with different project paths."""
 
     repo_path = os.path.abspath('tests/test-hooks/')
