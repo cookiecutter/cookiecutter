@@ -1,10 +1,13 @@
 """Functions for finding Cookiecutter templates and other components."""
 import logging
 import os
+import re
 
-from cookiecutter.exceptions import NonTemplatedInputDirException
+from cookiecutter import exceptions
 
 logger = logging.getLogger(__name__)
+
+_REGEX = r'{{.*cookiecutter.*}}'
 
 
 def find_template(repo_dir):
@@ -14,18 +17,17 @@ def find_template(repo_dir):
     :returns project_template: Relative path to project template.
     """
     logger.debug('Searching %s for the project template.', repo_dir)
-
-    repo_dir_contents = os.listdir(repo_dir)
-
-    project_template = None
-    for item in repo_dir_contents:
-        if 'cookiecutter' in item and '{{' in item and '}}' in item:
-            project_template = item
-            break
-
-    if project_template:
-        project_template = os.path.join(repo_dir, project_template)
-        logger.debug('The project template appears to be %s', project_template)
-        return project_template
-    else:
-        raise NonTemplatedInputDirException
+    candidates = []
+    with os.scandir(repo_dir) as it:
+        for entry in it:
+            if not entry.is_dir():
+                continue
+            if re.search(_REGEX, entry.name):
+                candidates.append(entry)
+    if not candidates:
+        raise exceptions.NonTemplatedInputDirException
+    if len(candidates) > 1:
+        raise exceptions.UnknownTemplateDirException
+    entry, = candidates
+    logger.debug('The project template appears to be %s', entry.path)
+    return entry.path
