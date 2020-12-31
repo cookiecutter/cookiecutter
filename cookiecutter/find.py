@@ -28,6 +28,6 @@ def find_template(repo_dir):
         raise exceptions.NonTemplatedInputDirException
     if len(candidates) > 1:
         raise exceptions.UnknownTemplateDirException
-    entry, = candidates
+    (entry,) = candidates
     logger.debug('The project template appears to be %s', entry.path)
     return entry.path
