@@ -18,7 +18,7 @@ def _expand_path(path):
     return path
 
 def _find_first_path(paths):
-    """Finds the first existing path from a list"""
+    """Find the first existing path from a list."""
     logger.debug("_find_first_path: %s", paths)
     for path in paths:
         if path:
