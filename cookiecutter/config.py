@@ -17,6 +17,7 @@ def _expand_path(path):
     path = os.path.expanduser(path)
     return path
 
+
 def _find_first_path(paths):
     """Find the first existing path from a list."""
     logger.debug("_find_first_path: %s", paths)
@@ -27,8 +28,6 @@ def _find_first_path(paths):
             if os.path.exists(path):
                 return path
     return None
-
-
 
 
 USER_CONFIG_PATH = _find_first_path(
@@ -52,8 +51,6 @@ DEFAULT_CONFIG = {
     'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
-
-
 
 
 def merge_configs(default, overwrite):
