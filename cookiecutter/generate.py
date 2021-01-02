@@ -324,7 +324,7 @@ def generate_files(
         )
 
     with work_in(template_dir):
-        env.loader = FileSystemLoader('.')
+        env.loader = FileSystemLoader(['.', '../templates'])
 
         for root, dirs, files in os.walk('.'):
             # We must separate the two types of dirs into different lists.

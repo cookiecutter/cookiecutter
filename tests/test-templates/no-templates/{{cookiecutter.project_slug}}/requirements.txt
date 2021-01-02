@@ -1,0 +1,5 @@
+pip==19.2.3
+{% if cookiecutter.command_line_interface|lower == 'click' -%}
+Click==7.0{% endif %}
+{% if cookiecutter.use_pytest == 'y' -%}
+pytest==4.6.5{% endif %}
