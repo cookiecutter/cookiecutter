@@ -29,6 +29,7 @@ Example user config:
         github_username: "audreyr"
     cookiecutters_dir: "/home/audreyr/my-custom-cookiecutters-dir/"
     replay_dir: "/home/audreyr/my-custom-replay-dir/"
+    output_dir: "/home/audreyr/dev/"
     abbreviations:
         pp: https://github.com/audreyr/cookiecutter-pypackage.git
         gh: https://github.com/{0}.git
@@ -43,6 +44,7 @@ Possible settings are:
   use Cookiecutter with a repo argument.
 * replay_dir: Directory where Cookiecutter dumps context data to, which
   you can fetch later on when using the :ref:`replay feature <replay-feature>`.
+* output_dir:  Directory that Cookiecutter uses as the default output_dir.
 * abbreviations: A list of abbreviations for cookiecutters. Abbreviations can
   be simple aliases for a repo name, or can be used as a prefix, in the form
   `abbr:suffix`. Any suffix will be inserted into the expansion in place of

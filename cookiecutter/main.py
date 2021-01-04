@@ -103,6 +103,10 @@ def cookiecutter(
 
         dump(config_dict['replay_dir'], template_name, context)
 
+    # Get output_dir from config
+    if config_dict['output_dir']:
+        output_dir = config_dict['output_dir']
+
     # Create project from local context and project template.
     result = generate_files(
         repo_dir=repo_dir,
