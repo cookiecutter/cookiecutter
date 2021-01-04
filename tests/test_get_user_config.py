@@ -49,7 +49,7 @@ def custom_config():
         },
         'cookiecutters_dir': '/home/example/some-path-to-templates',
         'replay_dir': '/home/example/some-path-to-replay-files',
-        'output_dir': '/home/example/some-path-for-dev-files'
+        'output_dir': '/home/example/some-path-for-dev-files',
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
