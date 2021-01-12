@@ -1,5 +1,4 @@
 """pytest fixtures which are globally available throughout the suite."""
-import logging
 import os
 import shutil
 

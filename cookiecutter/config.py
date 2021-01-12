@@ -4,7 +4,6 @@ import copy
 import logging
 import os
 
-import poyo
 import yaml
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
