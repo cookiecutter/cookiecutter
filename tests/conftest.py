@@ -8,9 +8,13 @@ from cookiecutter import utils
 
 
 USER_CONFIG = """
-cookiecutters_dir: "{cookiecutters_dir}"
-replay_dir: "{replay_dir}"
+cookiecutters_dir: '{cookiecutters_dir}'
+replay_dir: '{replay_dir}'
 """
+# In YAML, double quotes mean to use escape sequences.
+# Single quotes mean we will have unescaped backslahes.
+# http://blogs.perl.org/users/tinita/2018/03/
+# strings-in-yaml---to-quote-or-not-to-quote.html
 
 
 def backup_dir(original_dir, backup_dir):
