@@ -499,7 +499,11 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
     fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
     os.makedirs(os.path.dirname(user_config_path))
     with open(user_config_path, 'w') as config_file:
-        config_file.write('cookiecutters_dir: "%s"' % fake_template_dir)
+        # In YAML, double quotes mean to use escape sequences.
+        # Single quotes mean we will have unescaped backslahes.
+        # http://blogs.perl.org/users/tinita/2018/03/
+        # strings-in-yaml---to-quote-or-not-to-quote.html
+        config_file.write("cookiecutters_dir: '%s'" % fake_template_dir)
     open(os.path.join('fake-project', 'cookiecutter.json'), 'w').write('{}')
 
     result = cli_runner(
