@@ -43,7 +43,7 @@ def load_replay_file(replay_file):
         # Since a YAML parser will also parse JSON,
         # we could simply use the YAML parser always.
         if os.path.splitext(replay_file) in ('.yml', '.yaml'):
-            context = yaml.safe_load(inifile)
+            context = yaml.safe_load(infile)
         else:
             context = json.load(infile)
 
