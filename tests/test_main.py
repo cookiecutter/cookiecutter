@@ -1,5 +1,6 @@
 """Collection of tests around cookiecutter's replay feature."""
 from cookiecutter.main import cookiecutter
+import cookiecutter.replay
 
 
 def test_replay_dump_template_name(
@@ -58,13 +59,14 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
     """Check that reply.load is called with the custom replay_file."""
     monkeypatch.chdir('tests/fake-repo-tmpl')
 
-    mock_replay_load = mocker.patch('cookiecutter.replay.load_replay_file')
+    mock_replay_load = mocker.patch('cookiecutter.main.load_replay_file',
+        side_effect=cookiecutter.replay.load_replay_file)
     mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
-        '.', replay='./custom-replay-file', config_file=user_config_file,
+        '.', replay='../test-replay/cookiedozer_load.json', config_file=user_config_file,
     )
 
     mock_replay_load.assert_called_once_with(
-        '.', 'custom-replay-file',
+        '../test-replay/cookiedozer_load.json',
     )
