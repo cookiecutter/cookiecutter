@@ -58,7 +58,7 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
     """Check that reply.load is called with the custom replay_file."""
     monkeypatch.chdir('tests/fake-repo-tmpl')
 
-    mock_replay_load = mocker.patch('cookiecutter.main.load')
+    mock_replay_load = mocker.patch('cookiecutter.replay.load_replay_file')
     mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
