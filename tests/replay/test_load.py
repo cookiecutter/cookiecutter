@@ -59,9 +59,7 @@ def test_run_json_load(
     assert loaded_context == context
 
 
-def test_load_replay_file_json(
-    context, replay_file
-):
+def test_load_replay_file_json(context, replay_file):
     """Test that replay.load_replay_file correctly loads the context."""
     loaded_context = replay.load_replay_file(replay_file)
     assert loaded_context == context
