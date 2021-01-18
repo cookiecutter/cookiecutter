@@ -5,6 +5,7 @@ cookiecutter.replay.
 """
 import json
 import os
+import yaml
 
 from cookiecutter.utils import make_sure_path_exists
 
@@ -39,7 +40,12 @@ def dump(replay_dir, template_name, context):
 def load_replay_file(replay_file):
     """Read cookiecutter's parameter values from replay file."""
     with open(replay_file, 'r') as infile:
-        context = json.load(infile)
+        # Since a YAML parser will also parse JSON,
+        # we could simply use the YAML parser always.
+        if os.path.splitext(replay_file) in ('.yml', '.yaml'):
+            context = yaml.safe_load(inifile)
+        else:
+            context = json.load(infile)
 
     if 'cookiecutter' not in context:
         raise ValueError('Context is required to contain a cookiecutter key')

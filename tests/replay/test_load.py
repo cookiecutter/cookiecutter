@@ -20,6 +20,13 @@ def replay_file(replay_test_dir, template_name):
     return os.path.join(replay_test_dir, file_name)
 
 
+@pytest.fixture
+def replay_yaml_file(replay_test_dir, template_name):
+    """Fixture to return a actual file name of the dump."""
+    file_name = '{}.yaml'.format(template_name)
+    return os.path.join(replay_test_dir, file_name)
+
+
 def test_type_error_if_no_template_name(replay_test_dir):
     """Test that replay.load raises if the template_name is not a valid str."""
     with pytest.raises(TypeError):
@@ -62,4 +69,10 @@ def test_run_json_load(
 def test_load_replay_file_json(context, replay_file):
     """Test that replay.load_replay_file correctly loads the context."""
     loaded_context = replay.load_replay_file(replay_file)
+    assert loaded_context == context
+
+
+def test_load_replay_file_yaml(context, replay_yaml_file):
+    """Test that replay.load_replay_file correctly loads the context."""
+    loaded_context = replay.load_replay_file(replay_yaml_file)
     assert loaded_context == context
