@@ -1,6 +1,6 @@
 """Collection of tests around cookiecutter's replay feature."""
 from cookiecutter.main import cookiecutter
-import cookiecutter.replay
+from cookiecutter import replay
 
 
 def test_replay_dump_template_name(
@@ -60,7 +60,7 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
     monkeypatch.chdir('tests/fake-repo-tmpl')
 
     mock_replay_load = mocker.patch('cookiecutter.main.load_replay_file',
-        side_effect=cookiecutter.replay.load_replay_file)
+        side_effect=replay.load_replay_file)
     mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
