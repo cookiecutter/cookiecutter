@@ -3,6 +3,7 @@ import os
 
 import freezegun
 import pytest
+import uuid
 
 from cookiecutter.main import cookiecutter
 
