@@ -51,7 +51,7 @@ class SlugifyExtension(Extension):
 
         environment.filters['slugify'] = slugify
 
-        
+
 class UUIDExtension(Extension):
     """Jinja2 Extension to generate uuid4 string."""
 

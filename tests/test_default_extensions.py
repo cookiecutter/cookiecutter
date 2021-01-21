@@ -48,6 +48,7 @@ def test_jinja2_slugify_extension(tmpdir):
 
     assert os.path.basename(project_dir) == "it-s-slugified-foobar"
 
+
 def test_jinja2_uuid_extension(tmpdir):
     """Verify Jinja2 uuid extension work correctly."""
     project_dir = cookiecutter(
