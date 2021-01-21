@@ -59,5 +59,5 @@ def test_jinja2_uuid_extension(tmpdir):
     with open(changelog_file, 'r', encoding='utf-8') as f:
         changelog_lines = f.readlines()
 
-    uuid.UUID4(changelog_lines[0])
+    uuid.UUID(changelog_lines[0], version=4)
     assert True
