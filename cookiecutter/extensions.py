@@ -52,12 +52,12 @@ class SlugifyExtension(Extension):
         environment.filters['slugify'] = slugify
 
         
-class UUID4Extension(Extension):
+class UUIDExtension(Extension):
     """Jinja2 Extension to generate uuid4 string."""
 
     def __init__(self, environment):
         """Jinja2 Extension constructor."""
-        super(UUID4Extension, self).__init__(environment)
+        super(UUIDExtension, self).__init__(environment)
 
         def uuid4():
             """Generates UUID4"""
