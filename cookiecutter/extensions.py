@@ -60,7 +60,7 @@ class UUIDExtension(Extension):
         super(UUIDExtension, self).__init__(environment)
 
         def uuid4():
-            """Generates UUID4"""
+            """Generate UUID4."""
             return str(uuid.uuid4())
 
         environment.globals.update(uuid4=uuid4)
