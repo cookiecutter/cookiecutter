@@ -1,6 +1,7 @@
 """Jinja2 extensions."""
 import json
 import string
+import uuid
 from secrets import choice
 
 from jinja2.ext import Extension
@@ -49,3 +50,17 @@ class SlugifyExtension(Extension):
             return pyslugify(value, **kwargs)
 
         environment.filters['slugify'] = slugify
+
+        
+class UUID4Extension(Extension):
+    """Jinja2 Extension to generate uuid4 string."""
+
+    def __init__(self, environment):
+        """Jinja2 Extension constructor."""
+        super(UUID4Extension, self).__init__(environment)
+
+        def uuid4():
+            """Generates UUID4"""
+            return str(uuid.uuid4())
+
+        environment.globals.update(uuid4=uuid4)
