@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import shutil
+import warnings
 from collections import OrderedDict
 
 from binaryornot.check import is_binary
@@ -108,7 +109,10 @@ def generate_context(
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
     if default_context:
-        apply_overwrites_to_context(obj, default_context)
+        try:
+            apply_overwrites_to_context(obj, default_context)
+        except ValueError as ex:
+            warnings.warn("Invalid default received: " + str(ex))
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
 
