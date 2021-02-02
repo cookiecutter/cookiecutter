@@ -28,8 +28,11 @@ logger = logging.getLogger(__name__)
 
 # https://stackoverflow.com/a/21912744
 def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
-    """# usage example:
-    ordered_load(stream, yaml.SafeLoader)"""
+    """Load YAML from the given stream using the given Loader.
+
+    Note that for a safe load you must specifiy the SafeLoader:
+    ordered_load(stream, yaml.SafeLoader)
+    """
 
     class OrderedLoader(Loader):
         pass
