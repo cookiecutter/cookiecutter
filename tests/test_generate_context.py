@@ -160,7 +160,7 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite():
                 ('github_username', 'hackebrot'),
                 ('project_name', 'Kivy Project'),
                 ('repo_name', '{{cookiecutter.project_name|lower}}'),
-                ('orientation', ["all", "landscape", "portrait"]),
+                ('orientation', ['all', 'landscape', 'portrait']),
             ]
         )
     }
