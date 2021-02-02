@@ -63,9 +63,10 @@ def apply_overwrites_to_context(context, overwrite_context):
                 context_value.remove(overwrite)
                 context_value.insert(0, overwrite)
             else:
-                raise ValueError("{} provided for choice variable {}, but the "
-                                 "choices are {}.".format(overwrite, variable,
-                                                          context_value))
+                raise ValueError(
+                    "{} provided for choice variable {}, but the "
+                    "choices are {}.".format(overwrite, variable, context_value)
+                )
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
