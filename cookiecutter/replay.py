@@ -6,13 +6,13 @@ cookiecutter.replay.
 import json
 import os
 
+from cookiecutter.utils import make_sure_path_exists
+
 import ruyaml
 
 yaml = ruyaml.YAML(typ='safe')
 # import yaml
 # To swap, all we need to do is swap these lines above.
-
-from cookiecutter.utils import make_sure_path_exists
 
 
 def get_file_name(replay_dir, template_name):
