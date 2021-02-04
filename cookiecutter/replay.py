@@ -5,7 +5,9 @@ cookiecutter.replay.
 """
 import json
 import os
-import yaml
+# import yaml
+import ruyaml
+yaml = ruyaml.YAML(typ='safe')
 
 from cookiecutter.utils import make_sure_path_exists
 
@@ -43,7 +45,7 @@ def load_replay_file(replay_file):
         # Since a YAML parser will also parse JSON,
         # we could simply use the YAML parser always.
         if os.path.splitext(replay_file)[1] in ('.yml', '.yaml'):
-            context = yaml.safe_load(infile)
+            context = yaml.load(infile)
         else:
             context = json.load(infile)
 
