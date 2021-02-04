@@ -4,14 +4,15 @@ import copy
 import logging
 import os
 
-import ruyaml
+from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
+
 from ruyaml import YAMLError
+# from yaml import YAMLError
+import ruyaml
 
 yaml = ruyaml.YAML(typ='safe')
 # import yaml
 # To swap, all we need to do is swap these lines above.
-
-from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 

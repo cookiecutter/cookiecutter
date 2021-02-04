@@ -3,6 +3,7 @@ import os
 
 import pytest
 from ruyaml import YAMLError
+# from yaml import YAMLError
 
 from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
