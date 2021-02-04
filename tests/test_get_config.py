@@ -2,7 +2,7 @@
 import os
 
 import pytest
-import ruyaml
+from ruyaml import YAMLError
 
 from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
@@ -89,7 +89,7 @@ def test_invalid_config():
     with pytest.raises(InvalidConfiguration) as exc_info:
         config.get_config('tests/test-config/invalid-config.yaml')
         assert expected_error_msg in str(exc_info.value)
-        assert isinstance(exc_info.value.__cause__, ruyaml.YAMLError)
+        assert isinstance(exc_info.value.__cause__, YAMLError)
 
 
 def test_get_config_with_defaults():

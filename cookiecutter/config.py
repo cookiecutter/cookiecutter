@@ -5,6 +5,8 @@ import logging
 import os
 
 import ruyaml
+from ruyaml import YAMLError
+yaml = ruyaml.YAML(typ='safe')
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
@@ -62,8 +64,8 @@ def get_config(config_path):
     logger.debug('config_path is %s', config_path)
     with open(config_path, encoding='utf-8') as file_handle:
         try:
-            yaml_dict = ruyaml.YAML(typ='safe').load(file_handle)
-        except ruyaml.YAMLError as e:
+            yaml_dict = yaml.load(file_handle)
+        except YAMLError as e:
             raise InvalidConfiguration(
                 'Unable to parse YAML file {}.'.format(config_path)
             ) from e
