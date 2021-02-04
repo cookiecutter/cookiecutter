@@ -7,6 +7,7 @@ import os
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 from ruyaml import YAMLError
+
 # from yaml import YAMLError
 import ruyaml
 
