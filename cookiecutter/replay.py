@@ -5,9 +5,12 @@ cookiecutter.replay.
 """
 import json
 import os
-# import yaml
+
 import ruyaml
+
 yaml = ruyaml.YAML(typ='safe')
+# import yaml
+# To swap, all we need to do is swap these lines above.
 
 from cookiecutter.utils import make_sure_path_exists
 
