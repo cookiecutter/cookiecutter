@@ -6,7 +6,10 @@ import os
 
 import ruyaml
 from ruyaml import YAMLError
+
 yaml = ruyaml.YAML(typ='safe')
+# import yaml
+# To swap, all we need to do is swap these lines above.
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
