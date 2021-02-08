@@ -34,6 +34,6 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
     - name: Send coverage report to codecov
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v1
       with:
         file: ./coverage.xml
