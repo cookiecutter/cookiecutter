@@ -37,6 +37,8 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         file: ./coverage.xml
-    - uses: actions/download-artifact@v2
+    - name: Save artifact
+      uses: actions/download-artifact@v2
       with:
         name: coverage.xml
+        path: ./
