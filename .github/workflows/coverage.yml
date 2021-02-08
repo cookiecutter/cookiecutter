@@ -40,4 +40,4 @@ jobs:
     - name: Save artifact
       uses: actions/download-artifact@v2
       with:
-        file: ./coverage.xml
+        name: ${{github.workspace}}/coverage.xml
