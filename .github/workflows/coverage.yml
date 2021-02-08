@@ -40,5 +40,4 @@ jobs:
     - name: Save artifact
       uses: actions/download-artifact@v2
       with:
-        name: coverage.xml
-        path: ./
+        file: ./coverage.xml
