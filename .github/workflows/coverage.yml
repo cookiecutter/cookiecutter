@@ -39,4 +39,4 @@ jobs:
         file: ./coverage.xml
     - uses: actions/download-artifact@v2
       with:
-        name: ./coverage.xml
+        name: coverage.xml
