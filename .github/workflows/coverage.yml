@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - patch_private_dict
     tags:
       - "*"
   pull_request:
@@ -33,6 +34,6 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
     - name: Send coverage report to codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v2
       with:
         file: ./coverage.xml
