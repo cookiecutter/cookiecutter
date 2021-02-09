@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - patch_private_dict
     tags:
       - "*"
   pull_request:

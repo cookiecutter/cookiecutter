@@ -12,7 +12,7 @@ from cookiecutter.prompt import read_user_yes_no
 logger = logging.getLogger(__name__)
 
 
-def force_delete(func, path, exc_info):
+def force_delete(func, path, exc_info): # pragma: no cover due to https://bugs.python.org/issue39340
     """Error handler for `shutil.rmtree()` equivalent to `rm -rf`.
 
     Usage: `shutil.rmtree(path, onerror=force_delete)`
