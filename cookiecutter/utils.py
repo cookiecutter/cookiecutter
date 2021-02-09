@@ -17,7 +17,7 @@ def force_delete(func, path, exc_info):  # pragma: no cover
 
     Coverage is exluded since not all code is reached in all OSs due to
     https://bugs.python.org/issue39340
-    
+
     Usage: `shutil.rmtree(path, onerror=force_delete)`
     From stackoverflow.com/questions/1889597
     """
