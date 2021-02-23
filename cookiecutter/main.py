@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 def cookiecutter(
     template,
     checkout=None,
+    recurse_submodules=False,
     no_input=False,
     extra_context=None,
     replay=None,
@@ -39,6 +40,8 @@ def cookiecutter(
     :param template: A directory containing a project template directory,
         or a URL to a git repository.
     :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param recurse_submodules: Clone submodules if set to `True`
     :param no_input: Prompt the user at command line for manual configuration?
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
@@ -68,6 +71,7 @@ def cookiecutter(
         abbreviations=config_dict['abbreviations'],
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
+        recurse_submodules,
         no_input=no_input,
         password=password,
         directory=directory,

@@ -59,6 +59,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
 
     :param repo_url: Repo URL of unknown type.
     :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param recurse_submodules: Clone submodules if set to `True`
     :param clone_to_dir: The directory to clone to.
                          Defaults to the current directory.
     :param no_input: Suppress all user prompts when calling via API.
@@ -81,8 +82,13 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+        clone_command = ['git', 'clone']
+        if recurse_submodules:
+            clone_command.append('--recurse-submodules')
+        clone_command.append(repo_url)
     elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+        clone_command = ['hg', 'clone']
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
@@ -90,15 +96,10 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     else:
         clone = True
 
-    clone_command = {
-        'git': ['git', 'clone', '--recurse-submodules', repo_url],
-        'hg': ['hg', 'clone', repo_url],
-    }
-
     if clone:
         try:
             subprocess.check_output(
-                clone_command[repo_type], cwd=clone_to_dir, stderr=subprocess.STDOUT,
+                clone_command, cwd=clone_to_dir, stderr=subprocess.STDOUT,
             )
             if checkout is not None:
                 subprocess.check_output(

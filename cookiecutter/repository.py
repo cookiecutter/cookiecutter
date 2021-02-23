@@ -65,6 +65,7 @@ def determine_repo_dir(
     abbreviations,
     clone_to_dir,
     checkout,
+    recurse_submodules,
     no_input,
     password=None,
     directory=None,
@@ -82,6 +83,7 @@ def determine_repo_dir(
         definitions.
     :param clone_to_dir: The directory to clone the repository into.
     :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param recurse_submodules: Clone submodules if set to `True`
     :param no_input: Prompt the user at command line for manual configuration?
     :param password: The password to use when extracting the repository.
     :param directory: Directory within repo where cookiecutter.json lives.
@@ -106,6 +108,7 @@ def determine_repo_dir(
         cloned_repo = clone(
             repo_url=template,
             checkout=checkout,
+            recurse_submodules=recurse_submodules,
             clone_to_dir=clone_to_dir,
             no_input=no_input,
         )

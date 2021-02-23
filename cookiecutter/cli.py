@@ -80,6 +80,11 @@ def list_installed_templates(default_config, passed_config_file):
     '-c', '--checkout', help='branch, tag or commit to checkout after git clone',
 )
 @click.option(
+    '--recurse-submodules', help='recursively checkout git submodules',
+    is_flag=True,
+    default=False
+)
+@click.option(
     '--directory',
     help='Directory within repo that holds cookiecutter.json file '
     'for advanced repositories with multi templates in it',
@@ -146,6 +151,7 @@ def main(
     extra_context,
     no_input,
     checkout,
+    recurse_submodules,
     verbose,
     replay,
     overwrite_if_exists,
@@ -191,6 +197,7 @@ def main(
         cookiecutter(
             template,
             checkout,
+            recurse_submodules,
             no_input,
             extra_context=extra_context,
             replay=replay,
