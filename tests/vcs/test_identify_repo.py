@@ -9,39 +9,47 @@ from cookiecutter import exceptions, vcs
     [
         (
             'git+https://github.com/pytest-dev/cookiecutter-pytest-plugin.git',
-            'git',
+            vcs.Git,
             'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git',
         ),
         (
             'hg+https://bitbucket.org/foo/bar.hg',
-            'hg',
+            vcs.Hg,
             'https://bitbucket.org/foo/bar.hg',
         ),
         (
             'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git',
-            'git',
+            vcs.Git,
             'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git',
         ),
-        ('https://bitbucket.org/foo/bar.hg', 'hg', 'https://bitbucket.org/foo/bar.hg'),
+        (
+            'https://bitbucket.org/foo/bar.hg',
+            vcs.Hg,
+            'https://bitbucket.org/foo/bar.hg'),
         (
             'https://github.com/audreyr/cookiecutter-pypackage.git',
-            'git',
+            vcs.Git,
             'https://github.com/audreyr/cookiecutter-pypackage.git',
         ),
         (
             'https://github.com/audreyr/cookiecutter-pypackage',
-            'git',
+            vcs.Git,
             'https://github.com/audreyr/cookiecutter-pypackage',
         ),
         (
             'git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git',
-            'git',
+            vcs.Git,
             'git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git',
         ),
         (
             'https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket',
-            'hg',
+            vcs.Hg,
             'https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket',
+        ),
+        (
+            'svn+http://svn.apache.org/viewvc/xml/axkit/trunk/axkit.org/examples',
+            vcs.SVN,
+            'http://svn.apache.org/viewvc/xml/axkit/trunk/axkit.org/examples',
         ),
     ],
 )

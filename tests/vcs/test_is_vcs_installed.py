@@ -11,4 +11,4 @@ from cookiecutter import vcs
 def test_is_vcs_installed(mocker, which_return, result):
     """Verify `is_vcs_installed` function correctly handles `which` answer."""
     mocker.patch('cookiecutter.vcs.which', autospec=True, return_value=which_return)
-    assert vcs.is_vcs_installed('git') == result
+    assert vcs.Git.is_installed() == result
