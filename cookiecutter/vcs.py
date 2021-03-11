@@ -23,18 +23,38 @@ BRANCH_ERRORS = [
 
 
 class _VCS:
+    """Abstract base VCS class. Handles the cloning of VCS repositories."""
     cmd = 'xyz'
 
     @classmethod
     def is_installed(cls):
+        """
+        Checks if VCS is installed
+
+        :return: (bool) is_installed
+        """
         return bool(which(cls.cmd))
 
     @staticmethod
     def get_repo_dir(repo_name, clone_to_dir):
+        """
+        Gets the path of the cloned repository
+
+        :return: repo_dir
+        """
         return os.path.normpath(os.path.join(clone_to_dir, repo_name))
 
     @classmethod
     def clone(cls, repo_url, checkout, clone_to_dir, repo_dir):
+        """
+        Clones the repository
+
+        :param repo_url: Repository URL
+        :param checkout: Branch/Revision to check out
+        :param clone_to_dir: Working directory for the VCS
+        :param repo_dir: Path of the cloned repository
+        :raise subprocess.CalledProcessError: if the VCS returned an error
+        """
         subprocess.check_output(
             [cls.cmd, 'clone', repo_url],
             cwd=clone_to_dir,
@@ -49,6 +69,7 @@ class _VCS:
 
 
 class Git(_VCS):
+    """Git VCS class"""
     cmd = 'git'
 
     @staticmethod
@@ -58,10 +79,12 @@ class Git(_VCS):
 
 
 class Hg(_VCS):
+    """Mercury VCS class"""
     cmd = 'hg'
 
 
 class SVN(_VCS):
+    """Subversion VCS class"""
     cmd = 'svn'
 
     @classmethod
