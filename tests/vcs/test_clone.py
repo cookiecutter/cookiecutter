@@ -209,7 +209,7 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
 
 def test_clone_unknown_clone_error(mocker, clone_dir):
     """In clone(), unknown subprocess errors should be raised as \
-    RepositoryCloneFailed"""
+    RepositoryCloneFailed."""
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
