@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 BRANCH_ERRORS = [
     'error: pathspec',
     'unknown revision',
+    'No such revision'
 ]
 
 
@@ -34,31 +35,17 @@ class _VCS:
 
     @classmethod
     def clone(cls, repo_url, checkout, clone_to_dir, repo_dir):
-        try:
+        subprocess.check_output(
+            [cls.cmd, 'clone', repo_url],
+            cwd=clone_to_dir,
+            stderr=subprocess.STDOUT,
+        )
+        if checkout is not None:
             subprocess.check_output(
-                [cls.cmd, 'clone', repo_url],
-                cwd=clone_to_dir,
+                [cls.cmd, 'checkout', checkout],
+                cwd=repo_dir,
                 stderr=subprocess.STDOUT,
             )
-            if checkout is not None:
-                subprocess.check_output(
-                    [cls.cmd, 'checkout', checkout],
-                    cwd=repo_dir,
-                    stderr=subprocess.STDOUT,
-                )
-        except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output.decode('utf-8')
-            if 'not found' in output.lower():
-                raise RepositoryNotFound(
-                    'The repository {} could not be found, '
-                    'have you made a typo?'.format(repo_url)
-                )
-            if any(error in output for error in BRANCH_ERRORS):
-                raise RepositoryCloneFailed(
-                    'The {} branch of repository {} could not found, '
-                    'have you made a typo?'.format(checkout, repo_url)
-                )
-            raise
 
 
 class Git(_VCS):
@@ -84,23 +71,7 @@ class SVN(_VCS):
         if checkout:
             command += ['-r', checkout]
 
-        try:
-            subprocess.check_output(
-                command, cwd=clone_to_dir, stderr=subprocess.STDOUT,
-            )
-        except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output.decode('utf-8')
-            if 'unable to connect' in output.lower() or "doesn't exist" in output.lower():
-                raise RepositoryNotFound(
-                    'The repository {} could not be found, '
-                    'have you made a typo?'.format(repo_url)
-                )
-            if any(error in output for error in BRANCH_ERRORS):
-                raise RepositoryCloneFailed(
-                    'The {} branch of repository {} could not found, '
-                    'have you made a typo?'.format(checkout, repo_url)
-                )
-            raise
+        subprocess.check_output(command, cwd=clone_to_dir, stderr=subprocess.STDOUT)
 
 
 # Mapping VCS classes to their identifiers
@@ -179,6 +150,21 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
         clone = True
 
     if clone:
-        vcs.clone(repo_url, checkout, clone_to_dir, repo_dir)
+        try:
+            vcs.clone(repo_url, checkout, clone_to_dir, repo_dir)
+        except subprocess.CalledProcessError as clone_error:
+            output = clone_error.output.decode('utf-8')
+            if 'not found' in output.lower():
+                raise RepositoryNotFound(
+                    'The repository {} could not be found, '
+                    'have you made a typo?'.format(repo_url)
+                )
+            if any(error in output for error in BRANCH_ERRORS):
+                raise RepositoryCloneFailed(
+                    'The {} branch of repository {} could not found, '
+                    'have you made a typo?'.format(checkout, repo_url)
+                )
+            raise RepositoryCloneFailed('Cloning of Repository {} returned an error:\n{}'
+                                        .format(repo_url, output))
 
     return repo_dir

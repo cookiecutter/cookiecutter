@@ -39,7 +39,7 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
 def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
     """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
     without cloning anything."""
-    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+    mocker.patch('cookiecutter.vcs.Git.is_installed', autospec=True, return_value=True)
     mocker.patch(
         'cookiecutter.vcs.prompt_and_delete', side_effect=SystemExit, autospec=True
     )
@@ -194,7 +194,10 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
 
 
 def test_clone_unknown_subprocess_error(mocker, clone_dir):
-    """In `clone()`, unknown subprocess errors should be raised."""
+    """
+    In `clone()`, unknown subprocess errors should be raised
+    as RepositoryCloneFailed.
+    """
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
@@ -205,9 +208,13 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
         ],
     )
 
-    with pytest.raises(subprocess.CalledProcessError):
+    repository_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin'
+    with pytest.raises(exceptions.RepositoryCloneFailed) as err:
         vcs.clone(
-            'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+            repository_url,
             clone_to_dir=str(clone_dir),
             no_input=True,
         )
+    assert str(err.value) == (
+        'Cloning of Repository {} returned an error:\nSomething went wrong'
+    ).format(repository_url)
