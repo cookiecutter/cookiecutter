@@ -25,7 +25,8 @@ from cookiecutter import exceptions, vcs
         (
             'https://bitbucket.org/foo/bar.hg',
             vcs.Hg,
-            'https://bitbucket.org/foo/bar.hg'),
+            'https://bitbucket.org/foo/bar.hg',
+        ),
         (
             'https://github.com/audreyr/cookiecutter-pypackage.git',
             vcs.Git,

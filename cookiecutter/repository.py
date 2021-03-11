@@ -9,7 +9,9 @@ from cookiecutter.zipfile import unzip
 REPO_REGEX = re.compile(
     r"""
 # something like git:// ssh:// file:// etc.
-((((""" + '|'.join(REPO_TYPES.keys()) + r""")\+)?(git|ssh|file|https?):(//)?)
+(((("""
+    + '|'.join(REPO_TYPES.keys())
+    + r""")\+)?(git|ssh|file|https?):(//)?)
  |                                      # or
  (\w+@[\w\.]+)                          # something like user@...
 )
