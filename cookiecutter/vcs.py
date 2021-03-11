@@ -74,6 +74,11 @@ class Git(_VCS):
 
     @staticmethod
     def get_repo_dir(repo_name, clone_to_dir):
+        """
+        Get the path of the cloned repository.
+
+        :return: repo_dir
+        """
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
         return os.path.normpath(os.path.join(clone_to_dir, repo_name))
 
@@ -89,6 +94,15 @@ class SVN(_VCS):
 
     @classmethod
     def clone(cls, repo_url, checkout, clone_to_dir, repo_dir):
+        """
+        Clone the repository.
+
+        :param repo_url: Repository URL
+        :param checkout: Branch/Revision to check out
+        :param clone_to_dir: Working directory for the VCS
+        :param repo_dir: Path of the cloned repository
+        :raise subprocess.CalledProcessError: if the VCS returned an error
+        """
         command = [cls.cmd, 'export', repo_url]
 
         if checkout:
