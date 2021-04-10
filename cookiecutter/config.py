@@ -4,7 +4,7 @@ import copy
 import logging
 import os
 
-import poyo
+import yaml
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
@@ -44,7 +44,7 @@ def merge_configs(default, overwrite):
     for k, v in overwrite.items():
         # Make sure to preserve existing items in
         # nested dicts, for example `abbreviations`
-        if isinstance(v, dict):
+        if isinstance(v, dict) and k in default:
             new_config[k] = merge_configs(default[k], v)
         else:
             new_config[k] = v
@@ -60,13 +60,8 @@ def get_config(config_path):
         )
 
     logger.debug('config_path is %s', config_path)
-    with open(config_path, encoding='utf-8') as file_handle:
-        try:
-            yaml_dict = poyo.parse_string(file_handle.read())
-        except poyo.exceptions.PoyoException as e:
-            raise InvalidConfiguration(
-                'Unable to parse YAML file {}. Error: {}'.format(config_path, e)
-            )
+    with open(config_path, 'r') as yaml_file:
+        yaml_dict = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 

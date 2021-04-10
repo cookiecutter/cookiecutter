@@ -11,6 +11,7 @@ requirements = [
     'binaryornot>=0.4.4',
     'Jinja2<3.0.0',
     'click>=7.0',
+    'pyyaml>=5.4',
     'poyo>=0.5.0',
     'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
