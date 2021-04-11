@@ -59,6 +59,10 @@ def test_get_config():
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
             'github_username': 'example',
+            'project': {
+                'description': 'description',
+                'tags': ['first', 'second', 'third',],
+            },
         },
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
