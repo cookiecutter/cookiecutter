@@ -11,7 +11,7 @@ REPO_REGEX = re.compile(
 # something like git:// ssh:// file:// etc.
 (((("""
     + '|'.join(REPO_TYPES.keys())
-    + r""")\+)?(git|ssh|file|https?):(//)?)
+    + r""")\+)?(git|svn|ssh|file|https?):(//)?)
  |                                      # or
  (\w+@[\w\.]+)                          # something like user@...
 )

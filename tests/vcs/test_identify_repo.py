@@ -47,11 +47,10 @@ from cookiecutter import exceptions, vcs
             vcs.Hg,
             'https://audreyr@bitbucket.org/audreyr/cookiecutter-bitbucket',
         ),
-        (
-            'svn+http://svn.apache.org/viewvc/xml/axkit/trunk/axkit.org/examples',
-            vcs.SVN,
-            'http://svn.apache.org/viewvc/xml/axkit/trunk/axkit.org/examples',
-        ),
+        ('svn+file:///home/johndoe/myrepo', vcs.SVN, 'file:///home/johndoe/myrepo',),
+        ('svn+https://private.com/myrepo', vcs.SVN, 'https://private.com/myrepo',),
+        ('svn://private.com/myrepo', vcs.SVN, 'svn://private.com/myrepo',),
+        ('svn+ssh://private.com/myrepo', vcs.SVN, 'ssh://private.com/myrepo',),
     ],
 )
 def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):

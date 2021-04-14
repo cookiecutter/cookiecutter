@@ -35,8 +35,8 @@ Try it out!
 
 
 
-Works directly with git and hg (mercurial) repos too
-------------------------------------------------------
+Works directly with git, hg (mercurial) and svn repos too
+---------------------------------------------------------
 
 To create a project from the cookiecutter-pypackage.git repo template::
 
@@ -46,9 +46,17 @@ Cookiecutter knows abbreviations for Github (``gh``), Bitbucket (``bb``), and
 GitLab (``gl``) projects, but you can also give it the full URL to any
 repository::
 
+    Git:
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
     $ cookiecutter git+ssh://git@github.com/audreyr/cookiecutter-pypackage.git
+
+    Mercurial:
     $ cookiecutter hg+ssh://hg@bitbucket.org/audreyr/cookiecutter-pypackage
+
+    SVN:
+    $ cookiecutter svn+https://svn.code.sf.net/p/cookiecutter-pypackage/code/trunk/cookiecutter-pypackage
+    $ cookiecutter svn://svn.code.sf.net/p/cookiecutter-pypackage/code/trunk/cookiecutter-pypackage
+    $ cookiecutter svn+ssh://username@svn.code.sf.net/p/cookiecutter-pypackage/code/trunk/cookiecutter-pypackage
 
 You will be prompted to enter a bunch of project config values. (These are
 defined in the project's `cookiecutter.json`.)

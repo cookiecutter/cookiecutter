@@ -89,22 +89,25 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
 
 
 @pytest.mark.parametrize(
-    'repo_class, repo_url, repo_name',
+    'repo_class, input_url, repo_url, repo_name',
     [
-        (vcs.Git, 'https://github.com/hello/world.git', 'world'),
-        (vcs.Hg, 'https://bitbucket.org/foo/bar', 'bar'),
+        (vcs.Git, 'https://github.com/hello/world.git', None, 'world'),
+        (vcs.Hg, 'https://bitbucket.org/foo/bar', None, 'bar'),
+        (vcs.Git, 'git@host:gitoliterepo', 'git@host:gitoliterepo', 'gitoliterepo'),
+        (vcs.Git, 'git@gitlab.com:cookiecutter/cookiecutter.git', None, 'cookiecutter'),
+        (vcs.Git, 'git@github.com:cookiecutter/cookiecutter.git', None, 'cookiecutter'),
         (
             vcs.SVN,
-            'http://svn.apache.org/viewvc/xml/axkit/trunk/axkit.org/examples',
-            'examples',
+            'svn+https://private.com/myrepo',
+            'https://private.com/myrepo',
+            'myrepo',
         ),
-        (vcs.Git, 'git@host:gitoliterepo', 'gitoliterepo'),
-        (vcs.Git, 'git@gitlab.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
-        (vcs.Git, 'git@github.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
+        (vcs.SVN, 'svn://private.com/myrepo', None, 'myrepo'),
+        (vcs.SVN, 'svn+ssh://private.com/myrepo', None, 'myrepo'),
     ],
 )
 def test_clone_should_invoke_vcs_command(
-    mocker, clone_dir, repo_class, repo_url, repo_name
+    mocker, clone_dir, repo_class, input_url, repo_url, repo_name
 ):
     """When `clone()` is called with a git/hg repo, the corresponding VCS \
     command should be run via `subprocess.check_output()`.
@@ -112,6 +115,12 @@ def test_clone_should_invoke_vcs_command(
     This should take place:
     * In the correct dir
     * With the correct args.
+
+    :param repo_class: _VCS class that should be used
+    :param input_url: Repo URL to be passed into the vcs.clone() function
+    :param repo_url: Repo URL that should be cloned by the VCS
+      (defaults to input_url if set to None)
+    :param repo_name: Name of subdirectory where the cloned files will be
     """
     mocker.patch(
         repo_class.__module__ + '.' + repo_class.__name__ + '.is_installed',
@@ -124,10 +133,14 @@ def test_clone_should_invoke_vcs_command(
     )
     expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
 
+    # repo_url defaults to input_url
+    if repo_url is None:
+        repo_url = input_url
+
     branch = 'foobar'
 
     repo_dir = vcs.clone(
-        repo_url, checkout=branch, clone_to_dir=clone_dir, no_input=True
+        input_url, checkout=branch, clone_to_dir=clone_dir, no_input=True
     )
 
     assert repo_dir == expected_repo_dir

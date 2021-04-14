@@ -3,6 +3,7 @@ import logging
 import os
 import subprocess  # nosec
 from shutil import which
+import re
 
 from cookiecutter.exceptions import (
     RepositoryCloneFailed,
@@ -99,6 +100,9 @@ class SVN(_VCS):
         :param repo_dir: Path of the cloned repository
         :raise subprocess.CalledProcessError: if the VCS returned an error
         """
+        # SVN SSH syntax: svn+ssh://private.com/myrepo
+        repo_url = re.sub(r'''^ssh://''', 'svn+ssh://', repo_url)
+
         command = [cls.cmd, 'export', repo_url]
 
         if checkout:

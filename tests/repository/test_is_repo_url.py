@@ -32,6 +32,8 @@ def test_is_zip_file(zipfile):
         'https://bitbucket.org/pokoli/cookiecutter.hg',
         'file://server/path/to/repo.git',
         'git://private.com/gitrepo',
+        'svn+https://private.com/svnrepo',
+        'svn://private.com/svnrepo',
     ]
 )
 def remote_repo_url(request):
