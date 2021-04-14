@@ -56,15 +56,11 @@ class _VCS:
         :raise subprocess.CalledProcessError: if the VCS returned an error
         """
         subprocess.check_output(
-            [cls.cmd, 'clone', repo_url],
-            cwd=clone_to_dir,
-            stderr=subprocess.STDOUT,
+            [cls.cmd, 'clone', repo_url], cwd=clone_to_dir, stderr=subprocess.STDOUT,
         )
         if checkout is not None:
             subprocess.check_output(
-                [cls.cmd, 'checkout', checkout],
-                cwd=repo_dir,
-                stderr=subprocess.STDOUT,
+                [cls.cmd, 'checkout', checkout], cwd=repo_dir, stderr=subprocess.STDOUT,
             )
 
 

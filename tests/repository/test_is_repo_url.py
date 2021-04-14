@@ -31,6 +31,7 @@ def test_is_zip_file(zipfile):
         'hg+https://private.com/mercurialrepo',
         'https://bitbucket.org/pokoli/cookiecutter.hg',
         'file://server/path/to/repo.git',
+        'git://private.com/gitrepo',
     ]
 )
 def remote_repo_url(request):
