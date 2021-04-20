@@ -37,9 +37,9 @@ clean-pyc: ## Remove Python file artifacts
 clean: clean-tox clean-build clean-pyc ## Remove all file artifacts
 
 .PHONY: lint
-lint: ## Check code style with flake8
+lint: ## Check code style
 	@echo "+ $@"
-	@tox -e flake8
+	@tox -e lint
 
 .PHONY: test
 test: ## Run tests quickly with the default Python
@@ -52,9 +52,7 @@ test-all: ## Run tests on every Python version with tox
 	@tox
 
 .PHONY: coverage
-coverage: ## Check code coverage quickly with the default Python
-	@echo "+ $@"
-	@tox -e cov-report
+coverage: test ## Check code coverage quickly with the default Python
 	@$(BROWSER) htmlcov/index.html
 
 .PHONY: docs
