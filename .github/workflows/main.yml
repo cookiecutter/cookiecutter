@@ -112,7 +112,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install tox virtualenv
     - name: Test build
-      run: "tox -e ${{ matrix.tox_env }}"
+      run: "tox -e ${{ matrix.tox_env }}-cov-report"
     - name: Send coverage report to codeclimate
       uses: paambaati/codeclimate-action@v2.6.0
       with:

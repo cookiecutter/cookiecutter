@@ -52,7 +52,9 @@ test-all: ## Run tests on every Python version with tox
 	@tox
 
 .PHONY: coverage
-coverage: test ## Check code coverage quickly with the default Python
+coverage: ## Check code coverage quickly with the default Python
+	@echo "+ $@"
+	@tox -e cov-report
 	@$(BROWSER) htmlcov/index.html
 
 .PHONY: docs
