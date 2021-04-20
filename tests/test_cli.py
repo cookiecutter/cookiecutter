@@ -2,7 +2,6 @@
 
 import json
 import os
-import sys
 
 import pytest
 from click.testing import CliRunner
@@ -365,10 +364,6 @@ def test_default_user_config(mocker, cli_runner):
     )
 
 
-@pytest.mark.skipif(
-    sys.version_info[0] == 3 and sys.version_info[1] == 6 and sys.version_info[2] == 1,
-    reason="Outdated pypy3 version on Travis CI/CD with wrong OrderedDict syntax.",
-)
 def test_echo_undefined_variable_error(tmpdir, cli_runner):
     """Cli invocation return error if variable undefined in template."""
     output_dir = str(tmpdir.mkdir('output'))
