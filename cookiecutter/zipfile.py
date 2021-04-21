@@ -10,7 +10,7 @@ from cookiecutter.prompt import read_repo_password
 from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
 
-def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
+def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, refresh=False, password=None):
     """Download and unpack a zipfile at a given URI.
 
     This will download the zipfile to the cookiecutter repository,
@@ -21,6 +21,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     :param clone_to_dir: The cookiecutter repository directory
         to put the archive into.
     :param no_input: Suppress any prompts
+    :param refresh: If true, overwrites cached cookiecutter without prompting user
     :param password: The password to use when unpacking the repository.
     """
     # Ensure that clone_to_dir exists
@@ -34,7 +35,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
-            download = prompt_and_delete(zip_path, no_input=no_input)
+            download = prompt_and_delete(zip_path, no_input=no_input or refresh)
         else:
             download = True
 

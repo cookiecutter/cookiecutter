@@ -32,6 +32,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
         no_input=True,
+        refresh=False,
         password=None,
     )
 
@@ -40,6 +41,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
         is_url=is_url,
         clone_to_dir=user_config_data['cookiecutters_dir'],
         no_input=True,
+        refresh=False,
         password=None,
     )
 
@@ -75,6 +77,7 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data):
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
         no_input=True,
+        refresh=False,
     )
 
     mock_clone.assert_called_once_with(
@@ -82,6 +85,7 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data):
         checkout=None,
         clone_to_dir=user_config_data['cookiecutters_dir'],
         no_input=True,
+        refresh=False,
     )
 
     assert os.path.isdir(project_dir)

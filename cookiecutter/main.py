@@ -24,6 +24,7 @@ def cookiecutter(
     no_input=False,
     extra_context=None,
     replay=None,
+    refresh=False,
     overwrite_if_exists=False,
     output_dir='.',
     config_file=None,
@@ -45,6 +46,7 @@ def cookiecutter(
     :param replay: Do not prompt for input, instead read from saved json. If
         ``True`` read from the ``replay_dir``.
         if it exists
+    :param refresh: If true, overwrites cached cookiecutter without prompting user
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
@@ -71,6 +73,7 @@ def cookiecutter(
         no_input=no_input,
         password=password,
         directory=directory,
+        refresh=refresh,
     )
 
     template_name = os.path.basename(os.path.abspath(repo_dir))

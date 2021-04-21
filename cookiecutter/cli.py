@@ -99,6 +99,11 @@ def list_installed_templates(default_config, passed_config_file):
     help='Use this file for replay instead of the default.',
 )
 @click.option(
+    '--refresh',
+    is_flag=True,
+    help='If true, overwrites cached cookiecutter without prompting user',
+)
+@click.option(
     '-f',
     '--overwrite-if-exists',
     is_flag=True,
@@ -148,6 +153,7 @@ def main(
     checkout,
     verbose,
     replay,
+    refresh,
     overwrite_if_exists,
     output_dir,
     config_file,
@@ -194,6 +200,7 @@ def main(
             no_input,
             extra_context=extra_context,
             replay=replay,
+            refresh=refresh,
             overwrite_if_exists=overwrite_if_exists,
             output_dir=output_dir,
             config_file=config_file,

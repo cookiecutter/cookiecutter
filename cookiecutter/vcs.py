@@ -54,7 +54,7 @@ def is_vcs_installed(repo_type):
     return bool(which(repo_type))
 
 
-def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
+def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False, refresh=False):
     """Clone a repo to the current directory.
 
     :param repo_url: Repo URL of unknown type.
@@ -62,6 +62,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     :param clone_to_dir: The directory to clone to.
                          Defaults to the current directory.
     :param no_input: Suppress all user prompts when calling via API.
+    :param refresh: If true, overwrites cached cookiecutter without prompting user
     :returns: str with path to the new directory of the repository.
     """
     # Ensure that clone_to_dir exists
@@ -86,7 +87,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
+        clone = prompt_and_delete(repo_dir, no_input=no_input or refresh)
     else:
         clone = True
 
