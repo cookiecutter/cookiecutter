@@ -16,6 +16,7 @@ requirements = [
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
     'MarkupSafe<2.0.0',
+    'jsonschema>=3.2.0',
 ]
 
 setup(
