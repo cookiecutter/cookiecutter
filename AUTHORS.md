@@ -2,7 +2,7 @@
 
 ## Development Leads
 
-* Audrey Roy Greenfeld ([@audreyr](https://github.com/audreyr))
+* Audrey Feldroy ([@audreyr](https://github.com/audreyfeldroy))
 * Daniel Roy Greenfeld ([@pydanny](https://github.com/pydanny))
 * Raphael Pierzina ([@hackebrot](https://github.com/hackebrot))
 
