@@ -44,7 +44,7 @@ def merge_configs(default, overwrite):
     for k, v in overwrite.items():
         # Make sure to preserve existing items in
         # nested dicts, for example `abbreviations`
-        if isinstance(v, dict) and k in default:
+        if isinstance(v, dict):
             new_config[k] = merge_configs(default[k], v)
         else:
             new_config[k] = v

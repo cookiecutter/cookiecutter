@@ -175,9 +175,3 @@ def user_config_file(user_dir, user_config_data):
     config_text = USER_CONFIG.format(**user_config_data)
     config_file.write(config_text)
     return str(config_file)
-
-
-@pytest.fixture(autouse=True)
-def disable_poyo_logging():
-    """Fixture that disables poyo logging."""
-    logging.getLogger('poyo').setLevel(logging.WARNING)
