@@ -2,8 +2,8 @@
 
 ## Development Leads
 
-* Audrey Roy Greenfeld ([@audreyr](https://github.com/audreyr))
-* Daniel Roy Greenfeld ([@pydanny](https://github.com/pydanny))
+* Audrey Feldroy ([@audreyfeldroy](https://github.com/audreyfeldroy))
+* Daniel Feldroy ([@pydanny](https://github.com/pydanny))
 * Raphael Pierzina ([@hackebrot](https://github.com/hackebrot))
 
 ## Core Committers
