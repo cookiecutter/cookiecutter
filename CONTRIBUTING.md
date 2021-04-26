@@ -103,13 +103,13 @@ Please note that tox runs lint check automatically, since we have a test environ
 If you feel like running only the lint environment, please use the following command:
 
 ```bash
-tox -e lint
+make lint
 ```
 
 6. Ensure that your feature or commit is fully covered by tests. Check report after regular tox run. You can also run coverage only report and get html report with statement by statement highlighting:
 
 ```bash
-tox -e cov-report
+make coverage
 ```
 
 You report will be placed to `htmlcov` directory. Please do not include this directory to your commits. By default this directory in our `.gitignore` file.
@@ -296,7 +296,7 @@ Ensure that each pull request meets all requirements in [checklist](https://gist
 
 ### Process: Issues
 
-If an issue is a bug that needs an urgent fix, mark it for the next patch release.  
+If an issue is a bug that needs an urgent fix, mark it for the next patch release.
 Then either fix it or mark as please-help.
 
 For other issues: encourage friendly discussion, moderate debate, offer your thoughts.
@@ -353,7 +353,7 @@ note: Adding a template doesn't give authors credit.
 
 ### Process: Your own code changes
 
-All code changes, regardless of who does them, need to be reviewed and merged by someone else.  
+All code changes, regardless of who does them, need to be reviewed and merged by someone else.
 This rule applies to all the core committers.
 
 Exceptions:
