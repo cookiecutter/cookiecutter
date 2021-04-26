@@ -60,8 +60,13 @@ def get_config(config_path):
         )
 
     logger.debug('config_path is %s', config_path)
-    with open(config_path, 'r') as yaml_file:
-        yaml_dict = yaml.load(yaml_file, Loader=yaml.FullLoader)
+    with open(config_path, encoding='utf-8') as yaml_file:
+        try:
+            yaml_dict = yaml.load(yaml_file, Loader=yaml.SafeLoader)
+        except yaml.YAMLError as e:
+            raise InvalidConfiguration(
+                'Unable to parse YAML file {}. Error: {}'.format(config_path, e)
+            )
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
