@@ -31,6 +31,8 @@ By default Cookiecutter includes the following extensions:
 
 - ``cookiecutter.extensions.JsonifyExtension``
 - ``cookiecutter.extensions.RandomStringExtension``
+- ``cookiecutter.extensions.SlugifyExtension``
+- ``cookiecutter.extensions.UUIDExtension``
 - ``jinja2_time.TimeExtension``
 
 Jsonify extension
@@ -108,3 +110,23 @@ be passed to `slugify()`.
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
 .. _`python-slugify`: https://github.com/un33k/python-slugify
+
+UUID4 extension
+~~~~~~~~~~~~~~~~~~~~~~~
+
+*New in Cookiecutter 1.x*
+
+The ``cookiecutter.extensions.UUIDExtension`` extension provides a ``uuid4()``
+method in templates that generates a uuid4.
+
+Generate a uuid4 string:
+
+.. code-block:: jinja
+
+    {{ uuid4() }}
+
+Outputs:
+
+.. code-block:: text
+
+    83b5de62-31b4-4a1e-83fa-8c548de65a11

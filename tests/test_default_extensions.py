@@ -3,6 +3,7 @@ import os
 
 import freezegun
 import pytest
+import uuid
 
 from cookiecutter.main import cookiecutter
 
@@ -46,3 +47,18 @@ def test_jinja2_slugify_extension(tmpdir):
     )
 
     assert os.path.basename(project_dir) == "it-s-slugified-foobar"
+
+
+def test_jinja2_uuid_extension(tmpdir):
+    """Verify Jinja2 uuid extension work correctly."""
+    project_dir = cookiecutter(
+        'tests/test-extensions/default/', no_input=True, output_dir=str(tmpdir)
+    )
+    changelog_file = os.path.join(project_dir, 'id')
+    assert os.path.isfile(changelog_file)
+
+    with open(changelog_file, 'r', encoding='utf-8') as f:
+        changelog_lines = f.readlines()
+
+    uuid.UUID(changelog_lines[0], version=4)
+    assert True

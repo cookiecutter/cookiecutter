@@ -2,6 +2,7 @@
 import os
 
 import pytest
+import yaml
 
 from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
@@ -82,13 +83,13 @@ def test_get_config_does_not_exist():
 def test_invalid_config():
     """An invalid config file should raise an `InvalidConfiguration` \
     exception."""
+    expected_error_msg = (
+        'Unable to parse YAML file tests/test-config/invalid-config.yaml.'
+    )
     with pytest.raises(InvalidConfiguration) as exc_info:
         config.get_config('tests/test-config/invalid-config.yaml')
-
-    expected_error_msg = (
-        'Unable to parse YAML file tests/test-config/invalid-config.yaml. Error: '
-    )
-    assert expected_error_msg in str(exc_info.value)
+        assert expected_error_msg in str(exc_info.value)
+        assert isinstance(exc_info.value.__cause__, yaml.YAMLError)
 
 
 def test_get_config_with_defaults():

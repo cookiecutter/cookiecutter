@@ -22,3 +22,4 @@ def test_env_should_come_with_default_extensions():
     assert 'cookiecutter.extensions.JsonifyExtension' in env.extensions
     assert 'cookiecutter.extensions.RandomStringExtension' in env.extensions
     assert 'cookiecutter.extensions.SlugifyExtension' in env.extensions
+    assert 'cookiecutter.extensions.UUIDExtension' in env.extensions

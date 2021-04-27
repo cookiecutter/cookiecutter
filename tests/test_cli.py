@@ -3,7 +3,6 @@
 import json
 import os
 import re
-import sys
 
 import pytest
 from click.testing import CliRunner
@@ -366,10 +365,6 @@ def test_default_user_config(mocker, cli_runner):
     )
 
 
-@pytest.mark.skipif(
-    sys.version_info[0] == 3 and sys.version_info[1] == 6 and sys.version_info[2] == 1,
-    reason="Outdated pypy3 version on Travis CI/CD with wrong OrderedDict syntax.",
-)
 def test_echo_undefined_variable_error(tmpdir, cli_runner):
     """Cli invocation return error if variable undefined in template."""
     output_dir = str(tmpdir.mkdir('output'))
@@ -500,7 +495,11 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
     fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
     os.makedirs(os.path.dirname(user_config_path))
     with open(user_config_path, 'w') as config_file:
-        config_file.write('cookiecutters_dir: "%s"' % fake_template_dir)
+        # In YAML, double quotes mean to use escape sequences.
+        # Single quotes mean we will have unescaped backslahes.
+        # http://blogs.perl.org/users/tinita/2018/03/
+        # strings-in-yaml---to-quote-or-not-to-quote.html
+        config_file.write("cookiecutters_dir: '%s'" % fake_template_dir)
     open(os.path.join('fake-project', 'cookiecutter.json'), 'w').write('{}')
 
     result = cli_runner(

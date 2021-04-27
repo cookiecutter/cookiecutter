@@ -1,5 +1,4 @@
 """pytest fixtures which are globally available throughout the suite."""
-import logging
 import os
 import shutil
 
@@ -9,9 +8,13 @@ from cookiecutter import utils
 
 
 USER_CONFIG = """
-cookiecutters_dir: "{cookiecutters_dir}"
-replay_dir: "{replay_dir}"
+cookiecutters_dir: '{cookiecutters_dir}'
+replay_dir: '{replay_dir}'
 """
+# In YAML, double quotes mean to use escape sequences.
+# Single quotes mean we will have unescaped backslahes.
+# http://blogs.perl.org/users/tinita/2018/03/
+# strings-in-yaml---to-quote-or-not-to-quote.html
 
 
 def backup_dir(original_dir, backup_dir):
@@ -175,9 +178,3 @@ def user_config_file(user_dir, user_config_data):
     config_text = USER_CONFIG.format(**user_config_data)
     config_file.write(config_text)
     return str(config_file)
-
-
-@pytest.fixture(autouse=True)
-def disable_poyo_logging():
-    """Fixture that disables poyo logging."""
-    logging.getLogger('poyo').setLevel(logging.WARNING)
