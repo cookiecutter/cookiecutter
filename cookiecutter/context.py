@@ -65,8 +65,7 @@ def context_is_version_2(cookiecutter_context):
     # This really is not sufficient since a v1 context could define each of
     # these fields; perhaps a more thorough test would be to also check if the
     # 'variables' field was defined as a list of OrderedDict items.
-    if (cookiecutter_context.keys() &
-            SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
+    if (cookiecutter_context.keys() & SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
         return True
     else:
         return False
@@ -124,10 +123,7 @@ def prompt_json(variable, default):
 
     def process_json(user_value):
         try:
-            return json.loads(
-                user_value,
-                object_pairs_hook=collections.OrderedDict,
-            )
+            return json.loads(user_value, object_pairs_hook=collections.OrderedDict,)
         except ValueError:
             # json.decoder.JSONDecodeError raised in Python 3.5, 3.6
             # but it inherits from ValueError which is raised in Python 3.4
@@ -184,16 +180,17 @@ def prompt_yes_no(variable, default):
 def prompt_choice(variable, default):
     """Returns prompt, default and callback for a choice variable"""
     choice_map = collections.OrderedDict(
-        (u'{}'.format(i), value)
-        for i, value in enumerate(variable.choices, 1)
+        (u'{}'.format(i), value) for i, value in enumerate(variable.choices, 1)
     )
     choices = choice_map.keys()
 
-    prompt = u'\n'.join((
-        variable.prompt,
-        u'\n'.join([u'{} - {}'.format(*c) for c in choice_map.items()]),
-        u'Choose from {}'.format(u', '.join(choices)),
-    ))
+    prompt = u'\n'.join(
+        (
+            variable.prompt,
+            u'\n'.join([u'{} - {}'.format(*c) for c in choice_map.items()]),
+            u'Choose from {}'.format(u', '.join(choices)),
+        )
+    )
     default = str(variable.choices.index(default) + 1)
 
     user_choice = click.prompt(
@@ -334,7 +331,9 @@ class Variable(object):
         self.description = self.check_type('description', None, str)
 
         # -- PROMPT ----------------------------------------------------------
-        self.prompt = self.check_type('prompt', DEFAULT_PROMPT.format(variable=self), str)
+        self.prompt = self.check_type(
+            'prompt', DEFAULT_PROMPT.format(variable=self), str
+        )
 
         # -- HIDE_INPUT ------------------------------------------------------
         self.hide_input = self.check_type('hide_input', False, bool)
@@ -343,9 +342,11 @@ class Variable(object):
         self.var_type = info.get('type', 'string')
         if self.var_type not in VALID_TYPES:
             msg = 'Variable: {var_name} has an invalid type {var_type}. Valid types are: {types}'
-            raise ValueError(msg.format(var_type=self.var_type,
-                                        var_name=self.name,
-                                        types=VALID_TYPES))
+            raise ValueError(
+                msg.format(
+                    var_type=self.var_type, var_name=self.name, types=VALID_TYPES
+                )
+            )
 
         # -- SKIP_IF ---------------------------------------------------------
         self.skip_if = self.check_type('skip_if', '', str)
@@ -378,7 +379,11 @@ class Variable(object):
         self.choices = self.check_type('choices', [], list)
         if self.choices and default not in self.choices:
             msg = "Variable: {var_name} has an invalid default value {default} for choices: {choices}."
-            raise ValueError(msg.format(var_name=self.name, default=self.default, choices=self.choices))
+            raise ValueError(
+                msg.format(
+                    var_name=self.name, default=self.default, choices=self.choices
+                )
+            )
 
         # -- VALIDATION STARTS -----------------------------------------------
         self.validation = self.check_type('validation', None, str)
@@ -393,10 +398,15 @@ class Variable(object):
             if vflag in REGEX_COMPILE_FLAGS.keys():
                 self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
             else:
-                msg = "Variable: {var_name} - Ignoring unkown RegEx validation Control Flag named '{flag}'\n" \
-                      "Legal flag names are: {names}"
-                logger.warn(msg.format(var_name=self.name, flag=vflag,
-                                       names=REGEX_COMPILE_FLAGS.keys()))
+                msg = (
+                    "Variable: {var_name} - Ignoring unkown RegEx validation Control Flag named '{flag}'\n"
+                    "Legal flag names are: {names}"
+                )
+                logger.warn(
+                    msg.format(
+                        var_name=self.name, flag=vflag, names=REGEX_COMPILE_FLAGS.keys()
+                    )
+                )
                 self.validation_flag_names.remove(vflag)
 
         self.validate = None
@@ -405,18 +415,22 @@ class Variable(object):
                 self.validate = re.compile(self.validation, self.validation_flags)
             except re.error as e:
                 msg = "Variable: {var_name} - Validation Setup Error: Invalid RegEx '{value}' - does not compile - {err}"
-                raise ValueError(msg.format(var_name=self.name,
-                                            value=self.validation, err=e))
+                raise ValueError(
+                    msg.format(var_name=self.name, value=self.validation, err=e)
+                )
         # -- VALIDATION ENDS -------------------------------------------------
 
     def __repr__(self):
         return "<{class_name} {variable_name}>".format(
-            class_name=self.__class__.__name__,
-            variable_name=self.name,
+            class_name=self.__class__.__name__, variable_name=self.name,
         )
 
     def __str__(self):
-        s = ["{key}='{value}'".format(key=key, value=self.__dict__[key]) for key in self.__dict__ if key != 'info']
+        s = [
+            "{key}='{value}'".format(key=key, value=self.__dict__[key])
+            for key in self.__dict__
+            if key != 'info'
+        ]
         return self.__repr__() + ':\n' + ',\n'.join(s)
 
     def check_type(self, option_name, option_default_value, option_type):
@@ -429,7 +443,14 @@ class Variable(object):
         if option_value is not None:
             if not isinstance(option_value, option_type):
                 msg = "Variable: '{var_name}' Option: '{opt_name}' requires a value of type {type_name}, but has a value of: {value}"
-                raise ValueError(msg.format(var_name=self.name, opt_name=option_name, type_name=option_type.__name__, value=option_value))
+                raise ValueError(
+                    msg.format(
+                        var_name=self.name,
+                        opt_name=option_name,
+                        type_name=option_type.__name__,
+                        value=option_value,
+                    )
+                )
 
         return option_value
 
@@ -477,8 +498,7 @@ class CookiecutterTemplate(object):
 
     def __repr__(self):
         return "<{class_name} {template_name}>".format(
-            class_name=self.__class__.__name__,
-            template_name=self.name,
+            class_name=self.__class__.__name__, template_name=self.name,
         )
 
     def __iter__(self):
@@ -547,7 +567,9 @@ def load_context(json_object, no_input=False, verbose=True):
                     if variable.validate.match(value):
                         break
                     else:
-                        msg = "Input validation failure against regex: '{val_string}', try again!".format(val_string=variable.validation)
+                        msg = "Input validation failure against regex: '{val_string}', try again!".format(
+                            val_string=variable.validation
+                        )
                         click.echo(msg)
                         if variable.validation_msg:
                             click.echo(variable.validation_msg)
@@ -568,6 +590,10 @@ def load_context(json_object, no_input=False, verbose=True):
             skip_to_variable_name = variable.if_no_skip_to
 
     if skip_to_variable_name:
-        logger.warn("Processed all variables, but skip_to_variable_name '{}' was never found.".format(skip_to_variable_name))
+        logger.warn(
+            "Processed all variables, but skip_to_variable_name '{}' was never found.".format(
+                skip_to_variable_name
+            )
+        )
 
     return context

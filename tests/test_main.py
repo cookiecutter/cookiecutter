@@ -70,8 +70,7 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
     )
 
 
-def test_version_2_load_context_call(
-        monkeypatch, mocker, user_config_file):
+def test_version_2_load_context_call(monkeypatch, mocker, user_config_file):
     """Check that the version 2 load_context() is called.
 
     Change the current working directory temporarily to
@@ -83,17 +82,14 @@ def test_version_2_load_context_call(
     mock_replay_dump = mocker.patch('cookiecutter.main.dump')
 
     mock_version_1_prompt_for_config = mocker.patch(
-        'cookiecutter.main.prompt_for_config')
-    mock_version_2_load_context = mocker.patch(
-        'cookiecutter.main.load_context')
+        'cookiecutter.main.prompt_for_config'
+    )
+    mock_version_2_load_context = mocker.patch('cookiecutter.main.load_context')
 
     mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
-        '.',
-        no_input=True,
-        replay=False,
-        config_file=user_config_file,
+        '.', no_input=True, replay=False, config_file=user_config_file,
     )
 
     assert mock_version_1_prompt_for_config.call_count == 0

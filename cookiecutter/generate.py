@@ -76,7 +76,9 @@ def apply_default_overwrites_to_context_v2(context, overwrite_default_context):
     """
 
     for variable, overwrite in overwrite_default_context.items():
-        var_dict = next((d for d in context['variables'] if d['name'] == variable), None)   # noqa
+        var_dict = next(
+            (d for d in context['variables'] if d['name'] == variable), None
+        )  # noqa
         if var_dict:
             if 'choices' in var_dict.keys():
                 context_value = var_dict['choices']
@@ -112,14 +114,18 @@ def resolve_changed_variable_names(context, variables_to_resolve):
             for field_name in variable.keys():
                 if isinstance(variable[field_name], str):
                     if var_name_to_resolve in variable[field_name]:
-                        variable[field_name] = variable[field_name].replace(var_name_to_resolve, new_var_name)     # noqa
+                        variable[field_name] = variable[field_name].replace(
+                            var_name_to_resolve, new_var_name
+                        )  # noqa
 
                 elif isinstance(variable[field_name], list):
                     # a choices field could have an str item to update
                     for i, item in enumerate(variable[field_name]):
                         if isinstance(item, str):
                             if var_name_to_resolve in item:
-                                variable[field_name][i] = item.replace(var_name_to_resolve, new_var_name)     # noqa
+                                variable[field_name][i] = item.replace(
+                                    var_name_to_resolve, new_var_name
+                                )  # noqa
 
 
 def apply_overwrites_to_context_v2(context, extra_context):
@@ -211,16 +217,25 @@ def apply_overwrites_to_context_v2(context, extra_context):
                     except IndexError:
                         replace_name = None
 
-                    var_dict = next((d for d in context['variables'] if d['name'] == xtra_ctx_name), None)  # noqa
+                    var_dict = next(
+                        (d for d in context['variables'] if d['name'] == xtra_ctx_name),
+                        None,
+                    )  # noqa
                     if var_dict:
                         # Since creation of new key/value pairs is NOT
                         # desired, we only use a key that is common to both
                         # the variables context and the extra context.
-                        common_keys = [key for key in xtra_ctx_item.keys() if key in var_dict.keys()]   # noqa
+                        common_keys = [
+                            key
+                            for key in xtra_ctx_item.keys()
+                            if key in var_dict.keys()
+                        ]  # noqa
                         for key in common_keys:
                             if xtra_ctx_item[key] == '<<REMOVE::FIELD>>':
                                 if key in ['default']:
-                                    raise ValueError("Cannot remove mandatory 'default' field")   # noqa
+                                    raise ValueError(
+                                        "Cannot remove mandatory 'default' field"
+                                    )  # noqa
                                 var_dict.pop(key, None)
                             else:
                                 # normal field update
@@ -230,31 +245,39 @@ def apply_overwrites_to_context_v2(context, extra_context):
                         # house-keeping to do. The default/choices
                         # house-keeping could effecively be no-ops if the
                         # user did the correct thing.
-                        if ('default' in common_keys) & ('choices' in var_dict.keys()):       # noqa
+                        if ('default' in common_keys) & (
+                            'choices' in var_dict.keys()
+                        ):  # noqa
                             # default updated, regardless if choices has been
                             # updated, re-order choices based on default
                             if var_dict['default'] in var_dict['choices']:
-                                var_dict['choices'].remove(var_dict['default'])                # noqa
+                                var_dict['choices'].remove(var_dict['default'])  # noqa
 
                             var_dict['choices'].insert(0, var_dict['default'])
 
-                        if ('default' not in common_keys) & ('choices' in common_keys):         # noqa
+                        if ('default' not in common_keys) & (
+                            'choices' in common_keys
+                        ):  # noqa
                             # choices updated, so update default based on
                             # first location in choices
                             var_dict['default'] = var_dict['choices'][0]
 
                         if replace_name:
-                            variable_names_to_resolve[xtra_ctx_name] = replace_name   # noqa
+                            variable_names_to_resolve[
+                                xtra_ctx_name
+                            ] = replace_name  # noqa
                             var_dict['name'] = replace_name
                     else:
                         msg = "No variable found in context whose name matches extra context name '{name}'"  # noqa
                         raise ValueError(msg.format(name=xtra_ctx_name))
                 else:
-                    msg = "Extra context dictionary item {item} is missing a 'name' key."                    # noqa
+                    msg = "Extra context dictionary item {item} is missing a 'name' key."  # noqa
                     raise ValueError(msg.format(item=xtra_ctx_item))
             else:
-                msg = "Extra context list item '{item}' is of type {t}, should be a dictionary."             # noqa
-                raise ValueError(msg.format(item=str(xtra_ctx_item), t=type(xtra_ctx_item).__name__))        # noqa
+                msg = "Extra context list item '{item}' is of type {t}, should be a dictionary."  # noqa
+                raise ValueError(
+                    msg.format(item=str(xtra_ctx_item), t=type(xtra_ctx_item).__name__)
+                )  # noqa
 
         if variable_names_to_resolve:
             # At least one variable name has been over-written, if any
@@ -266,8 +289,9 @@ def apply_overwrites_to_context_v2(context, extra_context):
         raise ValueError(msg)
 
 
-def generate_context(context_file='cookiecutter.json', default_context=None,
-                     extra_context=None):
+def generate_context(
+    context_file='cookiecutter.json', default_context=None, extra_context=None
+):
     """Generate the context for a Cookiecutter project template.
 
     Loads the JSON file as a Python object, with key being the JSON filename.

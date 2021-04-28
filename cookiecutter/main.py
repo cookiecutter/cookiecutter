@@ -96,9 +96,9 @@ def cookiecutter(
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
         if context_is_version_2(context['cookiecutter']):
-            context['cookiecutter'] = load_context(context[u'cookiecutter'],
-                                                   no_input=no_input,
-                                                   verbose=True)
+            context['cookiecutter'] = load_context(
+                context[u'cookiecutter'], no_input=no_input, verbose=True
+            )
         else:
             context['cookiecutter'] = prompt_for_config(context, no_input)
 
