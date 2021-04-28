@@ -14,10 +14,23 @@ def make_readonly(path):
     Path.chmod(path, mode & ~stat.S_IWRITE)
 
 
-@pytest.mark.skipif(
-    sys.version_info[0] == 3 and sys.version_info[1] == 6 and sys.version_info[2] == 1,
-    reason="Outdated pypy3 version on Travis CI/CD",
-)
+def test_force_delete(mocker, tmp_path):
+    """Verify `utils.force_delete` makes files writable."""
+    ro_file = Path(tmp_path, 'bar')
+
+    with open(ro_file, "w") as f:
+        f.write("Test data")
+    make_readonly(ro_file)
+
+    rmtree = mocker.Mock()
+    utils.force_delete(rmtree, ro_file, sys.exc_info())
+
+    assert (ro_file.stat().st_mode & stat.S_IWRITE) == stat.S_IWRITE
+    rmtree.assert_called_once_with(ro_file)
+
+    utils.rmtree(tmp_path)
+
+
 def test_rmtree(tmp_path):
     """Verify `utils.rmtree` remove files marked as read-only."""
     with open(Path(tmp_path, 'bar'), "w") as f:
@@ -29,10 +42,6 @@ def test_rmtree(tmp_path):
     assert not Path(tmp_path).exists()
 
 
-@pytest.mark.skipif(
-    sys.version_info[0] == 3 and sys.version_info[1] == 6 and sys.version_info[2] == 1,
-    reason="Outdated pypy3 version on Travis CI/CD",
-)
 def test_make_sure_path_exists(tmp_path):
     """Verify correct True/False response from `utils.make_sure_path_exists`.
 
@@ -68,10 +77,6 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
     assert not utils.make_sure_path_exists(uncreatable_directory)
 
 
-@pytest.mark.skipif(
-    sys.version_info[0] == 3 and sys.version_info[1] == 6 and sys.version_info[2] == 1,
-    reason="Outdated pypy3 version on Travis CI/CD",
-)
 def test_work_in(tmp_path):
     """Verify returning to original folder after `utils.work_in` use."""
     cwd = Path.cwd()

@@ -1,5 +1,6 @@
 """Tests for `cookiecutter.hooks` module."""
 import os
+import errno
 import stat
 import sys
 import textwrap
@@ -143,6 +144,31 @@ class TestExternalHooks(object):
         """Execute a hook script, independently of project generation."""
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert os.path.isfile('shell_post.txt')
+
+    def test_run_failing_script(self, mocker):
+        """Test correct exception raise if run_script fails."""
+
+        err = OSError()
+
+        prompt = mocker.patch('subprocess.Popen')
+        prompt.side_effect = err
+
+        with pytest.raises(exceptions.FailedHookException) as excinfo:
+            hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
+        assert 'Hook script failed (error: {})'.format(err) in str(excinfo.value)
+
+    def test_run_failing_script_enoexec(self, mocker):
+        """Test correct exception raise if run_script fails."""
+
+        err = OSError()
+        err.errno = errno.ENOEXEC
+
+        prompt = mocker.patch('subprocess.Popen')
+        prompt.side_effect = err
+
+        with pytest.raises(exceptions.FailedHookException) as excinfo:
+            hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
+        assert 'Hook script failed, might be an empty file or missing a shebang' in str(excinfo.value)
 
     def test_run_script_cwd(self):
         """Change directory before running hook."""

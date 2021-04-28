@@ -12,12 +12,6 @@ Contributions are welcome, and they are greatly appreciated! Every little bit he
 
 You can contribute in many ways:
 
-### Create Cookiecutter Templates
-
-Some other Cookiecutter templates to list in the [README](README.md) would be great.
-
-If you create a Cookiecutter template, submit a pull request adding it to README.md.
-
 ### Report Bugs
 
 Report bugs at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
@@ -159,13 +153,11 @@ def is_pirate(message):
     return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
 ```
 
-* Write new code in Python 3.
-
 ## Testing with tox
 
 Tox uses py.test under the hood, hence it supports the same syntax for selecting tests.
 
-For further information please consult the [`pytest usage docs`](http://pytest.org/en/latest/example/index.html).
+For further information please consult the [pytest usage docs](http://pytest.org/en/latest/example/index.html).
 
 To run a particular test class with tox:
 
@@ -342,15 +334,6 @@ Other changes:
 * Description of the change, thanks to [@contributor](https://github.com/contributor) (#PR).
 ```
 
-### Process: Accepting Template Pull Requests
-
-* Run the template to generate the project.
-* Attempt to start/use the rendered project.
-* Merge the template in.
-* Update the history file.
-
-note: Adding a template doesn't give authors credit.
-
 ### Process: Your own code changes
 
 All code changes, regardless of who does them, need to be reviewed and merged by someone else.
@@ -364,7 +347,7 @@ Exceptions:
 
 ### Responsibilities
 
-* Ensure cross-platform compatibility for every change that's accepted. Windows, Mac, Debian & Ubuntu Linux.
+* Ensure cross-platform compatibility for every change that's accepted. Windows, macOS and Linux.
 * Ensure that code that goes into core meets all requirements in this checklist: [https://gist.github.com/audreyr/4feef90445b9680475f2](https://gist.github.com/audreyr/4feef90445b9680475f2)
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
