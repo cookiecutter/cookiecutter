@@ -8,6 +8,7 @@ import click
 
 from cookiecutter import __version__
 from cookiecutter.exceptions import (
+    ContextDecodingException,
     FailedHookException,
     InvalidModeException,
     InvalidZipRepository,
@@ -204,6 +205,7 @@ def main(
             accept_hooks=_accept_hooks,
         )
     except (
+        ContextDecodingException,
         OutputDirExistsException,
         InvalidModeException,
         FailedHookException,

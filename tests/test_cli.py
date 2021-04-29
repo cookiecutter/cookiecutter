@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 
 import pytest
 from click.testing import CliRunner
@@ -581,3 +582,22 @@ def test_cli_accept_hooks(
         skip_if_file_exists=False,
         accept_hooks=expected,
     )
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_with_json_decoding_error(cli_runner):
+    """Test cli invocation with a malformed JSON file."""
+    template_path = 'tests/fake-repo-bad-json/'
+    result = cli_runner(template_path, '--no-input')
+    assert result.exit_code != 0
+
+    # Validate the error message.
+    # original message from json module should be included
+    pattern = 'Expecting \'{0,1}:\'{0,1} delimiter: line 1 column (19|20) \\(char 19\\)'
+    assert re.search(pattern, result.output)
+    # File name should be included too...for testing purposes, just test the
+    # last part of the file. If we wanted to test the absolute path, we'd have
+    # to do some additional work in the test which doesn't seem that needed at
+    # this point.
+    path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
+    assert path in result.output
