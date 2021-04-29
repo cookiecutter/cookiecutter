@@ -46,6 +46,10 @@ def custom_config():
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
             'github_username': 'example',
+            'project': {
+                'description': 'description',
+                'tags': ['first', 'second', 'third',],
+            },
         },
         'cookiecutters_dir': '/home/example/some-path-to-templates',
         'replay_dir': '/home/example/some-path-to-replay-files',
