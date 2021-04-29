@@ -87,7 +87,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False, refresh=Fal
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input or refresh)
+        clone = prompt_and_delete(repo_dir, no_input=no_input, refresh=refresh)
     else:
         clone = True
 

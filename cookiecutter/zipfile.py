@@ -35,7 +35,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, refresh=False, pass
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):
-            download = prompt_and_delete(zip_path, no_input=no_input or refresh)
+            download = prompt_and_delete(zip_path, no_input=no_input, refresh=refresh)
         else:
             download = True
 

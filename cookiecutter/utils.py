@@ -69,7 +69,7 @@ def make_executable(script_path):
     os.chmod(script_path, status.st_mode | stat.S_IEXEC)
 
 
-def prompt_and_delete(path, no_input=False):
+def prompt_and_delete(path, no_input=False, refresh=False):
     """
     Ask user if it's okay to delete the previously-downloaded file/directory.
 
@@ -81,7 +81,7 @@ def prompt_and_delete(path, no_input=False):
     :return: True if the content was deleted
     """
     # Suppress prompt if called via API
-    if no_input:
+    if no_input or refresh:
         ok_to_delete = True
     else:
         question = (
