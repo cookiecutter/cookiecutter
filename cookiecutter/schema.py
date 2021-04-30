@@ -59,7 +59,11 @@ schema_2_0 = {
                     # more detailed description of this variable
                     "description": {"type": "string"},
                     # input data type (string, boolean, etc.)
-                    "type": {"type": "string"},
+                     "type": {
+                        "type": "string",
+                        "enum": ["boolean", "yes_no", "int",
+                                 "float", "uuid", "json", "string"],
+                    },
                     # validate user input with this regex
                     "validation": {"type": "string"},
                     # display this message if validation failed
@@ -78,6 +82,14 @@ schema_2_0 = {
                     "if_no_skip_to": {"type": "string"},
                     # skip to this variable name, if the user selected "yes" in a "yes_no" prompt
                     "if_yes_skip_to": {"type": "string"},
+                    "validation_flags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": ["ascii", "debug", "ignorecase", "locale",
+                                     "mulitline", "dotall", "verbose"]
+                        },
+                    },
                 },
                 "required": ["name", "type"],
             },
