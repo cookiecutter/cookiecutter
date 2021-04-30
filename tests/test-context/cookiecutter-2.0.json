@@ -1,11 +1,12 @@
 {
+  "version": "2.0",
   "name": "cookiecutter-pytest-plugin",
-  "version": "0.1.0",
   "description": "a cookiecutter to create pytest plugins with ease.",
   "authors": [
     "Raphael Pierzina <raphael@hackebrot.de>",
     "Audrey Roy Greenfeld <aroy@alum.mit.edu>"
   ],
+  "template_version": "1.0.0",
   "cookiecutter_version": "2.0.0",
   "python_requires": ">=3.7",
   "license": "MIT",
