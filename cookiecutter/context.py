@@ -26,6 +26,8 @@ import re
 import click
 from jinja2 import Environment
 
+from cookiecutter.schema import validate
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_PROMPT = 'Please enter a value for "{variable.name}"'
@@ -65,6 +67,7 @@ def context_is_version_2(cookiecutter_context):
     # This really is not sufficient since a v1 context could define each of
     # these fields; perhaps a more thorough test would be to also check if the
     # 'variables' field was defined as a list of OrderedDict items.
+    # TODO: extend this check
     if (cookiecutter_context.keys() & SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
         return True
     else:
@@ -119,6 +122,7 @@ def prompt_uuid(variable, default):
 def prompt_json(variable, default):
     # The JSON object from cookiecutter.json might be very large
     # We only show 'default'
+
     DEFAULT_JSON = 'default'
 
     def process_json(user_value):
@@ -141,7 +145,7 @@ def prompt_json(variable, default):
         type=click.STRING,
         value_proc=process_json,
     )
-
+    # working around the default process of click
     if dict_value == DEFAULT_JSON:
         # Return the given default w/o any processing
         return default
@@ -328,55 +332,43 @@ class Variable(object):
         self.info = info
 
         # -- DESCRIPTION -----------------------------------------------------
-        self.description = self.check_type('description', None, str)
-
+        self.description = info.get('description', None)
         # -- PROMPT ----------------------------------------------------------
-        self.prompt = self.check_type(
-            'prompt', DEFAULT_PROMPT.format(variable=self), str
-        )
+        self.prompt = info.get('prompt', DEFAULT_PROMPT.format(variable=self))
 
         # -- HIDE_INPUT ------------------------------------------------------
-        self.hide_input = self.check_type('hide_input', False, bool)
+        self.hide_input = info.get('hide_input', False)
 
         # -- TYPE ------------------------------------------------------------
         self.var_type = info.get('type', 'string')
-        if self.var_type not in VALID_TYPES:
-            msg = 'Variable: {var_name} has an invalid type {var_type}. Valid types are: {types}'
-            raise ValueError(
-                msg.format(
-                    var_type=self.var_type, var_name=self.name, types=VALID_TYPES
-                )
-            )
 
         # -- SKIP_IF ---------------------------------------------------------
-        self.skip_if = self.check_type('skip_if', '', str)
+        self.skip_if = info.get('skip_if', '')
 
         # -- DO_IF ---------------------------------------------------------
-        self.do_if = self.check_type('do_if', '', str)
+        self.do_if = info.get('do_if', '')
 
         # -- IF_YES_SKIP_TO ---------------------------------------------------------
-        self.if_yes_skip_to = self.check_type('if_yes_skip_to', None, str)
-        if self.if_yes_skip_to:
-            if self.var_type not in ['yes_no']:
-                msg = "Variable: '{var_name}' specifies 'if_yes_skip_to' field, but variable not of type 'yes_no'"
-                raise ValueError(msg.format(var_name=self.name))
+        self.if_yes_skip_to = info.get('if_yes_skip_to', None)
+        if self.if_yes_skip_to and self.var_type != 'yes_no':
+            raise ValueError(f"Variable: '{self.name}' specifies "
+                             f"'if_yes_skip_to' field, but variable not of type 'yes_no'")
 
         # -- IF_NO_SKIP_TO ---------------------------------------------------------
-        self.if_no_skip_to = self.check_type('if_no_skip_to', None, str)
-        if self.if_no_skip_to:
-            if self.var_type not in ['yes_no']:
-                msg = "Variable: '{var_name}' specifies 'if_no_skip_to' field, but variable not of type 'yes_no'"
-                raise ValueError(msg.format(var_name=self.name))
+        self.if_no_skip_to = info.get('if_no_skip_to', None)
+        if self.if_no_skip_to and self.var_type != 'yes_no':
+            raise ValueError(f"Variable: '{self.name}' specifies "
+                             f"'if_no_skip_to' field, but variable not of type 'yes_no'")
 
         # -- PROMPT_USER -----------------------------------------------------
-        self.prompt_user = self.check_type('prompt_user', True, bool)
+        self.prompt_user = info.get('prompt_user', True)
         # do not prompt for private variable names (beginning with _)
         if self.name.startswith('_'):
             self.prompt_user = False
 
         # -- CHOICES ---------------------------------------------------------
         # choices are somewhat special as they can be of every type
-        self.choices = self.check_type('choices', [], list)
+        self.choices = info.get('choices', [])
         if self.choices and default not in self.choices:
             msg = "Variable: {var_name} has an invalid default value {default} for choices: {choices}."
             raise ValueError(
@@ -386,28 +378,15 @@ class Variable(object):
             )
 
         # -- VALIDATION STARTS -----------------------------------------------
-        self.validation = self.check_type('validation', None, str)
+        self.validation = info.get('validation', None)
 
-        self.validation_msg = self.check_type('validation_msg', None, str)
+        self.validation_msg = info.get('validation_msg', None)
 
-        self.validation_flag_names = self.check_type('validation_flags', [], list)
-
+        self.validation_flag_names = info.get('validation_flags', [])
         self.validation_flags = 0
 
         for vflag in self.validation_flag_names:
-            if vflag in REGEX_COMPILE_FLAGS.keys():
-                self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
-            else:
-                msg = (
-                    "Variable: {var_name} - Ignoring unkown RegEx validation Control Flag named '{flag}'\n"
-                    "Legal flag names are: {names}"
-                )
-                logger.warn(
-                    msg.format(
-                        var_name=self.name, flag=vflag, names=REGEX_COMPILE_FLAGS.keys()
-                    )
-                )
-                self.validation_flag_names.remove(vflag)
+            self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
 
         self.validate = None
         if self.validation:
@@ -432,27 +411,6 @@ class Variable(object):
             if key != 'info'
         ]
         return self.__repr__() + ':\n' + ',\n'.join(s)
-
-    def check_type(self, option_name, option_default_value, option_type):
-        """
-        Retrieve the option_value named option_name from info and check its type.
-        Raise ValueError if the type is incorrect; otherwise return option's value.
-        """
-        option_value = self.info.get(option_name, option_default_value)
-
-        if option_value is not None:
-            if not isinstance(option_value, option_type):
-                msg = "Variable: '{var_name}' Option: '{opt_name}' requires a value of type {type_name}, but has a value of: {value}"
-                raise ValueError(
-                    msg.format(
-                        var_name=self.name,
-                        opt_name=option_name,
-                        type_name=option_type.__name__,
-                        value=option_value,
-                    )
-                )
-
-        return option_value
 
 
 class CookiecutterTemplate(object):
@@ -514,12 +472,14 @@ def load_context(json_object, no_input=False, verbose=True):
     :param json_object: A JSON file that has be loaded into a Python OrderedDict.
     :param no_input: Prompt the user at command line for manual configuration if False,
                      if True, no input prompts are made, all defaults are accepted.
-    :param verbose: Emit maximum varible information.
+    :param verbose: Emit maximum variable information.
     """
     env = Environment(extensions=['jinja2_time.TimeExtension'])
     context = collections.OrderedDict({})
 
     skip_to_variable_name = None
+
+    validate(json_object)
 
     for variable in CookiecutterTemplate(**json_object):
         if skip_to_variable_name:
