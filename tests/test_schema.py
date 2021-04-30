@@ -54,5 +54,5 @@ def test_detect_invalid():
 
 
 def get_sample_cookiecutter(version='2.0.0'):
-    with open(f'test-context/cookiecutter-{version}.json') as fp:
+    with open(f'tests/test-context/cookiecutter-{version}.json') as fp:
         return json.load(fp)
