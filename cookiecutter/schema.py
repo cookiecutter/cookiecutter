@@ -94,8 +94,7 @@ schema_versions = {
     '2': schema_2_0,
     'latest': schema_2_0,
 }
-# version numbers that can be declared in the "version" field of a valid cookiecutter.json
-declarable_versions = {'2.0', '2'}
+
 # cookiecutter schema versions in chronological order
 schema_chronology = ['1.0', '2.0']
 
