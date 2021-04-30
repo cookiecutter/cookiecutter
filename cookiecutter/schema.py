@@ -59,10 +59,17 @@ schema_2_0 = {
                     # more detailed description of this variable
                     "description": {"type": "string"},
                     # input data type (string, boolean, etc.)
-                     "type": {
+                    "type": {
                         "type": "string",
-                        "enum": ["boolean", "yes_no", "int",
-                                 "float", "uuid", "json", "string"],
+                        "enum": [
+                            "boolean",
+                            "yes_no",
+                            "int",
+                            "float",
+                            "uuid",
+                            "json",
+                            "string",
+                        ],
                     },
                     # validate user input with this regex
                     "validation": {"type": "string"},
@@ -86,8 +93,15 @@ schema_2_0 = {
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "enum": ["ascii", "debug", "ignorecase", "locale",
-                                     "mulitline", "dotall", "verbose"]
+                            "enum": [
+                                "ascii",
+                                "debug",
+                                "ignorecase",
+                                "locale",
+                                "mulitline",
+                                "dotall",
+                                "verbose",
+                            ],
                         },
                     },
                 },
