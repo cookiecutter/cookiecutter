@@ -18,6 +18,11 @@ def test_validate_fail_1_0():
         validate(d, version='1.0')
 
 
+def test_validate_1_0_implicitly():
+    d = get_sample_cookiecutter('1.0')
+    validate(d)
+
+
 def test_validate_2_0():
     d = get_sample_cookiecutter('2.0')
     validate(d, version='2.0')
@@ -28,6 +33,11 @@ def test_validate_fail_2_0():
     d['authors'] = "authors must be an array"
     with pytest.raises(ValidationError):
         validate(d, version='2.0')
+
+
+def test_validate_2_0_implicitly():
+    d = get_sample_cookiecutter('2.0')
+    validate(d)
 
 
 def test_validate_fail_unsupported():

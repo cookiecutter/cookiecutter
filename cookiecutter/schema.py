@@ -86,6 +86,7 @@ schema_2_0 = {
     "required": ["name", "version", "variables"],
 }
 
+# mapping from valid schema version names to their json schema instances
 schema_versions = {
     '1.0': schema_1_0,
     '1': schema_1_0,
@@ -93,11 +94,10 @@ schema_versions = {
     '2': schema_2_0,
     'latest': schema_2_0,
 }
-
-schema_chronology = [
-    '1.0',
-    '2.0',
-]
+# version numbers that can be declared in the "version" field of a valid cookiecutter.json
+declarable_versions = {'2.0', '2'}
+# cookiecutter schema versions in chronological order
+schema_chronology = ['1.0', '2.0']
 
 
 def validate(d: dict, version=None) -> None:
@@ -118,8 +118,14 @@ def validate(d: dict, version=None) -> None:
         # a version number has been explicitly defined
         _validate(d, version)
     elif "version" in d:
-        # the version number was taken from cookiecutter.json (only for schema 2.0 or later)
-        _validate(d, d["version"])
+        # at this point we can't be sure if this is a legacy cookiecutter which happens to contain
+        # a "version" variable or a new cookiecutter with a version field
+        try:
+            # check the legacy path first
+            _validate(d, '1.0')
+        except ValidationError:
+            # not a legacy cookiecutter - use the declared version number
+            _validate(d, d['version'])
     else:
         # assuming schema 1.0.0, since no version has been defined explicitly or implicitly
         _validate(d, '1.0')
