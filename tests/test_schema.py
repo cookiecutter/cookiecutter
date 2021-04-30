@@ -23,6 +23,12 @@ def test_validate_1_0_implicitly():
     validate(d)
 
 
+def test_validate_1_0_fallback():
+    d = get_sample_cookiecutter('1.0')
+    del d['version']
+    validate(d)
+
+
 def test_validate_2_0():
     d = get_sample_cookiecutter('2.0')
     validate(d, version='2.0')

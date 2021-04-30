@@ -75,20 +75,7 @@ schema_2_0 = {
                     "validation": {"type": "string"},
                     # display this message if validation failed
                     "validation_msg": {"type": "string"},
-                    # a list of items to choose from
-                    "choices": {"type": "array", "items": {"type": "string"}},
-                    # don't prompt the user for this variable, if this is set to false
-                    "prompt_user": {"type": "boolean"},
-                    # hide user input while typing (e.g. if you're asking for a password)
-                    "hide_input": {"type": "boolean"},
-                    # only show this prompt, if the specified condition is true
-                    "do_if": {"type": "string"},
-                    # skip this prompt, if the specified condition is true
-                    "skip_if": {"type": "string"},
-                    # skip to this variable name, if the user selected "no" in a "yes_no" prompt
-                    "if_no_skip_to": {"type": "string"},
-                    # skip to this variable name, if the user selected "yes" in a "yes_no" prompt
-                    "if_yes_skip_to": {"type": "string"},
+                    # regex flags used with the validation string 
                     "validation_flags": {
                         "type": "array",
                         "items": {
@@ -104,6 +91,20 @@ schema_2_0 = {
                             ],
                         },
                     },
+                    # a list of items to choose from
+                    "choices": {"type": "array", "items": {"type": "string"}},
+                    # don't prompt the user for this variable, if this is set to false
+                    "prompt_user": {"type": "boolean"},
+                    # hide user input while typing (e.g. if you're asking for a password)
+                    "hide_input": {"type": "boolean"},
+                    # only show this prompt, if the specified condition is true
+                    "do_if": {"type": "string"},
+                    # skip this prompt, if the specified condition is true
+                    "skip_if": {"type": "string"},
+                    # skip to this variable name, if the user selected "no" in a "yes_no" prompt
+                    "if_no_skip_to": {"type": "string"},
+                    # skip to this variable name, if the user selected "yes" in a "yes_no" prompt
+                    "if_yes_skip_to": {"type": "string"},
                 },
                 "required": ["name", "type"],
             },
@@ -120,8 +121,7 @@ schema_versions = {
     '2': schema_2_0,
     'latest': schema_2_0,
 }
-# version numbers that can be declared in the "version" field of a valid cookiecutter.json
-declarable_versions = {'2.0', '2'}
+
 # cookiecutter schema versions in chronological order
 schema_chronology = ['1.0', '2.0']
 
