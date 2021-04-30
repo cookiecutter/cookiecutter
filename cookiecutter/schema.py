@@ -1,7 +1,23 @@
 import jsonschema
 
 
-schema_2_0 = {
+schema_1_0_0 = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "cookiecutter-schema-1.0",
+    "type": "object",
+    "patternProperties": {
+        "^.+$": {
+            "anyOf": [
+                {"type": "string"},
+                {"type": "array", "items": {"type": "string"}},
+            ]
+        }
+    },
+    "additionalProperties": False,
+}
+
+
+schema_2_0_0 = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "cookiecutter-schema-2.0",
     "type": "object",
@@ -42,6 +58,18 @@ schema_2_0 = {
     "required": ["name", "cookiecutter_version", "variables"],
 }
 
+schema = {
+    '1.0.0': schema_1_0_0,
+    '1.0': schema_1_0_0,
+    '1': schema_1_0_0,
+    '2.0.0': schema_2_0_0,
+    '2.0': schema_2_0_0,
+    '2': schema_2_0_0,
+    'latest': schema_2_0_0,
+}
 
-def validate(d):
-    jsonschema.validate(instance=d, schema=schema_2_0)
+
+def validate(d, version='latest'):
+    if version not in schema:
+        raise ValueError(f"Unsupported schema version {version}")
+    jsonschema.validate(instance=d, schema=schema[version])
