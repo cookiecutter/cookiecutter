@@ -39,7 +39,7 @@ schema_2_0 = {
             },
         },
     },
-    "required": ["name", "version", "cookiecutter_version", "variables"],
+    "required": ["name", "cookiecutter_version", "variables"],
 }
 
 
