@@ -348,7 +348,7 @@ Exceptions:
 ### Responsibilities
 
 * Ensure cross-platform compatibility for every change that's accepted. Windows, macOS and Linux.
-* Ensure that code that goes into core meets all requirements in this checklist: [https://gist.github.com/audreyr/4feef90445b9680475f2](https://gist.github.com/audreyr/4feef90445b9680475f2)
+* Ensure that code that goes into core meets all requirements in this checklist: [https://gist.github.com/audreyfeldroy/4feef90445b9680475f2](https://gist.github.com/audreyr/4feef90445b9680475f2)
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
 * Keep feature versions as small as possible, preferably one new feature per version.
