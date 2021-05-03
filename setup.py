@@ -28,7 +28,7 @@ setup(
     ),
     long_description=readme,
     long_description_content_type='text/markdown',
-    author='Audrey Roy',
+    author='Audrey Feldroy',
     author_email='audreyr@gmail.com',
     url='https://github.com/cookiecutter/cookiecutter',
     packages=['cookiecutter'],
