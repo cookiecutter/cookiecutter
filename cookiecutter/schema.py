@@ -75,7 +75,7 @@ schema_2_0 = {
                     "validation": {"type": "string"},
                     # display this message if validation failed
                     "validation_msg": {"type": "string"},
-                    # regex flags used with the validation string 
+                    # regex flags used with the validation string
                     "validation_flags": {
                         "type": "array",
                         "items": {
