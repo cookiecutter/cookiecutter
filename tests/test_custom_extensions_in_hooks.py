@@ -22,9 +22,11 @@ def template(request):
 
 
 @pytest.fixture
-def output_dir(tmpdir):
+def output_dir(tmp_path):
     """Fixture. Create and return custom temp directory for test."""
-    return str(tmpdir.mkdir('hello'))
+    output_path = tmp_path.joinpath("hello")
+    output_path.mkdir()
+    return str(output_path)
 
 
 @pytest.fixture(autouse=True)

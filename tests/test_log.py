@@ -58,9 +58,9 @@ def debug_logger():
 
 
 @pytest.fixture
-def debug_file(tmpdir):
+def debug_file(tmp_path):
     """Fixture. Generate debug file location for tests."""
-    return tmpdir / 'pytest-plugin.log'
+    return tmp_path.joinpath('pytest-plugin.log')
 
 
 @pytest.fixture
@@ -117,4 +117,5 @@ def test_debug_file_logging(caplog, info_logger_with_file, debug_file, debug_mes
     assert debug_file.exists()
 
     # Last line in the log file is an empty line
-    assert debug_file.readlines(cr=False) == debug_messages + ['']
+    with debug_file.open() as f:
+        assert f.read().split('\n') == debug_messages + ['']

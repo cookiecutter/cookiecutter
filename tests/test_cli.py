@@ -239,9 +239,11 @@ def output_dir_flag(request):
 
 
 @pytest.fixture
-def output_dir(tmpdir):
+def output_dir(tmp_path):
     """Pytest fixture return `output_dir` argument as string."""
-    return str(tmpdir.mkdir('output'))
+    output_path = tmp_path.joinpath("output")
+    output_path.mkdir()
+    return str(output_path)
 
 
 def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
@@ -283,9 +285,9 @@ def test_cli_help(cli_runner, help_cli_flag):
 
 
 @pytest.fixture
-def user_config_path(tmpdir):
+def user_config_path(tmp_path):
     """Pytest fixture return `user_config` argument as string."""
-    return str(tmpdir.join('tests/config.yaml'))
+    return str(tmp_path.joinpath("tests", "config.yaml"))
 
 
 def test_user_config(mocker, cli_runner, user_config_path):
@@ -365,9 +367,8 @@ def test_default_user_config(mocker, cli_runner):
     )
 
 
-def test_echo_undefined_variable_error(tmpdir, cli_runner):
+def test_echo_undefined_variable_error(output_dir, cli_runner):
     """Cli invocation return error if variable undefined in template."""
-    output_dir = str(tmpdir.mkdir('output'))
     template_path = 'tests/undefined-variable/file-name/'
 
     result = cli_runner(
@@ -396,9 +397,8 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     assert context_str in result.output
 
 
-def test_echo_unknown_extension_error(tmpdir, cli_runner):
+def test_echo_unknown_extension_error(output_dir, cli_runner):
     """Cli return error if extension incorrectly defined in template."""
-    output_dir = str(tmpdir.mkdir('output'))
     template_path = 'tests/test-extensions/unknown/'
 
     result = cli_runner(
@@ -434,9 +434,9 @@ def test_cli_extra_context_invalid_format(cli_runner):
 
 
 @pytest.fixture
-def debug_file(tmpdir):
+def debug_file(tmp_path):
     """Pytest fixture return `debug_file` argument as path object."""
-    return tmpdir.join('fake-repo.log')
+    return tmp_path.joinpath('fake-repo.log')
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -458,7 +458,7 @@ def test_debug_file_non_verbose(cli_runner, debug_file):
         "DEBUG cookiecutter.main: context_file is "
         "tests/fake-repo-pre/cookiecutter.json"
     )
-    assert context_log in debug_file.readlines(cr=False)
+    assert context_log in debug_file.read_text()
     assert context_log not in result.output
 
 
@@ -485,7 +485,7 @@ def test_debug_file_verbose(cli_runner, debug_file):
         "DEBUG cookiecutter.main: context_file is "
         "tests/fake-repo-pre/cookiecutter.json"
     )
-    assert context_log in debug_file.readlines(cr=False)
+    assert context_log in debug_file.read_text()
     assert context_log in result.output
 
 
