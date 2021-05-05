@@ -147,7 +147,6 @@ class TestExternalHooks(object):
 
     def test_run_failing_script(self, mocker):
         """Test correct exception raise if run_script fails."""
-
         err = OSError()
 
         prompt = mocker.patch('subprocess.Popen')
@@ -159,7 +158,6 @@ class TestExternalHooks(object):
 
     def test_run_failing_script_enoexec(self, mocker):
         """Test correct exception raise if run_script fails."""
-
         err = OSError()
         err.errno = errno.ENOEXEC
 
@@ -168,7 +166,9 @@ class TestExternalHooks(object):
 
         with pytest.raises(exceptions.FailedHookException) as excinfo:
             hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
-        assert 'Hook script failed, might be an empty file or missing a shebang' in str(excinfo.value)
+        assert 'Hook script failed, might be an empty file or missing a shebang' in str(
+            excinfo.value
+        )
 
     def test_run_script_cwd(self):
         """Change directory before running hook."""
