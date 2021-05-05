@@ -38,7 +38,9 @@ def test_local_repo_with_no_context_raises(tmp_path):
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
             template_path,
-            '\n'.join([template_path, str(tmp_path.joinpath('tests', 'fake-repo-bad'))]),
+            '\n'.join(
+                [template_path, str(tmp_path.joinpath('tests', 'fake-repo-bad'))]
+            ),
         )
     )
 

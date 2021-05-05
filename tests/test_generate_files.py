@@ -322,7 +322,6 @@ def undefined_context():
 
 def test_raise_undefined_variable_file_name(output_dir, undefined_context):
     """Verify correct error raised when file name cannot be rendered."""
-
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-name/',
@@ -336,9 +335,10 @@ def test_raise_undefined_variable_file_name(output_dir, undefined_context):
     assert not Path(output_dir).joinpath('testproject').exists()
 
 
-def test_raise_undefined_variable_file_name_existing_project(output_dir, undefined_context):
+def test_raise_undefined_variable_file_name_existing_project(
+    output_dir, undefined_context
+):
     """Verify correct error raised when file name cannot be rendered."""
-
     testproj_path = Path(output_dir, 'testproject')
     testproj_path.mkdir()
 
@@ -358,7 +358,6 @@ def test_raise_undefined_variable_file_name_existing_project(output_dir, undefin
 
 def test_raise_undefined_variable_file_content(output_dir, undefined_context):
     """Verify correct error raised when file content cannot be rendered."""
-
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-content/',
@@ -374,7 +373,6 @@ def test_raise_undefined_variable_file_content(output_dir, undefined_context):
 
 def test_raise_undefined_variable_dir_name(output_dir, undefined_context):
     """Verify correct error raised when directory name cannot be rendered."""
-
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/dir-name/',
@@ -392,9 +390,10 @@ def test_raise_undefined_variable_dir_name(output_dir, undefined_context):
     assert not Path(output_dir).joinpath('testproject').exists()
 
 
-def test_raise_undefined_variable_dir_name_existing_project(output_dir, undefined_context):
+def test_raise_undefined_variable_dir_name_existing_project(
+    output_dir, undefined_context
+):
     """Verify correct error raised when directory name cannot be rendered."""
-
     testproj_path = Path(output_dir, 'testproject')
     testproj_path.mkdir()
 
