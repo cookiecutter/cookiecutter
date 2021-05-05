@@ -24,7 +24,7 @@ jobs:
           pip install tox virtualenv
       - name: Lint
         run: "tox -e lint"
-  test:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
