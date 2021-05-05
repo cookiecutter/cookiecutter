@@ -125,9 +125,10 @@ git push origin name-of-your-bugfix-or-feature
 Before you submit a pull request, check that it meets these guidelines:
 
 1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put your new functionality into a function with a docstring, and add the feature to the list in README.md.
-3. The pull request must pass all CI/CD jobs before being ready for review.
-4. If one CI/CD job is failing for unrelated reasons you may want to create another PR to fix that first.
+2. The pull request should be contained: if it's too big consider splitting it into smaller pull requests.
+3. If the pull request adds functionality, the docs should be updated. Put your new functionality into a function with a docstring, and add the feature to the list in README.md.
+4. The pull request must pass all CI/CD jobs before being ready for review.
+5. If one CI/CD job is failing for unrelated reasons you may want to create another PR to fix that first.
 
 ### Coding Standards
 
@@ -284,7 +285,10 @@ How to prioritize pull requests, from most to least important:
 * Major edits to docs.
 * Features.
 
-Ensure that each pull request meets all requirements in [checklist](https://gist.github.com/audreyr/4feef90445b9680475f2).
+#### Pull Requests Review Guidelines
+- Think carefully about the long-term implications of the change. How will it affect existing projects that are dependent on this? If this is complicated, do we really want to maintain it forever?
+- Take the time to get things right, PRs almost always require additional improvements to meet the bar for quality. **Be very strict about quality.**
+- When you merge a pull request take care of closing/updating every related issue explaining how they were affected by those changes. Also, remember to add the author to `AUTHORS.md`.
 
 ### Process: Issues
 
@@ -310,30 +314,6 @@ Milestone size:
 * If a milestone contains too much, move some to the next milestone.
 * Err on the side of more frequent patch releases.
 
-### Process: Pull Request merging and HISTORY.md maintenance
-
-If you merge a pull request, you're responsible for updating `AUTHORS.md` and `HISTORY.md`
-
-When you're processing the first change after a release, create boilerplate following the existing pattern:
-
-```md
-## x.y.z (Development)
-
-The goals of this release are TODO: release summary of features
-
-Features:
-
-* Feature description, thanks to [@contributor](https://github.com/contributor) (#PR).
-
-Bug Fixes:
-
-* Bug fix description, thanks to [@contributor](https://github.com/contributor) (#PR).
-
-Other changes:
-
-* Description of the change, thanks to [@contributor](https://github.com/contributor) (#PR).
-```
-
 ### Process: Your own code changes
 
 All code changes, regardless of who does them, need to be reviewed and merged by someone else.
@@ -348,7 +328,6 @@ Exceptions:
 ### Responsibilities
 
 * Ensure cross-platform compatibility for every change that's accepted. Windows, macOS and Linux.
-* Ensure that code that goes into core meets all requirements in this checklist: [https://gist.github.com/audreyr/4feef90445b9680475f2](https://gist.github.com/audreyr/4feef90445b9680475f2)
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
 * Keep feature versions as small as possible, preferably one new feature per version.
