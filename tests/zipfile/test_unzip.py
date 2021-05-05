@@ -7,15 +7,6 @@ from cookiecutter import zipfile
 from cookiecutter.exceptions import InvalidZipRepository
 
 
-@pytest.fixture
-def clone_dir(tmp_path):
-    """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
-    Returns a str to said directory."""
-    clone_dir = tmp_path.joinpath("clone_dir")
-    clone_dir.mkdir()
-    return clone_dir
-
-
 def mock_download():
     """Fake download function."""
     with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:

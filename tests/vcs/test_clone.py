@@ -7,15 +7,6 @@ import pytest
 from cookiecutter import exceptions, vcs
 
 
-@pytest.fixture
-def clone_dir(tmp_path):
-    """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
-    Returns a str to said directory."""
-    clone_dir = tmp_path.joinpath("clone_dir")
-    clone_dir.mkdir()
-    return clone_dir
-
-
 def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
     """In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS \
     is installed."""

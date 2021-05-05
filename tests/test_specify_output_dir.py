@@ -18,14 +18,6 @@ def context():
 
 
 @pytest.fixture
-def output_dir(tmp_path):
-    """Fixture to prepare test output directory."""
-    output_path = tmp_path.joinpath("output")
-    output_path.mkdir()
-    return str(output_path)
-
-
-@pytest.fixture
 def template(tmp_path):
     """Fixture to prepare test template directory."""
     template_dir = tmp_path.joinpath("template")

@@ -3,7 +3,6 @@
 Use the global clean_system fixture and run additional teardown code to remove
 some special folders.
 """
-import os
 from pathlib import Path
 
 import pytest
@@ -321,39 +320,32 @@ def undefined_context():
     }
 
 
-@pytest.fixture
-def output_path(tmp_path):
-    """Fixture. Create and return custom temp directory for test."""
-    output_path = tmp_path.joinpath("output")
-    output_path.mkdir()
-    return output_path
-
-
-def test_raise_undefined_variable_file_name(output_path, undefined_context):
+def test_raise_undefined_variable_file_name(output_dir, undefined_context):
     """Verify correct error raised when file name cannot be rendered."""
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-name/',
-            output_dir=str(output_path),
+            output_dir=output_dir,
             context=undefined_context,
         )
     error = err.value
     assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
     assert error.context == undefined_context
 
-    assert not output_path.joinpath('testproject').exists()
+    assert not Path(output_dir).joinpath('testproject').exists()
 
 
-def test_raise_undefined_variable_file_name_existing_project(output_path, undefined_context):
+def test_raise_undefined_variable_file_name_existing_project(output_dir, undefined_context):
     """Verify correct error raised when file name cannot be rendered."""
 
-    output_path.joinpath('testproject').mkdir()
+    testproj_path = Path(output_dir, 'testproject')
+    testproj_path.mkdir()
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-name/',
-            output_dir=str(output_path),
+            output_dir=output_dir,
             context=undefined_context,
             overwrite_if_exists=True,
         )
@@ -361,66 +353,67 @@ def test_raise_undefined_variable_file_name_existing_project(output_path, undefi
     assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
     assert error.context == undefined_context
 
-    assert output_path.joinpath('testproject').exists()
+    assert testproj_path.exists()
 
 
-def test_raise_undefined_variable_file_content(output_path, undefined_context):
+def test_raise_undefined_variable_file_content(output_dir, undefined_context):
     """Verify correct error raised when file content cannot be rendered."""
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-content/',
-            output_dir=str(output_path),
+            output_dir=output_dir,
             context=undefined_context,
         )
     error = err.value
     assert "Unable to create file 'README.rst'" == error.message
     assert error.context == undefined_context
 
-    assert not output_path.joinpath('testproject').exists()
+    assert not Path(output_dir).joinpath('testproject').exists()
 
 
-def test_raise_undefined_variable_dir_name(output_path, undefined_context):
+def test_raise_undefined_variable_dir_name(output_dir, undefined_context):
     """Verify correct error raised when directory name cannot be rendered."""
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/dir-name/',
-            output_dir=str(output_path),
+            output_dir=output_dir,
             context=undefined_context,
         )
     error = err.value
 
-    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    directory = Path('testproject', '{{cookiecutter.foobar}}')
     msg = "Unable to create directory '{}'".format(directory)
     assert msg == error.message
 
     assert error.context == undefined_context
 
-    assert not output_path.joinpath('testproject').exists()
+    assert not Path(output_dir).joinpath('testproject').exists()
 
 
-def test_raise_undefined_variable_dir_name_existing_project(output_path, undefined_context):
+def test_raise_undefined_variable_dir_name_existing_project(output_dir, undefined_context):
     """Verify correct error raised when directory name cannot be rendered."""
 
-    output_path.joinpath('testproject').mkdir()
+    testproj_path = Path(output_dir, 'testproject')
+    testproj_path.mkdir()
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/dir-name/',
-            output_dir=str(output_path),
+            output_dir=output_dir,
             context=undefined_context,
             overwrite_if_exists=True,
         )
     error = err.value
 
-    directory = os.path.join('testproject', '{{cookiecutter.foobar}}')
+    directory = Path('testproject', '{{cookiecutter.foobar}}')
     msg = "Unable to create directory '{}'".format(directory)
     assert msg == error.message
 
     assert error.context == undefined_context
 
-    assert output_path.joinpath('testproject').exists()
+    assert testproj_path.exists()
 
 
 def test_raise_undefined_variable_project_dir(tmp_path):

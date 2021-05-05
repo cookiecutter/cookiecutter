@@ -238,14 +238,6 @@ def output_dir_flag(request):
     return request.param
 
 
-@pytest.fixture
-def output_dir(tmp_path):
-    """Pytest fixture return `output_dir` argument as string."""
-    output_path = tmp_path.joinpath("output")
-    output_path.mkdir()
-    return str(output_path)
-
-
 def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
     """Test cli invocation with `output-dir` flag changes output directory."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
