@@ -471,14 +471,6 @@ def test_prompt_choice(mocker):
     assert r == EXPECTED_LICENSE
 
 
-def test_variable_invalid_type_exception():
-
-    with pytest.raises(ValueError) as excinfo:
-        context.Variable(name='badtype', default=None, type='color')
-
-    assert 'Variable: badtype has an invalid type color' in str(excinfo.value)
-
-
 def test_variable_invalid_default_choice():
 
     CHOICES = ['green', 'red', 'blue', 'yellow']
@@ -493,30 +485,6 @@ def test_variable_invalid_default_choice():
     ) in str(
         excinfo.value
     )
-
-
-def test_variable_invalid_validation_control_flag_is_logged_and_removed(caplog):
-
-    with caplog.at_level(logging.INFO):
-        v = context.Variable(
-            'module_name',
-            "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
-            prompt="Please enter a name for your base python module",
-            type='string',
-            validation='^[a-z_]+$',
-            validation_flags=['ignorecase', 'forget',],
-            hide_input=True,
-        )
-
-        for record in caplog.records:
-            assert record.levelname == 'WARNING'
-
-        assert (
-            "Variable: module_name - Ignoring unkown RegEx validation Control Flag named 'forget'"
-            in caplog.text
-        )
-
-        assert v.validation_flag_names == ['ignorecase']
 
 
 def test_variable_validation_compile_exception():

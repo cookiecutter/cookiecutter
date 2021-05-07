@@ -1,7 +1,7 @@
 {
     "name": "cookiecutter-testing-skips",
     "cookiecutter_version": "2.0.0",
-    "version": "0.1.0",
+    "version": "2.0",
     "variables": [
         {
             "name": "project_uses_existing_logging_facilities",
