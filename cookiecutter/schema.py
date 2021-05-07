@@ -8,6 +8,7 @@ schema_1_0 = {
     "title": "cookiecutter-schema-1.0",
     "type": "object",
     # schema 1.0 is trivial: mapping from any variable name to a string or list of strings
+    # Should accept dict !!!
     "patternProperties": {
         "^.+$": {
             "anyOf": [
@@ -140,6 +141,7 @@ def validate(d: dict, version=None) -> None:
     :raises ValueError: if the schema version is not supported
     :raises ValidationError: if schema validation was not successful
     """
+
     if version:
         # a version number has been explicitly defined
         _validate(d, version)

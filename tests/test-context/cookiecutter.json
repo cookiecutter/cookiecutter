@@ -1,6 +1,6 @@
 {
     "name": "cookiecutter-pytest-plugin",
-    "version": "0.1.0",
+    "version": "2.0",
     "description": "a cookiecutter to create pytest plugins with ease.",
     "authors": [
         "Raphael Pierzina <raphael@hackebrot.de>",

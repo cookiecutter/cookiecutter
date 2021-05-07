@@ -604,28 +604,6 @@ def test_variable_str():
         assert "validate='<_sre.SRE_Pattern object at" in str(v)
 
 
-def test_variable_option_raise_invalid_type_value_error():
-
-    VAR_NAME = 'module_name'
-    OPT_VALUE_OF_INCORRECT_TYPE = 12  # should be a string
-
-    with pytest.raises(ValueError) as excinfo:
-        context.Variable(
-            VAR_NAME,
-            "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
-            prompt="Please enter a name for your base python module",
-            type='string',
-            validation=OPT_VALUE_OF_INCORRECT_TYPE,
-            validation_flags=['ignorecase'],
-            hide_input=True,
-        )
-
-    msg = "Variable: '{var_name}' Option: 'validation' requires a value of type str, but has a value of: {value}"
-    assert msg.format(var_name=VAR_NAME, value=OPT_VALUE_OF_INCORRECT_TYPE) in str(
-        excinfo.value
-    )
-
-
 def test_cookiecutter_template_repr():
     #  name, cookiecutter_version, variables, **info
 
@@ -721,35 +699,3 @@ def test_load_context_with_input_with_validation_failure_msg(mocker, capsys):
 
     assert cc_cfg['project_name'] == INPUT_1
     assert cc_cfg['module_name'] == INPUT_3
-
-
-def test_specify_if_yes_skip_to_without_yes_no_type():
-    """
-    Test ValueError is raised when a variable specifies an if_yes_skip_to
-    field and the variable type is not 'yes+no'
-    """
-    with pytest.raises(ValueError) as excinfo:
-        context.Variable(
-            name='author', default='JKR', type='string', if_yes_skip_to='roman'
-        )
-
-    assert (
-        "Variable: 'author' specifies 'if_yes_skip_to' field, but variable not of type 'yes_no'"
-        in str(excinfo.value)
-    )
-
-
-def test_specify_if_no_skip_to_without_yes_no_type():
-    """
-    Test ValueError is raised when a variable specifies an if_no_skip_to
-    field and the variable type is not 'yes+no'
-    """
-    with pytest.raises(ValueError) as excinfo:
-        context.Variable(
-            name='author', default='JKR', type='string', if_no_skip_to='roman'
-        )
-
-    assert (
-        "Variable: 'author' specifies 'if_no_skip_to' field, but variable not of type 'yes_no'"
-        in str(excinfo.value)
-    )
