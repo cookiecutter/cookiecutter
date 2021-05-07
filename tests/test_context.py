@@ -564,7 +564,7 @@ def test_variable_str():
     assert "choices='[]'" in str(v)
     assert "validation='^[a-z_]+$'" in str(v)
     assert "validation_flag_names='['ignorecase']'" in str(v)
-    assert "validation_flags='2'" in str(v)
+    assert ("validation_flags='2'" in str(v)) | (".IGNORECASE" in str(v))
 
     if sys.version_info >= (3, 4):
         assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in str(v)
