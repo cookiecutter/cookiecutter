@@ -54,7 +54,8 @@ def test_validate_fail_unsupported():
 
 
 def test_detect_1_0():
-    d = get_sample_cookiecutter('1.0')
+    # testing a version 1 withou version in it
+    d = get_sample_cookiecutter('1.0.1')
     assert detect(d) == '1.0'
 
 

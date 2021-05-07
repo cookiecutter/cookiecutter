@@ -350,19 +350,9 @@ class Variable(object):
 
         # -- IF_YES_SKIP_TO ---------------------------------------------------------
         self.if_yes_skip_to = info.get('if_yes_skip_to', None)
-        if self.if_yes_skip_to and self.var_type != 'yes_no':
-            raise ValueError(
-                f"Variable: '{self.name}' specifies "
-                f"'if_yes_skip_to' field, but variable not of type 'yes_no'"
-            )
 
         # -- IF_NO_SKIP_TO ---------------------------------------------------------
         self.if_no_skip_to = info.get('if_no_skip_to', None)
-        if self.if_no_skip_to and self.var_type != 'yes_no':
-            raise ValueError(
-                f"Variable: '{self.name}' specifies "
-                f"'if_no_skip_to' field, but variable not of type 'yes_no'"
-            )
 
         # -- PROMPT_USER -----------------------------------------------------
         self.prompt_user = info.get('prompt_user', True)
