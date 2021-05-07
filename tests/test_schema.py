@@ -53,6 +53,27 @@ def test_validate_fail_unsupported():
         validate(d)
 
 
+def test_validate_fail_additions():
+    d = get_sample_cookiecutter('2.0')
+    d['addition'] = "yolo!"
+    with pytest.raises(ValidationError):
+        validate(d)
+
+
+def test_validate_fail_additions_2():
+    d = get_sample_cookiecutter('2.0')
+    d['template']['descriptin'] = "oops, typo :/"
+    with pytest.raises(ValidationError):
+        validate(d)
+
+
+def test_validate_fail_additions_3():
+    d = get_sample_cookiecutter('2.0')
+    d['template']['variables'][0]['addition'] = "yolo!"
+    with pytest.raises(ValidationError):
+        validate(d)
+
+
 def test_detect_1_0():
     # testing a version 1 withou version in it
     d = get_sample_cookiecutter('1.0.1')

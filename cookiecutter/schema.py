@@ -8,7 +8,6 @@ schema_1_0 = {
     "title": "cookiecutter-schema-1.0",
     "type": "object",
     # schema 1.0 is trivial: mapping from any variable name to a string or list of strings
-    # Should accept dict !!!
     "patternProperties": {
         "^.+$": {
             "anyOf": [
@@ -27,100 +26,116 @@ schema_2_0 = {
     "properties": {
         # cookiecutter schema version
         "version": {"type": "string", "enum": ["2.0", "2"]},
-        # name of the template
-        "name": {"type": "string"},
-        # description of the template
-        "description": {"type": "string"},
-        # list of authors (may include email addresses or other contact information)
-        "authors": {"type": "array", "items": {"type": "string"}},
-        # version number of the cookiecutter template
-        "template_version": {"type": "string"},
-        # min version of cookiecutter that is required by the template
-        "cookiecutter_version": {"type": "string"},
-        # python version constraints of the template
-        "python_requires": {"type": "string"},
-        # license of the template
-        "license": {"type": "string"},
-        # keywords that describe the goals of the template
-        "keywords": {"type": "array", "items": {"type": "string"}},
-        # the canonical url from where the template can be retrieved
-        "url": {"type": "string"},
-        # definition of the template's variables
-        "variables": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    # variable name (must be a valid python variable name)
-                    "name": {"type": "string"},
-                    # the default value for that variable
-                    "default": {},
-                    # text that will be displayed before the input field (keep it short!)
-                    "prompt": {"type": "string"},
-                    # more detailed description of this variable
-                    "description": {"type": "string"},
-                    # input data type (string, boolean, etc.)
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "boolean",
-                            "yes_no",
-                            "int",
-                            "float",
-                            "uuid",
-                            "json",
-                            "string",
-                        ],
-                    },
-                    # validate user input with this regex
-                    "validation": {"type": "string"},
-                    # display this message if validation failed
-                    "validation_msg": {"type": "string"},
-                    # regex flags used with the validation string
-                    "validation_flags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "enum": [
-                                "ascii",
-                                "debug",
-                                "ignorecase",
-                                "locale",
-                                "mulitline",
-                                "dotall",
-                                "verbose",
-                            ],
-                        },
-                    },
-                    # a list of items to choose from
-                    "choices": {"type": "array", "items": {"type": "string"}},
-                    # don't prompt the user for this variable, if this is set to false
-                    "prompt_user": {"type": "boolean"},
-                    # hide user input while typing (e.g. if you're asking for a password)
-                    "hide_input": {"type": "boolean"},
-                    # only show this prompt, if the specified condition is true
-                    "do_if": {"type": "string"},
-                    # skip this prompt, if the specified condition is true
-                    "skip_if": {"type": "string"},
-                    # skip to this variable name, if the user selected "no" in a "yes_no" prompt
-                    "if_no_skip_to": {"type": "string"},
-                    # skip to this variable name, if the user selected "yes" in a "yes_no" prompt
-                    "if_yes_skip_to": {"type": "string"},
-                },
-                "required": ["name", "type"],
+        # list requirements for this template
+        "requires": {
+            "type": "object",
+            "properties": {
+                # min version of cookiecutter that is required by the template
+                "cookiecutter": {"type": "string"},
+                # python version constraints of the template
+                "python": {"type": "string"},
             },
+            "additionalProperties": False,
+        },
+        # custom Jinja2 extensions to load
+        "extensions": {"type": "array", "items": {"type": "string"}},
+        # the template definition
+        "template": {
+            "type": "object",
+            "properties": {
+                # name of the template
+                "name": {"type": "string"},
+                # version number of the cookiecutter template
+                "version": {"type": "string"},
+                # description of the template
+                "description": {"type": "string"},
+                # list of authors (may include email addresses or other contact information)
+                "authors": {"type": "array", "items": {"type": "string"}},
+                # license of the template
+                "license": {"type": "string"},
+                # keywords that describe the goals of the template
+                "keywords": {"type": "array", "items": {"type": "string"}},
+                # the canonical url from where the template can be retrieved
+                "url": {"type": "string"},
+                # definition of the template's variables
+                "variables": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            # variable name (must be a valid python variable name)
+                            "name": {"type": "string"},
+                            # the default value for that variable
+                            "default": {},
+                            # text that will be displayed before the input field (keep it short!)
+                            "prompt": {"type": "string"},
+                            # more detailed description of this variable
+                            "description": {"type": "string"},
+                            # input data type (string, boolean, etc.)
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "boolean",
+                                    "yes_no",
+                                    "int",
+                                    "float",
+                                    "uuid",
+                                    "json",
+                                    "string",
+                                ],
+                            },
+                            # validate user input with this regex
+                            "validation": {"type": "string"},
+                            # display this message if validation failed
+                            "validation_msg": {"type": "string"},
+                            # regex flags used with the validation string
+                            "validation_flags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "ascii",
+                                        "debug",
+                                        "ignorecase",
+                                        "locale",
+                                        "mulitline",
+                                        "dotall",
+                                        "verbose",
+                                    ],
+                                },
+                            },
+                            # a list of items to choose from
+                            "choices": {"type": "array", "items": {"type": "string"}},
+                            # don't prompt the user for this variable, if this is set to false
+                            "prompt_user": {"type": "boolean"},
+                            # hide user input while typing (e.g. if you're asking for a password)
+                            "hide_input": {"type": "boolean"},
+                            # only show this prompt, if the specified condition is true
+                            "do_if": {"type": "string"},
+                            # skip this prompt, if the specified condition is true
+                            "skip_if": {"type": "string"},
+                            # skip to this variable, if "no" was selected in a "yes_no" prompt
+                            "if_no_skip_to": {"type": "string"},
+                            # skip to this variable, if "yes" was selected in a "yes_no" prompt
+                            "if_yes_skip_to": {"type": "string"},
+                        },
+                        "required": ["name", "type"],
+                        "additionalProperties": False,
+                    },
+                },
+            },
+            "required": ["name"],
+            "additionalProperties": False,
         },
     },
-    "required": ["name", "version", "variables"],
+    "required": ["version", "template"],
+    "additionalProperties": False,
 }
 
 # mapping from valid schema version names to their json schema instances
 schema_versions = {
     '1.0': schema_1_0,
-    '1': schema_1_0,
     '2.0': schema_2_0,
-    '2': schema_2_0,
-    'latest': schema_2_0,
 }
 
 # cookiecutter schema versions in chronological order

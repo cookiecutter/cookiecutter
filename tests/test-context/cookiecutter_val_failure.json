@@ -1,21 +1,22 @@
 {
+  "version": "2.0",
+  "template": {
     "name": "cookiecutter-test-validation-failure",
-    "version": "2.0",
-    "cookiecutter_version": "2.0.0",
     "variables": [
-        {
-            "name": "project_name",
-            "default": "Default Project Name",
-            "prompt": "Enter Project Name",
-            "description": "Please enter a short, space delimited, name for this project.",
-            "type": "string"
-        },
-        {
-            "name": "module_name",
-            "default": "{{cookiecutter.project_name|lower|replace(' ','_')}}",
-            "prompt": "Please enter a name for your base python module",
-            "type": "string",
-            "validation": "^[a-z_]+$"
-        }
+      {
+        "name": "project_name",
+        "default": "Default Project Name",
+        "prompt": "Enter Project Name",
+        "description": "Please enter a short, space delimited, name for this project.",
+        "type": "string"
+      },
+      {
+        "name": "module_name",
+        "default": "{{cookiecutter.project_name|lower|replace(' ','_')}}",
+        "prompt": "Please enter a name for your base python module",
+        "type": "string",
+        "validation": "^[a-z_]+$"
+      }
     ]
+  }
 }
