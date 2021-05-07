@@ -1,6 +1,6 @@
 """test_load."""
 import json
-import os
+from pathlib import Path
 
 import pytest
 
@@ -17,7 +17,7 @@ def template_name():
 def replay_file(replay_test_dir, template_name):
     """Fixture to return a actual file name of the dump."""
     file_name = '{}.json'.format(template_name)
-    return os.path.join(replay_test_dir, file_name)
+    return str(Path(replay_test_dir, file_name))
 
 
 def test_type_error_if_no_template_name(replay_test_dir):

@@ -5,7 +5,7 @@ The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
 import logging
-import os
+from pathlib import Path
 
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
@@ -73,16 +73,16 @@ def cookiecutter(
         directory=directory,
     )
 
-    template_name = os.path.basename(os.path.abspath(repo_dir))
+    template_name = Path(repo_dir).resolve().name
 
     if replay:
         if isinstance(replay, bool):
             context = load(config_dict['replay_dir'], template_name)
         else:
-            path, template_name = os.path.split(os.path.splitext(replay)[0])
-            context = load(path, template_name)
+            replay = Path(replay)
+            context = load(str(replay.parent), replay.stem)
     else:
-        context_file = os.path.join(repo_dir, 'cookiecutter.json')
+        context_file = str(Path(repo_dir, 'cookiecutter.json'))
         logger.debug('context_file is %s', context_file)
 
         context = generate_context(
@@ -99,7 +99,7 @@ def cookiecutter(
         context['cookiecutter']['_template'] = template
 
         # include output+dir in the context dict
-        context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
+        context['cookiecutter']['_output_dir'] = str(Path(output_dir).resolve())
 
         dump(config_dict['replay_dir'], template_name, context)
 

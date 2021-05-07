@@ -1,5 +1,6 @@
 """Verify correct work of `_copy_without_render` context option."""
 import os
+from pathlib import Path
 
 import pytest
 
@@ -11,7 +12,7 @@ from cookiecutter import utils
 def remove_test_dir():
     """Fixture. Remove the folder that is created by the test."""
     yield
-    if os.path.exists('test_copy_without_render'):
+    if Path('test_copy_without_render').exists():
         utils.rmtree('test_copy_without_render')
 
 

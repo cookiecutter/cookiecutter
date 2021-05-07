@@ -1,6 +1,6 @@
 """Cookiecutter repository functions."""
-import os
 import re
+from pathlib import Path
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
@@ -52,11 +52,10 @@ def repository_has_cookiecutter_json(repo_directory):
     :param repo_directory: The candidate repository directory.
     :return: True if the `repo_directory` is valid, else False.
     """
-    repo_directory_exists = os.path.isdir(repo_directory)
+    repo_directory_exists = Path(repo_directory).is_dir()
 
-    repo_config_exists = os.path.isfile(
-        os.path.join(repo_directory, 'cookiecutter.json')
-    )
+    repo_config_exists = Path(repo_directory, 'cookiecutter.json').is_file()
+
     return repo_directory_exists and repo_config_exists
 
 
@@ -112,13 +111,11 @@ def determine_repo_dir(
         repository_candidates = [cloned_repo]
         cleanup = False
     else:
-        repository_candidates = [template, os.path.join(clone_to_dir, template)]
+        repository_candidates = [template, str(Path(clone_to_dir, template))]
         cleanup = False
 
     if directory:
-        repository_candidates = [
-            os.path.join(s, directory) for s in repository_candidates
-        ]
+        repository_candidates = [str(Path(s, directory)) for s in repository_candidates]
 
     for repo_candidate in repository_candidates:
         if repository_has_cookiecutter_json(repo_candidate):

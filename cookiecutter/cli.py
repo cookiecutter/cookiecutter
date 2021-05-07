@@ -3,6 +3,7 @@ import collections
 import json
 import os
 import sys
+from pathlib import Path
 
 import click
 
@@ -26,7 +27,7 @@ from cookiecutter.config import get_user_config
 def version_msg():
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version[:3]
-    location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    location = str(Path(__file__).resolve().parent.parent)
     message = 'Cookiecutter %(version)s from {} (Python {})'
     return message.format(location, python_version)
 
@@ -48,8 +49,8 @@ def validate_extra_context(ctx, param, value):
 def list_installed_templates(default_config, passed_config_file):
     """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
     config = get_user_config(passed_config_file, default_config)
-    cookiecutter_folder = config.get('cookiecutters_dir')
-    if not os.path.exists(cookiecutter_folder):
+    cookiecutter_folder = Path(config.get('cookiecutters_dir'))
+    if not cookiecutter_folder.exists():
         click.echo(
             'Error: Cannot list installed templates. Folder does not exist: '
             '{}'.format(cookiecutter_folder)
@@ -58,10 +59,8 @@ def list_installed_templates(default_config, passed_config_file):
 
     template_names = [
         folder
-        for folder in os.listdir(cookiecutter_folder)
-        if os.path.exists(
-            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
-        )
+        for folder in cookiecutter_folder.iterdir()
+        if cookiecutter_folder.joinpath(folder, 'cookiecutter.json').exists()
     ]
     click.echo('{} installed templates: '.format(len(template_names)))
     for name in template_names:

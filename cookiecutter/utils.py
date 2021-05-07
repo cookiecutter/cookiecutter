@@ -6,6 +6,7 @@ import os
 import shutil
 import stat
 import sys
+from pathlib import Path
 
 from cookiecutter.prompt import read_user_yes_no
 
@@ -18,7 +19,7 @@ def force_delete(func, path, exc_info):
     Usage: `shutil.rmtree(path, onerror=force_delete)`
     From https://docs.python.org/3/library/shutil.html#rmtree-example
     """
-    os.chmod(path, stat.S_IWRITE)
+    Path(path).chmod(stat.S_IWRITE)
     func(path)
 
 
@@ -37,7 +38,7 @@ def make_sure_path_exists(path):
     """
     logger.debug('Making sure path exists: %s', path)
     try:
-        os.makedirs(path)
+        Path(path).mkdir(parents=True)
         logger.debug('Created directory at: %s', path)
     except OSError as exception:
         if exception.errno != errno.EEXIST:
@@ -51,7 +52,7 @@ def work_in(dirname=None):
 
     When exited, returns to the working directory prior to entering.
     """
-    curdir = os.getcwd()
+    curdir = Path.cwd()
     try:
         if dirname is not None:
             os.chdir(dirname)
@@ -65,8 +66,8 @@ def make_executable(script_path):
 
     :param script_path: The file to change
     """
-    status = os.stat(script_path)
-    os.chmod(script_path, status.st_mode | stat.S_IEXEC)
+    status = Path(script_path).stat()
+    Path(script_path).chmod(status.st_mode | stat.S_IEXEC)
 
 
 def prompt_and_delete(path, no_input=False):
@@ -91,10 +92,10 @@ def prompt_and_delete(path, no_input=False):
         ok_to_delete = read_user_yes_no(question, 'yes')
 
     if ok_to_delete:
-        if os.path.isdir(path):
+        if Path(path).is_dir():
             rmtree(path)
         else:
-            os.remove(path)
+            Path(path).unlink()
         return True
     else:
         ok_to_reuse = read_user_yes_no(

@@ -4,7 +4,7 @@ cookiecutter.replay.
 -------------------
 """
 import json
-import os
+from pathlib import Path
 
 from cookiecutter.utils import make_sure_path_exists
 
@@ -13,7 +13,7 @@ def get_file_name(replay_dir, template_name):
     """Get the name of file."""
     suffix = '.json' if not template_name.endswith('.json') else ''
     file_name = '{}{}'.format(template_name, suffix)
-    return os.path.join(replay_dir, file_name)
+    return str(Path(replay_dir, file_name))
 
 
 def dump(replay_dir, template_name, context):

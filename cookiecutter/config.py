@@ -3,6 +3,7 @@ import collections
 import copy
 import logging
 import os
+from pathlib import Path
 
 import yaml
 
@@ -10,7 +11,7 @@ from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfigur
 
 logger = logging.getLogger(__name__)
 
-USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+USER_CONFIG_PATH = str(Path('~/.cookiecutterrc').expanduser())
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
@@ -19,8 +20,8 @@ BUILTIN_ABBREVIATIONS = {
 }
 
 DEFAULT_CONFIG = {
-    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
-    'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
+    'cookiecutters_dir': str(Path('~/.cookiecutters/').expanduser()),
+    'replay_dir': str(Path('~/.cookiecutter_replay/').expanduser()),
     'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
@@ -29,7 +30,7 @@ DEFAULT_CONFIG = {
 def _expand_path(path):
     """Expand both environment variables and user home in the given path."""
     path = os.path.expandvars(path)
-    path = os.path.expanduser(path)
+    path = str(Path(path).expanduser())
     return path
 
 
@@ -54,7 +55,7 @@ def merge_configs(default, overwrite):
 
 def get_config(config_path):
     """Retrieve the config from the specified path, returning a config dict."""
-    if not os.path.exists(config_path):
+    if not Path(config_path).exists():
         raise ConfigDoesNotExistException(
             'Config file {} does not exist.'.format(config_path)
         )
@@ -111,7 +112,7 @@ def get_user_config(config_file=None, default_config=False):
     except KeyError:
         # Load an optional user config if it exists
         # otherwise return the defaults
-        if os.path.exists(USER_CONFIG_PATH):
+        if Path(USER_CONFIG_PATH).exists():
             logger.debug("Loading config from %s.", USER_CONFIG_PATH)
             return get_config(USER_CONFIG_PATH)
         else:

@@ -5,6 +5,7 @@ import logging
 import os
 import shutil
 import warnings
+from pathlib import Path
 from collections import OrderedDict
 
 from binaryornot.check import is_binary
@@ -93,7 +94,7 @@ def generate_context(
     except ValueError as e:
         # JSON decoding error.  Let's throw a new exception that is more
         # friendly for the developer or user.
-        full_fpath = os.path.abspath(context_file)
+        full_fpath = str(Path(context_file).resolve())
         json_exc_message = str(e)
         our_exc_message = (
             'JSON decoding error while loading "{0}".  Decoding'
@@ -102,7 +103,7 @@ def generate_context(
         raise ContextDecodingException(our_exc_message)
 
     # Add the Python object to the context dictionary
-    file_name = os.path.split(context_file)[1]
+    file_name = Path(context_file).name
     file_stem = file_name.split('.')[0]
     context[file_stem] = obj
 
@@ -146,13 +147,13 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
     # Render the path to the output file (not including the root project dir)
     outfile_tmpl = env.from_string(infile)
 
-    outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
-    file_name_is_empty = os.path.isdir(outfile)
+    outfile = Path(project_dir, outfile_tmpl.render(**context))
+    file_name_is_empty = outfile.is_dir()
     if file_name_is_empty:
         logger.debug('The resulting file name is empty: %s', outfile)
         return
 
-    if skip_if_file_exists and os.path.exists(outfile):
+    if skip_if_file_exists and outfile.exists():
         logger.debug('The resulting file already exists: %s', outfile)
         return
 
@@ -166,7 +167,7 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
     else:
         # Force fwd slashes on Windows for get_template
         # This is a by-design Jinja issue
-        infile_fwd_slashes = infile.replace(os.path.sep, '/')
+        infile_fwd_slashes = Path(infile).as_posix()
 
         # Render the file
         try:
@@ -205,13 +206,13 @@ def render_and_create_dir(
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
 
-    dir_to_create = os.path.normpath(os.path.join(output_dir, rendered_dirname))
+    dir_to_create = Path(output_dir, rendered_dirname)
 
     logger.debug(
         'Rendered dir %s must exist in output_dir %s', dir_to_create, output_dir
     )
 
-    output_dir_exists = os.path.exists(dir_to_create)
+    output_dir_exists = dir_to_create.exists()
 
     if output_dir_exists:
         if overwrite_if_exists:
@@ -284,7 +285,7 @@ def generate_files(
 
     envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
 
-    unrendered_dir = os.path.split(template_dir)[1]
+    unrendered_dir = Path(template_dir).name
     ensure_dir_is_templated(unrendered_dir)
     env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
     try:
@@ -302,7 +303,7 @@ def generate_files(
     #  In order to build our files to the correct folder(s), we'll use an
     # absolute path for the target folder (project_dir)
 
-    project_dir = os.path.abspath(project_dir)
+    project_dir = str(Path(project_dir).resolve())
     logger.debug('Project directory is %s', project_dir)
 
     # if we created the output directory, then it's ok to remove it
@@ -325,7 +326,7 @@ def generate_files(
             render_dirs = []
 
             for d in dirs:
-                d_ = os.path.normpath(os.path.join(root, d))
+                d_ = Path(root, d)
                 # We check the full path, because that's how it can be
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
@@ -335,8 +336,8 @@ def generate_files(
                     render_dirs.append(d)
 
             for copy_dir in copy_dirs:
-                indir = os.path.normpath(os.path.join(root, copy_dir))
-                outdir = os.path.normpath(os.path.join(project_dir, indir))
+                indir = str(Path(root, copy_dir))
+                outdir = str(Path(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
                 shutil.copytree(indir, outdir)
@@ -345,7 +346,7 @@ def generate_files(
             # recursively
             dirs[:] = render_dirs
             for d in dirs:
-                unrendered_dir = os.path.join(project_dir, root, d)
+                unrendered_dir = str(Path(project_dir, root, d))
                 try:
                     render_and_create_dir(
                         unrendered_dir, context, output_dir, env, overwrite_if_exists
@@ -353,16 +354,16 @@ def generate_files(
                 except UndefinedError as err:
                     if delete_project_on_failure:
                         rmtree(project_dir)
-                    _dir = os.path.relpath(unrendered_dir, output_dir)
+                    _dir = Path(unrendered_dir).relative_to(output_dir)
                     msg = "Unable to create directory '{}'".format(_dir)
                     raise UndefinedVariableInTemplate(msg, err, context)
 
             for f in files:
-                infile = os.path.normpath(os.path.join(root, f))
+                infile = str(Path(root, f))
                 if is_copy_only_path(infile, context):
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
-                    outfile = os.path.join(project_dir, outfile_rendered)
+                    outfile = str(Path(project_dir, outfile_rendered))
                     logger.debug(
                         'Copying file %s to %s without rendering', infile, outfile
                     )

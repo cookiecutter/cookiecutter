@@ -5,6 +5,7 @@ import os
 import subprocess  # nosec
 import sys
 import tempfile
+from pathlib import Path
 
 from cookiecutter import utils
 from cookiecutter.environment import StrictEnvironment
@@ -26,12 +27,12 @@ def valid_hook(hook_file, hook_name):
     :param hook_name: The hook to find
     :return: The hook file validity
     """
-    filename = os.path.basename(hook_file)
-    basename = os.path.splitext(filename)[0]
+    filename = Path(hook_file).name
+    basename = Path(hook_file).stem
 
     matching_hook = basename == hook_name
     supported_hook = basename in _HOOKS
-    backup_file = filename.endswith('~')
+    backup_file = str(filename).endswith('~')
 
     return matching_hook and supported_hook and not backup_file
 
@@ -48,16 +49,16 @@ def find_hook(hook_name, hooks_dir='hooks'):
     :param hooks_dir: The hook directory in the template
     :return: The absolute path to the hook script or None
     """
-    logger.debug('hooks_dir is %s', os.path.abspath(hooks_dir))
+    logger.debug('hooks_dir is %s', Path(hooks_dir).resolve())
 
-    if not os.path.isdir(hooks_dir):
+    if not Path(hooks_dir).is_dir():
         logger.debug('No hooks/dir in template_dir')
         return None
 
     scripts = []
     for hook_file in os.listdir(hooks_dir):
         if valid_hook(hook_file, hook_name):
-            scripts.append(os.path.abspath(os.path.join(hooks_dir, hook_file)))
+            scripts.append(str(Path(hooks_dir, hook_file).resolve()))
 
     if len(scripts) == 0:
         return None
@@ -100,7 +101,7 @@ def run_script_with_context(script_path, cwd, context):
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
     """
-    _, extension = os.path.splitext(script_path)
+    extension = Path(script_path).suffix
 
     with open(script_path, 'r', encoding='utf-8') as file:
         contents = file.read()

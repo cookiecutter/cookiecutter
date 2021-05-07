@@ -71,7 +71,7 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
     def raiser(*args, **kwargs):
         raise OSError()
 
-    mocker.patch("os.makedirs", raiser)
+    mocker.patch.object(Path, 'mkdir', raiser)
     uncreatable_directory = Path('protected_path')
 
     assert not utils.make_sure_path_exists(uncreatable_directory)

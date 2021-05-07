@@ -1,6 +1,6 @@
 """test_dump."""
 import json
-import os
+from pathlib import Path
 
 import pytest
 
@@ -17,7 +17,7 @@ def template_name():
 def replay_file(replay_test_dir, template_name):
     """Fixture to return a actual file name of the dump."""
     file_name = '{}.json'.format(template_name)
-    return os.path.join(replay_test_dir, file_name)
+    return str(Path(replay_test_dir, file_name))
 
 
 @pytest.fixture(autouse=True)
@@ -25,8 +25,9 @@ def remove_replay_dump(request, replay_file):
     """Remove the replay file created by tests."""
 
     def fin_remove_replay_file():
-        if os.path.exists(replay_file):
-            os.remove(replay_file)
+        replay_file_path = Path(replay_file)
+        if replay_file_path.exists():
+            replay_file_path.unlink()
 
     request.addfinalizer(fin_remove_replay_file)
 

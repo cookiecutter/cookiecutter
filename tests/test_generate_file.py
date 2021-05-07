@@ -1,6 +1,7 @@
 """Tests for `generate_file` function, part of `generate_files` function workflow."""
 import json
-import os
+import pathlib
+from pathlib import Path
 
 import pytest
 from jinja2 import FileSystemLoader
@@ -18,12 +19,12 @@ def tear_down():
     Used for all tests in this file.
     """
     yield
-    if os.path.exists('tests/files/cheese.txt'):
-        os.remove('tests/files/cheese.txt')
-    if os.path.exists('tests/files/cheese_lf_newlines.txt'):
-        os.remove('tests/files/cheese_lf_newlines.txt')
-    if os.path.exists('tests/files/cheese_crlf_newlines.txt'):
-        os.remove('tests/files/cheese_crlf_newlines.txt')
+    if Path('tests/files/cheese.txt').exists():
+        Path('tests/files/cheese.txt').unlink()
+    if Path('tests/files/cheese_lf_newlines.txt').exists():
+        Path('tests/files/cheese_lf_newlines.txt').unlink()
+    if Path('tests/files/cheese_crlf_newlines.txt').exists():
+        Path('tests/files/cheese_crlf_newlines.txt').unlink()
 
 
 @pytest.fixture
@@ -43,7 +44,7 @@ def test_generate_file(env):
         context={'cookiecutter': {'generate_file': 'cheese'}},
         env=env,
     )
-    assert os.path.isfile('tests/files/cheese.txt')
+    assert Path('tests/files/cheese.txt').is_file()
     with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
         assert generated_text == 'Testing cheese'
@@ -56,7 +57,7 @@ def test_generate_file_jsonify_filter(env):
     generate.generate_file(
         project_dir=".", infile=infile, context={'cookiecutter': data}, env=env
     )
-    assert os.path.isfile('tests/files/cheese.txt')
+    assert Path('tests/files/cheese.txt').is_file()
     with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
         assert json.loads(generated_text) == data
@@ -70,7 +71,7 @@ def test_generate_file_random_ascii_string(env, length, punctuation):
     data = {'random_string_file': 'cheese'}
     context = {"cookiecutter": data, "length": length, "punctuation": punctuation}
     generate.generate_file(project_dir=".", infile=infile, context=context, env=env)
-    assert os.path.isfile('tests/files/cheese.txt')
+    assert Path('tests/files/cheese.txt').is_file()
     with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
         assert len(generated_text) == length
@@ -90,7 +91,7 @@ def test_generate_file_with_true_condition(env):
         context={'cookiecutter': {'generate_file': 'y'}},
         env=env,
     )
-    assert os.path.isfile('tests/files/cheese.txt')
+    assert Path('tests/files/cheese.txt').is_file()
     with open('tests/files/cheese.txt', 'rt') as f:
         generated_text = f.read()
         assert generated_text == 'Testing that generate_file was y'
@@ -110,7 +111,7 @@ def test_generate_file_with_false_condition(env):
         context={'cookiecutter': {'generate_file': 'n'}},
         env=env,
     )
-    assert not os.path.isfile('tests/files/cheese.txt')
+    assert not Path('tests/files/cheese.txt').is_file()
 
 
 @pytest.fixture
@@ -121,7 +122,7 @@ def expected_msg():
         '  File "./tests/files/syntax_error.txt", line 1\n'
         '    I eat {{ syntax_error }} {# this comment is not closed}'
     )
-    return msg.replace("/", os.sep)
+    return msg.replace("/", pathlib.os.sep)
 
 
 def test_generate_file_verbose_template_syntax_error(env, expected_msg):

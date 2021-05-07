@@ -1,8 +1,8 @@
 """Collection of tests around cookiecutter's command-line interface."""
 
 import json
-import os
 import re
+from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
@@ -29,7 +29,7 @@ def remove_fake_project_dir(request):
     """Remove the fake project directory created during the tests."""
 
     def fin_remove_fake_project_dir():
-        if os.path.isdir('fake-project'):
+        if Path('fake-project').is_dir():
             utils.rmtree('fake-project')
 
     request.addfinalizer(fin_remove_fake_project_dir)
@@ -38,7 +38,7 @@ def remove_fake_project_dir(request):
 @pytest.fixture
 def make_fake_project_dir(request):
     """Create a fake project to be overwritten in the according tests."""
-    os.makedirs('fake-project')
+    Path('fake-project').mkdir()
 
 
 @pytest.fixture(params=['-V', '--version'])
@@ -68,8 +68,8 @@ def test_cli(cli_runner):
     """Test cli invocation work without flags if directory not exist."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input')
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
-    with open(os.path.join('fake-project', 'README.rst')) as f:
+    assert Path('fake-project').is_dir()
+    with open(Path('fake-project', 'README.rst')) as f:
         assert 'Project name: **Fake Project**' in f.read()
 
 
@@ -78,8 +78,8 @@ def test_cli_verbose(cli_runner):
     """Test cli invocation display log if called with `verbose` flag."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input', '-v')
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
-    with open(os.path.join('fake-project', 'README.rst')) as f:
+    assert Path('fake-project').is_dir()
+    with open(Path('fake-project', 'README.rst')) as f:
         assert 'Project name: **Fake Project**' in f.read()
 
 
@@ -216,7 +216,7 @@ def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
     result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag)
 
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
+    assert Path('fake-project').is_dir()
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
@@ -227,7 +227,7 @@ def test_cli_overwrite_if_exists_when_output_dir_exists(cli_runner, overwrite_cl
     """
     result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag)
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
+    assert Path('fake-project').is_dir()
 
 
 @pytest.fixture(params=['-o', '--output-dir'])
@@ -407,8 +407,8 @@ def test_cli_extra_context(cli_runner):
         'tests/fake-repo-pre/', '--no-input', '-v', 'project_name=Awesomez',
     )
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
-    with open(os.path.join('fake-project', 'README.rst')) as f:
+    assert Path('fake-project').is_dir()
+    with open(Path('fake-project', 'README.rst')) as f:
         assert 'Project name: **Awesomez**' in f.read()
 
 
@@ -446,7 +446,7 @@ def test_debug_file_non_verbose(cli_runner, debug_file):
 
     context_log = (
         "DEBUG cookiecutter.main: context_file is "
-        "tests/fake-repo-pre/cookiecutter.json"
+        f"{Path('tests/fake-repo-pre/cookiecutter.json')}"
     )
     assert context_log in debug_file.read_text()
     assert context_log not in result.output
@@ -473,7 +473,7 @@ def test_debug_file_verbose(cli_runner, debug_file):
 
     context_log = (
         "DEBUG cookiecutter.main: context_file is "
-        "tests/fake-repo-pre/cookiecutter.json"
+        f"{Path('tests/fake-repo-pre/cookiecutter.json')}"
     )
     assert context_log in debug_file.read_text()
     assert context_log in result.output
@@ -482,15 +482,15 @@ def test_debug_file_verbose(cli_runner, debug_file):
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
 def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path):
     """Verify --list-installed command correct invocation."""
-    fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
-    os.makedirs(os.path.dirname(user_config_path))
+    fake_template_dir = Path('fake-project').resolve().parent
+    Path(user_config_path).parent.mkdir()
     with open(user_config_path, 'w') as config_file:
         # In YAML, double quotes mean to use escape sequences.
         # Single quotes mean we will have unescaped backslahes.
         # http://blogs.perl.org/users/tinita/2018/03/
         # strings-in-yaml---to-quote-or-not-to-quote.html
         config_file.write("cookiecutters_dir: '%s'" % fake_template_dir)
-    open(os.path.join('fake-project', 'cookiecutter.json'), 'w').write('{}')
+    open(Path('fake-project', 'cookiecutter.json'), 'w').write('{}')
 
     result = cli_runner(
         '--list-installed', '--config-file', user_config_path, str(debug_file),
@@ -504,7 +504,7 @@ def test_debug_list_installed_templates_failure(
     cli_runner, debug_file, user_config_path
 ):
     """Verify --list-installed command error on invocation."""
-    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).parent.mkdir()
     with open(user_config_path, 'w') as config_file:
         config_file.write('cookiecutters_dir: "/notarealplace/"')
 
@@ -523,8 +523,8 @@ def test_directory_repo(cli_runner):
         'tests/fake-repo-dir/', '--no-input', '-v', '--directory=my-dir',
     )
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
-    with open(os.path.join("fake-project", "README.rst")) as f:
+    assert Path("fake-project").is_dir()
+    with open(Path("fake-project", "README.rst")) as f:
         assert "Project name: **Fake Project**" in f.read()
 
 
@@ -585,9 +585,6 @@ def test_cli_with_json_decoding_error(cli_runner):
     # original message from json module should be included
     pattern = 'Expecting \'{0,1}:\'{0,1} delimiter: line 1 column (19|20) \\(char 19\\)'
     assert re.search(pattern, result.output)
-    # File name should be included too...for testing purposes, just test the
-    # last part of the file. If we wanted to test the absolute path, we'd have
-    # to do some additional work in the test which doesn't seem that needed at
-    # this point.
-    path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
+
+    path = str(Path('tests', 'fake-repo-bad-json', 'cookiecutter.json').resolve())
     assert path in result.output
