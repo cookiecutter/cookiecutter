@@ -515,7 +515,8 @@ def load_context(json_object, no_input=False, verbose=True):
             if verbose and variable.description:
                 click.echo(variable.description)
 
-            while True:
+            prompting = True
+            while prompting:
                 value = prompt(variable, default)
                 if variable.validate:
                     if variable.validate.match(value):
@@ -529,7 +530,7 @@ def load_context(json_object, no_input=False, verbose=True):
                             click.echo(variable.validation_msg)
                 else:
                     # no validation defined
-                    break
+                    prompting = False
 
             if verbose:
                 width, _ = click.get_terminal_size()
