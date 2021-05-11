@@ -77,7 +77,7 @@ def apply_default_overwrites_to_context_v2(context, overwrite_default_context):
 
     for variable, overwrite in overwrite_default_context.items():
         var_dict = next(
-            (d for d in context['variables'] if d['name'] == variable), None
+            (d for d in context['template']['variables'] if d['name'] == variable), None
         )  # noqa
         if var_dict:
             if 'choices' in var_dict.keys():
@@ -110,7 +110,7 @@ def resolve_changed_variable_names(context, variables_to_resolve):
 
         new_var_name = variables_to_resolve[var_name_to_resolve]
 
-        for variable in context['variables']:
+        for variable in context['template']['variables']:
             for field_name in variable.keys():
                 if isinstance(variable[field_name], str):
                     if var_name_to_resolve in variable[field_name]:
@@ -218,7 +218,11 @@ def apply_overwrites_to_context_v2(context, extra_context):
                         replace_name = None
 
                     var_dict = next(
-                        (d for d in context['variables'] if d['name'] == xtra_ctx_name),
+                        (
+                            d
+                            for d in context['template']['variables']
+                            if d['name'] == xtra_ctx_name
+                        ),
                         None,
                     )  # noqa
                     if var_dict:
@@ -317,16 +321,17 @@ def generate_context(
         )
         raise ContextDecodingException(our_exc_message)
 
+    # TODO: this seem to dynamically accept any file name but then (in main)
+    #  has a hard requirement for cookiecutter.json
+
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
     context[file_stem] = obj
-
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
     if context_is_version_2(context[file_stem]):
         logger.debug("Context is version 2")
-
         if default_context:
             apply_overwrites_to_context_v2(obj, default_context)
         if extra_context:

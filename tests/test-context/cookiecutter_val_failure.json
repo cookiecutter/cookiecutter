@@ -1,5 +1,8 @@
 {
   "version": "2.0",
+  "requires": {
+    "cookiecutter": "2.0.0"
+  },
   "template": {
     "name": "cookiecutter-test-validation-failure",
     "variables": [

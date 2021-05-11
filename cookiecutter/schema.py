@@ -35,6 +35,7 @@ schema_2_0 = {
                 # python version constraints of the template
                 "python": {"type": "string"},
             },
+            "required": ["cookiecutter"],
             "additionalProperties": False,
         },
         # custom Jinja2 extensions to load
@@ -128,7 +129,7 @@ schema_2_0 = {
             "additionalProperties": False,
         },
     },
-    "required": ["version", "template"],
+    "required": ["version", "requires", "template"],
     "additionalProperties": False,
 }
 

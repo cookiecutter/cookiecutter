@@ -1,17 +1,22 @@
 {
-    "name": "cookiecutter-pytest-plugin",
-    "cookiecutter_version": "2.0.0",
-    "variables" : [
-        {
-            "name": "license",
-            "default": "MIT",
-            "choices": [
-                "MIT",
-                "BSD3",
-                "GNU-GPL3",
-                "Apache2",
-                "Mozilla2"
-            ]
-        }
-    ]
+    "version": "2.0",
+    "requires": {
+        "cookiecutter": "2.0.0"
+    },
+    "template": {
+        "name": "cookiecutter-pytest-plugin",
+        "variables": [
+            {
+                "name": "license",
+                "default": "MIT",
+                "choices": [
+                    "MIT",
+                    "BSD3",
+                    "GNU-GPL3",
+                    "Apache2",
+                    "Mozilla2"
+                ]
+            }
+        ]
+    }
 }

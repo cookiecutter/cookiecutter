@@ -43,10 +43,12 @@ VALID_TYPES = [
 ]
 
 SET_OF_REQUIRED_FIELDS = {
-    'name',
-    'cookiecutter_version',
-    'variables',
+    'requires',
+    'template',
+    'version',
 }
+
+# TODO unify the version checkers (here and the schema one)
 
 REGEX_COMPILE_FLAGS = {
     'ascii': re.ASCII,
@@ -412,7 +414,7 @@ class CookiecutterTemplate(object):
     Embodies all attributes of a version 2 Cookiecutter template.
     """
 
-    def __init__(self, name, cookiecutter_version, variables, **info):
+    def __init__(self, requires, template, **options):
         """
         Mandatorty Parameters
 
@@ -436,17 +438,17 @@ class CookiecutterTemplate(object):
         """
 
         # mandatory fields
-        self.name = name
-        self.cookiecutter_version = cookiecutter_version
-        self.variables = [Variable(**v) for v in variables]
+        self.name = template["name"]
+        self.cookiecutter_version = requires["cookiecutter"]
+        self.variables = [Variable(**v) for v in template["variables"]]
 
         # optional fields
-        self.authors = info.get('authors', [])
-        self.description = info.get('description', None)
-        self.keywords = info.get('keywords', [])
-        self.license = info.get('license', None)
-        self.url = info.get('url', None)
-        self.version = info.get('version', None)
+        self.authors = template.get('authors', [])
+        self.description = template.get('description', None)
+        self.keywords = template.get('keywords', [])
+        self.license = template.get('license', None)
+        self.url = template.get('url', None)
+        self.version = template.get('version', None)
 
     def __repr__(self):
         return "<{class_name} {template_name}>".format(
@@ -515,8 +517,7 @@ def load_context(json_object, no_input=False, verbose=True):
             if verbose and variable.description:
                 click.echo(variable.description)
 
-            prompting = True
-            while prompting:
+            while True:
                 value = prompt(variable, default)
                 if variable.validate:
                     if variable.validate.match(value):
@@ -530,7 +531,7 @@ def load_context(json_object, no_input=False, verbose=True):
                             click.echo(variable.validation_msg)
                 else:
                     # no validation defined
-                    prompting = False
+                    break  # pragma: no cover
 
             if verbose:
                 width, _ = click.get_terminal_size()
@@ -550,5 +551,8 @@ def load_context(json_object, no_input=False, verbose=True):
                 skip_to_variable_name
             )
         )
+
+    if 'extensions' in json_object:
+        context['extensions'] = json_object.get('extensions')
 
     return context

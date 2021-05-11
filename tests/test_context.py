@@ -59,39 +59,60 @@ def context_data_check():
         {
             'cookiecutter_context': OrderedDict(
                 [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
-                    ("variables", []),
+                    ('version', '2.0'),
+                    ('requires', OrderedDict([('cookiecutter', "2.0.0")])),
+                    (
+                        'template',
+                        OrderedDict(
+                            [("Name", "cookiecutter-pytest-plugin"), ("variables", [])]
+                        ),
+                    ),
                 ]
             )
         },
         True,
     )
 
-    context_missing_name = (
-        {
-            'cookiecutter_context': OrderedDict(
-                [("cookiecutter_version", "2.0.0"), ("variables", [])]
-            )
-        },
-        False,
-    )
-
-    context_missing_cookiecutter_version = (
-        {
-            'cookiecutter_context': OrderedDict(
-                [("name", "cookiecutter-pytest-plugin"), ("variables", [])]
-            )
-        },
-        False,
-    )
-
-    context_missing_variables = (
+    context_missing_requires = (
         {
             'cookiecutter_context': OrderedDict(
                 [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
+                    ('version', '2.0'),
+                    (
+                        'template',
+                        OrderedDict(
+                            [("Name", "cookiecutter-pytest-plugin"), ("variables", [])]
+                        ),
+                    ),
+                ]
+            )
+        },
+        False,
+    )
+
+    context_missing_version = (
+        {
+            'cookiecutter_context': OrderedDict(
+                [
+                    ('requires', OrderedDict([('cookiecutter', "2.0.0")])),
+                    (
+                        'template',
+                        OrderedDict(
+                            [("Name", "cookiecutter-pytest-plugin"), ("variables", [])]
+                        ),
+                    ),
+                ]
+            )
+        },
+        False,
+    )
+
+    context_missing_template = (
+        {
+            'cookiecutter_context': OrderedDict(
+                [
+                    ('version', '2.0'),
+                    ('requires', OrderedDict([('cookiecutter', "2.0.0")])),
                 ]
             )
         },
@@ -99,9 +120,9 @@ def context_data_check():
     )
 
     yield context_all_reqs
-    yield context_missing_name
-    yield context_missing_cookiecutter_version
-    yield context_missing_variables
+    yield context_missing_requires
+    yield context_missing_version
+    yield context_missing_template
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -118,7 +139,6 @@ def test_context_check(input_params, expected_result):
 def test_load_context_defaults():
 
     cc = load_cookiecutter('tests/test-context/cookiecutter.json')
-
     cc_cfg = context.load_context(cc['cookiecutter'], no_input=True)
 
     assert cc_cfg['full_name'] == 'Raphael Pierzina'
@@ -133,7 +153,10 @@ def test_load_context_defaults():
     assert cc_cfg['released'] is False
     assert cc_cfg['temperature'] == 77.3
     assert cc_cfg['Release-GUID'] == UUID('04f5eaa9ee7345469dccffc538b27194')
-    assert cc_cfg['extensions'] == "['jinja2_time.TimeExtension']"
+    assert cc_cfg['extensions'] == [
+        'cookiecutter.extensions.SlugifyExtension',
+        'jinja2_time.TimeExtension',
+    ]
     assert (
         cc_cfg['copy_with_out_render']
         == "['*.html', '*not_rendered_dir', 'rendered_dir/not_rendered_file.ini']"
@@ -576,7 +599,8 @@ def test_cookiecutter_template_repr():
     #  name, cookiecutter_version, variables, **info
 
     cct = context.CookiecutterTemplate(
-        'cookiecutter_template_repr_test', cookiecutter_version='2.0.0', variables=[]
+        {'cookiecutter': '2.0.0'},
+        {'name': 'cookiecutter_template_repr_test', 'variables': []},
     )
 
     assert repr(cct) == "<CookiecutterTemplate cookiecutter_template_repr_test>"
