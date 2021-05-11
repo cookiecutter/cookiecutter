@@ -26,6 +26,8 @@ import click
 
 from uuid import UUID
 
+from cookiecutter.schema import infer_schema_version
+
 logger = logging.getLogger(__name__)
 
 
@@ -57,21 +59,14 @@ def load_cookiecutter(cookiecutter_file):
 def context_data_check():
     context_all_reqs = (
         {
-            'cookiecutter_context': OrderedDict(
-                [
-                    ('version', '2.0'),
-                    ('requires', OrderedDict([('cookiecutter', "2.0.0")])),
-                    (
-                        'template',
-                        OrderedDict(
-                            [("Name", "cookiecutter-pytest-plugin"), ("variables", [])]
-                        ),
-                    ),
-                ]
-            )
+            'version': "2.0",
+            'requires': {'cookiecutter': '2.0'},
+            'template': {'name': "cookiecutter-pytest-plugin", "variables": []}
         },
-        True,
+        '2.0',
     )
+
+
 
     context_missing_requires = (
         {
@@ -87,7 +82,7 @@ def context_data_check():
                 ]
             )
         },
-        False,
+        '1.0',
     )
 
     context_missing_version = (
@@ -104,7 +99,7 @@ def context_data_check():
                 ]
             )
         },
-        False,
+        '1.0',
     )
 
     context_missing_template = (
@@ -116,7 +111,7 @@ def context_data_check():
                 ]
             )
         },
-        False,
+        '1.0',
     )
 
     yield context_all_reqs
@@ -126,14 +121,49 @@ def context_data_check():
 
 
 @pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_result', context_data_check())
-def test_context_check(input_params, expected_result):
+def test_infer_v2():
     """
     Test that a context with the required fields will be detected as a
     v2 context.
     """
-    assert context.context_is_version_2(**input_params) == expected_result
+    context_sample = {
+            'version': "2.0",
+            'requires': {'cookiecutter': '2.0'},
+            'template': {'name': "cookiecutter-pytest-plugin", "variables": []}
+        }
 
+    assert infer_schema_version(context_sample) == '2.0'
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_infer_v1():
+    """
+    Test that a context with the required fields will be detected as a
+    v2 context.
+    """
+    context_sample = {
+            'field1': "value1"
+        }
+
+    assert infer_schema_version(context_sample) == '1.0'
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_infer_fails_v2():
+    """
+    Test that a context with the required fields will be detected as a
+    v2 context.
+    """
+    context_sample = {
+            'version': "2.0",
+            'requires': {'cookiecutter': '2.0'},
+            'templat': {'name': "cookiecutter-pytest-plugin", "variables": []}
+        }
+
+    with pytest.raises(ValueError) as excinfo:
+        infer_schema_version(context_sample)
+
+    assert "Version 2 detected in context file but the file structure doesn't fit schema 2.0" in str(excinfo.value)
 
 @pytest.mark.usefixtures('clean_system')
 def test_load_context_defaults():
@@ -152,7 +182,7 @@ def test_load_context_defaults():
     assert cc_cfg['incept_year'] == 2017
     assert cc_cfg['released'] is False
     assert cc_cfg['temperature'] == 77.3
-    assert cc_cfg['Release-GUID'] == UUID('04f5eaa9ee7345469dccffc538b27194')
+    assert cc_cfg['Release-GUID'] == UUID('04f5eaa9ee7345469dccffc538b27194').hex
     assert cc_cfg['extensions'] == [
         'cookiecutter.extensions.SlugifyExtension',
         'jinja2_time.TimeExtension',

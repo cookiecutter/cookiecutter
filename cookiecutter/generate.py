@@ -22,7 +22,8 @@ from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
-from cookiecutter.context import context_is_version_2
+from cookiecutter.schema import infer_schema_version
+
 
 logger = logging.getLogger(__name__)
 
@@ -330,7 +331,7 @@ def generate_context(
     context[file_stem] = obj
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
-    if context_is_version_2(context[file_stem]):
+    if infer_schema_version(context[file_stem]) in ['2.0']:
         logger.debug("Context is version 2")
         if default_context:
             apply_overwrites_to_context_v2(obj, default_context)

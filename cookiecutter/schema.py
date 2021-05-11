@@ -192,7 +192,7 @@ def _validate(d: dict, version: str):
     jsonschema.validate(instance=d, schema=schema_versions[version])
 
 
-def detect(d: dict) -> Optional[str]:
+def infer_schema_version(d: dict) -> Optional[str]:
     """
     Detect the schema version of the specified cookiecutter.json (as Python dict).
     The schema will not be validated, this function will only try to return the schema version.
@@ -202,16 +202,18 @@ def detect(d: dict) -> Optional[str]:
     :return: the schema version or None, if no version was detected
     """
     # try to validate against the declared version
-    if "version" in d:
+    if "version" in d and d["version"] in schema_versions:
         try:
             _validate(d, d["version"])
             return d["version"]
-        except (ValueError, ValidationError):
-            pass
+        except ValidationError:
+            raise ValueError("Version 2 detected in context file but "
+                             "the file structure doesn't fit schema 2.0")
+
     # no version was declared or the declaration was invalid, fallback to schema 1.0
     try:
         _validate(d, '1.0')
         return '1.0'
     except ValidationError:
         # nope, this does not appear to be a valid cookiecutter.json
-        return None
+        raise ValueError("The cookiecutter.json file matches no known schema")

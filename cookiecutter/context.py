@@ -61,21 +61,6 @@ REGEX_COMPILE_FLAGS = {
 }
 
 
-def context_is_version_2(cookiecutter_context):
-    """
-    Return True if the cookiecutter_context meets the current requirements for
-    a version 2 cookiecutter.json file format.
-    """
-    # This really is not sufficient since a v1 context could define each of
-    # these fields; perhaps a more thorough test would be to also check if the
-    # 'variables' field was defined as a list of OrderedDict items.
-    # TODO: extend this check
-    if (cookiecutter_context.keys() & SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
-        return True
-    else:
-        return False
-
-
 def prompt_string(variable, default):
     return click.prompt(
         variable.prompt,

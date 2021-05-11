@@ -3,7 +3,7 @@ import json
 import pytest
 from jsonschema import ValidationError
 
-from cookiecutter.schema import detect, validate
+from cookiecutter.schema import infer_schema_version, validate
 
 
 def test_validate_1_0():
@@ -77,18 +77,18 @@ def test_validate_fail_additions_3():
 def test_detect_1_0():
     # testing a version 1 withou version in it
     d = get_sample_cookiecutter('1.0.1')
-    assert detect(d) == '1.0'
+    assert infer_schema_version(d) == '1.0'
 
 
 def test_detect_2_0():
     d = get_sample_cookiecutter('2.0')
-    assert detect(d) == '2.0'
+    assert infer_schema_version(d) == '2.0'
 
 
 def test_detect_invalid():
     d = get_sample_cookiecutter('2.0')
     d['version'] = "2.42"
-    assert detect(d) is None
+    assert infer_schema_version(d) is None
 
 
 def get_sample_cookiecutter(version='2.0.0'):

@@ -15,7 +15,8 @@ from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
 
-from .context import context_is_version_2, load_context
+from .context import load_context
+from cookiecutter.schema import infer_schema_version
 
 logger = logging.getLogger(__name__)
 
@@ -95,7 +96,7 @@ def cookiecutter(
 
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
-        if context_is_version_2(context['cookiecutter']):
+        if infer_schema_version(context['cookiecutter']) in ['2.0']:
             context['cookiecutter'] = load_context(
                 context[u'cookiecutter'], no_input=no_input, verbose=True
             )
