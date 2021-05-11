@@ -240,7 +240,8 @@ def deserialize_float(value):
 
 
 def deserialize_uuid(value):
-    return click.UUID(value)
+    # standard UUID is not JSON Serializable
+    return click.UUID(value).hex
 
 
 def deserialize_json(value):
@@ -532,7 +533,6 @@ def load_context(json_object, no_input=False, verbose=True):
                 else:
                     # no validation defined
                     break  # pragma: no cover
-
             if verbose:
                 width, _ = click.get_terminal_size()
                 click.echo('-' * width)
