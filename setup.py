@@ -9,13 +9,12 @@ with open('README.md', encoding='utf-8') as readme_file:
 
 requirements = [
     'binaryornot>=0.4.4',
-    'Jinja2<4.0.0',
+    'Jinja2>=2.7,<4.0.0',
     'click>=7.0',
     'pyyaml>=5.3.1',
     'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
-    'MarkupSafe<2.0.0',
 ]
 
 setup(
