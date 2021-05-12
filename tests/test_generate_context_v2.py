@@ -173,6 +173,50 @@ def context_data():
         },
     )
 
+    context_choices_with_default = (
+        {
+            'context_file': 'tests/test-generate-context-v2/test_choices.json',
+            'default_context': {'license': 'Apache2'},
+        },
+        {
+            "test_choices": OrderedDict(
+                [
+                    ("version", "2.0"),
+                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
+                    (
+                        "template",
+                        OrderedDict(
+                            [
+                                ("name", "cookiecutter-pytest-plugin"),
+                                (
+                                    "variables",
+                                    [
+                                        OrderedDict(
+                                            [
+                                                ("name", "license"),
+                                                ("type", "string"),
+                                                ("default", "Apache2"),
+                                                (
+                                                    "choices",
+                                                    [
+                                                        "Apache2",
+                                                        "MIT",
+                                                        "BSD3",
+                                                        "GNU-GPL3",
+                                                        "Mozilla2",
+                                                    ],
+                                                ),
+                                            ]
+                                        )
+                                    ],
+                                ),
+                            ]
+                        ),
+                    ),
+                ]
+            )
+        },
+    )
     context_with_default_and_extra = (
         {
             'context_file': 'tests/test-generate-context-v2/test.json',
@@ -216,50 +260,6 @@ def context_data():
                                                 ("type", "string"),
                                             ]
                                         ),
-                                    ],
-                                ),
-                            ]
-                        ),
-                    ),
-                ]
-            )
-        },
-    )
-
-    context_choices_with_default = (
-        {
-            'context_file': 'tests/test-generate-context-v2/test_choices.json',
-            'default_context': {'license': 'Apache2'},
-        },
-        {
-            "test_choices": OrderedDict(
-                [
-                    ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
-                    (
-                        "template",
-                        OrderedDict(
-                            [
-                                ("name", "cookiecutter-pytest-plugin"),
-                                (
-                                    "variables",
-                                    [
-                                        OrderedDict(
-                                            [
-                                                ("name", "license"),
-                                                ("default", "Apache2"),
-                                                (
-                                                    "choices",
-                                                    [
-                                                        "Apache2",
-                                                        "MIT",
-                                                        "BSD3",
-                                                        "GNU-GPL3",
-                                                        "Mozilla2",
-                                                    ],
-                                                ),
-                                            ]
-                                        )
                                     ],
                                 ),
                             ]

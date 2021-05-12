@@ -1,22 +1,14 @@
 from typing import Optional
+from warnings import warn
 
 import jsonschema
-from jsonschema import ValidationError
 
 schema_1_0 = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "cookiecutter-schema-1.0",
     "type": "object",
-    # schema 1.0 is trivial: mapping from any variable name to a string or list of strings
-    "patternProperties": {
-        "^.+$": {
-            "anyOf": [
-                {"type": "string"},
-                {"type": "array", "items": {"type": "string"}},
-            ]
-        }
-    },
-    "additionalProperties": False,
+    # schema 1.0 is simply everything
+    "properties": {},
 }
 
 schema_2_0 = {
@@ -35,7 +27,6 @@ schema_2_0 = {
                 # python version constraints of the template
                 "python": {"type": "string"},
             },
-            "required": ["cookiecutter"],
             "additionalProperties": False,
         },
         # custom Jinja2 extensions to load
@@ -129,7 +120,7 @@ schema_2_0 = {
             "additionalProperties": False,
         },
     },
-    "required": ["version", "requires", "template"],
+    "required": ["version", "template"],
     "additionalProperties": False,
 }
 
@@ -157,22 +148,12 @@ def validate(d: dict, version=None) -> None:
     :raises ValueError: if the schema version is not supported
     :raises ValidationError: if schema validation was not successful
     """
-
     if version:
         # a version number has been explicitly defined
         _validate(d, version)
-    elif "version" in d:
-        # at this point we can't be sure if this is a legacy cookiecutter which happens to contain
-        # a "version" variable or a new cookiecutter with a version field
-        try:
-            # check the legacy path first
-            _validate(d, '1.0')
-        except ValidationError:
-            # not a legacy cookiecutter - use the declared version number
-            _validate(d, d['version'])
     else:
-        # assuming schema 1.0.0, since no version has been defined explicitly or implicitly
-        _validate(d, '1.0')
+        version = infer_schema_version(d)
+        _validate(d, version)
 
 
 def _validate(d: dict, version: str):
@@ -201,19 +182,16 @@ def infer_schema_version(d: dict) -> Optional[str]:
     :param d: the cookiecutter.json as Python dict
     :return: the schema version or None, if no version was detected
     """
-    # try to validate against the declared version
+    # here we make the minimal assumptions for the versions. If a file contains a version=2.0 term
+    # but contains a 1.0 schema structure, it will be considered as a broken 2.0 file
     if "version" in d and d["version"] in schema_versions:
-        try:
-            _validate(d, d["version"])
-            return d["version"]
-        except ValidationError:
-            raise ValueError("Version 2 detected in context file but "
-                             "the file structure doesn't fit schema 2.0")
+        return d["version"]
 
-    # no version was declared or the declaration was invalid, fallback to schema 1.0
-    try:
-        _validate(d, '1.0')
-        return '1.0'
-    except ValidationError:
-        # nope, this does not appear to be a valid cookiecutter.json
-        raise ValueError("The cookiecutter.json file matches no known schema")
+    if "version" in d:
+        warn(
+            " Schema version & detected."
+            " \"version\" field is reserved in Cookiecutter 2 for indicating the Schema version."
+            "Please use another variable name for safe usage"
+        )
+
+    return '1.0'

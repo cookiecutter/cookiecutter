@@ -61,12 +61,10 @@ def context_data_check():
         {
             'version': "2.0",
             'requires': {'cookiecutter': '2.0'},
-            'template': {'name': "cookiecutter-pytest-plugin", "variables": []}
+            'template': {'name': "cookiecutter-pytest-plugin", "variables": []},
         },
         '2.0',
     )
-
-
 
     context_missing_requires = (
         {
@@ -119,51 +117,6 @@ def context_data_check():
     yield context_missing_version
     yield context_missing_template
 
-
-@pytest.mark.usefixtures('clean_system')
-def test_infer_v2():
-    """
-    Test that a context with the required fields will be detected as a
-    v2 context.
-    """
-    context_sample = {
-            'version': "2.0",
-            'requires': {'cookiecutter': '2.0'},
-            'template': {'name': "cookiecutter-pytest-plugin", "variables": []}
-        }
-
-    assert infer_schema_version(context_sample) == '2.0'
-
-
-@pytest.mark.usefixtures('clean_system')
-def test_infer_v1():
-    """
-    Test that a context with the required fields will be detected as a
-    v2 context.
-    """
-    context_sample = {
-            'field1': "value1"
-        }
-
-    assert infer_schema_version(context_sample) == '1.0'
-
-
-@pytest.mark.usefixtures('clean_system')
-def test_infer_fails_v2():
-    """
-    Test that a context with the required fields will be detected as a
-    v2 context.
-    """
-    context_sample = {
-            'version': "2.0",
-            'requires': {'cookiecutter': '2.0'},
-            'templat': {'name': "cookiecutter-pytest-plugin", "variables": []}
-        }
-
-    with pytest.raises(ValueError) as excinfo:
-        infer_schema_version(context_sample)
-
-    assert "Version 2 detected in context file but the file structure doesn't fit schema 2.0" in str(excinfo.value)
 
 @pytest.mark.usefixtures('clean_system')
 def test_load_context_defaults():

@@ -307,7 +307,6 @@ def generate_context(
     :param extra_context: Dictionary containing configuration overrides
     """
     context = OrderedDict([])
-
     try:
         with open(context_file, encoding='utf-8') as file_handle:
             obj = json.load(file_handle, object_pairs_hook=OrderedDict)

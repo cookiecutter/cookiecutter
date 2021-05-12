@@ -110,7 +110,7 @@ def prompt_json(variable, default):
     # The JSON object from cookiecutter.json might be very large
     # We only show 'default'
 
-    DEFAULT_JSON = 'default'
+    default_json = 'default'
 
     def process_json(user_value):
         try:
@@ -127,13 +127,13 @@ def prompt_json(variable, default):
 
     dict_value = click.prompt(
         variable.prompt,
-        default=DEFAULT_JSON,
+        default=default_json,
         hide_input=variable.hide_input,
         type=click.STRING,
         value_proc=process_json,
     )
     # working around the default process of click
-    if dict_value == DEFAULT_JSON:
+    if dict_value == default_json:
         # Return the given default w/o any processing
         return default
     return dict_value
@@ -352,7 +352,7 @@ class Variable(object):
         # choices are somewhat special as they can be of every type
         self.choices = info.get('choices', [])
         if self.choices and default not in self.choices:
-            msg = "Variable: {var_name} has an invalid default value {default} for choices: {choices}."
+            msg = "Variable: {var_name} has invalid default value {default} for choices: {choices}."
             raise ValueError(
                 msg.format(
                     var_name=self.name, default=self.default, choices=self.choices
@@ -375,7 +375,8 @@ class Variable(object):
             try:
                 self.validate = re.compile(self.validation, self.validation_flags)
             except re.error as e:
-                msg = "Variable: {var_name} - Validation Setup Error: Invalid RegEx '{value}' - does not compile - {err}"
+                msg = "Variable: {var_name} - Validation Setup Error:" \
+                      " Invalid RegEx '{value}' - does not compile - {err}"
                 raise ValueError(
                     msg.format(var_name=self.name, value=self.validation, err=e)
                 )
@@ -509,9 +510,8 @@ def load_context(json_object, no_input=False, verbose=True):
                     if variable.validate.match(value):
                         break
                     else:
-                        msg = "Input validation failure against regex: '{val_string}', try again!".format(
-                            val_string=variable.validation
-                        )
+                        msg = f"Input validation failure against regex: " \
+                              f"'{variable.validation}', try again!"
                         click.echo(msg)
                         if variable.validation_msg:
                             click.echo(variable.validation_msg)

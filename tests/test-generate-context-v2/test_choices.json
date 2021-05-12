@@ -8,6 +8,7 @@
         "variables": [
             {
                 "name": "license",
+                "type": "string",
                 "default": "MIT",
                 "choices": [
                     "MIT",
