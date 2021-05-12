@@ -232,9 +232,10 @@ class TestExternalHooks(object):
 
 
 @pytest.fixture()
-def dir_with_hooks(tmpdir):
+def dir_with_hooks(tmp_path):
     """Yield a directory that contains hook backup files."""
-    hooks_dir = tmpdir.mkdir('hooks')
+    hooks_dir = tmp_path.joinpath('hooks')
+    hooks_dir.mkdir()
 
     pre_hook_content = textwrap.dedent(
         """
@@ -243,7 +244,7 @@ def dir_with_hooks(tmpdir):
         print('pre_gen_project.py~')
         """
     )
-    pre_gen_hook_file = hooks_dir / 'pre_gen_project.py~'
+    pre_gen_hook_file = hooks_dir.joinpath('pre_gen_project.py~')
     pre_gen_hook_file.write_text(pre_hook_content, encoding='utf8')
 
     post_hook_content = textwrap.dedent(
@@ -254,15 +255,15 @@ def dir_with_hooks(tmpdir):
         """
     )
 
-    post_gen_hook_file = hooks_dir / 'post_gen_project.py~'
+    post_gen_hook_file = hooks_dir.joinpath('post_gen_project.py~')
     post_gen_hook_file.write_text(post_hook_content, encoding='utf8')
 
     # Make sure to yield the parent directory as `find_hooks()`
     # looks into `hooks/` in the current working directory
-    yield str(tmpdir)
+    yield str(tmp_path)
 
-    pre_gen_hook_file.remove()
-    post_gen_hook_file.remove()
+    pre_gen_hook_file.unlink()
+    post_gen_hook_file.unlink()
 
 
 def test_ignore_hook_backup_files(monkeypatch, dir_with_hooks):
