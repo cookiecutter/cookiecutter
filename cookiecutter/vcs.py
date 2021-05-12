@@ -115,6 +115,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                     'The {} branch of repository {} could not found, '
                     'have you made a typo?'.format(checkout, repo_url)
                 )
+            logger.error('git clone failed with error: %s', output)
             raise
 
     return repo_dir
