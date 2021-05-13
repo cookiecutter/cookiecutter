@@ -19,14 +19,13 @@ import pytest
 from collections import OrderedDict
 
 from cookiecutter import context
+from cookiecutter.context import validate_requirement
 
 from cookiecutter.exceptions import ContextDecodingException
 
 import click
 
 from uuid import UUID
-
-from cookiecutter.schema import infer_schema_version
 
 logger = logging.getLogger(__name__)
 
@@ -54,68 +53,6 @@ def load_cookiecutter(cookiecutter_file):
     context[file_stem] = obj
 
     return context
-
-
-def context_data_check():
-    context_all_reqs = (
-        {
-            'version': "2.0",
-            'requires': {'cookiecutter': '2.0'},
-            'template': {'name': "cookiecutter-pytest-plugin", "variables": []},
-        },
-        '2.0',
-    )
-
-    context_missing_requires = (
-        {
-            'cookiecutter_context': OrderedDict(
-                [
-                    ('version', '2.0'),
-                    (
-                        'template',
-                        OrderedDict(
-                            [("Name", "cookiecutter-pytest-plugin"), ("variables", [])]
-                        ),
-                    ),
-                ]
-            )
-        },
-        '1.0',
-    )
-
-    context_missing_version = (
-        {
-            'cookiecutter_context': OrderedDict(
-                [
-                    ('requires', OrderedDict([('cookiecutter', "2.0.0")])),
-                    (
-                        'template',
-                        OrderedDict(
-                            [("Name", "cookiecutter-pytest-plugin"), ("variables", [])]
-                        ),
-                    ),
-                ]
-            )
-        },
-        '1.0',
-    )
-
-    context_missing_template = (
-        {
-            'cookiecutter_context': OrderedDict(
-                [
-                    ('version', '2.0'),
-                    ('requires', OrderedDict([('cookiecutter', "2.0.0")])),
-                ]
-            )
-        },
-        '1.0',
-    )
-
-    yield context_all_reqs
-    yield context_missing_requires
-    yield context_missing_version
-    yield context_missing_template
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -579,10 +516,9 @@ def test_variable_str():
 
 
 def test_cookiecutter_template_repr():
-    #  name, cookiecutter_version, variables, **info
+    #  name, cookiecutter_requirement, variables, **info
 
     cct = context.CookiecutterTemplate(
-        {'cookiecutter': '2.0.0'},
         {'name': 'cookiecutter_template_repr_test', 'variables': []},
     )
 
@@ -674,3 +610,14 @@ def test_load_context_with_input_with_validation_failure_msg(mocker, capsys):
 
     assert cc_cfg['project_name'] == INPUT_1
     assert cc_cfg['module_name'] == INPUT_3
+
+
+def test_validate_requirements():
+
+    assert validate_requirement('>=5', '6.0')
+    assert validate_requirement('>2, <=3', '3')
+    assert validate_requirement('5', '5.0')
+    assert validate_requirement('==5', '5')
+    assert not validate_requirement('>=5', '5a')
+    assert not validate_requirement('>=5, <6', '6.0')
+    assert not validate_requirement('5', '5.1')

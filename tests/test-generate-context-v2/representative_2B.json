@@ -1,8 +1,8 @@
 {
     "version": "2.0",
     "requires": {
-        "cookiecutter": "2.0.0",
-        "python": ">=3.7"
+        "cookiecutter": ">1",
+        "python": ">=3.0"
     },
     "template": {
         "name": "cc-representative",

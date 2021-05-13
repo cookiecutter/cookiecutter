@@ -1,8 +1,5 @@
 {
-        "version": "2.0",
-    "requires": {
-        "cookiecutter": "2.0.0"
-    },
+    "version": "2.0",
     "template": {
         "name": "cc-representative",
         "variables": [

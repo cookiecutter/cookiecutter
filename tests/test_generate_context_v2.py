@@ -23,7 +23,7 @@ def context_data():
             "test": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
+                    ("requires", OrderedDict([("cookiecutter", ">1")])),
                     (
                         "template",
                         OrderedDict(
@@ -78,7 +78,7 @@ def context_data():
             "test": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
+                    ("requires", OrderedDict([("cookiecutter", ">1")])),
                     (
                         "template",
                         OrderedDict(
@@ -130,7 +130,7 @@ def context_data():
             "test": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
+                    ("requires", OrderedDict([("cookiecutter", ">1")])),
                     (
                         "template",
                         OrderedDict(
@@ -182,7 +182,6 @@ def context_data():
             "test_choices": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -227,7 +226,7 @@ def context_data():
             "test": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
+                    ("requires", OrderedDict([("cookiecutter", ">1")])),
                     (
                         "template",
                         OrderedDict(
@@ -279,7 +278,7 @@ def context_data():
             "test": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
+                    ("requires", OrderedDict([("cookiecutter", ">1")])),
                     (
                         "template",
                         OrderedDict(
@@ -445,7 +444,7 @@ def gen_context_data_inputs_expected():
             "test": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
+                    ("requires", OrderedDict([("cookiecutter", ">1")])),
                     (
                         "template",
                         OrderedDict(
@@ -502,7 +501,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -590,7 +588,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -675,7 +672,7 @@ def gen_context_data_inputs_expected():
                     ("version", "2.0"),
                     (
                         "requires",
-                        OrderedDict([("cookiecutter", "2.0.0"), ("python", ">=3.7")]),
+                        OrderedDict([("cookiecutter", ">1"), ("python", ">=3.0")]),
                     ),
                     (
                         "template",
@@ -765,7 +762,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -856,7 +852,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -949,7 +944,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -1030,7 +1024,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -1122,7 +1115,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -1203,7 +1195,6 @@ def gen_context_data_inputs_expected():
             "representative": OrderedDict(
                 [
                     ("version", "2.0"),
-                    ("requires", OrderedDict([("cookiecutter", "2.0.0")])),
                     (
                         "template",
                         OrderedDict(
@@ -1307,7 +1298,6 @@ def context_data_2():
             "representative": OrderedDict(
                 [
                     ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
                     (
                         "variables",
                         [

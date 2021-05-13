@@ -22,11 +22,15 @@ import logging
 import collections
 import json
 import re
+import sys
 
 import click
 from jinja2 import Environment
+from packaging import version
+from pkg_resources import require
 
 from cookiecutter.schema import validate
+from cookiecutter import __version__
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +63,30 @@ REGEX_COMPILE_FLAGS = {
     'dotall': re.DOTALL,
     'verbose': re.VERBOSE,
 }
+
+from operator import eq, lt, le, gt, ge
+
+op_mapping = {'==': eq, '<': lt, '<=': le, '>': gt, '>=': ge}
+
+
+def validate_requirement(req_long_str: str, pkg_version: str) -> bool:
+
+    req_list = map(str.strip, req_long_str.split(','))
+
+    def parse_string(req_str):
+        if req_str[:2] in op_mapping:
+            operator = op_mapping[req_str[:2]]
+            version_ref = req_str[2:]
+        elif req_str[:1] in op_mapping:
+            operator = op_mapping[req_str[:1]]
+            version_ref = req_str[1:]
+        else:
+            operator = eq
+            version_ref = req_str
+
+        return operator(version.parse(pkg_version), version.parse(version_ref))
+
+    return all(map(parse_string, req_list))
 
 
 def prompt_string(variable, default):
@@ -352,7 +380,10 @@ class Variable(object):
         # choices are somewhat special as they can be of every type
         self.choices = info.get('choices', [])
         if self.choices and default not in self.choices:
-            msg = "Variable: {var_name} has invalid default value {default} for choices: {choices}."
+            msg = (
+                "Variable: {var_name} has an invalid default "
+                "value {default} for choices: {choices}."
+            )
             raise ValueError(
                 msg.format(
                     var_name=self.name, default=self.default, choices=self.choices
@@ -375,8 +406,10 @@ class Variable(object):
             try:
                 self.validate = re.compile(self.validation, self.validation_flags)
             except re.error as e:
-                msg = "Variable: {var_name} - Validation Setup Error:" \
-                      " Invalid RegEx '{value}' - does not compile - {err}"
+                msg = (
+                    "Variable: {var_name} - Validation Setup Error:"
+                    " Invalid RegEx '{value}' - does not compile - {err}"
+                )
                 raise ValueError(
                     msg.format(var_name=self.name, value=self.validation, err=e)
                 )
@@ -401,7 +434,7 @@ class CookiecutterTemplate(object):
     Embodies all attributes of a version 2 Cookiecutter template.
     """
 
-    def __init__(self, requires, template, **options):
+    def __init__(self, template, **options):
         """
         Mandatorty Parameters
 
@@ -426,7 +459,15 @@ class CookiecutterTemplate(object):
 
         # mandatory fields
         self.name = template["name"]
-        self.cookiecutter_version = requires["cookiecutter"]
+        self.cookiecutter_requirement = options.get("requires", {}).get('cookiecutter')
+
+        if self.cookiecutter_requirement:
+            assert validate_requirement(self.cookiecutter_requirement, __version__)
+
+        self.python_version = options.get("requires", {}).get('python')
+        if self.python_version:
+            assert validate_requirement(self.python_version, sys.version.split()[0])
+
         self.variables = [Variable(**v) for v in template["variables"]]
 
         # optional fields
@@ -510,8 +551,10 @@ def load_context(json_object, no_input=False, verbose=True):
                     if variable.validate.match(value):
                         break
                     else:
-                        msg = f"Input validation failure against regex: " \
-                              f"'{variable.validation}', try again!"
+                        msg = (
+                            f"Input validation failure against regex: "
+                            f"'{variable.validation}', try again!"
+                        )
                         click.echo(msg)
                         if variable.validation_msg:
                             click.echo(variable.validation_msg)
