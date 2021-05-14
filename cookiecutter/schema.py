@@ -199,7 +199,8 @@ def infer_schema_version(d: dict) -> Optional[str]:
         warn(
             " Schema version & detected."
             " \"version\" field is reserved in Cookiecutter 2 for indicating "
-            "the Schema version. Please use another variable name for safe usage"
+            "the Schema version. Please use another variable name for safe usage",
+            UserWarning
         )
 
     return '1.0'

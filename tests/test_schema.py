@@ -49,13 +49,7 @@ def test_validate_fail_unsupported():
 
     d = get_sample_cookiecutter('2.0')
     d['version'] = "2.42"
-    with pytest.warns(
-        UserWarning,
-        match=" Schema version & detected."
-        " \"version\" field is reserved in Cookiecutter 2 "
-        "for indicating the Schema version."
-        "Please use another variable name for safe usage",
-    ):
+    with pytest.warns(UserWarning):
         validate(d)
 
 
@@ -94,13 +88,7 @@ def test_detect_2_0():
 def test_infer_fallback_1_0():
     d = get_sample_cookiecutter('2.0')
     d['version'] = "2.42"
-    with pytest.warns(
-        UserWarning,
-        match=" Schema version & detected."
-        " \"version\" field is reserved in Cookiecutter 2 "
-        "for indicating the Schema version."
-        "Please use another variable name for safe usage",
-    ):
+    with pytest.warns(UserWarning):
         assert infer_schema_version(d) == '1.0'
 
 
