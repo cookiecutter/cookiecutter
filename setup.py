@@ -26,14 +26,13 @@ with io.open('README.md', 'r', encoding='utf-8') as readme_file:
 
 requirements = [
     'binaryornot>=0.4.4',
-    'Jinja2<3.0.0',
+    'Jinja2>=2.7,<4.0.0',
     'click>=7.0',
     'poyo>=0.5.0',
     'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
     'six>=1.10',
-    'MarkupSafe<2.0.0',
 ]
 
 if sys.argv[-1] == 'readme':
