@@ -15,7 +15,7 @@ from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
 
-from .context import load_context
+from cookiecutter.context import load_context
 from cookiecutter.schema import infer_schema_version
 
 logger = logging.getLogger(__name__)

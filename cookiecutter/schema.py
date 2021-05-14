@@ -29,6 +29,13 @@ schema_2_0 = {
             },
             "additionalProperties": False,
         },
+        # set of additionnal variables for the jinja2.Environment
+        # See https://jinja.palletsprojects.com/en/3.0.x/api/#jinja2.Environment
+        "jinja2_env_vars": {
+            "type": "object",
+            "patternProperties": {"^": {"type": ["string", "boolean", "integer"]}},
+            "additionalProperties": False,
+        },
         # custom Jinja2 extensions to load
         "extensions": {"type": "array", "items": {"type": "string"}},
         # the template definition
@@ -176,22 +183,23 @@ def _validate(d: dict, version: str):
 def infer_schema_version(d: dict) -> Optional[str]:
     """
     Detect the schema version of the specified cookiecutter.json (as Python dict).
-    The schema will not be validated, this function will only try to return the schema version.
-    If the schema version could not be detected, None is returned.
+    The schema will not be validated, this function will only try to return the
+    schema version. If the schema version could not be detected, None is returned.
 
     :param d: the cookiecutter.json as Python dict
     :return: the schema version or None, if no version was detected
     """
-    # here we make the minimal assumptions for the versions. If a file contains a version=2.0 term
-    # but contains a 1.0 schema structure, it will be considered as a broken 2.0 file
+    # here we make the minimal assumptions for the versions.
+    # If a file contains a version=2.0 term but contains a 1.0
+    # schema structure, it will be considered as a broken 2.0 file
     if "version" in d and d["version"] in schema_versions:
         return d["version"]
 
     if "version" in d:
         warn(
             " Schema version & detected."
-            " \"version\" field is reserved in Cookiecutter 2 for indicating the Schema version."
-            "Please use another variable name for safe usage"
+            " \"version\" field is reserved in Cookiecutter 2 for indicating "
+            "the Schema version. Please use another variable name for safe usage"
         )
 
     return '1.0'

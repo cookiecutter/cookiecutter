@@ -77,6 +77,7 @@ def test_load_context_defaults():
         'cookiecutter.extensions.SlugifyExtension',
         'jinja2_time.TimeExtension',
     ]
+    assert cc_cfg['_jinja2_env_vars'] == {"optimized": True}
     assert (
         cc_cfg['copy_with_out_render']
         == "['*.html', '*not_rendered_dir', 'rendered_dir/not_rendered_file.ini']"
@@ -157,17 +158,17 @@ def test_load_context_defaults_skips_unknown_variable_name_warning(caplog):
         assert record.levelname == 'WARNING'
 
     assert (
-        "Processed all variables, but skip_to_variable_name 'this_variable_name_is_not_in_the_list' was never found."
-        in caplog.text
+        "Processed all variables, but skip_to_variable_name "
+        "'this_variable_name_is_not_in_the_list' was never found." in caplog.text
     )
 
 
 def test_prompt_string(mocker):
 
-    EXPECTED_VALUE = 'Input String'
+    expected_value = 'Input String'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -182,15 +183,15 @@ def test_prompt_string(mocker):
         v.prompt, default='Alpha', hide_input=v.hide_input, type=click.STRING,
     )
 
-    assert r == EXPECTED_VALUE
+    assert r == expected_value
 
 
 def test_prompt_bool(mocker):
 
-    EXPECTED_VALUE = True
+    expected_value = True
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -205,15 +206,15 @@ def test_prompt_bool(mocker):
         v.prompt, default=False, hide_input=v.hide_input, type=click.BOOL,
     )
 
-    assert r  # EXPECTED_VALUE
+    assert r  # expected_value
 
 
 def test_prompt_int(mocker):
 
-    EXPECTED_VALUE = 777
+    expected_value = 777
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -228,15 +229,15 @@ def test_prompt_int(mocker):
         v.prompt, default=1000, hide_input=v.hide_input, type=click.INT,
     )
 
-    assert r == EXPECTED_VALUE
+    assert r == expected_value
 
 
 def test_prompt_float(mocker):
 
-    EXPECTED_VALUE = 3.14
+    expected_value = 3.14
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -251,15 +252,15 @@ def test_prompt_float(mocker):
         v.prompt, default=3.0, hide_input=v.hide_input, type=click.FLOAT,
     )
 
-    assert r == EXPECTED_VALUE
+    assert r == expected_value
 
 
 def test_prompt_uuid(mocker):
 
-    EXPECTED_VALUE = '931ef56c3e7b45eea0427bac386f0a98'
+    expected_value = '931ef56c3e7b45eea0427bac386f0a98'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -274,15 +275,15 @@ def test_prompt_uuid(mocker):
         v.prompt, default=None, hide_input=v.hide_input, type=click.UUID,
     )
 
-    assert r == EXPECTED_VALUE
+    assert r == expected_value
 
 
 def test_prompt_json(monkeypatch, mocker):
 
-    EXPECTED_VALUE = '{"port": 67888, "colors": ["red", "green", "blue"]}'
+    expected_value = '{"port": 67888, "colors": ["red", "green", "blue"]}'
 
     mocker.patch(
-        'click.termui.visible_prompt_func', autospec=True, return_value=EXPECTED_VALUE,
+        'click.termui.visible_prompt_func', autospec=True, return_value=expected_value,
     )
     m = mocker.Mock()
     m.side_effect = context.Variable
@@ -297,13 +298,13 @@ def test_prompt_json(monkeypatch, mocker):
 
 def test_prompt_json_bad_json_decode_click_asks_again(mocker, capsys):
 
-    EXPECTED_BAD_VALUE = '{"port": 67888, "colors": ["red", "green", "blue"}'
-    EXPECTED_GOOD_VALUE = '{"port": 67888, "colors": ["red", "green", "blue"]}'
+    expected_bad_value = '{"port": 67888, "colors": ["red", "green", "blue"}'
+    expected_good_value = '{"port": 67888, "colors": ["red", "green", "blue"]}'
 
     mocker.patch(
         'click.termui.visible_prompt_func',
         autospec=True,
-        side_effect=[EXPECTED_BAD_VALUE, EXPECTED_GOOD_VALUE],
+        side_effect=[expected_bad_value, expected_good_value],
     )
     m = mocker.Mock()
     m.side_effect = context.Variable
@@ -319,12 +320,12 @@ def test_prompt_json_bad_json_decode_click_asks_again(mocker, capsys):
 
 
 def test_prompt_json_default(mocker):
-    EXPECTED_VALUE = 'default'
+    expected_value = 'default'
 
     cfg = '{"port": 67888, "colors": ["red", "green", "blue"]}'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -348,10 +349,10 @@ def test_prompt_json_default(mocker):
 
 def test_prompt_yes_no_default_no(mocker):
 
-    EXPECTED_VALUE = 'y'
+    expected_value = 'y'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -370,15 +371,15 @@ def test_prompt_yes_no_default_no(mocker):
         v.prompt, default='n', hide_input=v.hide_input, type=click.BOOL,
     )
 
-    assert r  # EXPECTED_VALUE
+    assert r  # expected_value
 
 
 def test_prompt_yes_no_default_yes(mocker):
 
-    EXPECTED_VALUE = 'y'
+    expected_value = 'y'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -397,20 +398,20 @@ def test_prompt_yes_no_default_yes(mocker):
         v.prompt, default='y', hide_input=v.hide_input, type=click.BOOL,
     )
 
-    assert r  # EXPECTED_VALUE
+    assert r  # expected_value
 
 
 def test_prompt_choice(mocker):
 
-    LICENSES = ['ISC', 'MIT', 'BSD3']
+    licenses = ['ISC', 'MIT', 'BSD3']
 
-    DEFAULT_LICENSE = 'ISC'
+    default_license = 'ISC'
 
-    EXPECTED_VALUE = '2'
-    EXPECTED_LICENSE = 'MIT'
+    expected_value = '2'
+    expected_license = 'MIT'
 
     mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=EXPECTED_VALUE,
+        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -418,28 +419,28 @@ def test_prompt_choice(mocker):
     v = m.side_effect(
         name='license',
         type='string',
-        default=DEFAULT_LICENSE,
-        choices=LICENSES,
+        default=default_license,
+        choices=licenses,
         prompt='Pick a License',
         hide_input=False,
     )
 
-    r = context.prompt_choice(v, default=DEFAULT_LICENSE)
+    r = context.prompt_choice(v, default=default_license)
 
-    assert r == EXPECTED_LICENSE
+    assert r == expected_license
 
 
 def test_variable_invalid_default_choice():
 
-    CHOICES = ['green', 'red', 'blue', 'yellow']
+    choices = ['green', 'red', 'blue', 'yellow']
 
     with pytest.raises(ValueError) as excinfo:
         context.Variable(
-            name='badchoice', default='purple', type='string', choices=CHOICES
+            name='badchoice', default='purple', type='string', choices=choices
         )
 
     assert 'Variable: badchoice has an invalid default value purple for choices: {choices}'.format(
-        choices=CHOICES
+        choices=choices
     ) in str(
         excinfo.value
     )
@@ -447,24 +448,24 @@ def test_variable_invalid_default_choice():
 
 def test_variable_validation_compile_exception():
 
-    VAR_NAME = 'module_name'
-    BAD_REGEX_STRING = '^[a-z_+$'  # Missing a closing square-bracket (])
+    var_name = 'module_name'
+    bad_regex_string = '^[a-z_+$'  # Missing a closing square-bracket (])
 
     with pytest.raises(ValueError) as excinfo:
         context.Variable(
-            VAR_NAME,
+            var_name,
             default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
             prompt="Please enter a name for your base python module",
             type='string',
-            validation=BAD_REGEX_STRING,
+            validation=bad_regex_string,
             validation_flags=['ignorecase'],
             hide_input=True,
         )
 
-    assert "Variable: {var_name} - Validation Setup Error: " "Invalid RegEx '{value}' - does not compile - ".format(
-        var_name=VAR_NAME, value=BAD_REGEX_STRING
-    ) in str(
-        excinfo.value
+    assert (
+        f"Variable: {var_name} - Validation Setup Error: "
+        f"Invalid RegEx '{bad_regex_string}' - does not compile - "
+        in str(excinfo.value)
     )
 
 
@@ -559,51 +560,51 @@ def test_cookiecutter_template_repr():
 def test_load_context_with_input_chioces(mocker):
     cc = load_cookiecutter('tests/test-context/cookiecutter_choices.json')
 
-    INPUT_1 = 'E.R. Uber'
-    INPUT_2 = 'eruber@gmail.com'
-    INPUT_3 = '2'  # 'MIT'
+    input_1 = 'E.R. Uber'
+    input_2 = 'eruber@gmail.com'
+    input_3 = '2'  # 'MIT'
     mocker.patch(
         'click.termui.visible_prompt_func',
         autospec=True,
-        side_effect=[INPUT_1, INPUT_2, INPUT_3],
+        side_effect=[input_1, input_2, input_3],
     )
 
     cc_cfg = context.load_context(cc['cookiecutter_choices'], no_input=False)
 
-    assert cc_cfg['full_name'] == INPUT_1
-    assert cc_cfg['email'] == INPUT_2
+    assert cc_cfg['full_name'] == input_1
+    assert cc_cfg['email'] == input_2
     assert cc_cfg['license'] == 'MIT'
 
 
 def test_load_context_with_input_with_validation_success(mocker):
     cc = load_cookiecutter('tests/test-context/cookiecutter_val_success.json')
 
-    INPUT_1 = 'Image Module Maker'
-    INPUT_2 = ''
+    input_1 = 'Image Module Maker'
+    input_2 = ''
     mocker.patch(
         'click.termui.visible_prompt_func',
         autospec=True,
-        side_effect=[INPUT_1, INPUT_2],
+        side_effect=[input_1, input_2],
     )
 
     logger.debug(cc)
 
     cc_cfg = context.load_context(cc['cookiecutter_val_success'], no_input=False)
 
-    assert cc_cfg['project_name'] == INPUT_1
+    assert cc_cfg['project_name'] == input_1
     assert cc_cfg['module_name'] == 'image_module_maker'
 
 
 def test_load_context_with_input_with_validation_failure(mocker, capsys):
     cc = load_cookiecutter('tests/test-context/cookiecutter_val_failure.json')
 
-    INPUT_1 = '6 Debug Shell'
-    INPUT_2 = ''
-    INPUT_3 = 'debug_shell'
+    input_1 = '6 Debug Shell'
+    input_2 = ''
+    input_3 = 'debug_shell'
     mocker.patch(
         'click.termui.visible_prompt_func',
         autospec=True,
-        side_effect=[INPUT_1, INPUT_2, INPUT_3],
+        side_effect=[input_1, input_2, input_3],
     )
 
     cc_cfg = context.load_context(cc['cookiecutter_val_failure'], no_input=False)
@@ -613,20 +614,20 @@ def test_load_context_with_input_with_validation_failure(mocker, capsys):
     msg = "Input validation failure against regex: '^[a-z_]+$', try again!"
     assert msg in out
 
-    assert cc_cfg['project_name'] == INPUT_1
-    assert cc_cfg['module_name'] == INPUT_3
+    assert cc_cfg['project_name'] == input_1
+    assert cc_cfg['module_name'] == input_3
 
 
 def test_load_context_with_input_with_validation_failure_msg(mocker, capsys):
     cc = load_cookiecutter('tests/test-context/cookiecutter_val_failure_msg.json')
 
-    INPUT_1 = '6 Debug Shell'
-    INPUT_2 = ''
-    INPUT_3 = 'debug_shell'
+    input_1 = '6 Debug Shell'
+    input_2 = ''
+    input_3 = 'debug_shell'
     mocker.patch(
         'click.termui.visible_prompt_func',
         autospec=True,
-        side_effect=[INPUT_1, INPUT_2, INPUT_3],
+        side_effect=[input_1, input_2, input_3],
     )
 
     cc_cfg = context.load_context(cc['cookiecutter_val_failure_msg'], no_input=False)
@@ -639,8 +640,8 @@ def test_load_context_with_input_with_validation_failure_msg(mocker, capsys):
     msg2 = "Really, you couldn't get this correct the first time?"
     assert msg2 in out
 
-    assert cc_cfg['project_name'] == INPUT_1
-    assert cc_cfg['module_name'] == INPUT_3
+    assert cc_cfg['project_name'] == input_1
+    assert cc_cfg['module_name'] == input_3
 
 
 def test_validate_requirements():

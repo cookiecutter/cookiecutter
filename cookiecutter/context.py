@@ -223,32 +223,32 @@ PROMPTS = {
 }
 
 
-def deserialize_string(value: str) -> str:
+def deserialize_string(value) -> str:
     return str(value)
 
 
-def deserialize_boolean(value: str) -> bool:
+def deserialize_boolean(value) -> bool:
     return bool(value)
 
 
-def deserialize_yes_no(value: str) -> bool:
+def deserialize_yes_no(value) -> bool:
     return bool(value)
 
 
-def deserialize_int(value: str) -> int:
+def deserialize_int(value) -> int:
     return int(value)
 
 
-def deserialize_float(value: str) -> float:
+def deserialize_float(value) -> float:
     return float(value)
 
 
-def deserialize_uuid(value: UUID) -> str:
+def deserialize_uuid(value) -> str:
     # standard UUID is not JSON Serializable
     return click.UUID(value).hex
 
 
-def deserialize_json(value: Dict) -> Dict:
+def deserialize_json(value) -> Dict:
     return value
 
 
@@ -489,7 +489,13 @@ class CookiecutterTemplate(object):
 
 
 def prompt_variable(variable, verbose):
+    """
+    Getting variable value from user in the terminal prompt
 
+    :param variable: the variable object to be prompted
+    :param verbose: option for more elaborate display
+    :return: the value provided by user
+    """
     if variable.choices:
         # which prompt depends of the variable type except if its a choice list
         prompt = prompt_choice
@@ -530,6 +536,7 @@ def load_context(json_object, no_input=False, verbose=True):
     # checking that the context shell is valid
     validate(json_object)
 
+    # setting up jinja for rendering dynamical variables
     env = Environment(extensions=['jinja2_time.TimeExtension'])
     context = collections.OrderedDict({})
 
@@ -555,6 +562,7 @@ def load_context(json_object, no_input=False, verbose=True):
         if isinstance(variable.default, str):
             variable.default = jinja_render(variable.default)
 
+        # actually getting the variable value
         if no_input or (not variable.prompt_user):
             value = variable.default
         else:
@@ -563,6 +571,7 @@ def load_context(json_object, no_input=False, verbose=True):
         deserialize = DESERIALIZERS[variable.var_type]
         context[variable.name] = deserialize(value)
 
+        # for prompt esthetics
         if verbose:
             width, _ = click.get_terminal_size()
             click.echo('-' * width)
@@ -580,7 +589,7 @@ def load_context(json_object, no_input=False, verbose=True):
             f"'{skip_to_variable_name}' was never found."
         )
 
-    if 'extensions' in json_object:
-        context['_extensions'] = json_object.get('extensions')
+    context['_extensions'] = json_object.get('extensions')
+    context['_jinja2_env_vars'] = json_object.get('jinja2_env_vars')
 
     return context

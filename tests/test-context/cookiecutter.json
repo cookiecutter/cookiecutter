@@ -8,6 +8,9 @@
     "cookiecutter.extensions.SlugifyExtension",
     "jinja2_time.TimeExtension"
   ],
+  "jinja2_env_vars": {
+    "optimized": true
+  },
   "template": {
     "name": "cookiecutter-pytest-plugin",
     "version": "0.1",
@@ -40,7 +43,6 @@
       },
       {
         "name": "secret_token",
-        "default": null,
         "prompt": "Please enter your secret token",
         "type": "string",
         "hide_input": true
