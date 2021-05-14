@@ -73,7 +73,7 @@ def test_load_context_defaults():
     assert cc_cfg['released'] is False
     assert cc_cfg['temperature'] == 77.3
     assert cc_cfg['Release-GUID'] == UUID('04f5eaa9ee7345469dccffc538b27194').hex
-    assert cc_cfg['extensions'] == [
+    assert cc_cfg['_extensions'] == [
         'cookiecutter.extensions.SlugifyExtension',
         'jinja2_time.TimeExtension',
     ]
@@ -172,7 +172,9 @@ def test_prompt_string(mocker):
 
     m = mocker.Mock()
     m.side_effect = context.Variable
-    v = m.side_effect(name='name', default='', prompt='Enter Name', hide_input=False)
+    v = m.side_effect(
+        name='name', type='string', default='', prompt='Enter Name', hide_input=False
+    )
 
     r = context.prompt_string(v, default='Alpha')
 
@@ -194,7 +196,7 @@ def test_prompt_bool(mocker):
     m = mocker.Mock()
     m.side_effect = context.Variable
     v = m.side_effect(
-        name='flag', default=False, prompt='Enter a Flag', hide_input=False
+        name='flag', type='bool', default=False, prompt='Enter a Flag', hide_input=False
     )
 
     r = context.prompt_boolean(v, default=False)
@@ -216,7 +218,9 @@ def test_prompt_int(mocker):
 
     m = mocker.Mock()
     m.side_effect = context.Variable
-    v = m.side_effect(name='port', default=1000, prompt='Enter Port', hide_input=False)
+    v = m.side_effect(
+        name='port', type='int', default=1000, prompt='Enter Port', hide_input=False
+    )
 
     r = context.prompt_int(v, default=1000)
 
@@ -237,7 +241,9 @@ def test_prompt_float(mocker):
 
     m = mocker.Mock()
     m.side_effect = context.Variable
-    v = m.side_effect(name='PI', default=3.0, prompt='Enter PI', hide_input=False)
+    v = m.side_effect(
+        name='PI', type='float', default=3.0, prompt='Enter PI', hide_input=False
+    )
 
     r = context.prompt_float(v, default=3.0)
 
@@ -259,7 +265,7 @@ def test_prompt_uuid(mocker):
     m = mocker.Mock()
     m.side_effect = context.Variable
     v = m.side_effect(
-        name='uuid', default=None, prompt='Enter a UUID', hide_input=False
+        name='uuid', default=None, type='uuid', prompt='Enter a UUID', hide_input=False
     )
 
     r = context.prompt_uuid(v, default=None)
@@ -281,7 +287,7 @@ def test_prompt_json(monkeypatch, mocker):
     m = mocker.Mock()
     m.side_effect = context.Variable
     v = m.side_effect(
-        name='json', default=None, prompt='Enter Config', hide_input=False
+        name='json', type='json', default=None, prompt='Enter Config', hide_input=False
     )
 
     r = context.prompt_json(v, default=None)
@@ -302,7 +308,7 @@ def test_prompt_json_bad_json_decode_click_asks_again(mocker, capsys):
     m = mocker.Mock()
     m.side_effect = context.Variable
     v = m.side_effect(
-        name='json', default=None, prompt='Enter Config', hide_input=False
+        name='json', type='json', default=None, prompt='Enter Config', hide_input=False
     )
 
     r = context.prompt_json(v, default=None)
@@ -324,7 +330,7 @@ def test_prompt_json_default(mocker):
     m = mocker.Mock()
     m.side_effect = context.Variable
     v = m.side_effect(
-        name='json', default=None, prompt='Enter Config', hide_input=False
+        name='json', type='json', default=None, prompt='Enter Config', hide_input=False
     )
 
     r = context.prompt_json(v, default=cfg)
@@ -351,7 +357,11 @@ def test_prompt_yes_no_default_no(mocker):
     m = mocker.Mock()
     m.side_effect = context.Variable
     v = m.side_effect(
-        name='enable_docs', default='n', prompt='Enable docs', hide_input=False
+        name='enable_docs',
+        type='yes_no',
+        default='n',
+        prompt='Enable docs',
+        hide_input=False,
     )
 
     r = context.prompt_yes_no(v, default=False)
@@ -374,7 +384,11 @@ def test_prompt_yes_no_default_yes(mocker):
     m = mocker.Mock()
     m.side_effect = context.Variable
     v = m.side_effect(
-        name='enable_docs', default='y', prompt='Enable docs', hide_input=False
+        name='enable_docs',
+        type='yes_no',
+        default='y',
+        prompt='Enable docs',
+        hide_input=False,
     )
 
     r = context.prompt_yes_no(v, default=True)
@@ -403,6 +417,7 @@ def test_prompt_choice(mocker):
     m.side_effect = context.Variable
     v = m.side_effect(
         name='license',
+        type='string',
         default=DEFAULT_LICENSE,
         choices=LICENSES,
         prompt='Pick a License',
@@ -438,7 +453,7 @@ def test_variable_validation_compile_exception():
     with pytest.raises(ValueError) as excinfo:
         context.Variable(
             VAR_NAME,
-            "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
+            default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
             prompt="Please enter a name for your base python module",
             type='string',
             validation=BAD_REGEX_STRING,
@@ -446,17 +461,33 @@ def test_variable_validation_compile_exception():
             hide_input=True,
         )
 
-    assert "Variable: {var_name} - Validation Setup Error: Invalid RegEx '{value}' - does not compile - ".format(
+    assert "Variable: {var_name} - Validation Setup Error: " "Invalid RegEx '{value}' - does not compile - ".format(
         var_name=VAR_NAME, value=BAD_REGEX_STRING
     ) in str(
         excinfo.value
     )
 
 
+def test_variable_validation_bad_type():
+
+    bad_type = 'int'
+    regex_string = '^[a-z_+$]'
+
+    with pytest.raises(ValueError):
+        context.Variable(
+            'module_name',
+            prompt="Please enter a name for your base python module",
+            type=bad_type,
+            validation=regex_string,
+            validation_flags=['ignorecase'],
+            hide_input=True,
+        )
+
+
 def test_variable_forces_no_prompt_for_private_variable_names():
     v = context.Variable(
         '_private_variable_name',
-        "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
+        default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
         prompt="Please enter a name for your base python module",
         prompt_user=True,
         type='string',
@@ -472,7 +503,7 @@ def test_variable_repr():
 
     v = context.Variable(
         'module_name',
-        "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
+        default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
         prompt="Please enter a name for your base python module",
         type='string',
         validation='^[a-z_]+$',
@@ -487,7 +518,7 @@ def test_variable_str():
 
     v = context.Variable(
         'module_name',
-        "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
+        default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
         prompt="Please enter a name for your base python module",
         type='string',
         validation='^[a-z_]+$',
@@ -516,7 +547,7 @@ def test_variable_str():
 
 
 def test_cookiecutter_template_repr():
-    #  name, cookiecutter_requirement, variables, **info
+    #  name, cookiecutter_version, variables, **info
 
     cct = context.CookiecutterTemplate(
         {'name': 'cookiecutter_template_repr_test', 'variables': []},

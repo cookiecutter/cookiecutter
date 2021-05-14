@@ -4,7 +4,7 @@
 cookiecutter.context
 --------------------
 
-Process the version 2 cookiecutter context (previsously loaded via
+Process the version 2 cookiecutter context (previously loaded via
 cookiecutter.json) and handle any user input that might be associated with
 initializing the settings defined in the 'variables' OrderedDict part of the
 context.
@@ -18,41 +18,26 @@ https://github.com/hackebrot/cookiecutter/tree/new-context-format
 
 """
 
-import logging
 import collections
 import json
+import logging
 import re
 import sys
+from uuid import UUID
+from operator import eq, lt, le, gt, ge
+from typing import Dict
 
 import click
 from jinja2 import Environment
 from packaging import version
-from pkg_resources import require
 
-from cookiecutter.schema import validate
 from cookiecutter import __version__
+from cookiecutter.schema import validate
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_PROMPT = 'Please enter a value for "{variable.name}"'
 
-VALID_TYPES = [
-    'boolean',
-    'yes_no',
-    'int',
-    'float',
-    'uuid',
-    'json',
-    'string',
-]
-
-SET_OF_REQUIRED_FIELDS = {
-    'requires',
-    'template',
-    'version',
-}
-
-# TODO unify the version checkers (here and the schema one)
 
 REGEX_COMPILE_FLAGS = {
     'ascii': re.ASCII,
@@ -64,16 +49,22 @@ REGEX_COMPILE_FLAGS = {
     'verbose': re.VERBOSE,
 }
 
-from operator import eq, lt, le, gt, ge
-
 op_mapping = {'==': eq, '<': lt, '<=': le, '>': gt, '>=': ge}
 
 
 def validate_requirement(req_long_str: str, pkg_version: str) -> bool:
+    """
+    Checks if a version number fits a version requirement
 
+    :param req_long_str: string with list of version requirements (e.g ">3, <4")
+    :param pkg_version: the actual version of the package in question
+    :return: if the version fits the requirements
+    """
+    # splits the consecutive restrictions
     req_list = map(str.strip, req_long_str.split(','))
 
-    def parse_string(req_str):
+    # parse a pip style requirement
+    def validate_single_req(req_str):
         if req_str[:2] in op_mapping:
             operator = op_mapping[req_str[:2]]
             version_ref = req_str[2:]
@@ -86,7 +77,7 @@ def validate_requirement(req_long_str: str, pkg_version: str) -> bool:
 
         return operator(version.parse(pkg_version), version.parse(version_ref))
 
-    return all(map(parse_string, req_list))
+    return all(map(validate_single_req, req_list))
 
 
 def prompt_string(variable, default):
@@ -232,32 +223,32 @@ PROMPTS = {
 }
 
 
-def deserialize_string(value):
+def deserialize_string(value: str) -> str:
     return str(value)
 
 
-def deserialize_boolean(value):
+def deserialize_boolean(value: str) -> bool:
     return bool(value)
 
 
-def deserialize_yes_no(value):
+def deserialize_yes_no(value: str) -> bool:
     return bool(value)
 
 
-def deserialize_int(value):
+def deserialize_int(value: str) -> int:
     return int(value)
 
 
-def deserialize_float(value):
+def deserialize_float(value: str) -> float:
     return float(value)
 
 
-def deserialize_uuid(value):
+def deserialize_uuid(value: UUID) -> str:
     # standard UUID is not JSON Serializable
     return click.UUID(value).hex
 
 
-def deserialize_json(value):
+def deserialize_json(value: Dict) -> Dict:
     return value
 
 
@@ -278,12 +269,12 @@ class Variable(object):
     a cookiecutter version 2 context.
     """
 
-    def __init__(self, name, default, **info):
+    def __init__(self, name, type, **info):
         """
         :param name: A string containing the variable's name in the jinja2
                      context.
-        :param default: The variable's default value. Can any type defined
-                        below.
+        :param type: The variable's type. Suported types are listed in the schema
+
         :param kwargs info: Keyword/Argument pairs recognized are shown below.
 
         Recognized Keyword/Arguments, but optional:
@@ -292,8 +283,8 @@ class Variable(object):
             - `prompt` -- A string to show user when prompted for input.
             - `prompt_user` -- A boolean, if True prompt user; else no prompt.
             - `hide_input` -- A boolean, if True hide user's input.
-            - `type` -- Specifies the variable's data type see below,
-                    defaults to string.
+            - `default` -- Specify a fall back value if no input is provided
+                        (highly recommended).
             - `skip_if` -- A string of a jinja2 renderable boolean expression,
                     the variable will be skipped if it renders True.
             - `do_if` -- A string of a jinja2 renderable boolean expression,
@@ -342,21 +333,21 @@ class Variable(object):
 
         # mandatory fields
         self.name = name
-        self.default = default
+        self.var_type = type
 
         # optional fields
         self.info = info
 
         # -- DESCRIPTION -----------------------------------------------------
-        self.description = info.get('description', None)
+        self.description = info.get('description')
         # -- PROMPT ----------------------------------------------------------
         self.prompt = info.get('prompt', DEFAULT_PROMPT.format(variable=self))
 
         # -- HIDE_INPUT ------------------------------------------------------
         self.hide_input = info.get('hide_input', False)
 
-        # -- TYPE ------------------------------------------------------------
-        self.var_type = info.get('type', 'string')
+        # -- DEFAULT ------------------------------------------------------------
+        self.default = info.get('default')
 
         # -- SKIP_IF ---------------------------------------------------------
         self.skip_if = info.get('skip_if', '')
@@ -365,10 +356,10 @@ class Variable(object):
         self.do_if = info.get('do_if', '')
 
         # -- IF_YES_SKIP_TO ---------------------------------------------------------
-        self.if_yes_skip_to = info.get('if_yes_skip_to', None)
+        self.if_yes_skip_to = info.get('if_yes_skip_to')
 
         # -- IF_NO_SKIP_TO ---------------------------------------------------------
-        self.if_no_skip_to = info.get('if_no_skip_to', None)
+        self.if_no_skip_to = info.get('if_no_skip_to')
 
         # -- PROMPT_USER -----------------------------------------------------
         self.prompt_user = info.get('prompt_user', True)
@@ -377,9 +368,9 @@ class Variable(object):
             self.prompt_user = False
 
         # -- CHOICES ---------------------------------------------------------
-        # choices are somewhat special as they can be of every type
         self.choices = info.get('choices', [])
-        if self.choices and default not in self.choices:
+        # making sure that the default value is present in the choices
+        if self.choices and "default" in info and self.default not in self.choices:
             msg = (
                 "Variable: {var_name} has an invalid default "
                 "value {default} for choices: {choices}."
@@ -392,17 +383,16 @@ class Variable(object):
 
         # -- VALIDATION STARTS -----------------------------------------------
         self.validation = info.get('validation', None)
-
-        self.validation_msg = info.get('validation_msg', None)
-
-        self.validation_flag_names = info.get('validation_flags', [])
-        self.validation_flags = 0
-
-        for vflag in self.validation_flag_names:
-            self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
-
         self.validate = None
         if self.validation:
+
+            self.validation_msg = info.get('validation_msg', None)
+            self.validation_flag_names = info.get('validation_flags', [])
+
+            self.validation_flags = 0
+            for vflag in self.validation_flag_names:
+                self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
+
             try:
                 self.validate = re.compile(self.validation, self.validation_flags)
             except re.error as e:
@@ -413,6 +403,12 @@ class Variable(object):
                 raise ValueError(
                     msg.format(var_name=self.name, value=self.validation, err=e)
                 )
+
+            # -- making a few sanity checks
+            # checking fo key as default value could be 'False' or ''
+            if self.var_type != "string":
+                raise ValueError("attempting regex validation on non-string input")
+
         # -- VALIDATION ENDS -------------------------------------------------
 
     def __repr__(self):
@@ -459,14 +455,18 @@ class CookiecutterTemplate(object):
 
         # mandatory fields
         self.name = template["name"]
-        self.cookiecutter_requirement = options.get("requires", {}).get('cookiecutter')
+        self.requirements = options.get("requires")
+        self.extensions = options.get("extensions")
 
-        if self.cookiecutter_requirement:
-            assert validate_requirement(self.cookiecutter_requirement, __version__)
+        if self.requirements:
 
-        self.python_version = options.get("requires", {}).get('python')
-        if self.python_version:
-            assert validate_requirement(self.python_version, sys.version.split()[0])
+            self.cookiecutter_version = self.requirements.get('cookiecutter')
+            if self.cookiecutter_version:
+                assert validate_requirement(self.cookiecutter_version, __version__)
+
+            self.python_version = self.requirements.get('python')
+            if self.python_version:
+                assert validate_requirement(self.python_version, sys.version.split()[0])
 
         self.variables = [Variable(**v) for v in template["variables"]]
 
@@ -488,6 +488,34 @@ class CookiecutterTemplate(object):
             yield v
 
 
+def prompt_variable(variable, verbose):
+
+    if variable.choices:
+        # which prompt depends of the variable type except if its a choice list
+        prompt = prompt_choice
+    else:
+        prompt = PROMPTS[variable.var_type]
+
+    if verbose and variable.description:
+        click.echo(variable.description)
+
+    while True:
+        value = prompt(variable, variable.default)
+        if variable.validate:
+            if variable.validate.match(value):
+                return value
+            else:
+                msg = (
+                    f"Input validation failure against regex: "
+                    f"'{variable.validation}', try again!"
+                )
+                click.echo(msg)
+                if variable.validation_msg:
+                    click.echo(variable.validation_msg)
+        else:
+            return value
+
+
 def load_context(json_object, no_input=False, verbose=True):
     """
     Load a version 2 context & process the json_object for declared variables
@@ -498,75 +526,48 @@ def load_context(json_object, no_input=False, verbose=True):
                      if True, no input prompts are made, all defaults are accepted.
     :param verbose: Emit maximum variable information.
     """
+
+    # checking that the context shell is valid
+    validate(json_object)
+
     env = Environment(extensions=['jinja2_time.TimeExtension'])
     context = collections.OrderedDict({})
 
+    def jinja_render(string):
+        template = env.from_string(string)
+        return template.render(cookiecutter=context)
+
     skip_to_variable_name = None
-
-    validate(json_object)
-
     for variable in CookiecutterTemplate(**json_object):
-        if skip_to_variable_name:
-            if variable.name == skip_to_variable_name:
-                skip_to_variable_name = None
-            else:
-                # Is executed, but not marked so in coverage report, due to
-                # CPython's peephole optimizer's optimizations.
-                # See https://bitbucket.org/ned/coveragepy/issues/198/continue-marked-as-not-covered
-                # Issue #198 in coverage.py marked WONTFIX
-                continue  # pragma: no cover
 
-        if variable.skip_if:
-            skip_template = env.from_string(variable.skip_if)
-            if skip_template.render(cookiecutter=context) == 'True':
-                continue
+        # checking all scenarios for which this variable should be skipped
+        if skip_to_variable_name and variable.name != skip_to_variable_name:
+            continue
+        skip_to_variable_name = None
 
-        if variable.do_if:
-            do_template = env.from_string(variable.do_if)
-            if do_template.render(cookiecutter=context) == 'False':
-                continue
+        if variable.skip_if and jinja_render(variable.skip_if) == 'True':
+            continue
 
-        default = variable.default
+        if variable.do_if and jinja_render(variable.do_if) == 'False':
+            continue
 
-        if isinstance(default, str):
-            template = env.from_string(default)
-            default = template.render(cookiecutter=context)
-
-        deserialize = DESERIALIZERS[variable.var_type]
+        # rendering dynamical default value
+        if isinstance(variable.default, str):
+            variable.default = jinja_render(variable.default)
 
         if no_input or (not variable.prompt_user):
-            context[variable.name] = deserialize(default)
+            value = variable.default
         else:
-            if variable.choices:
-                prompt = prompt_choice
-            else:
-                prompt = PROMPTS[variable.var_type]
+            value = prompt_variable(variable, verbose)
 
-            if verbose and variable.description:
-                click.echo(variable.description)
+        deserialize = DESERIALIZERS[variable.var_type]
+        context[variable.name] = deserialize(value)
 
-            while True:
-                value = prompt(variable, default)
-                if variable.validate:
-                    if variable.validate.match(value):
-                        break
-                    else:
-                        msg = (
-                            f"Input validation failure against regex: "
-                            f"'{variable.validation}', try again!"
-                        )
-                        click.echo(msg)
-                        if variable.validation_msg:
-                            click.echo(variable.validation_msg)
-                else:
-                    # no validation defined
-                    break  # pragma: no cover
-            if verbose:
-                width, _ = click.get_terminal_size()
-                click.echo('-' * width)
+        if verbose:
+            width, _ = click.get_terminal_size()
+            click.echo('-' * width)
 
-            context[variable.name] = deserialize(value)
-
+        # updating the skipping variables for the continuation
         if variable.if_yes_skip_to and context[variable.name] is True:
             skip_to_variable_name = variable.if_yes_skip_to
 
@@ -575,12 +576,11 @@ def load_context(json_object, no_input=False, verbose=True):
 
     if skip_to_variable_name:
         logger.warning(
-            "Processed all variables, but skip_to_variable_name '{}' was never found.".format(
-                skip_to_variable_name
-            )
+            f"Processed all variables, but skip_to_variable_name "
+            f"'{skip_to_variable_name}' was never found."
         )
 
     if 'extensions' in json_object:
-        context['extensions'] = json_object.get('extensions')
+        context['_extensions'] = json_object.get('extensions')
 
     return context

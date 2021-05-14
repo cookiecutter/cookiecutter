@@ -321,9 +321,6 @@ def generate_context(
         )
         raise ContextDecodingException(our_exc_message)
 
-    # TODO: this seem to dynamically accept any file name but then (in main)
-    #  has a hard requirement for cookiecutter.json
-
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
     file_stem = file_name.split('.')[0]
