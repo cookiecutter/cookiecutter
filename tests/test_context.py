@@ -653,3 +653,24 @@ def test_validate_requirements():
     assert not validate_requirement('>=5', '5a')
     assert not validate_requirement('>=5, <6', '6.0')
     assert not validate_requirement('5', '5.1')
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_load_context_bad_python_version():
+
+    cc = load_cookiecutter('tests/test-context/cookiecutter.json')
+
+    cc['cookiecutter']['requires']['python'] = '>3, <3'
+
+    with pytest.raises(AssertionError):
+        context.load_context(cc['cookiecutter'], no_input=True)
+
+
+@pytest.mark.usefixtures('clean_system')
+def test_load_context_bad_cc_version():
+    cc = load_cookiecutter('tests/test-context/cookiecutter.json')
+
+    cc['cookiecutter']['requires']['cookiecutter'] = '2, >2.&'
+
+    with pytest.raises(AssertionError):
+        context.load_context(cc['cookiecutter'], no_input=True)
