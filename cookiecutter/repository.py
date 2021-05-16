@@ -3,26 +3,15 @@ import os
 import re
 
 from cookiecutter.exceptions import RepositoryNotFound
-from cookiecutter.vcs import clone, REPO_TYPES
+from cookiecutter.vcs import is_repo_url, clone
 from cookiecutter.zipfile import unzip
 
-REPO_REGEX = re.compile(
-    r"""
-# something like git:// ssh:// file:// etc.
-(((("""
-    + '|'.join(REPO_TYPES.keys())
-    + r""")\+)?(git|svn|ssh|file|https?):(//)?)
- |                                      # or
- (\w+@[\w\.]+)                          # something like user@...
-)
-""",
-    re.VERBOSE,
-)
+URL_REGEX = re.compile(r'''https?://''')
 
 
-def is_repo_url(value):
-    """Return True if value is a repository URL."""
-    return bool(REPO_REGEX.match(value))
+def is_url(value):
+    """Return True if value is a http/https URL."""
+    return bool(URL_REGEX.match(value))
 
 
 def is_zip_file(value):
@@ -97,7 +86,7 @@ def determine_repo_dir(
     if is_zip_file(template):
         unzipped_dir = unzip(
             zip_uri=template,
-            is_url=is_repo_url(template),
+            is_url=is_url(template),
             clone_to_dir=clone_to_dir,
             no_input=no_input,
             password=password,

@@ -50,7 +50,7 @@ from cookiecutter import exceptions, vcs
         ('svn+file:///home/johndoe/myrepo', vcs.SVN, 'file:///home/johndoe/myrepo',),
         ('svn+https://private.com/myrepo', vcs.SVN, 'https://private.com/myrepo',),
         ('svn://private.com/myrepo', vcs.SVN, 'svn://private.com/myrepo',),
-        ('svn+ssh://private.com/myrepo', vcs.SVN, 'ssh://private.com/myrepo',),
+        ('svn+ssh://private.com/myrepo', vcs.SVN, 'svn+ssh://private.com/myrepo',),
     ],
 )
 def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
@@ -65,6 +65,7 @@ def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
         'foo+bar',  # uses explicit identifier with neither 'git' nor 'hg'
         'foobar',  # no identifier but neither 'git' nor 'bitbucket' in url
         'http://norepotypespecified.com',
+        'git+svn://private.com/myrepo',
     ]
 )
 def unknown_repo_type_url(request):

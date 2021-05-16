@@ -89,25 +89,19 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
 
 
 @pytest.mark.parametrize(
-    'repo_class, input_url, repo_url, repo_name',
+    'repo_class, repo_url, repo_name',
     [
-        (vcs.Git, 'https://github.com/hello/world.git', None, 'world'),
-        (vcs.Hg, 'https://bitbucket.org/foo/bar', None, 'bar'),
-        (vcs.Git, 'git@host:gitoliterepo', 'git@host:gitoliterepo', 'gitoliterepo'),
-        (vcs.Git, 'git@gitlab.com:cookiecutter/cookiecutter.git', None, 'cookiecutter'),
-        (vcs.Git, 'git@github.com:cookiecutter/cookiecutter.git', None, 'cookiecutter'),
-        (
-            vcs.SVN,
-            'svn+https://private.com/myrepo',
-            'https://private.com/myrepo',
-            'myrepo',
-        ),
-        (vcs.SVN, 'svn://private.com/myrepo', None, 'myrepo'),
-        (vcs.SVN, 'svn+ssh://private.com/myrepo', None, 'myrepo'),
+        (vcs.Git, 'https://github.com/hello/world.git', 'world'),
+        (vcs.Hg, 'https://bitbucket.org/foo/bar', 'bar'),
+        (vcs.Git, 'git@host:gitoliterepo', 'gitoliterepo'),
+        (vcs.Git, 'git@gitlab.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
+        (vcs.Git, 'git@github.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
+        (vcs.SVN, 'svn://private.com/myrepo', 'myrepo'),
+        (vcs.SVN, 'svn+ssh://private.com/myrepo', 'myrepo'),
     ],
 )
 def test_clone_should_invoke_vcs_command(
-    mocker, clone_dir, repo_class, input_url, repo_url, repo_name
+    mocker, clone_dir, repo_class, repo_url, repo_name
 ):
     """When `clone()` is called with a git/hg repo, the corresponding VCS \
     command should be run via `subprocess.check_output()`.
@@ -117,9 +111,7 @@ def test_clone_should_invoke_vcs_command(
     * With the correct args.
 
     :param repo_class: _VCS class that should be used
-    :param input_url: Repo URL to be passed into the vcs.clone() function
     :param repo_url: Repo URL that should be cloned by the VCS
-      (defaults to input_url if set to None)
     :param repo_name: Name of subdirectory where the cloned files will be
     """
     mocker.patch(
@@ -133,14 +125,10 @@ def test_clone_should_invoke_vcs_command(
     )
     expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
 
-    # repo_url defaults to input_url
-    if repo_url is None:
-        repo_url = input_url
-
     branch = 'foobar'
 
     repo_dir = vcs.clone(
-        input_url, checkout=branch, clone_to_dir=clone_dir, no_input=True
+        repo_url, checkout=branch, clone_to_dir=clone_dir, no_input=True
     )
 
     assert repo_dir == expected_repo_dir
@@ -194,25 +182,32 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
 
 
 @pytest.mark.parametrize(
-    'error_message',
+    'error_message,repository_url',
     [
         (
-            "error: pathspec 'unknown_branch' did not match any file(s) known to git"
-        ).encode('utf-8'),
-        "hg: abort: unknown revision 'unknown_branch'!".encode('utf-8'),
-        "svn: E160006: No such revision 99999".encode('utf-8'),
+            "error: pathspec 'unknown_branch' did not match any file(s) known to git",
+            'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+        ),
+        (
+            "hg: abort: unknown revision 'unknown_branch'!",
+            'https://bitbucket.org/foo/bar.hg',
+        ),
+        ("svn: E160006: No such revision 99999", 'svn://private.com/myrepo'),
     ],
 )
-def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
+def test_clone_handles_branch_typo(mocker, clone_dir, repository_url, error_message):
     """In `clone()`, branch not found errors should raise an \
     appropriate exception."""
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
-        side_effect=[subprocess.CalledProcessError(-1, 'cmd', output=error_message)],
+        side_effect=[
+            subprocess.CalledProcessError(
+                -1, 'cmd', output=error_message.encode('utf-8')
+            )
+        ],
     )
 
-    repository_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin'
     with pytest.raises(exceptions.RepositoryCloneFailed) as err:
         vcs.clone(
             repository_url,
@@ -227,9 +222,8 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
     ).format(repository_url)
 
 
-def test_clone_unknown_clone_error(mocker, clone_dir):
-    """In clone(), unknown subprocess errors should be raised as \
-    RepositoryCloneFailed."""
+def test_clone_unknown_subprocess_error(mocker, clone_dir):
+    """In `clone()`, unknown subprocess errors should be raised."""
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
@@ -240,11 +234,9 @@ def test_clone_unknown_clone_error(mocker, clone_dir):
         ],
     )
 
-    repository_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin'
-    with pytest.raises(exceptions.RepositoryCloneFailed) as err:
+    with pytest.raises(subprocess.CalledProcessError):
         vcs.clone(
-            repository_url, clone_to_dir=clone_dir, no_input=True,
+            'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
+            clone_to_dir=clone_dir,
+            no_input=True,
         )
-    assert str(err.value) == (
-        'Cloning of Repository {} returned an error:\nSomething went wrong'
-    ).format(repository_url)
