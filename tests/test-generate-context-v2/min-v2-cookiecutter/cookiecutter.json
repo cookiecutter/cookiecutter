@@ -1,8 +1,5 @@
 {
     "version": "2.0",
-    "requires": {
-        "cookiecutter": ">=2a"
-    },
     "template": {
         "name": "cookiecutter-fake-minimun-template",
         "variables": []

@@ -29,15 +29,16 @@ schema_2_0 = {
             },
             "additionalProperties": False,
         },
-        # set of additionnal variables for the jinja2.Environment
-        # See https://jinja.palletsprojects.com/en/3.0.x/api/#jinja2.Environment
-        "jinja2_env_vars": {
+        # additional parameters for Jinja2 environment
+        # frequent use for the 'extension' parameter
+        # see all parameters option at https://jinja.palletsprojects.com/en/3.0.x/api/#jinja2.Environment
+        "jinja": {
             "type": "object",
-            "patternProperties": {"^": {"type": ["string", "boolean", "integer"]}},
-            "additionalProperties": False,
+            "additionalProperties": {
+                "type": ["string", "boolean", "integer", "array"],
+                "items": {"type": "string"},
+            },
         },
-        # custom Jinja2 extensions to load
-        "extensions": {"type": "array", "items": {"type": "string"}},
         # the template definition
         "template": {
             "type": "object",

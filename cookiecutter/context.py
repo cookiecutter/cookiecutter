@@ -529,6 +529,7 @@ def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
     :param verbose: Emit maximum variable information.
     """
 
+
     # checking that the context shell is valid
     validate(json_object)
 
@@ -585,7 +586,16 @@ def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
             f"'{skip_to_variable_name}' was never found."
         )
 
-    context['_extensions'] = json_object.get('extensions')
-    context['_jinja2_env_vars'] = json_object.get('jinja2_env_vars')
+    # TODO: here we match the v2 context to the v1 conventions for Jinja env variables
+    #  if this PR goes through, next step is to refactor the whole context
+    #  structure and the namings
+    context_parameters = json_object.get('jinja')
+    if context_parameters:
+        context['_extensions'] = context_parameters.get('extensions')
+        context['_jinja2_env_vars'] = {
+            param: context_parameters[param]
+            for param in context_parameters.keys()
+            if param != 'extensions'
+        }
 
     return context

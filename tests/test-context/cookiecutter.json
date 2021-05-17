@@ -4,12 +4,12 @@
     "cookiecutter": ">=2a",
     "python": ">=3"
   },
-  "extensions": [
+  "jinja": {
+    "optimized": true,
+    "extensions": [
     "cookiecutter.extensions.SlugifyExtension",
     "jinja2_time.TimeExtension"
-  ],
-  "jinja2_env_vars": {
-    "optimized": true
+  ]
   },
   "template": {
     "name": "cookiecutter-pytest-plugin",
