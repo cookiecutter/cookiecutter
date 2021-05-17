@@ -123,7 +123,7 @@ schema_2_0 = {
                     },
                 },
             },
-            "required": ["name"],
+            "required": ["name", "variables"],
             "additionalProperties": False,
         },
     },
@@ -187,7 +187,7 @@ def infer_schema_version(d: dict) -> Optional[str]:
     schema version. If the schema version could not be detected, None is returned.
 
     :param d: the cookiecutter.json as Python dict
-    :return: the schema version or None, if no version was detected
+    :return: the schema version, defaults to v1.0 with a warning
     """
     # here we make the minimal assumptions for the versions.
     # If a file contains a version=2.0 term but contains a 1.0
@@ -200,7 +200,7 @@ def infer_schema_version(d: dict) -> Optional[str]:
             " Schema version & detected."
             " \"version\" field is reserved in Cookiecutter 2 for indicating "
             "the Schema version. Please use another variable name for safe usage",
-            UserWarning
+            UserWarning,
         )
 
     return '1.0'

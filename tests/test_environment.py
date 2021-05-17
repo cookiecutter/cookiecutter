@@ -26,11 +26,14 @@ def test_env_should_come_with_default_extensions():
 
 def test_env_new_extensions():
     """Verify default extensions loaded with StrictEnvironment."""
-    context = {'cookiecutter': {'_extensions':
-        [
-            'cookiecutter.extensions.SlugifyExtension',
-            'jinja2.ext.InternationalizationExtension'
-        ]}}
+    context = {
+        'cookiecutter': {
+            '_extensions': [
+                'cookiecutter.extensions.SlugifyExtension',
+                'jinja2.ext.InternationalizationExtension',
+            ]
+        }
+    }
     env = StrictEnvironment(context=context, keep_trailing_newline=True)
 
     assert 'cookiecutter.extensions.SlugifyExtension' in env.extensions

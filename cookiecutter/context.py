@@ -212,6 +212,7 @@ def prompt_choice(variable, default):
     return choice_map[user_choice]
 
 
+# each variable type need specific handling in prompting
 PROMPTS = {
     'string': prompt_string,
     'boolean': prompt_boolean,
@@ -252,6 +253,7 @@ def deserialize_json(value) -> Dict:
     return value
 
 
+# mapping of functions used to process every possible click input type
 DESERIALIZERS = {
     'string': deserialize_string,
     'boolean': deserialize_boolean,
@@ -269,7 +271,7 @@ class Variable(object):
     a cookiecutter version 2 context.
     """
 
-    def __init__(self, name, type, **info):
+    def __init__(self, name: str, type: str, **info):
         """
         :param name: A string containing the variable's name in the jinja2
                      context.
@@ -430,33 +432,25 @@ class CookiecutterTemplate(object):
     Embodies all attributes of a version 2 Cookiecutter template.
     """
 
-    def __init__(self, template, **options):
+    def __init__(self, template, requires=None, extensions=None, **kwargs):
         """
         Mandatorty Parameters
 
-        :param name: A string, the cookiecutter template name
-        :param cookiecutter_version: A string containing the version of the
-            cookiecutter application that is compatible with this template.
-        :param variables: A list of OrderedDict items that describe each
-            variable in the template. These variables are essentially what
-            is found in the version 1 cookiecutter.json file.
+        :param Template: A dictionnary containing the template fields of
+        schema 2.0, including:
+        - name: the template name
+        - variables: a list of context variables
+        - additionnal template info (e.g. Authors, URL, etc.)
 
-        Optional Parameters (via \**info)
-
-        :param authors: An array of string - maintainers of the template.
-        :param description: A string, human readable description of template.
-        :param keywords: An array of string - similar to PyPI keywords.
-        :param license: A string identifying the license of the template code.
-        :param url: A string containing the URL for the template project.
-        :param version: A string containing a version identifier, ideally
-            following the semantic versioning spec.
+        :param Requires: A list of env. requirement (python version and CC version)
+        :param **kwargs: Other template info not used here
 
         """
 
         # mandatory fields
         self.name = template["name"]
-        self.requirements = options.get("requires")
-        self.extensions = options.get("extensions")
+        self.requirements = requires
+        self.extensions = extensions
 
         if self.requirements:
 
@@ -488,7 +482,7 @@ class CookiecutterTemplate(object):
             yield v
 
 
-def prompt_variable(variable, verbose):
+def prompt_variable(variable: Variable, verbose: bool):
     """
     Getting variable value from user in the terminal prompt
 
@@ -507,6 +501,8 @@ def prompt_variable(variable, verbose):
 
     while True:
         value = prompt(variable, variable.default)
+        # if a regex pattern has been used for validation, we repeat the prompting
+        # until regex validation patter has been matched
         if variable.validate:
             if variable.validate.match(value):
                 return value
@@ -522,7 +518,7 @@ def prompt_variable(variable, verbose):
             return value
 
 
-def load_context(json_object, no_input=False, verbose=True):
+def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
     """
     Load a version 2 context & process the json_object for declared variables
     in the Cookiecutter template.
