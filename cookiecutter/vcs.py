@@ -81,7 +81,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    elif repo_type == 'hg':
+    if repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
