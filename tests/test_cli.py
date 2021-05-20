@@ -238,12 +238,12 @@ def output_dir_flag(request):
     return request.param
 
 
-def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
+def test_cli_output_dir(mocker, cli_runner, output_dir_flag, clone_dir):
     """Test cli invocation with `output-dir` flag changes output directory."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
     template_path = 'tests/fake-repo-pre/'
-    result = cli_runner(template_path, output_dir_flag, output_dir)
+    result = cli_runner(template_path, output_dir_flag, str(clone_dir))
 
     assert result.exit_code == 0
     mock_cookiecutter.assert_called_once_with(
@@ -253,7 +253,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         replay=False,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
-        output_dir=output_dir,
+        output_dir=str(clone_dir),
         config_file=None,
         default_config=False,
         extra_context=None,
@@ -359,12 +359,12 @@ def test_default_user_config(mocker, cli_runner):
     )
 
 
-def test_echo_undefined_variable_error(output_dir, cli_runner):
+def test_echo_undefined_variable_error(clone_dir, cli_runner):
     """Cli invocation return error if variable undefined in template."""
     template_path = 'tests/undefined-variable/file-name/'
 
     result = cli_runner(
-        '--no-input', '--default-config', '--output-dir', output_dir, template_path,
+        '--no-input', '--default-config', '--output-dir', str(clone_dir), template_path,
     )
 
     assert result.exit_code == 1
@@ -382,19 +382,19 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
             'github_username': 'hackebrot',
             'project_slug': 'testproject',
             '_template': template_path,
-            '_output_dir': output_dir,
+            '_output_dir': str(clone_dir),
         }
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
     assert context_str in result.output
 
 
-def test_echo_unknown_extension_error(output_dir, cli_runner):
+def test_echo_unknown_extension_error(clone_dir, cli_runner):
     """Cli return error if extension incorrectly defined in template."""
     template_path = 'tests/test-extensions/unknown/'
 
     result = cli_runner(
-        '--no-input', '--default-config', '--output-dir', output_dir, template_path,
+        '--no-input', '--default-config', '--output-dir', str(clone_dir), template_path,
     )
 
     assert result.exit_code == 1
@@ -545,7 +545,7 @@ def test_cli_accept_hooks(
     mocker,
     cli_runner,
     output_dir_flag,
-    output_dir,
+    clone_dir,
     accept_hooks_arg,
     user_input,
     expected,
@@ -555,7 +555,11 @@ def test_cli_accept_hooks(
 
     template_path = "tests/fake-repo-pre/"
     result = cli_runner(
-        template_path, output_dir_flag, output_dir, accept_hooks_arg, input=user_input
+        template_path,
+        output_dir_flag,
+        str(clone_dir),
+        accept_hooks_arg,
+        input=user_input,
     )
 
     assert result.exit_code == 0
@@ -565,7 +569,7 @@ def test_cli_accept_hooks(
         False,
         replay=False,
         overwrite_if_exists=False,
-        output_dir=output_dir,
+        output_dir=str(clone_dir),
         config_file=None,
         default_config=False,
         extra_context=None,

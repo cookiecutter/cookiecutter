@@ -44,18 +44,18 @@ def mock_replay(mocker):
     mocker.patch('cookiecutter.main.dump')
 
 
-def test_api_invocation(mocker, template, output_dir, context):
+def test_api_invocation(mocker, template, clone_dir, context):
     """Verify output dir location is correctly passed."""
     mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
 
-    main.cookiecutter(template, output_dir=output_dir)
+    main.cookiecutter(template, output_dir=str(clone_dir))
 
     mock_gen_files.assert_called_once_with(
         repo_dir=template,
         context=context,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
-        output_dir=output_dir,
+        output_dir=str(clone_dir),
         accept_hooks=True,
     )
 

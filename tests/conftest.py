@@ -182,14 +182,6 @@ def user_config_file(user_dir, user_config_data):
 
 
 @pytest.fixture
-def output_dir(tmp_path):
-    """Fixture to prepare test output directory."""
-    output_path = tmp_path.joinpath("output")
-    output_path.mkdir()
-    return str(output_path)
-
-
-@pytest.fixture
 def clone_dir(tmp_path):
     """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
     Returns a str to said directory."""
