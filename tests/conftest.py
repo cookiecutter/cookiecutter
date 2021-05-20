@@ -182,9 +182,9 @@ def user_config_file(user_dir, user_config_data):
 
 
 @pytest.fixture
-def clone_dir(tmp_path):
-    """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
+def output_dir(tmp_path):
+    """Simulate creation of a directory called `output_dir` inside of `tmp_path`. \
     Returns a str to said directory."""
-    clone_dir = tmp_path.joinpath("clone_dir")
-    clone_dir.mkdir()
-    return clone_dir
+    output_dir = tmp_path.joinpath("output_dir")
+    output_dir.mkdir()
+    return output_dir

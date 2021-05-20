@@ -320,32 +320,32 @@ def undefined_context():
     }
 
 
-def test_raise_undefined_variable_file_name(clone_dir, undefined_context):
+def test_raise_undefined_variable_file_name(output_dir, undefined_context):
     """Verify correct error raised when file name cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-name/',
-            output_dir=str(clone_dir),
+            output_dir=str(output_dir),
             context=undefined_context,
         )
     error = err.value
     assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
     assert error.context == undefined_context
 
-    assert not clone_dir.joinpath('testproject').exists()
+    assert not output_dir.joinpath('testproject').exists()
 
 
 def test_raise_undefined_variable_file_name_existing_project(
-    clone_dir, undefined_context
+    output_dir, undefined_context
 ):
     """Verify correct error raised when file name cannot be rendered."""
-    testproj_path = clone_dir.joinpath('testproject')
+    testproj_path = output_dir.joinpath('testproject')
     testproj_path.mkdir()
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-name/',
-            output_dir=str(clone_dir),
+            output_dir=str(output_dir),
             context=undefined_context,
             overwrite_if_exists=True,
         )
@@ -356,27 +356,27 @@ def test_raise_undefined_variable_file_name_existing_project(
     assert testproj_path.exists()
 
 
-def test_raise_undefined_variable_file_content(clone_dir, undefined_context):
+def test_raise_undefined_variable_file_content(output_dir, undefined_context):
     """Verify correct error raised when file content cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/file-content/',
-            output_dir=str(clone_dir),
+            output_dir=str(output_dir),
             context=undefined_context,
         )
     error = err.value
     assert "Unable to create file 'README.rst'" == error.message
     assert error.context == undefined_context
 
-    assert not clone_dir.joinpath('testproject').exists()
+    assert not output_dir.joinpath('testproject').exists()
 
 
-def test_raise_undefined_variable_dir_name(clone_dir, undefined_context):
+def test_raise_undefined_variable_dir_name(output_dir, undefined_context):
     """Verify correct error raised when directory name cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/dir-name/',
-            output_dir=str(clone_dir),
+            output_dir=str(output_dir),
             context=undefined_context,
         )
     error = err.value
@@ -387,20 +387,20 @@ def test_raise_undefined_variable_dir_name(clone_dir, undefined_context):
 
     assert error.context == undefined_context
 
-    assert not clone_dir.joinpath('testproject').exists()
+    assert not output_dir.joinpath('testproject').exists()
 
 
 def test_raise_undefined_variable_dir_name_existing_project(
-    clone_dir, undefined_context
+    output_dir, undefined_context
 ):
     """Verify correct error raised when directory name cannot be rendered."""
-    testproj_path = clone_dir.joinpath('testproject')
+    testproj_path = output_dir.joinpath('testproject')
     testproj_path.mkdir()
 
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
             repo_dir='tests/undefined-variable/dir-name/',
-            output_dir=str(clone_dir),
+            output_dir=str(output_dir),
             context=undefined_context,
             overwrite_if_exists=True,
         )

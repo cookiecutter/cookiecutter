@@ -27,7 +27,7 @@ def modify_syspath(monkeypatch):
     monkeypatch.syspath_prepend('tests/test-extensions/hello_extension')
 
 
-def test_hook_with_extension(template, clone_dir):
+def test_hook_with_extension(template, output_dir):
     """Verify custom Jinja2 extension correctly work in hooks and file rendering.
 
     Each file in hooks has simple tests inside and will raise error if not
@@ -36,7 +36,7 @@ def test_hook_with_extension(template, clone_dir):
     project_dir = main.cookiecutter(
         template,
         no_input=True,
-        output_dir=str(clone_dir),
+        output_dir=str(output_dir),
         extra_context={'project_slug': 'foobar', 'name': 'Cookiemonster'},
     )
 
