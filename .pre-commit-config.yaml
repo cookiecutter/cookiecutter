@@ -34,3 +34,8 @@ repos:
           - flake8-absolute-import
           - flake8-black
           - flake8-docstrings
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.6.0
+    hooks:
+      - id: bandit
+        args: [--ini, .bandit]

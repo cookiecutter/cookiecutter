@@ -1,7 +1,7 @@
 """Helper functions for working with version control systems."""
 import logging
 import os
-import subprocess
+import subprocess  # nosec
 from shutil import which
 
 from cookiecutter.exceptions import (
@@ -92,13 +92,13 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
 
     if clone:
         try:
-            subprocess.check_output(
+            subprocess.check_output(  # nosec
                 [repo_type, 'clone', repo_url],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
             if checkout is not None:
-                subprocess.check_output(
+                subprocess.check_output(  # nosec
                     [repo_type, 'checkout', checkout],
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,
