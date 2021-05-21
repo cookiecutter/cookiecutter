@@ -656,20 +656,15 @@ def test_validate_requirements():
 
 @pytest.mark.usefixtures('clean_system')
 def test_load_context_bad_python_version():
-
     cc = load_cookiecutter('tests/test-context/cookiecutter.json')
-
     cc['cookiecutter']['requires']['python'] = '>3, <3'
-
-    with pytest.raises(AssertionError):
+    with pytest.raises(IncompatibleVersion):
         context.load_context(cc['cookiecutter'], no_input=True)
 
 
 @pytest.mark.usefixtures('clean_system')
 def test_load_context_bad_cc_version():
     cc = load_cookiecutter('tests/test-context/cookiecutter.json')
-
-    cc['cookiecutter']['requires']['cookiecutter'] = '2, >2.&'
-
-    with pytest.raises(AssertionError):
+    cc['cookiecutter']['requires']['cookiecutter'] = '2, >2.0'
+    with pytest.raises(IncompatibleVersion):
         context.load_context(cc['cookiecutter'], no_input=True)
