@@ -5,6 +5,7 @@ import shutil
 import pytest
 
 from cookiecutter import utils
+from cookiecutter.config import DEFAULT_CONFIG
 
 
 USER_CONFIG = """
@@ -15,6 +16,20 @@ replay_dir: '{replay_dir}'
 # Single quotes mean we will have unescaped backslahes.
 # http://blogs.perl.org/users/tinita/2018/03/
 # strings-in-yaml---to-quote-or-not-to-quote.html
+
+
+@pytest.fixture(autouse=True)
+def isolated_filesystem(monkeypatch, tmp_path):
+    """Ensure filesystem isolation, set the user home to a tmp_path."""
+    root_path = tmp_path.joinpath("home")
+    root_path.mkdir()
+    cookiecutters_dir = root_path.joinpath(".cookiecutters/")
+    replay_dir = root_path.joinpath(".cookiecutter_replay/")
+    monkeypatch.setitem(DEFAULT_CONFIG, 'cookiecutters_dir', str(cookiecutters_dir))
+    monkeypatch.setitem(DEFAULT_CONFIG, 'replay_dir', str(replay_dir))
+
+    monkeypatch.setenv("HOME", str(root_path))
+    monkeypatch.setenv("USERPROFILE", str(root_path))
 
 
 def backup_dir(original_dir, backup_dir):
