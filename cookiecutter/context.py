@@ -21,17 +21,17 @@ https://github.com/hackebrot/cookiecutter/tree/new-context-format
 import collections
 import json
 import logging
+import platform
 import re
-import sys
-from uuid import UUID
-from operator import eq, lt, le, gt, ge
-from typing import Dict
+from operator import eq, ge, gt, le, lt, ne
+from typing import Any, Callable, Dict, Tuple
 
 import click
 from jinja2 import Environment
 from packaging import version
 
 from cookiecutter import __version__
+from cookiecutter.exceptions import IncompatibleVersion
 from cookiecutter.schema import validate
 
 logger = logging.getLogger(__name__)
@@ -49,35 +49,56 @@ REGEX_COMPILE_FLAGS = {
     'verbose': re.VERBOSE,
 }
 
-op_mapping = {'==': eq, '<': lt, '<=': le, '>': gt, '>=': ge}
+op_mapping = {'==': eq, '<=': le, '<': lt, '>=': ge, '>': gt, '!=': ne}
 
 
-def validate_requirement(req_long_str: str, pkg_version: str) -> bool:
+def _split_version_op(version_op: str, default='==') \
+        -> Tuple[str, str, Callable[[Any, Any], bool]]:
     """
-    Checks if a version number fits a version requirement
+    Split a version string that may contain an operator and return just the version,
+    the operator and the Python function that implements this operator.
+    If no operator was detected, use the default operator instead.
+    Supported operators are ==, <=, <, >=, >, !=.
 
-    :param req_long_str: string with list of version requirements (e.g ">3, <4")
-    :param pkg_version: the actual version of the package in question
-    :return: if the version fits the requirements
+    Example: ">= 1.5.0" becomes ("1.5.0", ">=", <built-in function ge>)
+
+    :param version_op: a version string with an optional operator at the start
+    :param default: the default operator to return, if no operator was found
+    :return: a tuple of (version string, operator string, operator function)
     """
-    # splits the consecutive restrictions
-    req_list = map(str.strip, req_long_str.split(','))
+    version_op = version_op.strip()
+    for code, op in op_mapping.items():
+        if version_op.startswith(code):
+            version_str = version_op[len(code):].strip()
+            return version_str, code, op
+    return version_op, default, op_mapping[default]
 
-    # parse a pip style requirement
-    def validate_single_req(req_str):
-        if req_str[:2] in op_mapping:
-            operator = op_mapping[req_str[:2]]
-            version_ref = req_str[2:]
-        elif req_str[:1] in op_mapping:
-            operator = op_mapping[req_str[:1]]
-            version_ref = req_str[1:]
-        else:
-            operator = eq
-            version_ref = req_str
 
-        return operator(version.parse(pkg_version), version.parse(version_ref))
+def validate_requirement(requires: str, actual: str, message=None):
+    """
+    Checks if a version number fits a version requirement.
 
-    return all(map(validate_single_req, req_list))
+    Mostly adheres to PEP 440 with a few limitations:
+
+    * no wildcard version matching, e.g. "!= 3.1.*"
+    * no compatible release matching, e.g. "~= 1.4.5"
+
+    :param requires: string with list of version requirements (e.g ">=3, <4")
+    :param actual: the actual version to compare to
+    :param message: error message to use when the version check fails
+    :raises IncompatibleVersion: if a version check fails
+    """
+    # parse version numbers
+    requires_ops = [_split_version_op(s) for s in requires.split(',')]
+    version_actual = version.parse(actual)
+    # check each version
+    for version_str, op_str, op_fun in requires_ops:
+        version_requires = version.parse(version_str)
+        if not op_fun(version_actual, version_requires):
+            error_text = f"{actual} {op_str} {version_str}"
+            if message:
+                error_text = f"{message}: {error_text}"
+            raise IncompatibleVersion(error_text)
 
 
 def prompt_string(variable, default):
@@ -427,40 +448,38 @@ class Variable(object):
         return self.__repr__() + ':\n' + ',\n'.join(s)
 
 
-class CookiecutterTemplate(object):
+class CookiecutterTemplate:
     """
     Embodies all attributes of a version 2 Cookiecutter template.
     """
 
     def __init__(self, template, requires=None, extensions=None, **kwargs):
         """
-        Mandatorty Parameters
+        Mandatory Parameters
 
-        :param Template: A dictionnary containing the template fields of
-        schema 2.0, including:
-        - name: the template name
-        - variables: a list of context variables
-        - additionnal template info (e.g. Authors, URL, etc.)
-
-        :param Requires: A list of env. requirement (python version and CC version)
-        :param **kwargs: Other template info not used here
-
+        :param template: A dictionary containing the template fields of
+               schema 2.0, including:
+                - name: the template name
+                - variables: a list of context variables
+                - additional template info (e.g. Authors, URL, etc.)
+        :param requires: A list of env. requirement (python version and CC version)
+        :param extensions: a list of jinja2 environment parameters
+        :param kwargs: Other template info not used here
         """
-
         # mandatory fields
         self.name = template["name"]
         self.requirements = requires
         self.extensions = extensions
 
         if self.requirements:
-
             self.cookiecutter_version = self.requirements.get('cookiecutter')
             if self.cookiecutter_version:
-                assert validate_requirement(self.cookiecutter_version, __version__)
-
+                validate_requirement(self.cookiecutter_version, __version__,
+                                     "cookiecutter version check failed")
             self.python_version = self.requirements.get('python')
             if self.python_version:
-                assert validate_requirement(self.python_version, sys.version.split()[0])
+                validate_requirement(self.python_version, platform.python_version(),
+                                     "Python version check failed")
 
         self.variables = [Variable(**v) for v in template["variables"]]
 
@@ -528,8 +547,6 @@ def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
                      if True, no input prompts are made, all defaults are accepted.
     :param verbose: Emit maximum variable information.
     """
-
-
     # checking that the context shell is valid
     validate(json_object)
 

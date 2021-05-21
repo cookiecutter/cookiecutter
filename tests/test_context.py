@@ -8,24 +8,20 @@ Tests for `cookiecutter.context` module that handles prompts for v2 context.
 """
 from __future__ import unicode_literals
 
-import sys
-import os.path
-import time
 import json
 import logging
-
-import pytest
-
+import os.path
+import sys
+import time
 from collections import OrderedDict
+from uuid import UUID
+
+import click
+import pytest
 
 from cookiecutter import context
 from cookiecutter.context import validate_requirement
-
-from cookiecutter.exceptions import ContextDecodingException
-
-import click
-
-from uuid import UUID
+from cookiecutter.exceptions import ContextDecodingException, IncompatibleVersion
 
 logger = logging.getLogger(__name__)
 
@@ -645,14 +641,17 @@ def test_load_context_with_input_with_validation_failure_msg(mocker, capsys):
 
 
 def test_validate_requirements():
-
-    assert validate_requirement('>=5', '6.0')
-    assert validate_requirement('>2, <=3', '3')
-    assert validate_requirement('5', '5.0')
-    assert validate_requirement('==5', '5')
-    assert not validate_requirement('>=5', '5a')
-    assert not validate_requirement('>=5, <6', '6.0')
-    assert not validate_requirement('5', '5.1')
+    validate_requirement('>=5', '6.0')
+    validate_requirement('>2, <=3', '3')
+    validate_requirement('5', '5.0')
+    validate_requirement('==5', '5')
+    validate_requirement('>=2.6, !=3.0.*, !=3.1.*, !=3.2.*', '3.7.5')
+    with pytest.raises(IncompatibleVersion):
+        validate_requirement('>=5', '5a')
+    with pytest.raises(IncompatibleVersion):
+        validate_requirement('>=5, <6', '6.0')
+    with pytest.raises(IncompatibleVersion):
+        validate_requirement('5', '5.1')
 
 
 @pytest.mark.usefixtures('clean_system')
