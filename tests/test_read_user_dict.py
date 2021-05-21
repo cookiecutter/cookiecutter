@@ -97,6 +97,17 @@ def test_should_call_prompt_with_process_json(mocker):
     )
 
 
+def test_should_not_call_process_json_default_value(mocker, monkeypatch):
+    """Make sure that `process_json` is not called when using default value."""
+    mock_process_json = mocker.patch('cookiecutter.prompt.process_json', autospec=True)
+
+    runner = click.testing.CliRunner()
+    with runner.isolation(input="\n"):
+        read_user_dict('name', {'project_slug': 'pytest-plugin'})
+
+    mock_process_json.assert_not_called()
+
+
 def test_read_user_dict_default_value(mocker):
     """Make sure that `read_user_dict` returns the default value.
 
