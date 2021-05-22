@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 
 class VCS:
     """Abstract base VCS class. Handles the cloning of VCS repositories."""
+
     cmd = 'xyz'
     """VCS command"""
 
@@ -141,17 +142,18 @@ class VCS:
         :param repo_dir: Path of the cloned repository
         :raise subprocess.CalledProcessError: if the VCS returned an error
         """
-        subprocess.check_output(
+        subprocess.check_output(  # nosec
             [cls.cmd, 'clone', repo_url], cwd=clone_to_dir, stderr=subprocess.STDOUT,
         )
         if checkout is not None:
-            subprocess.check_output(
+            subprocess.check_output(  # nosec
                 [cls.cmd, 'checkout', checkout], cwd=repo_dir, stderr=subprocess.STDOUT,
             )
 
 
 class Git(VCS):
     """Git VCS class."""
+
     cmd = 'git'
 
     identifiers = ['git']
@@ -174,6 +176,7 @@ class Git(VCS):
 
 class Hg(VCS):
     """Mercury VCS class."""
+
     cmd = 'hg'
 
     identifiers = ['hg', 'bitbucket']
@@ -186,6 +189,7 @@ class Hg(VCS):
 
 class SVN(VCS):
     """Subversion VCS class."""
+
     cmd = 'svn'
 
     identifiers = ['svn']
@@ -227,7 +231,9 @@ class SVN(VCS):
         if checkout:
             command += ['-r', checkout]
 
-        subprocess.check_output(command, cwd=clone_to_dir, stderr=subprocess.STDOUT)
+        subprocess.check_output(  # nosec
+            command, cwd=clone_to_dir, stderr=subprocess.STDOUT
+        )
 
 
 REPO_TYPES = [
