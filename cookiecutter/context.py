@@ -69,7 +69,7 @@ def _split_version_op(
     version_op = version_op.strip()
     for code, op in op_mapping.items():
         if version_op.startswith(code):
-            version_str = version_op[len(code):].strip()
+            version_str = version_op[len(code) :].strip()  # noqa
             return version_str, code, op
     return version_op, default, op_mapping[default]
 
@@ -562,7 +562,7 @@ def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
     validate(json_object)
 
     # setting up jinja for rendering dynamical variables
-    env = Environment(extensions=['jinja2_time.TimeExtension'])
+    env = Environment(extensions=['jinja2_time.TimeExtension'])  # nosec
     context = collections.OrderedDict({})
 
     def jinja_render(string):
