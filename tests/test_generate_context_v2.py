@@ -341,7 +341,7 @@ def test_generate_context_extra_ctx_invalid():
             extra_context='should_be_a_list_or_a_dictionary',
         )
 
-    msg = "Extra context must be a dictionary or a list of dictionaries!"
+    msg = "Extra context must be a dictionary or a list of dictionaries"
     assert msg in str(excinfo.value)
 
 

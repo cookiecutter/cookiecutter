@@ -1,3 +1,4 @@
+"""JSON Schema definition for cookiecutter.json"""
 from typing import Optional
 from warnings import warn
 
@@ -31,7 +32,8 @@ schema_2_0 = {
         },
         # additional parameters for Jinja2 environment
         # frequent use for the 'extension' parameter
-        # see all parameters option at https://jinja.palletsprojects.com/en/3.0.x/api/#jinja2.Environment
+        # see all parameter options at
+        # https://jinja.palletsprojects.com/en/3.0.x/api/#jinja2.Environment
         "jinja": {
             "type": "object",
             "additionalProperties": {
@@ -144,7 +146,7 @@ schema_chronology = ['1.0', '2.0']
 
 def validate(d: dict, version=None) -> None:
     """
-    Validate the a cookiecutter.json (as Python dict) against the specified cookiecutter schema
+    Validate a cookiecutter.json (as Python dict) against the specified cookiecutter schema
     version. If the version is undefined, the version that is declared in the cookiecutter.json
     is used. If no version declaration is found, schema version 1.0 is assumed.
     Raises a ValidationError if schema validation failed. Raises a ValueError, if the specified
