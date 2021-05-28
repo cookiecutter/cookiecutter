@@ -12,14 +12,14 @@ WINDOWS = sys.platform.startswith('win')
 
 
 @pytest.fixture(scope='function')
-def remove_additional_folders(tmpdir):
+def remove_additional_folders(tmp_path):
     """Remove some special folders which are created by the tests."""
     yield
     directories_to_delete = [
         'tests/test-pyhooks/inputpyhooks',
         'inputpyhooks',
         'inputhooks',
-        os.path.join(str(tmpdir), 'test-shellhooks'),
+        tmp_path.joinpath('test-shellhooks'),
         'tests/test-hooks',
     ]
     for directory in directories_to_delete:
@@ -170,7 +170,7 @@ def test_run_failing_hook_preserves_existing_output_directory():
 
 @pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux only test")
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_shell_hooks(tmpdir):
+def test_run_shell_hooks(tmp_path):
     """Verify pre and post generate project shell hooks executed.
 
     This test for .sh files.
@@ -178,21 +178,21 @@ def test_run_shell_hooks(tmpdir):
     generate.generate_files(
         context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks/',
-        output_dir=os.path.join(str(tmpdir), 'test-shellhooks'),
+        output_dir=tmp_path.joinpath('test-shellhooks'),
     )
-    shell_pre_file = os.path.join(
-        str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
+    shell_pre_file = tmp_path.joinpath(
+        'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
     )
-    shell_post_file = os.path.join(
-        str(tmpdir), 'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
+    shell_post_file = tmp_path.joinpath(
+        'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
     )
-    assert os.path.exists(shell_pre_file)
-    assert os.path.exists(shell_post_file)
+    assert shell_pre_file.exists()
+    assert shell_post_file.exists()
 
 
 @pytest.mark.skipif(not sys.platform.startswith('win'), reason="Win only test")
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_shell_hooks_win(tmpdir):
+def test_run_shell_hooks_win(tmp_path):
     """Verify pre and post generate project shell hooks executed.
 
     This test for .bat files.
@@ -200,16 +200,16 @@ def test_run_shell_hooks_win(tmpdir):
     generate.generate_files(
         context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks-win/',
-        output_dir=os.path.join(str(tmpdir), 'test-shellhooks-win'),
+        output_dir=tmp_path.joinpath('test-shellhooks-win'),
     )
-    shell_pre_file = os.path.join(
-        str(tmpdir), 'test-shellhooks-win', 'inputshellhooks', 'shell_pre.txt'
+    shell_pre_file = tmp_path.joinpath(
+        'test-shellhooks-win', 'inputshellhooks', 'shell_pre.txt'
     )
-    shell_post_file = os.path.join(
-        str(tmpdir), 'test-shellhooks-win', 'inputshellhooks', 'shell_post.txt'
+    shell_post_file = tmp_path.joinpath(
+        'test-shellhooks-win', 'inputshellhooks', 'shell_post.txt'
     )
-    assert os.path.exists(shell_pre_file)
-    assert os.path.exists(shell_post_file)
+    assert shell_pre_file.exists()
+    assert shell_post_file.exists()
 
 
 @pytest.mark.usefixtures("clean_system", "remove_additional_folders")

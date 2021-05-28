@@ -18,16 +18,11 @@ def context():
 
 
 @pytest.fixture
-def output_dir(tmpdir):
-    """Fixture to prepare test output directory."""
-    return str(tmpdir.mkdir('output'))
-
-
-@pytest.fixture
-def template(tmpdir):
+def template(tmp_path):
     """Fixture to prepare test template directory."""
-    template_dir = tmpdir.mkdir('template')
-    template_dir.join('cookiecutter.json').ensure(file=True)
+    template_dir = tmp_path.joinpath("template")
+    template_dir.mkdir()
+    template_dir.joinpath('cookiecutter.json').touch()
     return str(template_dir)
 
 

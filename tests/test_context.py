@@ -21,7 +21,8 @@ import pytest
 
 from cookiecutter import context
 from cookiecutter.context import validate_requirement
-from cookiecutter.exceptions import ContextDecodingException, IncompatibleVersion
+from cookiecutter.exceptions import ContextDecodingException, IncompatibleVersion, \
+    InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 
@@ -427,19 +428,12 @@ def test_prompt_choice(mocker):
 
 
 def test_variable_invalid_default_choice():
-
     choices = ['green', 'red', 'blue', 'yellow']
-
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(InvalidConfiguration) as excinfo:
         context.Variable(
-            name='badchoice', default='purple', type='string', choices=choices
-        )
-
-    assert 'Variable: badchoice has an invalid default value purple for choices: {choices}'.format(
-        choices=choices
-    ) in str(
-        excinfo.value
-    )
+            name='badchoice', default='purple', type='string', choices=choices)
+    assert (f'Variable: badchoice has an invalid default value purple for choices: {choices}'
+            in str(excinfo.value))
 
 
 def test_variable_validation_compile_exception():
@@ -447,7 +441,7 @@ def test_variable_validation_compile_exception():
     var_name = 'module_name'
     bad_regex_string = '^[a-z_+$'  # Missing a closing square-bracket (])
 
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(InvalidConfiguration) as excinfo:
         context.Variable(
             var_name,
             default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
@@ -470,7 +464,7 @@ def test_variable_validation_bad_type():
     bad_type = 'int'
     regex_string = '^[a-z_+$]'
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidConfiguration):
         context.Variable(
             'module_name',
             prompt="Please enter a name for your base python module",
@@ -481,12 +475,11 @@ def test_variable_validation_bad_type():
         )
 
 
-def test_variable_forces_no_prompt_for_private_variable_names():
+def test_variable_defaults_to_no_prompt_for_private_variable_names():
     v = context.Variable(
         '_private_variable_name',
         default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
         prompt="Please enter a name for your base python module",
-        prompt_user=True,
         type='string',
         validation='^[a-z_]+$',
         validation_flags=['ignorecase'],
@@ -512,7 +505,6 @@ def test_variable_repr():
 
 
 def test_variable_str():
-
     v = context.Variable(
         'module_name',
         default="{{cookiecutter.plugin_name|lower|replace('-','_')}}",
@@ -523,24 +515,25 @@ def test_variable_str():
         hide_input=True,
     )
 
-    assert '<Variable module_name>:' in str(v)
-    assert "name='module_name'" in str(v)
-    assert "default='{{cookiecutter.plugin_name|lower|replace('-','_')}}'" in str(v)
-    assert "description='None'" in str(v)
-    assert "prompt='Please enter a name for your base python module'" in str(v)
-    assert "hide_input='True'" in str(v)
-    assert "var_type='string'" in str(v)
-    assert "skip_if=''" in str(v)
-    assert "prompt_user='True'" in str(v)
-    assert "choices='[]'" in str(v)
-    assert "validation='^[a-z_]+$'" in str(v)
-    assert "validation_flag_names='['ignorecase']'" in str(v)
-    assert ("validation_flags='2'" in str(v)) | (".IGNORECASE" in str(v))
+    v_str = str(v)
+    assert '<Variable module_name>:' in v_str
+    assert "name='module_name'" in v_str
+    assert "default='{{cookiecutter.plugin_name|lower|replace('-','_')}}'" in v_str
+    assert "description='None'" in v_str
+    assert "prompt='Please enter a name for your base python module'" in v_str
+    assert "hide_input='True'" in v_str
+    assert "var_type='string'" in v_str
+    assert "skip_if='None'" in v_str
+    assert "prompt_user='True'" in v_str
+    assert "choices='[]'" in v_str
+    assert "validation='^[a-z_]+$'" in v_str
+    assert "validation_flag_names='['ignorecase']'" in v_str
+    assert ("validation_flags='2'" in v_str) | (".IGNORECASE" in v_str)
 
     if sys.version_info >= (3, 4):
-        assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in str(v)
+        assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in v_str
     else:
-        assert "validate='<_sre.SRE_Pattern object at" in str(v)
+        assert "validate='<_sre.SRE_Pattern object at" in v_str
 
 
 def test_cookiecutter_template_repr():

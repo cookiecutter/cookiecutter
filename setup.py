@@ -9,13 +9,12 @@ with open('README.md', encoding='utf-8') as readme_file:
 
 requirements = [
     'binaryornot>=0.4.4',
-    'Jinja2<3.0.0',
-    'click>=7.0',
-    'poyo>=0.5.0',
+    'Jinja2>=2.7,<4.0.0',
+    'click>=7.0,<8.0.0',
+    'pyyaml>=5.3.1',
     'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
-    'MarkupSafe<2.0.0',
     'jsonschema>=3.2.0',
 ]
 
@@ -29,7 +28,7 @@ setup(
     ),
     long_description=readme,
     long_description_content_type='text/markdown',
-    author='Audrey Roy',
+    author='Audrey Feldroy',
     author_email='audreyr@gmail.com',
     url='https://github.com/cookiecutter/cookiecutter',
     packages=['cookiecutter'],
