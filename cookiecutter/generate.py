@@ -338,7 +338,10 @@ def generate_context(
     else:
         logger.debug("Context is version 1")
         if default_context:
-            apply_overwrites_to_context(obj, default_context)
+            try:
+                apply_overwrites_to_context(obj, default_context)
+            except ValueError as ex:
+                warnings.warn("Invalid default received: " + str(ex))
         if extra_context:
             apply_overwrites_to_context(obj, extra_context)
 
