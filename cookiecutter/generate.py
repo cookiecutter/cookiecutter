@@ -107,10 +107,7 @@ def resolve_changed_variable_names(context, variables_to_resolve):
     context and update any other variable context fields that may still
     reference the original variable name.
     """
-    for var_name_to_resolve in variables_to_resolve:
-
-        new_var_name = variables_to_resolve[var_name_to_resolve]
-
+    for var_name_to_resolve, new_var_name in variables_to_resolve.items():
         for variable in context['template']['variables']:
             for field_name in variable.keys():
                 if isinstance(variable[field_name], str):
@@ -202,96 +199,94 @@ def apply_overwrites_to_context_v2(context, extra_context):
     location in the choices list.
 
     """
-    variable_names_to_resolve = {}
     if isinstance(extra_context, dict):
         apply_default_overwrites_to_context_v2(context, extra_context)
     elif isinstance(extra_context, list):
-        for xtra_ctx_item in extra_context:
-            if isinstance(xtra_ctx_item, dict):
-                if 'name' in xtra_ctx_item.keys():
-                    # xtra_ctx_item['name'] may have a replace value of the
-                    # form:
-                    #       'name_value::replace_name_value'
-                    xtra_ctx_name = xtra_ctx_item['name'].split('::')[0]
-                    try:
-                        replace_name = xtra_ctx_item['name'].split('::')[1]
-                    except IndexError:
-                        replace_name = None
-
-                    var_dict = next(
-                        (
-                            d
-                            for d in context['template']['variables']
-                            if d['name'] == xtra_ctx_name
-                        ),
-                        None,
-                    )  # noqa
-                    if var_dict:
-                        # Since creation of new key/value pairs is NOT
-                        # desired, we only use a key that is common to both
-                        # the variables context and the extra context.
-                        common_keys = [
-                            key
-                            for key in xtra_ctx_item.keys()
-                            if key in var_dict.keys()
-                        ]  # noqa
-                        for key in common_keys:
-                            if xtra_ctx_item[key] == '<<REMOVE::FIELD>>':
-                                if key in ['default']:
-                                    raise ValueError(
-                                        "Cannot remove mandatory 'default' field"
-                                    )  # noqa
-                                var_dict.pop(key, None)
-                            else:
-                                # normal field update
-                                var_dict[key] = xtra_ctx_item[key]
-
-                        # After all fields have been updated, there is some
-                        # house-keeping to do. The default/choices
-                        # house-keeping could effecively be no-ops if the
-                        # user did the correct thing.
-                        if ('default' in common_keys) & (
-                            'choices' in var_dict.keys()
-                        ):  # noqa
-                            # default updated, regardless if choices has been
-                            # updated, re-order choices based on default
-                            if var_dict['default'] in var_dict['choices']:
-                                var_dict['choices'].remove(var_dict['default'])  # noqa
-
-                            var_dict['choices'].insert(0, var_dict['default'])
-
-                        if ('default' not in common_keys) & (
-                            'choices' in common_keys
-                        ):  # noqa
-                            # choices updated, so update default based on
-                            # first location in choices
-                            var_dict['default'] = var_dict['choices'][0]
-
-                        if replace_name:
-                            variable_names_to_resolve[
-                                xtra_ctx_name
-                            ] = replace_name  # noqa
-                            var_dict['name'] = replace_name
-                    else:
-                        msg = "No variable found in context whose name matches extra context name '{name}'"  # noqa
-                        raise ValueError(msg.format(name=xtra_ctx_name))
+        variable_names_to_resolve = {}
+        for item in extra_context:
+            if isinstance(item, dict):
+                if 'name' in item.keys():
+                    replacement = _replace_extra_context_name(context, item)
+                    if replacement:
+                        old_name, new_name = replacement
+                        variable_names_to_resolve[old_name] = new_name
                 else:
-                    msg = "Extra context dictionary item {item} is missing a 'name' key."  # noqa
-                    raise ValueError(msg.format(item=xtra_ctx_item))
+                    raise ValueError(
+                        f"Extra context dictionary item {item} is missing a 'name' key.")
             else:
-                msg = "Extra context list item '{item}' is of type {t}, should be a dictionary."  # noqa
                 raise ValueError(
-                    msg.format(item=str(xtra_ctx_item), t=type(xtra_ctx_item).__name__)
-                )  # noqa
-
+                    f"Extra context list item '{item}' is of type {type(item).__name__}, "
+                    f"should be a dictionary.")
         if variable_names_to_resolve:
             # At least one variable name has been over-written, if any
             # variables use the original name, they must get updated as well
             resolve_changed_variable_names(context, variable_names_to_resolve)
-
     else:
-        msg = "Extra context must be a dictionary or a list of dictionaries!"
-        raise ValueError(msg)
+        raise ValueError("Extra context must be a dictionary or a list of dictionaries")
+
+
+def _replace_extra_context_name(context: dict, extra_context: dict):
+    # extra_context['name'] may have a replace value of the form:
+    #       'name_value::replace_name_value'
+    split = extra_context['name'].split('::')
+    extra_context_name = split[0]
+    replace_name = split[1] if len(split) > 1 else None
+    var_dict = next(
+        (
+            d
+            for d in context['template']['variables']
+            if d['name'] == extra_context_name
+        ),
+        None,
+    )  # noqa
+    if var_dict:
+        # Since creation of new key/value pairs is NOT
+        # desired, we only use a key that is common to both
+        # the variables context and the extra context.
+        common_keys = [
+            key
+            for key in extra_context.keys()
+            if key in var_dict.keys()
+        ]  # noqa
+        for key in common_keys:
+            if extra_context[key] == '<<REMOVE::FIELD>>':
+                if key in ['default']:
+                    raise ValueError(
+                        "Cannot remove mandatory 'default' field"
+                    )  # noqa
+                var_dict.pop(key, None)
+            else:
+                # normal field update
+                var_dict[key] = extra_context[key]
+
+        # After all fields have been updated, there is some
+        # house-keeping to do. The default/choices
+        # house-keeping could effectively be no-ops if the
+        # user did the correct thing.
+        if ('default' in common_keys) & (
+                'choices' in var_dict.keys()
+        ):  # noqa
+            # default updated, regardless if choices has been
+            # updated, re-order choices based on default
+            if var_dict['default'] in var_dict['choices']:
+                var_dict['choices'].remove(var_dict['default'])  # noqa
+
+            var_dict['choices'].insert(0, var_dict['default'])
+
+        if ('default' not in common_keys) & (
+                'choices' in common_keys
+        ):  # noqa
+            # choices updated, so update default based on
+            # first location in choices
+            var_dict['default'] = var_dict['choices'][0]
+
+        if replace_name:
+            var_dict['name'] = replace_name
+            return extra_context_name, replace_name
+    else:
+        raise ValueError(
+            f"No variable found in context whose name matches extra context "
+            f"name '{extra_context_name}'")
 
 
 def generate_context(
@@ -327,8 +322,9 @@ def generate_context(
     context[file_stem] = obj
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
-    if infer_schema_version(context[file_stem]) in ['2.0']:
-        logger.debug("Context is version 2")
+    schema_version = infer_schema_version(context[file_stem])
+    if schema_version != '1.0':
+        logger.debug(f"Context is version {schema_version}")
         if default_context:
             apply_overwrites_to_context_v2(obj, default_context)
         if extra_context:
