@@ -31,7 +31,7 @@ from jinja2 import Environment
 from packaging import version
 
 from cookiecutter import __version__
-from cookiecutter.exceptions import IncompatibleVersion
+from cookiecutter.exceptions import IncompatibleVersion, InvalidConfiguration
 from cookiecutter.schema import validate
 
 logger = logging.getLogger(__name__)
@@ -373,10 +373,10 @@ class Variable(object):
         self.default = info.get('default')
 
         # -- SKIP_IF ---------------------------------------------------------
-        self.skip_if = info.get('skip_if', '')
+        self.skip_if = info.get('skip_if')
 
         # -- DO_IF ---------------------------------------------------------
-        self.do_if = info.get('do_if', '')
+        self.do_if = info.get('do_if')
 
         # -- IF_YES_SKIP_TO ---------------------------------------------------------
         self.if_yes_skip_to = info.get('if_yes_skip_to')
@@ -385,10 +385,10 @@ class Variable(object):
         self.if_no_skip_to = info.get('if_no_skip_to')
 
         # -- PROMPT_USER -----------------------------------------------------
-        self.prompt_user = info.get('prompt_user', True)
+        self.prompt_user = info.get('prompt_user')
         # do not prompt for private variable names (beginning with _)
-        if self.name.startswith('_'):
-            self.prompt_user = False
+        if self.prompt_user is None:
+            self.prompt_user = not self.name.startswith('_')
 
         # -- CHOICES ---------------------------------------------------------
         self.choices = info.get('choices', [])
@@ -398,39 +398,39 @@ class Variable(object):
                 "Variable: {var_name} has an invalid default "
                 "value {default} for choices: {choices}."
             )
-            raise ValueError(
+            raise InvalidConfiguration(
                 msg.format(
                     var_name=self.name, default=self.default, choices=self.choices
                 )
             )
 
         # -- VALIDATION STARTS -----------------------------------------------
-        self.validation = info.get('validation', None)
+        self.validation = info.get('validation')
         self.validate = None
         if self.validation:
 
-            self.validation_msg = info.get('validation_msg', None)
+            self.validation_msg = info.get('validation_msg')
             self.validation_flag_names = info.get('validation_flags', [])
 
             self.validation_flags = 0
             for vflag in self.validation_flag_names:
                 self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
-
             try:
                 self.validate = re.compile(self.validation, self.validation_flags)
             except re.error as e:
+                # TODO: cleanup
                 msg = (
                     "Variable: {var_name} - Validation Setup Error:"
                     " Invalid RegEx '{value}' - does not compile - {err}"
                 )
-                raise ValueError(
+                raise InvalidConfiguration(
                     msg.format(var_name=self.name, value=self.validation, err=e)
                 )
 
             # -- making a few sanity checks
             # checking fo key as default value could be 'False' or ''
             if self.var_type != "string":
-                raise ValueError("attempting regex validation on non-string input")
+                raise InvalidConfiguration("attempting regex validation on non-string input")
 
         # -- VALIDATION ENDS -------------------------------------------------
 
@@ -485,10 +485,10 @@ class CookiecutterTemplate:
 
         # optional fields
         self.authors = template.get('authors', [])
-        self.description = template.get('description', None)
+        self.description = template.get('description')
         self.keywords = template.get('keywords', [])
-        self.license = template.get('license', None)
-        self.url = template.get('url', None)
+        self.license = template.get('license')
+        self.url = template.get('url')
         self.version = template.get('version', None)
 
     def __repr__(self):
@@ -526,10 +526,8 @@ def prompt_variable(variable: Variable, verbose: bool):
             if variable.validate.match(value):
                 return value
             else:
-                msg = (
-                    f"Input validation failure against regex: "
-                    f"'{variable.validation}', try again!"
-                )
+                msg = f"Input validation failure against regex: '{variable.validation}', try again!"
+
                 click.echo(msg)
                 if variable.validation_msg:
                     click.echo(variable.validation_msg)
