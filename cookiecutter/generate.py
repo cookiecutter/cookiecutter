@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import shutil
+import warnings
 from collections import OrderedDict
 
 from binaryornot.check import is_binary
@@ -65,6 +66,11 @@ def apply_overwrites_to_context(context, overwrite_context):
                 # see ``cookiecutter.prompt.prompt_choice_for_config``
                 context_value.remove(overwrite)
                 context_value.insert(0, overwrite)
+            else:
+                raise ValueError(
+                    "{} provided for choice variable {}, but the "
+                    "choices are {}.".format(overwrite, variable, context_value)
+                )
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
@@ -331,7 +337,6 @@ def generate_context(
             apply_overwrites_to_context_v2(obj, extra_context)
     else:
         logger.debug("Context is version 1")
-
         if default_context:
             apply_overwrites_to_context(obj, default_context)
         if extra_context:

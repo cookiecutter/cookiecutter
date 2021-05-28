@@ -1,7 +1,8 @@
 """Collection of tests around loading cookiecutter config."""
-import os
+from pathlib import Path
 
 import pytest
+import yaml
 
 from cookiecutter import config
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
@@ -59,6 +60,10 @@ def test_get_config():
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
             'github_username': 'example',
+            'project': {
+                'description': 'description',
+                'tags': ['first', 'second', 'third',],
+            },
         },
         'abbreviations': {
             'gh': 'https://github.com/{0}.git',
@@ -82,23 +87,23 @@ def test_get_config_does_not_exist():
 def test_invalid_config():
     """An invalid config file should raise an `InvalidConfiguration` \
     exception."""
+    expected_error_msg = (
+        'Unable to parse YAML file tests/test-config/invalid-config.yaml.'
+    )
     with pytest.raises(InvalidConfiguration) as exc_info:
         config.get_config('tests/test-config/invalid-config.yaml')
-
-    expected_error_msg = (
-        'Unable to parse YAML file tests/test-config/invalid-config.yaml. Error: '
-    )
-    assert expected_error_msg in str(exc_info.value)
+        assert expected_error_msg in str(exc_info.value)
+        assert isinstance(exc_info.value.__cause__, yaml.YAMLError)
 
 
 def test_get_config_with_defaults():
     """A config file that overrides 1 of 3 defaults."""
     conf = config.get_config('tests/test-config/valid-partial-config.yaml')
-    default_cookiecutters_dir = os.path.expanduser('~/.cookiecutters/')
-    default_replay_dir = os.path.expanduser('~/.cookiecutter_replay/')
+    default_cookiecutters_dir = Path('~/.cookiecutters').expanduser()
+    default_replay_dir = Path('~/.cookiecutter_replay').expanduser()
     expected_conf = {
-        'cookiecutters_dir': default_cookiecutters_dir,
-        'replay_dir': default_replay_dir,
+        'cookiecutters_dir': str(default_cookiecutters_dir),
+        'replay_dir': str(default_replay_dir),
         'default_context': {
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',

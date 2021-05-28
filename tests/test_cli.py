@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 
 import pytest
 from click.testing import CliRunner
@@ -180,9 +181,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
     mocker, cli_runner, overwrite_cli_flag
 ):
     """Test cli invocation with `overwrite-if-exists` and `replay` flags."""
-    mock_cookiecutter = mocker.patch(
-        'cookiecutter.cli.cookiecutter', side_effect=cookiecutter
-    )
+    mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
     template_path = 'tests/fake-repo-pre/'
     result = cli_runner(template_path, '--replay', '-v', overwrite_cli_flag)
@@ -237,12 +236,6 @@ def output_dir_flag(request):
     return request.param
 
 
-@pytest.fixture
-def output_dir(tmpdir):
-    """Pytest fixture return `output_dir` argument as string."""
-    return str(tmpdir.mkdir('output'))
-
-
 def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
     """Test cli invocation with `output-dir` flag changes output directory."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
@@ -282,9 +275,9 @@ def test_cli_help(cli_runner, help_cli_flag):
 
 
 @pytest.fixture
-def user_config_path(tmpdir):
+def user_config_path(tmp_path):
     """Pytest fixture return `user_config` argument as string."""
-    return str(tmpdir.join('tests/config.yaml'))
+    return str(tmp_path.joinpath("tests", "config.yaml"))
 
 
 def test_user_config(mocker, cli_runner, user_config_path):
@@ -364,9 +357,8 @@ def test_default_user_config(mocker, cli_runner):
     )
 
 
-def test_echo_undefined_variable_error(tmpdir, cli_runner):
+def test_echo_undefined_variable_error(output_dir, cli_runner):
     """Cli invocation return error if variable undefined in template."""
-    output_dir = str(tmpdir.mkdir('output'))
     template_path = 'tests/undefined-variable/file-name/'
 
     result = cli_runner(
@@ -395,9 +387,8 @@ def test_echo_undefined_variable_error(tmpdir, cli_runner):
     assert context_str in result.output
 
 
-def test_echo_unknown_extension_error(tmpdir, cli_runner):
+def test_echo_unknown_extension_error(output_dir, cli_runner):
     """Cli return error if extension incorrectly defined in template."""
-    output_dir = str(tmpdir.mkdir('output'))
     template_path = 'tests/test-extensions/unknown/'
 
     result = cli_runner(
@@ -433,9 +424,9 @@ def test_cli_extra_context_invalid_format(cli_runner):
 
 
 @pytest.fixture
-def debug_file(tmpdir):
+def debug_file(tmp_path):
     """Pytest fixture return `debug_file` argument as path object."""
-    return tmpdir.join('fake-repo.log')
+    return tmp_path.joinpath('fake-repo.log')
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -457,7 +448,7 @@ def test_debug_file_non_verbose(cli_runner, debug_file):
         "DEBUG cookiecutter.main: context_file is "
         "tests/fake-repo-pre/cookiecutter.json"
     )
-    assert context_log in debug_file.readlines(cr=False)
+    assert context_log in debug_file.read_text()
     assert context_log not in result.output
 
 
@@ -484,7 +475,7 @@ def test_debug_file_verbose(cli_runner, debug_file):
         "DEBUG cookiecutter.main: context_file is "
         "tests/fake-repo-pre/cookiecutter.json"
     )
-    assert context_log in debug_file.readlines(cr=False)
+    assert context_log in debug_file.read_text()
     assert context_log in result.output
 
 
@@ -494,7 +485,11 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
     fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
     os.makedirs(os.path.dirname(user_config_path))
     with open(user_config_path, 'w') as config_file:
-        config_file.write('cookiecutters_dir: "%s"' % fake_template_dir)
+        # In YAML, double quotes mean to use escape sequences.
+        # Single quotes mean we will have unescaped backslahes.
+        # http://blogs.perl.org/users/tinita/2018/03/
+        # strings-in-yaml---to-quote-or-not-to-quote.html
+        config_file.write("cookiecutters_dir: '%s'" % fake_template_dir)
     open(os.path.join('fake-project', 'cookiecutter.json'), 'w').write('{}')
 
     result = cli_runner(
@@ -577,3 +572,22 @@ def test_cli_accept_hooks(
         skip_if_file_exists=False,
         accept_hooks=expected,
     )
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_with_json_decoding_error(cli_runner):
+    """Test cli invocation with a malformed JSON file."""
+    template_path = 'tests/fake-repo-bad-json/'
+    result = cli_runner(template_path, '--no-input')
+    assert result.exit_code != 0
+
+    # Validate the error message.
+    # original message from json module should be included
+    pattern = 'Expecting \'{0,1}:\'{0,1} delimiter: line 1 column (19|20) \\(char 19\\)'
+    assert re.search(pattern, result.output)
+    # File name should be included too...for testing purposes, just test the
+    # last part of the file. If we wanted to test the absolute path, we'd have
+    # to do some additional work in the test which doesn't seem that needed at
+    # this point.
+    path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
+    assert path in result.output

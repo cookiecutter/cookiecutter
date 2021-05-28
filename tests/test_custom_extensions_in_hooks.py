@@ -21,12 +21,6 @@ def template(request):
     return 'tests/test-extensions/' + request.param
 
 
-@pytest.fixture
-def output_dir(tmpdir):
-    """Fixture. Create and return custom temp directory for test."""
-    return str(tmpdir.mkdir('hello'))
-
-
 @pytest.fixture(autouse=True)
 def modify_syspath(monkeypatch):
     """Fixture. Make sure that the custom extension can be loaded."""

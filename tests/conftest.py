@@ -1,17 +1,35 @@
 """pytest fixtures which are globally available throughout the suite."""
-import logging
 import os
 import shutil
 
 import pytest
 
 from cookiecutter import utils
+from cookiecutter.config import DEFAULT_CONFIG
 
 
 USER_CONFIG = """
-cookiecutters_dir: "{cookiecutters_dir}"
-replay_dir: "{replay_dir}"
+cookiecutters_dir: '{cookiecutters_dir}'
+replay_dir: '{replay_dir}'
 """
+# In YAML, double quotes mean to use escape sequences.
+# Single quotes mean we will have unescaped backslahes.
+# http://blogs.perl.org/users/tinita/2018/03/
+# strings-in-yaml---to-quote-or-not-to-quote.html
+
+
+@pytest.fixture(autouse=True)
+def isolated_filesystem(monkeypatch, tmp_path):
+    """Ensure filesystem isolation, set the user home to a tmp_path."""
+    root_path = tmp_path.joinpath("home")
+    root_path.mkdir()
+    cookiecutters_dir = root_path.joinpath(".cookiecutters/")
+    replay_dir = root_path.joinpath(".cookiecutter_replay/")
+    monkeypatch.setitem(DEFAULT_CONFIG, 'cookiecutters_dir', str(cookiecutters_dir))
+    monkeypatch.setitem(DEFAULT_CONFIG, 'replay_dir', str(replay_dir))
+
+    monkeypatch.setenv("HOME", str(root_path))
+    monkeypatch.setenv("USERPROFILE", str(root_path))
 
 
 def backup_dir(original_dir, backup_dir):
@@ -134,9 +152,9 @@ def clean_system(request):
 
 
 @pytest.fixture(scope='session')
-def user_dir(tmpdir_factory):
+def user_dir(tmp_path_factory):
     """Fixture that simulates the user's home directory."""
-    return tmpdir_factory.mktemp('user_dir')
+    return tmp_path_factory.mktemp('user_dir')
 
 
 @pytest.fixture(scope='session')
@@ -150,9 +168,10 @@ def user_config_data(user_dir):
 
     :returns: Dict with name of both user config dirs
     """
-    cookiecutters_dir = user_dir.mkdir('cookiecutters')
-    replay_dir = user_dir.mkdir('cookiecutter_replay')
-
+    cookiecutters_dir = user_dir.joinpath('cookiecutters')
+    cookiecutters_dir.mkdir()
+    replay_dir = user_dir.joinpath('cookiecutter_replay')
+    replay_dir.mkdir()
     return {
         'cookiecutters_dir': str(cookiecutters_dir),
         'replay_dir': str(replay_dir),
@@ -170,14 +189,25 @@ def user_config_file(user_dir, user_config_data):
     :param user_config_data: Dict of config values
     :returns: String of path to config file
     """
-    config_file = user_dir.join('config')
+    config_file = user_dir.joinpath('config')
 
     config_text = USER_CONFIG.format(**user_config_data)
-    config_file.write(config_text)
+    config_file.write_text(config_text)
     return str(config_file)
 
 
-@pytest.fixture(autouse=True)
-def disable_poyo_logging():
-    """Fixture that disables poyo logging."""
-    logging.getLogger('poyo').setLevel(logging.WARNING)
+@pytest.fixture
+def output_dir(tmp_path):
+    """Fixture to prepare test output directory."""
+    output_path = tmp_path.joinpath("output")
+    output_path.mkdir()
+    return str(output_path)
+
+
+@pytest.fixture
+def clone_dir(tmp_path):
+    """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
+    Returns a str to said directory."""
+    clone_dir = tmp_path.joinpath("clone_dir")
+    clone_dir.mkdir()
+    return clone_dir

@@ -2,7 +2,7 @@
 import errno
 import logging
 import os
-import subprocess
+import subprocess  # nosec
 import sys
 import tempfile
 
@@ -79,7 +79,7 @@ def run_script(script_path, cwd='.'):
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)
+        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
