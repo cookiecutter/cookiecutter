@@ -52,8 +52,9 @@ REGEX_COMPILE_FLAGS = {
 op_mapping = {'==': eq, '<=': le, '<': lt, '>=': ge, '>': gt, '!=': ne}
 
 
-def _split_version_op(version_op: str, default='==') \
-        -> Tuple[str, str, Callable[[Any, Any], bool]]:
+def _split_version_op(
+    version_op: str, default='=='
+) -> Tuple[str, str, Callable[[Any, Any], bool]]:
     """
     Split a version string that may contain an operator and return just the version,
     the operator and the Python function that implements this operator.
@@ -69,7 +70,7 @@ def _split_version_op(version_op: str, default='==') \
     version_op = version_op.strip()
     for code, op in op_mapping.items():
         if version_op.startswith(code):
-            version_str = version_op[len(code):].strip()
+            version_str = version_op[len(code) :].strip()
             return version_str, code, op
     return version_op, default, op_mapping[default]
 
@@ -430,7 +431,9 @@ class Variable(object):
             # -- making a few sanity checks
             # checking fo key as default value could be 'False' or ''
             if self.var_type != "string":
-                raise InvalidConfiguration("attempting regex validation on non-string input")
+                raise InvalidConfiguration(
+                    "attempting regex validation on non-string input"
+                )
 
         # -- VALIDATION ENDS -------------------------------------------------
 
@@ -474,12 +477,18 @@ class CookiecutterTemplate:
         if self.requirements:
             self.cookiecutter_version = self.requirements.get('cookiecutter')
             if self.cookiecutter_version:
-                validate_requirement(self.cookiecutter_version, __version__,
-                                     "cookiecutter version check failed")
+                validate_requirement(
+                    self.cookiecutter_version,
+                    __version__,
+                    "cookiecutter version check failed",
+                )
             self.python_version = self.requirements.get('python')
             if self.python_version:
-                validate_requirement(self.python_version, platform.python_version(),
-                                     "Python version check failed")
+                validate_requirement(
+                    self.python_version,
+                    platform.python_version(),
+                    "Python version check failed",
+                )
 
         self.variables = [Variable(**v) for v in template["variables"]]
 
