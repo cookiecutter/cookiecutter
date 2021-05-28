@@ -77,11 +77,7 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 
 def apply_default_overwrites_to_context_v2(context, overwrite_default_context):
-    """
-    Modify the given version 2 context in place based on the
-    overwrite_default_context.
-    """
-
+    """Modify the given version 2 context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_default_context.items():
         var_dict = next(
             (d for d in context['template']['variables'] if d['name'] == variable), None
@@ -108,6 +104,8 @@ def apply_default_overwrites_to_context_v2(context, overwrite_default_context):
 
 def resolve_changed_variable_names(context, variables_to_resolve):
     """
+    Back-checks references to changed variable names.
+
     The variable names contained in the variables_to_resolve dictionary's
     key names have been over-written with keys' value. Check the entire
     context and update any other variable context fields that may still
@@ -222,8 +220,8 @@ def apply_overwrites_to_context_v2(context, extra_context):
                     )
             else:
                 raise ValueError(
-                    f"Extra context list item '{item}' is of type {type(item).__name__}, "
-                    f"should be a dictionary."
+                    f"Extra context list item '{item}' is of type "
+                    f"{type(item).__name__}, should be a dictionary."
                 )
         if variable_names_to_resolve:
             # At least one variable name has been over-written, if any

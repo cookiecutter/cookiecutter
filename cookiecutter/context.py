@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-# flake8: noqa
 """
-cookiecutter.context
---------------------
+Parses a cookiecutter JSON content and prompts the users for input.
 
 Process the version 2 cookiecutter context (previously loaded via
 cookiecutter.json) and handle any user input that might be associated with
@@ -56,6 +53,8 @@ def _split_version_op(
     version_op: str, default='=='
 ) -> Tuple[str, str, Callable[[Any, Any], bool]]:
     """
+    Parse the version requirement string.
+
     Split a version string that may contain an operator and return just the version,
     the operator and the Python function that implements this operator.
     If no operator was detected, use the default operator instead.
@@ -70,14 +69,14 @@ def _split_version_op(
     version_op = version_op.strip()
     for code, op in op_mapping.items():
         if version_op.startswith(code):
-            version_str = version_op[len(code) :].strip()
+            version_str = version_op[len(code):].strip()
             return version_str, code, op
     return version_op, default, op_mapping[default]
 
 
 def validate_requirement(requires: str, actual: str, message=None):
     """
-    Checks if a version number fits a version requirement.
+    Check if a version number fits a version requirement.
 
     Mostly adheres to PEP 440 with a few limitations:
 
@@ -103,6 +102,7 @@ def validate_requirement(requires: str, actual: str, message=None):
 
 
 def prompt_string(variable, default):
+    """Prompts the user for a text value."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -112,6 +112,7 @@ def prompt_string(variable, default):
 
 
 def prompt_boolean(variable, default):
+    """Prompts the user for a boolean."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -121,6 +122,7 @@ def prompt_boolean(variable, default):
 
 
 def prompt_int(variable, default):
+    """Prompts the user for an int."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -130,6 +132,7 @@ def prompt_int(variable, default):
 
 
 def prompt_float(variable, default):
+    """Prompts the user for float."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -139,6 +142,7 @@ def prompt_float(variable, default):
 
 
 def prompt_uuid(variable, default):
+    """Prompts the user for a uuid."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -148,6 +152,7 @@ def prompt_uuid(variable, default):
 
 
 def prompt_json(variable, default):
+    """Prompts the user for a JSON entry."""
     # The JSON object from cookiecutter.json might be very large
     # We only show 'default'
 
@@ -181,6 +186,7 @@ def prompt_json(variable, default):
 
 
 def prompt_yes_no(variable, default):
+    """Prompts the user for a yes or no option."""
     if default is True:
         default_display = 'y'
     else:
@@ -210,7 +216,7 @@ def prompt_yes_no(variable, default):
 
 
 def prompt_choice(variable, default):
-    """Returns prompt, default and callback for a choice variable"""
+    """Return prompt, default and callback for a choice variable."""
     choice_map = collections.OrderedDict(
         (u'{}'.format(i), value) for i, value in enumerate(variable.choices, 1)
     )
@@ -246,55 +252,54 @@ PROMPTS = {
 }
 
 
-def deserialize_string(value) -> str:
+def _deserialize_string(value) -> str:
     return str(value)
 
 
-def deserialize_boolean(value) -> bool:
+def _deserialize_boolean(value) -> bool:
     return bool(value)
 
 
-def deserialize_yes_no(value) -> bool:
+def _deserialize_yes_no(value) -> bool:
     return bool(value)
 
 
-def deserialize_int(value) -> int:
+def _deserialize_int(value) -> int:
     return int(value)
 
 
-def deserialize_float(value) -> float:
+def _deserialize_float(value) -> float:
     return float(value)
 
 
-def deserialize_uuid(value) -> str:
+def _deserialize_uuid(value) -> str:
     # standard UUID is not JSON Serializable
     return click.UUID(value).hex
 
 
-def deserialize_json(value) -> Dict:
+def _deserialize_json(value) -> Dict:
     return value
 
 
 # mapping of functions used to process every possible click input type
 DESERIALIZERS = {
-    'string': deserialize_string,
-    'boolean': deserialize_boolean,
-    'int': deserialize_int,
-    'float': deserialize_float,
-    'uuid': deserialize_uuid,
-    'json': deserialize_json,
-    'yes_no': deserialize_yes_no,
+    'string': _deserialize_string,
+    'boolean': _deserialize_boolean,
+    'int': _deserialize_int,
+    'float': _deserialize_float,
+    'uuid': _deserialize_uuid,
+    'json': _deserialize_json,
+    'yes_no': _deserialize_yes_no,
 }
 
 
 class Variable(object):
-    """
-    Embody attributes of variables while processing the variables field of
-    a cookiecutter version 2 context.
-    """
+    """Parse the attributes and functionalities of a version 2 variable."""
 
     def __init__(self, name: str, type: str, **info):
         """
+        Mandatory parameters.
+
         :param name: A string containing the variable's name in the jinja2
                      context.
         :param type: The variable's type. Suported types are listed in the schema
@@ -354,7 +359,6 @@ class Variable(object):
             * yes_no
 
         """
-
         # mandatory fields
         self.name = name
         self.var_type = type
@@ -419,13 +423,9 @@ class Variable(object):
             try:
                 self.validate = re.compile(self.validation, self.validation_flags)
             except re.error as e:
-                # TODO: cleanup
-                msg = (
-                    "Variable: {var_name} - Validation Setup Error:"
-                    " Invalid RegEx '{value}' - does not compile - {err}"
-                )
                 raise InvalidConfiguration(
-                    msg.format(var_name=self.name, value=self.validation, err=e)
+                    f"Variable: {self.name} - Validation Setup Error:"
+                    f" Invalid RegEx '{self.validation}' - does not compile - {e}"
                 )
 
             # -- making a few sanity checks
@@ -438,11 +438,13 @@ class Variable(object):
         # -- VALIDATION ENDS -------------------------------------------------
 
     def __repr__(self):
+        """Provide a representation with variable name."""
         return "<{class_name} {variable_name}>".format(
             class_name=self.__class__.__name__, variable_name=self.name,
         )
 
     def __str__(self):
+        """Provide a JSON representation of the variable content."""
         s = [
             "{key}='{value}'".format(key=key, value=self.__dict__[key])
             for key in self.__dict__
@@ -452,13 +454,11 @@ class Variable(object):
 
 
 class CookiecutterTemplate:
-    """
-    Embodies all attributes of a version 2 Cookiecutter template.
-    """
+    """Embodies all attributes of a version 2 Cookiecutter template."""
 
     def __init__(self, template, requires=None, extensions=None, **kwargs):
         """
-        Mandatory Parameters
+        Mandatory Parameters.
 
         :param template: A dictionary containing the template fields of
                schema 2.0, including:
@@ -501,18 +501,20 @@ class CookiecutterTemplate:
         self.version = template.get('version', None)
 
     def __repr__(self):
+        """Provide a classname with template name."""
         return "<{class_name} {template_name}>".format(
             class_name=self.__class__.__name__, template_name=self.name,
         )
 
     def __iter__(self):
+        """Iterate through the templates variables."""
         for v in self.variables:
             yield v
 
 
 def prompt_variable(variable: Variable, verbose: bool):
     """
-    Getting variable value from user in the terminal prompt
+    Prompt variable value from user in the terminal.
 
     :param variable: the variable object to be prompted
     :param verbose: option for more elaborate display
@@ -535,7 +537,10 @@ def prompt_variable(variable: Variable, verbose: bool):
             if variable.validate.match(value):
                 return value
             else:
-                msg = f"Input validation failure against regex: '{variable.validation}', try again!"
+                msg = (
+                    f"Input validation failure against regex:"
+                    f" '{variable.validation}', try again!"
+                )
 
                 click.echo(msg)
                 if variable.validation_msg:
@@ -546,8 +551,7 @@ def prompt_variable(variable: Variable, verbose: bool):
 
 def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
     """
-    Load a version 2 context & process the json_object for declared variables
-    in the Cookiecutter template.
+    Load a v2 cookiecutter.json and prompts/loads the variable inputs.
 
     :param json_object: A JSON file that has be loaded into a Python OrderedDict.
     :param no_input: Prompt the user at command line for manual configuration if False,

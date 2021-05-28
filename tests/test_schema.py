@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# flake8: noqa
+"""
+test_schema
+------------
+
+Tests for `cookiecutter.scherma` module that defines, infers and validate
+a cookiecutter schema
+"""
 import json
 
 import pytest

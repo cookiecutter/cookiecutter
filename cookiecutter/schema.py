@@ -1,4 +1,11 @@
-"""JSON Schema definition for cookiecutter.json"""
+# -*- coding: utf-8 -*-
+"""
+Defines and validates the allowed schemas for cookiecutter.json.
+
+This file contains the definition of the allowed schemas, using the JSONschema
+notation. It also implements the functions used to infer a schema version from
+a loaded JSON and validate it against the corresponding JSON schema.
+"""
 from typing import Optional
 from warnings import warn
 
@@ -51,7 +58,8 @@ schema_2_0 = {
                 "version": {"type": "string"},
                 # description of the template
                 "description": {"type": "string"},
-                # list of authors (may include email addresses or other contact information)
+                # list of authors
+                # (may include email addresses or other contact information)
                 "authors": {"type": "array", "items": {"type": "string"}},
                 # license of the template
                 "license": {"type": "string"},
@@ -69,7 +77,8 @@ schema_2_0 = {
                             "name": {"type": "string"},
                             # the default value for that variable
                             "default": {},
-                            # text that will be displayed before the input field (keep it short!)
+                            # text that will be displayed before the input field
+                            # (keep it short!)
                             "prompt": {"type": "string"},
                             # more detailed description of this variable
                             "description": {"type": "string"},
@@ -108,17 +117,20 @@ schema_2_0 = {
                             },
                             # a list of items to choose from
                             "choices": {"type": "array", "items": {"type": "string"}},
-                            # don't prompt the user for this variable, if this is set to false
+                            # don't prompt the user for this variable if set to false
                             "prompt_user": {"type": "boolean"},
-                            # hide user input while typing (e.g. if you're asking for a password)
+                            # hide user input while typing
+                            # (e.g. if you're asking for a password)
                             "hide_input": {"type": "boolean"},
                             # only show this prompt, if the specified condition is true
                             "do_if": {"type": "string"},
                             # skip this prompt, if the specified condition is true
                             "skip_if": {"type": "string"},
-                            # skip to this variable, if "no" was selected in a "yes_no" prompt
+                            # skip to this variable,
+                            # if "no" was selected in a "yes_no" prompt
                             "if_no_skip_to": {"type": "string"},
-                            # skip to this variable, if "yes" was selected in a "yes_no" prompt
+                            # skip to this variable,
+                            # if "yes" was selected in a "yes_no" prompt
                             "if_yes_skip_to": {"type": "string"},
                         },
                         "required": ["name", "type"],
@@ -146,11 +158,13 @@ schema_chronology = ['1.0', '2.0']
 
 def validate(d: dict, version=None) -> None:
     """
-    Validate a cookiecutter.json (as Python dict) against the specified cookiecutter schema
-    version. If the version is undefined, the version that is declared in the cookiecutter.json
-    is used. If no version declaration is found, schema version 1.0 is assumed.
-    Raises a ValidationError if schema validation failed. Raises a ValueError, if the specified
-    schema version is not supported.
+    Infers schema version and validates the cookiecutter context.
+
+    Validate a cookiecutter.json (as Python dict) against the specified cookiecutter
+    schema version. If the version is undefined, the version that is declared in
+    the cookiecutter.json is used. If no version declaration is found,
+    schema version 1.0 is assumed. Raises a ValidationError if schema validation
+    failed. Raises a ValueError, if the specified schema version is not supported.
 
     :param d: the cookiecutter.json as Python dict
     :param version: the schema version to validate against (optional)
@@ -168,6 +182,8 @@ def validate(d: dict, version=None) -> None:
 
 def _validate(d: dict, version: str):
     """
+    Validate cookiecutter context against the schema version provided.
+
     Validate the specified cookiecutter.json (as Python dict) against the specified
     cookiecutter schema version. If the version number is undefined or not supported,
     a ValueError is raised.
@@ -185,6 +201,8 @@ def _validate(d: dict, version: str):
 
 def infer_schema_version(d: dict) -> Optional[str]:
     """
+    Infers the schema version of a cookiecutter context.
+
     Detect the schema version of the specified cookiecutter.json (as Python dict).
     The schema will not be validated, this function will only try to return the
     schema version. If the schema version could not be detected, None is returned.

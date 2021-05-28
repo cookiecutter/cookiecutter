@@ -21,8 +21,11 @@ import pytest
 
 from cookiecutter import context
 from cookiecutter.context import validate_requirement
-from cookiecutter.exceptions import ContextDecodingException, IncompatibleVersion, \
-    InvalidConfiguration
+from cookiecutter.exceptions import (
+    ContextDecodingException,
+    IncompatibleVersion,
+    InvalidConfiguration,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -431,9 +434,12 @@ def test_variable_invalid_default_choice():
     choices = ['green', 'red', 'blue', 'yellow']
     with pytest.raises(InvalidConfiguration) as excinfo:
         context.Variable(
-            name='badchoice', default='purple', type='string', choices=choices)
-    assert (f'Variable: badchoice has an invalid default value purple for choices: {choices}'
-            in str(excinfo.value))
+            name='badchoice', default='purple', type='string', choices=choices
+        )
+    assert (
+        f'Variable: badchoice has an invalid default value purple for choices: {choices}'
+        in str(excinfo.value)
+    )
 
 
 def test_variable_validation_compile_exception():
