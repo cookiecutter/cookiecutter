@@ -1,3 +1,5 @@
+filter-by-commitish: true
+commitish: master
 categories:
   - title: 'Breaking Changes'
     labels:
