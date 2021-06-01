@@ -1,4 +1,5 @@
 """Functions for prompting the user for project info."""
+import functools
 import json
 from collections import OrderedDict
 
@@ -78,11 +79,18 @@ def read_user_choice(var_name, options):
     return choice_map[user_choice]
 
 
-def process_json(user_value):
+DEFAULT_DISPLAY = 'default'
+
+
+def process_json(user_value, default_value=None):
     """Load user-supplied value as a JSON dict.
 
     :param str user_value: User-supplied value to load as a JSON dict
     """
+    if user_value == DEFAULT_DISPLAY:
+        # Return the given default w/o any processing
+        return default_value
+
     try:
         user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
     except Exception:
@@ -107,15 +115,16 @@ def read_user_dict(var_name, default_value):
     if not isinstance(default_value, dict):
         raise TypeError
 
-    default_display = 'default'
-
     user_value = click.prompt(
-        var_name, default=default_display, type=click.STRING, value_proc=process_json
+        var_name,
+        default=DEFAULT_DISPLAY,
+        type=click.STRING,
+        value_proc=functools.partial(process_json, default_value=default_value),
     )
 
-    if user_value == default_display:
-        # Return the given default w/o any processing
-        return default_value
+    if click.__version__.startswith("7.") and user_value == DEFAULT_DISPLAY:
+        # click 7.x does not invoke value_proc on the default value.
+        return default_value  # pragma: no cover
     return user_value
 
 
