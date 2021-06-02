@@ -26,17 +26,6 @@ schema_2_0 = {
     "properties": {
         # cookiecutter schema version
         "version": {"type": "string", "enum": ["2.0", "2"]},
-        # list requirements for this template
-        "requires": {
-            "type": "object",
-            "properties": {
-                # min version of cookiecutter that is required by the template
-                "cookiecutter": {"type": "string"},
-                # python version constraints of the template
-                "python": {"type": "string"},
-            },
-            "additionalProperties": False,
-        },
         # additional parameters for Jinja2 environment
         # frequent use for the 'extension' parameter
         # see all parameter options at
@@ -81,8 +70,6 @@ schema_2_0 = {
                             # (keep it short!)
                             "prompt": {"type": "string"},
                             # more detailed description of this variable
-                            "description": {"type": "string"},
-                            # input data type (string, boolean, etc.)
                             "type": {
                                 "type": "string",
                                 "enum": [
@@ -95,43 +82,10 @@ schema_2_0 = {
                                     "string",
                                 ],
                             },
-                            # validate user input with this regex
-                            "validation": {"type": "string"},
-                            # display this message if validation failed
-                            "validation_msg": {"type": "string"},
-                            # regex flags used with the validation string
-                            "validation_flags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string",
-                                    "enum": [
-                                        "ascii",
-                                        "debug",
-                                        "ignorecase",
-                                        "locale",
-                                        "mulitline",
-                                        "dotall",
-                                        "verbose",
-                                    ],
-                                },
-                            },
                             # a list of items to choose from
                             "choices": {"type": "array", "items": {"type": "string"}},
                             # don't prompt the user for this variable if set to false
                             "prompt_user": {"type": "boolean"},
-                            # hide user input while typing
-                            # (e.g. if you're asking for a password)
-                            "hide_input": {"type": "boolean"},
-                            # only show this prompt, if the specified condition is true
-                            "do_if": {"type": "string"},
-                            # skip this prompt, if the specified condition is true
-                            "skip_if": {"type": "string"},
-                            # skip to this variable,
-                            # if "no" was selected in a "yes_no" prompt
-                            "if_no_skip_to": {"type": "string"},
-                            # skip to this variable,
-                            # if "yes" was selected in a "yes_no" prompt
-                            "if_yes_skip_to": {"type": "string"},
                         },
                         "required": ["name", "type"],
                         "additionalProperties": False,
