@@ -92,9 +92,12 @@ def test_should_call_prompt_with_process_json(mocker):
 
     read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
-    assert mock_prompt.call_args == mocker.call(
-        'name', type=click.STRING, default='default', value_proc=process_json,
-    )
+    args, kwargs = mock_prompt.call_args
+
+    assert args == ('name',)
+    assert kwargs['type'] == click.STRING
+    assert kwargs['default'] == 'default'
+    assert kwargs['value_proc'].func == process_json
 
 
 def test_should_not_call_process_json_default_value(mocker, monkeypatch):
