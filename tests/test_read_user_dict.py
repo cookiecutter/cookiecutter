@@ -100,15 +100,17 @@ def test_should_call_prompt_with_process_json(mocker):
     assert kwargs['value_proc'].func == process_json
 
 
-def test_should_not_call_process_json_default_value(mocker, monkeypatch):
-    """Make sure that `process_json` is not called when using default value."""
-    mock_process_json = mocker.patch('cookiecutter.prompt.process_json', autospec=True)
+def test_should_not_load_json_from_sentinel(mocker):
+    """Make sure that `json.loads` is not called when using default value."""
+    mock_json_loads = mocker.patch(
+        'cookiecutter.prompt.json.loads', autospec=True, return_value={}
+    )
 
     runner = click.testing.CliRunner()
     with runner.isolation(input="\n"):
         read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
-    mock_process_json.assert_not_called()
+    mock_json_loads.assert_not_called()
 
 
 @pytest.mark.parametrize("input", ["\n", "default\n"])
