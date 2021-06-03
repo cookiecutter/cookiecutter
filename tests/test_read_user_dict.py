@@ -111,19 +111,14 @@ def test_should_not_call_process_json_default_value(mocker, monkeypatch):
     mock_process_json.assert_not_called()
 
 
-def test_read_user_dict_default_value(mocker):
+@pytest.mark.parametrize("input", ["\n", "default\n"])
+def test_read_user_dict_default_value(mocker, input):
     """Make sure that `read_user_dict` returns the default value.
 
     Verify return of a dict variable rather than the display value.
     """
-    mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value='default',
-    )
-
-    val = read_user_dict('name', {'project_slug': 'pytest-plugin'})
-
-    assert mock_prompt.call_args == mocker.call(
-        'name', type=click.STRING, default='default', value_proc=process_json,
-    )
+    runner = click.testing.CliRunner()
+    with runner.isolation(input=input):
+        val = read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
     assert val == {'project_slug': 'pytest-plugin'}
