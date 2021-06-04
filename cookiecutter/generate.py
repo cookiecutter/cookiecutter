@@ -23,9 +23,6 @@ from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
-from cookiecutter.schema import infer_schema_version
-
-
 logger = logging.getLogger(__name__)
 
 
@@ -76,32 +73,6 @@ def apply_overwrites_to_context(context, overwrite_context):
             context[variable] = overwrite
 
 
-def apply_default_overwrites_to_context_v2(context, overwrite_default_context):
-    """Modify the given version 2 context in place based on the overwrite_context."""
-    for variable, overwrite in overwrite_default_context.items():
-        var_dict = next(
-            (d for d in context['template']['variables'] if d['name'] == variable), None
-        )  # noqa
-        if var_dict:
-            if 'choices' in var_dict.keys():
-                context_value = var_dict['choices']
-            else:
-                context_value = var_dict['default']
-
-            if isinstance(context_value, list):
-                # We are dealing with a choice variable
-                if overwrite in context_value:
-                    # This overwrite is actually valid for the given context
-                    # Let's set it as default (by definition 1st item in list)
-                    # see ``cookiecutter.prompt.prompt_choice_for_config``
-                    context_value.remove(overwrite)
-                    context_value.insert(0, overwrite)
-                    var_dict['default'] = overwrite
-            else:
-                # Simply overwrite the value for this variable
-                var_dict['default'] = overwrite
-
-
 def resolve_changed_variable_names(context, variables_to_resolve):
     """
     Back-checks references to changed variable names.
@@ -128,164 +99,6 @@ def resolve_changed_variable_names(context, variables_to_resolve):
                                 variable[field_name][i] = item.replace(
                                     var_name_to_resolve, new_var_name
                                 )  # noqa
-
-
-def apply_overwrites_to_context_v2(context, extra_context):
-    """
-    Modify the given version 2 context in place based on extra_context.
-
-    The extra_context parameter may be a dictionary or a list of dictionaries.
-
-    If extra_context is a dictionary, the key is assumed to identify the
-    variable's 'name' field and the value will be applied to the name field's
-    default value -- this behavior is exactly like version 1 context overwrite
-    behavior.
-
-    When extra_context is a list of dictionaries, each dictionary MUST specify
-    at the very least a 'name' key/value pair, or a ValueError is raised. The
-    'name' key's value will be used to find the variable dictionary to
-    overwrite by matching each dictionary's 'name' field.
-
-    If extra_context is a list of dictionaries, apply the overwrite from each
-    dictionary to it's matching variable's dictionary. This allows all fields
-    of a variable to be updated. A match considers the variable's 'name' field
-    only; any name fields in the extra_context list of dictionaries that do
-    not match a variable 'name' field, are ignored. Any key/value pairs
-    specified in an extra_content dictionary that are not already defined by
-    the matching variable dictionary will raise a ValueError.
-
-    Changing the 'name' Field
-    -------------------------
-    Changing the 'name' field requires a special syntax. Because the algorithm
-    chosen to find a variable’s dictionary entry in the variables list of
-    OrderDicts uses the variable’s ‘name’ field; it could not be used to
-    simultaneously hold a new ‘name’ field value. Therefore the following
-    extra context dictionary entry snytax was introduced to allow the ‘name’
-    field of a variable to be changed:
-
-        {
-           'name': 'CURRENT_VARIABLE_NAME::NEW_VARIABLE_NAME',
-        }
-
-    So, for example, to change a variable’s ‘name’ field from
-    ‘director_credit’ to ‘producer_credit’, would require:
-
-        {
-           'name': 'director_credit::producer_credit',
-        }
-
-    Removing a Field from a Variable
-    --------------------------------
-    It is possible that a previous extra context overwrite requires that a
-    subsequent variable entry be removed.
-
-    In order to accomplish this a remove field token is used in the extra
-    context as follows:
-
-        {
-           'name': 'director_cut',
-           'skip_if': '<<REMOVE::FIELD>>',
-        }
-
-    In the example above, the extra context overwrite results in the variable
-    named ‘director_cut’ having it’s ‘skip_if’ field removed.
-
-    Overwrite Considerations Regarding ‘default’ & ‘choices’ Fields
-    ---------------------------------------------------------------
-    When a variable is defined that has both the ‘default’ and the ‘choices’
-    fields, these two fields influence each other. If one of these fields is
-    updated, but not the other field, then the other field will be
-    automatically updated by the overwrite logic.
-
-    If both fields are updated, then the ‘default’ value will be moved to the
-    first location of the ‘choices’ field if it exists elsewhere in the list;
-    if the default value is not in the list, it will be added to the first
-    location in the choices list.
-
-    """
-    if isinstance(extra_context, dict):
-        apply_default_overwrites_to_context_v2(context, extra_context)
-    elif isinstance(extra_context, list):
-        variable_names_to_resolve = {}
-        for item in extra_context:
-            if isinstance(item, dict):
-                if 'name' in item.keys():
-                    replacement = _replace_extra_context_name(context, item)
-                    if replacement:
-                        old_name, new_name = replacement
-                        variable_names_to_resolve[old_name] = new_name
-                else:
-                    raise ValueError(
-                        f"Extra context dictionary item {item} is missing a 'name' key."
-                    )
-            else:
-                raise ValueError(
-                    f"Extra context list item '{item}' is of type "
-                    f"{type(item).__name__}, should be a dictionary."
-                )
-        if variable_names_to_resolve:
-            # At least one variable name has been over-written, if any
-            # variables use the original name, they must get updated as well
-            resolve_changed_variable_names(context, variable_names_to_resolve)
-    else:
-        raise ValueError("Extra context must be a dictionary or a list of dictionaries")
-
-
-def _replace_extra_context_name(context: dict, extra_context: dict):
-    # extra_context['name'] may have a replace value of the form:
-    #       'name_value::replace_name_value'
-    split = extra_context['name'].split('::')
-    extra_context_name = split[0]
-    replace_name = split[1] if len(split) > 1 else None
-    var_dict = next(
-        (
-            d
-            for d in context['template']['variables']
-            if d['name'] == extra_context_name
-        ),
-        None,
-    )  # noqa
-    if var_dict:
-        # Since creation of new key/value pairs is NOT
-        # desired, we only use a key that is common to both
-        # the variables context and the extra context.
-        common_keys = [
-            key for key in extra_context.keys() if key in var_dict.keys()
-        ]  # noqa
-        for key in common_keys:
-            if extra_context[key] == '<<REMOVE::FIELD>>':
-                if key in ['default']:
-                    raise ValueError("Cannot remove mandatory 'default' field")  # noqa
-                var_dict.pop(key, None)
-            else:
-                # normal field update
-                var_dict[key] = extra_context[key]
-
-        # After all fields have been updated, there is some
-        # house-keeping to do. The default/choices
-        # house-keeping could effectively be no-ops if the
-        # user did the correct thing.
-        if ('default' in common_keys) & ('choices' in var_dict.keys()):  # noqa
-            # default updated, regardless if choices has been
-            # updated, re-order choices based on default
-            if var_dict['default'] in var_dict['choices']:
-                var_dict['choices'].remove(var_dict['default'])  # noqa
-
-            var_dict['choices'].insert(0, var_dict['default'])
-
-        if ('default' not in common_keys) & ('choices' in common_keys):  # noqa
-            # choices updated, so update default based on
-            # first location in choices
-            var_dict['default'] = var_dict['choices'][0]
-
-        if replace_name:
-            var_dict['name'] = replace_name
-            return extra_context_name, replace_name
-    else:
-        raise ValueError(
-            f"No variable found in context whose name matches extra context "
-            f"name '{extra_context_name}'"
-        )
 
 
 def generate_context(
@@ -321,22 +134,14 @@ def generate_context(
     context[file_stem] = obj
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
-    schema_version = infer_schema_version(context[file_stem])
-    if schema_version != '1.0':
-        logger.debug(f"Context is version {schema_version}")
-        if default_context:
-            apply_overwrites_to_context_v2(obj, default_context)
-        if extra_context:
-            apply_overwrites_to_context_v2(obj, extra_context)
-    else:
-        logger.debug("Context is version 1")
-        if default_context:
-            try:
-                apply_overwrites_to_context(obj, default_context)
-            except ValueError as ex:
-                warnings.warn("Invalid default received: " + str(ex))
-        if extra_context:
-            apply_overwrites_to_context(obj, extra_context)
+    logger.debug("Context is version 1")
+    if default_context:
+        try:
+            apply_overwrites_to_context(obj, default_context)
+        except ValueError as ex:
+            warnings.warn("Invalid default received: " + str(ex))
+    if extra_context:
+        apply_overwrites_to_context(obj, extra_context)
 
     logger.debug('Context generated is %s', context)
     return context
