@@ -1,7 +1,0 @@
-{
-    "version": "2.0",
-    "template": {
-        "name": "cookiecutter-fake-minimun-template",
-        "variables": []
-    }
-}

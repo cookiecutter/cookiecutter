@@ -73,34 +73,6 @@ def apply_overwrites_to_context(context, overwrite_context):
             context[variable] = overwrite
 
 
-def resolve_changed_variable_names(context, variables_to_resolve):
-    """
-    Back-checks references to changed variable names.
-
-    The variable names contained in the variables_to_resolve dictionary's
-    key names have been over-written with keys' value. Check the entire
-    context and update any other variable context fields that may still
-    reference the original variable name.
-    """
-    for var_name_to_resolve, new_var_name in variables_to_resolve.items():
-        for variable in context['template']['variables']:
-            for field_name in variable.keys():
-                if isinstance(variable[field_name], str):
-                    if var_name_to_resolve in variable[field_name]:
-                        variable[field_name] = variable[field_name].replace(
-                            var_name_to_resolve, new_var_name
-                        )  # noqa
-
-                elif isinstance(variable[field_name], list):
-                    # a choices field could have an str item to update
-                    for i, item in enumerate(variable[field_name]):
-                        if isinstance(item, str):
-                            if var_name_to_resolve in item:
-                                variable[field_name][i] = item.replace(
-                                    var_name_to_resolve, new_var_name
-                                )  # noqa
-
-
 def generate_context(
     context_file='cookiecutter.json', default_context=None, extra_context=None
 ):
