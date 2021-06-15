@@ -92,6 +92,16 @@ def test_work_in(tmp_path):
     assert cwd == Path.cwd()
 
 
+def test_work_in_without_path():
+    """Folder is not changed if no path provided."""
+    cwd = Path.cwd()
+
+    with utils.work_in():
+        assert cwd == Path.cwd()
+
+    assert cwd == Path.cwd()
+
+
 def test_prompt_should_ask_and_rm_repo_dir(mocker, tmp_path):
     """In `prompt_and_delete()`, if the user agrees to delete/reclone the \
     repo, the repo should be deleted."""
