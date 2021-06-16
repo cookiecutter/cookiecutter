@@ -22,6 +22,7 @@ def cookiecutter(
     template,
     checkout=None,
     no_input=False,
+    recurse_submodules=False,
     extra_context=None,
     replay=None,
     overwrite_if_exists=False,
@@ -40,6 +41,7 @@ def cookiecutter(
         or a URL to a git repository.
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param no_input: Prompt the user at command line for manual configuration?
+    :param recurse_submodules: Clone submodules if set to `True`
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
     :param replay: Do not prompt for input, instead read from saved json. If
@@ -69,6 +71,7 @@ def cookiecutter(
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,
+        recurse_submodules=recurse_submodules,
         password=password,
         directory=directory,
     )

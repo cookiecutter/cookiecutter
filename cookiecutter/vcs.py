@@ -54,11 +54,12 @@ def is_vcs_installed(repo_type):
     return bool(which(repo_type))
 
 
-def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
+def clone(repo_url, checkout=None, recurse_submodules=False,
+          clone_to_dir='.', no_input=False):
     """Clone a repo to the current directory.
-
     :param repo_url: Repo URL of unknown type.
     :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param recurse_submodules: Clone submodules if set to `True`
     :param clone_to_dir: The directory to clone to.
                          Defaults to the current directory.
     :param no_input: Suppress all user prompts when calling via API.
@@ -78,11 +79,20 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
 
     repo_url = repo_url.rstrip('/')
     repo_name = os.path.split(repo_url)[1]
+
+    _repo_args = {'git': ['git', 'clone'],
+                  'hg': ['hg', 'clone'],
+                  }
+    clone_command = _repo_args[repo_type] # avoid warnign if defined in if-elif
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    if repo_type == 'hg':
+        if recurse_submodules:
+            clone_command.append('--recurse-submodules')
+
+    elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+    clone_command.append(repo_url)
     logger.debug('repo_dir is {0}'.format(repo_dir))
 
     if os.path.isdir(repo_dir):
@@ -93,7 +103,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     if clone:
         try:
             subprocess.check_output(  # nosec
-                [repo_type, 'clone', repo_url],
+                clone_command,
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )

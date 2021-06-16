@@ -83,6 +83,32 @@ def test_cli_verbose(cli_runner):
         assert 'Project name: **Fake Project**' in f.read()
 
 
+def test_user_config_recurse_submodules(mocker, cli_runner, user_config_path):
+    """Test cli invocation works with `recurse-submodules` option."""
+    mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
+
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--config-file', user_config_path,
+                        '--recurse-submodules')
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        recurse_submodules=True,
+        replay=False,
+        overwrite_if_exists=False,
+        skip_if_file_exists=False,
+        output_dir='.',
+        config_file=user_config_path,
+        default_config=False,
+        extra_context=None,
+        password=None,
+        directory=None,
+        accept_hooks=True,
+    )
+
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_replay(mocker, cli_runner):
     """Test cli invocation display log with `verbose` and `replay` flags."""
@@ -96,6 +122,7 @@ def test_cli_replay(mocker, cli_runner):
         template_path,
         None,
         False,
+        recurse_submodules=False,
         replay=True,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
@@ -122,6 +149,7 @@ def test_cli_replay_file(mocker, cli_runner):
         template_path,
         None,
         False,
+        recurse_submodules=False,
         replay='~/custom-replay-file',
         overwrite_if_exists=False,
         skip_if_file_exists=False,
@@ -157,6 +185,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         template_path,
         None,
         True,
+        recurse_submodules=False,
         replay=True,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
@@ -192,6 +221,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         template_path,
         None,
         False,
+        recurse_submodules=False,
         replay=True,
         overwrite_if_exists=True,
         skip_if_file_exists=False,
@@ -248,6 +278,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         template_path,
         None,
         False,
+        recurse_submodules=False,
         replay=False,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
@@ -292,6 +323,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         template_path,
         None,
         False,
+        recurse_submodules=False,
         replay=False,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
@@ -319,6 +351,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         template_path,
         None,
         False,
+        recurse_submodules=False,
         replay=False,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
@@ -344,6 +377,7 @@ def test_default_user_config(mocker, cli_runner):
         template_path,
         None,
         False,
+        recurse_submodules=False,
         replay=False,
         overwrite_if_exists=False,
         skip_if_file_exists=False,
@@ -562,6 +596,7 @@ def test_cli_accept_hooks(
         None,
         False,
         replay=False,
+        recurse_submodules=False,
         overwrite_if_exists=False,
         output_dir=output_dir,
         config_file=None,

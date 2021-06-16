@@ -14,6 +14,7 @@ def test_finds_local_repo(tmp_path):
         abbreviations={},
         clone_to_dir=str(tmp_path),
         checkout=None,
+        recurse_submodules=False,
         no_input=True,
     )
 
@@ -31,6 +32,7 @@ def test_local_repo_with_no_context_raises(tmp_path):
             abbreviations={},
             clone_to_dir=str(tmp_path),
             checkout=None,
+            recurse_submodules=False,
             no_input=True,
         )
 
@@ -55,6 +57,7 @@ def test_local_repo_typo(tmp_path):
             abbreviations={},
             clone_to_dir=str(tmp_path),
             checkout=None,
+            recurse_submodules=False,
             no_input=True,
         )
 
