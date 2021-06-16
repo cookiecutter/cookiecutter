@@ -2,6 +2,7 @@
 import tempfile
 
 import pytest
+import shutil
 
 from cookiecutter import zipfile
 from cookiecutter.exceptions import InvalidZipRepository
@@ -9,6 +10,16 @@ from cookiecutter.exceptions import InvalidZipRepository
 
 def mock_download():
     """Fake download function."""
+    with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:
+        chunk = zf.read(1024)
+        while chunk:
+            yield chunk
+            chunk = zf.read(1024)
+
+
+def mock_download_with_empty_chunks():
+    """Fake download function."""
+    yield
     with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:
         chunk = zf.read(1024)
         while chunk:
@@ -170,6 +181,29 @@ def test_unzip_url(mocker, clone_dir):
     assert not mock_prompt_and_delete.called
 
 
+def test_unzip_url_with_empty_chunks(mocker, clone_dir):
+    """In `unzip()` empty chunk must be ignored."""
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+
+    request = mocker.MagicMock()
+    request.iter_content.return_value = mock_download_with_empty_chunks()
+
+    mocker.patch(
+        'cookiecutter.zipfile.requests.get', return_value=request, autospec=True,
+    )
+
+    output_dir = zipfile.unzip(
+        'https://example.com/path/to/fake-repo-tmpl.zip',
+        is_url=True,
+        clone_to_dir=str(clone_dir),
+    )
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    assert not mock_prompt_and_delete.called
+
+
 def test_unzip_url_existing_cache(mocker, clone_dir):
     """Url should be downloaded and unzipped, old zip file will be removed."""
     mock_prompt_and_delete = mocker.patch(
@@ -240,3 +274,25 @@ def test_unzip_should_abort_if_no_redownload(mocker, clone_dir):
         zipfile.unzip(zipfile_url, is_url=True, clone_to_dir=str(clone_dir))
 
     assert not mock_requests_get.called
+
+
+def test_unzip_is_ok_to_reuse(mocker, clone_dir):
+    """Already downloaded zip should not be downloaded again."""
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=False, autospec=True
+    )
+
+    request = mocker.MagicMock()
+
+    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    shutil.copy('tests/files/fake-repo-tmpl.zip', existing_zip)
+
+    output_dir = zipfile.unzip(
+        'https://example.com/path/to/fake-repo-tmpl.zip',
+        is_url=True,
+        clone_to_dir=str(clone_dir),
+    )
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    assert mock_prompt_and_delete.call_count == 1
+    assert request.iter_content.call_count == 0
