@@ -2,9 +2,10 @@
 
 ## Development Leads
 
-* Audrey Roy Greenfeld ([@audreyr](https://github.com/audreyr))
-* Daniel Roy Greenfeld ([@pydanny](https://github.com/pydanny))
+* Audrey Feldroy ([@audreyfeldroy](https://github.com/audreyfeldroy))
+* Daniel Feldroy ([@pydanny](https://github.com/pydanny))
 * Raphael Pierzina ([@hackebrot](https://github.com/hackebrot))
+
 
 ## Core Committers
 
@@ -13,6 +14,7 @@
 * Andrey Shpak ([@insspb](https://github.com/insspb))
 * Sorin Sbarnea ([@ssbarnea](https://github.com/ssbarnea))
 * Fábio C. Barrionuevo da Luz ([@luzfcb](https://github.com/luzfcb))
+* Simone Basso ([@simobasso](https://github.com/simobasso))
 
 ## Contributors
 
@@ -147,3 +149,24 @@
 * Amey Joshi ([@amey589](https://github.com/amey589))
 * Paul Harrison ([@smoothml](https://github.com/smoothml))
 * Fabio Todaro ([@SharpEdgeMarshall](https://github.com/SharpEdgeMarshall))
+* Nicholas Bollweg ([@bollwyvl](https://github.com/bollwyvl))
+* Jace Browning ([@jacebrowning](https://github.com/jacebrowning))
+* Ionel Cristian Mărieș ([@ionelmc](https://github.com/ionelmc))
+* Kishan Mehta ([@kishan3](https://github.com/kishan3))
+* Wieland Hoffmann ([@mineo](https://github.com/mineo))
+* Antony Lee ([@anntzer](https://github.com/anntzer))
+* Aurélien Gâteau ([@agateau](https://github.com/agateau))
+* Axel H. ([@noirbizarre](https://github.com/noirbizarre))
+* Chris ([@chrisbrake](https://github.com/chrisbrake))
+* Chris Streeter ([@streeter](https://github.com/streeter))
+* Gábor Lipták ([@gliptak](https://github.com/gliptak))
+* Javier Sánchez Portero ([@javiersanp](https://github.com/javiersanp))
+* Nimrod Milo ([@milonimrod](https://github.com/milonimrod))
+* Philipp Kats ([@Casyfill](https://github.com/Casyfill))
+* Reinout van Rees ([@reinout](https://github.com/reinout))
+* Rémy Greinhofer ([@rgreinho](https://github.com/rgreinho))
+* Sebastian ([@sebix](https://github.com/sebix))
+* Stuart Mumford ([@Cadair](https://github.com/Cadair))
+* Tom Forbes ([@orf](https://github.com/orf))
+* Xie Yanbo ([@xyb](https://github.com/xyb))
+* Maxim Ivanov ([@ivanovmg](https://github.com/ivanovmg))

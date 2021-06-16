@@ -39,9 +39,9 @@ Did someone say features?
 # You'll be prompted to enter values.
 # Then it'll create your Python package in the current working directory,
 # based on those values.
-$ cookiecutter https://github.com/audreyr/cookiecutter-pypackage
+$ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage
 # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-$ cookiecutter gh:audreyr/cookiecutter-pypackage
+$ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
 ```
 
 * Use it at the command line with a local template:
@@ -61,7 +61,7 @@ from cookiecutter.main import cookiecutter
 cookiecutter('cookiecutter-pypackage/')
 
 # Create project from the cookiecutter-pypackage.git repo template
-cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+cookiecutter('https://github.com/audreyfeldroy/cookiecutter-pypackage.git')
 ```
 
 * Directory names and filenames can be templated. For example:
@@ -76,7 +76,7 @@ cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
 ```json
 {
-    "full_name": "Audrey Roy",
+    "full_name": "Audrey Feldroy",
     "email": "audreyr@gmail.com",
     "project_name": "Complexity",
     "repo_name": "complexity",
@@ -95,9 +95,9 @@ cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
 
 ```yaml
 default_context:
-    full_name: "Audrey Roy"
+    full_name: "Audrey Feldroy"
     email: "audreyr@gmail.com"
-    github_username: "audreyr"
+    github_username: "audreyfeldroy"
 cookiecutters_dir: "~/.cookiecutters/"
 ```
 
@@ -108,7 +108,7 @@ you can reference it by directory name:
 
 ```bash
 # Clone cookiecutter-pypackage
-$ cookiecutter gh:audreyr/cookiecutter-pypackage
+$ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
 # Now you can use the already cloned cookiecutter by name
 $ cookiecutter cookiecutter-pypackage
 ```
@@ -157,8 +157,8 @@ discoverable. You are almost not limited in topics amount, use it!
 
 These Cookiecutters are maintained by the cookiecutter team:
 
-* [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage):
-[@audreyr's](https://github.com/audreyr) ultimate Python package project template.
+* [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage):
+[@audreyfeldroy's](https://github.com/audreyfeldroy) ultimate Python package project template.
 * [cookiecutter-django](https://github.com/pydanny/cookiecutter-django):
 A bleeding edge Django project template with Bootstrap 4, customizable users app,
 starter templates, working user registration, celery setup, and much more.
@@ -222,7 +222,7 @@ If urgent, it's fine to ping a core committer in the issue with a reminder.
 * Ask others to comment, discuss, review, etc.
 * Search the Cookiecutter repo for issues related to yours.
 * Need a fix/feature/release/help urgently, and can't wait?
-[@audreyr](https://github.com/audreyr) is available for hire for consultation
+[@audreyfeldroy](https://github.com/audreyfeldroy) is available for hire for consultation
 or custom development.
 
 ## Support This Project

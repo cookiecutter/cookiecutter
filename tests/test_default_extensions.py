@@ -3,6 +3,7 @@ import os
 
 import freezegun
 import pytest
+import uuid
 
 from cookiecutter.main import cookiecutter
 
@@ -16,10 +17,10 @@ def freeze():
     freezer.stop()
 
 
-def test_jinja2_time_extension(tmpdir):
+def test_jinja2_time_extension(tmp_path):
     """Verify Jinja2 time extension work correctly."""
     project_dir = cookiecutter(
-        'tests/test-extensions/default/', no_input=True, output_dir=str(tmpdir)
+        'tests/test-extensions/default/', no_input=True, output_dir=str(tmp_path)
     )
     changelog_file = os.path.join(project_dir, 'HISTORY.rst')
     assert os.path.isfile(changelog_file)
@@ -39,10 +40,25 @@ def test_jinja2_time_extension(tmpdir):
     assert expected_lines == changelog_lines
 
 
-def test_jinja2_slugify_extension(tmpdir):
+def test_jinja2_slugify_extension(tmp_path):
     """Verify Jinja2 slugify extension work correctly."""
     project_dir = cookiecutter(
-        'tests/test-extensions/default/', no_input=True, output_dir=str(tmpdir)
+        'tests/test-extensions/default/', no_input=True, output_dir=str(tmp_path)
     )
 
     assert os.path.basename(project_dir) == "it-s-slugified-foobar"
+
+
+def test_jinja2_uuid_extension(tmp_path):
+    """Verify Jinja2 uuid extension work correctly."""
+    project_dir = cookiecutter(
+        'tests/test-extensions/default/', no_input=True, output_dir=str(tmp_path)
+    )
+    changelog_file = os.path.join(project_dir, 'id')
+    assert os.path.isfile(changelog_file)
+
+    with open(changelog_file, 'r', encoding='utf-8') as f:
+        changelog_lines = f.readlines()
+
+    uuid.UUID(changelog_lines[0], version=4)
+    assert True
