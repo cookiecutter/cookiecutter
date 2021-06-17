@@ -11,7 +11,7 @@ from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
 from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.prompt import prompt_for_config
-from cookiecutter.replay import dump, load
+from cookiecutter.replay import dump, load, load_replay_file
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
 
@@ -79,8 +79,7 @@ def cookiecutter(
         if isinstance(replay, bool):
             context = load(config_dict['replay_dir'], template_name)
         else:
-            path, template_name = os.path.split(os.path.splitext(replay)[0])
-            context = load(path, template_name)
+            context = load_replay_file(replay)
     else:
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is %s', context_file)
