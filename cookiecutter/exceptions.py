@@ -166,6 +166,6 @@ class InvalidZipRepository(CookiecutterException):
 class IncompatibleVersion(CookiecutterException):
     """
     Exception for incompatible software versions.
-    
+
     Raised when a mandatory version requirement is not fulfilled.
     """
