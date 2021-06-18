@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Defines and validates the allowed schemas for cookiecutter.json.
+
 This file contains the definition of the allowed schemas, using the JSONschema
 notation. It also implements the functions used to infer a schema version from
 a loaded JSON and validate it against the corresponding JSON schema.
