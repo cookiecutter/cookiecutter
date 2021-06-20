@@ -60,7 +60,7 @@ class VCS:
     @classmethod
     def match_repo_url(cls, url):
         """
-        Check if the raw URL input from the matches this VCS.
+        Check if the raw URL input matches this VCS.
 
         Return match level:
 
