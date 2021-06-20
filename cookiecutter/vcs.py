@@ -89,7 +89,7 @@ class VCS:
         if protocol and protocol not in cls.allowed_protocols + cls.protocols:
             return VCS.MatchLevel.NONE, ''
 
-        # If a VCS prefix is stated, it has to equal the VCS command
+        # If a VCS prefix is stated, it has to be equal to the VCS command
         # -> explicit match
         if prefix:
             if prefix == cls.cmd:
