@@ -1,4 +1,4 @@
-# Cookiecutter
+# Cookiecutter 
 
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
