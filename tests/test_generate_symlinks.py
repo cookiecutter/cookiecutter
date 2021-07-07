@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 import os
+import shutil
 
 import pytest
 
@@ -103,3 +104,29 @@ def test_symlinks():
         '{{ cookiecutter.sym_to_temp }}',
         '{{ cookiecutter.link_dir }}',
     )
+
+    # test overwriting + symlinks
+    utils.rmtree(TEST_OUTPUT_DIR)  # remove output
+    os.makedirs(os.path.join(TEST_OUTPUT_DIR, "symlink"))
+    shutil.copy(
+        os.path.join("tests", "test-generate-symlinks", "cookiecutter.json"),
+        os.path.join(
+            TEST_OUTPUT_DIR, "symlink", "afile.txt"
+        ),  # copy to where output will exist
+    )
+    generate.generate_files(
+        context={
+            'cookiecutter': {
+                'name': TEST_OUTPUT_DIR,
+                "link_dir": "rendered_dir",
+                "sym_to_nontemp": "rendered_sym_to_original",
+                "sym_to_temp": "rendered_sym_to_rendered_dir",
+                "_copy_without_render": ["copy_no_render"],
+            }
+        },
+        repo_dir=os.path.join('tests', 'test-generate-symlinks'),
+        overwrite_if_exists=True,  # overwrite the symlink
+    )
+
+    # normal symlink, not rendered target
+    _test_symlink(non_rendered_dir, 'symlink', 'original')

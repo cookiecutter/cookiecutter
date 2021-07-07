@@ -218,11 +218,14 @@ def render_and_create_dir(
             logger.debug(
                 'Output directory %s already exists, overwriting it', dir_to_create
             )
+
+            # must be removed for symlink to be created successfully
+            if symlink is not None:
+                shutil.rmtree(dir_to_create)
+
         else:
             msg = 'Error: "{}" directory already exists'.format(dir_to_create)
             raise OutputDirExistsException(msg)
-    else:
-        make_sure_path_exists(dir_to_create)
 
     if symlink is not None:
         link_tmpl = environment.from_string(symlink)
@@ -357,7 +360,9 @@ def generate_files(
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
-                shutil.copytree(indir, outdir, symlinks=True)
+                shutil.copytree(
+                    indir, outdir, symlinks=True, dirs_exist_ok=overwrite_if_exists
+                )
 
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively
