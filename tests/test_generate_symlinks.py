@@ -23,9 +23,11 @@ def remove_test_dir(request):
     """
     Remove the folder that is created by the test.
     """
+
     def fin_remove_test_dir():
         if os.path.exists(TEST_OUTPUT_DIR):
             utils.rmtree(TEST_OUTPUT_DIR)
+
     request.addfinalizer(fin_remove_test_dir)
 
 
@@ -38,12 +40,10 @@ def test_symlinks():
                 "link_dir": "rendered_dir",
                 "sym_to_nontemp": "rendered_sym_to_original",
                 "sym_to_temp": "rendered_sym_to_rendered_dir",
-                "_copy_without_render": [
-                    "copy_no_render"
-                ]
+                "_copy_without_render": ["copy_no_render"],
             }
         },
-        repo_dir='tests/test-generate-symlinks'
+        repo_dir='tests/test-generate-symlinks',
     )
 
     dir_contents = os.listdir(TEST_OUTPUT_DIR)
@@ -76,8 +76,7 @@ def test_symlinks():
     _test_symlink(TEST_OUTPUT_DIR, 'rendered_sym_to_original', 'original')
 
     # rendered symlink, rendered target
-    _test_symlink(TEST_OUTPUT_DIR, 'rendered_sym_to_rendered_dir',
-                  'rendered_dir')
+    _test_symlink(TEST_OUTPUT_DIR, 'rendered_sym_to_rendered_dir', 'rendered_dir')
 
     # Test links that have not been rendered
     non_rendered_dir = os.path.join(TEST_OUTPUT_DIR, 'copy_no_render')
@@ -94,17 +93,16 @@ def test_symlinks():
     _test_symlink(non_rendered_dir, 'symlink', 'original')
 
     # normal symlink, rendered target
-    _test_symlink(non_rendered_dir,
-                  'symlink_to_rendered',
-                  '{{ cookiecutter.link_dir }}')
+    _test_symlink(
+        non_rendered_dir, 'symlink_to_rendered', '{{ cookiecutter.link_dir }}'
+    )
 
     # rendered symlink, not rendered target
-    _test_symlink(non_rendered_dir,
-                  '{{ cookiecutter.sym_to_nontemp }}',
-                  'original')
+    _test_symlink(non_rendered_dir, '{{ cookiecutter.sym_to_nontemp }}', 'original')
 
     # rendered symlink, rendered target
-    _test_symlink(non_rendered_dir,
-                  '{{ cookiecutter.sym_to_temp }}',
-                  '{{ cookiecutter.link_dir }}')
-
+    _test_symlink(
+        non_rendered_dir,
+        '{{ cookiecutter.sym_to_temp }}',
+        '{{ cookiecutter.link_dir }}',
+    )

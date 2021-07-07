@@ -228,10 +228,9 @@ def render_and_create_dir(
         link_tmpl = environment.from_string(symlink)
         rendered_link = link_tmpl.render(**context)
 
-        logger.debug('Creating symlink from {} to {}'.format(
-            dir_to_create,
-            rendered_link
-        ))
+        logger.debug(
+            'Creating symlink from {} to {}'.format(dir_to_create, rendered_link)
+        )
 
         os.symlink(rendered_link, dir_to_create)
     else:
@@ -366,7 +365,12 @@ def generate_files(
                 unrendered_dir = os.path.join(project_dir, root, d)
                 try:
                     render_and_create_dir(
-                        unrendered_dir, context, output_dir, env, overwrite_if_exists, symlink=symlinks.get(d, None)
+                        unrendered_dir,
+                        context,
+                        output_dir,
+                        env,
+                        overwrite_if_exists,
+                        symlink=symlinks.get(d, None),
                     )
                 except UndefinedError as err:
                     if delete_project_on_failure:
