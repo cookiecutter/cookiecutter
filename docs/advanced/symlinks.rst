@@ -9,8 +9,7 @@ that points to ``/var/log`` on the system where the template is rendered. Symlin
 be thought of as a shortcut to a specific file or folder.
 
 Symlinks will work on most platforms with cookiecutter. However, if you expect your
-template to be used on Windows systems with Python < 3.2, it is recommended that you
-do not use symlinks or that you handle symlinking in a post-generation hook.
+template to be used on Windows systems, see the additional information below.
 
 
 Using symlinks
@@ -33,10 +32,6 @@ will be replaced when the template is rendered.
 Symlinks on Windows
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. warning:: Symlinks are not currently supported on Windows systems with a
-             Python version < 3.2. Symlinks should work as expected on other
-             configurations.
-
 Symlinks in the posix sense are a relatively new addition to Windows operating
 systems, and support for these was introduced into Python in Python 3.2. If you
 want to use symlinks in a template on a Windows system, you may need to take some
@@ -44,7 +39,7 @@ additional steps. On windows the ``mklink`` command will create links::
 
     > mklink new_symlink_path existing_file_path
 
-First, if your template is cloned using ``git``, you will need to tell ``git`` to respect
+First, if your template is cloned using ``git``, you may need to tell ``git`` to respect
 symlinks when cloning the project. This can be done at the commandline::
 
     $ git config --global core.symlinks true

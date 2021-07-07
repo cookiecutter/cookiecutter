@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
-
-"""
-test_generate_symlinks
----------------------------------
-"""
+"""Tests for `generate.py` that have symlinks in the templates."""
 
 from __future__ import unicode_literals
 import os
-import sys
 
 import pytest
 
@@ -20,9 +14,7 @@ TEST_OUTPUT_DIR = 'test_symlinks'
 
 @pytest.fixture(scope='function')
 def remove_test_dir(request):
-    """
-    Remove the folder that is created by the test.
-    """
+    """Remove the folder that is created by the test."""
 
     def fin_remove_test_dir():
         if os.path.exists(TEST_OUTPUT_DIR):
@@ -33,6 +25,11 @@ def remove_test_dir(request):
 
 @pytest.mark.usefixtures('clean_system', 'remove_test_dir')
 def test_symlinks():
+    """
+    Verify generating projects with symlinks.
+
+    Includes both rendered and non-rendered symlink paths.
+    """
     generate.generate_files(
         context={
             'cookiecutter': {
