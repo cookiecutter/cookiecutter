@@ -361,7 +361,7 @@ def generate_files(
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
                 shutil.copytree(
-                    indir, outdir, symlinks=True, dirs_exist_ok=overwrite_if_exists
+                    indir, outdir, symlinks=True,
                 )
 
             # We mutate ``dirs``, because we only want to go through these dirs
