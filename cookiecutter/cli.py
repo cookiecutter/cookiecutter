@@ -75,7 +75,9 @@ def list_installed_templates(default_config, passed_config_file):
 @click.option(
     '--no-input',
     is_flag=True,
-    help='Do not prompt for parameters and only use cookiecutter.json file content',
+    help='Do not prompt for parameters and only use cookiecutter.json file content. '
+    'Defaults to deleting any cached resources and redownloading them. '
+    'Cannot be combined with the --replay flag.',
 )
 @click.option(
     '-c', '--checkout', help='branch, tag or commit to checkout after git clone',
@@ -91,7 +93,8 @@ def list_installed_templates(default_config, passed_config_file):
 @click.option(
     '--replay',
     is_flag=True,
-    help='Do not prompt for parameters and only use information entered previously',
+    help='Do not prompt for parameters and only use information entered previously. '
+    'Cannot be combined with the --no-input flag or with extra configuration passed.',
 )
 @click.option(
     '--replay-file',
