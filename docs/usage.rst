@@ -42,7 +42,7 @@ To create a project from the cookiecutter-pypackage.git repo template::
 
     $ cookiecutter gh:audreyr/cookiecutter-pypackage
 
-Cookiecutter knows abbreviations for Github (``gh``), Bitbucket (``bb``), and
+Cookiecutter knows abbreviations for Github (``gh``), Bitbucket (``bb``), Sourcehut (``sr``), and
 GitLab (``gl``) projects, but you can also give it the full URL to any
 repository::
 
