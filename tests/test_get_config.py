@@ -18,6 +18,7 @@ def test_merge_configs():
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'sr': 'https://git.sr.ht/~{0}',
         },
     }
 
