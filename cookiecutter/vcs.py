@@ -39,6 +39,8 @@ def identify_repo(repo_url):
     else:
         if 'git' in repo_url:
             return 'git', repo_url
+        elif 'codecommit' in repo_url:
+            return 'git-remote-codecommit', repo_url
         elif 'bitbucket' in repo_url:
             return 'hg', repo_url
         else:
@@ -80,6 +82,11 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     repo_name = os.path.split(repo_url)[1]
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
+        repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+    if repo_type == 'git-remote-codecommit':
+        # override repo type as it is a git extension
+        repo_type = 'git'
+        repo_name = repo_name.split('@')[-1]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     if repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))

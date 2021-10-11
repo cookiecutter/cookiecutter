@@ -88,6 +88,9 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
         ('git', 'git@host:gitoliterepo', 'gitoliterepo'),
         ('git', 'git@gitlab.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
         ('git', 'git@github.com:cookiecutter/cookiecutter.git', 'cookiecutter'),
+        ('git', 'codecommit://cookiecutter', 'cookiecutter'),
+        ('git', 'codecommit://test@cookiecutter', 'cookiecutter'),
+        ('git', 'codecommit::eu-central-1://test@cookiecutter', 'cookiecutter'),
     ],
 )
 def test_clone_should_invoke_vcs_command(

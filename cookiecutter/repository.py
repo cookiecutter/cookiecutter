@@ -12,6 +12,9 @@ REPO_REGEX = re.compile(
 ((((git|hg)\+)?(git|ssh|file|https?):(//)?)
  |                                      # or
  (\w+@[\w\.]+)                          # something like user@...
+ |                                      # or
+ (codecommit)(::[\w-]+)?:(//)           # codecommit::us-east-1://... or
+                                        # codecommit://...
 )
 """,
     re.VERBOSE,
