@@ -31,3 +31,14 @@ Create Your Very Own Cookiecutter Project Template
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@hackebrot`: https://github.com/hackebrot
+
+
+Community driven how-tos:
+--------------------------------------------------
+
+* `How to create a Spring Boot Microservice using Cookiecutter`_ by `@maddymanu`_ & `@cristinabuenahora`_
+
+.. _`How to create a Spring Boot Microservice using Cookiecutter`: https://www.cortex.io/post/how-to-create-a-spring-boot-microservice-using-cookiecutter
+
+.. _`@maddymanu`: https://github.com/maddymanu
+.. _`@cristinabuenahora`: https://github.com/cristinabuenahora
