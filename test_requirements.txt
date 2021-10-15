@@ -1,4 +1,5 @@
+freezegun
 pytest
 pytest-cov
 pytest-mock
-freezegun
+pyyaml
