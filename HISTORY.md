@@ -226,7 +226,7 @@ Other Changes:
 * Tests update: use sys.executable when invoking python in python 3 only environment thanks to [@vincentbernat](https://github.com/vincentbernat) (#1221)
 * Prevent `click` API v7.0 from showing choices when already shown, thanks to [@rly](https://github.com/rly) and [@luzfcb](https://github.com/luzfcb) (#1168)
 * Test the codebase with python3.8 beta on tox and travis-ci (#1206), thanks to [@mihrab34](https://github.com/mihrab34)
-* Add a [CODE\_OF\_CONDUCT.md](https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md) file to the project, thanks to [@andreagrandi](https://github.com/andreagrandi) (#1009)
+* Add a [CODE\_OF\_CONDUCT.md](https://github.com/audreyfeldroy/cookiecutter/blob/master/CODE_OF_CONDUCT.md) file to the project, thanks to [@andreagrandi](https://github.com/andreagrandi) (#1009)
 * Update docstrings in `cookiecutter/main.py`, `cookiecutter/__init__.py`, and `cookiecutter/log.py` to follow the PEP 257 style guide, thanks to [@meahow](https://github.com/meahow) (#998, #999, #1000)
 * Update docstrings in `cookiecutter/utils.py` to follow the PEP 257 style guide, thanks to [@dornheimer](https://github.com/dornheimer)(#1026)
 * Fix grammar in *Choice Variables* documentation, thanks to [@jubrilissa](https://github.com/jubrilissa) (#1011)
@@ -548,7 +548,7 @@ Other Changes:
 
 * Enable py35 support on Travis by using Python 3.5 as base Python ([@maiksensi](https://github.com/maiksensi) / #540)
 * If a filename is empty, do not generate. Log instead ([@iljabauer](https://github.com/iljabauer) / #444)
-* Fix tests as per last changes in [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage), thanks to [@eliasdorneles](https://github.com/eliasdorneles)(#555).
+* Fix tests as per last changes in [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage), thanks to [@eliasdorneles](https://github.com/eliasdorneles)(#555).
 * Removed deprecated cookiecutter-pylibrary-minimal from the list, thanks to [@ionelmc](https://github.com/ionelmc) (#556)
 * Moved to using rualmel.yaml instead of PyYAML, except for Windows users on Python 2.7, thanks
     to [@pydanny](https://github.com/pydanny) (#557)
@@ -823,8 +823,8 @@ Other changes:
     # Create project from the cookiecutter-pypackage/ template
     $ cookiecutter cookiecutter-pypackage/
     # Create project from the cookiecutter-pypackage.git repo template
-    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
-```
+    $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
+```  
 
 * Can now use Cookiecutter from Python as a package:
 
@@ -835,7 +835,7 @@ Other changes:
     cookiecutter('cookiecutter-pypackage/')
 
     # Create project from the cookiecutter-pypackage.git repo template
-    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+    cookiecutter('https://github.com/audreyfeldroy/cookiecutter-pypackage.git')
 ```
 
 * Internal refactor to remove any code that changes the working

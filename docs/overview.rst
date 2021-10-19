@@ -32,7 +32,7 @@ You must have:
 
 Beyond that, you can have whatever files/directories you want.
 
-See https://github.com/audreyr/cookiecutter-pypackage for a real-world example
+See https://github.com/audreyfeldroy/cookiecutter-pypackage for a real-world example
 of this.
 
 Output
