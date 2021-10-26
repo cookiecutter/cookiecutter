@@ -61,7 +61,8 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     :param checkout: The branch, tag or commit ID to checkout after clone.
     :param clone_to_dir: The directory to clone to.
                          Defaults to the current directory.
-    :param no_input: Suppress all user prompts when calling via API.
+    :param no_input: Do not prompt for user input and eventually force a refresh of
+        cached resources.
     :returns: str with path to the new directory of the repository.
     """
     # Ensure that clone_to_dir exists
