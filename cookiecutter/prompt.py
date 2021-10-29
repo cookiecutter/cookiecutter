@@ -2,6 +2,7 @@
 import functools
 import json
 from collections import OrderedDict
+from os import getlogin
 
 import click
 from jinja2.exceptions import UndefinedError
@@ -128,7 +129,7 @@ def read_user_dict(var_name, default_value):
     return user_value
 
 
-def render_variable(env, raw, cookiecutter_dict):
+def render_variable(env, raw, cookiecutter_dict, user=getlogin()):
     """Render the next variable to be displayed in the user prompt.
 
     Inside the prompting taken from the cookiecutter.json file, this renders
@@ -143,6 +144,7 @@ def render_variable(env, raw, cookiecutter_dict):
     :param raw: The next value to be prompted for by the user.
     :param dict cookiecutter_dict: The current context as it's gradually
         being populated with variables.
+    :param user: The username of the user.
     :return: The rendered value for the default variable.
     """
     if raw is None:
@@ -161,7 +163,8 @@ def render_variable(env, raw, cookiecutter_dict):
 
     template = env.from_string(raw)
 
-    rendered_template = template.render(cookiecutter=cookiecutter_dict)
+    rendered_template = template.render(
+        cookiecutter=cookiecutter_dict, user=user)
     return rendered_template
 
 
