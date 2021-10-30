@@ -11,7 +11,7 @@ build-backend = "setuptools.build_meta"
 skip-string-normalization = true
 exclude = '/(tests/hooks-abort-render/hooks|docs\/HelloCookieCutter1)/'
 line-length = 88
-target-version = ['py36']
+target-version = ['py39']
 
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
