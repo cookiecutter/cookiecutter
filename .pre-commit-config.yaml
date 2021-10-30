@@ -10,8 +10,8 @@ repos:
         language: python
         files: \.rst$
         require_serial: true
-  - repo: https://github.com/python/black.git
-    rev: 19.10b0
+  - repo: https://github.com/psf/black.git
+    rev: 21.9b0
     hooks:
       - id: black
         language_version: python3
