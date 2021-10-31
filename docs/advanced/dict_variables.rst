@@ -61,5 +61,5 @@ The above ``file_type`` dictionary variable creates
     {% endfor %}
 
 
-Cookiecutter is using `Jinja2's for expression <http://jinja.pocoo.org/docs/dev/templates/#for>`_ to iterate over the items in the dictionary.
+Cookiecutter is using `Jinja2's for expression <https://jinja.palletsprojects.com/en/latest/templates/#for>`_ to iterate over the items in the dictionary.
 
