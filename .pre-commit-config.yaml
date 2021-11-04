@@ -1,15 +1,15 @@
 ---
 repos:
-  - repo: https://github.com/PyCQA/doc8
-    rev: 0.8.1
-    hooks:
-      - id: doc8
-        name: doc8
-        description: This hook runs doc8 for linting docs.
-        entry: python -m doc8
-        language: python
-        files: \.rst$
-        require_serial: true
+  # - repo: https://github.com/PyCQA/doc8
+  #   rev: 0.8.1
+  #   hooks:
+  #     - id: doc8
+  #       name: doc8
+  #       description: This hook runs doc8 for linting docs.
+  #       entry: python -m doc8
+  #       language: python
+  #       files: \.rst$
+  #       require_serial: true
   - repo: https://github.com/psf/black.git
     rev: 21.9b0
     hooks:
