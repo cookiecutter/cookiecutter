@@ -78,7 +78,9 @@ def list_installed_templates(default_config, passed_config_file):
     help='Do not prompt for parameters and only use cookiecutter.json file content',
 )
 @click.option(
-    '-c', '--checkout', help='branch, tag or commit to checkout after git clone',
+    '-c',
+    '--checkout',
+    help='branch, tag or commit to checkout after git clone',
 )
 @click.option(
     '--directory',
