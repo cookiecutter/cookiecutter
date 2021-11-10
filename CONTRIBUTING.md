@@ -194,7 +194,7 @@ It is possible to test with specific versions of Python. To do this, the command
 tox -e py37,py38
 ```
 
-Will run py.test with the python3.7 and python3.8 interpreters, for example.
+This will run `py.test` with the `python3.7` and `python3.8` interpreters.
 
 ## Core Committer Guide
 
