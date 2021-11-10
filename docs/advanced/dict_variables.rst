@@ -38,7 +38,7 @@ For example, you could provide the following dictionary variable in your
     }
 
 
-The above ``file_type`` dictionary variable creates
+The above ``file_types`` dictionary variable creates
 ``cookiecutter.file_types``, which can be used like this::
 
     {% for extension, details in cookiecutter.file_types|dictsort %}
