@@ -9,5 +9,5 @@ import setuptools
 # https://github.com/jazzband/pip-tools/issues/1278
 setuptools.setup(
     use_scm_version={"local_scheme": "no-local-version"},
-    setup_requires=["setuptools_scm[toml]>=3.5.0"],
+    setup_requires=["setuptools_scm[toml]>=3.5.0", "wheel"],
 )
