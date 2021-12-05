@@ -24,7 +24,8 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
 
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output', autospec=True,
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
     )
 
     vcs.clone('https://github.com/foo/bar/', clone_to_dir=str(clone_dir), no_input=True)
@@ -44,7 +45,8 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
         'cookiecutter.vcs.prompt_and_delete', side_effect=SystemExit, autospec=True
     )
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output', autospec=True,
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
     )
 
     # Create repo_dir to trigger prompt_and_delete
@@ -66,7 +68,8 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
         'cookiecutter.vcs.prompt_and_delete', return_value=False, autospec=True
     )
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output', autospec=True,
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
     )
 
     clone_to_dir = tmpdir.mkdir('clone')
@@ -103,7 +106,8 @@ def test_clone_should_invoke_vcs_command(
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
 
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output', autospec=True,
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
     )
     expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
 
