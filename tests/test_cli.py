@@ -53,6 +53,8 @@ def test_cli_version(cli_runner, version_cli_flag):
     assert result.exit_code == 0
     assert result.output.startswith('Cookiecutter')
 
+def test_version_msg():
+    print("to do")
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
 def test_cli_error_on_existing_output_directory(cli_runner):
