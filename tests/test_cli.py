@@ -51,14 +51,14 @@ def version_cli_flag(request):
 
 
 def test_cli_version(cli_runner, version_cli_flag):
-    """Verify correct version output by `cookiecutter` on cli invocation."""
+    """Verify Cookiecutter version output by `cookiecutter` on cli invocation."""
     result = cli_runner(version_cli_flag)
     assert result.exit_code == 0
     assert result.output.startswith('Cookiecutter')
 
 
-def test_version_msg(cli_runner, version_cli_flag):
-    """Verify correct output for Cookiecutter Python version."""
+def test_cli_version_python(cli_runner, version_cli_flag):
+    """Verify correct Python version output by `cookiecutter` on cli invocation."""
     result = cli_runner(version_cli_flag)
     python_major_number = sys.version_info.major
     python_minor_number = sys.version_info.minor
@@ -66,12 +66,7 @@ def test_version_msg(cli_runner, version_cli_flag):
     version_output_string = version_output_string[-5:-1]
     if version_output_string[0] == ' ':
         version_output_string = version_output_string[1:]
-    if version_output_string[-1] == ')':
-        version_output_string = version_output_string[:-1]
-    assert (
-        str(python_major_number) + '.' + str(python_minor_number)
-        == version_output_string
-    )
+    assert f'{python_major_number}.{python_minor_number}' == version_output_string
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
