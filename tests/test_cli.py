@@ -4,6 +4,9 @@ import json
 import os
 import re
 
+import sys
+
+
 import pytest
 from click.testing import CliRunner
 
@@ -53,8 +56,23 @@ def test_cli_version(cli_runner, version_cli_flag):
     assert result.exit_code == 0
     assert result.output.startswith('Cookiecutter')
 
-def test_version_msg():
-    print("to do")
+
+def test_version_msg(cli_runner, version_cli_flag):
+    """Verify correct output for Cookiecutter Python version."""
+    result = cli_runner(version_cli_flag)
+    python_major_number = sys.version_info.major
+    python_minor_number = sys.version_info.minor
+    version_output_string = result.output[:-1]
+    version_output_string = version_output_string[-5:-1]
+    if version_output_string[0] == ' ':
+        version_output_string = version_output_string[1:]
+    if version_output_string[-1] == ')':
+        version_output_string = version_output_string[:-1]
+    assert (
+        str(python_major_number) + '.' + str(python_minor_number)
+        == version_output_string
+    )
+
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
 def test_cli_error_on_existing_output_directory(cli_runner):
