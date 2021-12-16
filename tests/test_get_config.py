@@ -62,7 +62,11 @@ def test_get_config():
             'github_username': 'example',
             'project': {
                 'description': 'description',
-                'tags': ['first', 'second', 'third',],
+                'tags': [
+                    'first',
+                    'second',
+                    'third',
+                ],
             },
         },
         'abbreviations': {

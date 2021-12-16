@@ -69,3 +69,8 @@ target/
 
 # PyEnv
 .python-version
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride

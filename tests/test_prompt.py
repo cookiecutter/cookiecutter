@@ -80,7 +80,8 @@ class TestPrompt(object):
     def test_prompt_for_config(self, monkeypatch, context):
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable', lambda var, default: default,
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)

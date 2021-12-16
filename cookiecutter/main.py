@@ -60,7 +60,8 @@ def cookiecutter(
         raise InvalidModeException(err_msg)
 
     config_dict = get_user_config(
-        config_file=config_file, default_config=default_config,
+        config_file=config_file,
+        default_config=default_config,
     )
 
     repo_dir, cleanup = determine_repo_dir(

@@ -22,11 +22,16 @@ def test_replay_dump_template_name(
     mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
-        '.', no_input=True, replay=False, config_file=user_config_file,
+        '.',
+        no_input=True,
+        replay=False,
+        config_file=user_config_file,
     )
 
     mock_replay_dump.assert_called_once_with(
-        user_config_data['replay_dir'], 'fake-repo-tmpl', mocker.ANY,
+        user_config_data['replay_dir'],
+        'fake-repo-tmpl',
+        mocker.ANY,
     )
 
 
@@ -46,11 +51,14 @@ def test_replay_load_template_name(
     mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
-        '.', replay=True, config_file=user_config_file,
+        '.',
+        replay=True,
+        config_file=user_config_file,
     )
 
     mock_replay_load.assert_called_once_with(
-        user_config_data['replay_dir'], 'fake-repo-tmpl',
+        user_config_data['replay_dir'],
+        'fake-repo-tmpl',
     )
 
 
@@ -62,9 +70,12 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
     mocker.patch('cookiecutter.main.generate_files')
 
     cookiecutter(
-        '.', replay='./custom-replay-file', config_file=user_config_file,
+        '.',
+        replay='./custom-replay-file',
+        config_file=user_config_file,
     )
 
     mock_replay_load.assert_called_once_with(
-        '.', 'custom-replay-file',
+        '.',
+        'custom-replay-file',
     )

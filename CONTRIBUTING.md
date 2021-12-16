@@ -72,7 +72,7 @@ git clone git@github.com:your_name_here/cookiecutter.git
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
 
 ```bash
-mkvirtualenv cookiecutter
+
 cd cookiecutter/
 python setup.py develop
 ```
@@ -188,13 +188,13 @@ tox
 
 This configuration file setup the pytest-cov plugin and it is an additional dependency. It generate a coverage report after the tests.
 
-It is possible to tests with some versions of python, to do this the command is:
+It is possible to test with specific versions of Python. To do this, the command is:
 
 ```bash
-tox -e py36,pypy3
+tox -e py37,py38
 ```
 
-Will run py.test with the python3.6 and pypy3 interpreters, for example.
+This will run `py.test` with the `python3.7` and `python3.8` interpreters.
 
 ## Core Committer Guide
 

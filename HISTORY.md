@@ -2,10 +2,96 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 1.8.0 (Current master, in development)
+## 2.0.1 (2021-12-11)
+### Breaking Changes
 
-* Do not modify this file, since 1.7.1 Changes are generated on Pull request
-title and will be added before release.
+* Release preparation for 2.0.1rc1 (#1608) @audreyfeldroy
+* Replace poyo with pyyaml. (#1489) @dHannasch
+* Added: Path templates will be rendered when copy_without_render used (#839) @noirbizarre
+* Added: End of line detection and configuration. (#1407) @insspb
+* Remove support for python2.7 (#1386) @ssbarnea
+
+### Minor Changes
+
+* Adopt setuptools-scm packaging (#1577) @ssbarnea
+* Log the error message when git clone fails, not just the return code (#1505) @logworthy
+* allow jinja 3.0.0 (#1548) @wouterdb
+* Added uuid extension to be able to generate uuids (#1493) @jonaswre
+* Alert user if choice is invalid (#1496) @dHannasch
+* Replace poyo with pyyaml. (#1489) @dHannasch
+* update AUTHOR lead (#1532) @HosamAlmoghraby
+* Add Python 3.9 (#1478) @gliptak
+* Added: --list-installed cli option, listing already downloaded cookiecutter packages (#1096) @chrisbrake
+* Added: Jinja2 Environment extension on files generation stage (#1419) @insspb
+* Added: --replay-file cli option, for replay file distributing (#906) @Cadair
+* Added: _output_dir to cookiecutter context (#1034) @Casyfill
+* Added: CLI option to ignore hooks (#992) @rgreinho
+* Changed: Generated projects can use multiple type hooks at same time. (sh + py) (#974) @milonimrod
+* Added: Path templates will be rendered when copy_without_render used (#839) @noirbizarre
+* Added: End of line detection and configuration. (#1407) @insspb
+* Making code python 3 only: Remove python2 u' sign, fix some strings (#1402) @insspb
+* py3: remove futures, six and encoding (#1401) @insspb
+* Render variables starting with an underscore. (#1339) @smoothml
+* Tests refactoring: test_utils write issues fixed #1405 (#1406) @insspb
+
+### CI/CD and QA changes
+
+* enable branch coverage (#1542) @simobasso
+* Make release-drafter diff only between master releases (#1568) @SharpEdgeMarshall
+* ensure filesystem isolation during tests execution (#1564) @simobasso
+* add safety ci step (#1560) @simobasso
+* pre-commit: add bandit hook (#1559) @simobasso
+* Replace tmpdir in favour of tmp_path (#1545) @SharpEdgeMarshall
+* Fix linting in CI (#1546) @SharpEdgeMarshall
+* Coverage 100% (#1526) @SharpEdgeMarshall
+* Run coverage with matrix (#1521) @SharpEdgeMarshall
+* Lint rst files (#1443) @ssbarnea
+* Python3: Changed io.open to build-in open (PEP3116) (#1408) @insspb
+* Making code python 3 only: Remove python2 u' sign, fix some strings (#1402) @insspb
+* py3: remove futures, six and encoding (#1401) @insspb
+* Removed: Bumpversion, setup.py arguments. (#1404) @insspb
+* Tests refactoring: test_utils write issues fixed #1405 (#1406) @insspb
+* Added: Automatic PyPI deploy on tag creation (#1400) @insspb
+* Changed: Restored coverage reporter (#1399) @insspb
+
+### Documentation updates
+
+* Fix pull requests checklist reference (#1537) @glumia
+* Fix author name (#1544) @HosamAlmoghraby
+* Add missing contributors (#1535) @glumia
+* Update CONTRIBUTING.md (#1529) @glumia
+* Update LICENSE (#1519) @simobasso
+* docs: rewrite the conditional files / directories example description. (#1437) @lyz-code
+* Fix incorrect years in release history (#1473) @graue70
+* Add slugify in the default extensions list (#1470) @oncleben31
+* Renamed cookiecutter.package to API (#1442) @grrlic
+* Fixed wording detail (#1427) @steltenpower
+* Changed: CLI Commands documentation engine (#1418) @insspb
+* Added: Example for conditional files / directories in hooks (#1397) @xyb
+* Changed: README.md PyPI URLs changed to the modern PyPI last version (#1391) @brettcannon
+* Fixed: Comma in README.md (#1390) @Cy-dev-tex
+* Fixed: Replaced no longer maintained pipsi by pipx (#1395) @ndclt
+
+### Bugfixes
+
+* Add support for click 8.x (#1569) @cjolowicz
+* Force click<8.0.0 (#1562) @SharpEdgeMarshall
+* Remove direct dependency on markupsafe (#1549) @ssbarnea
+* fixes prompting private rendered dicts (#1504) @juhuebner
+* User's JSON parse error causes ugly Python exception #809 (#1468) @noone234
+* config: set default on missing default_context key (#1516) @simobasso
+* Fixed: Values encoding on Windows (#1414) @agateau
+* Fixed: Fail with gitolite repositories (#1144) @javiersanp
+* MANIFEST: Fix file name extensions (#1387) @sebix
+
+### Deprecations
+
+* Removed: Bumpversion, setup.py arguments. (#1404) @insspb
+* Removed support for Python 3.6 and PyPy (#1608) @audreyfeldroy
+
+### This release was made possible by our wonderful contributors:
+
+@Cadair, @Casyfill, @Cy-dev-tex, @HosamAlmoghraby, @SharpEdgeMarshall, @agateau, @audreyfeldroy, @brettcannon, @chrisbrake, @cjolowicz, @dHannasch, @gliptak, @glumia, @graue70, @grrlic, @insspb, @javiersanp, @jonaswre, @jsoref, @Jthevos, @juhuebner, @logworthy, @lyz-code, @milonimrod, @ndclt, @noirbizarre, @noone234, @oncleben31, @ozer619, @rgreinho, @sebix, @Sahil-101, @simobasso, @smoothml, @ssbarnea, @steltenpower, @wouterdb, @xyb, Christopher Wolfe and Hosam Almoghraby ( RIAG Digital )
 
 ## 1.7.2 (2020-04-21)
 
