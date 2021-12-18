@@ -4,8 +4,6 @@ import json
 import os
 import re
 
-import sys
-
 
 import pytest
 from click.testing import CliRunner
