@@ -4,6 +4,7 @@ import json
 import os
 import re
 
+
 import pytest
 from click.testing import CliRunner
 
@@ -48,7 +49,7 @@ def version_cli_flag(request):
 
 
 def test_cli_version(cli_runner, version_cli_flag):
-    """Verify correct version output by `cookiecutter` on cli invocation."""
+    """Verify Cookiecutter version output by `cookiecutter` on cli invocation."""
     result = cli_runner(version_cli_flag)
     assert result.exit_code == 0
     assert result.output.startswith('Cookiecutter')

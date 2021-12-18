@@ -37,14 +37,17 @@ jobs:
           - "ubuntu-py37"
           - "ubuntu-py38"
           - "ubuntu-py39"
+          - "ubuntu-py310"
 
           - "macos-py37"
           - "macos-py38"
           - "macos-py39"
+          - "macos-py310"
 
           - "windows-py37"
           - "windows-py38"
           - "windows-py39"
+          - "windows-py310"
 
         include:
           - name: "ubuntu-py37"
@@ -59,6 +62,10 @@ jobs:
             python: "3.9"
             os: ubuntu-latest
             tox_env: "py39"
+          - name: "ubuntu-py310"
+            python: "3.10"
+            os: ubuntu-latest
+            tox_env: "py310"
 
           - name: "macos-py37"
             python: "3.7"
@@ -72,6 +79,10 @@ jobs:
             python: "3.9"
             os: macos-latest
             tox_env: "py39"
+          - name: "macos-py310"
+            python: "3.10"
+            os: macos-latest
+            tox_env: "py310"
 
           - name: "windows-py37"
             python: "3.7"
@@ -85,6 +96,10 @@ jobs:
             python: "3.9"
             os: windows-latest
             tox_env: "py39"
+          - name: "windows-py310"
+            python: "3.10"
+            os: windows-latest
+            tox_env: "py310"
 
     steps:
       - uses: actions/checkout@v2

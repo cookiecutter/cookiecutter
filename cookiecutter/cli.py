@@ -25,7 +25,7 @@ from cookiecutter.config import get_user_config
 
 def version_msg():
     """Return the Cookiecutter version, location and Python powering it."""
-    python_version = sys.version[:3]
+    python_version = sys.version
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     message = 'Cookiecutter %(version)s from {} (Python {})'
     return message.format(location, python_version)
