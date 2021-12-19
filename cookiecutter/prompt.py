@@ -145,6 +145,8 @@ def render_variable(env, raw, cookiecutter_dict):
     """
     if raw is None:
         return None
+    elif isinstance(raw, bool):
+        return raw
     elif isinstance(raw, dict):
         return {
             render_variable(env, k, cookiecutter_dict): render_variable(
@@ -200,6 +202,12 @@ def prompt_for_config(context, no_input=False):
                 val = prompt_choice_for_config(
                     cookiecutter_dict, env, key, raw, no_input
                 )
+                cookiecutter_dict[key] = val
+            elif isinstance(raw, bool):
+                # We are dealing with a boolean variable
+                val = render_variable(env, raw, cookiecutter_dict)
+                if not no_input:
+                    val = read_user_yes_no(key, raw)
                 cookiecutter_dict[key] = val
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
