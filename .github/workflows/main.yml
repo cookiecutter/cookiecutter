@@ -24,8 +24,6 @@ jobs:
           pip install tox virtualenv
       - name: Lint
         run: "tox -e lint"
-      - name: Packaging
-        run: "tox -e packaging"
       - name: Safety
         run: "tox -e safety"
   build:
