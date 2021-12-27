@@ -2,6 +2,10 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.0.2 (2021-12-27)
+
+* Fix Python version number in cookiecutter --version and test on Python 3.10 (#1621) @ozer550
+
 ## 2.0.1 (2021-12-11)
 ### Breaking Changes
 
@@ -91,7 +95,7 @@ History is important, but our current roadmap can be found [here](https://github
 
 ### This release was made possible by our wonderful contributors:
 
-@Cadair, @Casyfill, @Cy-dev-tex, @HosamAlmoghraby, @SharpEdgeMarshall, @agateau, @audreyfeldroy, @brettcannon, @chrisbrake, @cjolowicz, @dHannasch, @gliptak, @glumia, @graue70, @grrlic, @insspb, @javiersanp, @jonaswre, @jsoref, @Jthevos, @juhuebner, @logworthy, @lyz-code, @milonimrod, @ndclt, @noirbizarre, @noone234, @oncleben31, @ozer619, @rgreinho, @sebix, @Sahil-101, @simobasso, @smoothml, @ssbarnea, @steltenpower, @wouterdb, @xyb, Christopher Wolfe and Hosam Almoghraby ( RIAG Digital )
+@Cadair, @Casyfill, @Cy-dev-tex, @HosamAlmoghraby, @SharpEdgeMarshall, @agateau, @audreyfeldroy, @brettcannon, @chrisbrake, @cjolowicz, @dHannasch, @gliptak, @glumia, @graue70, @grrlic, @insspb, @javiersanp, @jonaswre, @jsoref, @Jthevos, @juhuebner, @logworthy, @lyz-code, @milonimrod, @ndclt, @noirbizarre, @noone234, @oncleben31, @ozer550, @rgreinho, @sebix, @Sahil-101, @simobasso, @smoothml, @ssbarnea, @steltenpower, @wouterdb, @xyb, Christopher Wolfe and Hosam Almoghraby ( RIAG Digital )
 
 ## 1.7.2 (2020-04-21)
 
