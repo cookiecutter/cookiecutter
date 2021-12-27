@@ -5,6 +5,7 @@ History is important, but our current roadmap can be found [here](https://github
 ## 2.0.2 (2021-12-27)
 
 * Fix Python version number in cookiecutter --version and test on Python 3.10 (#1621) @ozer550
+* Removed changes related to setuptools_scm (#1629) @audreyfeldroy @ozer550
 
 ## 2.0.1 (2021-12-11)
 ### Breaking Changes
