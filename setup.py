@@ -38,7 +38,7 @@ setup(
     install_requires=requirements,
     license='BSD',
     zip_safe=False,
-        classifiers=[
+    classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
