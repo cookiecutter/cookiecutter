@@ -7,6 +7,17 @@ import pathlib
 import sys
 
 
+def import_py_files(module_dir):
+    if os.path.exists(module_dir):
+        sys.path.append(module_dir)
+
+    py_files = glob.glob(os.path.join(module_dir, '*.py'))
+
+    for py_file in py_files:
+        module_name = pathlib.Path(py_file).stem
+        importlib.import_module(module_name)
+
+
 def load_custom_filters(repo_dir, context, env):
     """
     Load custom filters for jinja2
@@ -20,14 +31,7 @@ def load_custom_filters(repo_dir, context, env):
         return
 
     module_dir = f'{repo_dir}/filters'
-    if os.path.exists(module_dir):
-        sys.path.append(module_dir)
-
-    py_files = glob.glob(os.path.join(module_dir, '*.py'))
-
-    for py_file in py_files:
-        module_name = pathlib.Path(py_file).stem
-        importlib.import_module(module_name)
+    import_py_files(module_dir)
 
     for key, value in filters.items():
         model = importlib.import_module("filter")
