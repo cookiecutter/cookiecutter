@@ -1,43 +1,29 @@
-# Contributing
-
-Contributions are welcome, and they are greatly appreciated! Every little bit helps, and credit will always be given.
-
-* [Types of Contributions](#Types-of-Contributions)
-* [Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
-* [Contributor Guidelines](#Contributor-Guidelines)
-* [Contributor Testing](#Testing-with-tox)
-* [Core Committer Guide](#Core-Committer-Guide)
-
-## Types of Contributions
-
+#contributing...%...completes
+#building...%...completes
+#publishing...%...completes
+#releasing...%...completes
+#launching...%...completes
+automates_merge: Squash_merges: th.100X_pdf.exports/flatten.jpng.xlvslmnxvs, and they are greatly appreciated! Every little bit helps, and credit will always be given
+*/**[Types of Contributions](#Types-of-Contributions)
+*/**[Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
+*/**Contributor Guidelines](#Contributor-Guidelines)
+*/**[Contributor Testing](#Testing-with-tox)
+*/**[Core Committer Guide](Contributing.md/README.md/README.m)
+*/**Types of Contributions
 You can contribute in many ways:
-
-### Report Bugs
-
-Report bugs at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
-
+### Reports!-#-Bug-Fix/Hello, World'@https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
 If you are reporting a bug, please include:
-
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in troubleshooting.
-* If you can, provide detailed steps to reproduce the bug.
-* If you don't have steps to reproduce the bug, just note your observations in as much detail as you can. Questions to start a discussion about the issue are welcome.
-
-### Fix Bugs
-
-Look through the GitHub issues for bugs. Anything tagged with "bug" is open to whoever wants to implement it.
-
-### Implement Features
-
+* If you can, provide detailed steps to reproduce the bugLook through issues for bugs. Anything tagged with "bug" is open to whoever wants to implement it.
+# Implement Features
 Look through the GitHub issues for features. Anything tagged with "enhancement" and "please-help" is open to whoever wants to implement it.
-
 Please do not combine multiple feature enhancements into a single pull request.
-
 Note: this project is very conservative, so new features that aren't tagged with "please-help" might not get into core. We're trying to keep the code base small, extensible, and streamlined. Whenever possible, it's best to try and implement feature ideas as separate projects outside of the core codebase.
-
-### Write Documentation
-
-Cookiecutter could always use more documentation, whether as part of the official Cookiecutter docs, in docstrings, or even on the web in blog posts, articles, and such.
+# Write CookieKeyscutter/Makefile/rakefile.gem/,specs'@moejojojojo/zyphrr-red-hot-chilipeppers/Bump-the-Hump/javascript/Jekylls.javascript/Python.js'@moejojojojo/bitore.sig'@.it.git.it''
+:Build::
+Retuen:' Run''
+could always use more documentation, whether as part of the official Cookiecutter docs, in docstrings, or even on the web in blog posts, articles, and such.
 
 If you want to review your changes on the documentation locally, you can do:
 
