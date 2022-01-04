@@ -8,9 +8,13 @@ import sys
 
 
 def import_py_files(module_dir):
-    if os.path.exists(module_dir):
-        sys.path.append(module_dir)
+    """
+    Import python files from template repo dir.
+    """
+    if not os.path.exists(module_dir):
+        return
 
+    sys.path.append(module_dir)
     py_files = glob.glob(os.path.join(module_dir, '*.py'))
 
     for py_file in py_files:
