@@ -1,3 +1,91 @@
+[tool.poetry]
+name = "cookiecutter"
+version = "2.0.2"
+
+description = """\
+  A command-line utility that creates projects from project \
+  templates, e.g. creating a Python package project from a \
+  Python package project template.\
+  """
+
+authors = [
+    "Audrey Roy Greenfeld <audreyr@gmail.com>"
+]
+
+license = "BSD"
+readme = "README.md"
+
+packages = [
+    { include = "cookiecutter" }
+]
+
+homepage = "https://github.com/cookiecutter/cookiecutter"
+documentation = "https://cookiecutter.readthedocs.io"
+
+keywords = [
+    "cookiecutter",
+    "Python",
+    "projects",
+    "project templates",
+    "Jinja2",
+    "skeleton",
+    "scaffolding",
+    "project directory",
+    "package",
+    "packaging"
+    ]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+]
+
+
+[tool.poetry.build]
+generate-setup-file = false
+
+
+[tool.poetry.dependencies]
+python = ">=3.6"
+
+binaryornot = ">=0.4.4"
+Jinja2 = ">=2.7,<4.0.0"
+click = ">=7.0,<8.0.0"
+pyyaml = ">=5.3.1"
+jinja2-time = ">=0.2.0"
+python-slugify = ">=4.0.0"
+requests = ">=2.23.0"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-cov = "*"
+pytest-mock = "*"
+freezegun = "*"
+
+
+[tool.poetry.scripts]
+cookiecutter = "cookiecutter.__main__:main"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
 [tool.black]
 skip-string-normalization = true
 exclude = '/(tests/hooks-abort-render/hooks|docs\/HelloCookieCutter1)/'
