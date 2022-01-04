@@ -12,6 +12,7 @@ from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
+from cookiecutter.filters import load_custom_filters
 from cookiecutter.exceptions import (
     ContextDecodingException,
     FailedHookException,
@@ -287,6 +288,7 @@ def generate_files(
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
     env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+    load_custom_filters(repo_dir, context, env)
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
