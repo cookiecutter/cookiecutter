@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "cookiecutter"
-version = "2.0.2"
+name = "cookiec"
+version = "2.0.6"
 
 description = """\
   A command-line utility that creates projects from project \
@@ -41,15 +41,8 @@ classifiers = [
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "License :: OSI Approved :: BSD License",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "Programming Language :: Python",
     "Topic :: Software Development",
 ]
 
@@ -81,13 +74,13 @@ freezegun = "*"
 cookiecutter = "cookiecutter.__main__:main"
 
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-
 [tool.black]
 skip-string-normalization = true
 exclude = '/(tests/hooks-abort-render/hooks|docs\/HelloCookieCutter1)/'
 line-length = 88
 target-version = ['py39']
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
