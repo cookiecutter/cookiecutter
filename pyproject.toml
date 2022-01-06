@@ -64,10 +64,11 @@ requests = ">=2.23.0"
 
 
 [tool.poetry.dev-dependencies]
-pytest = "*"
-pytest-cov = "*"
-pytest-mock = "*"
-freezegun = "*"
+tox = "^3.24"
+pytest = "^6.2"
+pytest-cov = "^3.0"
+pytest-mock = "^3.6"
+freezegun = "^1.1"
 
 
 [tool.poetry.scripts]
