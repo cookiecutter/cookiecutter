@@ -19,14 +19,16 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: "3.9"
+      - name: Install Poetry
+        run: pip install --user poetry
+      - name: Configure Poetry
+        run: poetry config virtualenvs.create false
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install tox virtualenv
+        run: poetry install tox virtualenv
       - name: Lint
-        run: "tox -e lint"
+        run: "poetry run tox -e lint"
       - name: Safety
-        run: "tox -e safety"
+        run: "poetry run tox -e safety"
   build:
     runs-on: ${{ matrix.os }}
     strategy:
