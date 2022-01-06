@@ -24,7 +24,7 @@ jobs:
       - name: Configure Poetry
         run: poetry config virtualenvs.create false
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --no-root
       - name: Lint
         run: "poetry run tox -e lint"
       - name: Safety
@@ -113,7 +113,7 @@ jobs:
       - name: Configure Poetry
         run: poetry config virtualenvs.create false
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --no-root
       - name: Test build
         run: "poetry run tox -e ${{ matrix.tox_env }}-cov-report"
       - name: Send coverage report to codeclimate
