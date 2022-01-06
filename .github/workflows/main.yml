@@ -16,15 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: "3.10"
       - name: Install Poetry
         run: pip install --user poetry
       - name: Configure Poetry
         run: poetry config virtualenvs.create false
       - name: Install dependencies
-        run: poetry install tox virtualenv
+        run: poetry install --dev-only
       - name: Lint
         run: "poetry run tox -e lint"
       - name: Safety
