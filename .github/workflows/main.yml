@@ -24,7 +24,7 @@ jobs:
       - name: Configure Poetry
         run: poetry config virtualenvs.create false
       - name: Install dependencies
-        run: poetry install --dev-only
+        run: poetry install tox
       - name: Lint
         run: "poetry run tox -e lint"
       - name: Safety
