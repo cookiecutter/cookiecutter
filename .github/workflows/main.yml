@@ -20,7 +20,13 @@ jobs:
         with:
           python-version: "3.9"
       - name: Install Poetry
-        uses: snok/install-poetry@v1
+        run: pip install --user poetry
+      - name: Configure Poetry
+        run: poetry config virtualenvs.create true
+      - name: Install dependencies
+        run: poetry install --no-root
+      - name: Add Poetry to $PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Lint
         run: "poetry run tox -e lint"
       - name: Safety
@@ -105,7 +111,13 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Install Poetry
-        uses: snok/install-poetry@v1
+        run: pip install --user poetry
+      - name: Configure Poetry
+        run: poetry config virtualenvs.create true
+      - name: Install dependencies
+        run: poetry install --no-root
+      - name: Add Poetry to $PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Test build
         run: "poetry run tox -e ${{ matrix.tox_env }}-cov-report"
       - name: Send coverage report to codeclimate
