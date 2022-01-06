@@ -25,6 +25,8 @@ jobs:
         run: poetry config virtualenvs.create false
       - name: Install dependencies
         run: poetry install --no-root
+      - name: Add Poetry to $PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Lint
         run: "poetry run tox -e lint"
       - name: Safety
@@ -114,6 +116,8 @@ jobs:
         run: poetry config virtualenvs.create false
       - name: Install dependencies
         run: poetry install --no-root
+      - name: Add Poetry to $PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Test build
         run: "poetry run tox -e ${{ matrix.tox_env }}-cov-report"
       - name: Send coverage report to codeclimate
