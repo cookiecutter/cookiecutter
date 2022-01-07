@@ -31,6 +31,9 @@ jobs:
         if: ${{ matrix.os != 'Windows*' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
+      - name: PRINT MATRIX OS
+        run: echo "$matrix.os"
+
       - name: Update Path for Windows
         if: ${{ matrix.os == 'windows*' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
@@ -145,6 +148,9 @@ jobs:
       - name: Update PATH
         if: ${{ matrix.os != 'Windows*' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: PRINT MATRIX OS
+        run: echo "$matrix.os"
 
       - name: Update Path for Windows
         if: ${{ matrix.os == 'windows*' }}
