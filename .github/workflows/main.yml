@@ -89,7 +89,7 @@ jobs:
             python: "3.8"
             os: ubuntu-latest
             tox_env: "py38"
-          - name: "ubuntu-py39"os
+          - name: "ubuntu-py39"
           - name: "ubuntu-py310"
             python: "3.10"
             os: ubuntu-latest
