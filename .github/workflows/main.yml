@@ -149,11 +149,11 @@ jobs:
 
       - name: Update PATH
         if: ${{ matrix.os != 'windows-latest' }}
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+        run: env
 
       - name: Update Path for Windows
         if: ${{ matrix.os == 'windows-latest' }}
-        run: env
+        run: echo "$APPDATA\Python\Scripts" >> $PATH
 
       - name: Configure poetry
         run: poetry config virtualenvs.in-project true
