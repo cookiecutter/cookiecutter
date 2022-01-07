@@ -28,14 +28,11 @@ jobs:
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
       - name: Update PATH
-        if: ${{ matrix.name != 'windows*' }}
+        if: ${{ matrix.os != 'windows-latest' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: PRINT MATRIX OS
-        run: echo ${{ matrix.name }}
-
       - name: Update Path for Windows
-        if: ${{ matrix.name == 'windows*' }}
+        if: ${{ matrix.os == 'windows-latest' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: Configure poetry
@@ -146,14 +143,11 @@ jobs:
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
       - name: Update PATH
-        if: ${{ matrix.name != 'windows*' }}
+        if: ${{ matrix.os != 'windows-latest' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: PRINT MATRIX OS
-        run: echo ${{ matrix.name }}
-
       - name: Update Path for Windows
-        if: ${{ matrix.name == 'windows*' }}
+        if: ${{ matrix.os == 'windows-latest' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: Configure poetry
