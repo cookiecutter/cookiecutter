@@ -131,7 +131,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Bootstrap poetry
+      - name: Install poetry
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
 
