@@ -153,7 +153,7 @@ jobs:
 
       - name: Update Path for Windows
         if: ${{ matrix.os == 'windows-latest' }}
-        run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH && echo ${{ GITHUB_PATH }} && echo ${{ APPDATA }}
+        run: env
 
       - name: Configure poetry
         run: poetry config virtualenvs.in-project true
