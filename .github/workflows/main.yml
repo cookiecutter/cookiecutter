@@ -49,6 +49,9 @@ jobs:
         run: "poetry run tox -e safety"
   build:
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
