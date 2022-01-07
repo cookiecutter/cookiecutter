@@ -32,7 +32,7 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: PRINT MATRIX OS
-        run: echo "$matrix.os"
+        run: echo ${{ matrix.os }}
 
       - name: Update Path for Windows
         if: ${{ matrix.os == 'windows*' }}
@@ -150,7 +150,7 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: PRINT MATRIX OS
-        run: echo "$matrix.os"
+        run: echo ${{ matrix.os }}
 
       - name: Update Path for Windows
         if: ${{ matrix.os == 'windows*' }}
