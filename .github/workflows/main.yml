@@ -156,7 +156,7 @@ jobs:
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: PRINTOUT ENVIRONMENT VARIABLES
-        run: cat $GITHUB_PATH
+        run: cat $(echo $GITHUB_PATH)
 
       - name: Configure poetry
         run: poetry config virtualenvs.in-project true
