@@ -155,8 +155,11 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
+      - name: PRINTOUT ENVIRONMENT VARIABLES
+        run: cat $GITHUB_PATH
+
       - name: Configure poetry
-        run: C:\Users\runneradmin\AppData\Roaming\Python\Scripts\poetry config virtualenvs.in-project true
+        run: poetry config virtualenvs.in-project true
 
       - name: Set up cache
         uses: actions/cache@v2
