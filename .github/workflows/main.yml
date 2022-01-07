@@ -28,14 +28,14 @@ jobs:
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
       - name: Update PATH
-        if: ${{ matrix.os != 'Windows*' }}
+        if: ${{ matrix.name != 'windows*' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: PRINT MATRIX OS
-        run: echo ${{ matrix.os }}
+        run: echo ${{ matrix.name }}
 
       - name: Update Path for Windows
-        if: ${{ matrix.os == 'windows*' }}
+        if: ${{ matrix.name == 'windows*' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: Configure poetry
@@ -89,10 +89,7 @@ jobs:
             python: "3.8"
             os: ubuntu-latest
             tox_env: "py38"
-          - name: "ubuntu-py39"
-            python: "3.9"
-            os: ubuntu-latest
-            tox_env: "py39"
+          - name: "ubuntu-py39"os
           - name: "ubuntu-py310"
             python: "3.10"
             os: ubuntu-latest
@@ -146,14 +143,14 @@ jobs:
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
       - name: Update PATH
-        if: ${{ matrix.os != 'Windows*' }}
+        if: ${{ matrix.name != 'windows*' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: PRINT MATRIX OS
-        run: echo ${{ matrix.os }}
+        run: echo ${{ matrix.name }}
 
       - name: Update Path for Windows
-        if: ${{ matrix.os == 'windows*' }}
+        if: ${{ matrix.name == 'windows*' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: Configure poetry
