@@ -168,9 +168,6 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Install pytest plugin
-        run: poetry run pip install pytest-github-actions-annotate-failures
-
       - name: Test build
         run: "poetry run tox -e ${{ matrix.tox_env }}-cov-report"
 
