@@ -1,9 +1,7 @@
 .. _new-lines:
 
-Working with line-ends special symbols LF/CRLF
+Working with line-ends special symbols LF/CRLF (2.0+)
 ----------------------------------------------
-
-*New in Cookiecutter 2.0*
 
 Before version 2.0 Cookiecutter silently used system line end character.
 LF for POSIX and CRLF for Windows. Since version 2.0 this behaviour changed

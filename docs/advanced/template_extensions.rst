@@ -1,9 +1,7 @@
 .. _`template extensions`:
 
-Template Extensions
--------------------
-
-*New in Cookiecutter 1.4*
+Template Extensions (1.4+)
+--------------------------
 
 A template may extend the Cookiecutter environment with custom `Jinja2 extensions`_,
 that can add extra filters, tests, globals or even extend the parser.

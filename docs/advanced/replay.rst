@@ -1,9 +1,7 @@
 .. _replay-feature:
 
-Replay Project Generation
--------------------------
-
-*New in Cookiecutter 1.1*
+Replay Project Generation (1.1+)
+--------------------------------
 
 On invocation **Cookiecutter** dumps a json file to ``~/.cookiecutter_replay/`` which enables you to *replay* later on.
 

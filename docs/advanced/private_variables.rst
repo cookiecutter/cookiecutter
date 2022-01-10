@@ -1,7 +1,7 @@
 .. _private-variables:
 
-Private Variables
------------------
+Private Variables (2.0+)
+------------------------
 
 Cookiecutter allows the definition private variables - those the user will not be required to fill in - by prepending an underscore to the variable name. These can either be not rendered, by using a prepending underscore, or rendered, prepending a double underscore. For example, the ``cookiecutter.json``::
 

@@ -1,7 +1,7 @@
 .. _user-hooks:
 
 Using Pre/Post-Generate Hooks (0.7.0+)
-======================================
+--------------------------------------
 
 You can have Python or Shell scripts that run before and/or after your project
 is generated.
