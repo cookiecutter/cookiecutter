@@ -142,7 +142,7 @@ jobs:
 
       - name: Install poetry
         run: |
-          curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
+          curl -sL https://install.python-poetry.org | python - -y ${{ matrix.install-args }}
 
       - name: Update PATH
         if: ${{ matrix.os != 'windows-latest' }}
