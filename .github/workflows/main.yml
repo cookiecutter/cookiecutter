@@ -25,6 +25,9 @@ jobs:
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
       - name: Set up cache
         uses: actions/cache@v2
