@@ -37,9 +37,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
 
-      - name: Install library
-        run: poetry install --no-interaction
-
       - name: Lint
         run: "poetry run tox -e lint"
 
