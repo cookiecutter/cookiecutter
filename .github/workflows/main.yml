@@ -95,32 +95,32 @@ jobs:
 
           - name: "macos-py37"
             python: "3.7"
-            os: macos-latest
+            os: macos-11
             tox_env: "py37"
           - name: "macos-py38"
             python: "3.8"
-            os: macos-latest
+            os: macos-11
             tox_env: "py38"
           - name: "macos-py39"
             python: "3.9"
-            os: macos-latest
+            os: macos-11
             tox_env: "py39"
           - name: "macos-py310"
             python: "3.10"
-            os: macos-latest
+            os: macos-11
             tox_env: "py310"
 
           - name: "windows-py37"
             python: "3.7"
-            os: windows-latest
+            os: windows-2022
             tox_env: "py37"
           - name: "windows-py38"
             python: "3.8"
-            os: windows-latest
+            os: windows-2022
             tox_env: "py38"
           - name: "windows-py39"
             python: "3.9"
-            os: windows-latest
+            os: windows-2022
             tox_env: "py39"
           - name: "windows-py310"
             python: "3.10"
@@ -144,11 +144,11 @@ jobs:
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
 
       - name: Update PATH
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os != 'windows-2022' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Update Path for Windows
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ matrix.os == 'windows-2022' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: Configure poetry
