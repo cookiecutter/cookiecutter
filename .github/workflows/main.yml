@@ -17,6 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
       - name: Install Poetry
         uses: snok/install-poetry@v1
 
