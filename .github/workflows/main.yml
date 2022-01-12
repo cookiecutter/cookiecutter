@@ -45,7 +45,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        shell: sh
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
