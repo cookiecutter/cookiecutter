@@ -21,7 +21,11 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install poetry
+      - name: Get full Python version
+        id: full-python-version
+        run: echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info))")
+
+      - name: Bootstrap poetry
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
 
@@ -131,7 +135,11 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Install poetry
+      - name: Get full Python version
+        id: full-python-version
+        run: echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info))")
+
+      - name: Bootstrap poetry
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
 
