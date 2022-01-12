@@ -124,7 +124,7 @@ jobs:
             tox_env: "py39"
           - name: "windows-py310"
             python: "3.10"
-            os: windows-latest
+            os: windows-2022
             tox_env: "py310"
 
     steps:
