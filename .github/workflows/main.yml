@@ -156,7 +156,7 @@ jobs:
 
       - name: Test build
         run: |
-          source .venv/bin/activate
+          poetry shell
           tox -e ${{ matrix.tox_env }}-cov-report
 
       - name: Send coverage report to codeclimate
