@@ -22,6 +22,8 @@ jobs:
       - name: Bootstrap poetry
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
+      - name: Update PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Lint
         run: "poetry run tox -e lint"
       - name: Safety
