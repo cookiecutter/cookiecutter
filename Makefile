@@ -1,5 +1,3 @@
-PYPI_SERVER = pypitest
-
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
 try:
@@ -77,24 +75,6 @@ submodules: ## Pull and update git submodules recursively
 	@echo "+ $@"
 	@git pull --recurse-submodules
 	@git submodule update --init --recursive
-
-.PHONY: release
-release: clean ## Package and upload release
-	@echo "+ $@"
-	@python setup.py sdist bdist_wheel
-	@twine upload -r $(PYPI_SERVER) dist/*
-
-.PHONY: sdist
-sdist: clean ## Build sdist distribution
-	@echo "+ $@"
-	@python setup.py sdist
-	@ls -l dist
-
-.PHONY: wheel
-wheel: clean ## Build bdist_wheel distribution
-	@echo "+ $@"
-	@python setup.py bdist_wheel
-	@ls -l dist
 
 .PHONY: help
 help:
