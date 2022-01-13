@@ -10,17 +10,32 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
-        python-version: "3.7"
-    - name: Install dependencies
+        python-version: "3.10"
+    - name: Bootstrap poetry
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install setuptools wheel twine
-    - name: Package project
-      run: python setup.py sdist bdist_wheel
-    - name: Upload distributions
+        curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
+    - name: Configure poetry
+      run: poetry config virtualenvs.in-project true
+    - name: Set up cache
+      uses: actions/cache@v2
+      id: cache
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
+    - name: Ensure cache is healthy
+      if: steps.cache.outputs.cache-hit == 'true'
+      run: timeout 10s poetry run pip --version || rm -rf .venv
+    - name: Install dependencies
+      run: poetry install
+    - name: Build project
+      run: poetry build
+    - name: Configure Test PyPI Repository
+      run: |
+        poetry config repositories.pypi-test https://test.pypi.org/legacy/
+        poetry config pypi-token.pypi-test ${{ secrets.PYPI_TOKEN }}
+    - name: Publish to PyPI
       env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-      run: twine upload dist/*
+        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      run: poetry publish -r pypi-test
