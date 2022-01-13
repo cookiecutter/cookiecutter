@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cookiecutter"
-version = "2.0.2"
+version = "2.0.0"
 
 description = """\
   A command-line utility that creates projects from project \

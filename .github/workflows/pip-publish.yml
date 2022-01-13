@@ -3,9 +3,6 @@ name: Upload to PyPI
 on:
   release:
     types: [published]
-  push:
-    branches:
-      - publish_with_poetry
 
 jobs:
   upload:
@@ -34,11 +31,7 @@ jobs:
       run: poetry install
     - name: Build project
       run: poetry build
-    - name: Configure Test PyPI Repository
-      run: |
-        poetry config repositories.pypi-test https://test.pypi.org/legacy/
-        poetry config pypi-token.pypi-test ${{ secrets.PYPI_TOKEN }}
     - name: Publish to PyPI
       env:
         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-      run: poetry publish -r pypi-test
+      run: poetry publish
