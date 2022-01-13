@@ -77,63 +77,63 @@ jobs:
 
         include:
           - name: "ubuntu-py37"
-            python: "3.7"
+            python-version: "3.7"
             os: ubuntu-latest
             tox_env: "py37"
           - name: "ubuntu-py38"
-            python: "3.8"
+            python-version: "3.8"
             os: ubuntu-latest
             tox_env: "py38"
           - name: "ubuntu-py39"
-            python: "3.9"
+            python-version: "3.9"
             os: ubuntu-latest
             tox_env: "py39"
           - name: "ubuntu-py310"
-            python: "3.10"
+            python-version: "3.10"
             os: ubuntu-latest
             tox_env: "py310"
 
           - name: "macos-py37"
-            python: "3.7"
-            os: macos-11
+            python-version: "3.7"
+            os: macos-latest
             tox_env: "py37"
           - name: "macos-py38"
-            python: "3.8"
-            os: macos-11
+            python-version: "3.8"
+            os: macos-latest
             tox_env: "py38"
           - name: "macos-py39"
-            python: "3.9"
-            os: macos-11
+            python-version: "3.9"
+            os: macos-latest
             tox_env: "py39"
           - name: "macos-py310"
-            python: "3.10"
-            os: macos-11
+            python-version: "3.10"
+            os: macos-latest
             tox_env: "py310"
 
           - name: "windows-py37"
-            python: "3.7"
-            os: windows-2022
+            python-version: "3.7"
+            os: windows-latest
             tox_env: "py37"
           - name: "windows-py38"
-            python: "3.8"
-            os: windows-2022
+            python-version: "3.8"
+            os: windows-latest
             tox_env: "py38"
           - name: "windows-py39"
-            python: "3.9"
-            os: windows-2022
+            python-version: "3.9"
+            os: windows-latest
             tox_env: "py39"
           - name: "windows-py310"
-            python: "3.10"
-            os: windows-2022
+            python-version: "3.10"
+            os: windows-latest
             tox_env: "py310"
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python ${{ matrix.python }}
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.python-version }}
 
       - name: Get full Python version
         id: full-python-version
@@ -144,11 +144,11 @@ jobs:
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
 
       - name: Update PATH
-        if: ${{ matrix.os != 'windows-2022' }}
+        if: ${{ matrix.os != 'windows-latest' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Update Path for Windows
-        if: ${{ matrix.os == 'windows-2022' }}
+        if: ${{ matrix.os == 'windows-latest' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: Configure poetry
@@ -182,5 +182,5 @@ jobs:
       - name: Send coverage report to codecov
         uses: codecov/codecov-action@v1
         with:
-          env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python }}
+          env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python-version }}
           file: ./coverage.xml
