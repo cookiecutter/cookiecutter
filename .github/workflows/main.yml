@@ -77,63 +77,63 @@ jobs:
 
         include:
           - name: "ubuntu-py37"
-            python-version: "3.7"
+            python: "3.7"
             os: ubuntu-latest
             tox_env: "py37"
           - name: "ubuntu-py38"
-            python-version: "3.8"
+            python: "3.8"
             os: ubuntu-latest
             tox_env: "py38"
           - name: "ubuntu-py39"
-            python-version: "3.9"
+            python: "3.9"
             os: ubuntu-latest
             tox_env: "py39"
           - name: "ubuntu-py310"
-            python-version: "3.10"
+            python: "3.10"
             os: ubuntu-latest
             tox_env: "py310"
 
           - name: "macos-py37"
-            python-version: "3.7"
+            python: "3.7"
             os: macos-latest
             tox_env: "py37"
           - name: "macos-py38"
-            python-version: "3.8"
+            python: "3.8"
             os: macos-latest
             tox_env: "py38"
           - name: "macos-py39"
-            python-version: "3.9"
+            python: "3.9"
             os: macos-latest
             tox_env: "py39"
           - name: "macos-py310"
-            python-version: "3.10"
+            python: "3.10"
             os: macos-latest
             tox_env: "py310"
 
           - name: "windows-py37"
-            python-version: "3.7"
+            python: "3.7"
             os: windows-latest
             tox_env: "py37"
           - name: "windows-py38"
-            python-version: "3.8"
+            python: "3.8"
             os: windows-latest
             tox_env: "py38"
           - name: "windows-py39"
-            python-version: "3.9"
+            python: "3.9"
             os: windows-latest
             tox_env: "py39"
           - name: "windows-py310"
-            python-version: "3.10"
+            python: "3.10"
             os: windows-latest
             tox_env: "py310"
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python }}
 
       - name: Get full Python version
         id: full-python-version
@@ -182,5 +182,5 @@ jobs:
       - name: Send coverage report to codecov
         uses: codecov/codecov-action@v1
         with:
-          env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python-version }}
+          env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python }}
           file: ./coverage.xml
