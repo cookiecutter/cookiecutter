@@ -3,6 +3,9 @@ name: Upload to PyPI
 on:
   release:
     types: [published]
+  push:
+    branches:
+      - publish_with_poetry
 
 jobs:
   upload:
