@@ -74,6 +74,8 @@ pytest = "^6.2"
 pytest-cov = "^3.0"
 pytest-mock = "^3.6"
 freezegun = "^1.1"
+pre-commit = "^1.20"
+safety = "^1.10"
 
 
 [tool.poetry.scripts]
