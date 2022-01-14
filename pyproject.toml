@@ -74,7 +74,7 @@ pytest = "^6.2"
 pytest-cov = "^3.0"
 pytest-mock = "^3.6"
 freezegun = "^1.1"
-pre-commit = "^2.6"
+pre-commit = { version = "^2.6", python = "^3.6.1" }
 safety = "^1.10"
 
 
