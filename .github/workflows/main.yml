@@ -3,7 +3,7 @@ name: CI Tests
 on:
   push:
     branches:
-      - publish_with_poetry
+      - master
     tags:
       - "*"
   pull_request:
