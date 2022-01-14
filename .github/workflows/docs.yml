@@ -1,8 +1,8 @@
 name: "Documentation build check"
 on:
-  pull_request:
+  push:
     branches:
-      - "*"
+      - publish_with_poetry
 
 jobs:
   docs:

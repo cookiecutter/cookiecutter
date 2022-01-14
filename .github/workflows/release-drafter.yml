@@ -3,7 +3,7 @@ name: Release Drafter
 on:
   push:
     branches:
-      - master
+      - publish_with_poetry
 
 jobs:
   update_release_draft:
