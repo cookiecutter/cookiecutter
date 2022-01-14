@@ -9,7 +9,13 @@ description = """\
   """
 
 authors = [
-    "Audrey Roy Greenfeld <audreyr@gmail.com>"
+    "Audrey Roy Greenfeld <audrey@feldroy.com>"
+]
+
+maintainers = [
+    "Audrey Roy Greenfeld <audrey@feldroy.com>",
+    "Daniel Roy Greenfeld <pydanny@gmail.com>",
+    "Hosam Almoghraby <hosam.moghraby@gmail.com>",
 ]
 
 license = "BSD"
@@ -42,7 +48,6 @@ classifiers = [
     "Natural Language :: English",
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Software Development",
 ]
 
@@ -52,15 +57,15 @@ generate-setup-file = false
 
 
 [tool.poetry.dependencies]
-python = ">=3.6"
+python = "^3.6"
 
-binaryornot = ">=0.4.4"
-Jinja2 = ">=2.7,<4.0.0"
-click = ">=7.0,<8.0.0"
-pyyaml = ">=5.3.1"
-jinja2-time = ">=0.2.0"
-python-slugify = ">=4.0.0"
-requests = ">=2.23.0"
+binaryornot = "^0.4"
+Jinja2 = "^3.0.0"
+click = "^7.0"
+pyyaml = "^5.3"
+jinja2-time = "^0.2"
+python-slugify = "^4.0"
+requests = "^2.23"
 
 
 [tool.poetry.dev-dependencies]
