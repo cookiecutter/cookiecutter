@@ -183,6 +183,8 @@ def prompt_for_config(context, no_input=False):
     :param dict context: Source for field names and sample values.
     :param no_input: Prompt the user at command line for manual configuration?
     """
+    conditional_keyword = "_if_use_"
+    conditional_keyword_length = len(conditional_keyword)
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
 
@@ -197,42 +199,70 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
-        try:
-            if isinstance(raw, list):
-                # We are dealing with a choice variable
-                val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
-                )
-                cookiecutter_dict[key] = val
-            elif not isinstance(raw, dict):
-                # We are dealing with a regular variable
-                val = render_variable(env, raw, cookiecutter_dict)
-
-                if not no_input:
-                    val = read_user_variable(key, val)
-
-                cookiecutter_dict[key] = val
-        except UndefinedError as err:
-            msg = "Unable to render variable '{}'".format(key)
-            raise UndefinedVariableInTemplate(msg, err, context)
+        cookiecutter_dict = get_cookiecutter_values(
+            raw, cookiecutter_dict, env, key, context, no_input
+        )
 
     # Second pass; handle the dictionaries.
     for key, raw in context['cookiecutter'].items():
         # Skip private type dicts not ot be rendered.
-        if key.startswith('_') and not key.startswith('__'):
+        if key.startswith(conditional_keyword):
+            conditional_value_to_check = key[conditional_keyword_length:]
+            if cookiecutter_dict[conditional_value_to_check] == 'yes':
+                for sub_key, value in raw.items():
+                    cookiecutter_dict = get_cookiecutter_values(
+                        value, cookiecutter_dict, env, sub_key, context, no_input
+                    )
+                cookiecutter_dict.pop(key)
+            else:
+                cookiecutter_dict.pop(key)
+
+        elif key.startswith('_') and not key.startswith('__'):
             continue
 
-        try:
-            if isinstance(raw, dict):
-                # We are dealing with a dict variable
-                val = render_variable(env, raw, cookiecutter_dict)
+        else:
+            try:
+                if isinstance(raw, dict):
+                    # We are dealing with a dict variable
+                    val = render_variable(env, raw, cookiecutter_dict)
 
-                if not no_input and not key.startswith('__'):
-                    val = read_user_dict(key, val)
+                    if not no_input and not key.startswith('__'):
+                        val = read_user_dict(key, val)
 
-                cookiecutter_dict[key] = val
-        except UndefinedError as err:
-            msg = "Unable to render variable '{}'".format(key)
-            raise UndefinedVariableInTemplate(msg, err, context)
+                    cookiecutter_dict[key] = val
+            except UndefinedError as err:
+                msg = "Unable to render variable '{}'".format(key)
+                raise UndefinedVariableInTemplate(msg, err, context)
+
+    return cookiecutter_dict
+
+
+def get_cookiecutter_values(raw, cookiecutter_dict, env, key, context, no_input):
+    """Get cookiecutter values from keys.
+
+    :param raw: raw value to get
+    :param cookiecutter_dict: current cookiecutter dict
+    :param env: from context
+    :param key: key to retrieve value for
+    :param dict context: Source for field names and sample values.
+    :param no_input: Prompt the user at command line for manual configuration?
+
+    """
+    try:
+        if isinstance(raw, list):
+            # We are dealing with a choice variable
+            val = prompt_choice_for_config(cookiecutter_dict, env, key, raw, no_input)
+            cookiecutter_dict[key] = val
+        elif not isinstance(raw, dict):
+            # We are dealing with a regular variable
+            val = render_variable(env, raw, cookiecutter_dict)
+
+            if not no_input:
+                val = read_user_variable(key, val)
+
+            cookiecutter_dict[key] = val
+    except UndefinedError as err:
+        msg = "Unable to render variable '{}'".format(key)
+        raise UndefinedVariableInTemplate(msg, err, context)
 
     return cookiecutter_dict
