@@ -187,6 +187,7 @@ def prompt_for_config(context, no_input=False):
     conditional_keyword_length = len(conditional_keyword)
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
+    meta_information = {"env": env, "no_input": no_input}
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
@@ -199,24 +200,28 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
-        cookiecutter_dict = get_cookiecutter_values(
-            raw, cookiecutter_dict, env, key, context, no_input
-        )
+        try:
+            cookiecutter_dict = get_cookiecutter_values(
+                key, raw, cookiecutter_dict, meta_information
+            )
+        except UndefinedError as err:
+            msg = "Unable to render variable '{}'".format(key)
+            raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
     for key, raw in context['cookiecutter'].items():
-        # Skip private type dicts not ot be rendered.
+        # Check for conditional keywords.
         if key.startswith(conditional_keyword):
             conditional_value_to_check = key[conditional_keyword_length:]
             if cookiecutter_dict[conditional_value_to_check] == 'yes':
-                for sub_key, value in raw.items():
+                for sub_key, sub_value in raw.items():
                     cookiecutter_dict = get_cookiecutter_values(
-                        value, cookiecutter_dict, env, sub_key, context, no_input
+                        sub_key, sub_value, cookiecutter_dict, meta_information
                     )
                 cookiecutter_dict.pop(key)
             else:
                 cookiecutter_dict.pop(key)
-
+        # Skip private type dicts not ot be rendered.
         elif key.startswith('_') and not key.startswith('__'):
             continue
 
@@ -237,32 +242,28 @@ def prompt_for_config(context, no_input=False):
     return cookiecutter_dict
 
 
-def get_cookiecutter_values(raw, cookiecutter_dict, env, key, context, no_input):
+def get_cookiecutter_values(key, value, cookiecutter_dict, meta_information):
     """Get cookiecutter values from keys.
 
-    :param raw: raw value to get
-    :param cookiecutter_dict: current cookiecutter dict
-    :param env: from context
     :param key: key to retrieve value for
-    :param dict context: Source for field names and sample values.
-    :param no_input: Prompt the user at command line for manual configuration?
+    :param value: raw value to get
+    :param cookiecutter_dict: current cookiecutter dict
+    :param meta_information: information about this session
 
     """
-    try:
-        if isinstance(raw, list):
-            # We are dealing with a choice variable
-            val = prompt_choice_for_config(cookiecutter_dict, env, key, raw, no_input)
-            cookiecutter_dict[key] = val
-        elif not isinstance(raw, dict):
-            # We are dealing with a regular variable
-            val = render_variable(env, raw, cookiecutter_dict)
+    env = meta_information.get("env")
+    no_input = meta_information.get("no_input")
+    if isinstance(value, list):
+        # We are dealing with a choice variable
+        val = prompt_choice_for_config(cookiecutter_dict, env, key, value, no_input)
+        cookiecutter_dict[key] = val
+    elif not isinstance(value, dict):
+        # We are dealing with a regular variable
+        val = render_variable(env, value, cookiecutter_dict)
 
-            if not no_input:
-                val = read_user_variable(key, val)
+        if not no_input:
+            val = read_user_variable(key, val)
 
-            cookiecutter_dict[key] = val
-    except UndefinedError as err:
-        msg = "Unable to render variable '{}'".format(key)
-        raise UndefinedVariableInTemplate(msg, err, context)
+        cookiecutter_dict[key] = val
 
     return cookiecutter_dict
