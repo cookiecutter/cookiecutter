@@ -13,6 +13,7 @@ from cookiecutter.repository import expand_abbreviations
         ('xx:a', {'xx': '<{0}>'}, '<a>'),
         ('gh:a', {'gh': '<{0}>'}, '<a>'),
         ('xx:a', {'xx': '<>'}, '<>'),
+        ('advanced', {'advanced': {'expansion': 'exp'}}, 'exp'),
         (
             'gh:pydanny/cookiecutter-django',
             BUILTIN_ABBREVIATIONS,
@@ -35,6 +36,7 @@ from cookiecutter.repository import expand_abbreviations
         'Expansion prefix',
         'expansion_override_builtin',
         'expansion_prefix_ignores_suffix',
+        'abbreviation_with_advanced_expansion',
         'Correct expansion for builtin abbreviations (github)',
         'Correct expansion for builtin abbreviations (gitlab)',
         'Correct expansion for builtin abbreviations (bitbucket)',
@@ -42,7 +44,7 @@ from cookiecutter.repository import expand_abbreviations
 )
 def test_abbreviation_expansion(template, abbreviations, expected_result):
     """Verify abbreviation unpacking."""
-    expanded = expand_abbreviations(template, abbreviations)
+    expanded, _ = expand_abbreviations(template, abbreviations)
     assert expanded == expected_result
 
 
@@ -50,3 +52,17 @@ def test_abbreviation_expansion_prefix_not_0_in_braces():
     """Verify abbreviation unpacking raises error on incorrect index."""
     with pytest.raises(IndexError):
         expand_abbreviations('xx:a', {'xx': '{1}'})
+
+
+def test_abbreviation_with_directory():
+    """Verify that we can expand advanced abbreviations with a directory"""
+    template = "my-abbreviation"
+    abbreviations = {
+        "my-abbreviation": {
+            "expansion": "the-expansion",
+            "directory": "the-directory",
+        }
+    }
+    expanded, directory = expand_abbreviations(template, abbreviations)
+    assert expanded == "the-expansion"
+    assert directory == "the-directory"

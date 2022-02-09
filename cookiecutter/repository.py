@@ -34,16 +34,21 @@ def expand_abbreviations(template, abbreviations):
     :param template: The project template name.
     :param abbreviations: Abbreviation definitions.
     """
-    if template in abbreviations:
-        return abbreviations[template]
-
     # Split on colon. If there is no colon, rest will be empty
     # and prefix will be the whole template
     prefix, sep, rest = template.partition(':')
-    if prefix in abbreviations:
-        return abbreviations[prefix].format(rest)
 
-    return template
+    if prefix in abbreviations:
+        expansion = abbreviations[prefix]
+        directory = None
+        if isinstance(expansion, dict):
+            directory = expansion.get('directory', None)
+            expansion = expansion['expansion']
+        if rest:
+            return expansion.format(rest), directory
+        return expansion, directory
+
+    return template, None
 
 
 def repository_has_cookiecutter_json(repo_directory):
@@ -90,7 +95,8 @@ def determine_repo_dir(
         after the template has been instantiated.
     :raises: `RepositoryNotFound` if a repository directory could not be found.
     """
-    template = expand_abbreviations(template, abbreviations)
+    template, abbrev_directory = expand_abbreviations(template, abbreviations)
+    directory = directory or abbrev_directory
 
     if is_zip_file(template):
         unzipped_dir = unzip(

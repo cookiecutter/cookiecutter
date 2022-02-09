@@ -71,5 +71,5 @@ def test_expand_abbreviations():
     # First `repository.expand_abbreviations` needs to translate it
     assert is_repo_url(template) is False
 
-    expanded_template = expand_abbreviations(template, BUILTIN_ABBREVIATIONS)
+    expanded_template, _ = expand_abbreviations(template, BUILTIN_ABBREVIATIONS)
     assert is_repo_url(expanded_template) is True
