@@ -55,7 +55,7 @@ def test_abbreviation_expansion_prefix_not_0_in_braces():
 
 
 def test_abbreviation_with_directory():
-    """Verify that we can expand advanced abbreviations with a directory"""
+    """Verify that we can expand advanced abbreviations with a directory."""
     template = "my-abbreviation"
     abbreviations = {
         "my-abbreviation": {
