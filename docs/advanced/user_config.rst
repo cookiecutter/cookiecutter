@@ -33,6 +33,9 @@ Example user config:
         pp: https://github.com/audreyr/cookiecutter-pypackage.git
         gh: https://github.com/{0}.git
         bb: https://bitbucket.org/{0}
+        advanced:
+            expansion: https://github.com/{0}/cookiecutter-repo.git
+            directory: my-cutter
 
 Possible settings are:
 
@@ -51,3 +54,7 @@ Possible settings are:
   `cookiecutter pp`, or `cookiecutter gh:audreyr/cookiecutter-pypackage`.
   The `gh` (github), `bb` (bitbucket), and `gl` (gitlab) abbreviations shown
   above are actually built in, and can be used without defining them yourself.
+  To specify the ``--directory`` option in abbreviations, write the
+  abbreviation as a mapping. The key ``expansion`` must contain the expanded
+  repository string and the key ``directory`` the subdirectory of that
+  repository.
