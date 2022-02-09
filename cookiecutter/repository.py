@@ -6,6 +6,9 @@ from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
 from cookiecutter.zipfile import unzip
 
+from typing import NamedTuple, Optional
+
+
 REPO_REGEX = re.compile(
     r"""
 # something like git:// ssh:// file:// etc.
@@ -16,6 +19,13 @@ REPO_REGEX = re.compile(
 """,
     re.VERBOSE,
 )
+
+
+class AbbreviationResult(NamedTuple):
+    """The result from an expansion of an abbreviation."""
+
+    expansion: str
+    directory: Optional[str]
 
 
 def is_repo_url(value):
@@ -45,10 +55,10 @@ def expand_abbreviations(template, abbreviations):
             directory = expansion.get('directory', None)
             expansion = expansion['expansion']
         if rest:
-            return expansion.format(rest), directory
-        return expansion, directory
+            return AbbreviationResult(expansion.format(rest), directory)
+        return AbbreviationResult(expansion, directory)
 
-    return template, None
+    return AbbreviationResult(template, None)
 
 
 def repository_has_cookiecutter_json(repo_directory):
