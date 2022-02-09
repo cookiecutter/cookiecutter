@@ -1,7 +1,7 @@
 .. _conditional_variables:
 
 Using conditional variables
------------------------
+---------------------------
 
 You can specify conditional variables that will only be rendered if a certain other variable is set to 'yes' and the name starts with _if_use_::
 
@@ -12,7 +12,7 @@ You can specify conditional variables that will only be rendered if a certain ot
     }
 
 Example: Add a conditional variable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have ``cookiecutter.json`` that has the following keys::
 

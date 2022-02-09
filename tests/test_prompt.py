@@ -252,6 +252,7 @@ class TestPrompt(object):
         assert cookiecutter_dict == context['cookiecutter']
 
     def test_render_conditional_variables(self):
+        """Verify rendering of conditional variables."""
         context = {
             'cookiecutter': {
                 'project_name': "Render conditional",
@@ -273,6 +274,7 @@ class TestPrompt(object):
         )
 
     def test_dont_render_conditional_variables(self):
+        """Verify that conditional variables are not rendered."""
         context = {
             'cookiecutter': {
                 'project_name': "Render conditional",
