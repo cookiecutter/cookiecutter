@@ -39,7 +39,7 @@ can be used like this::
 
   {% endif %}
 
-Cookiecutter is using `Jinja2's if conditional expression <http://jinja.pocoo.org/docs/dev/templates/#if>`_ to determine the correct license.
+Cookiecutter is using `Jinja2's if conditional expression <https://jinja.palletsprojects.com/en/latest/templates/#if>`_ to determine the correct license.
 
 The created choice variable is still a regular Cookiecutter variable and can be used like this::
 
