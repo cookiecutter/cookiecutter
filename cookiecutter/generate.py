@@ -333,6 +333,7 @@ def generate_files(
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
                 if is_copy_only_path(d_, context):
+                    logger.debug('Found copy only path %s', d)
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -342,6 +343,10 @@ def generate_files(
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+
+                # if the outdir is there, it must be a overwrite execution
+                if os.path.isdir(outdir):
+                    shutil.rmtree(outdir)
                 shutil.copytree(indir, outdir)
 
             # We mutate ``dirs``, because we only want to go through these dirs
