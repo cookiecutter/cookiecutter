@@ -22,7 +22,6 @@ def test_generate_copy_without_render_extensions():
     Some files/directories should be rendered during invocation,
     some just copied, without any modification.
     """
-
     # first run
     generate.generate_files(
         context={
