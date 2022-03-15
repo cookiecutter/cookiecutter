@@ -422,7 +422,11 @@ def test_local_extension(tmpdir, cli_runner):
     template_path = 'tests/test-extensions/local_extension/'
 
     result = cli_runner(
-        '--no-input', '--default-config', '--output-dir', output_dir, template_path,
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        output_dir,
+        template_path,
     )
     assert result.exit_code == 0
     with open(os.path.join(output_dir, 'Foobar', 'HISTORY.rst')) as f:
