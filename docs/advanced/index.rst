@@ -23,3 +23,4 @@ Various advanced topics regarding cookiecutter usage.
    template_extensions
    directories
    new_line_characters
+   local_extensions
