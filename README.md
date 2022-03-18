@@ -190,7 +190,7 @@ Development on Cookiecutter is community-driven:
   [contributing instructions](CONTRIBUTING.md), then get started.
 - Connect with other Cookiecutter contributors and users on
   [Discord](https://discord.gg/9BrxzPKuEW)
-  (note: due to work and commitments, a core committer might not always be available)
+  (note: due to work and other commitments, a core committer might not always be available)
 
 Encouragement is unbelievably motivating. If you want more work done on
 Cookiecutter, show support:
