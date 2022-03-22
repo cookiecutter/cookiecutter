@@ -253,7 +253,7 @@ def get_cookiecutter_values(key, value, cookiecutter_dict, meta_information):
     """
     env = meta_information.get("env")
     no_input = meta_information.get("no_input")
-    if isinstance(value, list):
+    if isinstance(value, (tuple, list)):
         # We are dealing with a choice variable
         val = prompt_choice_for_config(cookiecutter_dict, env, key, value, no_input)
         cookiecutter_dict[key] = val
