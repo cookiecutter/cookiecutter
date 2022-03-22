@@ -74,7 +74,7 @@ git clone git@github.com:your_name_here/cookiecutter.git
 ```bash
 
 cd cookiecutter/
-python setup.py develop
+pip install -e .
 ```
 
 4. Create a branch for local development:

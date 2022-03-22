@@ -4,8 +4,10 @@ Main entry point for the `cookiecutter` command.
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
+from copy import copy
 import logging
 import os
+import sys
 
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
@@ -73,15 +75,17 @@ def cookiecutter(
         password=password,
         directory=directory,
     )
+    import_patch = _patch_import_path_for_repo(repo_dir)
 
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
     if replay:
-        if isinstance(replay, bool):
-            context = load(config_dict['replay_dir'], template_name)
-        else:
-            path, template_name = os.path.split(os.path.splitext(replay)[0])
-            context = load(path, template_name)
+        with import_patch:
+            if isinstance(replay, bool):
+                context = load(config_dict['replay_dir'], template_name)
+            else:
+                path, template_name = os.path.split(os.path.splitext(replay)[0])
+                context = load(path, template_name)
     else:
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is %s', context_file)
@@ -94,7 +98,8 @@ def cookiecutter(
 
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
-        context['cookiecutter'] = prompt_for_config(context, no_input)
+        with import_patch:
+            context['cookiecutter'] = prompt_for_config(context, no_input)
 
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
@@ -105,17 +110,31 @@ def cookiecutter(
         dump(config_dict['replay_dir'], template_name, context)
 
     # Create project from local context and project template.
-    result = generate_files(
-        repo_dir=repo_dir,
-        context=context,
-        overwrite_if_exists=overwrite_if_exists,
-        skip_if_file_exists=skip_if_file_exists,
-        output_dir=output_dir,
-        accept_hooks=accept_hooks,
-    )
+    with import_patch:
+        result = generate_files(
+            repo_dir=repo_dir,
+            context=context,
+            overwrite_if_exists=overwrite_if_exists,
+            skip_if_file_exists=skip_if_file_exists,
+            output_dir=output_dir,
+            accept_hooks=accept_hooks,
+        )
 
     # Cleanup (if required)
     if cleanup:
         rmtree(repo_dir)
 
     return result
+
+
+class _patch_import_path_for_repo:
+    def __init__(self, repo_dir):
+        self._repo_dir = repo_dir
+        self._path = None
+
+    def __enter__(self):
+        self._path = copy(sys.path)
+        sys.path.append(self._repo_dir)
+
+    def __exit__(self, type, value, traceback):
+        sys.path = self._path
