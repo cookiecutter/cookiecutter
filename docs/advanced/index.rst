@@ -25,4 +25,3 @@ Various advanced topics regarding cookiecutter usage.
    new_line_characters
    conditional_variables
    local_extensions
-   
