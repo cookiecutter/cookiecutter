@@ -213,7 +213,7 @@ def prompt_for_config(context, no_input=False):
         # Check for conditional keywords.
         if key.startswith(conditional_keyword):
             conditional_value_to_check = key[conditional_keyword_length:]
-            if cookiecutter_dict[conditional_value_to_check] == 'yes':
+            if cookiecutter_dict[conditional_value_to_check].lower() == 'yes':
                 for sub_key, sub_value in raw.items():
                     cookiecutter_dict = get_cookiecutter_values(
                         sub_key, sub_value, cookiecutter_dict, meta_information
