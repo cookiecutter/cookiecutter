@@ -20,7 +20,7 @@ If you have ``cookiecutter.json`` that has the following keys::
         "project_name": "project_name",
         "docker": "yes",
         "_if_use_docker": {
-            "activate_docker": "now"
+            "activate_docker": "now",
             "platform": "Linux
         }
     }
