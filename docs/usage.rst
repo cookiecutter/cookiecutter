@@ -5,13 +5,11 @@ Usage
 Grab a Cookiecutter template
 ----------------------------
 
-First, find a Cookiecutter project template. To get started quickly, select one of the templates listed here:
-
-* `Cookiecutter Templates`_ by Sebastian Ruml
-
-Next, clone the Cookiecutter project template::
+First, clone a Cookiecutter project template::
 
     $ git clone git@github.com:audreyr/cookiecutter-pypackage.git
+
+.. note:: If you are looking for templates to get you started, grab one from the collection of templates listed here: `Cookiecutter Templates`_ by Sebastian Ruml
 
 Make your changes
 -----------------
