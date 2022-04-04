@@ -5,7 +5,11 @@ Usage
 Grab a Cookiecutter template
 ----------------------------
 
-First, clone a Cookiecutter project template::
+First, find a Cookiecutter project template. To get started quickly, you can find a collection of templates here:
+
+* `Cookiecutter Templates`_ by Sebastian Ruml
+
+Next, clone the Cookiecutter project template::
 
     $ git clone git@github.com:audreyr/cookiecutter-pypackage.git
 
@@ -129,3 +133,4 @@ Pre-0.7.0, this is how it worked:
 
 * Cloned cookiecutters were not saved locally.
 
+.. _`Cookiecutter Templates`: http://cookiecutter-templates.sebastianruml.name/
