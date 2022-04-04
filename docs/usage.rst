@@ -5,7 +5,7 @@ Usage
 Grab a Cookiecutter template
 ----------------------------
 
-First, find a Cookiecutter project template. To get started quickly, you can find a collection of templates here:
+First, find a Cookiecutter project template. To get started quickly, select one of the templates listed here:
 
 * `Cookiecutter Templates`_ by Sebastian Ruml
 
