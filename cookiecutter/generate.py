@@ -345,7 +345,7 @@ def generate_files(
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
 
                 # if the outdir is there, it must be a overwrite execution
-                if os.path.isdir(outdir):
+                if os.path.isdir(outdir) and overwrite_if_exists:
                     shutil.rmtree(outdir)
                 shutil.copytree(indir, outdir)
 
