@@ -339,7 +339,7 @@ def generate_files(
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
-                shutil.copytree(indir, outdir)
+                shutil.copytree(indir, outdir, dirs_exist_ok=overwrite_if_exists)
 
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively
