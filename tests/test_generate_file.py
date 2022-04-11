@@ -116,12 +116,11 @@ def test_generate_file_with_false_condition(env):
 @pytest.fixture
 def expected_msg():
     """Fixture. Used to ensure that exception generated text contain full data."""
-    msg = (
+    return (
         'Missing end of comment tag\n'
-        '  File "./tests/files/syntax_error.txt", line 1\n'
+        f'  File "{os.path.join("tests", "files", "syntax_error.txt")}", line 1\n'
         '    I eat {{ syntax_error }} {# this comment is not closed}'
     )
-    return msg.replace("/", os.sep)
 
 
 def test_generate_file_verbose_template_syntax_error(env, expected_msg):
