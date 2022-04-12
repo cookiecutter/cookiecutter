@@ -346,8 +346,10 @@ def generate_files(
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
 
-                # if the outdir is there, it must be a overwrite execution
-                if os.path.isdir(outdir) and overwrite_if_exists:
+                # The outdir is not the root dir, it is the dir which marked as copy
+                # only in the config file. If the program hits this line, which means
+                # the overwrite_if_exists = True, and root dir exists
+                if os.path.isdir(outdir):
                     shutil.rmtree(outdir)
                 shutil.copytree(indir, outdir)
 
