@@ -277,6 +277,8 @@ def generate_files(
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param skip_if_file_exists: Skip the files in the corresponding directories
+        if they already exist
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
