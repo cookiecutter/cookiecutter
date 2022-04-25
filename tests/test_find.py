@@ -4,6 +4,7 @@ import os
 import pytest
 
 from cookiecutter import find
+from cookiecutter.environment import StrictEnvironment
 
 
 @pytest.fixture(params=['fake-repo-pre', 'fake-repo-pre2'])
@@ -14,7 +15,8 @@ def repo_dir(request):
 
 def test_find_template(repo_dir):
     """Verify correctness of `find.find_template` path detection."""
-    template = find.find_template(repo_dir=repo_dir)
+    env = StrictEnvironment(context={}, keep_trailing_newline=True, **{})
+    template = find.find_template(repo_dir=repo_dir, env=env)
 
     test_dir = os.path.join(repo_dir, '{{cookiecutter.repo_name}}')
     assert template == test_dir
