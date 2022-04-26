@@ -12,7 +12,6 @@ from cookiecutter import exceptions, generate
 from cookiecutter.environment import StrictEnvironment
 
 
-
 @pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])
 def test_ensure_dir_is_templated_raises(invalid_dirname):
     """Verify `ensure_dir_is_templated` raises on wrong directories names input."""

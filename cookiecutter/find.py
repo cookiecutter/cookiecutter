@@ -20,7 +20,7 @@ def find_template(repo_dir, env):
     project_template = None
     for item in repo_dir_contents:
         if 'cookiecutter' in item and env.variable_start_string in item \
-            and env.variable_end_string in item:
+                and env.variable_end_string in item:
             project_template = item
             break
 
