@@ -30,7 +30,8 @@ def test_find_template(repo_dir):
 
 def test_find_template_variable_string(repo_dir_variable_string):
     """Verify correctness of `find.find_template` path detection."""
-    env = StrictEnvironment(context={}, keep_trailing_newline=True, **{"variable_start_string": "[[", "variable_end_string": "]]"})
+    env_vars = {"variable_start_string": "[[", "variable_end_string": "]]"}
+    env = StrictEnvironment(context={}, keep_trailing_newline=True, **env_vars)
     template = find.find_template(repo_dir=repo_dir_variable_string, env=env)
 
     test_dir = os.path.join(repo_dir_variable_string, '[[cookiecutter.repo_name]]')
