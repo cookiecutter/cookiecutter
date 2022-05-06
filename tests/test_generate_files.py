@@ -390,6 +390,18 @@ def test_raise_undefined_variable_dir_name(output_dir, undefined_context):
     assert not Path(output_dir).joinpath('testproject').exists()
 
 
+def test_keep_project_dir_on_failure(output_dir, undefined_context):
+    """Verify correct error raised when directory name cannot be rendered."""
+    with pytest.raises(exceptions.UndefinedVariableInTemplate):
+        generate.generate_files(
+            repo_dir='tests/undefined-variable/dir-name/',
+            output_dir=output_dir,
+            context=undefined_context,
+            keep_project_on_failure=True,
+        )
+    assert Path(output_dir).joinpath('testproject').exists()
+
+
 def test_raise_undefined_variable_dir_name_existing_project(
     output_dir, undefined_context
 ):
