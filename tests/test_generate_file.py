@@ -119,7 +119,13 @@ def expected_msg_regex():
     """Fixture. Used to ensure that exception generated text contain full data."""
     return re.compile(
         'Missing end of comment tag\n'
-        ' {2}File "(.' + os.sep + ')*tests' + os.sep + 'files' + os.sep + 'syntax_error.txt", line 1\n'
+        ' {2}File "(.'
+        + os.sep
+        + ')*tests'
+        + os.sep
+        + 'files'
+        + os.sep
+        + 'syntax_error.txt", line 1\n'
         ' {4}I eat {{ syntax_error }} {# this comment is not closed}'
     )
 
