@@ -133,7 +133,7 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg_regex):
             context={'syntax_error': 'syntax_error'},
             env=env,
         )
-    assert expected_msg_regex.match(str(exception.value)) is not None
+    assert expected_msg_regex.match(str(exception.value))
 
 
 def test_generate_file_does_not_translate_lf_newlines_to_crlf(env, tmp_path):
