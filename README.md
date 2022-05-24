@@ -19,9 +19,6 @@ template.
 
 ![Cookiecutter](https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
 
-We are proud to be an open source sponsor of
-[PyCon 2016](https://us.pycon.org/2016/sponsors/).
-
 ## Features
 
 - Cross-platform: Windows, Mac, and Linux are officially supported.
