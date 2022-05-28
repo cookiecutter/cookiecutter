@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/PyCQA/doc8
-    rev: 0.8.1
+    rev: 0.11.2
     hooks:
       - id: doc8
         name: doc8
@@ -11,10 +11,9 @@ repos:
         files: \.rst$
         require_serial: true
   - repo: https://github.com/psf/black.git
-    rev: 21.10b0
+    rev: 22.3.0
     hooks:
       - id: black
-        language_version: python3
         exclude: ^(tests\/hooks-abort-render\/hooks|docs\/HelloCookieCutter1)
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0
@@ -26,8 +25,8 @@ repos:
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
       - id: check-symlinks
-  - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.9
+  - repo: https://github.com/pycqa/flake8
+    rev: 4.0.1
     hooks:
       - id: flake8
         additional_dependencies:
@@ -35,7 +34,7 @@ repos:
           - flake8-black
           - flake8-docstrings
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.6.0
+    rev: 1.7.4
     hooks:
       - id: bandit
         args: [--ini, .bandit]
