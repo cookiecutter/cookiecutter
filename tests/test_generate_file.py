@@ -118,7 +118,7 @@ def expected_msg():
     """Fixture. Used to ensure that exception generated text contain full data."""
     msg = (
         'Missing end of comment tag\n'
-        '  File "./tests/files/syntax_error.txt", line 1\n'
+        '  File "tests/files/syntax_error.txt", line 1\n'
         '    I eat {{ syntax_error }} {# this comment is not closed}'
     )
     return msg.replace("/", os.sep)

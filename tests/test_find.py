@@ -4,6 +4,7 @@ import os
 import pytest
 
 from cookiecutter import find
+from cookiecutter.environment import StrictEnvironment
 
 
 @pytest.fixture(params=['fake-repo-pre', 'fake-repo-pre2'])
@@ -12,9 +13,26 @@ def repo_dir(request):
     return os.path.join('tests', request.param)
 
 
+@pytest.fixture(params=['fake-repo-pre3', 'fake-repo-pre4'])
+def repo_dir_variable_string(request):
+    """Fixture returning path for `test_find_template` test."""
+    return os.path.join('tests', request.param)
+
+
 def test_find_template(repo_dir):
     """Verify correctness of `find.find_template` path detection."""
-    template = find.find_template(repo_dir=repo_dir)
+    env = StrictEnvironment(context={}, keep_trailing_newline=True, **{})
+    template = find.find_template(repo_dir=repo_dir, env=env)
 
     test_dir = os.path.join(repo_dir, '{{cookiecutter.repo_name}}')
+    assert template == test_dir
+
+
+def test_find_template_variable_string(repo_dir_variable_string):
+    """Verify correctness of `find.find_template` path detection."""
+    env_vars = {"variable_start_string": "[[", "variable_end_string": "]]"}
+    env = StrictEnvironment(context={}, keep_trailing_newline=True, **env_vars)
+    template = find.find_template(repo_dir=repo_dir_variable_string, env=env)
+
+    test_dir = os.path.join(repo_dir_variable_string, '[[cookiecutter.repo_name]]')
     assert template == test_dir
