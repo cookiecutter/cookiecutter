@@ -57,3 +57,9 @@ def test_run_json_load(
     (infile_handler,), kwargs = mock_json_load.call_args
     assert infile_handler.name == replay_file
     assert loaded_context == context
+
+
+def test_load_replay_file_json(context, replay_file):
+    """Test that replay.load_replay_file correctly loads the context."""
+    loaded_context = replay.load_replay_file(replay_file)
+    assert loaded_context == context

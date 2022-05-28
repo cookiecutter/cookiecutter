@@ -36,13 +36,8 @@ def dump(replay_dir, template_name, context):
         json.dump(context, outfile, indent=2)
 
 
-def load(replay_dir, template_name):
-    """Read json data from file."""
-    if not isinstance(template_name, str):
-        raise TypeError('Template name is required to be of type str')
-
-    replay_file = get_file_name(replay_dir, template_name)
-
+def load_replay_file(replay_file):
+    """Read cookiecutter's parameter values from replay file."""
     with open(replay_file, 'r') as infile:
         context = json.load(infile)
 
@@ -50,3 +45,12 @@ def load(replay_dir, template_name):
         raise ValueError('Context is required to contain a cookiecutter key')
 
     return context
+
+
+def load(replay_dir, template_name):
+    """Read json data from file."""
+    if not isinstance(template_name, str):
+        raise TypeError('Template name is required to be of type str')
+
+    replay_file = get_file_name(replay_dir, template_name)
+    return load_replay_file(replay_file)
