@@ -1,4 +1,4 @@
-.. _`template extensions`:
+.. _`local extensions`:
 
 Local Extensions
 ----------------

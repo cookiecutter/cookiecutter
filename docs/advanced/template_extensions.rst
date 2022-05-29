@@ -96,7 +96,7 @@ that converts string into its underscored ("slugified") version:
 
 Would output:
 
-.. code-block:: json
+::
 
     it-s-a-random-version
 

@@ -18,9 +18,8 @@ Basics
    overview
    installation
    usage
-   tutorials
-   tutorial1
-   tutorial2
+   cli_options
+   tutorials/index
    advanced/index
    troubleshooting
 

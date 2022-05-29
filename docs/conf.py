@@ -95,7 +95,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'cookiecutter'
-copyright = '2013-2019, Audrey Roy and Cookiecutter community'
+copyright = '2013-2022, Audrey Roy and Cookiecutter community'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -324,7 +324,7 @@ texinfo_documents = [
 epub_title = 'cookiecutter'
 epub_author = 'Audrey Roy'
 epub_publisher = 'Audrey Roy and Cookiecutter community'
-epub_copyright = '2013-2019, Audrey Roy and Cookiecutter community'
+epub_copyright = '2013-2022, Audrey Roy and Cookiecutter community'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
@@ -377,4 +377,4 @@ epub_copyright = '2013-2019, Audrey Roy and Cookiecutter community'
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {'https://docs.python.org/3': None}

@@ -12,9 +12,13 @@ Prerequisites
 Python interpreter
 ^^^^^^^^^^^^^^^^^^
 
-Install Python for your operating system. Consult the official `Python documentation <https://docs.python.org/3/using/index.html>`_ for details.
+Install Python for your operating system.
+On Windows and macOS this is usually necessary.
+Most Linux distributions are coming with Python pre-installed.
+Consult the official `Python documentation <https://docs.python.org/3/using/index.html>`_ for details.
 
-You can install the Python binaries from `python.org <https://www.python.org/downloads/mac-osx/>`_. Alternatively on macOS, you can use the `homebrew <http://brew.sh/>`_ package manager.
+You can install the Python binaries from `python.org <https://www.python.org/downloads/>`_.
+Alternatively on macOS, you can use the `homebrew <http://brew.sh/>`_ package manager.
 
 .. code-block:: bash
 
@@ -77,7 +81,7 @@ Or, if you do not have pip:
 
     $ easy_install --user cookiecutter
 
-Though, pip is recommended.
+Though, pip is recommended, easy_install is deprecated.
 
 Or, if you are using conda, first add conda-forge to your channels:
 
@@ -106,32 +110,32 @@ Alternate installations
 
     $ pipx install cookiecutter
 
-**Debian/Ubuntu:**
 
-.. code-block:: bash
+Upgrading
+---------
 
-    $ sudo apt-get install cookiecutter
+from 0.6.4 to 0.7.0 or greater
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Upgrading from 0.6.4 to 0.7.0 or greater
-----------------------------------------
-
-First, read :doc:`HISTORY` in detail. There are a lot of major
-changes. The big ones are:
+First, read :doc:`HISTORY` in detail.
+There are a lot of major changes.
+The big ones are:
 
 * Cookiecutter no longer deletes the cloned repo after generating a project.
 * Cloned repos are saved into `~/.cookiecutters/`.
 * You can optionally create a `~/.cookiecutterrc` config file.
 
-Upgrade Cookiecutter either with easy_install:
-
-.. code-block:: bash
-
-    $ easy_install --upgrade cookiecutter
 
 Or with pip:
 
 .. code-block:: bash
 
     $ python3 -m pip install --upgrade cookiecutter
+
+Upgrade Cookiecutter either with easy_install (deprecated):
+
+.. code-block:: bash
+
+    $ easy_install --upgrade cookiecutter
 
 Then you should be good to go.

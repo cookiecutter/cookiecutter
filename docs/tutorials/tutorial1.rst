@@ -3,7 +3,7 @@ Getting to Know Cookiecutter
 =============================
 
 .. note:: Before you begin, please install Cookiecutter 0.7.0 or higher.
-   Instructions are in :doc:`installation`.
+   Instructions are in :doc:`../installation`.
 
 Cookiecutter is a tool for creating projects from *cookiecutters* (project
 templates).
