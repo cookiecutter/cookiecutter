@@ -24,8 +24,6 @@ jobs:
           pip install tox virtualenv
       - name: Lint
         run: "tox -e lint"
-      - name: Packaging
-        run: "tox -e packaging"
       - name: Safety
         run: "tox -e safety"
   build:
@@ -34,28 +32,22 @@ jobs:
       fail-fast: false
       matrix:
         name:
-          - "ubuntu-py36"
           - "ubuntu-py37"
           - "ubuntu-py38"
           - "ubuntu-py39"
-          - "ubuntu-pypy3"
+          - "ubuntu-py310"
 
-          - "macos-py36"
           - "macos-py37"
           - "macos-py38"
           - "macos-py39"
-          - "macos-pypy3"
+          - "macos-py310"
 
-          - "windows-py36"
           - "windows-py37"
           - "windows-py38"
           - "windows-py39"
+          - "windows-py310"
 
         include:
-          - name: "ubuntu-py36"
-            python: "3.6"
-            os: ubuntu-latest
-            tox_env: "py36"
           - name: "ubuntu-py37"
             python: "3.7"
             os: ubuntu-latest
@@ -68,15 +60,11 @@ jobs:
             python: "3.9"
             os: ubuntu-latest
             tox_env: "py39"
-          - name: "ubuntu-pypy3"
-            python: "pypy3"
+          - name: "ubuntu-py310"
+            python: "3.10"
             os: ubuntu-latest
-            tox_env: "pypy3"
+            tox_env: "py310"
 
-          - name: "macos-py36"
-            python: "3.6"
-            os: macos-latest
-            tox_env: "py36"
           - name: "macos-py37"
             python: "3.7"
             os: macos-latest
@@ -89,15 +77,11 @@ jobs:
             python: "3.9"
             os: macos-latest
             tox_env: "py39"
-          - name: "macos-pypy3"
-            python: "pypy3"
+          - name: "macos-py310"
+            python: "3.10"
             os: macos-latest
-            tox_env: "pypy3"
+            tox_env: "py310"
 
-          - name: "windows-py36"
-            python: "3.6"
-            os: windows-latest
-            tox_env: "py36"
           - name: "windows-py37"
             python: "3.7"
             os: windows-latest
@@ -110,6 +94,10 @@ jobs:
             python: "3.9"
             os: windows-latest
             tox_env: "py39"
+          - name: "windows-py310"
+            python: "3.10"
+            os: windows-latest
+            tox_env: "py310"
 
     steps:
       - uses: actions/checkout@v2

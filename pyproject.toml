@@ -1,17 +1,5 @@
-[build-system]
-requires = [
-  "setuptools >= 42.0.0",  # required by pyproject+setuptools_scm integration
-  "setuptools_scm[toml] >= 3.5.0",  # required for "no-local-version" scheme
-  "setuptools_scm_git_archive >= 1.0",
-  "wheel",
-]
-build-backend = "setuptools.build_meta"
-
 [tool.black]
 skip-string-normalization = true
 exclude = '/(tests/hooks-abort-render/hooks|docs\/HelloCookieCutter1)/'
 line-length = 88
-target-version = ['py36']
-
-[tool.setuptools_scm]
-local_scheme = "no-local-version"
+target-version = ['py39']

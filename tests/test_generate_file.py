@@ -1,6 +1,7 @@
 """Tests for `generate_file` function, part of `generate_files` function workflow."""
 import json
 import os
+import re
 
 import pytest
 from jinja2 import FileSystemLoader
@@ -114,17 +115,16 @@ def test_generate_file_with_false_condition(env):
 
 
 @pytest.fixture
-def expected_msg():
+def expected_msg_regex():
     """Fixture. Used to ensure that exception generated text contain full data."""
-    msg = (
+    return re.compile(
         'Missing end of comment tag\n'
-        '  File "./tests/files/syntax_error.txt", line 1\n'
-        '    I eat {{ syntax_error }} {# this comment is not closed}'
+        ' {2}File "(.[/\\\\])*tests[/\\\\]files[/\\\\]syntax_error.txt", line 1\n'
+        ' {4}I eat {{ syntax_error }} {# this comment is not closed}'
     )
-    return msg.replace("/", os.sep)
 
 
-def test_generate_file_verbose_template_syntax_error(env, expected_msg):
+def test_generate_file_verbose_template_syntax_error(env, expected_msg_regex):
     """Verify correct exception raised on syntax error in file before generation."""
     with pytest.raises(TemplateSyntaxError) as exception:
         generate.generate_file(
@@ -133,7 +133,7 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg):
             context={'syntax_error': 'syntax_error'},
             env=env,
         )
-    assert str(exception.value) == expected_msg
+    assert expected_msg_regex.match(str(exception.value))
 
 
 def test_generate_file_does_not_translate_lf_newlines_to_crlf(env, tmp_path):
