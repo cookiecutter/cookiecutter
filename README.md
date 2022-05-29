@@ -4,7 +4,7 @@
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![Build Status](https://github.com/cookiecutter/cookiecutter/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/cookiecutter/cookiecutter/actions)
 [![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/github/cookiecutter/cookiecutter?branch=master)
-[![slack](https://img.shields.io/badge/cookiecutter-Join%20on%20Slack-green?style=flat&logo=slack)](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U)
+[![discord](https://img.shields.io/badge/Discord-cookiecutter-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/9BrxzPKuEW)
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
 [![Code Quality](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master)
 
@@ -18,9 +18,6 @@ template.
 - Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE)
 
 ![Cookiecutter](https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
-
-We are proud to be an open source sponsor of
-[PyCon 2016](https://us.pycon.org/2016/sponsors/).
 
 ## Features
 
@@ -178,7 +175,7 @@ Stuck? Try one of the following:
   about the problem, even if it's just "I can't get it to work on this cookiecutter"
   with a link to your cookiecutter. Don't worry about naming/pinpointing the issue
   properly.
-- Ask for help on [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U)
+- Ask for help on [Discord](https://discord.gg/9BrxzPKuEW)
   if you must (but please try one of the other options first, so that others
   can benefit from the discussion).
 
@@ -189,8 +186,8 @@ Development on Cookiecutter is community-driven:
 - Everyone is invited to contribute. Read the
   [contributing instructions](CONTRIBUTING.md), then get started.
 - Connect with other Cookiecutter contributors and users on
-  [Slack](https://join.slack.com/t/cookie-cutter/shared_invite/enQtNzI0Mzg5NjE5Nzk5LTRlYWI2YTZhYmQ4YmU1Y2Q2NmE1ZjkwOGM0NDQyNTIwY2M4ZTgyNDVkNjMxMDdhZGI5ZGE5YmJjM2M3ODJlY2U)
-  (note: due to work and commitments, a core committer might not always be available)
+  [Discord](https://discord.gg/9BrxzPKuEW)
+  (note: due to work and other commitments, a core committer might not always be available)
 
 Encouragement is unbelievably motivating. If you want more work done on
 Cookiecutter, show support:
@@ -233,3 +230,7 @@ organizations and individuals to support the project.
 Everyone interacting in the Cookiecutter project's codebases, issue trackers,
 chat rooms, and mailing lists is expected to follow the
 [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
+
+## Creator / Leader
+
+This project was created and is led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy).
