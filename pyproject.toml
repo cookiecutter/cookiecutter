@@ -61,7 +61,7 @@ python = "^3.6"
 
 binaryornot = "^0.4"
 Jinja2 = "^3.0.0"
-click = "^7.0"
+click = "^8.0"
 pyyaml = "^5.3"
 jinja2-time = "^0.2"
 python-slugify = "^4.0"
