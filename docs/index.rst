@@ -42,10 +42,8 @@ Project Info
 
    CONTRIBUTING
    AUTHORS
-   sprint-contributors
    HISTORY
    case_studies
-   BACKERS
    CODE_OF_CONDUCT
 
 Index
