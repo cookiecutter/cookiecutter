@@ -8,8 +8,7 @@
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
 [![Code Quality](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master)
 
-A command-line utility that creates projects from **cookiecutters** (project templates),
-e.g. creating a Python package project from a Python package project template.
+A command-line utility that creates projects from **cookiecutters** (project templates), e.g. creating a Python package project from a Python package project template.
 
 - Documentation: [https://cookiecutter.readthedocs.io](https://cookiecutter.readthedocs.io)
 - GitHub: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
@@ -149,9 +148,10 @@ You are almost not limited in topics amount, use it!
 These Cookiecutters are maintained by the cookiecutter team:
 
 - [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage):
-  [@audreyfeldroy's](https://github.com/audreyfeldroy) ultimate Python package project template.
+  ultimate Python package project template by [@audreyfeldroy's](https://github.com/audreyfeldroy).
 - [cookiecutter-django](https://github.com/pydanny/cookiecutter-django):
-  A bleeding edge Django project template with Bootstrap 4, customizable users app, starter templates, working user registration, celery setup, and much more.
+  a framework for jumpstarting production-ready Django projects quickly.
+  It is bleeding edge with Bootstrap 5, customizable users app, starter templates, working user registration, celery setup, and much more.
 - [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin):
   Minimal Cookiecutter template for authoring [pytest](https://docs.pytest.org/) plugins that help you to write better programs.
 
@@ -164,8 +164,8 @@ Stuck? Try one of the following:
 
 - See the [Troubleshooting](https://cookiecutter.readthedocs.io/en/latest/troubleshooting.html) page.
 - Ask for help on [Stack Overflow](https://stackoverflow.com/questions/tagged/cookiecutter).
-- You are strongly encouraged to
-  [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) about the problem, even if it's just "I can't get it to work on this cookiecutter" with a link to your cookiecutter.
+- You are strongly encouraged to [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) about the problem.
+  Do it even if it's just "I can't get it to work on this cookiecutter" with a link to your cookiecutter.
   Don't worry about naming/pinpointing the issue properly.
 - Ask for help on [Discord](https://discord.gg/9BrxzPKuEW) if you must (but please try one of the other options first, so that others can benefit from the discussion).
 
@@ -177,8 +177,8 @@ Development on Cookiecutter is community-driven:
 - Connect with other Cookiecutter contributors and users on [Discord](https://discord.gg/9BrxzPKuEW)
   (note: due to work and other commitments, a core committer might not always be available)
 
-Encouragement is unbelievably motivating. If you want more work done on
-Cookiecutter, show support:
+Encouragement is unbelievably motivating.
+If you want more work done on Cookiecutter, show support:
 
 - Thank a core committer for their efforts.
 - Star [Cookiecutter on GitHub](https://github.com/cookiecutter/cookiecutter).
@@ -186,39 +186,35 @@ Cookiecutter, show support:
 
 Got criticism or complaints?
 
-- [File an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
-  so that Cookiecutter can be improved. Be friendly and constructive about what
-  could be better. Make detailed suggestions.
-- **Keep us in the loop so that we can help.** For example, if you are
-  discussing problems with Cookiecutter on a mailing list,
-  [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
-  where you link to the discussion thread and/or cc at least 1 core committer on the email.
-- Be encouraging. A comment like "This function ought to be rewritten like this"
-  is much more likely to result in action than a comment like "Eww, look how bad
-  this function is."
+- [File an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) so that Cookiecutter can be improved.
+  Be friendly and constructive about what could be better.
+  Make detailed suggestions.
+- **Keep us in the loop so that we can help.**
+  For example, if you are discussing problems with Cookiecutter on a mailing list, [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) where you link to the discussion thread and/or cc at least 1 core committer on the email.
+- Be encouraging.
+  A comment like "This function ought to be rewritten like this" is much more likely to result in action than a comment like "Eww, look how bad this function is."
 
 Waiting for a response to an issue/question?
 
-- Be patient and persistent. All issues are on the core committer team's radar
-  and will be considered thoughtfully, but we have a lot of issues to work through.
+- Be patient and persistent. All issues are on the core committer team's radar and will be considered thoughtfully, but we have a lot of issues to work through.
   If urgent, it's fine to ping a core committer in the issue with a reminder.
 - Ask others to comment, discuss, review, etc.
 - Search the Cookiecutter repo for issues related to yours.
 - Need a fix/feature/release/help urgently, and can't wait?
-  [@audreyfeldroy](https://github.com/audreyfeldroy) is available for hire for consultation
-  or custom development.
+  [@audreyfeldroy](https://github.com/audreyfeldroy) is available for hire for consultation or custom development.
 
 ## Support This Project
 
-This project is run by volunteers. Shortly we will be providing means for
-organizations and individuals to support the project.
+This project is run by volunteers.
+Shortly we will be providing means for organizations and individuals to support the project.
 
 ## Code of Conduct
 
-Everyone interacting in the Cookiecutter project's codebases, issue trackers,
-chat rooms, and mailing lists is expected to follow the
-[PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
+Everyone interacting in the Cookiecutter project's codebases and documentation is expected to follow the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
+This includes, but is not limited to, issue trackers, chat rooms, mailing lists, and other virtual or in real life communication.
 
 ## Creator / Leader
 
 This project was created and is led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy).
+
+She is supported by a team of maintainers.

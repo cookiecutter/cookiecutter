@@ -22,7 +22,7 @@ Alternatively on macOS, you can use the `homebrew <http://brew.sh/>`_ package ma
 
 .. code-block:: bash
 
-    $ brew install python3
+    brew install python3
 
 
 Adjust your path
@@ -73,13 +73,13 @@ At the command line:
 
 .. code-block:: bash
 
-    $ python3 -m pip install --user cookiecutter
+    python3 -m pip install --user cookiecutter
 
 Or, if you do not have pip:
 
 .. code-block:: bash
 
-    $ easy_install --user cookiecutter
+    easy_install --user cookiecutter
 
 Though, pip is recommended, easy_install is deprecated.
 
@@ -87,13 +87,13 @@ Or, if you are using conda, first add conda-forge to your channels:
 
 .. code-block:: bash
 
-    $ conda config --add channels conda-forge
+    conda config --add channels conda-forge
 
 Once the conda-forge channel has been enabled, cookiecutter can be installed with:
 
 .. code-block:: bash
 
-    $ conda install cookiecutter
+    conda install cookiecutter
 
 Alternate installations
 -----------------------
@@ -102,13 +102,13 @@ Alternate installations
 
 .. code-block:: bash
 
-    $ brew install cookiecutter
+    brew install cookiecutter
 
 **Pipx (Linux, OSX and Windows):**
 
 .. code-block:: bash
 
-    $ pipx install cookiecutter
+    pipx install cookiecutter
 
 
 Upgrading
@@ -130,12 +130,12 @@ Or with pip:
 
 .. code-block:: bash
 
-    $ python3 -m pip install --upgrade cookiecutter
+    python3 -m pip install --upgrade cookiecutter
 
 Upgrade Cookiecutter either with easy_install (deprecated):
 
 .. code-block:: bash
 
-    $ easy_install --upgrade cookiecutter
+    easy_install --upgrade cookiecutter
 
 Then you should be good to go.

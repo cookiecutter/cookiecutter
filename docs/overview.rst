@@ -27,9 +27,8 @@ This is a directory structure for a simple cookiecutter::
 
 You must have:
 
-- A `cookiecutter.json` file.
-- A `{{ cookiecutter.project_name }}/` directory, where
-  `project_name` is defined in your `cookiecutter.json`.
+- A ``cookiecutter.json`` file.
+- A ``{{ cookiecutter.project_name }}/`` directory, where ``project_name`` is defined in your ``cookiecutter.json``.
 
 Beyond that, you can have whatever files/directories you want.
 
