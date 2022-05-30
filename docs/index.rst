@@ -6,7 +6,7 @@
 Cookiecutter: Better Project Templates
 ======================================
 
-Cookiecutter creates projects from project templates, e.g. Python package projects.
+Cookiecutter creates projects from **cookiecutters** (project templates), e.g. Python package projects from Python package temnplates.
 
 Basics
 ------
@@ -18,9 +18,8 @@ Basics
    overview
    installation
    usage
-   tutorials
-   tutorial1
-   tutorial2
+   cli_options
+   tutorials/index
    advanced/index
    troubleshooting
 

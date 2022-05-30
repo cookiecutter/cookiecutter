@@ -4,10 +4,15 @@ History is important, but our current roadmap can be found [here](https://github
 
 ## 2.0.2 (2021-12-27)
 
+*Remark: This release never made it to official PyPI*
+
 * Fix Python version number in cookiecutter --version and test on Python 3.10 (#1621) @ozer550
 * Removed changes related to setuptools_scm (#1629) @audreyfeldroy @ozer550
 
 ## 2.0.1 (2021-12-11)
+
+*Remark: This release never made it to official PyPI*
+
 ### Breaking Changes
 
 * Release preparation for 2.0.1rc1 (#1608) @audreyfeldroy
@@ -105,7 +110,7 @@ History is important, but our current roadmap can be found [here](https://github
 ## 1.7.1 (2020-04-21)
 
 This release was focused on internal code and CI/CD changes. During this release
-all code was verified to match pep8, pep257 and other code-styling guides.  
+all code was verified to match pep8, pep257 and other code-styling guides.
 Project CI/CD was significantly changed, Windows platform checks based on Appveyor
 engine was replaced by GitHub actions tests. Appveyor was removed. Also our
 CI/CD was extended with Mac builds, to verify project builds on Apple devices.
@@ -773,7 +778,7 @@ Other changes:
     $ cookiecutter cookiecutter-pypackage/
     # Create project from the cookiecutter-pypackage.git repo template
     $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
-```  
+```
 
 * Can now use Cookiecutter from Python as a package:
 
