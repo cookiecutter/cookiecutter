@@ -63,6 +63,10 @@ docs: ## Generate Sphinx HTML documentation, including API docs
 	@rm -f docs/cookiecutter.rst
 	@sphinx-apidoc -o docs/ cookiecutter
 	@rm -f docs/modules.rst
+	@sed -i 's/cookiecutter package/===\nAPI\n===/' docs/cookiecutter.rst
+	@sed -i 's/====================//' docs/cookiecutter.rst
+	@sed -i 's/Submodules/This is the Cookiecutter modules API documentation./' docs/cookiecutter.rst
+	@sed -i 's/^----------$$//' docs/cookiecutter.rst
 	@$(MAKE) -C docs clean
 	@$(MAKE) -C docs html
 	@$(BROWSER) docs/_build/html/index.html
