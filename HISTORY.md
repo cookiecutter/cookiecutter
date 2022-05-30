@@ -2,6 +2,34 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.1.0 (2022-05-30)
+
+### Changes
+
+* Move contributors and backers to credits section (#1599) @doobrie
+* test_generate_file_verbose_template_syntax_error fixed (#1671) @MaciejPatro
+* Removed changes related to setuptools_scm (#1629) @ozer550
+* Feature/local extensions (#1240) @mwesterhof
+
+### CI/CD and QA changes
+
+* Check manifest: pre-commit, fixes, cleaning (#1683) @jensens
+* Follow PyPA guide to release package using GitHub Actions. (#1682) @ericof
+
+### Documentation updates
+
+* Fix typo in dict_variables.rst (#1680) @ericof
+* Documentation overhaul (#1677) @jensens
+* Fixed incorrect link on docs. (#1649) @luzfcb
+
+### Bugfixes
+
+* Restore accidentally deleted support for click 8.x (#1643) @jaklan
+
+### This release was made possible by our wonderful contributors:
+
+@doobrie, @jensens, @ericof, @luzfcb
+
 ## 2.0.2 (2021-12-27)
 
 *Remark: This release never made it to official PyPI*
