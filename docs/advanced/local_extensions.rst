@@ -35,8 +35,8 @@ It will contain a ``main.py`` file, containing the following (for instance):
 
 This will register the ``foobar`` filter for the template.
 
-For many cases, this will be unneccessarily complicated. It's likely that we'd only want to register a single function
-as a filter. For this, we can use the ``simple_filter`` decorator:
+For many cases, this will be unneccessarily complicated.
+It's likely that we'd only want to register a single function as a filter. For this, we can use the ``simple_filter`` decorator:
 
 .. code-block:: json
 

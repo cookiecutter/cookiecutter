@@ -1,12 +1,13 @@
 .. _user-hooks:
 
-Using Pre/Post-Generate Hooks (0.7.0+)
-======================================
+Using Pre/Post-Generate Hooks
+=============================
 
-You can have Python or Shell scripts that run before and/or after your project
-is generated.
+*New in cookiecutter 0.7*
 
-Put them in `hooks/` like this::
+You can have Python or Shell scripts that run before and/or after your project is generated.
+
+Put them in ``hooks/`` like this::
 
     cookiecutter-something/
     ├── {{cookiecutter.project_slug}}/
@@ -24,13 +25,11 @@ Shell scripts work similarly::
     │   └── post_gen_project.sh
     └── cookiecutter.json
 
-It shouldn't be too hard to extend Cookiecutter to work with other types of
-scripts too. Pull requests are welcome.
+It shouldn't be too hard to extend Cookiecutter to work with other types of scripts too.
+Pull requests are welcome.
 
-For portability, you should use Python scripts (with extension `.py`) for your
-hooks, as these can be run on any platform. However, if you intend for your
-template to only be run on a single platform, a shell script (or `.bat` file
-on Windows) can be a quicker alternative.
+For portability, you should use Python scripts (with extension `.py`) for your hooks, as these can be run on any platform.
+However, if you intend for your template to only be run on a single platform, a shell script (or `.bat` file on Windows) can be a quicker alternative.
 
 Writing hooks
 -------------
@@ -40,25 +39,21 @@ Here are some details on how to write pre/post-generate hook scripts.
 Exit with an appropriate status
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Make sure your hook scripts work in a robust manner. If a hook script fails
-(that is, `if it finishes with a nonzero exit status
-<https://docs.python.org/3/library/sys.html#sys.exit>`_), the project
-generation will stop and the generated directory will be cleaned up.
+Make sure your hook scripts work in a robust manner.
+If a hook script fails (that is, `if it finishes with a nonzero exit status <https://docs.python.org/3/library/sys.html#sys.exit>`_), the project generation will stop and the generated directory will be cleaned up.
 
 Current working directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When the hook scripts script are run, their current working directory is the
-root of the generated project. This makes it easy for a post-generate hook to
-find generated files using relative paths.
+When the hook scripts script are run, their current working directory is the root of the generated project.
+This makes it easy for a post-generate hook to find generated files using relative paths.
 
 Template variables are rendered in the script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Just like your project template, Cookiecutter also renders Jinja template
-syntax in your scripts. This lets you incorporate Jinja template variables in
-your scripts. For example, this line of Python sets ``module_name`` to the
-value of the ``cookiecutter.module_name`` template variable:
+Just like your project template, Cookiecutter also renders Jinja template syntax in your scripts.
+This lets you incorporate Jinja template variables in your scripts.
+For example, this line of Python sets ``module_name`` to the value of the ``cookiecutter.module_name`` template variable:
 
 .. code-block:: python
 
@@ -67,9 +62,7 @@ value of the ``cookiecutter.module_name`` template variable:
 Example: Validating template variables
 --------------------------------------
 
-Here is an example of a pre-generate hook script, defined at
-``hooks/pre_gen_project.py``, that validates a template variable before generating the
-project:
+Here is an example of a pre-generate hook script, defined at ``hooks/pre_gen_project.py``, that validates a template variable before generating the project:
 
 .. code-block:: python
 
@@ -90,12 +83,10 @@ project:
 Example: Conditional files / directories
 ----------------------------------------
 
-Here is an example of a post-generate hook script, defined at
-``hooks/post_gen_project.py``, on how to achieve conditional control of files and
-directories after generating the project.
+Here is an example of a post-generate hook script.
+The file ``hooks/post_gen_project.py`` shows how to achieve conditional control of files and directories after generating the project.
 
-The script ensures that the directory structure is as expected by
-removing unwanted files and directories:
+The script ensures that the directory structure is as expected by removing unwanted files and directories:
 
 .. code-block:: python
 
