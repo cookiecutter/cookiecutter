@@ -7,6 +7,11 @@ on:
 jobs:
   upload:
     runs-on: ubuntu-latest
+
+    environment:
+      name: pypi.org
+      url: https://pypi.org/project/cookiecutter/
+
     steps:
 
     - uses: actions/checkout@v2
