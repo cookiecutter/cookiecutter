@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Provides custom extension, exposing a ``foobar`` filter."""
 
 from jinja2.ext import Extension
@@ -11,7 +9,7 @@ class FoobarExtension(Extension):
 
     def __init__(self, environment):
         """Foobar Extension Constructor."""
-        super(FoobarExtension, self).__init__(environment)
+        super().__init__(environment)
         environment.filters['foobar'] = lambda v: v * 2
 
 

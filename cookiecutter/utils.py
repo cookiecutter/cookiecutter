@@ -113,7 +113,7 @@ def simple_filter(filter_function):
 
     class SimpleFilterExtension(Extension):
         def __init__(self, environment):
-            super(SimpleFilterExtension, self).__init__(environment)
+            super().__init__(environment)
             environment.filters[filter_function.__name__] = filter_function
 
     SimpleFilterExtension.__name__ = filter_function.__name__

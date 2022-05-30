@@ -24,7 +24,7 @@ def test_click_invocation(mocker, user_choice, expected_value):
     choice.return_value = click.Choice(OPTIONS)
 
     prompt = mocker.patch('click.prompt')
-    prompt.return_value = '{}'.format(user_choice)
+    prompt.return_value = f'{user_choice}'
 
     assert read_user_choice('varname', OPTIONS) == expected_value
 
