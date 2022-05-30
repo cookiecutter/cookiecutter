@@ -14,6 +14,8 @@
 - Sorin Sbarnea ([@ssbarnea](https://github.com/ssbarnea))
 - Fábio C. Barrionuevo da Luz ([@luzfcb](https://github.com/luzfcb))
 - Simone Basso ([@simobasso](https://github.com/simobasso))
+- Jens Klein ([@jensens](https://github.com/jensens))
+- Érico Andrei ([@ericof](https://github.com/ericof))
 
 ## Contributors
 
@@ -169,7 +171,6 @@
 - Tom Forbes ([@orf](https://github.com/orf))
 - Xie Yanbo ([@xyb](https://github.com/xyb))
 - Maxim Ivanov ([@ivanovmg](https://github.com/ivanovmg))
-- Jens Klein ([@jensens](https://github.com/jensens))
 
 ## Backers
 

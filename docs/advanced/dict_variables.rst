@@ -39,7 +39,7 @@ For example, you could provide the following dictionary variable in your ``cooki
     }
 
 
-The above ``file_type`` dictionary variable creates ``cookiecutter.file_types``, which can be used like this:
+The above ``file_types`` dictionary variable creates ``cookiecutter.file_types``, which can be used like this:
 
 .. code-block:: html+jinja
 
@@ -64,4 +64,3 @@ The above ``file_type`` dictionary variable creates ``cookiecutter.file_types``,
 
 
 Cookiecutter is using `Jinja2's for expression <http://jinja.pocoo.org/docs/dev/templates/#for>`_ to iterate over the items in the dictionary.
-
