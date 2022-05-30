@@ -66,7 +66,7 @@ class TestRenderVariable:
         assert result == rendered_var
 
 
-class TestPrompt(object):
+class TestPrompt:
     """Class to unite user prompt related tests."""
 
     @pytest.mark.parametrize(
@@ -210,11 +210,11 @@ class TestPrompt(object):
                 [
                     ('foo', 'Hello world'),
                     ('bar', 123),
-                    ('rendered_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('rendered_foo', '{{ cookiecutter.foo|lower }}'),
                     ('rendered_bar', 123),
-                    ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('_hidden_foo', '{{ cookiecutter.foo|lower }}'),
                     ('_hidden_bar', 123),
-                    ('__rendered_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                    ('__rendered_hidden_foo', '{{ cookiecutter.foo|lower }}'),
                     ('__rendered_hidden_bar', 123),
                 ]
             )
@@ -226,7 +226,7 @@ class TestPrompt(object):
                 ('bar', '123'),
                 ('rendered_foo', 'hello world'),
                 ('rendered_bar', '123'),
-                ('_hidden_foo', u'{{ cookiecutter.foo|lower }}'),
+                ('_hidden_foo', '{{ cookiecutter.foo|lower }}'),
                 ('_hidden_bar', 123),
                 ('__rendered_hidden_foo', 'hello world'),
                 ('__rendered_hidden_bar', '123'),
@@ -252,7 +252,7 @@ class TestPrompt(object):
         assert cookiecutter_dict == context['cookiecutter']
 
 
-class TestReadUserChoice(object):
+class TestReadUserChoice:
     """Class to unite choices prompt related tests."""
 
     def test_should_invoke_read_user_choice(self, mocker):
@@ -332,7 +332,7 @@ class TestReadUserChoice(object):
         assert cookiecutter_dict == expected
 
 
-class TestPromptChoiceForConfig(object):
+class TestPromptChoiceForConfig:
     """Class to unite choices prompt related tests with config test."""
 
     @pytest.fixture

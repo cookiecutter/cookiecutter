@@ -73,7 +73,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
 
     # check that the appropriate VCS for the repo_type is installed
     if not is_vcs_installed(repo_type):
-        msg = "'{0}' is not installed.".format(repo_type)
+        msg = f"'{repo_type}' is not installed."
         raise VCSNotInstalled(msg)
 
     repo_url = repo_url.rstrip('/')
@@ -83,7 +83,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     if repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    logger.debug('repo_dir is {0}'.format(repo_dir))
+    logger.debug(f'repo_dir is {repo_dir}')
 
     if os.path.isdir(repo_dir):
         clone = prompt_and_delete(repo_dir, no_input=no_input)

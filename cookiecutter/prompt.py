@@ -58,16 +58,14 @@ def read_user_choice(var_name, options):
     if not options:
         raise ValueError
 
-    choice_map = OrderedDict(
-        ('{}'.format(i), value) for i, value in enumerate(options, 1)
-    )
+    choice_map = OrderedDict((f'{i}', value) for i, value in enumerate(options, 1))
     choices = choice_map.keys()
     default = '1'
 
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join(
         (
-            'Select {}:'.format(var_name),
+            f'Select {var_name}:',
             '\n'.join(choice_lines),
             'Choose from {}'.format(', '.join(choices)),
         )
@@ -213,7 +211,7 @@ def prompt_for_config(context, no_input=False):
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
-            msg = "Unable to render variable '{}'".format(key)
+            msg = f"Unable to render variable '{key}'"
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
@@ -232,7 +230,7 @@ def prompt_for_config(context, no_input=False):
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
-            msg = "Unable to render variable '{}'".format(key)
+            msg = f"Unable to render variable '{key}'"
             raise UndefinedVariableInTemplate(msg, err, context)
 
     return cookiecutter_dict
