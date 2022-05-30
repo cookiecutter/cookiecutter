@@ -39,3 +39,7 @@ repos:
     hooks:
       - id: bandit
         args: [--ini, .bandit]
+  - repo: https://github.com/mgedmin/check-manifest
+    rev: "0.48"
+    hooks:
+    -   id: check-manifest
