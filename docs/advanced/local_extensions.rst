@@ -3,7 +3,7 @@
 Local Extensions
 ----------------
 
-*New in Cookiecutter X.x*
+*New in Cookiecutter 2.1*
 
 A template may extend the Cookiecutter environment with local extensions.
 These can be part of the template itself, providing it with more sophisticated custom tags and filters.
@@ -18,12 +18,9 @@ To do so, a template author must specify the required extensions in ``cookiecutt
         "_extensions": ["local_extensions.FoobarExtension"]
     }
 
-This example assumes that a ``local_extensions`` folder (python module) exists in the template root.
-It will contain a ``main.py`` file, containing the following (for instance):
+This example uses a simple module ``local_extensions.py`` which exists in the template root, containing the following (for instance):
 
 .. code-block:: python
-
-    # -*- coding: utf-8 -*-
 
     from jinja2.ext import Extension
 
@@ -48,8 +45,6 @@ It's likely that we'd only want to register a single function as a filter. For t
 
 .. code-block:: python
 
-    # -*- coding: utf-8 -*-
-
     from cookiecutter.utils import simple_filter
 
 
@@ -58,3 +53,7 @@ It's likely that we'd only want to register a single function as a filter. For t
         return v * 2
 
 This snippet will achieve the exact same result as the previous one.
+
+For complex use cases, a python module ``local_extensions`` (a folder with an ``__init__.py``) can also be created in the template root.
+Here, for example, a module ``main.py`` would have to export all extensions with ``from .main import FoobarExtension, simplefilterextension`` or ``from .main import *`` in the ``__init__.py``.
+
