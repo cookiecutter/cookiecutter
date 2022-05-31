@@ -129,7 +129,9 @@ def test_clone_should_invoke_vcs_command(
         branch_info.insert(0, "--")
 
     mock_subprocess.assert_any_call(
-        [repo_type, 'checkout', *branch_info], cwd=expected_repo_dir, stderr=subprocess.STDOUT
+        [repo_type, 'checkout', *branch_info],
+        cwd=expected_repo_dir,
+        stderr=subprocess.STDOUT,
     )
 
 
