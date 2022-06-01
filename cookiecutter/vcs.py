@@ -98,8 +98,12 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                 stderr=subprocess.STDOUT,
             )
             if checkout is not None:
+                checkout_params = [checkout]
+                # Avoid Mercurial "--config" and "--debugger" injection vulnerability
+                if repo_type == "hg":
+                    checkout_params.insert(0, "--")
                 subprocess.check_output(  # nosec
-                    [repo_type, 'checkout', checkout],
+                    [repo_type, 'checkout', *checkout_params],
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,
                 )
@@ -107,13 +111,13 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
                 raise RepositoryNotFound(
-                    'The repository {} could not be found, '
-                    'have you made a typo?'.format(repo_url)
+                    f'The repository {repo_url} could not be found, '
+                    'have you made a typo?'
                 )
             if any(error in output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
-                    'The {} branch of repository {} could not found, '
-                    'have you made a typo?'.format(checkout, repo_url)
+                    f'The {checkout} branch of repository '
+                    f'{repo_url} could not found, have you made a typo?'
                 )
             logger.error('git clone failed with error: %s', output)
             raise

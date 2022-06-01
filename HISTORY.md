@@ -2,6 +2,8 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.1.1 (unreleased)
+
 ## 2.1.0 (2022-05-30)
 
 ### Changes

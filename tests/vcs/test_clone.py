@@ -122,8 +122,16 @@ def test_clone_should_invoke_vcs_command(
     mock_subprocess.assert_any_call(
         [repo_type, 'clone', repo_url], cwd=str(clone_dir), stderr=subprocess.STDOUT
     )
+
+    branch_info = [branch]
+    # We sanitize branch information for Mercurial
+    if repo_type == "hg":
+        branch_info.insert(0, "--")
+
     mock_subprocess.assert_any_call(
-        [repo_type, 'checkout', branch], cwd=expected_repo_dir, stderr=subprocess.STDOUT
+        [repo_type, 'checkout', *branch_info],
+        cwd=expected_repo_dir,
+        stderr=subprocess.STDOUT,
     )
 
 
@@ -151,8 +159,8 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
         vcs.clone(repository_url, clone_to_dir=str(clone_dir), no_input=True)
 
     assert str(err.value) == (
-        'The repository {} could not be found, have you made a typo?'
-    ).format(repository_url)
+        f'The repository {repository_url} could not be found, have you made a typo?'
+    )
 
 
 @pytest.mark.parametrize(
@@ -182,8 +190,8 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
 
     assert str(err.value) == (
         'The unknown_branch branch of repository '
-        '{} could not found, have you made a typo?'
-    ).format(repository_url)
+        f'{repository_url} could not found, have you made a typo?'
+    )
 
 
 def test_clone_unknown_subprocess_error(mocker, clone_dir):
