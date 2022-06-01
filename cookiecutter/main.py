@@ -85,7 +85,7 @@ def cookiecutter(
                 context = load(config_dict['replay_dir'], template_name)
             else:
                 replay = Path(replay)
-                context = load(str(path.parent), template_name)
+                context = load(str(replay.parent), template_name)
     else:
         context_file = str(Path(repo_dir, 'cookiecutter.json'))
         logger.debug('context_file is %s', context_file)
