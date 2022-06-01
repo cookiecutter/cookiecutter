@@ -2,7 +2,20 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 2.1.1 (unreleased)
+## 2.1.1 (2022-06-01)
+
+### Documentation updates
+
+* Fix local extensions documentation (#1686) @alkatar21
+
+### Bugfixes
+
+* Sanitize Mercurial branch information before checkout. (#1689) @ericof
+
+### This release is made by wonderfull contributors:
+
+@alkatar21, @ericof and @jensens
+
 
 ## 2.1.0 (2022-05-30)
 
