@@ -5,7 +5,7 @@ Overview
 Cookiecutter takes a template provided as a directory structure with template-files.
 Templates can be in located in the filesystem, as a ZIP-file or on a VCS-Server (Git/Hg) like GitHub.
 
-It reads a settings file and prompts the user interactivly wether to change the settings.
+It reads a settings file and prompts the user interactively whether or not to change the settings.
 
 Then it takes both and generates an output directory structure from it.
 
