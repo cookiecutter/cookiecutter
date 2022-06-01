@@ -2,7 +2,7 @@
 """cookiecutter distutils configuration."""
 from setuptools import setup
 
-version = "2.0.0"
+version = "2.1.1.dev0"
 
 with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
@@ -10,7 +10,7 @@ with open('README.md', encoding='utf-8') as readme_file:
 requirements = [
     'binaryornot>=0.4.4',
     'Jinja2>=2.7,<4.0.0',
-    'click>=7.0,<8.0.0',
+    'click>=7.0,<9.0.0',
     'pyyaml>=5.3.1',
     'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
@@ -34,7 +34,7 @@ setup(
     package_dir={'cookiecutter': 'cookiecutter'},
     entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
     include_package_data=True,
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=requirements,
     license='BSD',
     zip_safe=False,
@@ -46,10 +46,10 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         "Programming Language :: Python",

@@ -1,4 +1,5 @@
 """Functions for prompting the user for project info."""
+import functools
 import json
 from collections import OrderedDict
 
@@ -57,16 +58,14 @@ def read_user_choice(var_name, options):
     if not options:
         raise ValueError
 
-    choice_map = OrderedDict(
-        ('{}'.format(i), value) for i, value in enumerate(options, 1)
-    )
+    choice_map = OrderedDict((f'{i}', value) for i, value in enumerate(options, 1))
     choices = choice_map.keys()
     default = '1'
 
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join(
         (
-            'Select {}:'.format(var_name),
+            f'Select {var_name}:',
             '\n'.join(choice_lines),
             'Choose from {}'.format(', '.join(choices)),
         )
@@ -78,11 +77,18 @@ def read_user_choice(var_name, options):
     return choice_map[user_choice]
 
 
-def process_json(user_value):
+DEFAULT_DISPLAY = 'default'
+
+
+def process_json(user_value, default_value=None):
     """Load user-supplied value as a JSON dict.
 
     :param str user_value: User-supplied value to load as a JSON dict
     """
+    if user_value == DEFAULT_DISPLAY:
+        # Return the given default w/o any processing
+        return default_value
+
     try:
         user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
     except Exception:
@@ -107,15 +113,16 @@ def read_user_dict(var_name, default_value):
     if not isinstance(default_value, dict):
         raise TypeError
 
-    default_display = 'default'
-
     user_value = click.prompt(
-        var_name, default=default_display, type=click.STRING, value_proc=process_json
+        var_name,
+        default=DEFAULT_DISPLAY,
+        type=click.STRING,
+        value_proc=functools.partial(process_json, default_value=default_value),
     )
 
-    if user_value == default_display:
-        # Return the given default w/o any processing
-        return default_value
+    if click.__version__.startswith("7.") and user_value == DEFAULT_DISPLAY:
+        # click 7.x does not invoke value_proc on the default value.
+        return default_value  # pragma: no cover
     return user_value
 
 
@@ -204,7 +211,7 @@ def prompt_for_config(context, no_input=False):
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
-            msg = "Unable to render variable '{}'".format(key)
+            msg = f"Unable to render variable '{key}'"
             raise UndefinedVariableInTemplate(msg, err, context)
 
     # Second pass; handle the dictionaries.
@@ -223,7 +230,7 @@ def prompt_for_config(context, no_input=False):
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
-            msg = "Unable to render variable '{}'".format(key)
+            msg = f"Unable to render variable '{key}'"
             raise UndefinedVariableInTemplate(msg, err, context)
 
     return cookiecutter_dict

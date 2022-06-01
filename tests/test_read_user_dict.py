@@ -92,35 +92,35 @@ def test_should_call_prompt_with_process_json(mocker):
 
     read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
-    assert mock_prompt.call_args == mocker.call(
-        'name', type=click.STRING, default='default', value_proc=process_json,
+    args, kwargs = mock_prompt.call_args
+
+    assert args == ('name',)
+    assert kwargs['type'] == click.STRING
+    assert kwargs['default'] == 'default'
+    assert kwargs['value_proc'].func == process_json
+
+
+def test_should_not_load_json_from_sentinel(mocker):
+    """Make sure that `json.loads` is not called when using default value."""
+    mock_json_loads = mocker.patch(
+        'cookiecutter.prompt.json.loads', autospec=True, return_value={}
     )
-
-
-def test_should_not_call_process_json_default_value(mocker, monkeypatch):
-    """Make sure that `process_json` is not called when using default value."""
-    mock_process_json = mocker.patch('cookiecutter.prompt.process_json', autospec=True)
 
     runner = click.testing.CliRunner()
     with runner.isolation(input="\n"):
         read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
-    mock_process_json.assert_not_called()
+    mock_json_loads.assert_not_called()
 
 
-def test_read_user_dict_default_value(mocker):
+@pytest.mark.parametrize("input", ["\n", "default\n"])
+def test_read_user_dict_default_value(mocker, input):
     """Make sure that `read_user_dict` returns the default value.
 
     Verify return of a dict variable rather than the display value.
     """
-    mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value='default',
-    )
-
-    val = read_user_dict('name', {'project_slug': 'pytest-plugin'})
-
-    assert mock_prompt.call_args == mocker.call(
-        'name', type=click.STRING, default='default', value_proc=process_json,
-    )
+    runner = click.testing.CliRunner()
+    with runner.isolation(input=input):
+        val = read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
     assert val == {'project_slug': 'pytest-plugin'}

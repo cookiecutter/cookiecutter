@@ -57,8 +57,10 @@ def get_config(config_path):
     """Retrieve the config from the specified path, returning a config dict."""
     if not Path(config_path).exists():
         raise ConfigDoesNotExistException(
-            'Config file {} does not exist.'.format(config_path)
+            f'Config file {config_path} does not exist.'
         )
+    if not Path(config_path).exists():
+        raise ConfigDoesNotExistException(f'Config file {config_path} does not exist.')
 
     logger.debug('config_path is %s', config_path)
     with open(config_path, encoding='utf-8') as file_handle:
@@ -66,7 +68,7 @@ def get_config(config_path):
             yaml_dict = yaml.safe_load(file_handle)
         except yaml.YAMLError as e:
             raise InvalidConfiguration(
-                'Unable to parse YAML file {}.'.format(config_path)
+                f'Unable to parse YAML file {config_path}.'
             ) from e
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)

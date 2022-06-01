@@ -1,14 +1,13 @@
 .. _directories:
 
-Organizing cookiecutters in directories (1.7+)
----------------------------------------------------
+Organizing cookiecutters in directories
+---------------------------------------
 
 *New in Cookiecutter 1.7*
 
-Cookiecutter introduces the ability to organize several templates in one
-repository or zip file, separating them by directories. This allows using
-symlinks for general files. Here's an example repository demonstrating
-this feature::
+Cookiecutter introduces the ability to organize several templates in one repository or zip file, separating them by directories.
+This allows using symlinks for general files.
+Here's an example repository demonstrating this feature::
 
     https://github.com/user/repo-name.git
         ├── directory1-name/
@@ -18,6 +17,8 @@ this feature::
             ├── {{cookiecutter.project_slug}}/
             └── cookiecutter.json
 
-To activate one of templates within a subdirectory, use the ``--directory`` option::
+To activate one of templates within a subdirectory, use the ``--directory`` option:
+
+.. code-block:: bash
 
     cookiecutter https://github.com/user/repo-name.git --directory="directory1-name"

@@ -92,6 +92,16 @@ def test_work_in(tmp_path):
     assert cwd == Path.cwd()
 
 
+def test_work_in_without_path():
+    """Folder is not changed if no path provided."""
+    cwd = Path.cwd()
+
+    with utils.work_in():
+        assert cwd == Path.cwd()
+
+    assert cwd == Path.cwd()
+
+
 def test_prompt_should_ask_and_rm_repo_dir(mocker, tmp_path):
     """In `prompt_and_delete()`, if the user agrees to delete/reclone the \
     repo, the repo should be deleted."""
@@ -112,7 +122,8 @@ def test_prompt_should_ask_and_exit_on_user_no_answer(mocker, tmp_path):
     """In `prompt_and_delete()`, if the user decline to delete/reclone the \
     repo, cookiecutter should exit."""
     mock_read_user = mocker.patch(
-        'cookiecutter.utils.read_user_yes_no', return_value=False,
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=False,
     )
     mock_sys_exit = mocker.patch('sys.exit', return_value=True)
     repo_dir = Path(tmp_path, 'repo')

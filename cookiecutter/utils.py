@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from cookiecutter.prompt import read_user_yes_no
+from jinja2.ext import Extension
 
 logger = logging.getLogger(__name__)
 
@@ -106,3 +107,15 @@ def prompt_and_delete(path, no_input=False):
             return False
 
         sys.exit()
+
+
+def simple_filter(filter_function):
+    """Decorate a function to wrap it in a simplified jinja2 extension."""
+
+    class SimpleFilterExtension(Extension):
+        def __init__(self, environment):
+            super().__init__(environment)
+            environment.filters[filter_function.__name__] = filter_function
+
+    SimpleFilterExtension.__name__ = filter_function.__name__
+    return SimpleFilterExtension

@@ -26,10 +26,8 @@ from cookiecutter.config import get_user_config
 
 def version_msg():
     """Return the Cookiecutter version, location and Python powering it."""
-    python_version = sys.version[:3]
     location = str(Path(__file__).resolve().parent.parent)
-    message = 'Cookiecutter %(version)s from {} (Python {})'
-    return message.format(location, python_version)
+    return 'fCookiecutter %(version)s from {location} (Python {sys.version})'
 
 
 def validate_extra_context(ctx, param, value):
@@ -62,9 +60,9 @@ def list_installed_templates(default_config, passed_config_file):
         for folder in cookiecutter_folder.iterdir()
         if cookiecutter_folder.joinpath(folder, 'cookiecutter.json').exists()
     ]
-    click.echo('{} installed templates: '.format(len(template_names)))
+    click.echo(f'{len(template_names)} installed templates: ')
     for name in template_names:
-        click.echo(' * {}'.format(name))
+        click.echo(f' * {name}')
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -77,7 +75,9 @@ def list_installed_templates(default_config, passed_config_file):
     help='Do not prompt for parameters and only use cookiecutter.json file content',
 )
 @click.option(
-    '-c', '--checkout', help='branch, tag or commit to checkout after git clone',
+    '-c',
+    '--checkout',
+    help='branch, tag or commit to checkout after git clone',
 )
 @click.option(
     '--directory',
@@ -216,11 +216,11 @@ def main(
         click.echo(e)
         sys.exit(1)
     except UndefinedVariableInTemplate as undefined_err:
-        click.echo('{}'.format(undefined_err.message))
-        click.echo('Error message: {}'.format(undefined_err.error.message))
+        click.echo(f'{undefined_err.message}')
+        click.echo(f'Error message: {undefined_err.error.message}')
 
         context_str = json.dumps(undefined_err.context, indent=4, sort_keys=True)
-        click.echo('Context: {}'.format(context_str))
+        click.echo(f'Context: {context_str}')
         sys.exit(1)
 
 

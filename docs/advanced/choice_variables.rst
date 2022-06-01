@@ -1,17 +1,21 @@
 .. _choice-variables:
 
-Choice Variables (1.1+)
------------------------
+Choice Variables
+----------------
 
-Choice variables provide different choices when creating a project. Depending on a user's choice
-the template renders things differently.
+*New in Cookiecutter 1.1*
+
+Choice variables provide different choices when creating a project.
+Depending on a user's choice the template renders things differently.
 
 Basic Usage
 ~~~~~~~~~~~
 
 Choice variables are regular key / value pairs, but with the value being a list of strings.
 
-For example, if you provide the following choice variable in your ``cookiecutter.json``::
+For example, if you provide the following choice variable in your ``cookiecutter.json``:
+
+.. code-block:: JSON
 
    {
        "license": ["MIT", "BSD-3", "GNU GPL v3.0", "Apache Software License 2.0"]
@@ -28,8 +32,9 @@ you'd get the following choices when running Cookiecutter::
 
 Depending on an user's choice, a different license is rendered by Cookiecutter.
 
-The above ``license`` choice variable creates ``cookiecutter.license``, which
-can be used like this::
+The above ``license`` choice variable creates ``cookiecutter.license``, which can be used like this:
+
+.. code-block:: html+jinja
 
   {%- if cookiecutter.license == "MIT" -%}
   # Possible license content here
@@ -39,9 +44,12 @@ can be used like this::
 
   {% endif %}
 
-Cookiecutter is using `Jinja2's if conditional expression <http://jinja.pocoo.org/docs/dev/templates/#if>`_ to determine the correct license.
+Cookiecutter is using `Jinja2's if conditional expression <https://jinja.palletsprojects.com/en/latest/templates/#if>`_ to determine the correct license.
 
-The created choice variable is still a regular Cookiecutter variable and can be used like this::
+The created choice variable is still a regular Cookiecutter variable and can be used like this:
+
+.. code-block:: html+jinja
+
 
   License
   -------
@@ -53,7 +61,9 @@ Overwriting Default Choice Values
 
 Choice Variables are overwritable using a :ref:`user-config` file.
 
-For example, a choice variable can be created in ``cookiecutter.json`` by using a list as value::
+For example, a choice variable can be created in ``cookiecutter.json`` by using a list as value:
+
+.. code-block:: JSON
 
    {
        "license": ["MIT", "BSD-3", "GNU GPL v3.0", "Apache Software License 2.0"]

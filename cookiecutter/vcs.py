@@ -73,7 +73,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
 
     # check that the appropriate VCS for the repo_type is installed
     if not is_vcs_installed(repo_type):
-        msg = "'{0}' is not installed.".format(repo_type)
+        msg = f"'{repo_type}' is not installed."
         raise VCSNotInstalled(msg)
 
     repo_url = repo_url.rstrip('/')
@@ -81,9 +81,9 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    elif repo_type == 'hg':
+    if repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    logger.debug('repo_dir is {0}'.format(repo_dir))
+    logger.debug(f'repo_dir is {repo_dir}')
 
     if os.path.isdir(repo_dir):
         clone = prompt_and_delete(repo_dir, no_input=no_input)
@@ -98,8 +98,12 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                 stderr=subprocess.STDOUT,
             )
             if checkout is not None:
+                checkout_params = [checkout]
+                # Avoid Mercurial "--config" and "--debugger" injection vulnerability
+                if repo_type == "hg":
+                    checkout_params.insert(0, "--")
                 subprocess.check_output(  # nosec
-                    [repo_type, 'checkout', checkout],
+                    [repo_type, 'checkout', *checkout_params],
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,
                 )
@@ -107,13 +111,13 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
                 raise RepositoryNotFound(
-                    'The repository {} could not be found, '
-                    'have you made a typo?'.format(repo_url)
+                    f'The repository {repo_url} could not be found, '
+                    'have you made a typo?'
                 )
             if any(error in output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
-                    'The {} branch of repository {} could not found, '
-                    'have you made a typo?'.format(checkout, repo_url)
+                    f'The {checkout} branch of repository '
+                    f'{repo_url} could not found, have you made a typo?'
                 )
             logger.error('git clone failed with error: %s', output)
             raise

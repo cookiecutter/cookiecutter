@@ -24,7 +24,8 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
 
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output', autospec=True,
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
     )
 
     vcs.clone('https://github.com/foo/bar/', clone_to_dir=str(clone_dir), no_input=True)
@@ -44,7 +45,8 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
         'cookiecutter.vcs.prompt_and_delete', side_effect=SystemExit, autospec=True
     )
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output', autospec=True,
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
     )
 
     # Create repo_dir to trigger prompt_and_delete
@@ -55,6 +57,29 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
 
     with pytest.raises(SystemExit):
         vcs.clone(repo_url, clone_to_dir=str(clone_dir))
+    assert not mock_subprocess.called
+
+
+def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
+    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
+    without cloning anything."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+    mocker.patch(
+        'cookiecutter.vcs.prompt_and_delete', return_value=False, autospec=True
+    )
+    mock_subprocess = mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+    )
+
+    clone_to_dir = tmpdir.mkdir('clone')
+
+    # Create repo_dir to trigger prompt_and_delete
+    clone_to_dir.mkdir('cookiecutter-pytest-plugin')
+
+    repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
+
+    vcs.clone(repo_url, clone_to_dir=str(clone_to_dir))
     assert not mock_subprocess.called
 
 
@@ -81,7 +106,8 @@ def test_clone_should_invoke_vcs_command(
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
 
     mock_subprocess = mocker.patch(
-        'cookiecutter.vcs.subprocess.check_output', autospec=True,
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
     )
     expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
 
@@ -96,18 +122,24 @@ def test_clone_should_invoke_vcs_command(
     mock_subprocess.assert_any_call(
         [repo_type, 'clone', repo_url], cwd=str(clone_dir), stderr=subprocess.STDOUT
     )
+
+    branch_info = [branch]
+    # We sanitize branch information for Mercurial
+    if repo_type == "hg":
+        branch_info.insert(0, "--")
+
     mock_subprocess.assert_any_call(
-        [repo_type, 'checkout', branch], cwd=expected_repo_dir, stderr=subprocess.STDOUT
+        [repo_type, 'checkout', *branch_info],
+        cwd=expected_repo_dir,
+        stderr=subprocess.STDOUT,
     )
 
 
 @pytest.mark.parametrize(
     'error_message',
     [
-        (
-            "fatal: repository 'https://github.com/hackebro/cookiedozer' not found"
-        ).encode('utf-8'),
-        'hg: abort: HTTP Error 404: Not Found'.encode('utf-8'),
+        (b"fatal: repository 'https://github.com/hackebro/cookiedozer' not found"),
+        b'hg: abort: HTTP Error 404: Not Found',
     ],
 )
 def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
@@ -127,17 +159,15 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
         vcs.clone(repository_url, clone_to_dir=str(clone_dir), no_input=True)
 
     assert str(err.value) == (
-        'The repository {} could not be found, have you made a typo?'
-    ).format(repository_url)
+        f'The repository {repository_url} could not be found, have you made a typo?'
+    )
 
 
 @pytest.mark.parametrize(
     'error_message',
     [
-        (
-            "error: pathspec 'unknown_branch' did not match any file(s) known to git"
-        ).encode('utf-8'),
-        "hg: abort: unknown revision 'unknown_branch'!".encode('utf-8'),
+        b"error: pathspec 'unknown_branch' did not match any file(s) known to git",
+        b"hg: abort: unknown revision 'unknown_branch'!",
     ],
 )
 def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
@@ -160,8 +190,8 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
 
     assert str(err.value) == (
         'The unknown_branch branch of repository '
-        '{} could not found, have you made a typo?'
-    ).format(repository_url)
+        f'{repository_url} could not found, have you made a typo?'
+    )
 
 
 def test_clone_unknown_subprocess_error(mocker, clone_dir):
@@ -170,9 +200,7 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
         side_effect=[
-            subprocess.CalledProcessError(
-                -1, 'cmd', output='Something went wrong'.encode('utf-8')
-            )
+            subprocess.CalledProcessError(-1, 'cmd', output=b'Something went wrong')
         ],
     )
 

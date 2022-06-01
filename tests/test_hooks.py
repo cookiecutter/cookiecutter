@@ -71,7 +71,7 @@ def make_test_repo(name, multiple_hooks=False):
     return post
 
 
-class TestFindHooks(object):
+class TestFindHooks:
     """Class to unite find hooks related tests in one place."""
 
     repo_path = 'tests/test-hooks'
@@ -91,7 +91,7 @@ class TestFindHooks(object):
             actual_hook_path = hooks.find_hook('pre_gen_project')
             assert str(expected_pre) == actual_hook_path[0]
 
-            expected_post = Path('hooks/{}'.format(self.post_hook)).resolve()
+            expected_post = Path(f'hooks/{self.post_hook}').resolve()
             actual_hook_path = hooks.find_hook('post_gen_project')
             assert str(expected_post) == actual_hook_path[0]
 
@@ -111,7 +111,7 @@ class TestFindHooks(object):
             assert hooks.find_hook('unknown_hook') is None
 
 
-class TestExternalHooks(object):
+class TestExternalHooks:
     """Class to unite tests for hooks with different project paths."""
 
     repo_path = Path('tests/test-hooks/').resolve()
@@ -152,7 +152,7 @@ class TestExternalHooks(object):
 
         with pytest.raises(exceptions.FailedHookException) as excinfo:
             hooks.run_script(str(self.hooks_path.joinpath(self.post_hook)))
-        assert 'Hook script failed (error: {})'.format(err) in str(excinfo.value)
+        assert f'Hook script failed (error: {err})' in str(excinfo.value)
 
     def test_run_failing_script_enoexec(self, mocker):
         """Test correct exception raise if run_script fails."""

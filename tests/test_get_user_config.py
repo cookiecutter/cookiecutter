@@ -48,7 +48,11 @@ def custom_config():
             'github_username': 'example',
             'project': {
                 'description': 'description',
-                'tags': ['first', 'second', 'third',],
+                'tags': [
+                    'first',
+                    'second',
+                    'third',
+                ],
             },
         },
         'cookiecutters_dir': str(Path('/home/example/some-path-to-templates')),
