@@ -2,7 +2,7 @@
 """cookiecutter distutils configuration."""
 from setuptools import setup
 
-version = "2.1.1"
+version = "2.1.2.dev0"
 
 with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
