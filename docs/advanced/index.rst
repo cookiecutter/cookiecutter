@@ -17,9 +17,9 @@ Various advanced topics regarding cookiecutter usage.
    private_variables
    copy_without_render
    replay
-   cli_options
    choice_variables
    dict_variables
    template_extensions
    directories
    new_line_characters
+   local_extensions

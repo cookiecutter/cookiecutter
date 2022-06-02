@@ -122,18 +122,24 @@ def test_clone_should_invoke_vcs_command(
     mock_subprocess.assert_any_call(
         [repo_type, 'clone', repo_url], cwd=str(clone_dir), stderr=subprocess.STDOUT
     )
+
+    branch_info = [branch]
+    # We sanitize branch information for Mercurial
+    if repo_type == "hg":
+        branch_info.insert(0, "--")
+
     mock_subprocess.assert_any_call(
-        [repo_type, 'checkout', branch], cwd=expected_repo_dir, stderr=subprocess.STDOUT
+        [repo_type, 'checkout', *branch_info],
+        cwd=expected_repo_dir,
+        stderr=subprocess.STDOUT,
     )
 
 
 @pytest.mark.parametrize(
     'error_message',
     [
-        (
-            "fatal: repository 'https://github.com/hackebro/cookiedozer' not found"
-        ).encode('utf-8'),
-        'hg: abort: HTTP Error 404: Not Found'.encode('utf-8'),
+        (b"fatal: repository 'https://github.com/hackebro/cookiedozer' not found"),
+        b'hg: abort: HTTP Error 404: Not Found',
     ],
 )
 def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
@@ -153,17 +159,15 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
         vcs.clone(repository_url, clone_to_dir=str(clone_dir), no_input=True)
 
     assert str(err.value) == (
-        'The repository {} could not be found, have you made a typo?'
-    ).format(repository_url)
+        f'The repository {repository_url} could not be found, have you made a typo?'
+    )
 
 
 @pytest.mark.parametrize(
     'error_message',
     [
-        (
-            "error: pathspec 'unknown_branch' did not match any file(s) known to git"
-        ).encode('utf-8'),
-        "hg: abort: unknown revision 'unknown_branch'!".encode('utf-8'),
+        b"error: pathspec 'unknown_branch' did not match any file(s) known to git",
+        b"hg: abort: unknown revision 'unknown_branch'!",
     ],
 )
 def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
@@ -186,8 +190,8 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
 
     assert str(err.value) == (
         'The unknown_branch branch of repository '
-        '{} could not found, have you made a typo?'
-    ).format(repository_url)
+        f'{repository_url} could not found, have you made a typo?'
+    )
 
 
 def test_clone_unknown_subprocess_error(mocker, clone_dir):
@@ -196,9 +200,7 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
         side_effect=[
-            subprocess.CalledProcessError(
-                -1, 'cmd', output='Something went wrong'.encode('utf-8')
-            )
+            subprocess.CalledProcessError(-1, 'cmd', output=b'Something went wrong')
         ],
     )
 

@@ -55,7 +55,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
         zip_file = ZipFile(zip_path)
 
         if len(zip_file.namelist()) == 0:
-            raise InvalidZipRepository('Zip repository {} is empty'.format(zip_uri))
+            raise InvalidZipRepository(f'Zip repository {zip_uri} is empty')
 
         # The first record in the zipfile should be the directory entry for
         # the archive. If it isn't a directory, there's a problem.
@@ -106,7 +106,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
 
     except BadZipFile:
         raise InvalidZipRepository(
-            'Zip repository {} is not a valid zip archive:'.format(zip_uri)
+            f'Zip repository {zip_uri} is not a valid zip archive:'
         )
 
     return unzip_path

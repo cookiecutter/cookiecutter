@@ -96,8 +96,8 @@ def generate_context(
         full_fpath = os.path.abspath(context_file)
         json_exc_message = str(e)
         our_exc_message = (
-            'JSON decoding error while loading "{0}".  Decoding'
-            ' error details: "{1}"'.format(full_fpath, json_exc_message)
+            'JSON decoding error while loading "{}".  Decoding'
+            ' error details: "{}"'.format(full_fpath, json_exc_message)
         )
         raise ContextDecodingException(our_exc_message)
 
@@ -180,7 +180,7 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
         # Detect original file newline to output the rendered file
         # note: newline='' ensures newlines are not converted
-        with open(infile, 'r', encoding='utf-8', newline='') as rd:
+        with open(infile, encoding='utf-8', newline='') as rd:
             rd.readline()  # Read the first line to load 'newlines' value
 
             # Use `_new_lines` overwrite from context, if configured.
@@ -219,7 +219,7 @@ def render_and_create_dir(
                 'Output directory %s already exists, overwriting it', dir_to_create
             )
         else:
-            msg = 'Error: "{}" directory already exists'.format(dir_to_create)
+            msg = f'Error: "{dir_to_create}" directory already exists'
             raise OutputDirExistsException(msg)
     else:
         make_sure_path_exists(dir_to_create)
@@ -292,7 +292,7 @@ def generate_files(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
         )
     except UndefinedError as err:
-        msg = "Unable to create project directory '{}'".format(unrendered_dir)
+        msg = f"Unable to create project directory '{unrendered_dir}'"
         raise UndefinedVariableInTemplate(msg, err, context)
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
@@ -354,7 +354,7 @@ def generate_files(
                     if delete_project_on_failure:
                         rmtree(project_dir)
                     _dir = os.path.relpath(unrendered_dir, output_dir)
-                    msg = "Unable to create directory '{}'".format(_dir)
+                    msg = f"Unable to create directory '{_dir}'"
                     raise UndefinedVariableInTemplate(msg, err, context)
 
             for f in files:
@@ -376,7 +376,7 @@ def generate_files(
                 except UndefinedError as err:
                     if delete_project_on_failure:
                         rmtree(project_dir)
-                    msg = "Unable to create file '{}'".format(infile)
+                    msg = f"Unable to create file '{infile}'"
                     raise UndefinedVariableInTemplate(msg, err, context)
 
     if accept_hooks:

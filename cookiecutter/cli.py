@@ -63,9 +63,9 @@ def list_installed_templates(default_config, passed_config_file):
             os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
         )
     ]
-    click.echo('{} installed templates: '.format(len(template_names)))
+    click.echo(f'{len(template_names)} installed templates: ')
     for name in template_names:
-        click.echo(' * {}'.format(name))
+        click.echo(f' * {name}')
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -219,11 +219,11 @@ def main(
         click.echo(e)
         sys.exit(1)
     except UndefinedVariableInTemplate as undefined_err:
-        click.echo('{}'.format(undefined_err.message))
-        click.echo('Error message: {}'.format(undefined_err.error.message))
+        click.echo(f'{undefined_err.message}')
+        click.echo(f'Error message: {undefined_err.error.message}')
 
         context_str = json.dumps(undefined_err.context, indent=4, sort_keys=True)
-        click.echo('Context: {}'.format(context_str))
+        click.echo(f'Context: {context_str}')
         sys.exit(1)
 
 
