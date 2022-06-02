@@ -95,7 +95,7 @@ Would output:
 
     it-s-a-random-version
 
-It is different from a mere replace of spaces since it also trates some special characters such as ``'`` in the example above.
+It is different from a mere replace of spaces since it also treats some special characters differently such as ``'`` in the example above.
 The function accepts all arguments that can be passed to the ``slugify`` function of `python-slugify`_.
 For example to change the output from ``it-s-a-random-version``` to ``it_s_a_random_version``, the ``separator`` parameter would be passed: ``slugify(separator='_')``.
 
