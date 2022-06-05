@@ -30,7 +30,7 @@ External Links
 .. _`Extending our Cookiecutter template`: https://raphael.codes/blog/extending-our-cookiecutter-template/
 .. _`Wrapping up our Cookiecutter template`: https://raphael.codes/blog/wrapping-up-our-cookiecutter-template/
 
-.. _`@audreyr`: https://github.com/audreyr
+.. _`@audreyr`: https://github.com/audreyfeldroy
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@hackebrot`: https://github.com/hackebrot
 .. _`@BruceEckel`: https://github.com/BruceEckel
