@@ -23,7 +23,7 @@ you'd get the following user input when running Cookiecutter::
 The following values are considered valid input:
 
    true, 1, yes, y **or**
-   false, 0, no, n 
+   false, 0, no, n
 
 The above ``run_as_docker`` boolean variable creates ``cookiecutter.run_as_docker``, which
 can be used like this::
