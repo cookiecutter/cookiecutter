@@ -268,6 +268,7 @@ def generate_files(
     overwrite_if_exists=False,
     skip_if_file_exists=False,
     accept_hooks=True,
+    keep_project_on_failure=False,
 ):
     """Render the templates and saves them to files.
 
@@ -277,6 +278,8 @@ def generate_files(
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
     :param accept_hooks: Accept pre and post hooks if set to `True`.
+    :param keep_project_on_failure: If `True` keep generated project directory even when
+        generation fails
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
@@ -307,7 +310,7 @@ def generate_files(
 
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
-    delete_project_on_failure = output_directory_created
+    delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
     if accept_hooks:
         _run_hook_from_repo_dir(
