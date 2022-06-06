@@ -1,6 +1,6 @@
 .. _boolean-variables:
 
-Boolean Variables (2.0+)
+Boolean Variables (2.2+)
 ------------------------
 
 Boolean variables are used for answering True/False questions.
