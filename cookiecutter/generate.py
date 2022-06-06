@@ -277,6 +277,8 @@ def generate_files(
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param skip_if_file_exists: Skip the files in the corresponding directories
+        if they already exist
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
@@ -333,6 +335,7 @@ def generate_files(
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
                 if is_copy_only_path(d_, context):
+                    logger.debug('Found copy only path %s', d)
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -342,6 +345,12 @@ def generate_files(
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+
+                # The outdir is not the root dir, it is the dir which marked as copy
+                # only in the config file. If the program hits this line, which means
+                # the overwrite_if_exists = True, and root dir exists
+                if os.path.isdir(outdir):
+                    shutil.rmtree(outdir)
                 shutil.copytree(indir, outdir)
 
             # We mutate ``dirs``, because we only want to go through these dirs
