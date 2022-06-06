@@ -30,7 +30,7 @@ Advanced Example: Defaults + Extra Context
 
 If you combine an ``extra_context`` dict with the ``no_input`` argument, you can programmatically create the project with a set list of context parameters and without any command line prompts:
 
-.. code-block:: JSON
+.. code-block:: python
 
     cookiecutter('cookiecutter-pypackage/',
                  no_input=True,
