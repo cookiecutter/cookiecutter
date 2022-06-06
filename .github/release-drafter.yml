@@ -1,5 +1,25 @@
 filter-by-commitish: true
 commitish: master
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
+version-resolver:
+  major:
+    labels:
+      - 'breaking-change'
+      - 'major'
+  minor:
+    labels:
+      - 'enhancement'
+      - 'feature'
+  patch:
+    labels:
+      - 'bug'
+      - 'CI/CD'
+      - 'code style'
+      - 'documentation'
+      - 'tests'
+      - 'patch'
+  default: patch
 categories:
   - title: 'Breaking Changes'
     labels:
