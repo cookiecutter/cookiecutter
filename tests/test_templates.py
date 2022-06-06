@@ -26,7 +26,9 @@ def test_build_templates(template, output_dir):
     no-templates is a compatibility tests for repo without `templates` directory
     """
     project_dir = main.cookiecutter(
-        f'tests/test-templates/{template}', no_input=True, output_dir=output_dir,
+        f'tests/test-templates/{template}',
+        no_input=True,
+        output_dir=output_dir,
     )
 
     readme_file = os.path.join(project_dir, 'requirements.txt')
