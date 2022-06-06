@@ -20,6 +20,23 @@ version-resolver:
       - 'tests'
       - 'patch'
   default: patch
+autolabeler:
+  - label: 'CI/CD'
+    files:
+      - '.github/*'
+      - '.pre-commit-config.yaml'
+      - '*.cfg'
+      - '*.ini'
+      - 'noxfile.py'
+      - 'setup.*'
+      - 'docs/conf.py'
+      - 'Makefile'
+      - 'make.bat'
+      - '*requirements*.txt'
+  - label: 'documentation'
+    files:
+      - '*.md'
+      - '*.rst'
 categories:
   - title: 'Breaking Changes'
     labels:
