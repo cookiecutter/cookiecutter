@@ -1,6 +1,6 @@
 .. _templates:
 
-Templates inheritance (1.X+)
+Templates inheritance (2.2+)
 ---------------------------------------------------
 
 *New in Cookiecutter 1.X*
