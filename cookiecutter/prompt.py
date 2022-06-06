@@ -143,8 +143,8 @@ def render_variable(env, raw, cookiecutter_dict):
         being populated with variables.
     :return: The rendered value for the default variable.
     """
-    if raw is None:
-        return None
+    if raw is None or isinstance(raw, bool):
+        return raw
     elif isinstance(raw, dict):
         return {
             render_variable(env, k, cookiecutter_dict): render_variable(
@@ -201,6 +201,14 @@ def prompt_for_config(context, no_input=False):
                     cookiecutter_dict, env, key, raw, no_input
                 )
                 cookiecutter_dict[key] = val
+            elif isinstance(raw, bool):
+                # We are dealing with a boolean variable
+                if no_input:
+                    cookiecutter_dict[key] = render_variable(
+                        env, raw, cookiecutter_dict
+                    )
+                else:
+                    cookiecutter_dict[key] = read_user_yes_no(key, raw)
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
