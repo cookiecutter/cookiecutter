@@ -3,7 +3,7 @@
 Templates inheritance (2.2+)
 ---------------------------------------------------
 
-*New in Cookiecutter 1.X*
+*New in Cookiecutter 2.2+*
 
 Sometimes you need to extend a base template with a different
 configuration to avoid nested blocks.
