@@ -19,6 +19,7 @@ Various advanced topics regarding cookiecutter usage.
    replay
    choice_variables
    dict_variables
+   templates
    template_extensions
    directories
    new_line_characters
