@@ -25,7 +25,7 @@ Or this::
 
     {{ {{ url_for('home') }} }}
 
-See http://jinja.pocoo.org/docs/templates/#escaping for more info.
+See https://jinja.palletsprojects.com/en/latest/templates/#escaping for more info.
 
 You can also use the `_copy_without_render`_ key in your `cookiecutter.json`
 file to escape entire files and directories.
