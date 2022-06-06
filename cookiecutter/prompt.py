@@ -168,7 +168,7 @@ def render_variable(env, raw, cookiecutter_dict):
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
     """Prompt user with a set of options to choose from.
 
-    :no_input: Do not prompt for user input and return the first available option.
+    :param no_input: Do not prompt for user input and return the first available option.
     """
     rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
     if no_input:
