@@ -15,7 +15,7 @@ Create the directory for your cookiecutter and cd into it:
 
     $ mkdir cookiecutter-website-simple
     $ cd cookiecutter-website-simple/
-    
+
 Step 2: Create cookiecutter.json
 ----------------------------------
 
@@ -56,39 +56,39 @@ Inside of `{{ cookiecutter.project_slug }}`, create `index.html` with following 
             <p>by {{ cookiecutter.author }}</p>
         </body>
     </html>
-    
+
 Step 5: Pack cookiecutter into ZIP
 ----------------------------------
-There are many ways to run Cookiecutter templates, and they are described in details in `Usage chapter <https://cookiecutter.readthedocs.io/en/latest/usage.html#grab-a-cookiecutter-template>`_. In this tutorial we are going to ZIP cookiecutter and then run it for testing. 
+There are many ways to run Cookiecutter templates, and they are described in details in `Usage chapter <https://cookiecutter.readthedocs.io/en/latest/usage.html#grab-a-cookiecutter-template>`_. In this tutorial we are going to ZIP cookiecutter and then run it for testing.
 
 By running following command `cookiecutter.zip` will get generated which can be used to run cookiecutter. Script will generate `cookiecutter.zip` ZIP file and echo full path to the file.
 
 .. code-block:: bash
-   
+
    $ (SOURCE_DIR=$(basename $PWD) ZIP=cookiecutter.zip && # Set variables
    pushd && # Set parent directory as working directory
    zip -r $ZIP $SOURCE_DIR --exclude $SOURCE_DIR/$ZIP --quiet && # ZIP cookiecutter
    mv $ZIP $SOURCE_DIR/$ZIP && # Move ZIP to original directory
    popd && # Restore original work directory
    echo  "Cookiecutter full path: $PWD/$ZIP")
-   
+
 Step 6: Run cookiecutter
 ------------------------
 Set your work directory to whatever directory you would like to run cookiecutter at. Use cookiecutter full path and run the following command:
 
 .. code-block:: bash
-   
+
    $ cookiecutter <replace with Cookiecutter full path>
-   
+
 You can expect similar output:
 
 .. code-block:: bash
-   
+
    $ cookiecutter /Users/admin/cookiecutter-website-simple/cookiecutter.zip
    project_name [Cookiecutter Website Simple]: Test web
    project_slug [test_web]:
    author [Anonymous]: Cookiecutter Developer
-   
+
 Resulting directory should be inside your work directory with a name that matches `project_slug` you defined. Inside that direcory there should be `index.html` with generated source:
 
 .. code-block:: html
