@@ -42,7 +42,9 @@ def cookiecutter(
     :param template: A directory containing a project template directory,
         or a URL to a git repository.
     :param checkout: The branch, tag or commit ID to checkout after clone.
-    :param no_input: Prompt the user at command line for manual configuration?
+    :param no_input: Do not prompt for user input.
+        Use default values for template parameters taken from `cookiecutter.json`, user
+        config and `extra_dict`. Force a refresh of cached resources.
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
     :param replay: Do not prompt for input, instead read from saved json. If

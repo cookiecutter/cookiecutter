@@ -166,10 +166,9 @@ def render_variable(env, raw, cookiecutter_dict):
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
     """Prompt user with a set of options to choose from.
 
-    Each of the possible choices is rendered beforehand.
+    :param no_input: Do not prompt for user input and return the first available option.
     """
     rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
-
     if no_input:
         return rendered_options[0]
     return read_user_choice(key, rendered_options)
@@ -179,7 +178,7 @@ def prompt_for_config(context, no_input=False):
     """Prompt user to enter a new config.
 
     :param dict context: Source for field names and sample values.
-    :param no_input: Prompt the user at command line for manual configuration?
+    :param no_input: Do not prompt for user input and use only values from context.
     """
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
