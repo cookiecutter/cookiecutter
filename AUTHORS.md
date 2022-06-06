@@ -191,7 +191,7 @@ Contributions include user testing, debugging, improving documentation, reviewin
 
 - Adam Chainz ([@adamchainz](https://github.com/adamchainz))
 - Andrew Ittner ([@tephyr](https://github.com/tephyr))
-- Audrey Roy Greenfeld ([@audreyr](https://github.com/audreyfeldroy))
+- Audrey Roy Greenfeld ([@audreyfeldroy](https://github.com/audreyfeldroy))
 - Carol Willing ([@willingc](https://github.com/willingc))
 - Christopher Clarke ([@chrisdev](https://github.com/chrisdev))
 - Citlalli Murillo ([@citmusa](https://github.com/citmusa))

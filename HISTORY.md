@@ -403,7 +403,7 @@ Other Changes:
 * Refactor cookiecutter template identification, thanks to [@michaeljoseph](https://github.com/michaeljoseph) (#777)
 * Add a `cli_runner` test fixture to simplify CLI tests, thanks to [@hackebrot](https://github.com/hackebrot) (#790)
 * Add a check to ensure cookiecutter repositories have JSON context, thanks to [@michaeljoseph](https://github.com/michaeljoseph)(#782)
-* Rename the internal function that determines whether a file should be rendered, thanks to [@audreyr](https://github.com/audreyfeldroy) for raising the issue and [@hackebrot](https://github.com/hackebrot)for the PR (#741, #802)
+* Rename the internal function that determines whether a file should be rendered, thanks to [@audreyfeldroy](https://github.com/audreyfeldroy) for raising the issue and [@hackebrot](https://github.com/hackebrot)for the PR (#741, #802)
 * Fix typo in docs, thanks to [@mwarkentin](https://github.com/mwarkentin) (#828)
 * Fix broken link to *Invoke* docs, thanks to [@B3QL](https://github.com/B3QL) (#820)
 * Add documentation to `render_variable` function in `prompt.py`, thanks to [@pydanny](https://github.com/pydanny) (#678)
@@ -481,11 +481,11 @@ Other Changes:
 * Removed xfail in test\_cookiecutters, thanks to [@hackebrot](https://github.com/hackebrot) (#618)
 * Removed django-cms-plugin on account of 404 error, thanks to [@mativs](https://github.com/mativs) and [@pydanny](https://github.com/pydanny) (#593)
 * Fixed docs/usage.rst, thanks to [@macrotim](https://github.com/macrotim) (#604)
-* Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to [@audreyr](https://github.com/audreyfeldroy)
+* Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to [@audreyfeldroy](https://github.com/audreyfeldroy)
 * Use open context manager to read context\_file in generate() function, thanks to [@hackebrot](https://github.com/hackebrot)
 (#607, #608)
 * Added documentation for choice variables, thanks to [@maiksensi](https://github.com/maiksensi) (#611)
-* Set up Scrutinizer to check code quality, thanks to [@audreyr](https://github.com/audreyfeldroy)
+* Set up Scrutinizer to check code quality, thanks to [@audreyfeldroy](https://github.com/audreyfeldroy)
 * Drop distutils support in setup.py, thanks to [@hackebrot](https://github.com/hackebrot) (#606, #609)
 * Change cookiecutter-pypackage-minimal link, thanks to [@kragniz](https://github.com/kragniz) (#614)
 * Fix typo in one of the template\'s description, thanks to [@ryanfreckleton](https://github.com/ryanfreckleton) (#643)
@@ -671,7 +671,7 @@ The goal of this release was to allow for injection of extra context via the Coo
 
 Features:
 
-* cookiecutter() now takes an optional extra\_context parameter, thanks to [@michaeljoseph](https://github.com/michaeljoseph), [@fcurella](https://github.com/fcurella), [@aventurella](https://github.com/aventurella),  [@emonty](https://github.com/emonty), [@schacki](https://github.com/schacki), [@ryanolson](https://github.com/ryanolson), [@pfmoore](https://github.com/pfmoore), [@pydanny](https://github.com/pydanny), [@audreyr](https://github.com/audreyfeldroy) (#260).
+* cookiecutter() now takes an optional extra\_context parameter, thanks to [@michaeljoseph](https://github.com/michaeljoseph), [@fcurella](https://github.com/fcurella), [@aventurella](https://github.com/aventurella),  [@emonty](https://github.com/emonty), [@schacki](https://github.com/schacki), [@ryanolson](https://github.com/ryanolson), [@pfmoore](https://github.com/pfmoore), [@pydanny](https://github.com/pydanny), [@audreyfeldroy](https://github.com/audreyfeldroy) (#260).
 * Context is now injected into hooks, thanks to [@michaeljoseph](https://github.com/michaeljoseph) and [@dinopetrone](https://github.com/dinopetrone).
 * Moved all Python 2/3 compatibility code into cookiecutter.compat, making the eventual move to six easier, thanks to [@michaeljoseph](https://github.com/michaeljoseph) (#60, #102).
 * Added cookiecutterrc defined aliases for cookiecutters, thanks to [@pfmoore](https://github.com/pfmoore) (#246)
@@ -711,12 +711,12 @@ Bug Fixes:
 
 Other Changes:
 
-* [@audreyr](https://github.com/audreyfeldroy) formally accepted position as **BDFL of cookiecutter**.
+* [@audreyfeldroy](https://github.com/audreyfeldroy) formally accepted position as **BDFL of cookiecutter**.
 * Elevated [@pydanny](https://github.com/pydanny), [@michaeljoseph](https://github.com/michaeljoseph), and [@pfmoore](https://github.com/pfmoore) to core committer status.
-* Added Core Committer guide, by [@audreyr](https://github.com/audreyfeldroy).
-* Generated apidocs from make docs, by [@audreyr](https://github.com/audreyfeldroy).
+* Added Core Committer guide, by [@audreyfeldroy](https://github.com/audreyfeldroy).
+* Generated apidocs from make docs, by [@audreyfeldroy](https://github.com/audreyfeldroy).
 * Added contributing command to the makedocs function, by [@pydanny](https://github.com/pydanny).
-* Refactored contributing documentation, included adding core committer instructions, by [@pydanny](https://github.com/pydanny) and [@audreyr](https://github.com/audreyfeldroy).
+* Refactored contributing documentation, included adding core committer instructions, by [@pydanny](https://github.com/pydanny) and [@audreyfeldroy](https://github.com/audreyfeldroy).
 * Do not convert input prompt to bytes, thanks to [@uranusjr](https://github.com/uranusjr) (#192).
 * Added troubleshooting info about Python 3.3 tests and tox.
 * Added documentation about command line arguments, thanks to [@saxix](https://github.com/saxix).
