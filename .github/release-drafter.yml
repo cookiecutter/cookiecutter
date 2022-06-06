@@ -62,6 +62,8 @@ categories:
   - title: 'Deprecations'
     labels:
       - 'deprecated'
+sort-by: title
+sort-direction: ascending
 exclude-labels:
   - 'skip-changelog'
 template: |
