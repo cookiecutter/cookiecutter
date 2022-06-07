@@ -3,7 +3,7 @@
 Using conditional variables
 ---------------------------
 
-You can specify conditional variables that will only be rendered if a certain other variable is set to 'yes' and the name starts with _if_use_::
+You can specify conditional variables that will only be rendered if a certain other variable is set to 'yes' and the name starts with ``_if_use_``::
 
     {
         "_if_use_<variable-name>": {
@@ -26,4 +26,5 @@ If you have ``cookiecutter.json`` that has the following keys::
     }
 
 
-If the value of docker is 'yes' the two other variables will be added to the output. If the value of docker is 'no', the complete dictionary of "_if_use_docker" will be removed.
+If the value of docker is 'yes' the two other variables will be added to the output. 
+If the value of docker is 'no', the complete dictionary of ``_if_use_docker`` will be removed.
