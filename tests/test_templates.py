@@ -37,7 +37,7 @@ def test_build_templates(template, output_dir):
         readme = f.read().splitlines()
 
     assert readme == [
-        "pip==19.2.3",
-        "Click==7.0",
-        "pytest==4.6.5",
+        "pip",
+        "Click",
+        "pytest",
     ]
