@@ -69,7 +69,7 @@ def docs(session, batch_run: bool = False):
                 "--port",
                 "9812",
                 "--watch",
-                "../cookiecutter",
+                "../",
             ]
         )
 
