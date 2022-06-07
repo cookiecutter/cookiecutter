@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """cookiecutter distutils configuration."""
 from setuptools import setup
 
