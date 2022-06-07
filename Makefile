@@ -66,17 +66,17 @@ lint: ## Check code style
 .PHONY: test
 test: ## Run tests quickly with the default Python
 	@echo "+ $@"
-	@tox -e py
+	@nox -p 3.10
 
 .PHONY: test-all
 test-all: ## Run tests on every Python version with tox
 	@echo "+ $@"
-	@tox
+	@nox
 
 .PHONY: coverage
 coverage: ## Check code coverage quickly with the default Python
 	@echo "+ $@"
-	@tox -e cov-report
+	@nox -s tests -p 3.10
 	@$(BROWSER) htmlcov/index.html
 
 .PHONY: docs
