@@ -1,5 +1,6 @@
 watchdog>=0.10.2
-sphinx-rtd-theme>=0.4.3
-sphinx-click>=2.3.2
-recommonmark>=0.6.0
+sphinx-rtd-theme>=1.0.0
+sphinx-click>=4.1.0
+myst-parser>=0.17.2
 sphinx-autobuild>=2021.3.14
+Sphinx>=4.0.1
