@@ -2,6 +2,9 @@
 
 Nox is Tox tool replacement.
 """
+import shutil
+from pathlib import Path
+
 import nox
 
 nox.options.keywords = "not docs"
@@ -50,7 +53,7 @@ def documentation_tests(session):
 @nox.session(python="3.10")
 def docs(session, batch_run: bool = False):
     """Build the documentation or serve documentation interactively."""
-    session.run("rm", "-rf", "docs/_build", external=True)
+    shutil.rmtree(Path("docs").joinpath("_build"), ignore_errors=True)
     session.install("-r", "docs/requirements.txt")
     session.install(".")
     session.cd("docs")

@@ -60,21 +60,13 @@ coverage: ## Check code coverage quickly with the default Python
 .PHONY: docs
 docs: ## Generate Sphinx HTML documentation, including API docs
 	@echo "+ $@"
-	@rm -f docs/cookiecutter.rst
-	@sphinx-apidoc -o docs/ cookiecutter
-	@rm -f docs/modules.rst
-	@sed -i 's/cookiecutter package/===\nAPI\n===/' docs/cookiecutter.rst
-	@sed -i 's/====================//' docs/cookiecutter.rst
-	@sed -i 's/Submodules/This is the Cookiecutter modules API documentation./' docs/cookiecutter.rst
-	@sed -i 's/^----------$$//' docs/cookiecutter.rst
-	@$(MAKE) -C docs clean
-	@$(MAKE) -C docs html
+	@nox --non-interactive -s docs
 	@$(BROWSER) docs/_build/html/index.html
 
 .PHONY: servedocs
-servedocs: docs ## Rebuild docs automatically
+servedocs: ## Rebuild docs automatically
 	@echo "+ $@"
-	@watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+	@nox -s docs
 
 .PHONY: submodules
 submodules: ## Pull and update git submodules recursively
