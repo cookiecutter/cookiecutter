@@ -8,19 +8,19 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: 'recursive'
-      - uses: actions/setup-python@v1
+      - uses: actions/setup-python@v3
         with:
-          python-version: "3.7"
+          python-version: "3.10"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install tox virtualenv
+          pip install nox virtualenv
       - name: Build docs
-        run: tox -e docs
-      - uses: actions/upload-artifact@v1
+        run: nox -s docs
+      - uses: actions/upload-artifact@v3
         with:
           name: DocumentationHTML
           path: docs/_build/html/

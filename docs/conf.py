@@ -54,6 +54,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx_click.ext',
     'myst_parser',
+    'sphinxcontrib.apidoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -359,3 +360,8 @@ myst_enable_extensions = [
     "fieldlist",
 ]
 myst_heading_anchors = 3
+# Apidoc extension config
+apidoc_module_dir = "../cookiecutter"
+apidoc_output_dir = "."
+apidoc_toc_file = False
+apidoc_extra_args = ["-t", "_templates"]
