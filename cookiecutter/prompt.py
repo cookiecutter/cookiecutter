@@ -218,9 +218,7 @@ def prompt_for_config(context, no_input=False):
                     cookiecutter_dict = get_cookiecutter_values(
                         sub_key, sub_value, cookiecutter_dict, meta_information
                     )
-                cookiecutter_dict.pop(key)
-            else:
-                cookiecutter_dict.pop(key)
+            cookiecutter_dict.pop(key)
         # Skip private type dicts not ot be rendered.
         elif key.startswith('_') and not key.startswith('__'):
             continue
