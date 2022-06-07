@@ -353,7 +353,11 @@ epub_copyright = '2013-2022, Audrey Roy and Cookiecutter community'
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/3': None}
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "requests": ("https://requests.readthedocs.io/en/latest/", None),
+    "click": ("https://click.palletsprojects.com/en/latest", None),
+}
 myst_enable_extensions = [
     "tasklist",
     "strikethrough",
