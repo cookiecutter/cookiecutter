@@ -27,7 +27,7 @@ from cookiecutter.config import get_user_config
 def version_msg():
     """Return the Cookiecutter version, location and Python powering it."""
     location = str(Path(__file__).resolve().parent.parent)
-    return 'fCookiecutter %(version)s from {location} (Python {sys.version})'
+    return f'Cookiecutter %(version)s from {location} (Python {sys.version})'
 
 
 def validate_extra_context(ctx, param, value):
