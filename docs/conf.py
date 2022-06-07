@@ -28,31 +28,6 @@ import sys
 
 # flake8: noqa D107,D105
 
-
-class Mock(object):
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        return Mock()
-
-    @classmethod
-    def __getattr__(cls, name):
-        if name in ('__file__', '__path__'):
-            return '/dev/null'
-        elif name[0] == name[0].upper():
-            mockType = type(name, (), {})
-            mockType.__module__ = __name__
-            return mockType
-        else:
-            return Mock()
-
-
-MOCK_MODULES = ['yaml']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = Mock()
-
-
 # Add parent dir to path
 cwd = os.getcwd()
 parent = os.path.dirname(cwd)
@@ -78,7 +53,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx_click.ext',
-    'recommonmark',
+    'myst_parser',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -378,3 +353,9 @@ epub_copyright = '2013-2022, Audrey Roy and Cookiecutter community'
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/3': None}
+myst_enable_extensions = [
+    "tasklist",
+    "strikethrough",
+    "fieldlist",
+]
+myst_heading_anchors = 3
