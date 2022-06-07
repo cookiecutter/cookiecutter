@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # flake8: noqa
 
 """Simple pre-gen hook for testing the handling of different exit codes."""

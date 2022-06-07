@@ -69,6 +69,10 @@ def apply_overwrites_to_context(context, overwrite_context):
                     "{} provided for choice variable {}, but the "
                     "choices are {}.".format(overwrite, variable, context_value)
                 )
+        elif isinstance(context_value, dict) and isinstance(overwrite, dict):
+            # Partially overwrite some keys in original dict
+            apply_overwrites_to_context(context_value, overwrite)
+            context[variable] = context_value
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
@@ -269,6 +273,7 @@ def generate_files(
     overwrite_if_exists=False,
     skip_if_file_exists=False,
     accept_hooks=True,
+    keep_project_on_failure=False,
 ):
     """Render the templates and saves them to files.
 
@@ -277,7 +282,11 @@ def generate_files(
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param skip_if_file_exists: Skip the files in the corresponding directories
+        if they already exist
     :param accept_hooks: Accept pre and post hooks if set to `True`.
+    :param keep_project_on_failure: If `True` keep generated project directory even when
+        generation fails
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
@@ -308,7 +317,7 @@ def generate_files(
 
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
-    delete_project_on_failure = output_directory_created
+    delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
     if accept_hooks:
         _run_hook_from_repo_dir(
@@ -316,7 +325,7 @@ def generate_files(
         )
 
     with work_in(template_dir):
-        env.loader = FileSystemLoader('.')
+        env.loader = FileSystemLoader(['.', '../templates'])
 
         for root, dirs, files in os.walk('.'):
             # We must separate the two types of dirs into different lists.
@@ -331,6 +340,7 @@ def generate_files(
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
                 if is_copy_only_path(d_, context):
+                    logger.debug('Found copy only path %s', d)
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -340,6 +350,12 @@ def generate_files(
                 outdir = str(Path(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+
+                # The outdir is not the root dir, it is the dir which marked as copy
+                # only in the config file. If the program hits this line, which means
+                # the overwrite_if_exists = True, and root dir exists
+                if os.path.isdir(outdir):
+                    shutil.rmtree(outdir)
                 shutil.copytree(indir, outdir)
 
             # We mutate ``dirs``, because we only want to go through these dirs

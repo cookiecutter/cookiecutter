@@ -1,0 +1,2 @@
+{% extends "base-requirements.jinja" %}
+{% block dev_dependencies %}{{ super() }}{% endblock %}

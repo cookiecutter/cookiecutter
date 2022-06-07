@@ -109,6 +109,7 @@ def test_cli_replay(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -135,6 +136,7 @@ def test_cli_replay_file(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -170,6 +172,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -205,6 +208,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -261,6 +265,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -305,6 +310,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -335,6 +341,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -360,6 +367,7 @@ def test_default_user_config(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -629,6 +637,7 @@ def test_cli_accept_hooks(
         directory=None,
         skip_if_file_exists=False,
         accept_hooks=expected,
+        keep_project_on_failure=False,
     )
 
 
