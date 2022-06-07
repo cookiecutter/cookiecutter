@@ -20,7 +20,7 @@ def base_install(session):
 @nox.session(python="3.10")
 def lint(session):
     """Run linting check locally."""
-    session = base_install(session)
+    session.install("pre-commit")
     session.run("pre-commit", "run", "-a")
 
 

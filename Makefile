@@ -61,7 +61,7 @@ clean: clean-tox clean-build clean-pyc clean-nox clean-coverage clean-pytest cle
 .PHONY: lint
 lint: ## Check code style
 	@echo "+ $@"
-	@tox -e lint
+	@nox -s lint
 
 .PHONY: test
 test: ## Run tests quickly with the default Python
