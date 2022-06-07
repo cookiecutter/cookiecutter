@@ -16,20 +16,23 @@ def read_user_variable(var_name, default_value):
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
-    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(var_name, default=default_value)
 
 
 def read_user_yes_no(question, default_value):
     """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
 
-    Note:
-      Possible choices are 'true', '1', 'yes', 'y' or 'false', '0', 'no', 'n'
+    - These input values will be converted to ``True``:
+      "1", "true", "t", "yes", "y", "on"
+    - These input values will be converted to ``False``:
+      "0", "false", "f", "no", "n", "off"
+
+    Actual parsing done by :func:`click.prompt`; Check this function codebase change in
+    case of unexpected behaviour.
 
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
-    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(question, default=default_value, type=click.BOOL)
 
 
@@ -38,7 +41,6 @@ def read_repo_password(question):
 
     :param str question: Question to the user
     """
-    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     return click.prompt(question, hide_input=True)
 
 
@@ -51,7 +53,6 @@ def read_user_choice(var_name, options):
     :param list options: Sequence of options that are available to select from
     :return: Exactly one item of ``options`` that has been chosen by the user
     """
-    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     if not isinstance(options, list):
         raise TypeError
 
@@ -109,7 +110,6 @@ def read_user_dict(var_name, default_value):
     :param default_value: Value that will be returned if no input is provided
     :return: A Python dictionary to use in the context.
     """
-    # Please see https://click.palletsprojects.com/en/7.x/api/#click.prompt
     if not isinstance(default_value, dict):
         raise TypeError
 
