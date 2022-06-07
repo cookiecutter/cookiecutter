@@ -29,7 +29,7 @@ clean-coverage: ## Remove coverage reports
 	@echo "+ $@"
 	@rm -rf htmlcov/
 	@rm -rf .coverage
-	@rm -rf .coverage.xml
+	@rm -rf coverage.xml
 
 .PHONY: clean-pytest
 clean-pytest: ## Remove pytest cache
