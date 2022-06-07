@@ -55,7 +55,7 @@ def docs(session, batch_run: bool = False):
     """Build the documentation or serve documentation interactively."""
     shutil.rmtree(Path("docs").joinpath("_build"), ignore_errors=True)
     session.install("-r", "docs/requirements.txt")
-    session.install(".")
+    session.install("-e", ".")
     session.cd("docs")
     sphinx_args = ["-b", "html", "-W", ".", "_build/html"]
 
@@ -69,7 +69,13 @@ def docs(session, batch_run: bool = False):
                 "--port",
                 "9812",
                 "--watch",
-                "../",
+                "../*.md",
+                "--watch",
+                "../*.rst",
+                "--watch",
+                "../*.py",
+                "--watch",
+                "../cookiecutter",
             ]
         )
 

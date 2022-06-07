@@ -1,29 +1,35 @@
-.. _boolean-variables:
+Boolean Variables
+-----------------
 
-Boolean Variables (2.2+)
-------------------------
+.. versionadded:: 2.2.0
 
 Boolean variables are used for answering True/False questions.
 
 Basic Usage
 ~~~~~~~~~~~
 
-Boolean variables are regular key / value pairs, but with the value being True/False.
+Boolean variables are regular key / value pairs, but with the value being
+``True``/``False``.
 
-For example, if you provide the following boolean variable in your ``cookiecutter.json``::
+For example, if you provide the following boolean variable in your
+``cookiecutter.json``::
 
    {
        "run_as_docker": true
    }
 
-you'd get the following user input when running Cookiecutter::
+you will get the following user input when running Cookiecutter::
 
   run_as_docker [True]:
 
-Depending on the user's input, a different condition will be selected.
+User input will be parsed by :func:`~cookiecutter.prompt.read_user_yes_no`. The
+following values are considered as valid user input:
 
-The above ``run_as_docker`` boolean variable creates ``cookiecutter.run_as_docker``, which
-can be used like this::
+    - ``True`` values: "1", "true", "t", "yes", "y", "on"
+    - ``False`` values: "0", "false", "f", "no", "n", "off"
+
+The above ``run_as_docker`` boolean variable creates ``cookiecutter.run_as_docker``,
+which can be used like this::
 
   {%- if cookiecutter.run_as_docker -%}
   # In case of True add your content here
@@ -33,7 +39,8 @@ can be used like this::
 
   {% endif %}
 
-Cookiecutter is using `Jinja2's if conditional expression <http://jinja.pocoo.org/docs/dev/templates/#if>`_ to determine the correct ``run_as_docker``.
+Cookiecutter is using `Jinja2's if conditional expression <https://jinja.palletsprojects
+.com/en/latest/templates/#if>`_ to determine the correct ``run_as_docker``.
 
 Input Validation
 ~~~~~~~~~~~~~~~~
