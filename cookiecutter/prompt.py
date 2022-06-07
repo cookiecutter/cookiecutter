@@ -247,7 +247,6 @@ def get_cookiecutter_values(key, value, cookiecutter_dict, meta_information):
     :param value: raw value to get
     :param cookiecutter_dict: current cookiecutter dict
     :param meta_information: information about this session
-
     """
     env = meta_information.get("env")
     no_input = meta_information.get("no_input")
