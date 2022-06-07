@@ -2,3 +2,4 @@ watchdog>=0.10.2
 sphinx-rtd-theme>=0.4.3
 sphinx-click>=2.3.2
 recommonmark>=0.6.0
+sphinx-autobuild>=2021.3.14
