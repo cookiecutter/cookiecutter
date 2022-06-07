@@ -19,6 +19,28 @@ clean-tox: ## Remove tox testing artifacts
 	@echo "+ $@"
 	@rm -rf .tox/
 
+.PHONY: clean-nox
+clean-nox: ## Remove nox testing artifacts
+	@echo "+ $@"
+	@rm -rf .nox/
+
+.PHONY: clean-coverage
+clean-coverage: ## Remove coverage reports
+	@echo "+ $@"
+	@rm -rf htmlcov/
+	@rm -rf .coverage
+	@rm -rf .coverage.xml
+
+.PHONY: clean-pytest
+clean-pytest: ## Remove pytest cache
+	@echo "+ $@"
+	@rm -rf .pytest_cache/
+
+.PHONY: clean-docs-build
+clean-docs-build: ## Remove local docs
+	@echo "+ $@"
+	@rm -rf docs/_build
+
 .PHONY: clean-build
 clean-build: ## Remove build artifacts
 	@echo "+ $@"
@@ -33,8 +55,8 @@ clean-pyc: ## Remove Python file artifacts
 	@find . -type f -name '*.py[co]' -exec rm -f {} +
 	@find . -name '*~' -exec rm -f {} +
 
-.PHONY: clean
-clean: clean-tox clean-build clean-pyc ## Remove all file artifacts
+.PHONY: clean ## Remove all file artifacts
+clean: clean-tox clean-build clean-pyc clean-nox clean-coverage clean-pytest clean-docs-build
 
 .PHONY: lint
 lint: ## Check code style
