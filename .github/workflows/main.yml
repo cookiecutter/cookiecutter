@@ -100,7 +100,7 @@ jobs:
       - name: Project security test
         run: "nox -p ${{ matrix.python }} -s safety_tests"
       - name: Send coverage report to codeclimate
-        uses: paambaati/codeclimate-action@v3
+        uses: paambaati/codeclimate-action@v3.0.0
         with:
           coverageCommand: echo "Ignore rerun"
           coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
