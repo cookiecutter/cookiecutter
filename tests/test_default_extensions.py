@@ -26,8 +26,7 @@ def test_jinja2_time_extension(tmp_path):
     changelog_file = os.path.join(project_dir, 'HISTORY.rst')
     assert os.path.isfile(changelog_file)
 
-    with Path(changelog_file).open() as f:
-        changelog_lines = f.readlines()
+    changelog_lines = Path(changelog_file).open(encoding='utf-8').readlines()
 
     expected_lines = [
         'History\n',
@@ -58,8 +57,7 @@ def test_jinja2_uuid_extension(tmp_path):
     changelog_file = os.path.join(project_dir, 'id')
     assert os.path.isfile(changelog_file)
 
-    with Path(changelog_file).open() as f:
-        changelog_lines = f.readlines()
+    changelog_lines = Path(changelog_file).open(encoding='utf-8').readlines()
 
     uuid.UUID(changelog_lines[0], version=4)
     assert True
