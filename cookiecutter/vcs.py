@@ -114,12 +114,12 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
                 raise RepositoryNotFound(
                     f'The repository {repo_url} could not be found, '
                     'have you made a typo?'
-                )
+                ) from clone_error
             if any(error in output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
                     f'The {checkout} branch of repository '
                     f'{repo_url} could not found, have you made a typo?'
-                )
+                ) from clone_error
             logger.error('git clone failed with error: %s', output)
             raise
 
