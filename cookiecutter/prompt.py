@@ -92,9 +92,9 @@ def process_json(user_value, default_value=None):
 
     try:
         user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
-    except Exception:
+    except Exception as error:
         # Leave it up to click to ask the user again
-        raise click.UsageError('Unable to decode to JSON.')
+        raise click.UsageError('Unable to decode to JSON.') from error
 
     if not isinstance(user_dict, dict):
         # Leave it up to click to ask the user again
@@ -159,8 +159,7 @@ def render_variable(env, raw, cookiecutter_dict):
 
     template = env.from_string(raw)
 
-    rendered_template = template.render(cookiecutter=cookiecutter_dict)
-    return rendered_template
+    return template.render(cookiecutter=cookiecutter_dict)
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
@@ -219,7 +218,7 @@ def prompt_for_config(context, no_input=False):
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
             msg = f"Unable to render variable '{key}'"
-            raise UndefinedVariableInTemplate(msg, err, context)
+            raise UndefinedVariableInTemplate(msg, err, context) from err
 
     # Second pass; handle the dictionaries.
     for key, raw in context['cookiecutter'].items():
@@ -238,6 +237,6 @@ def prompt_for_config(context, no_input=False):
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
             msg = f"Unable to render variable '{key}'"
-            raise UndefinedVariableInTemplate(msg, err, context)
+            raise UndefinedVariableInTemplate(msg, err, context) from err
 
     return cookiecutter_dict
