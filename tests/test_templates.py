@@ -30,7 +30,7 @@ def test_build_templates(template, output_dir):
         output_dir=output_dir,
     )
 
-    readme = Path(project_dir, 'requirements.txt').read_text(encoding='utf-8')
+    readme = Path(project_dir, 'requirements.txt').read_text()
 
     assert readme.splitlines() == [
         "pip",
