@@ -86,8 +86,8 @@ def prompt_and_delete(path, no_input=False):
         ok_to_delete = True
     else:
         question = (
-            "You've downloaded {} before. Is it okay to delete and re-download it?"
-        ).format(path)
+            f"You've downloaded {path} before. Is it okay to delete and re-download it?"
+        )
 
         ok_to_delete = read_user_yes_no(question, 'yes')
 
