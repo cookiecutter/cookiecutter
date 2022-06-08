@@ -61,12 +61,12 @@ clean: clean-tox clean-build clean-pyc clean-nox clean-coverage clean-pytest cle
 .PHONY: lint
 lint: ## Check code style
 	@echo "+ $@"
-	@nox -s lint
+	@nox --force-python python -s lint
 
 .PHONY: test
 test: ## Run tests quickly with the default Python
 	@echo "+ $@"
-	@nox -p 3.10
+	@nox --force-python python
 
 .PHONY: test-all
 test-all: ## Run tests on every Python version with tox
@@ -76,7 +76,7 @@ test-all: ## Run tests on every Python version with tox
 .PHONY: coverage
 coverage: ## Check code coverage quickly with the default Python
 	@echo "+ $@"
-	@nox -s tests -p 3.10
+	@nox --force-python python -s tests
 	@$(BROWSER) htmlcov/index.html
 
 .PHONY: docs
