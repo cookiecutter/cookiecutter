@@ -18,7 +18,7 @@ def test_force_delete(mocker, tmp_path):
     """Verify `utils.force_delete` makes files writable."""
     ro_file = Path(tmp_path, 'bar')
 
-    with open(ro_file, "w") as f:
+    with Path(ro_file).open("w") as f:
         f.write("Test data")
     make_readonly(ro_file)
 
@@ -33,7 +33,7 @@ def test_force_delete(mocker, tmp_path):
 
 def test_rmtree(tmp_path):
     """Verify `utils.rmtree` remove files marked as read-only."""
-    with open(Path(tmp_path, 'bar'), "w") as f:
+    with Path(tmp_path, "bar").open("w") as f:
         f.write("Test data")
     make_readonly(Path(tmp_path, 'bar'))
 
