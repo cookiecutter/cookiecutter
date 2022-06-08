@@ -39,5 +39,5 @@ def test_hook_with_extension(template, output_dir):
         extra_context={'project_slug': 'foobar', 'name': 'Cookiemonster'},
     )
 
-    readme = Path(project_dir, 'README.rst').read_text(encoding="utf8")
+    readme = Path(project_dir, 'README.rst').read_text(encoding="utf-8")
     assert readme.strip() == 'Hello Cookiemonster!'
