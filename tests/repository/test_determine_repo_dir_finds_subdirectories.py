@@ -25,7 +25,7 @@ def cloned_cookiecutter_path(user_config_data, template):
     subdir_template_path = os.path.join(cloned_template_path, 'my-dir')
     if not os.path.exists(subdir_template_path):
         os.mkdir(subdir_template_path)
-    Path(subdir_template_path, 'cookiecutter.json').open('w')  # creates file
+    Path(subdir_template_path, 'cookiecutter.json').touch()  # creates file
 
     return subdir_template_path
 
