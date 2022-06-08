@@ -6,7 +6,7 @@ Every little bit helps, and credit will always be given.
 - [Types of Contributions](#types-of-contributions)
 - [Contributor Setup](#setting-up-the-code-for-local-development)
 - [Contributor Guidelines](#contributor-guidelines)
-- [Contributor Testing](#testing-with-tox)
+- [Contributor Testing](#testing-with-nox)
 - [Core Committer Guide](#core-committer-guide)
 
 ## Types of Contributions
@@ -15,54 +15,60 @@ You can contribute in many ways:
 
 ### Report Bugs
 
-Report bugs at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
+Report bugs in [issues] tracker.
+
+[issues]: https://github.com/cookiecutter/cookiecutter/issues
 
 If you are reporting a bug, please include:
 
 - Your operating system name and version.
 - Any details about your local setup that might be helpful in troubleshooting.
 - If you can, provide detailed steps to reproduce the bug.
-- If you don't have steps to reproduce the bug, just note your observations in as much detail as you can.
-  Questions to start a discussion about the issue are welcome.
+- If you don't have steps to reproduce the bug, just note your observations in as much
+  detail as you can. Questions to start a discussion about the issue are welcome.
+- When possible include template link and template version.
 
 ### Fix Bugs
 
-Look through the GitHub issues for bugs.
-Anything tagged with "bug" is open to whoever wants to implement it.
+Look through the GitHub [issues] for bugs. Anything tagged with "bug" is open to
+whoever wants to implement it.
 
 ### Implement Features
 
-Look through the GitHub issues for features.
-Anything tagged with "enhancement" and "please-help" is open to whoever wants to implement it.
+Look through the GitHub [issues] for features. Anything tagged with "enhancement"
+and "please-help" is open to whoever wants to implement it.
 
 Please do not combine multiple feature enhancements into a single pull request.
 
-Note: this project is very conservative, so new features that aren't tagged with "please-help" might not get into core.
-We're trying to keep the code base small, extensible, and streamlined.
-Whenever possible, it's best to try and implement feature ideas as separate projects outside of the core codebase.
+Note: this project is very conservative, so new features that aren't tagged with
+"please-help" might not get into core or may be significantly delayed. We're trying to
+keep the code base small, extensible, and streamlined. Whenever possible, it's best
+to try and implement feature ideas as separate projects outside of the core codebase.
 
 ### Write Documentation
 
-Cookiecutter could always use more documentation, whether as part of the official Cookiecutter docs, in docstrings, or even on the web in blog posts, articles, and such.
+Cookiecutter could always use more documentation, whether as part of the official
+Cookiecutter docs, in docstrings, or even on the web in blog posts, articles, and such.
 
 If you want to review your changes on the documentation locally, you can do:
 
 ```bash
-pip install -r docs/requirements.txt
-make servedocs
+pip install nox
+nox -s docs
 ```
 
-This will compile the documentation, open it in your browser and start watching the files for changes, recompiling as you save.
+This will compile the documentation, open it in your browser and start watching the
+files for changes, recompiling as you save.
 
 ### Submit Feedback
 
-The best way to send feedback is to file an issue at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
+The best way to send feedback is to file an issue at GitHub [issues] tracker.
 
 If you are proposing a feature:
 
 - Explain in detail how it would work.
 - Keep the scope as narrow as possible, to make it easier to implement.
-- Remember that this is a volunteer-driven project, and that contributions are welcome :)
+- Remember that this is a volunteer-driven project, and contributions are welcome :)
 
 ## Setting Up the Code for Local Development
 
@@ -75,8 +81,8 @@ Here's how to set up `cookiecutter` for local development.
    git clone git@github.com:your_name_here/cookiecutter.git
    ```
 
-3. Install your local copy into a virtualenv.
-   Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
+3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper
+   installed, this is how you set up your fork for local development:
 
    ```bash
    cd cookiecutter/
@@ -91,30 +97,41 @@ Here's how to set up `cookiecutter` for local development.
 
 Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass the tests and lint check:
+5. When you're done making changes, check that your changes pass all required checks:
 
    ```bash
-   pip install tox
-   tox
+   pip install nox
+   nox
    ```
 
-   Please note that tox runs lint check automatically, since we have a test environment for it.
+   Nox will make a complete check of project, similar how our CI/CD will do on pull
+   release. It will run:
+   1. Project tests in all supported python versions.
+   2. Project safety checks for known vulnerabilities in all supported python versions.
+   3. Documentation build test (our documentation depends on docstring format
+      correctness). Will be run only on same python version as on read the docs.
+   4. Lint tests.
 
-   If you feel like running only the lint environment, please use the following command:
+      If you feel like running only the lint environment, please use the following
+      command:
 
-   ```bash
-   make lint
-   ```
+      ```bash
+      nox -s lint
+      ```
 
-6. Ensure that your feature or commit is fully covered by tests. Check report after regular tox run.
-   You can also run coverage only report and get html report with statement by statement highlighting:
+      Under the hood this will run pre-commit with required configuration. It also
+      will fix some common bugs, so second run may pass without errors.
+
+6. Ensure that your feature or commit is fully covered by tests. Check report after
+   regular nox run. You can also run coverage only report and get html report with
+   statement by statement highlighting:
 
    ```bash
    make coverage
    ```
 
-   You report will be placed to `htmlcov` directory. Please do not include this directory to your commits.
-   By default this directory in our `.gitignore` file.
+   Your report will be placed to `htmlcov` directory. Please do not include this
+   directory to your commits. By default, this directory in our `.gitignore` file.
 
 7. Commit your changes and push your branch to GitHub:
 
@@ -133,22 +150,30 @@ Now you can make your changes locally.
 Before you submit a pull request, check that it meets these guidelines:
 
 1. The pull request should include tests.
-2. The pull request should be contained:
-   if it's too big consider splitting it into smaller pull requests.
-3. If the pull request adds functionality, the docs should be updated.
-   Put your new functionality into a function with a docstring, and add the feature to the list in README.md.
+2. The pull request should be contained: if it's too big consider splitting it into
+   smaller pull requests.
+3. If the pull request adds functionality, the docs should be updated. Put your new
+   functionality into a function with a docstring, and add the feature to the list
+   in [README.md].
 4. The pull request must pass all CI/CD jobs before being ready for review.
-5. If one CI/CD job is failing for unrelated reasons you may want to create another PR to fix that first.
+5. If one CI/CD job is failing for unrelated reasons you may want to create another
+   PR to fix that first.
+6. Please split you changes in commits too, so big pull requests can be tracked or
+   reused by singular commits.
 
 ### Coding Standards
 
 - PEP8
+- Documentation strings everywhere; RST format
 - Functions over classes except in tests
 - Quotes via [http://stackoverflow.com/a/56190/5549](http://stackoverflow.com/a/56190/5549)
 
-  - Use double quotes around strings that are used for interpolation or that are natural language messages
-  - Use single quotes for small symbol-like strings (but break the rules if the strings contain quotes)
-  - Use triple double quotes for docstrings and raw string literals for regular expressions even if they aren't needed.
+  - Use double quotes around strings that are used for interpolation or that are
+    natural language messages
+  - Use single quotes for small symbol-like strings (but break the rules if the
+    strings contain quotes)
+  - Use triple double quotes for docstrings and raw string literals for regular
+    expressions even if they aren't needed.
   - Example:
 
     ```python
@@ -164,48 +189,41 @@ Before you submit a pull request, check that it meets these guidelines:
         return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
     ```
 
-## Testing with tox
+## Testing with nox
 
-Tox uses py.test under the hood, hence it supports the same syntax for selecting tests.
+We support several python versions (check last status in [README.md]), so relevant
+python versions in system required for full tests. Nox will automatically create
+independent tests environments.
 
-For further information please consult the [pytest usage docs](http://pytest.org/en/latest/example/index.html).
-
-To run a particular test class with tox:
-
-```bash
-tox -e py '-k TestFindHooks'
-```
-
-To run some tests with names matching a string expression:
+### Run all tests with same configuration as in CI/CD
 
 ```bash
-tox -e py '-k generate'
+nox
 ```
 
-Will run all tests matching "generate", test_generate_files for example.
-
-To run just one method:
+### Run tests only with single/several python versions
 
 ```bash
-tox -e py '-k "TestFindHooks and test_find_hook"'
+nox -p 3.7 3.8 -s tests
 ```
 
-To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox:
+### Linting tests only
 
 ```bash
-tox
+nox -s lint
 ```
 
-This configuration file setup the pytest-cov plugin and it is an additional dependency.
-It generate a coverage report after the tests.
-
-It is possible to test with specific versions of Python. To do this, the command is:
+### Security checks only
 
 ```bash
-tox -e py37,py38
+nox -s safety
 ```
 
-This will run `py.test` with the `python3.7` and `python3.8` interpreters.
+### Documentation tests only
+
+```bash
+nox -s documentation_tests
+```
 
 ## Core Committer Guide
 
@@ -244,27 +262,32 @@ Being extendable by people with different ideas for Jinja2-based project templat
 Freedom for Cookiecutter users to build and extend.
 
 - No officially-maintained cookiecutter templates, only ones by individuals
-- Commercial project-friendly licensing, allowing for private cookiecutters and private Cookiecutter-based tools
+- Commercial project-friendly licensing, allowing for private cookiecutters and
+  private Cookiecutter-based tools
 
 #### Fast and Focused
 
 Cookiecutter is designed to do one thing, and do that one thing very well.
 
-- Cover the use cases that the core committers need, and as little as possible beyond that :)
+- Cover the use cases that the core committers need, and as little as possible
+  beyond that :)
 - Generates project templates from the command-line or API, nothing more
 - Minimize internal line of code (LOC) count
 - Ultra-fast project generation for high performance downstream tools
 
 #### Inclusive
 
-- Cross-platform and cross-version support are more important than features/functionality
+- Cross-platform and cross-version support are more important than
+  features/functionality
 - Fixing Windows bugs even if it's a pain, to allow for use by more beginner coders
 
 #### Stable
 
 - Aim for 100% test coverage and covering corner cases
-- No pull requests will be accepted that drop test coverage on any platform, including Windows
-- Conservative decisions patterned after CPython's conservative decisions with stability in mind
+- No pull requests will be accepted that drop test coverage on any platform,
+  including Windows
+- Conservative decisions patterned after CPython's conservative decisions with
+  stability in mind
 - Stable APIs that tool builders can rely on
 - New features require a +1 from 3 core committers
 
@@ -289,7 +312,8 @@ If a pull request is untriaged:
 
 How to prioritize pull requests, from most to least important:
 
-- Fixes for broken tests. Broken means broken on any supported platform or Python version.
+- Fixes for broken tests. Broken means broken on any supported platform or Python
+  version.
 - Extra tests to cover corner cases.
 - Minor edits to docs.
 - Bug fixes.
@@ -297,13 +321,16 @@ How to prioritize pull requests, from most to least important:
 - Features.
 
 #### Pull Requests Review Guidelines
+
 - Think carefully about the long-term implications of the change.
   How will it affect existing projects that are dependent on this?
   If this is complicated, do we really want to maintain it forever?
-- Take the time to get things right, PRs almost always require additional improvements to meet the bar for quality.
+- Take the time to get things right, PRs almost always require additional
+  improvements to meet the bar for quality.
   **Be very strict about quality.**
-- When you merge a pull request take care of closing/updating every related issue explaining how they were affected by those changes.
-  Also, remember to add the author to `AUTHORS.md`.
+- When you merge a pull request take care of closing/updating every related issue
+  explaining how they were affected by those changes. Also, remember to add the
+  author to `AUTHORS.md`.
 
 ### Process: Issues
 
@@ -314,36 +341,23 @@ For other issues: encourage friendly discussion, moderate debate, offer your tho
 
 New features require a +1 from 2 other core committers (besides yourself).
 
-### Process: Roadmap
-
-The roadmap located [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
-
-Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
-
-How to number milestones:
-
-- Follow semantic versioning. Look at: [http://semver.org](http://semver.org)
-
-Milestone size:
-
-- If a milestone contains too much, move some to the next milestone.
-- Err on the side of more frequent patch releases.
-
 ### Process: Your own code changes
 
-All code changes, regardless of who does them, need to be reviewed and merged by someone else.
-This rule applies to all the core committers.
+All code changes, regardless of who does them, need to be reviewed and merged by
+someone else. This rule applies to all the core committers.
 
 Exceptions:
 
 - Minor corrections and fixes to pull requests submitted by others.
-- While making a formal release, the release manager can make necessary, appropriate changes.
+- While making a formal release, the release manager can make necessary, appropriate
+  changes.
 - Small documentation changes that reinforce existing subject matter.
   Most commonly being, but not limited to spelling and grammar corrections.
 
 ### Responsibilities
 
-- Ensure cross-platform compatibility for every change that's accepted. Windows, macOS and Linux.
+- Ensure cross-platform compatibility for every change that's accepted. Windows, macOS
+  and Linux.
 - Create issues for any major changes and enhancements that you wish to make.
   Discuss things transparently and get community feedback.
 - Don't add any classes to the codebase unless absolutely needed.
@@ -354,11 +368,15 @@ Exceptions:
 
 ### Becoming a Core Committer
 
-Contributors may be given core commit privileges. Preference will be given to those with:
+Contributors may be given core commit privileges. Preference will be given to those
+with:
 
 1. Past contributions to Cookiecutter and other open-source projects.
-   Contributions to Cookiecutter include both code (both accepted and pending) and friendly participation in the issue tracker.
+   Contributions to Cookiecutter include both code (both accepted and pending) and
+   friendly participation in the issue tracker.
    Quantity and quality are considered.
 2. A coding style that the other core committers find simple, minimal, and clean.
 3. Access to resources for cross-platform development and testing.
 4. Time to devote to the project regularly.
+
+[README.md]: https://github.com/cookiecutter/cookiecutter/blob/master/README.md
