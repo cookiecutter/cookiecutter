@@ -103,7 +103,7 @@ def generate_context(
             f"JSON decoding error while loading '{full_fpath}'. "
             f"Decoding error details: '{json_exc_message}'"
         )
-        raise ContextDecodingException(our_exc_message)
+        raise ContextDecodingException(our_exc_message) from e
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
@@ -302,7 +302,7 @@ def generate_files(
         )
     except UndefinedError as err:
         msg = f"Unable to create project directory '{unrendered_dir}'"
-        raise UndefinedVariableInTemplate(msg, err, context)
+        raise UndefinedVariableInTemplate(msg, err, context) from err
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
@@ -371,7 +371,7 @@ def generate_files(
                         rmtree(project_dir)
                     _dir = os.path.relpath(unrendered_dir, output_dir)
                     msg = f"Unable to create directory '{_dir}'"
-                    raise UndefinedVariableInTemplate(msg, err, context)
+                    raise UndefinedVariableInTemplate(msg, err, context) from err
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
@@ -393,7 +393,7 @@ def generate_files(
                     if delete_project_on_failure:
                         rmtree(project_dir)
                     msg = f"Unable to create file '{infile}'"
-                    raise UndefinedVariableInTemplate(msg, err, context)
+                    raise UndefinedVariableInTemplate(msg, err, context) from err
 
     if accept_hooks:
         _run_hook_from_repo_dir(
