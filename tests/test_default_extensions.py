@@ -61,4 +61,3 @@ def test_jinja2_uuid_extension(tmp_path):
         changelog_lines = f.readlines()
 
     uuid.UUID(changelog_lines[0], version=4)
-    assert True
