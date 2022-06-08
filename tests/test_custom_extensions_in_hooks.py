@@ -18,7 +18,7 @@ from cookiecutter import main
 )
 def template(request):
     """Fixture. Allows to split pre and post hooks test directories."""
-    return 'tests/test-extensions/' + request.param
+    return f"tests/test-extensions/{request.param}"
 
 
 @pytest.fixture(autouse=True)
