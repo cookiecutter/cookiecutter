@@ -19,8 +19,7 @@ def make_test_repo(name, multiple_hooks=False):
     os.mkdir(hook_dir)
     os.mkdir(template)
 
-    with Path(template, 'README.rst').open('w') as f:
-        f.write("foo\n===\n\nbar\n")
+    Path(template, 'README.rst').write_text("foo\n===\n\nbar\n")
 
     with Path(hook_dir, 'pre_gen_project.py').open('w') as f:
         f.write("#!/usr/bin/env python\n")
