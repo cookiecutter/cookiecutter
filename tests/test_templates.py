@@ -4,8 +4,7 @@ test_custom_extension_in_hooks.
 Tests to ensure custom cookiecutter extensions are properly made available to
 pre- and post-gen hooks.
 """
-import codecs
-import os
+from pathlib import Path
 
 import pytest
 
@@ -31,9 +30,7 @@ def test_build_templates(template, output_dir):
         output_dir=output_dir,
     )
 
-    readme_file = os.path.join(project_dir, 'requirements.txt')
-
-    with codecs.open(readme_file, encoding='utf8') as f:
+    with Path(project_dir, 'requirements.txt').open() as f:
         readme = f.read().splitlines()
 
     assert readme == [
