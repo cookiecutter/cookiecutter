@@ -44,33 +44,33 @@ def test_generate_copy_without_render_extensions():
     assert 'test_copy_without_render-not-rendered' in dir_contents
     assert 'test_copy_without_render-rendered' in dir_contents
 
-    with Path('test_copy_without_render/README.txt').open() as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    file_1 = Path('test_copy_without_render/README.txt').read_text()
+    assert '{{cookiecutter.render_test}}' in file_1
 
-    with Path('test_copy_without_render/README.rst').open() as f:
-        assert 'I have been rendered!' in f.read()
+    file_2 = Path('test_copy_without_render/README.rst').read_text()
+    assert 'I have been rendered!' in file_2
 
-    with Path(
+    file_3 = Path(
         'test_copy_without_render/test_copy_without_render-rendered/README.txt'
-    ).open() as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    ).read_text()
+    assert '{{cookiecutter.render_test}}' in file_3
 
-    with Path(
+    file_4 = Path(
         'test_copy_without_render/test_copy_without_render-rendered/README.rst'
-    ).open() as f:
-        assert 'I have been rendered' in f.read()
+    ).read_text()
+    assert 'I have been rendered' in file_4
 
-    with Path(
+    file_5 = Path(
         'test_copy_without_render/'
         'test_copy_without_render-not-rendered/'
         'README.rst'
-    ).open() as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    ).read_text()
+    assert '{{cookiecutter.render_test}}' in file_5
 
-    with Path('test_copy_without_render/rendered/not_rendered.yml').open() as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    file_6 = Path('test_copy_without_render/rendered/not_rendered.yml').read_text()
+    assert '{{cookiecutter.render_test}}' in file_6
 
-    with Path(
+    file_7 = Path(
         'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md'
-    ).open() as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    ).read_text()
+    assert '{{cookiecutter.render_test}}' in file_7
