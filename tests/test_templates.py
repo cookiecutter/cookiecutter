@@ -30,10 +30,9 @@ def test_build_templates(template, output_dir):
         output_dir=output_dir,
     )
 
-    with Path(project_dir, 'requirements.txt').open() as f:
-        readme = f.read().splitlines()
+    readme = Path(project_dir, 'requirements.txt').read_text(encoding='utf-8')
 
-    assert readme == [
+    assert readme.splitlines() == [
         "pip",
         "Click",
         "pytest",
