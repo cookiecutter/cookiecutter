@@ -44,7 +44,7 @@ def test_generate_files(tmp_path):
     assert simple_file.exists()
     assert simple_file.is_file()
 
-    simple_text = open(simple_file, encoding='utf-8').read()
+    simple_text = Path(simple_file).read_text(encoding='utf-8')
     assert simple_text == 'I eat pizzä'
 
 
@@ -60,7 +60,7 @@ def test_generate_files_with_linux_newline(tmp_path):
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with open(newline_file, encoding='utf-8', newline='') as f:
+    with Path(newline_file).open(encoding='utf-8', newline='') as f:
         simple_text = f.readline()
     assert simple_text == 'newline is LF\n'
     assert f.newlines == '\n'
@@ -83,7 +83,7 @@ def test_generate_files_with_jinja2_environment(tmp_path):
     assert conditions_file.is_file()
     assert conditions_file.exists()
 
-    simple_text = conditions_file.open('rt', encoding='utf-8').read()
+    simple_text = conditions_file.read_text(encoding='utf-8')
     assert simple_text == 'I eat pizzä\n'
 
 
@@ -100,7 +100,7 @@ def test_generate_files_with_trailing_newline_forced_to_linux_by_context(tmp_pat
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with open(newline_file, encoding='utf-8', newline='') as f:
+    with Path(newline_file).open(encoding='utf-8', newline='') as f:
         simple_text = f.readline()
     assert simple_text == 'newline is LF\r\n'
     assert f.newlines == '\r\n'
@@ -118,7 +118,7 @@ def test_generate_files_with_windows_newline(tmp_path):
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with open(newline_file, encoding='utf-8', newline='') as f:
+    with Path(newline_file).open(encoding='utf-8', newline='') as f:
         simple_text = f.readline()
     assert simple_text == 'newline is CRLF\r\n'
     assert f.newlines == '\r\n'
@@ -136,7 +136,7 @@ def test_generate_files_with_windows_newline_forced_to_linux_by_context(tmp_path
     assert newline_file.is_file()
     assert newline_file.exists()
 
-    with open(newline_file, encoding='utf-8', newline='') as f:
+    with Path(newline_file).open(encoding='utf-8', newline='') as f:
         simple_text = f.readline()
 
     assert simple_text == 'newline is CRLF\n'
@@ -202,7 +202,6 @@ def test_generate_files_permissions(tmp_path):
         output_dir=tmp_path,
     )
 
-    assert Path(tmp_path, 'inputpermissions/simple.txt').exists()
     assert Path(tmp_path, 'inputpermissions/simple.txt').is_file()
 
     # Verify source simple.txt should still be 0o644
@@ -241,7 +240,7 @@ def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists(tmp_pa
     simple_with_new_line_file = Path(tmp_path, 'inputpizzä/simple-with-newline.txt')
 
     Path(tmp_path, 'inputpizzä').mkdir(parents=True)
-    with open(simple_file, 'w') as f:
+    with Path(simple_file).open('w') as f:
         f.write('temp')
 
     generate.generate_files(
@@ -257,7 +256,7 @@ def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists(tmp_pa
     assert Path(simple_with_new_line_file).is_file()
     assert Path(simple_with_new_line_file).exists()
 
-    simple_text = open(simple_file, encoding='utf-8').read()
+    simple_text = Path(simple_file).read_text(encoding='utf-8')
     assert simple_text == 'temp'
 
 
@@ -267,8 +266,7 @@ def test_generate_files_with_skip_if_file_exists(tmp_path):
     simple_with_new_line_file = Path(tmp_path, 'inputpizzä/simple-with-newline.txt')
 
     Path(tmp_path, 'inputpizzä').mkdir(parents=True)
-    with open(simple_file, 'w') as f:
-        f.write('temp')
+    Path(simple_file).write_text('temp')
 
     with pytest.raises(exceptions.OutputDirExistsException):
         generate.generate_files(
@@ -279,11 +277,10 @@ def test_generate_files_with_skip_if_file_exists(tmp_path):
         )
 
     assert Path(simple_file).is_file()
-    assert Path(simple_file).exists()
     assert not Path(simple_with_new_line_file).is_file()
     assert not Path(simple_with_new_line_file).exists()
 
-    simple_text = open(simple_file, encoding='utf-8').read()
+    simple_text = Path(simple_file).read_text(encoding='utf-8')
     assert simple_text == 'temp'
 
 
@@ -293,8 +290,7 @@ def test_generate_files_with_overwrite_if_exists(tmp_path):
     simple_with_new_line_file = Path(tmp_path, 'inputpizzä/simple-with-newline.txt')
 
     Path(tmp_path, 'inputpizzä').mkdir(parents=True)
-    with open(simple_file, 'w') as f:
-        f.write('temp')
+    Path(simple_file).write_text('temp')
 
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä'}},
@@ -308,7 +304,7 @@ def test_generate_files_with_overwrite_if_exists(tmp_path):
     assert Path(simple_with_new_line_file).is_file()
     assert Path(simple_with_new_line_file).exists()
 
-    simple_text = open(simple_file, encoding='utf-8').read()
+    simple_text = Path(simple_file).read_text(encoding='utf-8')
     assert simple_text == 'I eat pizzä'
 
 
