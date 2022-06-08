@@ -27,17 +27,16 @@ def version_msg():
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    message = 'Cookiecutter %(version)s from {} (Python {})'
-    return message.format(location, python_version)
+    return f"Cookiecutter {__version__} from {location} (Python {python_version})"
 
 
 def validate_extra_context(ctx, param, value):
     """Validate extra context."""
-    for s in value:
-        if '=' not in s:
+    for string in value:
+        if '=' not in string:
             raise click.BadParameter(
-                'EXTRA_CONTEXT should contain items of the form key=value; '
-                "'{}' doesn't match that form".format(s)
+                f"EXTRA_CONTEXT should contain items of the form key=value; "
+                f"'{string}' doesn't match that form"
             )
 
     # Convert tuple -- e.g.: ('program_name=foobar', 'startsecs=66')
@@ -51,8 +50,8 @@ def list_installed_templates(default_config, passed_config_file):
     cookiecutter_folder = config.get('cookiecutters_dir')
     if not os.path.exists(cookiecutter_folder):
         click.echo(
-            'Error: Cannot list installed templates. Folder does not exist: '
-            '{}'.format(cookiecutter_folder)
+            f"Error: Cannot list installed templates. "
+            f"Folder does not exist: {cookiecutter_folder}"
         )
         sys.exit(-1)
 

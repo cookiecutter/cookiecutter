@@ -66,9 +66,9 @@ def read_user_choice(var_name, options):
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join(
         (
-            f'Select {var_name}:',
-            '\n'.join(choice_lines),
-            'Choose from {}'.format(', '.join(choices)),
+            f"Select {var_name}:",
+            "\n".join(choice_lines),
+            f"Choose from {', '.join(choices)}",
         )
     )
 

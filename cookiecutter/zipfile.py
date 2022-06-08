@@ -63,8 +63,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
         first_filename = zip_file.namelist()[0]
         if not first_filename.endswith('/'):
             raise InvalidZipRepository(
-                'Zip repository {} does not include '
-                'a top-level directory'.format(zip_uri)
+                f"Zip repository {zip_uri} does not include a top-level directory"
             )
 
         # Construct the final target directory

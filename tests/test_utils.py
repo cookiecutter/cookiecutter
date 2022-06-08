@@ -173,10 +173,7 @@ def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmp_path):
     cloned template repo, it should not be deleted."""
 
     def answer(question, default):
-        if 'okay to delete' in question:
-            return False
-        else:
-            return True
+        return 'okay to delete' not in question
 
     mock_read_user = mocker.patch(
         'cookiecutter.utils.read_user_yes_no', side_effect=answer, autospec=True
