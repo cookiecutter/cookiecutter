@@ -65,8 +65,8 @@ def apply_overwrites_to_context(context, overwrite_context):
                 context_value.insert(0, overwrite)
             else:
                 raise ValueError(
-                    "{} provided for choice variable {}, but the "
-                    "choices are {}.".format(overwrite, variable, context_value)
+                    f"{overwrite} provided for choice variable {variable}, "
+                    f"but the choices are {context_value}."
                 )
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
@@ -100,8 +100,8 @@ def generate_context(
         full_fpath = os.path.abspath(context_file)
         json_exc_message = str(e)
         our_exc_message = (
-            'JSON decoding error while loading "{}".  Decoding'
-            ' error details: "{}"'.format(full_fpath, json_exc_message)
+            f"JSON decoding error while loading '{full_fpath}'. "
+            f"Decoding error details: '{json_exc_message}'"
         )
         raise ContextDecodingException(our_exc_message)
 
@@ -115,8 +115,8 @@ def generate_context(
     if default_context:
         try:
             apply_overwrites_to_context(obj, default_context)
-        except ValueError as ex:
-            warnings.warn("Invalid default received: " + str(ex))
+        except ValueError as error:
+            warnings.warn(f"Invalid default received: {error}")
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
 
