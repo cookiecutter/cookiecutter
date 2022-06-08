@@ -66,9 +66,8 @@ def test_cookiecutter_no_input_return_rendered_file():
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
     assert project_dir == os.path.abspath('fake-project')
-    with Path(project_dir, 'README.rst').open() as fh:
-        contents = fh.read()
-    assert "Project name: **Fake Project**" in contents
+    content = Path(project_dir, 'README.rst').read_text()
+    assert "Project name: **Fake Project**" in content
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
@@ -77,11 +76,9 @@ def test_cookiecutter_dict_values_in_context():
     project_dir = main.cookiecutter('tests/fake-repo-dict', no_input=True)
     assert project_dir == os.path.abspath('fake-project-dict')
 
-    with Path(project_dir, 'README.md').open() as fh:
-        contents = fh.read()
-
+    content = Path(project_dir, 'README.md').read_text()
     assert (
-        contents
+        content
         == textwrap.dedent(
             """
         # README
