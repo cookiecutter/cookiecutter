@@ -55,6 +55,7 @@ extensions = [
     'sphinx_click.ext',
     'myst_parser',
     'sphinxcontrib.apidoc',
+    'sphinx_autodoc_typehints',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -369,3 +370,6 @@ apidoc_module_dir = "../cookiecutter"
 apidoc_output_dir = "."
 apidoc_toc_file = False
 apidoc_extra_args = ["-t", "_templates"]
+
+autodoc_member_order = "groupwise"
+autodoc_typehints = "none"
