@@ -1,5 +1,6 @@
 """Verify correct work of `_copy_without_render` context option."""
 import os
+from pathlib import Path
 
 import pytest
 
@@ -62,33 +63,33 @@ def test_generate_copy_without_render_extensions():
     assert 'test_copy_without_render-not-rendered' in dir_contents
     assert 'test_copy_without_render-rendered' in dir_contents
 
-    with open('test_copy_without_render/README.txt') as f:
+    with Path('test_copy_without_render/README.txt').open() as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 
-    with open('test_copy_without_render/README.rst') as f:
+    with Path('test_copy_without_render/README.rst').open() as f:
         assert 'I have been rendered!' in f.read()
 
-    with open(
+    with Path(
         'test_copy_without_render/test_copy_without_render-rendered/README.txt'
-    ) as f:
+    ).open() as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 
-    with open(
+    with Path(
         'test_copy_without_render/test_copy_without_render-rendered/README.rst'
-    ) as f:
+    ).open() as f:
         assert 'I have been rendered' in f.read()
 
-    with open(
+    with Path(
         'test_copy_without_render/'
         'test_copy_without_render-not-rendered/'
         'README.rst'
-    ) as f:
+    ).open() as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 
-    with open('test_copy_without_render/rendered/not_rendered.yml') as f:
+    with Path('test_copy_without_render/rendered/not_rendered.yml').open() as f:
         assert '{{cookiecutter.render_test}}' in f.read()
 
-    with open(
+    with Path(
         'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md'
-    ) as f:
+    ).open() as f:
         assert '{{cookiecutter.render_test}}' in f.read()
