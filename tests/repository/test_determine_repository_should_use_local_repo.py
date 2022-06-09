@@ -10,21 +10,21 @@ from cookiecutter import repository, exceptions
 def test_finds_local_repo(tmp_path):
     """A valid local repository should be returned."""
     project_dir, cleanup = repository.determine_repo_dir(
-        'tests/fake-repo',
+        "tests/fake-repo",
         abbreviations={},
         clone_to_dir=str(tmp_path),
         checkout=None,
         no_input=True,
     )
 
-    assert 'tests/fake-repo' == project_dir
+    assert "tests/fake-repo" == project_dir
     assert not cleanup
 
 
 def test_local_repo_with_no_context_raises(tmp_path):
     """A local repository without a cookiecutter.json should raise a \
     `RepositoryNotFound` exception."""
-    template_path = str(Path('tests', 'fake-repo-bad'))
+    template_path = str(Path("tests", "fake-repo-bad"))
     with pytest.raises(exceptions.RepositoryNotFound) as err:
         repository.determine_repo_dir(
             template_path,
@@ -36,10 +36,10 @@ def test_local_repo_with_no_context_raises(tmp_path):
 
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
-        'locations:\n{}'.format(
+        "locations:\n{}".format(
             template_path,
-            '\n'.join(
-                [template_path, str(tmp_path.joinpath('tests', 'fake-repo-bad'))]
+            "\n".join(
+                [template_path, str(tmp_path.joinpath("tests", "fake-repo-bad"))]
             ),
         )
     )
@@ -48,7 +48,7 @@ def test_local_repo_with_no_context_raises(tmp_path):
 def test_local_repo_typo(tmp_path):
     """An unknown local repository should raise a `RepositoryNotFound` \
     exception."""
-    template_path = str(Path('tests', 'unknown-repo'))
+    template_path = str(Path("tests", "unknown-repo"))
     with pytest.raises(exceptions.RepositoryNotFound) as err:
         repository.determine_repo_dir(
             template_path,
@@ -60,8 +60,8 @@ def test_local_repo_typo(tmp_path):
 
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
-        'locations:\n{}'.format(
+        "locations:\n{}".format(
             template_path,
-            '\n'.join([template_path, str(tmp_path.joinpath('tests', 'unknown-repo'))]),
+            "\n".join([template_path, str(tmp_path.joinpath("tests", "unknown-repo"))]),
         )
     )

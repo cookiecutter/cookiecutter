@@ -6,38 +6,38 @@ from cookiecutter.repository import expand_abbreviations
 
 
 @pytest.mark.parametrize(
-    ('template', 'abbreviations', 'expected_result'),
+    ("template", "abbreviations", "expected_result"),
     [
-        ('foo', {'foo': 'bar'}, 'bar'),
-        ('baz', {'foo': 'bar'}, 'baz'),
-        ('xx:a', {'xx': '<{0}>'}, '<a>'),
-        ('gh:a', {'gh': '<{0}>'}, '<a>'),
-        ('xx:a', {'xx': '<>'}, '<>'),
+        ("foo", {"foo": "bar"}, "bar"),
+        ("baz", {"foo": "bar"}, "baz"),
+        ("xx:a", {"xx": "<{0}>"}, "<a>"),
+        ("gh:a", {"gh": "<{0}>"}, "<a>"),
+        ("xx:a", {"xx": "<>"}, "<>"),
         (
-            'gh:pydanny/cookiecutter-django',
+            "gh:pydanny/cookiecutter-django",
             BUILTIN_ABBREVIATIONS,
-            'https://github.com/pydanny/cookiecutter-django.git',
+            "https://github.com/pydanny/cookiecutter-django.git",
         ),
         (
-            'gl:pydanny/cookiecutter-django',
+            "gl:pydanny/cookiecutter-django",
             BUILTIN_ABBREVIATIONS,
-            'https://gitlab.com/pydanny/cookiecutter-django.git',
+            "https://gitlab.com/pydanny/cookiecutter-django.git",
         ),
         (
-            'bb:pydanny/cookiecutter-django',
+            "bb:pydanny/cookiecutter-django",
             BUILTIN_ABBREVIATIONS,
-            'https://bitbucket.org/pydanny/cookiecutter-django',
+            "https://bitbucket.org/pydanny/cookiecutter-django",
         ),
     ],
     ids=(
-        'Simple expansion',
-        'Skip expansion (expansion not an abbreviation)',
-        'Expansion prefix',
-        'expansion_override_builtin',
-        'expansion_prefix_ignores_suffix',
-        'Correct expansion for builtin abbreviations (github)',
-        'Correct expansion for builtin abbreviations (gitlab)',
-        'Correct expansion for builtin abbreviations (bitbucket)',
+        "Simple expansion",
+        "Skip expansion (expansion not an abbreviation)",
+        "Expansion prefix",
+        "expansion_override_builtin",
+        "expansion_prefix_ignores_suffix",
+        "Correct expansion for builtin abbreviations (github)",
+        "Correct expansion for builtin abbreviations (gitlab)",
+        "Correct expansion for builtin abbreviations (bitbucket)",
     ),
 )
 def test_abbreviation_expansion(template, abbreviations, expected_result):
@@ -49,4 +49,4 @@ def test_abbreviation_expansion(template, abbreviations, expected_result):
 def test_abbreviation_expansion_prefix_not_0_in_braces():
     """Verify abbreviation unpacking raises error on incorrect index."""
     with pytest.raises(IndexError):
-        expand_abbreviations('xx:a', {'xx': '{1}'})
+        expand_abbreviations("xx:a", {"xx": "{1}"})
