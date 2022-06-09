@@ -10,19 +10,19 @@ from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfigur
 
 logger = logging.getLogger(__name__)
 
-USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+USER_CONFIG_PATH = os.path.expanduser("~/.cookiecutterrc")
 
 BUILTIN_ABBREVIATIONS = {
-    'gh': 'https://github.com/{0}.git',
-    'gl': 'https://gitlab.com/{0}.git',
-    'bb': 'https://bitbucket.org/{0}',
+    "gh": "https://github.com/{0}.git",
+    "gl": "https://gitlab.com/{0}.git",
+    "bb": "https://bitbucket.org/{0}",
 }
 
 DEFAULT_CONFIG = {
-    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
-    'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
-    'default_context': collections.OrderedDict([]),
-    'abbreviations': BUILTIN_ABBREVIATIONS,
+    "cookiecutters_dir": os.path.expanduser("~/.cookiecutters/"),
+    "replay_dir": os.path.expanduser("~/.cookiecutter_replay/"),
+    "default_context": collections.OrderedDict([]),
+    "abbreviations": BUILTIN_ABBREVIATIONS,
 }
 
 
@@ -55,24 +55,24 @@ def merge_configs(default, overwrite):
 def get_config(config_path):
     """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
-        raise ConfigDoesNotExistException(f'Config file {config_path} does not exist.')
+        raise ConfigDoesNotExistException(f"Config file {config_path} does not exist.")
 
-    logger.debug('config_path is %s', config_path)
-    with open(config_path, encoding='utf-8') as file_handle:
+    logger.debug("config_path is %s", config_path)
+    with open(config_path, encoding="utf-8") as file_handle:
         try:
             yaml_dict = yaml.safe_load(file_handle)
         except yaml.YAMLError as e:
             raise InvalidConfiguration(
-                f'Unable to parse YAML file {config_path}.'
+                f"Unable to parse YAML file {config_path}."
             ) from e
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
-    raw_replay_dir = config_dict['replay_dir']
-    config_dict['replay_dir'] = _expand_path(raw_replay_dir)
+    raw_replay_dir = config_dict["replay_dir"]
+    config_dict["replay_dir"] = _expand_path(raw_replay_dir)
 
-    raw_cookies_dir = config_dict['cookiecutters_dir']
-    config_dict['cookiecutters_dir'] = _expand_path(raw_cookies_dir)
+    raw_cookies_dir = config_dict["cookiecutters_dir"]
+    config_dict["cookiecutters_dir"] = _expand_path(raw_cookies_dir)
 
     return config_dict
 
@@ -105,7 +105,7 @@ def get_user_config(config_file=None, default_config=False):
 
     try:
         # Does the user set up a config environment variable?
-        env_config_file = os.environ['COOKIECUTTER_CONFIG']
+        env_config_file = os.environ["COOKIECUTTER_CONFIG"]
     except KeyError:
         # Load an optional user config if it exists
         # otherwise return the defaults
