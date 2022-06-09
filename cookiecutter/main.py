@@ -27,7 +27,7 @@ def cookiecutter(
     extra_context=None,
     replay=None,
     overwrite_if_exists=False,
-    output_dir='.',
+    output_dir=".",
     config_file=None,
     default_config=False,
     password=None,
@@ -73,8 +73,8 @@ def cookiecutter(
 
     repo_dir, cleanup = determine_repo_dir(
         template=template,
-        abbreviations=config_dict['abbreviations'],
-        clone_to_dir=config_dict['cookiecutters_dir'],
+        abbreviations=config_dict["abbreviations"],
+        clone_to_dir=config_dict["cookiecutters_dir"],
         checkout=checkout,
         no_input=no_input,
         password=password,
@@ -87,32 +87,32 @@ def cookiecutter(
     if replay:
         with import_patch:
             if isinstance(replay, bool):
-                context = load(config_dict['replay_dir'], template_name)
+                context = load(config_dict["replay_dir"], template_name)
             else:
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
                 context = load(path, template_name)
     else:
-        context_file = os.path.join(repo_dir, 'cookiecutter.json')
-        logger.debug('context_file is %s', context_file)
+        context_file = os.path.join(repo_dir, "cookiecutter.json")
+        logger.debug("context_file is %s", context_file)
 
         context = generate_context(
             context_file=context_file,
-            default_context=config_dict['default_context'],
+            default_context=config_dict["default_context"],
             extra_context=extra_context,
         )
 
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
         with import_patch:
-            context['cookiecutter'] = prompt_for_config(context, no_input)
+            context["cookiecutter"] = prompt_for_config(context, no_input)
 
         # include template dir or url in the context dict
-        context['cookiecutter']['_template'] = template
+        context["cookiecutter"]["_template"] = template
 
         # include output+dir in the context dict
-        context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
+        context["cookiecutter"]["_output_dir"] = os.path.abspath(output_dir)
 
-        dump(config_dict['replay_dir'], template_name, context)
+        dump(config_dict["replay_dir"], template_name, context)
 
     # Create project from local context and project template.
     with import_patch:
