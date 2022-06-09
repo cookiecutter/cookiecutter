@@ -44,35 +44,35 @@ import cookiecutter  # noqa 402
 # extensions coming with Sphinx (named 'sphinx.ext.*') or
 # your custom ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.imgmath',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode',
-    'sphinx_click.ext',
-    'myst_parser',
-    'sphinxcontrib.apidoc',
-    'sphinx_autodoc_typehints',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.imgmath",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.viewcode",
+    "sphinx_click.ext",
+    "myst_parser",
+    "sphinxcontrib.apidoc",
+    "sphinx_autodoc_typehints",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = {'.rst': 'restructuredtext', '.md': 'markdown'}
+source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # General information about the project.
-project = 'cookiecutter'
-copyright = '2013-2022, Audrey Roy and Cookiecutter community'
+project = "cookiecutter"
+copyright = "2013-2022, Audrey Roy and Cookiecutter community"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -95,7 +95,7 @@ release = cookiecutter.__version__
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ["_build"]
 
 # The reST default role (used for this markup: `text`) to use for all documents
 # default_role = None
@@ -112,7 +112,7 @@ exclude_patterns = ['_build']
 # show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = "sphinx"
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
@@ -121,13 +121,13 @@ pygments_style = 'sphinx'
 # keep_warnings = False
 
 # Suppress nonlocal image warnings
-suppress_warnings = ['image.nonlocal_uri']
+suppress_warnings = ["image.nonlocal_uri"]
 
 # -- Options for HTML output --------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -200,7 +200,7 @@ html_static_path = []
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'cookiecutterdoc'
+htmlhelp_basename = "cookiecutterdoc"
 
 
 # -- Options for LaTeX output -------------------------------------------------
@@ -218,11 +218,11 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual])
 latex_documents = [
     (
-        'index',
-        'cookiecutter.tex',
-        'cookiecutter Documentation',
-        'Audrey Roy and Cookiecutter community',
-        'manual',
+        "index",
+        "cookiecutter.tex",
+        "cookiecutter Documentation",
+        "Audrey Roy and Cookiecutter community",
+        "manual",
     ),
 ]
 
@@ -253,10 +253,10 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (
-        'index',
-        'cookiecutter',
-        'cookiecutter Documentation',
-        ['Audrey Roy and Cookiecutter community'],
+        "index",
+        "cookiecutter",
+        "cookiecutter Documentation",
+        ["Audrey Roy and Cookiecutter community"],
         1,
     )
 ]
@@ -272,13 +272,13 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        'index',
-        'cookiecutter',
-        'cookiecutter Documentation',
-        'Audrey Roy and Cookiecutter community',
-        'cookiecutter',
-        'Creates projects from project templates',
-        'Miscellaneous',
+        "index",
+        "cookiecutter",
+        "cookiecutter Documentation",
+        "Audrey Roy and Cookiecutter community",
+        "cookiecutter",
+        "Creates projects from project templates",
+        "Miscellaneous",
     ),
 ]
 
@@ -298,10 +298,10 @@ texinfo_documents = [
 # -- Options for Epub output --------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = 'cookiecutter'
-epub_author = 'Audrey Roy'
-epub_publisher = 'Audrey Roy and Cookiecutter community'
-epub_copyright = '2013-2022, Audrey Roy and Cookiecutter community'
+epub_title = "cookiecutter"
+epub_author = "Audrey Roy"
+epub_publisher = "Audrey Roy and Cookiecutter community"
+epub_copyright = "2013-2022, Audrey Roy and Cookiecutter community"
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

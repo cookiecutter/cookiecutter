@@ -3,39 +3,39 @@ from setuptools import setup
 
 version = "2.1.2.dev0"
 
-with open('README.md', encoding='utf-8') as readme_file:
+with open("README.md", encoding="utf-8") as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    'binaryornot>=0.4.4',
-    'Jinja2>=2.7,<4.0.0',
-    'click>=7.0,<9.0.0',
-    'pyyaml>=5.3.1',
-    'jinja2-time>=0.2.0',
-    'python-slugify>=4.0.0',
-    'requests>=2.23.0',
+    "binaryornot>=0.4.4",
+    "Jinja2>=2.7,<4.0.0",
+    "click>=7.0,<9.0.0",
+    "pyyaml>=5.3.1",
+    "jinja2-time>=0.2.0",
+    "python-slugify>=4.0.0",
+    "requests>=2.23.0",
 ]
 
 setup(
-    name='cookiecutter',
+    name="cookiecutter",
     version=version,
     description=(
-        'A command-line utility that creates projects from project '
-        'templates, e.g. creating a Python package project from a '
-        'Python package project template.'
+        "A command-line utility that creates projects from project "
+        "templates, e.g. creating a Python package project from a "
+        "Python package project template."
     ),
     long_description=readme,
-    long_description_content_type='text/markdown',
-    author='Audrey Feldroy',
-    author_email='audreyr@gmail.com',
-    url='https://github.com/cookiecutter/cookiecutter',
-    packages=['cookiecutter'],
-    package_dir={'cookiecutter': 'cookiecutter'},
-    entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
+    long_description_content_type="text/markdown",
+    author="Audrey Feldroy",
+    author_email="audreyr@gmail.com",
+    url="https://github.com/cookiecutter/cookiecutter",
+    packages=["cookiecutter"],
+    package_dir={"cookiecutter": "cookiecutter"},
+    entry_points={"console_scripts": ["cookiecutter = cookiecutter.__main__:main"]},
     include_package_data=True,
-    python_requires='>=3.7',
+    python_requires=">=3.7",
     install_requires=requirements,
-    license='BSD',
+    license="BSD",
     zip_safe=False,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
