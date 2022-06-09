@@ -15,7 +15,7 @@ repos:
     hooks:
       - id: black
         language_version: python3
-        exclude: ^(tests\/hooks-abort-render\/hooks|docs\/HelloCookieCutter1)
+        exclude: ^(tests\/hooks-abort-render\/hooks)
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
     hooks:
