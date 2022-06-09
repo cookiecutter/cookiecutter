@@ -1,6 +1,8 @@
 """Utility functions for handling and fetching repo archives in zip format."""
 import os
 import tempfile
+from pathlib import Path
+from typing import Optional
 from zipfile import BadZipFile, ZipFile
 
 import requests
@@ -10,7 +12,13 @@ from cookiecutter.prompt import read_repo_password
 from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
 
-def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
+def unzip(
+    zip_uri: str,
+    is_url: bool,
+    clone_to_dir: "os.PathLike[str]" = ".",
+    no_input: bool = False,
+    password: Optional[str] = None,
+):
     """Download and unpack a zipfile at a given URI.
 
     This will download the zipfile to the cookiecutter repository,
@@ -25,7 +33,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     :param password: The password to use when unpacking the repository.
     """
     # Ensure that clone_to_dir exists
-    clone_to_dir = os.path.expanduser(clone_to_dir)
+    clone_to_dir = Path(clone_to_dir).expanduser()
     make_sure_path_exists(clone_to_dir)
 
     if is_url:
