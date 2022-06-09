@@ -37,7 +37,7 @@ def is_copy_only_path(path, context):
     :param context: cookiecutter context.
     """
     try:
-        for dont_render in context['cookiecutter']['_copy_without_render']:
+        for dont_render in context["cookiecutter"]["_copy_without_render"]:
             if fnmatch.fnmatch(path, dont_render):
                 return True
     except KeyError:
@@ -78,7 +78,7 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 
 def generate_context(
-    context_file='cookiecutter.json', default_context=None, extra_context=None
+    context_file="cookiecutter.json", default_context=None, extra_context=None
 ):
     """Generate the context for a Cookiecutter project template.
 
@@ -92,7 +92,7 @@ def generate_context(
     context = OrderedDict([])
 
     try:
-        with open(context_file, encoding='utf-8') as file_handle:
+        with open(context_file, encoding="utf-8") as file_handle:
             obj = json.load(file_handle, object_pairs_hook=OrderedDict)
     except ValueError as e:
         # JSON decoding error.  Let's throw a new exception that is more
@@ -107,7 +107,7 @@ def generate_context(
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
-    file_stem = file_name.split('.')[0]
+    file_stem = file_name.split(".")[0]
     context[file_stem] = obj
 
     # Overwrite context variable defaults with the default context from the
@@ -120,7 +120,7 @@ def generate_context(
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
 
-    logger.debug('Context generated is %s', context)
+    logger.debug("Context generated is %s", context)
     return context
 
 
@@ -145,7 +145,7 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
     :param context: Dict for populating the cookiecutter's variables.
     :param env: Jinja2 template execution environment.
     """
-    logger.debug('Processing file %s', infile)
+    logger.debug("Processing file %s", infile)
 
     # Render the path to the output file (not including the root project dir)
     outfile_tmpl = env.from_string(infile)
@@ -153,24 +153,24 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
     outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
     file_name_is_empty = os.path.isdir(outfile)
     if file_name_is_empty:
-        logger.debug('The resulting file name is empty: %s', outfile)
+        logger.debug("The resulting file name is empty: %s", outfile)
         return
 
     if skip_if_file_exists and os.path.exists(outfile):
-        logger.debug('The resulting file already exists: %s', outfile)
+        logger.debug("The resulting file already exists: %s", outfile)
         return
 
-    logger.debug('Created file at %s', outfile)
+    logger.debug("Created file at %s", outfile)
 
     # Just copy over binary files. Don't render.
     logger.debug("Check %s to see if it's a binary", infile)
     if is_binary(infile):
-        logger.debug('Copying binary %s to %s without rendering', infile, outfile)
+        logger.debug("Copying binary %s to %s without rendering", infile, outfile)
         shutil.copyfile(infile, outfile)
     else:
         # Force fwd slashes on Windows for get_template
         # This is a by-design Jinja issue
-        infile_fwd_slashes = infile.replace(os.path.sep, '/')
+        infile_fwd_slashes = infile.replace(os.path.sep, "/")
 
         # Render the file
         try:
@@ -184,18 +184,18 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
         # Detect original file newline to output the rendered file
         # note: newline='' ensures newlines are not converted
-        with open(infile, encoding='utf-8', newline='') as rd:
+        with open(infile, encoding="utf-8", newline="") as rd:
             rd.readline()  # Read the first line to load 'newlines' value
 
             # Use `_new_lines` overwrite from context, if configured.
             newline = rd.newlines
-            if context['cookiecutter'].get('_new_lines', False):
-                newline = context['cookiecutter']['_new_lines']
-                logger.debug('Overwriting end line character with %s', newline)
+            if context["cookiecutter"].get("_new_lines", False):
+                newline = context["cookiecutter"]["_new_lines"]
+                logger.debug("Overwriting end line character with %s", newline)
 
-        logger.debug('Writing contents to file %s', outfile)
+        logger.debug("Writing contents to file %s", outfile)
 
-        with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
+        with open(outfile, "w", encoding="utf-8", newline=newline) as fh:
             fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -216,7 +216,7 @@ def render_and_create_dir(
     dir_to_create = Path(output_dir, rendered_dirname)
 
     logger.debug(
-        'Rendered dir %s must exist in output_dir %s', dir_to_create, output_dir
+        "Rendered dir %s must exist in output_dir %s", dir_to_create, output_dir
     )
 
     output_dir_exists = dir_to_create.exists()
@@ -224,7 +224,7 @@ def render_and_create_dir(
     if output_dir_exists:
         if overwrite_if_exists:
             logger.debug(
-                'Output directory %s already exists, overwriting it', dir_to_create
+                "Output directory %s already exists, overwriting it", dir_to_create
             )
         else:
             msg = f'Error: "{dir_to_create}" directory already exists'
@@ -237,7 +237,7 @@ def render_and_create_dir(
 
 def ensure_dir_is_templated(dirname):
     """Ensure that dirname is a templated directory name."""
-    if '{{' in dirname and '}}' in dirname:
+    if "{{" in dirname and "}}" in dirname:
         return True
     else:
         raise NonTemplatedInputDirException
@@ -272,7 +272,7 @@ def _run_hook_from_repo_dir(
 def generate_files(
     repo_dir,
     context=None,
-    output_dir='.',
+    output_dir=".",
     overwrite_if_exists=False,
     skip_if_file_exists=False,
     accept_hooks=True,
@@ -292,10 +292,10 @@ def generate_files(
         generation fails
     """
     template_dir = find_template(repo_dir)
-    logger.debug('Generating project from %s...', template_dir)
+    logger.debug("Generating project from %s...", template_dir)
     context = context or OrderedDict([])
 
-    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+    envvars = context.get("cookiecutter", {}).get("_jinja2_env_vars", {})
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
@@ -316,7 +316,7 @@ def generate_files(
     # absolute path for the target folder (project_dir)
 
     project_dir = os.path.abspath(project_dir)
-    logger.debug('Project directory is %s', project_dir)
+    logger.debug("Project directory is %s", project_dir)
 
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
@@ -324,13 +324,13 @@ def generate_files(
 
     if accept_hooks:
         _run_hook_from_repo_dir(
-            repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
+            repo_dir, "pre_gen_project", project_dir, context, delete_project_on_failure
         )
 
     with work_in(template_dir):
-        env.loader = FileSystemLoader(['.', '../templates'])
+        env.loader = FileSystemLoader([".", "../templates"])
 
-        for root, dirs, files in os.walk('.'):
+        for root, dirs, files in os.walk("."):
             # We must separate the two types of dirs into different lists.
             # The reason is that we don't want ``os.walk`` to go through the
             # unrendered directories, since they will just be copied.
@@ -343,7 +343,7 @@ def generate_files(
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
                 if is_copy_only_path(d_, context):
-                    logger.debug('Found copy only path %s', d)
+                    logger.debug("Found copy only path %s", d)
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -352,7 +352,7 @@ def generate_files(
                 indir = os.path.normpath(os.path.join(root, copy_dir))
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
-                logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+                logger.debug("Copying dir %s to %s without rendering", indir, outdir)
 
                 # The outdir is not the root dir, it is the dir which marked as copy
                 # only in the config file. If the program hits this line, which means
@@ -384,7 +384,7 @@ def generate_files(
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
                     logger.debug(
-                        'Copying file %s to %s without rendering', infile, outfile
+                        "Copying file %s to %s without rendering", infile, outfile
                     )
                     shutil.copyfile(infile, outfile)
                     shutil.copymode(infile, outfile)
@@ -402,7 +402,7 @@ def generate_files(
     if accept_hooks:
         _run_hook_from_repo_dir(
             repo_dir,
-            'post_gen_project',
+            "post_gen_project",
             project_dir,
             context,
             delete_project_on_failure,
