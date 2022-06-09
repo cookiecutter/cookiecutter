@@ -18,7 +18,7 @@ class JsonifyExtension(Extension):
         def jsonify(obj):
             return json.dumps(obj, sort_keys=True, indent=4)
 
-        environment.filters['jsonify'] = jsonify
+        environment.filters["jsonify"] = jsonify
 
 
 class RandomStringExtension(Extension):
@@ -49,7 +49,7 @@ class SlugifyExtension(Extension):
             """Slugifies the value."""
             return pyslugify(value, **kwargs)
 
-        environment.filters['slugify'] = slugify
+        environment.filters["slugify"] = slugify
 
 
 class UUIDExtension(Extension):
