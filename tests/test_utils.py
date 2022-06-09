@@ -65,14 +65,10 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
     Should return True if directory exist or created.
     Should return False if impossible to create directory (for example protected)
     """
-
-    def raiser(*args, **kwargs):
-        raise OSError()
-
-    mocker.patch("os.makedirs", raiser)
-    uncreatable_directory = Path('protected_path')
-
-    assert not utils.make_sure_path_exists(uncreatable_directory)
+    mocker.patch("pathlib.Path.mkdir", side_effect=OSError)
+    with pytest.raises(OSError) as err:
+        utils.make_sure_path_exists(Path('protected_path'))
+    assert str(err.value) == "Unable to create replay directory at protected_path"
 
 
 def test_work_in(tmp_path):
