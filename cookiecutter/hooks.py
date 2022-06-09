@@ -13,8 +13,8 @@ from cookiecutter.exceptions import FailedHookException
 logger = logging.getLogger(__name__)
 
 _HOOKS = [
-    'pre_gen_project',
-    'post_gen_project',
+    "pre_gen_project",
+    "post_gen_project",
 ]
 EXIT_SUCCESS = 0
 
@@ -31,12 +31,12 @@ def valid_hook(hook_file, hook_name):
 
     matching_hook = basename == hook_name
     supported_hook = basename in _HOOKS
-    backup_file = filename.endswith('~')
+    backup_file = filename.endswith("~")
 
     return matching_hook and supported_hook and not backup_file
 
 
-def find_hook(hook_name, hooks_dir='hooks'):
+def find_hook(hook_name, hooks_dir="hooks"):
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
@@ -48,10 +48,10 @@ def find_hook(hook_name, hooks_dir='hooks'):
     :param hooks_dir: The hook directory in the template
     :return: The absolute path to the hook script or None
     """
-    logger.debug('hooks_dir is %s', os.path.abspath(hooks_dir))
+    logger.debug("hooks_dir is %s", os.path.abspath(hooks_dir))
 
     if not os.path.isdir(hooks_dir):
-        logger.debug('No hooks/dir in template_dir')
+        logger.debug("No hooks/dir in template_dir")
         return None
 
     scripts = []
@@ -64,14 +64,14 @@ def find_hook(hook_name, hooks_dir='hooks'):
     return scripts
 
 
-def run_script(script_path, cwd='.'):
+def run_script(script_path, cwd="."):
     """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
     """
-    run_thru_shell = sys.platform.startswith('win')
-    if script_path.endswith('.py'):
+    run_thru_shell = sys.platform.startswith("win")
+    if script_path.endswith(".py"):
         script_command = [sys.executable, script_path]
     else:
         script_command = [script_path]
@@ -83,14 +83,14 @@ def run_script(script_path, cwd='.'):
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
-                f'Hook script failed (exit status: {exit_status})'
+                f"Hook script failed (exit status: {exit_status})"
             )
     except OSError as err:
         if err.errno == errno.ENOEXEC:
             raise FailedHookException(
-                'Hook script failed, might be an empty file or missing a shebang'
+                "Hook script failed, might be an empty file or missing a shebang"
             ) from err
-        raise FailedHookException(f'Hook script failed (error: {err})') from err
+        raise FailedHookException(f"Hook script failed (error: {err})") from err
 
 
 def run_script_with_context(script_path, cwd, context):
@@ -102,14 +102,14 @@ def run_script_with_context(script_path, cwd, context):
     """
     _, extension = os.path.splitext(script_path)
 
-    with open(script_path, encoding='utf-8') as file:
+    with open(script_path, encoding="utf-8") as file:
         contents = file.read()
 
-    with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
+    with tempfile.NamedTemporaryFile(delete=False, mode="wb", suffix=extension) as temp:
         env = StrictEnvironment(context=context, keep_trailing_newline=True)
         template = env.from_string(contents)
         output = template.render(**context)
-        temp.write(output.encode('utf-8'))
+        temp.write(output.encode("utf-8"))
 
     run_script(temp.name, cwd)
 
@@ -124,8 +124,8 @@ def run_hook(hook_name, project_dir, context):
     """
     scripts = find_hook(hook_name)
     if not scripts:
-        logger.debug('No %s hook found', hook_name)
+        logger.debug("No %s hook found", hook_name)
         return
-    logger.debug('Running hook %s', hook_name)
+    logger.debug("Running hook %s", hook_name)
     for script in scripts:
         run_script_with_context(script, project_dir, context)
