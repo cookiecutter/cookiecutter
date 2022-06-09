@@ -68,7 +68,7 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
     mocker.patch("pathlib.Path.mkdir", side_effect=OSError)
     with pytest.raises(OSError) as err:
         utils.make_sure_path_exists(Path('protected_path'))
-    assert str(err.value) == "Unable to create replay directory at protected_path"
+    assert str(err.value) == "Unable to create directory at protected_path"
 
 
 def test_work_in(tmp_path):

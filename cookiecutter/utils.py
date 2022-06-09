@@ -41,7 +41,7 @@ def make_sure_path_exists(path: "os.PathLike[str]") -> None:
     try:
         Path(path).mkdir(parents=True, exist_ok=True)
     except OSError as error:
-        raise OSError(f'Unable to create replay directory at {path}') from error
+        raise OSError(f'Unable to create directory at {path}') from error
 
 
 @contextlib.contextmanager
