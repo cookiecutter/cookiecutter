@@ -25,7 +25,7 @@ def is_repo_url(value):
 
 def is_zip_file(value):
     """Return True if value is a zip file."""
-    return value.lower().endswith('.zip')
+    return value.lower().endswith(".zip")
 
 
 def expand_abbreviations(template, abbreviations):
@@ -39,7 +39,7 @@ def expand_abbreviations(template, abbreviations):
 
     # Split on colon. If there is no colon, rest will be empty
     # and prefix will be the whole template
-    prefix, sep, rest = template.partition(':')
+    prefix, sep, rest = template.partition(":")
     if prefix in abbreviations:
         return abbreviations[prefix].format(rest)
 
@@ -55,7 +55,7 @@ def repository_has_cookiecutter_json(repo_directory):
     repo_directory_exists = os.path.isdir(repo_directory)
 
     repo_config_exists = os.path.isfile(
-        os.path.join(repo_directory, 'cookiecutter.json')
+        os.path.join(repo_directory, "cookiecutter.json")
     )
     return repo_directory_exists and repo_config_exists
 
@@ -127,5 +127,5 @@ def determine_repo_dir(
 
     raise RepositoryNotFound(
         'A valid repository for "{}" could not be found in the following '
-        'locations:\n{}'.format(template, '\n'.join(repository_candidates))
+        "locations:\n{}".format(template, "\n".join(repository_candidates))
     )
