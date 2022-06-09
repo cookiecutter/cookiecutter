@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 BRANCH_ERRORS = [
-    'error: pathspec',
-    'unknown revision',
+    "error: pathspec",
+    "unknown revision",
 ]
 
 
@@ -31,7 +31,7 @@ def identify_repo(repo_url):
     :param repo_url: Repo URL of unknown type.
     :returns: ('git', repo_url), ('hg', repo_url), or None.
     """
-    repo_url_values = repo_url.split('+')
+    repo_url_values = repo_url.split("+")
     if len(repo_url_values) == 2:
         repo_type = repo_url_values[0]
         if repo_type in ["git", "hg"]:
@@ -39,10 +39,10 @@ def identify_repo(repo_url):
         else:
             raise UnknownRepoType
     else:
-        if 'git' in repo_url:
-            return 'git', repo_url
-        elif 'bitbucket' in repo_url:
-            return 'hg', repo_url
+        if "git" in repo_url:
+            return "git", repo_url
+        elif "bitbucket" in repo_url:
+            return "hg", repo_url
         else:
             raise UnknownRepoType
 
@@ -84,14 +84,14 @@ def clone(
         msg = f"'{repo_type}' is not installed."
         raise VCSNotInstalled(msg)
 
-    repo_url = repo_url.rstrip('/')
+    repo_url = repo_url.rstrip("/")
     repo_name = os.path.split(repo_url)[1]
-    if repo_type == 'git':
-        repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
+    if repo_type == "git":
+        repo_name = repo_name.split(":")[-1].rsplit(".git")[0]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    if repo_type == 'hg':
+    if repo_type == "hg":
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    logger.debug(f'repo_dir is {repo_dir}')
+    logger.debug(f"repo_dir is {repo_dir}")
 
     if os.path.isdir(repo_dir):
         clone = prompt_and_delete(repo_dir, no_input=no_input)
@@ -101,7 +101,7 @@ def clone(
     if clone:
         try:
             subprocess.check_output(  # nosec
-                [repo_type, 'clone', repo_url],
+                [repo_type, "clone", repo_url],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
@@ -111,23 +111,23 @@ def clone(
                 if repo_type == "hg":
                     checkout_params.insert(0, "--")
                 subprocess.check_output(  # nosec
-                    [repo_type, 'checkout', *checkout_params],
+                    [repo_type, "checkout", *checkout_params],
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,
                 )
         except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output.decode('utf-8')
-            if 'not found' in output.lower():
+            output = clone_error.output.decode("utf-8")
+            if "not found" in output.lower():
                 raise RepositoryNotFound(
-                    f'The repository {repo_url} could not be found, '
-                    'have you made a typo?'
+                    f"The repository {repo_url} could not be found, "
+                    "have you made a typo?"
                 ) from clone_error
             if any(error in output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
-                    f'The {checkout} branch of repository '
-                    f'{repo_url} could not found, have you made a typo?'
+                    f"The {checkout} branch of repository "
+                    f"{repo_url} could not found, have you made a typo?"
                 ) from clone_error
-            logger.error('git clone failed with error: %s', output)
+            logger.error("git clone failed with error: %s", output)
             raise
 
     return repo_dir
