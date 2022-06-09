@@ -6,7 +6,7 @@ from jinja2.ext import Extension
 class HelloExtension(Extension):
     """Simple jinja2 extension for cookiecutter test purposes."""
 
-    tags = {'hello'}
+    tags = {"hello"}
 
     def __init__(self, environment):
         """Hello Extension Constructor."""
@@ -14,11 +14,11 @@ class HelloExtension(Extension):
 
     def _hello(self, name):
         """Do actual tag replace when invoked by parser."""
-        return f'Hello {name}!'
+        return f"Hello {name}!"
 
     def parse(self, parser):
         """Work when something match `tags` variable."""
         lineno = next(parser.stream).lineno
         node = parser.parse_expression()
-        call_method = self.call_method('_hello', [node], lineno=lineno)
+        call_method = self.call_method("_hello", [node], lineno=lineno)
         return nodes.Output([call_method], lineno=lineno)

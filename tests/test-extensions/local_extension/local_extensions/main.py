@@ -10,7 +10,7 @@ class FoobarExtension(Extension):
     def __init__(self, environment):
         """Foobar Extension Constructor."""
         super().__init__(environment)
-        environment.filters['foobar'] = lambda v: v * 2
+        environment.filters["foobar"] = lambda v: v * 2
 
 
 @simple_filter
