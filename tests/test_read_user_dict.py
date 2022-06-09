@@ -11,17 +11,17 @@ from cookiecutter.prompt import (
 def test_process_json_invalid_json():
     """Test `process_json` for correct error on malformed input."""
     with pytest.raises(click.UsageError) as exc_info:
-        process_json('nope]')
+        process_json("nope]")
 
-    assert str(exc_info.value) == 'Unable to decode to JSON.'
+    assert str(exc_info.value) == "Unable to decode to JSON."
 
 
 def test_process_json_non_dict():
     """Test `process_json` for correct error on non-JSON input."""
     with pytest.raises(click.UsageError) as exc_info:
-        process_json('[1, 2]')
+        process_json("[1, 2]")
 
-    assert str(exc_info.value) == 'Requires JSON dict.'
+    assert str(exc_info.value) == "Requires JSON dict."
 
 
 def test_process_json_valid_json():
@@ -32,8 +32,8 @@ def test_process_json_valid_json():
     user_value = '{"name": "foobar", "bla": ["a", 1, "b", false]}'
 
     assert process_json(user_value) == {
-        'name': 'foobar',
-        'bla': ['a', 1, 'b', False],
+        "name": "foobar",
+        "bla": ["a", 1, "b", False],
     }
 
 
@@ -42,7 +42,7 @@ def test_process_json_deep_dict():
 
     Test for dict in dict case.
     """
-    user_value = '''{
+    user_value = """{
         "key": "value",
         "integer_key": 37,
         "dict_key": {
@@ -59,7 +59,7 @@ def test_process_json_deep_dict():
             "value 2",
             "value 3"
         ]
-    }'''
+    }"""
 
     assert process_json(user_value) == {
         "key": "value",
@@ -75,10 +75,10 @@ def test_process_json_deep_dict():
 
 def test_should_raise_type_error(mocker):
     """Test `default_value` arg verification in `read_user_dict` function."""
-    prompt = mocker.patch('cookiecutter.prompt.click.prompt')
+    prompt = mocker.patch("cookiecutter.prompt.click.prompt")
 
     with pytest.raises(TypeError):
-        read_user_dict('name', 'russell')
+        read_user_dict("name", "russell")
 
     assert not prompt.called
 
@@ -88,27 +88,27 @@ def test_should_call_prompt_with_process_json(mocker):
 
     Verifies generation of a processor for the user input.
     """
-    mock_prompt = mocker.patch('cookiecutter.prompt.click.prompt', autospec=True)
+    mock_prompt = mocker.patch("cookiecutter.prompt.click.prompt", autospec=True)
 
-    read_user_dict('name', {'project_slug': 'pytest-plugin'})
+    read_user_dict("name", {"project_slug": "pytest-plugin"})
 
     args, kwargs = mock_prompt.call_args
 
-    assert args == ('name',)
-    assert kwargs['type'] == click.STRING
-    assert kwargs['default'] == 'default'
-    assert kwargs['value_proc'].func == process_json
+    assert args == ("name",)
+    assert kwargs["type"] == click.STRING
+    assert kwargs["default"] == "default"
+    assert kwargs["value_proc"].func == process_json
 
 
 def test_should_not_load_json_from_sentinel(mocker):
     """Make sure that `json.loads` is not called when using default value."""
     mock_json_loads = mocker.patch(
-        'cookiecutter.prompt.json.loads', autospec=True, return_value={}
+        "cookiecutter.prompt.json.loads", autospec=True, return_value={}
     )
 
     runner = click.testing.CliRunner()
     with runner.isolation(input="\n"):
-        read_user_dict('name', {'project_slug': 'pytest-plugin'})
+        read_user_dict("name", {"project_slug": "pytest-plugin"})
 
     mock_json_loads.assert_not_called()
 
@@ -121,6 +121,6 @@ def test_read_user_dict_default_value(mocker, input):
     """
     runner = click.testing.CliRunner()
     with runner.isolation(input=input):
-        val = read_user_dict('name', {'project_slug': 'pytest-plugin'})
+        val = read_user_dict("name", {"project_slug": "pytest-plugin"})
 
-    assert val == {'project_slug': 'pytest-plugin'}
+    assert val == {"project_slug": "pytest-plugin"}

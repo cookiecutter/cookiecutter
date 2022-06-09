@@ -3,8 +3,8 @@ import click
 
 from cookiecutter.prompt import read_user_variable
 
-VARIABLE = 'project_name'
-DEFAULT = 'Kivy Project'
+VARIABLE = "project_name"
+DEFAULT = "Kivy Project"
 
 
 def test_click_invocation(mocker):
@@ -12,7 +12,7 @@ def test_click_invocation(mocker):
 
     Test for string type invocation.
     """
-    prompt = mocker.patch('click.prompt')
+    prompt = mocker.patch("click.prompt")
     prompt.return_value = DEFAULT
 
     assert read_user_variable(VARIABLE, DEFAULT) == DEFAULT
