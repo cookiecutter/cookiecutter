@@ -37,7 +37,7 @@ def make_sure_path_exists(path: "os.PathLike[str]") -> None:
 
     :param path: A directory tree path for creation.
     """
-    logger.debug('Making sure path exists (Create tree if not exist): %s', path)
+    logger.debug('Making sure path exists (creates tree if not exist): %s', path)
     try:
         Path(path).mkdir(parents=True, exist_ok=True)
     except OSError as error:
