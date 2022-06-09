@@ -14,14 +14,14 @@ def find_template(repo_dir: "os.PathLike[str]") -> Path:
     :param repo_dir: Local directory of newly cloned repo.
     :return: Relative path to project template.
     """
-    logger.debug('Searching %s for the project template.', repo_dir)
+    logger.debug("Searching %s for the project template.", repo_dir)
 
     for str_path in os.listdir(repo_dir):
-        if 'cookiecutter' in str_path and '{{' in str_path and '}}' in str_path:
+        if "cookiecutter" in str_path and "{{" in str_path and "}}" in str_path:
             project_template = Path(repo_dir, str_path)
             break
     else:
         raise NonTemplatedInputDirException
 
-    logger.debug('The project template appears to be %s', project_template)
+    logger.debug("The project template appears to be %s", project_template)
     return project_template
