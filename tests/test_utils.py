@@ -49,8 +49,8 @@ def test_make_sure_path_exists(tmp_path):
     existing_directory = tmp_path
     directory_to_create = Path(tmp_path, "not_yet_created")
 
-    assert utils.make_sure_path_exists(existing_directory)
-    assert utils.make_sure_path_exists(directory_to_create)
+    utils.make_sure_path_exists(existing_directory)
+    utils.make_sure_path_exists(directory_to_create)
 
     # Ensure by base system methods.
     assert existing_directory.is_dir()
