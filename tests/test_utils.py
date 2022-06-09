@@ -49,8 +49,8 @@ def test_make_sure_path_exists(tmp_path):
     existing_directory = tmp_path
     directory_to_create = Path(tmp_path, "not_yet_created")
 
-    assert utils.make_sure_path_exists(existing_directory)
-    assert utils.make_sure_path_exists(directory_to_create)
+    utils.make_sure_path_exists(existing_directory)
+    utils.make_sure_path_exists(directory_to_create)
 
     # Ensure by base system methods.
     assert existing_directory.is_dir()
@@ -65,14 +65,10 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
     Should return True if directory exist or created.
     Should return False if impossible to create directory (for example protected)
     """
-
-    def raiser(*args, **kwargs):
-        raise OSError()
-
-    mocker.patch("os.makedirs", raiser)
-    uncreatable_directory = Path('protected_path')
-
-    assert not utils.make_sure_path_exists(uncreatable_directory)
+    mocker.patch("pathlib.Path.mkdir", side_effect=OSError)
+    with pytest.raises(OSError) as err:
+        utils.make_sure_path_exists(Path('protected_path'))
+    assert str(err.value) == "Unable to create directory at protected_path"
 
 
 def test_work_in(tmp_path):

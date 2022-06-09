@@ -6,9 +6,9 @@ import os
 import shutil
 import warnings
 from collections import OrderedDict
-
+from pathlib import Path
 from binaryornot.check import is_binary
-from jinja2 import FileSystemLoader
+from jinja2 import FileSystemLoader, Environment
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
@@ -203,19 +203,23 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
 
 def render_and_create_dir(
-    dirname, context, output_dir, environment, overwrite_if_exists=False
+    dirname: str,
+    context: dict,
+    output_dir: "os.PathLike[str]",
+    environment: Environment,
+    overwrite_if_exists: bool = False,
 ):
     """Render name of a directory, create the directory, return its path."""
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
 
-    dir_to_create = os.path.normpath(os.path.join(output_dir, rendered_dirname))
+    dir_to_create = Path(output_dir, rendered_dirname)
 
     logger.debug(
         'Rendered dir %s must exist in output_dir %s', dir_to_create, output_dir
     )
 
-    output_dir_exists = os.path.exists(dir_to_create)
+    output_dir_exists = dir_to_create.exists()
 
     if output_dir_exists:
         if overwrite_if_exists:

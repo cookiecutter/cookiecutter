@@ -2,7 +2,9 @@
 import logging
 import os
 import subprocess  # nosec
+from pathlib import Path
 from shutil import which
+from typing import Optional
 
 from cookiecutter.exceptions import (
     RepositoryCloneFailed,
@@ -54,7 +56,12 @@ def is_vcs_installed(repo_type):
     return bool(which(repo_type))
 
 
-def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
+def clone(
+    repo_url: str,
+    checkout: Optional[str] = None,
+    clone_to_dir: "os.PathLike[str]" = ".",
+    no_input: bool = False,
+):
     """Clone a repo to the current directory.
 
     :param repo_url: Repo URL of unknown type.
@@ -66,7 +73,7 @@ def clone(repo_url, checkout=None, clone_to_dir='.', no_input=False):
     :returns: str with path to the new directory of the repository.
     """
     # Ensure that clone_to_dir exists
-    clone_to_dir = os.path.expanduser(clone_to_dir)
+    clone_to_dir = Path(clone_to_dir).expanduser()
     make_sure_path_exists(clone_to_dir)
 
     # identify the repo_type
