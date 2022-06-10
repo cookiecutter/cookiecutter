@@ -1,0 +1,18 @@
+{
+  "MD003": true,
+  "MD004": false,
+  "MD007": false,
+  "MD013": {
+    "tables": false,
+    "code_blocks": false,
+    "line_length": 88
+  },
+  "MD024": false,
+  "MD026": false,
+  "MD029": false,
+  "MD034": true,
+  "MD046": true,
+  "code-block-style": {
+    "style": "fenced"
+  }
+}

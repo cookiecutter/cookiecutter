@@ -52,3 +52,9 @@ repos:
     rev: "0.48"
     hooks:
     -   id: check-manifest
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.31.1
+    hooks:
+      - id: markdownlint
+        args: [-f]
+        exclude: ^(.github|tests)
