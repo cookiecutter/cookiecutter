@@ -174,7 +174,8 @@
 
 ## Backers
 
-We would like to thank the following people for supporting us in our efforts to maintain and improve Cookiecutter:
+We would like to thank the following people for supporting us in our efforts to
+maintain and improve Cookiecutter:
 
 - Alex DeBrie
 - Alexandre Y. Harano
@@ -186,8 +187,10 @@ We would like to thank the following people for supporting us in our efforts to 
 
 ### PyCon 2016 Sprint
 
-The following people made contributions to the cookiecutter project at the PyCon sprints in Portland, OR from June 2-5 2016.
-Contributions include user testing, debugging, improving documentation, reviewing issues, writing tutorials, creating and updating project templates, and teaching each other.
+The following people made contributions to the cookiecutter project at the PyCon
+sprints in Portland, OR from June 2-5 2016. Contributions include user testing,
+debugging, improving documentation, reviewing issues, writing tutorials, creating
+and updating project templates, and teaching each other.  
 
 - Adam Chainz ([@adamchainz](https://github.com/adamchainz))
 - Andrew Ittner ([@tephyr](https://github.com/tephyr))
