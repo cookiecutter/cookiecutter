@@ -484,7 +484,6 @@ context, address minor bugs and make a number of improvements.
   [@purplediane] (#754)
 * Create *hook backup files* during the tests as opposed to having them as static
   files in the repository, thanks to [@hackebrot] (#789)
-
 * Applied PEP 257 docstring conventions to:
   * `environment.py`, thanks to [@terryjbates] (#759)
   * `find.py`, thanks to [@terryjbates] (#761)
@@ -492,7 +491,6 @@ context, address minor bugs and make a number of improvements.
   * `hooks.py`, thanks to [@terryjbates] (#766)
   * `repository.py`, thanks to [@terryjbates] (#833)
   * `vcs.py`, thanks to [@terryjbates] (#831)
-
 * Fix link to the Tryton cookiecutter, thanks to [@cedk] and [@nicoe] (#697, #698)
 * Added PyCon US 2016 sponsorship to README, thanks to [@purplediane] (#720)
 * Added a sprint contributor doc, thanks to [@phoebebauer] (#727)
@@ -533,7 +531,6 @@ context, address minor bugs and make a number of improvements.
   to [@lamby] and [@hackebrot] (#800, #861)
 * Extend CLI help message and point users to the github project to engage with the
   community, thanks to [@hackebrot] (#859)
-
 * Added more cookiecutter templates to the mix:
   * [cookiecutter-funkload-friendly](https://github.com/tokibito/cookiecutter-funkload-friendly)
     by [@tokibito] (#657)
@@ -646,7 +643,6 @@ to more awesome in the future, as well as adding support for Jinja2 extensions.
 * Fix typo in one of the template\'s description, thanks to [@ryanfreckleton] (#643)
 * Fix broken link to [\_copy\_without\_render](http://cookiecutter.readthedocs.io/en/latest/advanced_usage.html#copy-without-render)
   in *troubleshooting.rst*, thanks to [@ptim] (#647)
-
 * Added more cookiecutter templates to the mix:
   * [cookiecutter-pipproject](https://github.com/wdm0006/cookiecutter-pipproject)
     by [@wdm0006] (#624)
@@ -788,7 +784,6 @@ command-line options such as ```--overwrite-if-exists```, ```---replay```, and
 * Added future to requirements, thanks to [@hackebrot].
 * Fixed problem where expanduser does not resolve \"\~\" correctly on windows 10
   using tox, thanks to [@maiksensi]. (#527)
-
 * Added more cookiecutter templates to the mix:
   * [cookiecutter-beamer](https://github.com/luismartingil/cookiecutter-beamer)
     by [@luismartingil] (#307)
@@ -846,7 +841,6 @@ the move to using py.test.
 * Tweaked flake8 to ignore e731, thanks to [@michaeljoseph] (#390).
 * Fixed failing Windows tests and corrected AppVeyor badge link thanks to [@msabramo]
   (#403).
-
 * Added more Cookiecutters to the list:
   * [cookiecutter-scala-spark](https://github.com/jpzk/cookiecutter-scala-spark)
     by [@jpzk]
