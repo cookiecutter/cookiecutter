@@ -3,7 +3,7 @@
 Choice Variables
 ----------------
 
-*New in Cookiecutter 1.1*
+.. versionadded:: 1.1.0
 
 Choice variables provide different choices when creating a project.
 Depending on a user's choice the template renders things differently.

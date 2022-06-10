@@ -3,7 +3,7 @@
 Dictionary Variables
 --------------------
 
-*New in Cookiecutter 1.5*
+.. versionadded:: 1.5.0
 
 Dictionary variables provide a way to define deep structured information when rendering
 a template.

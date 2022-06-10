@@ -3,13 +3,13 @@
 User Config
 ===========
 
-*New in Cookiecutter 0.7*
+.. versionadded:: 0.7.0
 
 If you use Cookiecutter a lot, you'll find it useful to have a user config file.
 By default Cookiecutter tries to retrieve settings from a `.cookiecutterrc` file in your
 home directory.
 
-*New in Cookiecutter 1.3*
+.. versionadded:: 1.3.0
 
 You can also specify a config file on the command line via ``--config-file``.
 

@@ -3,7 +3,7 @@
 Replay Project Generation
 -------------------------
 
-*New in Cookiecutter 1.1*
+.. versionadded:: 1.1.0
 
 On invocation **Cookiecutter** dumps a json file to ``~/.cookiecutter_replay/`` which
 enables you to *replay* later on.

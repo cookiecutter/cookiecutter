@@ -3,7 +3,7 @@
 Working with line-ends special symbols LF/CRLF
 ----------------------------------------------
 
-*New in Cookiecutter 2.0*
+.. versionadded:: 2.1.0
 
 .. note::
 

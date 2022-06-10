@@ -3,7 +3,7 @@
 Local Extensions
 ----------------
 
-*New in Cookiecutter 2.1*
+.. versionadded:: 2.1.0
 
 A template may extend the Cookiecutter environment with local extensions. These can be
 part of the template itself, providing it with more sophisticated custom tags and

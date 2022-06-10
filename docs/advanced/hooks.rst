@@ -3,7 +3,7 @@
 Using Pre/Post-Generate Hooks
 =============================
 
-*New in cookiecutter 0.7*
+.. versionadded:: 0.7.0
 
 You can have Python or Shell scripts that run before and/or after your project is
 generated.
