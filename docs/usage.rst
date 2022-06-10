@@ -63,8 +63,9 @@ And if you want to specify a branch you can do that with::
 Works with private repos
 ------------------------
 
-If you want to work with repos that are not hosted in github or bitbucket you can indicate explicitly the
-type of repo that you want to use prepending `hg+` or `git+` to repo url::
+If you want to work with repos that are not hosted in github or bitbucket you can
+indicate explicitly the type of repo that you want to use prepending `hg+` or `git+`
+to repo url::
 
     $ cookiecutter hg+https://example.com/repo
 

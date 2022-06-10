@@ -5,15 +5,18 @@ Dictionary Variables
 
 *New in Cookiecutter 1.5*
 
-Dictionary variables provide a way to define deep structured information when rendering a template.
+Dictionary variables provide a way to define deep structured information when rendering
+a template.
 
 Basic Usage
 ~~~~~~~~~~~
 
-Dictionary variables are, as the name suggests, dictionaries of key-value pairs.
-The dictionary values can, themselves, be other dictionaries and lists - the data structure can be as deep as you need.
+Dictionary variables are, as the name suggests, dictionaries of key-value pairs. The
+dictionary values can, themselves, be other dictionaries and lists - the data structure
+can be as deep as you need.
 
-For example, you could provide the following dictionary variable in your ``cookiecutter.json``:
+For example, you could provide the following dictionary variable in your
+``cookiecutter.json``:
 
 .. code-block:: json
 
@@ -39,7 +42,8 @@ For example, you could provide the following dictionary variable in your ``cooki
     }
 
 
-The above ``file_types`` dictionary variable creates ``cookiecutter.file_types``, which can be used like this:
+The above ``file_types`` dictionary variable creates ``cookiecutter.file_types``, which
+can be used like this:
 
 .. code-block:: html+jinja
 
@@ -63,4 +67,5 @@ The above ``file_types`` dictionary variable creates ``cookiecutter.file_types``
     {% endfor %}
 
 
-Cookiecutter is using `Jinja2's for expression <https://jinja.palletsprojects.com/en/latest/templates/#for>`_ to iterate over the items in the dictionary.
+Cookiecutter is using `Jinja2's for expression <https://jinja.palletsprojects.com/en/latest/templates/#for>`_
+to iterate over the items in the dictionary.

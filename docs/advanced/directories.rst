@@ -5,8 +5,8 @@ Organizing cookiecutters in directories
 
 *New in Cookiecutter 1.7*
 
-Cookiecutter introduces the ability to organize several templates in one repository or zip file, separating them by directories.
-This allows using symlinks for general files.
+Cookiecutter introduces the ability to organize several templates in one repository or
+zip file, separating them by directories. This allows using symlinks for general files.
 Here's an example repository demonstrating this feature::
 
     https://github.com/user/repo-name.git

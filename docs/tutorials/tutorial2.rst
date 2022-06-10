@@ -4,7 +4,8 @@
 Create a Cookiecutter From Scratch
 ==================================
 
-In this tutorial, we are creating `cookiecutter-website-simple`, a cookiecutter for generating simple, bare-bones websites.
+In this tutorial, we are creating `cookiecutter-website-simple`, a cookiecutter for
+generating simple, bare-bones websites.
 
 Step 1: Name Your Cookiecutter
 ------------------------------
@@ -19,7 +20,10 @@ Create the directory for your cookiecutter and cd into it:
 Step 2: Create cookiecutter.json
 ----------------------------------
 
-`cookiecutter.json` is a JSON file that contains fields which can be referenced in the cookiecutter template. For each, default value is defined and user will be prompted for input during cookiecutter execution. Only mandatory field is `project_slug` and it should comply with package naming conventions defined in `PEP8 Naming Conventions <https://www.python.org/dev/peps/pep-0008/#package-and-module-names>`_ .
+`cookiecutter.json` is a JSON file that contains fields which can be referenced in the
+cookiecutter template. For each, default value is defined and user will be prompted for
+input during cookiecutter execution. Only mandatory field is `project_slug` and it
+should comply with package naming conventions defined in `PEP8 Naming Conventions <https://www.python.org/dev/peps/pep-0008/#package-and-module-names>`_ .
 
 .. code-block:: json
 
@@ -35,7 +39,8 @@ Step 3: Create project_slug Directory
 
 Create a directory called `{{ cookiecutter.project_slug }}`.
 
-This value will be replaced with the repo name of projects that you generate from this cookiecutter.
+This value will be replaced with the repo name of projects that you generate from this
+cookiecutter.
 
 Step 4: Create index.html
 --------------------------
@@ -59,9 +64,13 @@ Inside of `{{ cookiecutter.project_slug }}`, create `index.html` with following 
 
 Step 5: Pack cookiecutter into ZIP
 ----------------------------------
-There are many ways to run Cookiecutter templates, and they are described in details in `Usage chapter <https://cookiecutter.readthedocs.io/en/latest/usage.html#grab-a-cookiecutter-template>`_. In this tutorial we are going to ZIP cookiecutter and then run it for testing.
+There are many ways to run Cookiecutter templates, and they are described in details in
+`Usage chapter <https://cookiecutter.readthedocs.io/en/latest/usage.html#grab-a-cookiecutter-template>`_.
+In this tutorial we are going to ZIP cookiecutter and then run it for testing.
 
-By running following command `cookiecutter.zip` will get generated which can be used to run cookiecutter. Script will generate `cookiecutter.zip` ZIP file and echo full path to the file.
+By running following command `cookiecutter.zip` will get generated which can be used to
+run cookiecutter. Script will generate `cookiecutter.zip` ZIP file and echo full path to
+the file.
 
 .. code-block:: bash
 
@@ -74,7 +83,8 @@ By running following command `cookiecutter.zip` will get generated which can be 
 
 Step 6: Run cookiecutter
 ------------------------
-Set your work directory to whatever directory you would like to run cookiecutter at. Use cookiecutter full path and run the following command:
+Set your work directory to whatever directory you would like to run cookiecutter at.
+Use cookiecutter full path and run the following command:
 
 .. code-block:: bash
 
@@ -89,7 +99,9 @@ You can expect similar output:
    project_slug [test_web]:
    author [Anonymous]: Cookiecutter Developer
 
-Resulting directory should be inside your work directory with a name that matches `project_slug` you defined. Inside that direcory there should be `index.html` with generated source:
+Resulting directory should be inside your work directory with a name that matches
+`project_slug` you defined. Inside that direcory there should be `index.html` with
+generated source:
 
 .. code-block:: html
 

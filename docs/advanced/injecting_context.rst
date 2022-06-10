@@ -3,7 +3,8 @@
 Injecting Extra Context
 -----------------------
 
-You can specify an ``extra_context`` dictionary that will override values from ``cookiecutter.json`` or ``.cookiecutterrc``:
+You can specify an ``extra_context`` dictionary that will override values from
+``cookiecutter.json`` or ``.cookiecutterrc``:
 
 .. code-block:: python
 
@@ -18,7 +19,8 @@ This works as command-line parameters as well:
 
     cookiecutter --no-input cookiecutter-pypackage/ project_name=TheGreatest
 
-You will also need to add these keys to the ``cookiecutter.json`` or ``.cookiecutterrc``.
+You will also need to add these keys to the ``cookiecutter.json`` or
+``.cookiecutterrc``.
 
 
 Example: Injecting a Timestamp

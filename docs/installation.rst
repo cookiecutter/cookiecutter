@@ -12,10 +12,10 @@ Prerequisites
 Python interpreter
 ^^^^^^^^^^^^^^^^^^
 
-Install Python for your operating system.
-On Windows and macOS this is usually necessary.
-Most Linux distributions are coming with Python pre-installed.
-Consult the official `Python documentation <https://docs.python.org/3/using/index.html>`_ for details.
+Install Python for your operating system. On Windows and macOS this is usually
+necessary. Most Linux distributions are coming with Python pre-installed. Consult the
+official `Python documentation <https://docs.python.org/3/using/index.html>`_ for
+details.
 
 You can install the Python binaries from `python.org <https://www.python.org/downloads/>`_.
 Alternatively on macOS, you can use the `homebrew <http://brew.sh/>`_ package manager.
@@ -28,7 +28,10 @@ Alternatively on macOS, you can use the `homebrew <http://brew.sh/>`_ package ma
 Adjust your path
 ^^^^^^^^^^^^^^^^
 
-Ensure that your ``bin`` folder is on your path for your platform. Typically ``~/.local/`` for UNIX and macOS, or ``%APPDATA%\Python`` on Windows. (See the Python documentation for `site.USER_BASE <https://docs.python.org/3/library/site.html#site.USER_BASE>`_ for full details.)
+Ensure that your ``bin`` folder is on your path for your platform. Typically
+``~/.local/`` for UNIX and macOS, or ``%APPDATA%\Python`` on Windows.
+(See the Python documentation for `site.USER_BASE <https://docs.python.org/3/library/site.html#site.USER_BASE>`_
+for full details.)
 
 
 UNIX and macOS
@@ -47,9 +50,14 @@ Remember to load changes with ``source ~/.bash_profile`` or open a new shell ses
 Windows
 """""""
 
-Ensure the directory where cookiecutter will be installed is in your environment's ``Path`` in order to make it possible to invoke it from a command prompt. To do so, search for "Environment Variables" on your computer (on Windows 10, it is under ``System Properties`` --> ``Advanced``) and add that directory to the ``Path`` environment variable, using the GUI to edit path segments.
+Ensure the directory where cookiecutter will be installed is in your environment's
+``Path`` in order to make it possible to invoke it from a command prompt. To do so,
+search for "Environment Variables" on your computer (on Windows 10, it is under
+``System Properties`` --> ``Advanced``) and add that directory to the ``Path``
+environment variable, using the GUI to edit path segments.
 
-Example segments should look like ``%APPDATA%\Python\Python3x\Scripts``, where you have your version of Python instead of ``Python3x``.
+Example segments should look like ``%APPDATA%\Python\Python3x\Scripts``, where you have
+your version of Python instead of ``Python3x``.
 
 You may need to restart your command prompt session to load the environment variables.
 
@@ -58,12 +66,16 @@ You may need to restart your command prompt session to load the environment vari
 **Unix on Windows**
 
 
-You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10>`_ or `GNU utilities for Win32 <http://unxutils.sourceforge.net>`_ to use Unix commands on Windows.
+You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10>`_
+or `GNU utilities for Win32 <http://unxutils.sourceforge.net>`_ to use Unix commands
+on Windows.
 
 Packaging tools
 ^^^^^^^^^^^^^^^
 
-See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_ for full details.
+See the Python Packaging Authority's (PyPA) documentation `Requirements for Installing
+Packages <https://packaging.python.org/en/latest/installing/#requirements-for-installing-packages>`_
+for full details.
 
 
 Install cookiecutter
@@ -117,14 +129,12 @@ Upgrading
 from 0.6.4 to 0.7.0 or greater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, read :doc:`HISTORY` in detail.
-There are a lot of major changes.
-The big ones are:
+First, read :doc:`HISTORY` in detail. There are a lot of major changes. The big ones
+are:
 
 * Cookiecutter no longer deletes the cloned repo after generating a project.
 * Cloned repos are saved into `~/.cookiecutters/`.
 * You can optionally create a `~/.cookiecutterrc` config file.
-
 
 Or with pip:
 

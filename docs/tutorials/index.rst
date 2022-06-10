@@ -14,7 +14,8 @@ Tutorials by `@audreyfeldroy`_
 External Links
 --------------
 
-- `Learn the Basics of Cookiecutter by Creating a Cookiecutter`_ - first steps tutorial with example template by `@BruceEckel`_
+- `Learn the Basics of Cookiecutter by Creating a Cookiecutter`_ - first steps tutorial
+  with example template by `@BruceEckel`_
 - `Project Templates Made Easy`_ by `@pydanny`_
 - Cookiedozer Tutorials by `@hackebrot`_
 

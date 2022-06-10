@@ -39,12 +39,13 @@ which can be used like this::
 
   {% endif %}
 
-Cookiecutter is using `Jinja2's if conditional expression <https://jinja.palletsprojects
-.com/en/latest/templates/#if>`_ to determine the correct ``run_as_docker``.
+Cookiecutter is using `Jinja2's if conditional expression <https://jinja.palletsprojects.com/en/latest/templates/#if>`_
+to determine the correct ``run_as_docker``.
 
 Input Validation
 ~~~~~~~~~~~~~~~~
-If a non valid value is inserted to a boolean field, the following error will be printed:
+If a non valid value is inserted to a boolean field, the following error will be
+printed:
 
 .. code-block:: bash
 

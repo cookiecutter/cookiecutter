@@ -12,7 +12,8 @@ What exactly does this mean? Read on!
 Case Study: cookiecutter-pypackage
 -----------------------------------
 
-*cookiecutter-pypackage* is a cookiecutter template that creates the starter boilerplate for a Python package.
+*cookiecutter-pypackage* is a cookiecutter template that creates the starter boilerplate
+for a Python package.
 
 .. note:: There are several variations of it, but for this tutorial we'll use
    the original version at https://github.com/audreyfeldroy/cookiecutter-pypackage/.
@@ -20,9 +21,11 @@ Case Study: cookiecutter-pypackage
 Step 1: Generate a Python Package Project
 ------------------------------------------
 
-Open your shell and cd into the directory where you'd like to create a starter Python package project.
+Open your shell and cd into the directory where you'd like to create a starter Python
+package project.
 
-At the command line, run the cookiecutter command, passing in the link to cookiecutter-pypackage's HTTPS clone URL like this:
+At the command line, run the cookiecutter command, passing in the link to
+cookiecutter-pypackage's HTTPS clone URL like this:
 
 .. code-block:: bash
 
@@ -31,17 +34,18 @@ At the command line, run the cookiecutter command, passing in the link to cookie
 Local Cloning of Project Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, cookiecutter-pypackage gets cloned to `~/.cookiecutters/` (or equivalent on Windows).
-Cookiecutter does this for you, so sit back and wait.
+First, cookiecutter-pypackage gets cloned to `~/.cookiecutters/` (or equivalent on
+Windows). Cookiecutter does this for you, so sit back and wait.
 
 Local Generation of Project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When cloning is complete, you will be prompted to enter a bunch of values, such as `full_name`, `email`, and `project_name`.
-Either enter your info, or simply press return/enter to accept the default values.
+When cloning is complete, you will be prompted to enter a bunch of values, such as
+`full_name`, `email`, and `project_name`. Either enter your info, or simply press
+return/enter to accept the default values.
 
-This info will be used to fill in the blanks for your project.
-For example, your name and the year will be placed into the LICENSE file.
+This info will be used to fill in the blanks for your project. For example, your name
+and the year will be placed into the LICENSE file.
 
 Step 2: Explore What Got Generated
 ----------------------------------
@@ -53,7 +57,8 @@ In your current directory, you should see that a project got generated:
     $ ls
     boilerplate
 
-Looking inside the `boilerplate/` (or directory corresponding to your `project_slug`) directory, you should see something like this:
+Looking inside the `boilerplate/` (or directory corresponding to your `project_slug`)
+directory, you should see something like this:
 
 .. code-block:: bash
 
@@ -94,32 +99,37 @@ How did that work?
 Step 3: Observe How It Was Generated
 ------------------------------------
 
-Let's take a look at cookiecutter-pypackage together. Open https://github.com/audreyfeldroy/cookiecutter-pypackage in a new browser window.
+Let's take a look at cookiecutter-pypackage together. Open https://github.com/audreyfeldroy/cookiecutter-pypackage
+in a new browser window.
 
 {{ cookiecutter.project_slug }}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Find the directory called `{{ cookiecutter.project_slug }}`.
-Click on it.
-Observe the files inside of it.
-You should see that this directory and its contents corresponds to the project that you just generated.
+- Find the directory called `{{ cookiecutter.project_slug }}`.
+- Click on it.
+- Observe the files inside of it.
+- You should see that this directory and its contents corresponds to the project that
+  you just generated.
 
-This happens in `find.py`, where the `find_template()` method looks for the first jinja-like directory name that starts with `cookiecutter`.
+This happens in `find.py`, where the `find_template()` method looks for the first
+jinja-like directory name that starts with `cookiecutter`.
 
 AUTHORS.rst
 ~~~~~~~~~~~
 
 Look at the raw version of `{{ cookiecutter.project_slug }}/AUTHORS.rst`, at
-https://raw.github.com/audreyfeldroy/cookiecutter-pypackage/master/%7B%7Bcookiecutter.project_slug%7D%7D/AUTHORS.rst.
+https://raw.github.com/audreyfeldroy/cookiecutter-pypackage/master/%7B%7Bcookiecutter.project_slug%7D%7D/AUTHORS.rst
 
 Observe how it corresponds to the `AUTHORS.rst` file that you generated.
 
 cookiecutter.json
 ~~~~~~~~~~~~~~~~~
 
-Now navigate back up to `cookiecutter-pypackage/` and look at the `cookiecutter.json` file.
+Now navigate back up to `cookiecutter-pypackage/` and look at the `cookiecutter.json`
+file.
 
-You should see JSON that corresponds to the prompts and default values shown earlier during project generation:
+You should see JSON that corresponds to the prompts and default values shown earlier
+during project generation:
 
 .. code-block:: json
 
@@ -141,12 +151,15 @@ You should see JSON that corresponds to the prompts and default values shown ear
 Questions?
 ----------
 
-If anything needs better explanation, please take a moment to file an issue at https://github.com/audreyfeldroy/cookiecutter/issues with what could be improved
-about this tutorial.
+If anything needs better explanation, please take a moment to file an issue at
+https://github.com/audreyfeldroy/cookiecutter/issues with what could be improved about
+this tutorial.
 
 Summary
 -------
 
-You have learned how to use Cookiecutter to generate your first project from a cookiecutter project template.
+You have learned how to use Cookiecutter to generate your first project from a
+cookiecutter project template.
 
-In tutorial 2 (:ref:`tutorial2`), you'll see how to create cookiecutters of your own, from scratch.
+In tutorial 2 (:ref:`tutorial2`), you'll see how to create cookiecutters of your own,
+from scratch.

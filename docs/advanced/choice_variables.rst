@@ -11,7 +11,8 @@ Depending on a user's choice the template renders things differently.
 Basic Usage
 ~~~~~~~~~~~
 
-Choice variables are regular key / value pairs, but with the value being a list of strings.
+Choice variables are regular key / value pairs, but with the value being a list of
+strings.
 
 For example, if you provide the following choice variable in your ``cookiecutter.json``:
 
@@ -32,7 +33,8 @@ you'd get the following choices when running Cookiecutter::
 
 Depending on an user's choice, a different license is rendered by Cookiecutter.
 
-The above ``license`` choice variable creates ``cookiecutter.license``, which can be used like this:
+The above ``license`` choice variable creates ``cookiecutter.license``, which can be
+used like this:
 
 .. code-block:: html+jinja
 
@@ -44,9 +46,11 @@ The above ``license`` choice variable creates ``cookiecutter.license``, which ca
 
   {% endif %}
 
-Cookiecutter is using `Jinja2's if conditional expression <https://jinja.palletsprojects.com/en/latest/templates/#if>`_ to determine the correct license.
+Cookiecutter is using `Jinja2's if conditional expression <https://jinja.palletsprojects.com/en/latest/templates/#if>`_
+to determine the correct license.
 
-The created choice variable is still a regular Cookiecutter variable and can be used like this:
+The created choice variable is still a regular Cookiecutter variable and can be used
+like this:
 
 .. code-block:: html+jinja
 
@@ -61,7 +65,8 @@ Overwriting Default Choice Values
 
 Choice Variables are overwritable using a :ref:`user-config` file.
 
-For example, a choice variable can be created in ``cookiecutter.json`` by using a list as value:
+For example, a choice variable can be created in ``cookiecutter.json`` by using a
+list as value:
 
 .. code-block:: JSON
 
@@ -71,7 +76,8 @@ For example, a choice variable can be created in ``cookiecutter.json`` by using 
 
 By default, the first entry in the values list serves as default value in the prompt.
 
-Setting the default ``license`` agreement to *Apache Software License 2.0* can be done using:
+Setting the default ``license`` agreement to *Apache Software License 2.0* can be done
+using:
 
 .. code-block:: yaml
 
@@ -90,4 +96,6 @@ The resulting prompt changes and looks like::
   Choose from 1, 2, 3, 4 [1]:
 
 .. note::
-   As you can see the order of the options changed from ``1 - MIT`` to ``1 - Apache Software License 2.0``. **Cookiecutter** takes the first value in the list as the default.
+    As you can see the order of the options changed from ``1 - MIT`` to
+    ``1 - Apache Software License 2.0``. **Cookiecutter** takes the first value in the
+    list as the default.

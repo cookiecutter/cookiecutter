@@ -5,8 +5,9 @@ Copy without Render
 
 *New in Cookiecutter 1.1*
 
-To avoid rendering directories and files of a cookiecutter, the ``_copy_without_render`` key can be used in the ``cookiecutter.json``.
-The value of this key accepts a list of Unix shell-style wildcards:
+To avoid rendering directories and files of a cookiecutter, the ``_copy_without_render``
+key can be used in the ``cookiecutter.json``. The value of this key accepts a list of
+Unix shell-style wildcards:
 
 .. code-block:: JSON
 
@@ -19,10 +20,9 @@ The value of this key accepts a list of Unix shell-style wildcards:
         ]
     }
 
-**Note**:
-Only the content of the files will be copied without being rendered.
-The paths are subject to rendering.
-This allows you to write:
+.. note::
+    Only the content of the files will be copied without being rendered. The paths are
+    subject to rendering. This allows you to write:
 
 .. code-block:: JSON
 
@@ -33,4 +33,5 @@ This allows you to write:
         ]
     }
 
-In this example, ``{{cookiecutter.repo_name}}`` will be rendered as expected but the html file content will be copied without rendering.
+In this example, ``{{cookiecutter.repo_name}}`` will be rendered as expected but the
+html file content will be copied without rendering.
