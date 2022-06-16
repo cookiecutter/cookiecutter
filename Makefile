@@ -99,19 +99,19 @@ submodules: ## Pull and update git submodules recursively
 .PHONY: release
 release: clean ## Package and upload release
 	@echo "+ $@"
-	@python setup.py sdist bdist_wheel
+	@python -m build
 	@twine upload -r $(PYPI_SERVER) dist/*
 
 .PHONY: sdist
 sdist: clean ## Build sdist distribution
 	@echo "+ $@"
-	@python setup.py sdist
+	@python -m build --sdist
 	@ls -l dist
 
 .PHONY: wheel
-wheel: clean ## Build bdist_wheel distribution
+wheel: clean ## Build wheel distribution
 	@echo "+ $@"
-	@python setup.py bdist_wheel
+	@python -m build --wheel
 	@ls -l dist
 
 .PHONY: help
