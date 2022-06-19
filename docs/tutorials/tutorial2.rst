@@ -89,7 +89,7 @@ You can expect similar output:
    project_slug [test_web]:
    author [Anonymous]: Cookiecutter Developer
 
-Resulting directory should be inside your work directory with a name that matches `project_slug` you defined. Inside that direcory there should be `index.html` with generated source:
+Resulting directory should be inside your work directory with a name that matches `project_slug` you defined. Inside that directory there should be `index.html` with generated source:
 
 .. code-block:: html
 

@@ -543,10 +543,7 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
     """Verify --list-installed command correct invocation."""
     fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
     os.makedirs(os.path.dirname(user_config_path))
-    # In YAML, double quotes mean to use escape sequences.
-    # Single quotes mean we will have unescaped backslahes.
-    # http://blogs.perl.org/users/tinita/2018/03/
-    # strings-in-yaml---to-quote-or-not-to-quote.html
+    # Single quotes in YAML will not parse escape codes (\).
     Path(user_config_path).write_text(f"cookiecutters_dir: '{fake_template_dir}'")
     Path("fake-project", "cookiecutter.json").write_text('{}')
 
