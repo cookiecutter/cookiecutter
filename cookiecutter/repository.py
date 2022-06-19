@@ -87,7 +87,7 @@ def determine_repo_dir(
     :param password: The password to use when extracting the repository.
     :param directory: Directory within repo where cookiecutter.json lives.
     :return: A tuple containing the cookiecutter template directory, and
-        a boolean descriving whether that directory should be cleaned up
+        a boolean describing whether that directory should be cleaned up
         after the template has been instantiated.
     :raises: `RepositoryNotFound` if a repository directory could not be found.
     """
