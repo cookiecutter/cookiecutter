@@ -16,7 +16,7 @@ def template_name():
 @pytest.fixture
 def replay_file(replay_test_dir, template_name):
     """Fixture to return a actual file name of the dump."""
-    file_name = '{}.json'.format(template_name)
+    file_name = f'{template_name}.json'
     return os.path.join(replay_test_dir, file_name)
 
 
@@ -57,7 +57,9 @@ def mock_ensure_failure(mocker):
     Used to mock internal function and limit test scope.
     Always return expected value: False
     """
-    return mocker.patch('cookiecutter.replay.make_sure_path_exists', return_value=False)
+    return mocker.patch(
+        'cookiecutter.replay.make_sure_path_exists', side_effect=OSError
+    )
 
 
 @pytest.fixture
@@ -72,7 +74,7 @@ def mock_ensure_success(mocker):
 
 def test_ioerror_if_replay_dir_creation_fails(mock_ensure_failure, replay_test_dir):
     """Test that replay.dump raises when the replay_dir cannot be created."""
-    with pytest.raises(IOError):
+    with pytest.raises(OSError):
         replay.dump(replay_test_dir, 'foo', {'cookiecutter': {'hello': 'world'}})
 
     mock_ensure_failure.assert_called_once_with(replay_test_dir)

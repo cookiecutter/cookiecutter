@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Simple pre-gen hook for testing project folder and custom file creation."""
 
 print('pre generation hook')

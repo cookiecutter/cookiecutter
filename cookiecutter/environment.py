@@ -4,7 +4,7 @@ from jinja2 import Environment, StrictUndefined
 from cookiecutter.exceptions import UnknownExtension
 
 
-class ExtensionLoaderMixin(object):
+class ExtensionLoaderMixin:
     """Mixin providing sane loading of extensions specified in a given context.
 
     The context is being extracted from the keyword arguments before calling
@@ -32,9 +32,9 @@ class ExtensionLoaderMixin(object):
         extensions = default_extensions + self._read_extensions(context)
 
         try:
-            super(ExtensionLoaderMixin, self).__init__(extensions=extensions, **kwargs)
+            super().__init__(extensions=extensions, **kwargs)
         except ImportError as err:
-            raise UnknownExtension('Unable to load extension: {}'.format(err))
+            raise UnknownExtension(f'Unable to load extension: {err}') from err
 
     def _read_extensions(self, context):
         """Return list of extensions as str to be passed on to the Jinja2 env.
@@ -62,4 +62,4 @@ class StrictEnvironment(ExtensionLoaderMixin, Environment):
 
         Also loading extensions defined in cookiecutter.json's _extensions key.
         """
-        super(StrictEnvironment, self).__init__(undefined=StrictUndefined, **kwargs)
+        super().__init__(undefined=StrictUndefined, **kwargs)

@@ -4,8 +4,7 @@ test_custom_extension_in_hooks.
 Tests to ensure custom cookiecutter extensions are properly made available to
 pre- and post-gen hooks.
 """
-import codecs
-import os
+from pathlib import Path
 
 import pytest
 
@@ -18,7 +17,7 @@ from cookiecutter import main
 )
 def template(request):
     """Fixture. Allows to split pre and post hooks test directories."""
-    return 'tests/test-extensions/' + request.param
+    return f"tests/test-extensions/{request.param}"
 
 
 @pytest.fixture(autouse=True)
@@ -40,9 +39,5 @@ def test_hook_with_extension(template, output_dir):
         extra_context={'project_slug': 'foobar', 'name': 'Cookiemonster'},
     )
 
-    readme_file = os.path.join(project_dir, 'README.rst')
-
-    with codecs.open(readme_file, encoding='utf8') as f:
-        readme = f.read().strip()
-
-    assert readme == 'Hello Cookiemonster!'
+    readme = Path(project_dir, 'README.rst').read_text(encoding="utf-8")
+    assert readme.strip() == 'Hello Cookiemonster!'

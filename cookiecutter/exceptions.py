@@ -124,15 +124,15 @@ class UndefinedVariableInTemplate(CookiecutterException):
     def __str__(self):
         """Text representation of UndefinedVariableInTemplate."""
         return (
-            "{self.message}. "
-            "Error message: {self.error.message}. "
-            "Context: {self.context}"
-        ).format(**locals())
+            f"{self.message}. "
+            f"Error message: {self.error.message}. "
+            f"Context: {self.context}"
+        )
 
 
 class UnknownExtension(CookiecutterException):
     """
-    Exception for un-importable extention.
+    Exception for un-importable extension.
 
     Raised when an environment is unable to import a required extension.
     """
