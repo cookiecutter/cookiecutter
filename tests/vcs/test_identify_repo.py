@@ -24,14 +24,14 @@ from cookiecutter import exceptions, vcs
         ),
         ('https://bitbucket.org/foo/bar.hg', 'hg', 'https://bitbucket.org/foo/bar.hg'),
         (
-            'https://github.com/audreyr/cookiecutter-pypackage.git',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage.git',
             'git',
-            'https://github.com/audreyr/cookiecutter-pypackage.git',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage.git',
         ),
         (
-            'https://github.com/audreyr/cookiecutter-pypackage',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage',
             'git',
-            'https://github.com/audreyr/cookiecutter-pypackage',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage',
         ),
         (
             'git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git',

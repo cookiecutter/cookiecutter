@@ -7,7 +7,7 @@ Grab a Cookiecutter template
 
 First, clone a Cookiecutter project template::
 
-    $ git clone git@github.com:audreyr/cookiecutter-pypackage.git
+    $ git clone https://github.com/audreyfeldroy/cookiecutter-pypackage.git
 
 Make your changes
 -----------------
@@ -40,14 +40,14 @@ Works directly with git and hg (mercurial) repos too
 
 To create a project from the cookiecutter-pypackage.git repo template::
 
-    $ cookiecutter gh:audreyr/cookiecutter-pypackage
+    $ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
 
 Cookiecutter knows abbreviations for Github (``gh``), Bitbucket (``bb``), and
 GitLab (``gl``) projects, but you can also give it the full URL to any
 repository::
 
-    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
-    $ cookiecutter git+ssh://git@github.com/audreyr/cookiecutter-pypackage.git
+    $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
+    $ cookiecutter git+ssh://git@github.com/audreyfeldroy/cookiecutter-pypackage.git
     $ cookiecutter hg+ssh://hg@bitbucket.org/audreyr/cookiecutter-pypackage
 
 You will be prompted to enter a bunch of project config values. (These are
@@ -58,7 +58,7 @@ that you entered. It will be placed in your current directory.
 
 And if you want to specify a branch you can do that with::
 
-    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git --checkout develop
+    $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git --checkout develop
 
 Works with private repos
 ------------------------

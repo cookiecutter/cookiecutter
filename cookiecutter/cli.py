@@ -27,17 +27,16 @@ def version_msg():
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    message = 'Cookiecutter %(version)s from {} (Python {})'
-    return message.format(location, python_version)
+    return f"Cookiecutter {__version__} from {location} (Python {python_version})"
 
 
 def validate_extra_context(ctx, param, value):
     """Validate extra context."""
-    for s in value:
-        if '=' not in s:
+    for string in value:
+        if '=' not in string:
             raise click.BadParameter(
-                'EXTRA_CONTEXT should contain items of the form key=value; '
-                "'{}' doesn't match that form".format(s)
+                f"EXTRA_CONTEXT should contain items of the form key=value; "
+                f"'{string}' doesn't match that form"
             )
 
     # Convert tuple -- e.g.: ('program_name=foobar', 'startsecs=66')
@@ -51,8 +50,8 @@ def list_installed_templates(default_config, passed_config_file):
     cookiecutter_folder = config.get('cookiecutters_dir')
     if not os.path.exists(cookiecutter_folder):
         click.echo(
-            'Error: Cannot list installed templates. Folder does not exist: '
-            '{}'.format(cookiecutter_folder)
+            f"Error: Cannot list installed templates. "
+            f"Folder does not exist: {cookiecutter_folder}"
         )
         sys.exit(-1)
 
@@ -75,7 +74,9 @@ def list_installed_templates(default_config, passed_config_file):
 @click.option(
     '--no-input',
     is_flag=True,
-    help='Do not prompt for parameters and only use cookiecutter.json file content',
+    help='Do not prompt for parameters and only use cookiecutter.json file content. '
+    'Defaults to deleting any cached resources and redownloading them. '
+    'Cannot be combined with the --replay flag.',
 )
 @click.option(
     '-c',
@@ -93,7 +94,8 @@ def list_installed_templates(default_config, passed_config_file):
 @click.option(
     '--replay',
     is_flag=True,
-    help='Do not prompt for parameters and only use information entered previously',
+    help='Do not prompt for parameters and only use information entered previously. '
+    'Cannot be combined with the --no-input flag or with extra configuration passed.',
 )
 @click.option(
     '--replay-file',
@@ -144,6 +146,11 @@ def list_installed_templates(default_config, passed_config_file):
 @click.option(
     '-l', '--list-installed', is_flag=True, help='List currently installed templates.'
 )
+@click.option(
+    '--keep-project-on-failure',
+    is_flag=True,
+    help='Do not delete project folder on failure',
+)
 def main(
     template,
     extra_context,
@@ -161,6 +168,7 @@ def main(
     accept_hooks,
     replay_file,
     list_installed,
+    keep_project_on_failure,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -205,6 +213,7 @@ def main(
             directory=directory,
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
+            keep_project_on_failure=keep_project_on_failure,
         )
     except (
         ContextDecodingException,

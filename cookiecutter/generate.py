@@ -6,9 +6,9 @@ import os
 import shutil
 import warnings
 from collections import OrderedDict
-
+from pathlib import Path
 from binaryornot.check import is_binary
-from jinja2 import FileSystemLoader
+from jinja2 import FileSystemLoader, Environment
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
@@ -65,9 +65,13 @@ def apply_overwrites_to_context(context, overwrite_context):
                 context_value.insert(0, overwrite)
             else:
                 raise ValueError(
-                    "{} provided for choice variable {}, but the "
-                    "choices are {}.".format(overwrite, variable, context_value)
+                    f"{overwrite} provided for choice variable {variable}, "
+                    f"but the choices are {context_value}."
                 )
+        elif isinstance(context_value, dict) and isinstance(overwrite, dict):
+            # Partially overwrite some keys in original dict
+            apply_overwrites_to_context(context_value, overwrite)
+            context[variable] = context_value
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
@@ -96,10 +100,10 @@ def generate_context(
         full_fpath = os.path.abspath(context_file)
         json_exc_message = str(e)
         our_exc_message = (
-            'JSON decoding error while loading "{}".  Decoding'
-            ' error details: "{}"'.format(full_fpath, json_exc_message)
+            f"JSON decoding error while loading '{full_fpath}'. "
+            f"Decoding error details: '{json_exc_message}'"
         )
-        raise ContextDecodingException(our_exc_message)
+        raise ContextDecodingException(our_exc_message) from e
 
     # Add the Python object to the context dictionary
     file_name = os.path.split(context_file)[1]
@@ -111,8 +115,8 @@ def generate_context(
     if default_context:
         try:
             apply_overwrites_to_context(obj, default_context)
-        except ValueError as ex:
-            warnings.warn("Invalid default received: " + str(ex))
+        except ValueError as error:
+            warnings.warn(f"Invalid default received: {error}")
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
 
@@ -199,19 +203,23 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
 
 def render_and_create_dir(
-    dirname, context, output_dir, environment, overwrite_if_exists=False
+    dirname: str,
+    context: dict,
+    output_dir: "os.PathLike[str]",
+    environment: Environment,
+    overwrite_if_exists: bool = False,
 ):
     """Render name of a directory, create the directory, return its path."""
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
 
-    dir_to_create = os.path.normpath(os.path.join(output_dir, rendered_dirname))
+    dir_to_create = Path(output_dir, rendered_dirname)
 
     logger.debug(
         'Rendered dir %s must exist in output_dir %s', dir_to_create, output_dir
     )
 
-    output_dir_exists = os.path.exists(dir_to_create)
+    output_dir_exists = dir_to_create.exists()
 
     if output_dir_exists:
         if overwrite_if_exists:
@@ -268,6 +276,7 @@ def generate_files(
     overwrite_if_exists=False,
     skip_if_file_exists=False,
     accept_hooks=True,
+    keep_project_on_failure=False,
 ):
     """Render the templates and saves them to files.
 
@@ -276,7 +285,11 @@ def generate_files(
     :param output_dir: Where to output the generated project dir into.
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param skip_if_file_exists: Skip the files in the corresponding directories
+        if they already exist
     :param accept_hooks: Accept pre and post hooks if set to `True`.
+    :param keep_project_on_failure: If `True` keep generated project directory even when
+        generation fails
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
@@ -293,7 +306,7 @@ def generate_files(
         )
     except UndefinedError as err:
         msg = f"Unable to create project directory '{unrendered_dir}'"
-        raise UndefinedVariableInTemplate(msg, err, context)
+        raise UndefinedVariableInTemplate(msg, err, context) from err
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
@@ -307,7 +320,7 @@ def generate_files(
 
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
-    delete_project_on_failure = output_directory_created
+    delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
     if accept_hooks:
         _run_hook_from_repo_dir(
@@ -315,7 +328,7 @@ def generate_files(
         )
 
     with work_in(template_dir):
-        env.loader = FileSystemLoader('.')
+        env.loader = FileSystemLoader(['.', '../templates'])
 
         for root, dirs, files in os.walk('.'):
             # We must separate the two types of dirs into different lists.
@@ -330,6 +343,7 @@ def generate_files(
                 # specified in the ``_copy_without_render`` setting, but
                 # we store just the dir name
                 if is_copy_only_path(d_, context):
+                    logger.debug('Found copy only path %s', d)
                     copy_dirs.append(d)
                 else:
                     render_dirs.append(d)
@@ -339,6 +353,12 @@ def generate_files(
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+
+                # The outdir is not the root dir, it is the dir which marked as copy
+                # only in the config file. If the program hits this line, which means
+                # the overwrite_if_exists = True, and root dir exists
+                if os.path.isdir(outdir):
+                    shutil.rmtree(outdir)
                 shutil.copytree(indir, outdir)
 
             # We mutate ``dirs``, because we only want to go through these dirs
@@ -355,7 +375,7 @@ def generate_files(
                         rmtree(project_dir)
                     _dir = os.path.relpath(unrendered_dir, output_dir)
                     msg = f"Unable to create directory '{_dir}'"
-                    raise UndefinedVariableInTemplate(msg, err, context)
+                    raise UndefinedVariableInTemplate(msg, err, context) from err
 
             for f in files:
                 infile = os.path.normpath(os.path.join(root, f))
@@ -377,7 +397,7 @@ def generate_files(
                     if delete_project_on_failure:
                         rmtree(project_dir)
                     msg = f"Unable to create file '{infile}'"
-                    raise UndefinedVariableInTemplate(msg, err, context)
+                    raise UndefinedVariableInTemplate(msg, err, context) from err
 
     if accept_hooks:
         _run_hook_from_repo_dir(

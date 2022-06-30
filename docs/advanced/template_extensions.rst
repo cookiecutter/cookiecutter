@@ -95,11 +95,11 @@ Would output:
 
     it-s-a-random-version
 
-It is different from a mere replace of spaces since it also trates some special characters such as ``'`` in the example above.
+It is different from a mere replace of spaces since it also treats some special characters differently such as ``'`` in the example above.
 The function accepts all arguments that can be passed to the ``slugify`` function of `python-slugify`_.
 For example to change the output from ``it-s-a-random-version``` to ``it_s_a_random_version``, the ``separator`` parameter would be passed: ``slugify(separator='_')``.
 
-.. _`Jinja2 extensions`: http://jinja.pocoo.org/docs/latest/extensions/
+.. _`Jinja2 extensions`: https://jinja.palletsprojects.com/en/latest/extensions/
 .. _`now`: https://github.com/hackebrot/jinja2-time#now-tag
 .. _`jinja2_time.TimeExtension`: https://github.com/hackebrot/jinja2-time
 .. _`python-slugify`: https://pypi.org/project/python-slugify

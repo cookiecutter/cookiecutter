@@ -82,11 +82,12 @@ def determine_repo_dir(
         definitions.
     :param clone_to_dir: The directory to clone the repository into.
     :param checkout: The branch, tag or commit ID to checkout after clone.
-    :param no_input: Prompt the user at command line for manual configuration?
+    :param no_input: Do not prompt for user input and eventually force a refresh of
+        cached resources.
     :param password: The password to use when extracting the repository.
     :param directory: Directory within repo where cookiecutter.json lives.
     :return: A tuple containing the cookiecutter template directory, and
-        a boolean descriving whether that directory should be cleaned up
+        a boolean describing whether that directory should be cleaned up
         after the template has been instantiated.
     :raises: `RepositoryNotFound` if a repository directory could not be found.
     """
