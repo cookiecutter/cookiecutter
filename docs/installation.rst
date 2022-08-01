@@ -14,7 +14,7 @@ Python interpreter
 
 Install Python for your operating system.
 On Windows and macOS this is usually necessary.
-Most Linux distributions are coming with Python pre-installed.
+Most Linux distributions come with Python pre-installed.
 Consult the official `Python documentation <https://docs.python.org/3/using/index.html>`_ for details.
 
 You can install the Python binaries from `python.org <https://www.python.org/downloads/>`_.
