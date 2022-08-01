@@ -55,7 +55,7 @@ def apply_overwrites_to_context(context, overwrite_context):
 
         context_value = context[variable]
 
-        if isinstance(context_value, list):
+        if isinstance(context_value, list) and not isinstance(overwrite, list):
             # We are dealing with a choice variable
             if overwrite in context_value:
                 # This overwrite is actually valid for the given context
