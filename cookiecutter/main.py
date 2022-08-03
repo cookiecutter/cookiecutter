@@ -91,7 +91,7 @@ def cookiecutter(
             else:
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
                 context_from_replayfile = load(path, template_name)
-                
+
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logger.debug('context_file is %s', context_file)
 
@@ -102,7 +102,11 @@ def cookiecutter(
             extra_context=None,
         )
         logger.debug('replayfile context: %s', context_from_replayfile)
-        items_for_prompting = { k:v for k,v in context['cookiecutter'].items() if k not in context_from_replayfile['cookiecutter'].keys() }
+        items_for_prompting = {
+            k: v
+            for k, v in context['cookiecutter'].items()
+            if k not in context_from_replayfile['cookiecutter'].keys()
+        }
         context_for_prompting = {}
         context_for_prompting['cookiecutter'] = items_for_prompting
         logger.debug('prompting context: %s', context_for_prompting)
@@ -116,9 +120,11 @@ def cookiecutter(
 
     # prompt the user to manually configure at the command line.
     # except when 'no-input' flag is set
-    
+
     with import_patch:
-        context['cookiecutter'].update(prompt_for_config(context_for_prompting, no_input))
+        context['cookiecutter'].update(
+            prompt_for_config(context_for_prompting, no_input)
+        )
     logger.debug('contex is %s', context)
 
     # include template dir or url in the context dict
