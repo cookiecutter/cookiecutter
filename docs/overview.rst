@@ -3,13 +3,13 @@ Overview
 ========
 
 Cookiecutter takes a template provided as a directory structure with template-files.
-Templates can be in located in the filesystem, as a ZIP-file or on a VCS-Server (Git/Hg) like GitHub.
+Templates can be located in the filesystem, as a ZIP-file or on a VCS-Server (Git/Hg) like GitHub.
 
 It reads a settings file and prompts the user interactively whether or not to change the settings.
 
 Then it takes both and generates an output directory structure from it.
 
-Additional the template can provide code (Python or shell-script) to be executed before and after generation (pre-gen- and post-gen-hooks).
+Additionally the template can provide code (Python or shell-script) to be executed before and after generation (pre-gen- and post-gen-hooks).
 
 
 Input
