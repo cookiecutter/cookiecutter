@@ -122,9 +122,10 @@ def cookiecutter(
     # except when 'no-input' flag is set
 
     with import_patch:
-        context['cookiecutter'].update(
-            prompt_for_config(context_for_prompting, no_input)
-        )
+        if context_for_prompting['cookiecutter']:
+            context['cookiecutter'].update(
+                prompt_for_config(context_for_prompting, no_input)
+            )
     logger.debug('contex is %s', context)
 
     # include template dir or url in the context dict
