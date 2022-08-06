@@ -259,8 +259,8 @@ def _run_hook_from_repo_dir(
         try:
             run_hook(hook_name, project_dir, context)
         except (
-                FailedHookException,
-                UndefinedError,
+            FailedHookException,
+            UndefinedError,
         ):
             if delete_project_on_failure:
                 rmtree(project_dir)
