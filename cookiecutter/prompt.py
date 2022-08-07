@@ -7,7 +7,10 @@ import click
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
-from cookiecutter.exceptions import UndefinedVariableInTemplate
+from cookiecutter.exceptions import (
+    UndefinedVariableInTemplate,
+    InvalidBooleanExpression,
+)
 
 
 def read_user_variable(var_name, default_value):
@@ -186,6 +189,7 @@ def prompt_for_config(context, no_input=False):
     # These must be done first because the dictionaries keys and
     # values might refer to them.
     for key, raw in context['cookiecutter'].items():
+        no_input_current = no_input
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
@@ -193,16 +197,24 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
+        if "?" in key:
+            actual_kay, should_present_question = parse_question_expression(
+                context, cookiecutter_dict, env, key
+            )
+            key = actual_kay
+            if not should_present_question:
+                no_input_current = True
+
         try:
             if isinstance(raw, list):
                 # We are dealing with a choice variable
                 val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
+                    cookiecutter_dict, env, key, raw, no_input_current
                 )
                 cookiecutter_dict[key] = val
             elif isinstance(raw, bool):
                 # We are dealing with a boolean variable
-                if no_input:
+                if no_input_current:
                     cookiecutter_dict[key] = render_variable(
                         env, raw, cookiecutter_dict
                     )
@@ -212,7 +224,7 @@ def prompt_for_config(context, no_input=False):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
 
-                if not no_input:
+                if not no_input_current:
                     val = read_user_variable(key, val)
 
                 cookiecutter_dict[key] = val
@@ -240,3 +252,23 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context) from err
 
     return cookiecutter_dict
+
+
+def parse_question_expression(context, cookiecutter_dict, env, key):
+    """Parse the question that the user entered.
+
+    :param context: Source for field names and sample values.
+    :param cookiecutter_dict: The values that already set.
+    :param env: A Jinja2 Environment object.
+    :param key: The key of the prompt variable.
+    """
+    try:
+        actual_kay, dependant_variable = key.split("?")
+        boolean_expression = env.from_string(dependant_variable).render(
+            **cookiecutter_dict
+        )
+        should_present_question = boolean_expression == "True"
+    except Exception as err:
+        msg = f"Unable to render dependent question - {key}"
+        raise InvalidBooleanExpression(msg, err, context) from err
+    return actual_kay, should_present_question

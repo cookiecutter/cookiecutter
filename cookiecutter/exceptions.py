@@ -161,3 +161,11 @@ class InvalidZipRepository(CookiecutterException):
     Raised when the specified cookiecutter repository isn't a valid
     Zip archive.
     """
+
+
+class InvalidBooleanExpression(CookiecutterException):
+    """
+    Exception for bad boolean expression.
+
+    Raised when the specified boolean expression cannot parse.
+    """
