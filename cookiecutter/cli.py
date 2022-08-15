@@ -151,6 +151,11 @@ def list_installed_templates(default_config, passed_config_file):
     is_flag=True,
     help='Do not delete project folder on failure',
 )
+@click.option(
+    '--no-tree',
+    is_flag=True,
+    help='Do not show project directory tree',
+)
 def main(
     template,
     extra_context,
@@ -169,6 +174,7 @@ def main(
     replay_file,
     list_installed,
     keep_project_on_failure,
+    no_tree,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -214,6 +220,7 @@ def main(
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            no_tree=no_tree,
         )
     except (
         ContextDecodingException,

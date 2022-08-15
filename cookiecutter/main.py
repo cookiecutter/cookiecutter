@@ -9,6 +9,8 @@ import logging
 import os
 import sys
 
+import seedir
+
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
 from cookiecutter.generate import generate_context, generate_files
@@ -35,6 +37,7 @@ def cookiecutter(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    no_tree=False,
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -129,6 +132,9 @@ def cookiecutter(
     # Cleanup (if required)
     if cleanup:
         rmtree(repo_dir)
+
+    if not no_tree:
+        seedir.seedir(output_dir)
 
     return result
 

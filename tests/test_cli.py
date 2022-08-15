@@ -110,6 +110,7 @@ def test_cli_replay(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -137,6 +138,7 @@ def test_cli_replay_file(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -173,6 +175,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -209,6 +212,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -266,6 +270,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -311,6 +316,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -342,6 +348,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -368,6 +375,7 @@ def test_default_user_config(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -632,6 +640,7 @@ def test_cli_accept_hooks(
         skip_if_file_exists=False,
         accept_hooks=expected,
         keep_project_on_failure=False,
+        no_tree=False,
     )
 
 
@@ -652,3 +661,25 @@ def test_cli_with_json_decoding_error(cli_runner):
     # this point.
     path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
     assert path in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_no_tree_on(cli_runner):
+    """Test cli invocation display log if called with `verbose` flag."""
+    result = cli_runner('tests/fake-repo-pre/', '--no-input', '--no-tree')
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+    content = Path("fake-project", "README.rst").read_text()
+    assert 'Project name: **Fake Project**' in content
+    assert result.stdout_bytes == b""
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_no_tree_off(cli_runner):
+    """Test cli invocation display log if called with `verbose` flag."""
+    result = cli_runner('tests/fake-repo-pre/', '--no-input')
+    assert result.exit_code == 0
+    assert os.path.isdir('fake-project')
+    content = Path("fake-project", "README.rst").read_text()
+    assert 'Project name: **Fake Project**' in content
+    assert result.stdout_bytes != b""
