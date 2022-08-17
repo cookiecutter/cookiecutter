@@ -9,7 +9,8 @@ import logging
 import os
 import sys
 
-from rptree.rptree import DirectoryTree
+from directory_tree import display_tree
+
 
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
@@ -134,8 +135,9 @@ def cookiecutter(
         rmtree(repo_dir)
 
     if not no_tree:
-        tree = DirectoryTree(repo_dir)
-        tree.generate()
+        # tree = DirectoryTree(output_dir)
+        # tree.generate()
+        display_tree(output_dir)
 
     return result
 
