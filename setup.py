@@ -14,7 +14,7 @@ requirements = [
     'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
-    'seedir >= 0.3.1',
+    'rptree >= 0.1.1',
 ]
 
 setup(
