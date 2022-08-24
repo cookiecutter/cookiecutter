@@ -78,7 +78,7 @@ def test_cli(cli_runner):
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_jinja2_change_delimiters(cli_runner):
-    """Test jinja2 change delimiters add duo bug in issue #1736."""
+    """Test jinja2 change delimiters add due to issue #1736."""
     result = cli_runner('tests/fake-repo-jinja2-delimiters/', '--no-input')
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
