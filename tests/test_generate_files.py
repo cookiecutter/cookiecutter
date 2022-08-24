@@ -8,14 +8,16 @@ from pathlib import Path
 import pytest
 from binaryornot.check import is_binary
 
+from cookieninja.environment import StrictEnvironment
 from cookieninja import exceptions, generate
 
 
 @pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])
 def test_ensure_dir_is_templated_raises(invalid_dirname):
     """Verify `ensure_dir_is_templated` raises on wrong directories names input."""
+    environment = StrictEnvironment()
     with pytest.raises(exceptions.NonTemplatedInputDirException):
-        generate.ensure_dir_is_templated(invalid_dirname)
+        generate.ensure_dir_is_templated(invalid_dirname, environment)
 
 
 def test_generate_files_nontemplated_exception(tmp_path):

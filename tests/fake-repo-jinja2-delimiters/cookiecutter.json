@@ -1,0 +1,8 @@
+{
+	"repo_name": "fake-project",
+    "project_name": "Fake Project",
+	"_jinja2_env_vars": {
+        "variable_start_string": "[[",
+        "variable_end_string": "]]"
+    }
+}
