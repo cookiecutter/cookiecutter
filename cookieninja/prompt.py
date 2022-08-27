@@ -2,6 +2,7 @@
 import functools
 import json
 from collections import OrderedDict
+import ast
 
 import click
 from jinja2.exceptions import UndefinedError
@@ -159,7 +160,19 @@ def render_variable(env, raw, cookiecutter_dict):
 
     template = env.from_string(raw)
 
-    return template.render(cookiecutter=cookiecutter_dict)
+    rendered_variable_str = template.render(cookiecutter=cookiecutter_dict)
+    try:
+        return ast.literal_eval(rendered_variable_str)
+    except UndefinedError as e:
+        raise e
+    except (
+        ValueError,
+        TypeError,
+        SyntaxError,
+        MemoryError,
+        RecursionError,
+    ):
+        return rendered_variable_str
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
@@ -186,39 +199,39 @@ def prompt_for_config(context, no_input=False):
     # These must be done first because the dictionaries keys and
     # values might refer to them.
     for key, raw in context['cookiecutter'].items():
+        try:
+            rendered_raw = render_variable(env, raw, cookiecutter_dict)
+        except UndefinedError as err:
+            msg = f"Unable to render variable '{key}'"
+            raise UndefinedVariableInTemplate(msg, err, context) from err
+
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
         elif key.startswith('__'):
-            cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
+            cookiecutter_dict[key] = rendered_raw
             continue
 
-        try:
-            if isinstance(raw, list):
-                # We are dealing with a choice variable
-                val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
-                )
-                cookiecutter_dict[key] = val
-            elif isinstance(raw, bool):
-                # We are dealing with a boolean variable
-                if no_input:
-                    cookiecutter_dict[key] = render_variable(
-                        env, raw, cookiecutter_dict
-                    )
-                else:
-                    cookiecutter_dict[key] = read_user_yes_no(key, raw)
-            elif not isinstance(raw, dict):
-                # We are dealing with a regular variable
-                val = render_variable(env, raw, cookiecutter_dict)
+        raw = rendered_raw
+        if isinstance(rendered_raw, list):
+            # We are dealing with a choice variable
+            val = prompt_choice_for_config(
+                cookiecutter_dict, env, key, rendered_raw, no_input
+            )
+            cookiecutter_dict[key] = val
+        elif isinstance(rendered_raw, bool):
+            # We are dealing with a boolean variable
+            if no_input:
+                cookiecutter_dict[key] = rendered_raw
+            else:
+                cookiecutter_dict[key] = read_user_yes_no(key, rendered_raw)
+        elif not isinstance(rendered_raw, dict):
+            # We are dealing with a regular variable
+            val = raw
+            if not no_input:
+                val = read_user_variable(key, rendered_raw)
 
-                if not no_input:
-                    val = read_user_variable(key, val)
-
-                cookiecutter_dict[key] = val
-        except UndefinedError as err:
-            msg = f"Unable to render variable '{key}'"
-            raise UndefinedVariableInTemplate(msg, err, context) from err
+            cookiecutter_dict[key] = val
 
     # Second pass; handle the dictionaries.
     for key, raw in context['cookiecutter'].items():
