@@ -163,8 +163,6 @@ def render_variable(env, raw, cookiecutter_dict):
     rendered_variable_str = template.render(cookiecutter=cookiecutter_dict)
     try:
         rendered_variable = ast.literal_eval(rendered_variable_str)
-    except UndefinedError as e:
-        raise e
     except (
         ValueError,
         TypeError,
