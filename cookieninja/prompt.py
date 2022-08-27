@@ -162,7 +162,7 @@ def render_variable(env, raw, cookiecutter_dict):
 
     rendered_variable_str = template.render(cookiecutter=cookiecutter_dict)
     try:
-        return ast.literal_eval(rendered_variable_str)
+        rendered_variable = ast.literal_eval(rendered_variable_str)
     except UndefinedError as e:
         raise e
     except (
@@ -172,7 +172,8 @@ def render_variable(env, raw, cookiecutter_dict):
         MemoryError,
         RecursionError,
     ):
-        return rendered_variable_str
+        rendered_variable = rendered_variable_str
+    return rendered_variable
 
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
