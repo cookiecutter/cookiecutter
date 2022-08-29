@@ -1,0 +1,7 @@
+pip
+{% if cookiecutter.command_line_interface|lower == 'click' -%}
+{% include 'click-requirements.jinja' %}{% endif %}
+{%- block dev_dependencies %}
+{% if cookiecutter.use_pytest == 'y' -%}{% include 'pytest-requirements.jinja' %}{% endif %}
+{%- endblock %}
+{% block dependencies %}{% endblock %}

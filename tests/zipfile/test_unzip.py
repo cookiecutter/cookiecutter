@@ -1,8 +1,9 @@
 """Tests for function unzip() from zipfile module."""
+import shutil
 import tempfile
+from pathlib import Path
 
 import pytest
-import shutil
 
 from cookiecutter import zipfile
 from cookiecutter.exceptions import InvalidZipRepository
@@ -10,7 +11,7 @@ from cookiecutter.exceptions import InvalidZipRepository
 
 def mock_download():
     """Fake download function."""
-    with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:
+    with Path('tests/files/fake-repo-tmpl.zip').open('rb') as zf:
         chunk = zf.read(1024)
         while chunk:
             yield chunk
@@ -20,7 +21,7 @@ def mock_download():
 def mock_download_with_empty_chunks():
     """Fake download function."""
     yield
-    with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:
+    with Path('tests/files/fake-repo-tmpl.zip').open('rb') as zf:
         chunk = zf.read(1024)
         while chunk:
             yield chunk

@@ -4,9 +4,18 @@ on:
   push:
     branches:
       - master
+  # autolabeler
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 jobs:
   update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5

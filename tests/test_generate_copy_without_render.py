@@ -1,5 +1,6 @@
 """Verify correct work of `_copy_without_render` context option."""
 import os
+from pathlib import Path
 
 import pytest
 
@@ -43,33 +44,33 @@ def test_generate_copy_without_render_extensions():
     assert 'test_copy_without_render-not-rendered' in dir_contents
     assert 'test_copy_without_render-rendered' in dir_contents
 
-    with open('test_copy_without_render/README.txt') as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    file_1 = Path('test_copy_without_render/README.txt').read_text()
+    assert '{{cookiecutter.render_test}}' in file_1
 
-    with open('test_copy_without_render/README.rst') as f:
-        assert 'I have been rendered!' in f.read()
+    file_2 = Path('test_copy_without_render/README.rst').read_text()
+    assert 'I have been rendered!' in file_2
 
-    with open(
+    file_3 = Path(
         'test_copy_without_render/test_copy_without_render-rendered/README.txt'
-    ) as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    ).read_text()
+    assert '{{cookiecutter.render_test}}' in file_3
 
-    with open(
+    file_4 = Path(
         'test_copy_without_render/test_copy_without_render-rendered/README.rst'
-    ) as f:
-        assert 'I have been rendered' in f.read()
+    ).read_text()
+    assert 'I have been rendered' in file_4
 
-    with open(
+    file_5 = Path(
         'test_copy_without_render/'
         'test_copy_without_render-not-rendered/'
         'README.rst'
-    ) as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    ).read_text()
+    assert '{{cookiecutter.render_test}}' in file_5
 
-    with open('test_copy_without_render/rendered/not_rendered.yml') as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    file_6 = Path('test_copy_without_render/rendered/not_rendered.yml').read_text()
+    assert '{{cookiecutter.render_test}}' in file_6
 
-    with open(
+    file_7 = Path(
         'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md'
-    ) as f:
-        assert '{{cookiecutter.render_test}}' in f.read()
+    ).read_text()
+    assert '{{cookiecutter.render_test}}' in file_7

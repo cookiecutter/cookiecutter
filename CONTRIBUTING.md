@@ -3,11 +3,11 @@
 Contributions are welcome, and they are greatly appreciated!
 Every little bit helps, and credit will always be given.
 
-- [Types of Contributions](#Types-of-Contributions)
-- [Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
-- [Contributor Guidelines](#Contributor-Guidelines)
-- [Contributor Testing](#Testing-with-tox)
-- [Core Committer Guide](#Core-Committer-Guide)
+- [Types of Contributions](#types-of-contributions)
+- [Contributor Setup](#setting-up-the-code-for-local-development)
+- [Contributor Guidelines](#contributor-guidelines)
+- [Contributor Testing](#testing-with-tox)
+- [Core Committer Guide](#core-committer-guide)
 
 ## Types of Contributions
 

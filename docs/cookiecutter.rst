@@ -2,7 +2,6 @@
 API
 ===
 
-
 This is the Cookiecutter modules API documentation.
 
 
