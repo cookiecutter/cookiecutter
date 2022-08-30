@@ -25,3 +25,4 @@ Various advanced topics regarding cookiecutter usage.
    directories
    new_line_characters
    local_extensions
+   nested_config_files

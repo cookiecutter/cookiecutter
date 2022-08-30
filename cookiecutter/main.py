@@ -4,14 +4,15 @@ Main entry point for the `cookiecutter` command.
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
-from copy import copy
 import logging
 import os
+import re
 import sys
+from copy import copy
 
+from cookiecutter import generate
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
-from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.prompt import prompt_for_config
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
@@ -95,7 +96,7 @@ def cookiecutter(
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
         logger.debug('context_file is %s', context_file)
 
-        context = generate_context(
+        context = generate.generate_context(
             context_file=context_file,
             default_context=config_dict['default_context'],
             extra_context=extra_context,
@@ -105,6 +106,27 @@ def cookiecutter(
         # except when 'no-input' flag is set
         with import_patch:
             context['cookiecutter'] = prompt_for_config(context, no_input)
+
+        if "template" in context["cookiecutter"]:
+            nested_template = re.search(
+                r'\((.*?)\)', context["cookiecutter"]["template"]
+            ).group(1)
+            return cookiecutter(
+                template=os.path.join(template, nested_template),
+                checkout=checkout,
+                no_input=no_input,
+                extra_context=extra_context,
+                replay=replay,
+                overwrite_if_exists=overwrite_if_exists,
+                output_dir=output_dir,
+                config_file=config_file,
+                default_config=default_config,
+                password=password,
+                directory=directory,
+                skip_if_file_exists=skip_if_file_exists,
+                accept_hooks=accept_hooks,
+                keep_project_on_failure=keep_project_on_failure,
+            )
 
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
@@ -116,7 +138,7 @@ def cookiecutter(
 
     # Create project from local context and project template.
     with import_patch:
-        result = generate_files(
+        result = generate.generate_files(
             repo_dir=repo_dir,
             context=context,
             overwrite_if_exists=overwrite_if_exists,
