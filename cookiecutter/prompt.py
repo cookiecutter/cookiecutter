@@ -219,6 +219,11 @@ def prompt_for_config(context, no_input=False):
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
+                
+                if isinstance(val, list):
+                    val = prompt_choice_for_config(
+                        cookiecutter_dict, env, key, val, no_input
+                    )
 
                 if not no_input:
                     val = read_user_variable(key, val)
