@@ -1,5 +1,6 @@
 """Functions for prompting the user for project info."""
 import functools
+import ast
 import json
 from collections import OrderedDict
 
@@ -158,9 +159,14 @@ def render_variable(env, raw, cookiecutter_dict):
         raw = str(raw)
 
     template = env.from_string(raw)
+    out = template.render(cookiecutter=cookiecutter_dict)
 
-    return template.render(cookiecutter=cookiecutter_dict)
-
+    try:
+        return ast.literal_eval(out)
+    except:
+        pass
+    
+    return out
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
     """Prompt user with a set of options to choose from.
