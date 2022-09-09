@@ -208,6 +208,14 @@ def prompt_for_config(context, no_input=False):
                     )
                 else:
                     cookiecutter_dict[key] = read_user_yes_no(key, raw)
+            elif isinstance(raw, dict):
+                # We are dealing with a dict variable
+                val = render_variable(env, raw, cookiecutter_dict)
+
+                if not no_input and not key.startswith('__'):
+                    val = read_user_dict(key, val)
+
+                cookiecutter_dict[key] = val
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
@@ -216,25 +224,7 @@ def prompt_for_config(context, no_input=False):
                     val = read_user_variable(key, val)
 
                 cookiecutter_dict[key] = val
-        except UndefinedError as err:
-            msg = f"Unable to render variable '{key}'"
-            raise UndefinedVariableInTemplate(msg, err, context) from err
 
-    # Second pass; handle the dictionaries.
-    for key, raw in context['cookiecutter'].items():
-        # Skip private type dicts not to be rendered.
-        if key.startswith('_') and not key.startswith('__'):
-            continue
-
-        try:
-            if isinstance(raw, dict):
-                # We are dealing with a dict variable
-                val = render_variable(env, raw, cookiecutter_dict)
-
-                if not no_input and not key.startswith('__'):
-                    val = read_user_dict(key, val)
-
-                cookiecutter_dict[key] = val
         except UndefinedError as err:
             msg = f"Unable to render variable '{key}'"
             raise UndefinedVariableInTemplate(msg, err, context) from err
