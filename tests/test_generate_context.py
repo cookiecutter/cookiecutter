@@ -16,7 +16,13 @@ def context_data():
     """
     context = (
         {'context_file': 'tests/test-generate-context/test.json'},
-        {'test': {'1': 2, 'some_key': 'some_val'}},
+        {
+            'test': {
+                '1': 2,
+                'some_key': 'some_val',
+                '_copy_without_render': ['**/*.txt'],
+            }
+        },
     )
 
     context_with_default = (
@@ -24,7 +30,27 @@ def context_data():
             'context_file': 'tests/test-generate-context/test.json',
             'default_context': {'1': 3},
         },
-        {'test': {'1': 3, 'some_key': 'some_val'}},
+        {
+            'test': {
+                '1': 3,
+                'some_key': 'some_val',
+                '_copy_without_render': ['**/*.txt'],
+            }
+        },
+    )
+
+    context_with_list_default = (
+        {
+            'context_file': 'tests/test-generate-context/test.json',
+            'default_context': {'_copy_without_render': ['**/*.html']},
+        },
+        {
+            'test': {
+                '1': 2,
+                'some_key': 'some_val',
+                '_copy_without_render': ['**/*.html'],
+            }
+        },
     )
 
     context_with_extra = (
@@ -32,7 +58,13 @@ def context_data():
             'context_file': 'tests/test-generate-context/test.json',
             'extra_context': {'1': 4},
         },
-        {'test': {'1': 4, 'some_key': 'some_val'}},
+        {
+            'test': {
+                '1': 4,
+                'some_key': 'some_val',
+                '_copy_without_render': ['**/*.txt'],
+            }
+        },
     )
 
     context_with_default_and_extra = (
@@ -41,11 +73,18 @@ def context_data():
             'default_context': {'1': 3},
             'extra_context': {'1': 5},
         },
-        {'test': {'1': 5, 'some_key': 'some_val'}},
+        {
+            'test': {
+                '1': 5,
+                'some_key': 'some_val',
+                '_copy_without_render': ['**/*.txt'],
+            }
+        },
     )
 
     yield context
     yield context_with_default
+    yield context_with_list_default
     yield context_with_extra
     yield context_with_default_and_extra
 
