@@ -80,7 +80,7 @@ def read_user_choice(var_name, options):
     user_choice = click.prompt(
         prompt, type=click.Choice(choices), default=default, show_choices=False
     )
-    return value_map[user_choice]
+    return values_map[user_choice]
 
 
 DEFAULT_DISPLAY = 'default'
