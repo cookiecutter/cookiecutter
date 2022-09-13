@@ -58,9 +58,13 @@ def read_user_choice(var_name, options):
 
     if not options:
         raise ValueError
+        
+    choices = [ option[0] if isinstance(option, tuple) for option in options ]
+    values = [ option[1] if isinstance(option, tuple) for option in options ]
 
-    choice_map = OrderedDict((f'{i}', value[0] if isinstance(value, tuple) else value for i, value in enumerate(options, 1))
-    values_map = OrderedDict((f'{i}', value[1] if isinstance(value, tuple) else value for i, value in enumerate(options, 1))                             
+    choice_map = OrderedDict((f'{i}', choice for i, choice in enumerate(choices, 1))
+    values_map = OrderedDict((f'{i}', value for i, value in enumerate(values, 1))
+    
     choices = choice_map.keys()
     default = '1'
 
