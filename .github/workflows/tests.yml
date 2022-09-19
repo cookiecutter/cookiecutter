@@ -57,6 +57,16 @@ jobs:
           - "3.8"
           - "3.9"
           - "3.10"
+        include:
+          - nox_py: "3.11"
+            python: "~3.11.0-0" # needed until 3.11 is released
+            os: ubuntu-latest
+          - nox_py: "3.11"
+            python: "~3.11.0-0" # needed until 3.11 is released
+            os: windows-latest
+          - nox_py: "3.11"
+            python: "~3.11.0-0" # needed until 3.11 is released
+            os: macos-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python }}
@@ -68,9 +78,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install nox virtualenv
       - name: Project internals test build
-        run: "nox -p ${{ matrix.python }} -s tests"
+        run: "nox -p ${{ matrix.nox_py || matrix.python }} -s tests"
       - name: Project security test
-        run: "nox -p ${{ matrix.python }} -s safety_tests"
+        run: "nox -p ${{ matrix.nox_py || matrix.python }} -s safety_tests"
       - name: Send coverage report to codeclimate
         continue-on-error: true
         uses: paambaati/codeclimate-action@v3.0.0
