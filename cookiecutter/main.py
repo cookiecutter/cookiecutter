@@ -35,6 +35,7 @@ def cookiecutter(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -58,6 +59,7 @@ def cookiecutter(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
+    :param dump_input: If 'True' the user input will be saved in new created file named .cookiecutter.json
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
