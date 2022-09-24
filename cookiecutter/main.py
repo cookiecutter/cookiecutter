@@ -129,6 +129,7 @@ def cookiecutter(
             output_dir=output_dir,
             accept_hooks=accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            dump_input=dump_input
         )
 
     # Cleanup (if required)
