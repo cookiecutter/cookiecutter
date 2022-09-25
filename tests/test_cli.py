@@ -374,8 +374,7 @@ def test_user_input_dump(mocker, cli_runner, user_config_path):
         skip_if_file_exists=False,
         output_dir='.',
         config_file=user_config_path,
-        default_config=False
-        ,
+        default_config=False,
         extra_context=None,
         password=None,
         directory=None,
