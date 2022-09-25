@@ -154,7 +154,7 @@ def list_installed_templates(default_config, passed_config_file):
 @click.option(
     '--dump-input',
     is_flag=True,
-    help="Add user input to generated .cookiecutter.json"
+    help="Add user input to generated .cookiecutter.json",
 )
 def main(
     template,
@@ -174,7 +174,7 @@ def main(
     replay_file,
     list_installed,
     keep_project_on_failure,
-    dump_input
+    dump_input,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -220,7 +220,7 @@ def main(
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
-            dump_input=dump_input
+            dump_input=dump_input,
         )
     except (
         ContextDecodingException,

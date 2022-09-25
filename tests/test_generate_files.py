@@ -260,6 +260,25 @@ def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists(tmp_pa
     assert simple_text == 'temp'
 
 
+def test_generate_files_with_user_output(tmp_path):
+    """Verify that user input file is generated when `dump_input` option is on."""
+    user_input_file_path = Path(tmp_path, 'inputpizzä', '.cookiecutter.json')
+
+    generate.generate_files(
+        context={'cookiecutter': {'food': 'pizzä'}},
+        repo_dir='tests/test-generate-files',
+        output_dir=tmp_path,
+        dump_input=True,
+    )
+
+    assert Path(user_input_file_path).is_file()
+    assert Path(user_input_file_path).exists()
+
+    # Using the unicode_scape because of the special ä character
+    simple_text = Path(user_input_file_path).read_text(encoding='unicode_escape')
+    assert simple_text == '{\n  "food": "pizzä"\n}'
+
+
 def test_generate_files_with_skip_if_file_exists(tmp_path):
     """Verify existed files not removed if error raised with `skip_if_file_exists`."""
     simple_file = Path(tmp_path, 'inputpizzä/simple.txt')

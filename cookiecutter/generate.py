@@ -277,7 +277,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
-    dump_input=False
+    dump_input=False,
 ):
     """Render the templates and saves them to files.
 
@@ -291,8 +291,8 @@ def generate_files(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
-    :param dump_input: If 'True' the user input will be added to the generated template in a new file named:
-        '.cookiecutter.json'
+    :param dump_input: If 'True' the user input will be added to the generated
+        template in a new file named: '.cookiecutter.json'
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
