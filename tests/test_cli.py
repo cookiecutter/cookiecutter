@@ -110,6 +110,7 @@ def test_cli_replay(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
@@ -137,6 +138,7 @@ def test_cli_replay_file(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
@@ -173,6 +175,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
@@ -209,6 +212,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
@@ -266,6 +270,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
@@ -311,6 +316,40 @@ def test_user_config(mocker, cli_runner, user_config_path):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
+    )
+
+
+@pytest.fixture
+def hooks_dir_path(tmpdir):
+    """Pytest fixture return `hooks-dir` argument as string."""
+    return str(tmpdir.join('myhooks'))
+
+
+def test_hooks_dir(mocker, cli_runner, hooks_dir_path):
+    """Test cli invocation works with `hooks-dir` option."""
+    mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
+
+    template_path = 'tests/fake-repo-pre/'
+    result = cli_runner(template_path, '--hooks-dir', hooks_dir_path)
+
+    assert result.exit_code == 0
+    mock_cookiecutter.assert_called_once_with(
+        template_path,
+        None,
+        False,
+        replay=False,
+        overwrite_if_exists=False,
+        skip_if_file_exists=False,
+        output_dir='.',
+        config_file=None,
+        default_config=False,
+        extra_context=None,
+        password=None,
+        directory=None,
+        accept_hooks=True,
+        keep_project_on_failure=False,
+        hooks_dir=hooks_dir_path,
     )
 
 
@@ -342,6 +381,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
@@ -368,6 +408,7 @@ def test_default_user_config(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
@@ -633,6 +674,7 @@ def test_cli_accept_hooks(
         skip_if_file_exists=False,
         accept_hooks=expected,
         keep_project_on_failure=False,
+        hooks_dir='hooks',
     )
 
 
