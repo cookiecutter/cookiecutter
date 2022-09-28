@@ -269,9 +269,10 @@ def _run_hook_from_repo_dir(
             raise
 
 
-def _dump_input(context:dict, project_dir:str, delete_project_on_failure:bool) -> None:
-    """
-    creates .cookiecutter.json file in the project dir with all the user's inputs.
+def _dump_input(
+    context: dict, project_dir: str, delete_project_on_failure: bool
+) -> None:
+    """Generate .cookiecutter.json file in the project dir with all the user's inputs.
 
     :param project_dir: The directory to execute the script from.
     :param context: Cookiecutter project context.
@@ -286,19 +287,21 @@ def _dump_input(context:dict, project_dir:str, delete_project_on_failure:bool) -
         with open(file_path, 'w') as f:
             json.dump(file_content, f)
 
-    # Note: Would handle the error better and maybe create custom exception
-    except (OSError, ValueError) as e:
+    # Note: To keep `delete_project_on_failure` flag relevant we need to handle failure
+    except (OSError, TypeError) as err:
         if delete_project_on_failure:
             rmtree(project_dir)
         logger.error(
-            f"""Stopping generation couldn't create .cookiecutter.json
-            script didn't exit successfully
-            path: {file_path}
-            content: {file_content}
-            error: {e}
-            """
+            """Stopping generation couldn't create .cookiecutter.json
+            path: %s
+            content: %s
+            error: %s
+            """,
+            file_path,
+            file_content,
+            err,
         )
-        raise e
+        raise err
 
 
 def generate_files(
@@ -309,7 +312,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
-    dump_input=False
+    dump_input=False,
 ):
     """Render the templates and saves them to files.
 
@@ -442,6 +445,6 @@ def generate_files(
         )
 
     if dump_input:
-        _dump_input(context,project_dir,delete_project_on_failure)
+        _dump_input(context, project_dir, delete_project_on_failure)
 
     return project_dir

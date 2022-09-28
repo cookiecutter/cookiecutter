@@ -438,19 +438,19 @@ def test_raise_undefined_variable_project_dir(tmp_path):
 
     assert not Path(tmp_path, 'testproject').exists()
 
+
 def test_generate_files_with_dump_input(tmp_path):
-    """Test .cookiecutter.json created"""
+    """Test .cookiecutter.json created."""
     output_path = Path(tmp_path, 'inputpizzä')
     output_path.mkdir(parents=True)
-    # Path(simple_file).write_text('temp')
 
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä'}},
         repo_dir='tests/test-generate-files',
         overwrite_if_exists=True,
         output_dir=tmp_path,
-        dump_input=True
+        dump_input=True,
     )
-    path = Path(output_path,'.cookiecutter.json')
+    path = Path(output_path, '.cookiecutter.json')
     assert path.exists()
     assert path.read_text() == '{"food": "pizz\\u00e4"}'

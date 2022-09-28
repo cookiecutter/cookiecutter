@@ -175,7 +175,7 @@ def main(
     replay_file,
     list_installed,
     keep_project_on_failure,
-    dump_input
+    dump_input,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
