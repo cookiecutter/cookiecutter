@@ -35,6 +35,7 @@ def cookiecutter(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -127,6 +128,7 @@ def cookiecutter(
             output_dir=output_dir,
             accept_hooks=accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            dump_input=dump_input,
         )
 
     # Cleanup (if required)

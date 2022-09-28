@@ -269,6 +269,38 @@ def _run_hook_from_repo_dir(
             raise
 
 
+def _dump_input(context:dict, project_dir:str, delete_project_on_failure:bool) -> None:
+    """
+    creates .cookiecutter.json file in the project dir with all the user's inputs.
+
+    :param project_dir: The directory to execute the script from.
+    :param context: Cookiecutter project context.
+    :param delete_project_on_failure: Delete the project directory on hook
+        failure?
+    """
+    logger.debug('Creating .cookiecutter.json file')
+    file_path = os.path.join(project_dir, '.cookiecutter.json')
+    file_content = context.get('cookiecutter')
+
+    try:
+        with open(file_path, 'w') as f:
+            json.dump(file_content, f)
+
+    # Note: Would handle the error better and maybe create custom exception
+    except (OSError, ValueError) as e:
+        if delete_project_on_failure:
+            rmtree(project_dir)
+        logger.error(
+            f"""Stopping generation couldn't create .cookiecutter.json
+            script didn't exit successfully
+            path: {file_path}
+            content: {file_content}
+            error: {e}
+            """
+        )
+        raise e
+
+
 def generate_files(
     repo_dir,
     context=None,
@@ -277,6 +309,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False
 ):
     """Render the templates and saves them to files.
 
@@ -407,5 +440,8 @@ def generate_files(
             context,
             delete_project_on_failure,
         )
+
+    if dump_input:
+        _dump_input(context,project_dir,delete_project_on_failure)
 
     return project_dir
