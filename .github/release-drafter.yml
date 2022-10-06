@@ -32,7 +32,6 @@ autolabeler:
       - 'docs/conf.py'
       - 'Makefile'
       - 'make.bat'
-      - '*requirements*.txt'
   - label: 'documentation'
     files:
       - '*.md'

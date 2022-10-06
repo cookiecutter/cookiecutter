@@ -13,7 +13,8 @@ formats:
   - pdf
   - epub
 python:
-   install:
-   - requirements: docs/requirements.txt
-   - method: pip
-     path: .
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs

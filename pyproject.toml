@@ -1,5 +1,108 @@
+[build-system]
+requires = ["hatchling>=1.8.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cookiecutter"
+dynamic = ["version"]
+description = "A command-line utility that creates projects from project templates, e.g. creating a Python package project from a Python package project template."
+readme = "README.md"
+license = "BSD-3-Clause"
+requires-python = ">=3.7"
+authors = [
+    { name = "Audrey Feldroy", email = "audreyr@gmail.com" },
+]
+keywords = [
+    "cookiecutter",
+    "Python",
+    "projects",
+    "project templates",
+    "Jinja2",
+    "skeleton",
+    "scaffolding",
+    "project directory",
+    "package",
+    "packaging",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+]
+dependencies = [
+    "binaryornot>=0.4.4",
+    "Jinja2>=2.7,<4.0.0",
+    "click>=7.0,<9.0.0",
+    "pyyaml>=5.3.1",
+    "jinja2-time>=0.2.0",
+    "python-slugify>=4.0.0",
+    "requests>=2.23.0",
+]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx-rtd-theme>=1.0.0",
+    "sphinx-click>=4.1.0",
+    "myst-parser>=0.17.2",
+    "sphinx-autobuild>=2021.3.14",
+    "Sphinx>=4.5.0",
+    "sphinxcontrib-apidoc>=0.3.0",
+    "sphinx-autodoc-typehints>=1.18.2",
+]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "freezegun",
+    "safety",
+    "pre-commit",
+]
+
+[project.urls]
+homepage = "https://github.com/cookiecutter/cookiecutter"
+
+[project.scripts]
+cookiecutter = "cookiecutter.__main__:main"
+
+[tool.hatch.version]
+path = "cookiecutter/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/cookiecutter",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "/cookiecutter",
+]
+
 [tool.black]
 skip-string-normalization = true
-exclude = '/(tests/hooks-abort-render/hooks|docs\/HelloCookieCutter1)/'
+exclude = "/(tests/hooks-abort-render/hooks|docs\\/HelloCookieCutter1)/"
 line-length = 88
-target-version = ['py39']
+target-version = [
+    "py39",
+]
+
+[tool.pytest]
+testpaths = [
+    "tests",
+]
+addopts = [
+    "-vvv",
+    "--cov-report term-missing",
+    "--cov=cookiecutter",
+]

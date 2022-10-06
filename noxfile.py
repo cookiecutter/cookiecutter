@@ -12,8 +12,7 @@ nox.options.keywords = "not docs"
 
 def base_install(session):
     """Create basic environment setup for tests and linting."""
-    session.install("-r", "test_requirements.txt")
-    session.install("-e", ".")
+    session.install("-e", ".[test]")
     return session
 
 
@@ -54,8 +53,7 @@ def documentation_tests(session):
 def docs(session, batch_run: bool = False):
     """Build the documentation or serve documentation interactively."""
     shutil.rmtree(Path("docs").joinpath("_build"), ignore_errors=True)
-    session.install("-r", "docs/requirements.txt")
-    session.install("-e", ".")
+    session.install("-e", ".[docs]")
     session.cd("docs")
     sphinx_args = ["-b", "html", "-W", ".", "_build/html"]
 

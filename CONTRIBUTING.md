@@ -48,7 +48,7 @@ Cookiecutter could always use more documentation, whether as part of the officia
 If you want to review your changes on the documentation locally, you can do:
 
 ```bash
-pip install -r docs/requirements.txt
+pip install -e ".[docs]"
 make servedocs
 ```
 
