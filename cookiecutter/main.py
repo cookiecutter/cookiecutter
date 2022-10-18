@@ -133,6 +133,8 @@ def cookiecutter(
 
     # include output+dir in the context dict
     context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
+        # include repo dir or url in the context dict
+    context['cookiecutter']['_repo_dir'] = repo_dir
 
     dump(config_dict['replay_dir'], template_name, context)
 
