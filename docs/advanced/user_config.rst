@@ -59,7 +59,7 @@ Possible settings are:
     Any suffix will be inserted into the expansion in place of the text ``{0}``, using standard Python string formatting.
     With the above aliases, you could use the ``cookiecutter-pypackage`` template simply by saying ``cookiecutter pp``, or ``cookiecutter gh:audreyr/cookiecutter-pypackage``.
     The ``gh`` (GitHub), ``bb`` (Bitbucket), and ``gl`` (Gitlab) abbreviations shown above are actually **built in**, and can be used without defining them yourself.
-    To specify the ``--directory`` CLI option by default for abbreviations, write the abbreviation as a mapping. 
+    To specify the ``--directory`` CLI option by default for abbreviations, write the abbreviation as a mapping.
     The key ``expansion`` must contain the expanded repository string and the key ``directory`` the subdirectory of that repository.
 
 Read also: :ref:`injecting-extra-content`
