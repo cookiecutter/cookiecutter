@@ -37,7 +37,7 @@ Pass the according option on the CLI:
     cookiecutter --replay gh:hackebrot/cookiedozer
 
 
-Or use the Python API::
+Or use the Python API:
 
 .. code-block:: python
 

@@ -34,6 +34,7 @@ def cookiecutter(
     directory=None,
     skip_if_file_exists=False,
     accept_hooks=True,
+    keep_project_on_failure=False,
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -41,7 +42,9 @@ def cookiecutter(
     :param template: A directory containing a project template directory,
         or a URL to a git repository.
     :param checkout: The branch, tag or commit ID to checkout after clone.
-    :param no_input: Prompt the user at command line for manual configuration?
+    :param no_input: Do not prompt for user input.
+        Use default values for template parameters taken from `cookiecutter.json`, user
+        config and `extra_dict`. Force a refresh of cached resources.
     :param extra_context: A dictionary of context that overrides default
         and user configuration.
     :param replay: Do not prompt for input, instead read from saved json. If
@@ -53,6 +56,8 @@ def cookiecutter(
     :param password: The password to use when extracting the repository.
     :param directory: Relative path to a cookiecutter template in a repository.
     :param accept_hooks: Accept pre and post hooks if set to `True`.
+    :param keep_project_on_failure: If `True` keep generated project directory even when
+        generation fails
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -104,6 +109,9 @@ def cookiecutter(
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
 
+        # include repo dir or url in the context dict
+        context['cookiecutter']['_repo_dir'] = repo_dir
+
         # include output+dir in the context dict
         context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
 
@@ -118,6 +126,7 @@ def cookiecutter(
             skip_if_file_exists=skip_if_file_exists,
             output_dir=output_dir,
             accept_hooks=accept_hooks,
+            keep_project_on_failure=keep_project_on_failure,
         )
 
     # Cleanup (if required)

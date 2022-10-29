@@ -12,10 +12,6 @@ USER_CONFIG = """
 cookiecutters_dir: '{cookiecutters_dir}'
 replay_dir: '{replay_dir}'
 """
-# In YAML, double quotes mean to use escape sequences.
-# Single quotes mean we will have unescaped backslahes.
-# http://blogs.perl.org/users/tinita/2018/03/
-# strings-in-yaml---to-quote-or-not-to-quote.html
 
 
 @pytest.fixture(autouse=True)
@@ -38,7 +34,7 @@ def backup_dir(original_dir, backup_dir):
     if not os.path.isdir(original_dir):
         return False
 
-    # Remove existing backups before backing up. If they exist, they're stale.
+    # Remove existing stale backups before backing up.
     if os.path.isdir(backup_dir):
         utils.rmtree(backup_dir)
 
@@ -48,12 +44,9 @@ def backup_dir(original_dir, backup_dir):
 
 def restore_backup_dir(original_dir, backup_dir, original_dir_found):
     """Restore default contents."""
-    # Carefully delete the created original_dir only in certain
-    # conditions.
     original_dir_is_dir = os.path.isdir(original_dir)
     if original_dir_found:
-        # Delete the created original_dir as long as a backup
-        # exists
+        # Delete original_dir if a backup exists
         if original_dir_is_dir and os.path.isdir(backup_dir):
             utils.rmtree(original_dir)
     else:

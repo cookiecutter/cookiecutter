@@ -3,7 +3,7 @@
 import json
 import os
 import re
-
+from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
@@ -72,8 +72,8 @@ def test_cli(cli_runner):
     result = cli_runner('tests/fake-repo-pre/', '--no-input')
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
-    with open(os.path.join('fake-project', 'README.rst')) as f:
-        assert 'Project name: **Fake Project**' in f.read()
+    content = Path("fake-project", "README.rst").read_text()
+    assert 'Project name: **Fake Project**' in content
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -82,8 +82,8 @@ def test_cli_verbose(cli_runner):
     result = cli_runner('tests/fake-repo-pre/', '--no-input', '-v')
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
-    with open(os.path.join('fake-project', 'README.rst')) as f:
-        assert 'Project name: **Fake Project**' in f.read()
+    content = Path("fake-project", "README.rst").read_text()
+    assert 'Project name: **Fake Project**' in content
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -109,6 +109,7 @@ def test_cli_replay(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -135,6 +136,7 @@ def test_cli_replay_file(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -170,6 +172,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -205,6 +208,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -261,6 +265,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -305,6 +310,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -335,6 +341,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -360,6 +367,7 @@ def test_default_user_config(mocker, cli_runner):
         password=None,
         directory=None,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
@@ -390,6 +398,7 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
             'github_username': 'hackebrot',
             'project_slug': 'testproject',
             '_template': template_path,
+            '_repo_dir': template_path,
             '_output_dir': output_dir,
         }
     }
@@ -427,10 +436,9 @@ def test_local_extension(tmpdir, cli_runner):
         template_path,
     )
     assert result.exit_code == 0
-    with open(os.path.join(output_dir, 'Foobar', 'HISTORY.rst')) as f:
-        data = f.read()
-        assert 'FoobarFoobar' in data
-        assert 'FOOBAR' in data
+    content = Path(output_dir, 'Foobar', 'HISTORY.rst').read_text()
+    assert 'FoobarFoobar' in content
+    assert 'FOOBAR' in content
 
 
 def test_local_extension_not_available(tmpdir, cli_runner):
@@ -454,8 +462,8 @@ def test_cli_extra_context(cli_runner):
     )
     assert result.exit_code == 0
     assert os.path.isdir('fake-project')
-    with open(os.path.join('fake-project', 'README.rst')) as f:
-        assert 'Project name: **Awesomez**' in f.read()
+    content = Path('fake-project', 'README.rst').read_text()
+    assert 'Project name: **Awesomez**' in content
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -536,13 +544,9 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
     """Verify --list-installed command correct invocation."""
     fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
     os.makedirs(os.path.dirname(user_config_path))
-    with open(user_config_path, 'w') as config_file:
-        # In YAML, double quotes mean to use escape sequences.
-        # Single quotes mean we will have unescaped backslahes.
-        # http://blogs.perl.org/users/tinita/2018/03/
-        # strings-in-yaml---to-quote-or-not-to-quote.html
-        config_file.write("cookiecutters_dir: '%s'" % fake_template_dir)
-    open(os.path.join('fake-project', 'cookiecutter.json'), 'w').write('{}')
+    # Single quotes in YAML will not parse escape codes (\).
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{fake_template_dir}'")
+    Path("fake-project", "cookiecutter.json").write_text('{}')
 
     result = cli_runner(
         '--list-installed',
@@ -560,8 +564,7 @@ def test_debug_list_installed_templates_failure(
 ):
     """Verify --list-installed command error on invocation."""
     os.makedirs(os.path.dirname(user_config_path))
-    with open(user_config_path, 'w') as config_file:
-        config_file.write('cookiecutters_dir: "/notarealplace/"')
+    Path(user_config_path).write_text('cookiecutters_dir: "/notarealplace/"')
 
     result = cli_runner(
         '--list-installed', '--config-file', user_config_path, str(debug_file)
@@ -582,8 +585,8 @@ def test_directory_repo(cli_runner):
     )
     assert result.exit_code == 0
     assert os.path.isdir("fake-project")
-    with open(os.path.join("fake-project", "README.rst")) as f:
-        assert "Project name: **Fake Project**" in f.read()
+    content = Path("fake-project", "README.rst").read_text()
+    assert "Project name: **Fake Project**" in content
 
 
 cli_accept_hook_arg_testdata = [
@@ -629,6 +632,7 @@ def test_cli_accept_hooks(
         directory=None,
         skip_if_file_exists=False,
         accept_hooks=expected,
+        keep_project_on_failure=False,
     )
 
 
