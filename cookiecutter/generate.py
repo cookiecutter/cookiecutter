@@ -269,6 +269,15 @@ def _run_hook_from_repo_dir(
             raise
 
 
+def generate_dump(project_dir, context, skip_if_file_exists):
+    path = Path(project_dir, "cookiecutter.json")
+    if skip_if_file_exists and os.path.exists(path):
+        logger.debug('The resulting file already exists: %s', path)
+        return
+    with open(path, 'w') as convert_file:
+        convert_file.write(json.dumps(context))
+
+
 def generate_files(
     repo_dir,
     context=None,
@@ -277,6 +286,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False
 ):
     """Render the templates and saves them to files.
 
@@ -304,6 +314,8 @@ def generate_files(
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
         )
+        if dump_input:
+            generate_dump(project_dir, context, skip_if_file_exists)
     except UndefinedError as err:
         msg = f"Unable to create project directory '{unrendered_dir}'"
         raise UndefinedVariableInTemplate(msg, err, context) from err

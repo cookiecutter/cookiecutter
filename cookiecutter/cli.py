@@ -151,6 +151,11 @@ def list_installed_templates(default_config, passed_config_file):
     is_flag=True,
     help='Do not delete project folder on failure',
 )
+@click.option(
+    '--dump-input',
+    is_flag=True,
+    help='Create cookiecutter.json file to output dir with extra context',
+)
 def main(
     template,
     extra_context,
@@ -169,6 +174,7 @@ def main(
     replay_file,
     list_installed,
     keep_project_on_failure,
+    dump_input
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -176,6 +182,7 @@ def main(
     volunteers. If you would like to help out or fund the project, please get
     in touch at https://github.com/cookiecutter/cookiecutter.
     """
+
     # Commands that should work without arguments
     if list_installed:
         list_installed_templates(default_config, config_file)
@@ -187,6 +194,8 @@ def main(
         sys.exit(0)
 
     configure_logger(stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file)
+
+
 
     # If needed, prompt the user to ask whether or not they want to execute
     # the pre/post hooks.
@@ -214,6 +223,7 @@ def main(
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            dump_input=dump_input
         )
     except (
         ContextDecodingException,

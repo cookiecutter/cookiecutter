@@ -35,6 +35,7 @@ def cookiecutter(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -59,6 +60,9 @@ def cookiecutter(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
+
+    logger.debug("cookiecutter function")
+
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
             "You can not use both replay and no_input or extra_context "
@@ -85,6 +89,7 @@ def cookiecutter(
     template_name = os.path.basename(os.path.abspath(repo_dir))
 
     if replay:
+        logger.debug("replay")
         with import_patch:
             if isinstance(replay, bool):
                 context = load(config_dict['replay_dir'], template_name)
@@ -93,7 +98,7 @@ def cookiecutter(
                 context = load(path, template_name)
     else:
         context_file = os.path.join(repo_dir, 'cookiecutter.json')
-        logger.debug('context_file is %s', context_file)
+        logger.debug('contexst_file i %s', context_file)
 
         context = generate_context(
             context_file=context_file,
@@ -127,6 +132,7 @@ def cookiecutter(
             output_dir=output_dir,
             accept_hooks=accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            dump_input=dump_input
         )
 
     # Cleanup (if required)
