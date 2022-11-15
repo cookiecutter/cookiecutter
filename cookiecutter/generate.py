@@ -257,7 +257,7 @@ def _run_hook_from_repo_dir(
     """
     with work_in(repo_dir):
         try:
-            run_hook(hook_name, project_dir, context)
+            return run_hook(hook_name, project_dir, context)
         except FailedHookException:
             if delete_project_on_failure:
                 rmtree(project_dir)
@@ -300,6 +300,12 @@ def generate_files(
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
     env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+
+    # Run context-modifying scripts
+    if accept_hooks:
+        context = _run_hook_from_repo_dir(repo_dir, 'pre_context', None, context, False)
+
+    # Render
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
@@ -323,7 +329,7 @@ def generate_files(
     delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        _ = _run_hook_from_repo_dir(
             repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
         )
 
@@ -400,7 +406,7 @@ def generate_files(
                     raise UndefinedVariableInTemplate(msg, err, context) from err
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        _ = _run_hook_from_repo_dir(
             repo_dir,
             'post_gen_project',
             project_dir,

@@ -142,7 +142,7 @@ class TestExternalHooks:
 
     def test_run_script(self):
         """Execute a hook script, independently of project generation."""
-        hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
+        _ = hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert os.path.isfile('shell_post.txt')
 
     def test_run_failing_script(self, mocker):
@@ -153,7 +153,7 @@ class TestExternalHooks:
         prompt.side_effect = err
 
         with pytest.raises(exceptions.FailedHookException) as excinfo:
-            hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
+            _ = hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert f'Hook script failed (error: {err})' in str(excinfo.value)
 
     def test_run_failing_script_enoexec(self, mocker):
@@ -165,14 +165,14 @@ class TestExternalHooks:
         prompt.side_effect = err
 
         with pytest.raises(exceptions.FailedHookException) as excinfo:
-            hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
+            _ = hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert 'Hook script failed, might be an empty file or missing a shebang' in str(
             excinfo.value
         )
 
     def test_run_script_cwd(self):
         """Change directory before running hook."""
-        hooks.run_script(os.path.join(self.hooks_path, self.post_hook), 'tests')
+        _ = hooks.run_script(os.path.join(self.hooks_path, self.post_hook), 'tests')
         assert os.path.isfile('tests/shell_post.txt')
         assert 'tests' not in os.getcwd()
 
@@ -196,7 +196,7 @@ class TestExternalHooks:
                 fh.write("touch '{{cookiecutter.file}}'\n")
                 os.chmod(hook_path, os.stat(hook_path).st_mode | stat.S_IXUSR)
 
-        hooks.run_script_with_context(
+        _ = hooks.run_script_with_context(
             os.path.join(self.hooks_path, self.post_hook),
             'tests',
             {'cookiecutter': {'file': 'context_post.txt'}},
@@ -209,11 +209,11 @@ class TestExternalHooks:
         directory."""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
-            hooks.run_hook('pre_gen_project', tests_dir, {})
+            _ = hooks.run_hook('pre_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
             assert os.path.isfile(os.path.join(tests_dir, 'shell_pre.txt'))
 
-            hooks.run_hook('post_gen_project', tests_dir, {})
+            _ = hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
 
     def test_run_failing_hook(self):
@@ -227,7 +227,7 @@ class TestExternalHooks:
 
         with utils.work_in(self.repo_path):
             with pytest.raises(exceptions.FailedHookException) as excinfo:
-                hooks.run_hook('pre_gen_project', tests_dir, {})
+                _ = hooks.run_hook('pre_gen_project', tests_dir, {})
             assert 'Hook script failed' in str(excinfo.value)
 
 

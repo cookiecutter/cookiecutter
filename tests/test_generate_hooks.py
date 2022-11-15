@@ -258,3 +258,27 @@ def test_run_shell_and_python_hooks(tmp_path):
     assert shell_post_file.exists()
     assert python_pre_file.exists()
     assert python_post_file.exists()
+
+
+@pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux only test")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_run_shell_and_python_context_hooks(tmp_path):
+    """Verify pre context shell and python hooks executed.
+
+    This test for .sh and .py files.
+    """
+    generate.generate_files(
+        context={'cookiecutter': {'pyshellhookscontext': 'pyshellhookscontext'}},
+        repo_dir='tests/test-pyshellhooks-context/',
+        output_dir=tmp_path.joinpath('test-pyshellhookscontext'),
+    )
+    readme_file = tmp_path.joinpath(
+        'test-pyshellhookscontext', 'inputpyshellhookscontext', 'README.rst'
+    )
+    assert readme_file.exists()
+
+    with open(readme_file, 'r') as readme:
+        content = readme.read()
+    assert 'A: sh' in content
+    assert 'B: py' in content
+    assert 'C: sh' in content

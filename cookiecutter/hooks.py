@@ -1,11 +1,13 @@
 """Functions for discovering and executing various cookiecutter hooks."""
 import errno
+import json
 import locale
 import logging
 import os
 import subprocess  # nosec
 import sys
 import tempfile
+from json import JSONDecodeError
 
 from cookiecutter import utils
 from cookiecutter.environment import StrictEnvironment
@@ -15,6 +17,7 @@ from subprocess import PIPE, TimeoutExpired  # nosec
 logger = logging.getLogger(__name__)
 
 _HOOKS = [
+    'pre_context',
     'pre_gen_project',
     'post_gen_project',
 ]
@@ -108,6 +111,12 @@ def run_script(script_path, cwd='.'):
                 f'Hook script did not fail, but produced some error message: {errs}'
             )
 
+        try:
+            return json.loads(outs)
+        except JSONDecodeError as err:
+            logger.info(f'Hook script output is not well-formed JSON: {err.msg}')
+            return outs
+
     except OSError as err:
         if err.errno == errno.ENOEXEC:
             raise FailedHookException(
@@ -134,7 +143,7 @@ def run_script_with_context(script_path, cwd, context):
         output = template.render(**context)
         temp.write(output.encode('utf-8'))
 
-    run_script(temp.name, cwd)
+    return run_script(temp.name, cwd)
 
 
 def run_hook(hook_name, project_dir, context):
@@ -148,7 +157,21 @@ def run_hook(hook_name, project_dir, context):
     scripts = find_hook(hook_name)
     if not scripts:
         logger.debug('No %s hook found', hook_name)
-        return
+        return context
     logger.debug('Running hook %s', hook_name)
     for script in scripts:
-        run_script_with_context(script, project_dir, context)
+        payload = run_script_with_context(script, project_dir, context)
+        if 'pre_context' == hook_name:
+            if not isinstance(payload, dict):
+                raise FailedHookException(
+                    f'Pre-Context Hook script failed to provide JSON, got: {payload}'
+                )
+            for key, value in payload.items():
+                if key in context['cookiecutter']:
+                    old = context["cookiecutter"][key]
+                    logger.info(
+                        f'Replacing context[cookiecutter][{key}] = {old} with {value}'
+                    )
+                context['cookiecutter'][key] = value
+
+    return context
