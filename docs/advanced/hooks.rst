@@ -91,7 +91,6 @@ The script ensures that the directory structure is as expected by removing unwan
 .. code-block:: python
 
    import os
-   import sys
 
    REMOVE_PATHS = [
        '{% if cookiecutter.packaging != "pip" %} requirements.txt {% endif %}',
