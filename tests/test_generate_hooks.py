@@ -228,3 +228,33 @@ def test_ignore_shell_hooks(tmp_path):
     )
     assert not shell_pre_file.exists()
     assert not shell_post_file.exists()
+
+
+@pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux only test")
+@pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
+def test_run_shell_and_python_hooks(tmp_path):
+    """Verify pre and post generate project shell and python hooks executed.
+
+    This test for .sh and .py files.
+    """
+    generate.generate_files(
+        context={'cookiecutter': {'pyshellhooks': 'pyshellhooks'}},
+        repo_dir='tests/test-pyshellhooks/',
+        output_dir=tmp_path.joinpath('test-pyshellhooks'),
+    )
+    shell_pre_file = tmp_path.joinpath(
+        'test-pyshellhooks', 'inputpyshellhooks', 'shell_pre.txt'
+    )
+    shell_post_file = tmp_path.joinpath(
+        'test-pyshellhooks', 'inputpyshellhooks', 'shell_post.txt'
+    )
+    python_pre_file = tmp_path.joinpath(
+        'test-pyshellhooks', 'inputpyshellhooks', 'python_pre.txt'
+    )
+    python_post_file = tmp_path.joinpath(
+        'test-pyshellhooks', 'inputpyshellhooks', 'python_post.txt'
+    )
+    assert shell_pre_file.exists()
+    assert shell_post_file.exists()
+    assert python_pre_file.exists()
+    assert python_post_file.exists()
