@@ -1,5 +1,6 @@
 """Functions for discovering and executing various cookiecutter hooks."""
 import errno
+import locale
 import logging
 import os
 import subprocess  # nosec
@@ -9,6 +10,7 @@ import tempfile
 from cookiecutter import utils
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import FailedHookException
+from subprocess import PIPE, TimeoutExpired  # nosec
 
 logger = logging.getLogger(__name__)
 
@@ -79,12 +81,33 @@ def run_script(script_path, cwd='.'):
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
-        exit_status = proc.wait()
-        if exit_status != EXIT_SUCCESS:
+        encoding = locale.getpreferredencoding()
+        proc = subprocess.Popen(  # nosec
+            script_command,
+            shell=run_thru_shell,
+            cwd=cwd,
+            stdout=PIPE,
+            stderr=PIPE,
+            encoding=encoding,
+        )
+        try:
+            outs, errs = proc.communicate()
+        except TimeoutExpired:
+            proc.kill()
+            outs, errs = proc.communicate()
+            logger.error(f'Hook script killed after timeout: {errs}')
+            raise FailedHookException(f'Hook script killed after timeout: {errs}')
+
+        if proc.returncode != EXIT_SUCCESS:
+            logger.error(f'Hook script failed with error message: {errs}')
             raise FailedHookException(
-                f'Hook script failed (exit status: {exit_status})'
+                f'Hook script failed (exit status: {proc.returncode})'
             )
+        if errs:
+            logger.warning(
+                f'Hook script did not fail, but produced some error message: {errs}'
+            )
+
     except OSError as err:
         if err.errno == errno.ENOEXEC:
             raise FailedHookException(
