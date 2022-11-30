@@ -30,7 +30,28 @@ def rmtree(path):
     :param path: A directory path.
     """
     shutil.rmtree(path, onerror=force_delete)
+    
+def make_sure_path_access(path: "os.PathLike[str]") -> None:
+    """
+    Return an array of file accessibility based on path.
+    
+    :param path: A directory tree path to check accessibility on.
+    :return: 4 item array of the values returned from testing the 4 possible accessibility modes.
+    """
+    logger.debug('Making sure path is accessible: %s', path)
+    access1 = os.access(path, os.F_OK)
+    print("F_OK - return value %s", access1)
 
+    access2 = os.access(path, os.R_OK)
+    print("R_OK - return value %s", access2)
+
+    access3 = os.access(path, os.W_OK)
+    print("W_OK - return value %s", access3)
+
+    access4 = os.access(path, os.X_OK)
+    print("X_OK - return value %s", access4)
+
+    return [access1, access2, access3, access4]
 
 def make_sure_path_exists(path: "os.PathLike[str]") -> None:
     """Ensure that a directory exists.
