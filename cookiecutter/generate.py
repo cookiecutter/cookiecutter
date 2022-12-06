@@ -301,8 +301,8 @@ def generate_files(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
-    :param dump_input: If `True` generates `.cookiecutter.json` file in project directory
-        with cookiecutter context, including user input
+    :param dump_input: If `True` generates `.cookiecutter.json` file 
+        in project directory with cookiecutter context, including user input
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
