@@ -59,7 +59,7 @@ def cookiecutter(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
-    :param dump_input: If `True` generates `.cookiecutter.json` 
+    :param dump_input: If `True` generates `.cookiecutter.json`
         file in project directory with cookiecutter context, including user input
     """
     if replay and ((no_input is not False) or (extra_context is not None)):

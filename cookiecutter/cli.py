@@ -158,7 +158,6 @@ def list_installed_templates(default_config, passed_config_file):
     'with cookiecutter context, including user input',
     default=False,
 )
-
 def main(
     template,
     extra_context,
