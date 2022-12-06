@@ -1,4 +1,4 @@
-"""Main `cookiecutter` CLI."""
+"""Main `cookiecutter` CLI"""
 import collections
 import json
 import os
