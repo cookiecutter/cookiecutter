@@ -4,7 +4,7 @@ import re
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
-from cookiecutter.zipfile import unzip
+from cookiecutter.zipfile_utils import unzip
 
 REPO_REGEX = re.compile(
     r"""

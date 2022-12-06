@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import zipfile
+from cookiecutter import zipfile_utils
 from cookiecutter.exceptions import InvalidZipRepository
 
 
@@ -34,7 +34,7 @@ def test_unzip_local_file(mocker, clone_dir):
         'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
     )
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'tests/files/fake-repo-tmpl.zip', is_url=False, clone_to_dir=str(clone_dir)
     )
 
@@ -48,7 +48,7 @@ def test_unzip_protected_local_file_environment_password(mocker, clone_dir):
         'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
     )
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'tests/files/protected-fake-repo-tmpl.zip',
         is_url=False,
         clone_to_dir=str(clone_dir),
@@ -66,7 +66,7 @@ def test_unzip_protected_local_file_bad_environment_password(mocker, clone_dir):
     )
 
     with pytest.raises(InvalidZipRepository):
-        zipfile.unzip(
+        zipfile_utils.unzip(
             'tests/files/protected-fake-repo-tmpl.zip',
             is_url=False,
             clone_to_dir=str(clone_dir),
@@ -81,7 +81,7 @@ def test_unzip_protected_local_file_user_password_with_noinput(mocker, clone_dir
     )
 
     with pytest.raises(InvalidZipRepository):
-        zipfile.unzip(
+        zipfile_utils.unzip(
             'tests/files/protected-fake-repo-tmpl.zip',
             is_url=False,
             clone_to_dir=str(clone_dir),
@@ -96,7 +96,7 @@ def test_unzip_protected_local_file_user_password(mocker, clone_dir):
     )
     mocker.patch('cookiecutter.zipfile.read_repo_password', return_value='sekrit')
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'tests/files/protected-fake-repo-tmpl.zip',
         is_url=False,
         clone_to_dir=str(clone_dir),
@@ -116,7 +116,7 @@ def test_unzip_protected_local_file_user_bad_password(mocker, clone_dir):
     )
 
     with pytest.raises(InvalidZipRepository):
-        zipfile.unzip(
+        zipfile_utils.unzip(
             'tests/files/protected-fake-repo-tmpl.zip',
             is_url=False,
             clone_to_dir=str(clone_dir),
@@ -130,7 +130,7 @@ def test_empty_zip_file(mocker, clone_dir):
     )
 
     with pytest.raises(InvalidZipRepository):
-        zipfile.unzip(
+        zipfile_utils.unzip(
             'tests/files/empty.zip', is_url=False, clone_to_dir=str(clone_dir)
         )
 
@@ -142,7 +142,7 @@ def test_non_repo_zip_file(mocker, clone_dir):
     )
 
     with pytest.raises(InvalidZipRepository):
-        zipfile.unzip(
+        zipfile_utils.unzip(
             'tests/files/not-a-repo.zip', is_url=False, clone_to_dir=str(clone_dir)
         )
 
@@ -154,7 +154,7 @@ def test_bad_zip_file(mocker, clone_dir):
     )
 
     with pytest.raises(InvalidZipRepository):
-        zipfile.unzip(
+        zipfile_utils.unzip(
             'tests/files/bad-zip-file.zip', is_url=False, clone_to_dir=str(clone_dir)
         )
 
@@ -174,7 +174,7 @@ def test_unzip_url(mocker, clone_dir):
         autospec=True,
     )
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
         clone_to_dir=str(clone_dir),
@@ -199,7 +199,7 @@ def test_unzip_url_with_empty_chunks(mocker, clone_dir):
         autospec=True,
     )
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
         clone_to_dir=str(clone_dir),
@@ -228,7 +228,7 @@ def test_unzip_url_existing_cache(mocker, clone_dir):
     existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
     existing_zip.write_text('This is an existing zipfile')
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
         clone_to_dir=str(clone_dir),
@@ -253,7 +253,7 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir):
     existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
     existing_zip.write_text('This is an existing zipfile')
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
         clone_to_dir=str(clone_dir),
@@ -281,7 +281,7 @@ def test_unzip_should_abort_if_no_redownload(mocker, clone_dir):
     zipfile_url = 'https://example.com/path/to/fake-repo-tmpl.zip'
 
     with pytest.raises(SystemExit):
-        zipfile.unzip(zipfile_url, is_url=True, clone_to_dir=str(clone_dir))
+        zipfile_utils.unzip(zipfile_url, is_url=True, clone_to_dir=str(clone_dir))
 
     assert not mock_requests_get.called
 
@@ -297,7 +297,7 @@ def test_unzip_is_ok_to_reuse(mocker, clone_dir):
     existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
     shutil.copy('tests/files/fake-repo-tmpl.zip', existing_zip)
 
-    output_dir = zipfile.unzip(
+    output_dir = zipfile_utils.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
         clone_to_dir=str(clone_dir),

@@ -23,6 +23,8 @@ from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
+COOKIECUTTER_JSON_DUMP_FILE = '.cookiecutter.json'
+
 logger = logging.getLogger(__name__)
 
 
@@ -269,6 +271,14 @@ def _run_hook_from_repo_dir(
             raise
 
 
+def _generate_cookiecutter_json_file(output_dir, context):
+    file_path = os.path.join(output_dir, COOKIECUTTER_JSON_DUMP_FILE)
+    logger.debug('Generating %s json dump file with %s', file_path, context)
+    with open(file_path, mode='x') as file:
+        # opened for exclusive creation (mode='x'), to fail if the file already exists
+        json.dump(context, file, sort_keys=True, indent=4)
+
+
 def generate_files(
     repo_dir,
     context=None,
@@ -277,6 +287,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False,
 ):
     """Render the templates and saves them to files.
 
@@ -290,6 +301,8 @@ def generate_files(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
+    :param dump_input: If `True` generates `.cookiecutter.json` file in project directory
+        with cookiecutter context, including user input
     """
     template_dir = find_template(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
@@ -300,6 +313,7 @@ def generate_files(
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
     env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
@@ -398,6 +412,9 @@ def generate_files(
                         rmtree(project_dir)
                     msg = f"Unable to create file '{infile}'"
                     raise UndefinedVariableInTemplate(msg, err, context) from err
+
+        if dump_input:
+            _generate_cookiecutter_json_file(project_dir, context['cookiecutter'])
 
     if accept_hooks:
         _run_hook_from_repo_dir(
