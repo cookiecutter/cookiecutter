@@ -199,7 +199,9 @@ def test_generate_files_with_dump_input(tmp_path):
         output_dir=tmp_path,
         dump_input=True,
     )
-    cookiecutter_file_path = Path(tmp_path, 'inputpizzä', generate.COOKIECUTTER_JSON_DUMP_FILE)
+    cookiecutter_file_path = Path(
+        tmp_path, 'inputpizzä', generate.COOKIECUTTER_JSON_DUMP_FILE
+    )
     assert cookiecutter_file_path.exists()
     assert cookiecutter_file_path.is_file()
     with open(cookiecutter_file_path) as file:

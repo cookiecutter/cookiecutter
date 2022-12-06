@@ -112,7 +112,8 @@ def test_unzip_protected_local_file_user_bad_password(mocker, clone_dir):
         'cookiecutter.zipfile_utils.prompt_and_delete', return_value=True, autospec=True
     )
     mocker.patch(
-        'cookiecutter.zipfile_utils.read_repo_password', return_value='not-the-right-password'
+        'cookiecutter.zipfile_utils.read_repo_password',
+        return_value='not-the-right-password',
     )
 
     with pytest.raises(InvalidZipRepository):
@@ -266,7 +267,9 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir):
 def test_unzip_should_abort_if_no_redownload(mocker, clone_dir):
     """Should exit without cloning anything If no redownload."""
     mocker.patch(
-        'cookiecutter.zipfile_utils.prompt_and_delete', side_effect=SystemExit, autospec=True
+        'cookiecutter.zipfile_utils.prompt_and_delete',
+        side_effect=SystemExit,
+        autospec=True,
     )
 
     mock_requests_get = mocker.patch(
@@ -289,7 +292,9 @@ def test_unzip_should_abort_if_no_redownload(mocker, clone_dir):
 def test_unzip_is_ok_to_reuse(mocker, clone_dir):
     """Already downloaded zip should not be downloaded again."""
     mock_prompt_and_delete = mocker.patch(
-        'cookiecutter.zipfile_utils.prompt_and_delete', return_value=False, autospec=True
+        'cookiecutter.zipfile_utils.prompt_and_delete',
+        return_value=False,
+        autospec=True,
     )
 
     request = mocker.MagicMock()
