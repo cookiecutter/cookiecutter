@@ -197,6 +197,7 @@ def test_generate_files_with_dump_input(tmp_path):
         context={'cookiecutter': {'food': 'pizzä'}},
         repo_dir=Path('tests/test-generate-files').absolute(),
         output_dir=tmp_path,
+        dump_input=True,
     )
     cookiecutter_file_path = Path(tmp_path, generate.COOKIECUTTER_JSON_DUMP_FILE)
     assert cookiecutter_file_path.exists()
