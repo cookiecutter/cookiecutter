@@ -3,6 +3,7 @@
 Use the global clean_system fixture and run additional teardown code to remove
 some special folders.
 """
+import json
 from pathlib import Path
 
 import pytest
@@ -188,6 +189,22 @@ def test_generate_files_output_dir(tmp_path):
     assert Path(output_dir, 'inputpizzä/simple.txt').exists()
     assert Path(output_dir, 'inputpizzä/simple.txt').is_file()
     assert Path(project_dir) == Path(tmp_path, 'custom_output_dir/inputpizzä')
+
+
+def test_generate_files_with_dump_input(tmp_path):
+    """Verify dump_input generates .cookicutter.json file."""
+    generate.generate_files(
+        context={'cookiecutter': {'food': 'pizzä'}},
+        repo_dir=Path('tests/test-generate-files').absolute(),
+        output_dir=tmp_path,
+    )
+    cookiecutter_file_path = Path(tmp_path, generate.COOKIECUTTER_JSON_DUMP_FILE)
+    assert cookiecutter_file_path.exists()
+    assert cookiecutter_file_path.is_file()
+    with open(cookiecutter_file_path) as file:
+        cookiecutter_dict = json.load(file)
+    assert cookiecutter_dict
+    assert 'food' in cookiecutter_dict
 
 
 def test_generate_files_permissions(tmp_path):
