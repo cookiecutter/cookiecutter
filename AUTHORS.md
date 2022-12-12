@@ -171,6 +171,7 @@
 - Tom Forbes ([@orf](https://github.com/orf))
 - Xie Yanbo ([@xyb](https://github.com/xyb))
 - Maxim Ivanov ([@ivanovmg](https://github.com/ivanovmg))
+- Mark Mayo ([@marksmayo](https://github.com/marksmayo/))
 
 ## Backers
 
