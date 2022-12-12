@@ -80,7 +80,7 @@ def test_get_config():
 
 
 def test_get_config_does_not_exist():
-    """Check that `exceptions.ConfigDoesNotExistException` is raised when \
+    """Check that `exceptions.ConfigDoesNotExistException` is raised when
     attempting to get a non-existent config file."""
     expected_error_msg = 'Config file tests/not-exist.yaml does not exist.'
     with pytest.raises(ConfigDoesNotExistException) as exc_info:
@@ -89,7 +89,7 @@ def test_get_config_does_not_exist():
 
 
 def test_invalid_config():
-    """An invalid config file should raise an `InvalidConfiguration` \
+    """An invalid config file should raise an `InvalidConfiguration`
     exception."""
     expected_error_msg = (
         'Unable to parse YAML file tests/test-config/invalid-config.yaml.'

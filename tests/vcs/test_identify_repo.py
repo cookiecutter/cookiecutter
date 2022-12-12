@@ -57,7 +57,7 @@ def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
         'foo+bar',  # uses explicit identifier with neither 'git' nor 'hg'
         'foobar',  # no identifier but neither 'git' nor 'bitbucket' in url
         'http://norepotypespecified.com',
-    ]
+    ],
 )
 def unknown_repo_type_url(request):
     """Fixture. Return wrong formatted repository url."""

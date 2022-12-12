@@ -3,7 +3,10 @@ from cookiecutter.main import cookiecutter
 
 
 def test_replay_dump_template_name(
-    monkeypatch, mocker, user_config_data, user_config_file
+    monkeypatch,
+    mocker,
+    user_config_data,
+    user_config_file,
 ):
     """Check that replay_dump is called with a valid template_name.
 
@@ -36,7 +39,10 @@ def test_replay_dump_template_name(
 
 
 def test_replay_load_template_name(
-    monkeypatch, mocker, user_config_data, user_config_file
+    monkeypatch,
+    mocker,
+    user_config_data,
+    user_config_file,
 ):
     """Check that replay_load is called correctly.
 

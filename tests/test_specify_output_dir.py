@@ -13,7 +13,7 @@ def context():
             'full_name': 'Raphael Pierzina',
             'github_username': 'hackebrot',
             'version': '0.1.0',
-        }
+        },
     }
 
 

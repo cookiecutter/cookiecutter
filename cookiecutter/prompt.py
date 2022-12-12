@@ -69,11 +69,14 @@ def read_user_choice(var_name, options):
             f"Select {var_name}:",
             "\n".join(choice_lines),
             f"Choose from {', '.join(choices)}",
-        )
+        ),
     )
 
     user_choice = click.prompt(
-        prompt, type=click.Choice(choices), default=default, show_choices=False
+        prompt,
+        type=click.Choice(choices),
+        default=default,
+        show_choices=False,
     )
     return choice_map[user_choice]
 
@@ -145,16 +148,18 @@ def render_variable(env, raw, cookiecutter_dict):
     """
     if raw is None or isinstance(raw, bool):
         return raw
-    elif isinstance(raw, dict):
+    if isinstance(raw, dict):
         return {
             render_variable(env, k, cookiecutter_dict): render_variable(
-                env, v, cookiecutter_dict
+                env,
+                v,
+                cookiecutter_dict,
             )
             for k, v in raw.items()
         }
-    elif isinstance(raw, list):
+    if isinstance(raw, list):
         return [render_variable(env, v, cookiecutter_dict) for v in raw]
-    elif not isinstance(raw, str):
+    if not isinstance(raw, str):
         raw = str(raw)
 
     template = env.from_string(raw)
@@ -189,7 +194,7 @@ def prompt_for_config(context, no_input=False):
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
-        elif key.startswith('__'):
+        if key.startswith('__'):
             cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
@@ -197,14 +202,20 @@ def prompt_for_config(context, no_input=False):
             if isinstance(raw, list):
                 # We are dealing with a choice variable
                 val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
+                    cookiecutter_dict,
+                    env,
+                    key,
+                    raw,
+                    no_input,
                 )
                 cookiecutter_dict[key] = val
             elif isinstance(raw, bool):
                 # We are dealing with a boolean variable
                 if no_input:
                     cookiecutter_dict[key] = render_variable(
-                        env, raw, cookiecutter_dict
+                        env,
+                        raw,
+                        cookiecutter_dict,
                     )
                 else:
                     cookiecutter_dict[key] = read_user_yes_no(key, raw)

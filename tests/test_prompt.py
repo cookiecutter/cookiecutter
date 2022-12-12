@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 import pytest
 
-from cookiecutter import prompt, exceptions, environment
+from cookiecutter import environment, exceptions, prompt
 
 
 @pytest.fixture(autouse=True)
@@ -31,7 +31,8 @@ class TestRenderVariable:
         """Verify simple items correctly rendered to strings."""
         env = environment.StrictEnvironment()
         from_string = mocker.patch(
-            'cookiecutter.prompt.StrictEnvironment.from_string', wraps=env.from_string
+            'cookiecutter.prompt.StrictEnvironment.from_string',
+            wraps=env.from_string,
         )
         context = {'project': 'foobar'}
 
@@ -104,9 +105,9 @@ class TestPrompt:
             'cookiecutter': {
                 'project_name': 'Slartibartfast',
                 'details': {
-                    '{{cookiecutter.project_name}}': '{{cookiecutter.project_name}}'
+                    '{{cookiecutter.project_name}}': '{{cookiecutter.project_name}}',
                 },
-            }
+            },
         }
 
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
@@ -140,7 +141,7 @@ class TestPrompt:
                         "value 3",
                     ],
                 },
-            }
+            },
         }
 
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
@@ -163,7 +164,8 @@ class TestPrompt:
     def test_prompt_for_templated_config(self, monkeypatch):
         """Verify Jinja2 templating works in unicode prompts."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable', lambda var, default: default
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default: default,
         )
         context = {
             'cookiecutter': OrderedDict(
@@ -173,8 +175,8 @@ class TestPrompt:
                         'pkg_name',
                         '{{ cookiecutter.project_name|lower|replace(" ", "") }}',
                     ),
-                ]
-            )
+                ],
+            ),
         }
 
         exp_cookiecutter_dict = {
@@ -189,7 +191,7 @@ class TestPrompt:
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
             lambda var, default: pytest.fail(
-                'Should not try to read a response for private context var'
+                'Should not try to read a response for private context var',
             ),
         )
         context = {'cookiecutter': {'_copy_without_render': ['*.html']}}
@@ -216,8 +218,8 @@ class TestPrompt:
                     ('_hidden_bar', 123),
                     ('__rendered_hidden_foo', '{{ cookiecutter.foo|lower }}'),
                     ('__rendered_hidden_bar', 123),
-                ]
-            )
+                ],
+            ),
         }
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
         assert cookiecutter_dict == OrderedDict(
@@ -230,7 +232,7 @@ class TestPrompt:
                 ('_hidden_bar', 123),
                 ('__rendered_hidden_foo', 'hello world'),
                 ('__rendered_hidden_bar', '123'),
-            ]
+            ],
         )
 
     def test_should_not_render_private_variables(self):
@@ -246,7 +248,7 @@ class TestPrompt:
                 '_skip_integer': 123,
                 '_skip_boolean': True,
                 '_skip_nested': True,
-            }
+            },
         }
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
         assert cookiecutter_dict == context['cookiecutter']
@@ -317,8 +319,8 @@ class TestReadUserChoice:
                             'bar',
                         ],
                     ),
-                ]
-            )
+                ],
+            ),
         }
 
         expected = {
@@ -380,7 +382,7 @@ class TestPromptChoiceForConfig:
         assert expected_choice == actual_choice
 
 
-class TestReadUserYesNo(object):
+class TestReadUserYesNo:
     """Class to unite boolean prompt related tests."""
 
     @pytest.mark.parametrize(
@@ -410,7 +412,7 @@ class TestReadUserYesNo(object):
         context = {
             'cookiecutter': {
                 'run_as_docker': True,
-            }
+            },
         }
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
         assert cookiecutter_dict == context['cookiecutter']

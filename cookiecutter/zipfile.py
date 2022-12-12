@@ -71,7 +71,7 @@ def unzip(
         first_filename = zip_file.namelist()[0]
         if not first_filename.endswith('/'):
             raise InvalidZipRepository(
-                f"Zip repository {zip_uri} does not include a top-level directory"
+                f"Zip repository {zip_uri} does not include a top-level directory",
             )
 
         # Construct the final target directory
@@ -90,11 +90,11 @@ def unzip(
                     zip_file.extractall(path=unzip_base, pwd=password.encode('utf-8'))
                 except RuntimeError:
                     raise InvalidZipRepository(
-                        'Invalid password provided for protected repository'
+                        'Invalid password provided for protected repository',
                     )
             elif no_input:
                 raise InvalidZipRepository(
-                    'Unable to unlock password protected repository'
+                    'Unable to unlock password protected repository',
                 )
             else:
                 retry = 0
@@ -102,19 +102,20 @@ def unzip(
                     try:
                         password = read_repo_password('Repo password')
                         zip_file.extractall(
-                            path=unzip_base, pwd=password.encode('utf-8')
+                            path=unzip_base,
+                            pwd=password.encode('utf-8'),
                         )
                         retry = None
                     except RuntimeError:
                         retry += 1
                         if retry == 3:
                             raise InvalidZipRepository(
-                                'Invalid password provided for protected repository'
+                                'Invalid password provided for protected repository',
                             )
 
     except BadZipFile:
         raise InvalidZipRepository(
-            f'Zip repository {zip_uri} is not a valid zip archive:'
+            f'Zip repository {zip_uri} is not a valid zip archive:',
         )
 
     return unzip_path

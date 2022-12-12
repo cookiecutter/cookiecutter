@@ -2,10 +2,7 @@
 import click
 import pytest
 
-from cookiecutter.prompt import (
-    process_json,
-    read_user_dict,
-)
+from cookiecutter.prompt import process_json, read_user_dict
 
 
 def test_process_json_invalid_json():
@@ -103,7 +100,9 @@ def test_should_call_prompt_with_process_json(mocker):
 def test_should_not_load_json_from_sentinel(mocker):
     """Make sure that `json.loads` is not called when using default value."""
     mock_json_loads = mocker.patch(
-        'cookiecutter.prompt.json.loads', autospec=True, return_value={}
+        'cookiecutter.prompt.json.loads',
+        autospec=True,
+        return_value={},
     )
 
     runner = click.testing.CliRunner()

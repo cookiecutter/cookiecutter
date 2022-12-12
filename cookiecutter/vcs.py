@@ -36,15 +36,12 @@ def identify_repo(repo_url):
         repo_type = repo_url_values[0]
         if repo_type in ["git", "hg"]:
             return repo_type, repo_url_values[1]
-        else:
-            raise UnknownRepoType
-    else:
-        if 'git' in repo_url:
-            return 'git', repo_url
-        elif 'bitbucket' in repo_url:
-            return 'hg', repo_url
-        else:
-            raise UnknownRepoType
+        raise UnknownRepoType
+    if 'git' in repo_url:
+        return 'git', repo_url
+    if 'bitbucket' in repo_url:
+        return 'hg', repo_url
+    raise UnknownRepoType
 
 
 def is_vcs_installed(repo_type):
@@ -120,12 +117,12 @@ def clone(
             if 'not found' in output.lower():
                 raise RepositoryNotFound(
                     f'The repository {repo_url} could not be found, '
-                    'have you made a typo?'
+                    'have you made a typo?',
                 ) from clone_error
             if any(error in output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
                     f'The {checkout} branch of repository '
-                    f'{repo_url} could not found, have you made a typo?'
+                    f'{repo_url} could not found, have you made a typo?',
                 ) from clone_error
             logger.error('git clone failed with error: %s', output)
             raise

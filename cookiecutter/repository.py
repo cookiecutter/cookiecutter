@@ -55,7 +55,7 @@ def repository_has_cookiecutter_json(repo_directory):
     repo_directory_exists = os.path.isdir(repo_directory)
 
     repo_config_exists = os.path.isfile(
-        os.path.join(repo_directory, 'cookiecutter.json')
+        os.path.join(repo_directory, 'cookiecutter.json'),
     )
     return repo_directory_exists and repo_config_exists
 
@@ -127,5 +127,5 @@ def determine_repo_dir(
 
     raise RepositoryNotFound(
         'A valid repository for "{}" could not be found in the following '
-        'locations:\n{}'.format(template, '\n'.join(repository_candidates))
+        'locations:\n{}'.format(template, '\n'.join(repository_candidates)),
     )

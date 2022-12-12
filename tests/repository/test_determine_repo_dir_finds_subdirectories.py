@@ -31,7 +31,9 @@ def cloned_cookiecutter_path(user_config_data, template):
 
 
 def test_should_find_existing_cookiecutter(
-    template, user_config_data, cloned_cookiecutter_path
+    template,
+    user_config_data,
+    cloned_cookiecutter_path,
 ):
     """Find `cookiecutter.json` in sub folder created by `cloned_cookiecutter_path`."""
     project_dir, cleanup = repository.determine_repo_dir(
@@ -60,14 +62,15 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
         )
 
     wrong_full_cookiecutter_path = os.path.join(
-        os.path.dirname(cloned_cookiecutter_path), 'wrong-dir'
+        os.path.dirname(cloned_cookiecutter_path),
+        'wrong-dir',
     )
     assert str(err.value) == (
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
             template,
             '\n'.join(
-                [os.path.join(template, 'wrong-dir'), wrong_full_cookiecutter_path]
+                [os.path.join(template, 'wrong-dir'), wrong_full_cookiecutter_path],
             ),
         )
     )

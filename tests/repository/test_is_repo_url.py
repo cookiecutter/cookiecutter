@@ -10,7 +10,7 @@ from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_fi
         '/path/to/zipfile.zip',
         'https://example.com/path/to/zipfile.zip',
         'http://example.com/path/to/zipfile.zip',
-    ]
+    ],
 )
 def zipfile(request):
     """Fixture. Represent possible paths to zip file."""
@@ -31,7 +31,7 @@ def test_is_zip_file(zipfile):
         'hg+https://private.com/mercurialrepo',
         'https://bitbucket.org/pokoli/cookiecutter.hg',
         'file://server/path/to/repo.git',
-    ]
+    ],
 )
 def remote_repo_url(request):
     """Fixture. Represent possible URI to different repositories types."""
@@ -51,7 +51,7 @@ def test_is_repo_url_for_remote_urls(remote_repo_url):
             'c:\\users\\foo\\appdata\\local\\temp\\1\\pytest-0\\'
             'test_default_output_dir0\\template'
         ),
-    ]
+    ],
 )
 def local_repo_url(request):
     """Fixture. Represent possible paths to local resources."""

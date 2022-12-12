@@ -73,7 +73,7 @@ def test_generate_files_with_jinja2_environment(tmp_path):
             'cookiecutter': {
                 'food': 'pizzä',
                 '_jinja2_env_vars': {'lstrip_blocks': True, 'trim_blocks': True},
-            }
+            },
         },
         repo_dir='tests/test-generate-files',
         output_dir=tmp_path,
@@ -312,7 +312,7 @@ def test_generate_files_with_overwrite_if_exists(tmp_path):
 def undefined_context():
     """Fixture. Populate context variable for future tests."""
     return {
-        'cookiecutter': {'project_slug': 'testproject', 'github_username': 'hackebrot'}
+        'cookiecutter': {'project_slug': 'testproject', 'github_username': 'hackebrot'},
     }
 
 
@@ -332,7 +332,8 @@ def test_raise_undefined_variable_file_name(output_dir, undefined_context):
 
 
 def test_raise_undefined_variable_file_name_existing_project(
-    output_dir, undefined_context
+    output_dir,
+    undefined_context,
 ):
     """Verify correct error raised when file name cannot be rendered."""
     testproj_path = Path(output_dir, 'testproject')
@@ -399,7 +400,8 @@ def test_keep_project_dir_on_failure(output_dir, undefined_context):
 
 
 def test_raise_undefined_variable_dir_name_existing_project(
-    output_dir, undefined_context
+    output_dir,
+    undefined_context,
 ):
     """Verify correct error raised when directory name cannot be rendered."""
     testproj_path = Path(output_dir, 'testproject')

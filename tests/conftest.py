@@ -7,7 +7,6 @@ import pytest
 from cookiecutter import utils
 from cookiecutter.config import DEFAULT_CONFIG
 
-
 USER_CONFIG = """
 cookiecutters_dir: '{cookiecutters_dir}'
 replay_dir: '{replay_dir}'
@@ -117,7 +116,8 @@ def clean_system(request):
     cookiecutter_replay_dir = os.path.expanduser('~/.cookiecutter_replay')
     cookiecutter_replay_dir_backup = os.path.expanduser('~/.cookiecutter_replay.backup')
     cookiecutter_replay_dir_found = backup_dir(
-        cookiecutter_replay_dir, cookiecutter_replay_dir_backup
+        cookiecutter_replay_dir,
+        cookiecutter_replay_dir_backup,
     )
 
     def restore_backup():
@@ -130,7 +130,9 @@ def clean_system(request):
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.
         restore_backup_dir(
-            cookiecutters_dir, cookiecutters_dir_backup, cookiecutters_dir_found
+            cookiecutters_dir,
+            cookiecutters_dir_backup,
+            cookiecutters_dir_found,
         )
 
         # Carefully delete the created ~/.cookiecutter_replay dir only in
@@ -199,7 +201,7 @@ def output_dir(tmp_path):
 
 @pytest.fixture
 def clone_dir(tmp_path):
-    """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
+    """Simulate creation of a directory called `clone_dir` inside of `tmp_path`.
     Returns a str to said directory."""
     clone_dir = tmp_path.joinpath("clone_dir")
     clone_dir.mkdir()

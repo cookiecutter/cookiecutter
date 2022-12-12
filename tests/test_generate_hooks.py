@@ -63,7 +63,8 @@ def test_run_python_hooks_cwd():
     created.
     """
     generate.generate_files(
-        context={'cookiecutter': {'pyhooks': 'pyhooks'}}, repo_dir='tests/test-pyhooks/'
+        context={'cookiecutter': {'pyhooks': 'pyhooks'}},
+        repo_dir='tests/test-pyhooks/',
     )
     assert os.path.exists('inputpyhooks/python_pre.txt')
     assert os.path.exists('inputpyhooks/python_post.txt')
@@ -182,10 +183,14 @@ def test_run_shell_hooks(tmp_path):
         output_dir=tmp_path.joinpath('test-shellhooks'),
     )
     shell_pre_file = tmp_path.joinpath(
-        'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
+        'test-shellhooks',
+        'inputshellhooks',
+        'shell_pre.txt',
     )
     shell_post_file = tmp_path.joinpath(
-        'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
+        'test-shellhooks',
+        'inputshellhooks',
+        'shell_post.txt',
     )
     assert shell_pre_file.exists()
     assert shell_post_file.exists()
@@ -204,10 +209,14 @@ def test_run_shell_hooks_win(tmp_path):
         output_dir=tmp_path.joinpath('test-shellhooks-win'),
     )
     shell_pre_file = tmp_path.joinpath(
-        'test-shellhooks-win', 'inputshellhooks', 'shell_pre.txt'
+        'test-shellhooks-win',
+        'inputshellhooks',
+        'shell_pre.txt',
     )
     shell_post_file = tmp_path.joinpath(
-        'test-shellhooks-win', 'inputshellhooks', 'shell_post.txt'
+        'test-shellhooks-win',
+        'inputshellhooks',
+        'shell_post.txt',
     )
     assert shell_pre_file.exists()
     assert shell_post_file.exists()
@@ -224,7 +233,7 @@ def test_ignore_shell_hooks(tmp_path):
     )
     shell_pre_file = tmp_path.joinpath("test-shellhooks/inputshellhooks/shell_pre.txt")
     shell_post_file = tmp_path.joinpath(
-        "test-shellhooks/inputshellhooks/shell_post.txt"
+        "test-shellhooks/inputshellhooks/shell_post.txt",
     )
     assert not shell_pre_file.exists()
     assert not shell_post_file.exists()

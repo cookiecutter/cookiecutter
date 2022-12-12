@@ -83,12 +83,12 @@ def run_script(script_path, cwd='.'):
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
-                f'Hook script failed (exit status: {exit_status})'
+                f'Hook script failed (exit status: {exit_status})',
             )
     except OSError as err:
         if err.errno == errno.ENOEXEC:
             raise FailedHookException(
-                'Hook script failed, might be an empty file or missing a shebang'
+                'Hook script failed, might be an empty file or missing a shebang',
             ) from err
         raise FailedHookException(f'Hook script failed (error: {err})') from err
 

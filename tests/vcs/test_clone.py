@@ -8,7 +8,7 @@ from cookiecutter import exceptions, vcs
 
 
 def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
-    """In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS \
+    """In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS
     is installed."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=False)
 
@@ -19,7 +19,7 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
 
 
 def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
-    """In `clone()`, repo URL's trailing slash should be stripped if one is \
+    """In `clone()`, repo URL's trailing slash should be stripped if one is
     present."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
 
@@ -38,11 +38,13 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
 
 
 def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
-    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
+    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit
     without cloning anything."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
     mocker.patch(
-        'cookiecutter.vcs.prompt_and_delete', side_effect=SystemExit, autospec=True
+        'cookiecutter.vcs.prompt_and_delete',
+        side_effect=SystemExit,
+        autospec=True,
     )
     mock_subprocess = mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
@@ -61,11 +63,13 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
 
 
 def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
-    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
+    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit
     without cloning anything."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
     mocker.patch(
-        'cookiecutter.vcs.prompt_and_delete', return_value=False, autospec=True
+        'cookiecutter.vcs.prompt_and_delete',
+        return_value=False,
+        autospec=True,
     )
     mock_subprocess = mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
@@ -94,9 +98,13 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
     ],
 )
 def test_clone_should_invoke_vcs_command(
-    mocker, clone_dir, repo_type, repo_url, repo_name
+    mocker,
+    clone_dir,
+    repo_type,
+    repo_url,
+    repo_name,
 ):
-    """When `clone()` is called with a git/hg repo, the corresponding VCS \
+    """When `clone()` is called with a git/hg repo, the corresponding VCS
     command should be run via `subprocess.check_output()`.
 
     This should take place:
@@ -114,13 +122,18 @@ def test_clone_should_invoke_vcs_command(
     branch = 'foobar'
 
     repo_dir = vcs.clone(
-        repo_url, checkout=branch, clone_to_dir=clone_dir, no_input=True
+        repo_url,
+        checkout=branch,
+        clone_to_dir=clone_dir,
+        no_input=True,
     )
 
     assert repo_dir == expected_repo_dir
 
     mock_subprocess.assert_any_call(
-        [repo_type, 'clone', repo_url], cwd=clone_dir, stderr=subprocess.STDOUT
+        [repo_type, 'clone', repo_url],
+        cwd=clone_dir,
+        stderr=subprocess.STDOUT,
     )
 
     branch_info = [branch]
@@ -143,7 +156,7 @@ def test_clone_should_invoke_vcs_command(
     ],
 )
 def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
-    """In `clone()`, repository not found errors should raise an \
+    """In `clone()`, repository not found errors should raise an
     appropriate exception."""
     # side_effect is set to an iterable here (and below),
     # because of a Python 3.4 unittest.mock regression
@@ -171,7 +184,7 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
     ],
 )
 def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
-    """In `clone()`, branch not found errors should raise an \
+    """In `clone()`, branch not found errors should raise an
     appropriate exception."""
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
@@ -200,7 +213,7 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir):
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
         side_effect=[
-            subprocess.CalledProcessError(-1, 'cmd', output=b'Something went wrong')
+            subprocess.CalledProcessError(-1, 'cmd', output=b'Something went wrong'),
         ],
     )
 

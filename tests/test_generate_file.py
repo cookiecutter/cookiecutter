@@ -55,7 +55,10 @@ def test_generate_file_jsonify_filter(env):
     infile = 'tests/files/{{cookiecutter.jsonify_file}}.txt'
     data = {'jsonify_file': 'cheese', 'type': 'roquefort'}
     generate.generate_file(
-        project_dir=".", infile=infile, context={'cookiecutter': data}, env=env
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': data},
+        env=env,
     )
     assert os.path.isfile('tests/files/cheese.txt')
     generated_text = Path('tests/files/cheese.txt').read_text()
@@ -117,7 +120,7 @@ def expected_msg_regex():
     return re.compile(
         'Missing end of comment tag\n'
         ' {2}File "(.[/\\\\])*tests[/\\\\]files[/\\\\]syntax_error.txt", line 1\n'
-        ' {4}I eat {{ syntax_error }} {# this comment is not closed}'
+        ' {4}I eat {{ syntax_error }} {# this comment is not closed}',
     )
 
 

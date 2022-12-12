@@ -76,7 +76,7 @@ def docs(session, batch_run: bool = False):
                 "../*.py",
                 "--watch",
                 "../cookiecutter",
-            ]
+            ],
         )
 
     session.run(sphinx_cmd, *sphinx_args)

@@ -95,15 +95,15 @@ def prompt_and_delete(path, no_input=False):
         else:
             os.remove(path)
         return True
-    else:
-        ok_to_reuse = read_user_yes_no(
-            "Do you want to re-use the existing version?", 'yes'
-        )
+    ok_to_reuse = read_user_yes_no(
+        "Do you want to re-use the existing version?",
+        'yes',
+    )
 
-        if ok_to_reuse:
-            return False
+    if ok_to_reuse:
+        return False
 
-        sys.exit()
+    sys.exit()
 
 
 def simple_filter(filter_function):

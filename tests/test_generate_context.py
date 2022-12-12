@@ -88,8 +88,8 @@ def test_default_context_replacement_in_generate_context():
                 ('project_name', 'Kivy Project'),
                 ('repo_name', '{{cookiecutter.project_name|lower}}'),
                 ('orientation', ['landscape', 'all', 'portrait']),
-            ]
-        )
+            ],
+        ),
     }
 
     generated_context = generate.generate_context(
@@ -114,12 +114,12 @@ def test_generate_context_decodes_non_ascii_chars():
         'non_ascii': OrderedDict(
             [
                 ('full_name', 'éèà'),
-            ]
-        )
+            ],
+        ),
     }
 
     generated_context = generate.generate_context(
-        context_file='tests/test-generate-context/non_ascii.json'
+        context_file='tests/test-generate-context/non_ascii.json',
     )
 
     assert generated_context == expected_context
@@ -135,14 +135,15 @@ def template_context():
             ('project_name', 'Kivy Project'),
             ('repo_name', '{{cookiecutter.project_name|lower}}'),
             ('orientation', ['all', 'landscape', 'portrait']),
-        ]
+        ],
     )
 
 
 def test_apply_overwrites_does_include_unused_variables(template_context):
     """Verify `apply_overwrites_to_context` skips variables that are not in context."""
     generate.apply_overwrites_to_context(
-        context=template_context, overwrite_context={'not in template': 'foobar'}
+        context=template_context,
+        overwrite_context={'not in template': 'foobar'},
     )
 
     assert 'not in template' not in template_context
@@ -151,7 +152,8 @@ def test_apply_overwrites_does_include_unused_variables(template_context):
 def test_apply_overwrites_sets_non_list_value(template_context):
     """Verify `apply_overwrites_to_context` work with string variables."""
     generate.apply_overwrites_to_context(
-        context=template_context, overwrite_context={'repo_name': 'foobar'}
+        context=template_context,
+        overwrite_context={'repo_name': 'foobar'},
     )
 
     assert template_context['repo_name'] == 'foobar'
@@ -167,8 +169,8 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite():
                 ('project_name', 'Kivy Project'),
                 ('repo_name', '{{cookiecutter.project_name|lower}}'),
                 ('orientation', ['all', 'landscape', 'portrait']),
-            ]
-        )
+            ],
+        ),
     }
 
     generated_context = generate.generate_context(
@@ -191,14 +193,16 @@ def test_apply_overwrites_invalid_overwrite(template_context):
     """Verify variables overwrite for list if variable not in list not ignored."""
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
-            context=template_context, overwrite_context={'orientation': 'foobar'}
+            context=template_context,
+            overwrite_context={'orientation': 'foobar'},
         )
 
 
 def test_apply_overwrites_sets_default_for_choice_variable(template_context):
     """Verify overwritten list member became a default value."""
     generate.apply_overwrites_to_context(
-        context=template_context, overwrite_context={'orientation': 'landscape'}
+        context=template_context,
+        overwrite_context={'orientation': 'landscape'},
     )
 
     assert template_context['orientation'] == ['landscape', 'all', 'portrait']
@@ -219,11 +223,11 @@ def test_apply_overwrites_in_nested_dict():
                             ('description', 'My Kivy Project'),
                             ('repo_name', '{{cookiecutter.project_name|lower}}'),
                             ('orientation', ["all", "landscape", "portrait"]),
-                        ]
+                        ],
                     ),
                 ),
-            ]
-        )
+            ],
+        ),
     }
 
     generated_context = generate.generate_context(

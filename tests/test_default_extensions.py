@@ -21,7 +21,9 @@ def freeze():
 def test_jinja2_time_extension(tmp_path):
     """Verify Jinja2 time extension work correctly."""
     project_dir = cookiecutter(
-        'tests/test-extensions/default/', no_input=True, output_dir=str(tmp_path)
+        'tests/test-extensions/default/',
+        no_input=True,
+        output_dir=str(tmp_path),
     )
     changelog_file = os.path.join(project_dir, 'HISTORY.rst')
     assert os.path.isfile(changelog_file)
@@ -44,7 +46,9 @@ def test_jinja2_time_extension(tmp_path):
 def test_jinja2_slugify_extension(tmp_path):
     """Verify Jinja2 slugify extension work correctly."""
     project_dir = cookiecutter(
-        'tests/test-extensions/default/', no_input=True, output_dir=str(tmp_path)
+        'tests/test-extensions/default/',
+        no_input=True,
+        output_dir=str(tmp_path),
     )
 
     assert os.path.basename(project_dir) == "it-s-slugified-foobar"
@@ -53,7 +57,9 @@ def test_jinja2_slugify_extension(tmp_path):
 def test_jinja2_uuid_extension(tmp_path):
     """Verify Jinja2 uuid extension work correctly."""
     project_dir = cookiecutter(
-        'tests/test-extensions/default/', no_input=True, output_dir=str(tmp_path)
+        'tests/test-extensions/default/',
+        no_input=True,
+        output_dir=str(tmp_path),
     )
     changelog_file = os.path.join(project_dir, 'id')
     assert os.path.isfile(changelog_file)

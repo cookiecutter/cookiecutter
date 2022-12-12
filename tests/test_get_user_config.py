@@ -111,7 +111,9 @@ def test_default_config_path(user_config_path):
 
 
 def test_default_config_from_env_variable(
-    monkeypatch, custom_config_path, custom_config
+    monkeypatch,
+    custom_config_path,
+    custom_config,
 ):
     """Validate app configuration. User config path should be parsed from sys env."""
     monkeypatch.setenv('COOKIECUTTER_CONFIG', custom_config_path)

@@ -7,8 +7,9 @@ import shutil
 import warnings
 from collections import OrderedDict
 from pathlib import Path
+
 from binaryornot.check import is_binary
-from jinja2 import FileSystemLoader, Environment
+from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
@@ -66,7 +67,7 @@ def apply_overwrites_to_context(context, overwrite_context):
             else:
                 raise ValueError(
                     f"{overwrite} provided for choice variable {variable}, "
-                    f"but the choices are {context_value}."
+                    f"but the choices are {context_value}.",
                 )
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
@@ -78,7 +79,9 @@ def apply_overwrites_to_context(context, overwrite_context):
 
 
 def generate_context(
-    context_file='cookiecutter.json', default_context=None, extra_context=None
+    context_file='cookiecutter.json',
+    default_context=None,
+    extra_context=None,
 ):
     """Generate the context for a Cookiecutter project template.
 
@@ -216,7 +219,9 @@ def render_and_create_dir(
     dir_to_create = Path(output_dir, rendered_dirname)
 
     logger.debug(
-        'Rendered dir %s must exist in output_dir %s', dir_to_create, output_dir
+        'Rendered dir %s must exist in output_dir %s',
+        dir_to_create,
+        output_dir,
     )
 
     output_dir_exists = dir_to_create.exists()
@@ -224,7 +229,8 @@ def render_and_create_dir(
     if output_dir_exists:
         if overwrite_if_exists:
             logger.debug(
-                'Output directory %s already exists, overwriting it', dir_to_create
+                'Output directory %s already exists, overwriting it',
+                dir_to_create,
             )
         else:
             msg = f'Error: "{dir_to_create}" directory already exists'
@@ -239,12 +245,15 @@ def ensure_dir_is_templated(dirname):
     """Ensure that dirname is a templated directory name."""
     if '{{' in dirname and '}}' in dirname:
         return True
-    else:
-        raise NonTemplatedInputDirException
+    raise NonTemplatedInputDirException
 
 
 def _run_hook_from_repo_dir(
-    repo_dir, hook_name, project_dir, context, delete_project_on_failure
+    repo_dir,
+    hook_name,
+    project_dir,
+    context,
+    delete_project_on_failure,
 ):
     """Run hook from repo directory, clean project directory if hook fails.
 
@@ -302,7 +311,11 @@ def generate_files(
     env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
     try:
         project_dir, output_directory_created = render_and_create_dir(
-            unrendered_dir, context, output_dir, env, overwrite_if_exists
+            unrendered_dir,
+            context,
+            output_dir,
+            env,
+            overwrite_if_exists,
         )
     except UndefinedError as err:
         msg = f"Unable to create project directory '{unrendered_dir}'"
@@ -324,7 +337,11 @@ def generate_files(
 
     if accept_hooks:
         _run_hook_from_repo_dir(
-            repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
+            repo_dir,
+            'pre_gen_project',
+            project_dir,
+            context,
+            delete_project_on_failure,
         )
 
     with work_in(template_dir):
@@ -368,7 +385,11 @@ def generate_files(
                 unrendered_dir = os.path.join(project_dir, root, d)
                 try:
                     render_and_create_dir(
-                        unrendered_dir, context, output_dir, env, overwrite_if_exists
+                        unrendered_dir,
+                        context,
+                        output_dir,
+                        env,
+                        overwrite_if_exists,
                     )
                 except UndefinedError as err:
                     if delete_project_on_failure:
@@ -384,14 +405,20 @@ def generate_files(
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
                     logger.debug(
-                        'Copying file %s to %s without rendering', infile, outfile
+                        'Copying file %s to %s without rendering',
+                        infile,
+                        outfile,
                     )
                     shutil.copyfile(infile, outfile)
                     shutil.copymode(infile, outfile)
                     continue
                 try:
                     generate_file(
-                        project_dir, infile, context, env, skip_if_file_exists
+                        project_dir,
+                        infile,
+                        context,
+                        env,
+                        skip_if_file_exists,
                     )
                 except UndefinedError as err:
                     if delete_project_on_failure:

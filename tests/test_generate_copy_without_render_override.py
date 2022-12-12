@@ -4,8 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import generate
-from cookiecutter import utils
+from cookiecutter import generate, utils
 
 
 @pytest.fixture
@@ -35,7 +34,7 @@ def test_generate_copy_without_render_extensions():
                     '*.txt',
                     '{{cookiecutter.repo_name}}-rendered/README.md',
                 ],
-            }
+            },
         },
         repo_dir='tests/test-generate-copy-without-render-override',
     )
@@ -52,7 +51,7 @@ def test_generate_copy_without_render_extensions():
                     '*.txt',
                     '{{cookiecutter.repo_name}}-rendered/README.md',
                 ],
-            }
+            },
         },
         overwrite_if_exists=True,
         repo_dir='tests/test-generate-copy-without-render',
@@ -70,19 +69,19 @@ def test_generate_copy_without_render_extensions():
     assert 'I have been rendered!' in file_2
 
     file_3 = Path(
-        'test_copy_without_render/test_copy_without_render-rendered/README.txt'
+        'test_copy_without_render/test_copy_without_render-rendered/README.txt',
     ).read_text()
     assert '{{cookiecutter.render_test}}' in file_3
 
     file_4 = Path(
-        'test_copy_without_render/test_copy_without_render-rendered/README.rst'
+        'test_copy_without_render/test_copy_without_render-rendered/README.rst',
     ).read_text()
     assert 'I have been rendered' in file_4
 
     file_5 = Path(
         'test_copy_without_render/'
         'test_copy_without_render-not-rendered/'
-        'README.rst'
+        'README.rst',
     ).read_text()
     assert '{{cookiecutter.render_test}}' in file_5
 
@@ -90,6 +89,6 @@ def test_generate_copy_without_render_extensions():
     assert '{{cookiecutter.render_test}}' in file_6
 
     file_7 = Path(
-        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md'
+        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md',
     ).read_text()
     assert '{{cookiecutter.render_test}}' in file_7

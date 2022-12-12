@@ -10,7 +10,8 @@ def test_valid_repository():
 
 
 @pytest.mark.parametrize(
-    'invalid_repository', (['tests/fake-repo-bad', 'tests/unknown-repo'])
+    'invalid_repository',
+    (['tests/fake-repo-bad', 'tests/unknown-repo']),
 )
 def test_invalid_repository(invalid_repository):
     """Validate correct response if `cookiecutter.json` file not exist."""

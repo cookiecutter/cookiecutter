@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import hooks, utils, exceptions
+from cookiecutter import exceptions, hooks, utils
 
 
 def make_test_repo(name, multiple_hooks=False):
@@ -167,7 +167,7 @@ class TestExternalHooks:
         with pytest.raises(exceptions.FailedHookException) as excinfo:
             hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert 'Hook script failed, might be an empty file or missing a shebang' in str(
-            excinfo.value
+            excinfo.value,
         )
 
     def test_run_script_cwd(self):
@@ -205,7 +205,7 @@ class TestExternalHooks:
         assert 'tests' not in os.getcwd()
 
     def test_run_hook(self):
-        """Execute hook from specified template in specified output \
+        """Execute hook from specified template in specified output
         directory."""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         with utils.work_in(self.repo_path):
@@ -242,7 +242,7 @@ def dir_with_hooks(tmp_path):
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('pre_gen_project.py~')
-        """
+        """,
     )
     pre_gen_hook_file = hooks_dir.joinpath('pre_gen_project.py~')
     pre_gen_hook_file.write_text(pre_hook_content, encoding='utf8')
@@ -252,7 +252,7 @@ def dir_with_hooks(tmp_path):
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
         print('post_gen_project.py~')
-        """
+        """,
     )
 
     post_gen_hook_file = hooks_dir.joinpath('post_gen_project.py~')

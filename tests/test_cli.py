@@ -144,7 +144,8 @@ def test_cli_replay_file(mocker, cli_runner):
 def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
     """Test cli invocation fail if both `no-input` and `replay` flags passed."""
     mock_cookiecutter = mocker.patch(
-        'cookiecutter.cli.cookiecutter', side_effect=cookiecutter
+        'cookiecutter.cli.cookiecutter',
+        side_effect=cookiecutter,
     )
 
     template_path = 'tests/fake-repo-pre/'
@@ -184,7 +185,9 @@ def overwrite_cli_flag(request):
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
-    mocker, cli_runner, overwrite_cli_flag
+    mocker,
+    cli_runner,
+    overwrite_cli_flag,
 ):
     """Test cli invocation with `overwrite-if-exists` and `replay` flags."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
@@ -214,7 +217,8 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
-    cli_runner, overwrite_cli_flag
+    cli_runner,
+    overwrite_cli_flag,
 ):
     """Test cli invocation with `overwrite-if-exists` and `no-input` flags.
 
@@ -400,7 +404,7 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
             '_template': template_path,
             '_repo_dir': template_path,
             '_output_dir': output_dir,
-        }
+        },
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
     assert context_str in result.output
@@ -560,14 +564,19 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
 
 
 def test_debug_list_installed_templates_failure(
-    cli_runner, debug_file, user_config_path
+    cli_runner,
+    debug_file,
+    user_config_path,
 ):
     """Verify --list-installed command error on invocation."""
     os.makedirs(os.path.dirname(user_config_path))
     Path(user_config_path).write_text('cookiecutters_dir: "/notarealplace/"')
 
     result = cli_runner(
-        '--list-installed', '--config-file', user_config_path, str(debug_file)
+        '--list-installed',
+        '--config-file',
+        user_config_path,
+        str(debug_file),
     )
 
     assert "Error: Cannot list installed templates." in result.output
@@ -598,7 +607,8 @@ cli_accept_hook_arg_testdata = [
 
 
 @pytest.mark.parametrize(
-    "accept_hooks_arg,user_input,expected", cli_accept_hook_arg_testdata
+    "accept_hooks_arg,user_input,expected",
+    cli_accept_hook_arg_testdata,
 )
 def test_cli_accept_hooks(
     mocker,
@@ -614,7 +624,11 @@ def test_cli_accept_hooks(
 
     template_path = "tests/fake-repo-pre/"
     result = cli_runner(
-        template_path, output_dir_flag, output_dir, accept_hooks_arg, input=user_input
+        template_path,
+        output_dir_flag,
+        output_dir,
+        accept_hooks_arg,
+        input=user_input,
     )
 
     assert result.exit_code == 0

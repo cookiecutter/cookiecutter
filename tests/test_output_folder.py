@@ -9,9 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import exceptions
-from cookiecutter import generate
-from cookiecutter import utils
+from cookiecutter import exceptions, generate, utils
 
 
 @pytest.fixture(scope='function')
@@ -26,7 +24,7 @@ def remove_output_folder(request):
 def test_output_folder():
     """Tests should correctly create content, as output_folder does not yet exist."""
     context = generate.generate_context(
-        context_file='tests/test-output-folder/cookiecutter.json'
+        context_file='tests/test-output-folder/cookiecutter.json',
     )
     generate.generate_files(context=context, repo_dir='tests/test-output-folder')
 
@@ -48,7 +46,7 @@ It is 2014."""
 def test_exception_when_output_folder_exists():
     """Tests should raise error as output folder created before `generate_files`."""
     context = generate.generate_context(
-        context_file='tests/test-output-folder/cookiecutter.json'
+        context_file='tests/test-output-folder/cookiecutter.json',
     )
     output_folder = context['cookiecutter']['test_name']
 

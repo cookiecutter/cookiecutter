@@ -63,7 +63,7 @@ def get_config(config_path):
             yaml_dict = yaml.safe_load(file_handle)
         except yaml.YAMLError as e:
             raise InvalidConfiguration(
-                f'Unable to parse YAML file {config_path}.'
+                f'Unable to parse YAML file {config_path}.',
             ) from e
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
@@ -112,9 +112,8 @@ def get_user_config(config_file=None, default_config=False):
         if os.path.exists(USER_CONFIG_PATH):
             logger.debug("Loading config from %s.", USER_CONFIG_PATH)
             return get_config(USER_CONFIG_PATH)
-        else:
-            logger.debug("User config not found. Loading default config.")
-            return copy.copy(DEFAULT_CONFIG)
+        logger.debug("User config not found. Loading default config.")
+        return copy.copy(DEFAULT_CONFIG)
     else:
         # There is a config environment variable. Try to load it.
         # Do not check for existence, so invalid file paths raise an error.
