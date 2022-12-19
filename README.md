@@ -1,4 +1,4 @@
-# Cookieninja - Cookiecutter Fork
+# Cookieninja - A Cookiecutter Fork
 
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
@@ -20,6 +20,7 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 ## Why the fork
 We have decided to fork the original `cookiecutter` project because the project is on hiatus and the maintainers aren't
 working on it anymore. We strive to bring the life back to the project. We would like the community to contribute to this fork.
+to make it as good as possible!
 
 ## Installation
 `pip install cookieninja`
