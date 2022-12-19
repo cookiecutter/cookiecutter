@@ -22,8 +22,8 @@ def configure_logger(stream_level='DEBUG', debug_file=None):
     Set up logging to stdout with given level. If ``debug_file`` is given set
     up logging to file with DEBUG level.
     """
-    # Set up 'cookiecutter' logger
-    logger = logging.getLogger('cookiecutter')
+    # Set up 'cookieninja' logger
+    logger = logging.getLogger('cookieninja')
     logger.setLevel(logging.DEBUG)
 
     # Remove all attached handlers, in case there was

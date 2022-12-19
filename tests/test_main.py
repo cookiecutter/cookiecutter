@@ -18,8 +18,8 @@ def test_replay_dump_template_name(
     """
     monkeypatch.chdir('tests/fake-repo-tmpl')
 
-    mock_replay_dump = mocker.patch('cookiecutter.main.dump')
-    mocker.patch('cookiecutter.main.generate_files')
+    mock_replay_dump = mocker.patch('cookieninja.main.dump')
+    mocker.patch('cookieninja.main.generate_files')
 
     cookiecutter(
         '.',
@@ -47,8 +47,8 @@ def test_replay_load_template_name(
     """
     monkeypatch.chdir('tests/fake-repo-tmpl')
 
-    mock_replay_load = mocker.patch('cookiecutter.main.load')
-    mocker.patch('cookiecutter.main.generate_files')
+    mock_replay_load = mocker.patch('cookieninja.main.load')
+    mocker.patch('cookieninja.main.generate_files')
 
     cookiecutter(
         '.',
@@ -66,8 +66,8 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
     """Check that reply.load is called with the custom replay_file."""
     monkeypatch.chdir('tests/fake-repo-tmpl')
 
-    mock_replay_load = mocker.patch('cookiecutter.main.load')
-    mocker.patch('cookiecutter.main.generate_files')
+    mock_replay_load = mocker.patch('cookieninja.main.load')
+    mocker.patch('cookieninja.main.generate_files')
 
     cookiecutter(
         '.',

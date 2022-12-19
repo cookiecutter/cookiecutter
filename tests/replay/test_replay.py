@@ -30,11 +30,11 @@ def test_raise_on_invalid_mode(invalid_kwargs):
 
 def test_main_does_not_invoke_dump_but_load(mocker):
     """Test `cookiecutter` calling correct functions on `replay`."""
-    mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
-    mock_gen_context = mocker.patch('cookiecutter.main.generate_context')
-    mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
-    mock_replay_dump = mocker.patch('cookiecutter.main.dump')
-    mock_replay_load = mocker.patch('cookiecutter.main.load')
+    mock_prompt = mocker.patch('cookieninja.main.prompt_for_config')
+    mock_gen_context = mocker.patch('cookieninja.main.generate_context')
+    mock_gen_files = mocker.patch('cookieninja.main.generate_files')
+    mock_replay_dump = mocker.patch('cookieninja.main.dump')
+    mock_replay_load = mocker.patch('cookieninja.main.load')
 
     main.cookiecutter('tests/fake-repo-tmpl/', replay=True)
 
@@ -47,11 +47,11 @@ def test_main_does_not_invoke_dump_but_load(mocker):
 
 def test_main_does_not_invoke_load_but_dump(mocker):
     """Test `cookiecutter` calling correct functions on non-replay launch."""
-    mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
-    mock_gen_context = mocker.patch('cookiecutter.main.generate_context')
-    mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
-    mock_replay_dump = mocker.patch('cookiecutter.main.dump')
-    mock_replay_load = mocker.patch('cookiecutter.main.load')
+    mock_prompt = mocker.patch('cookieninja.main.prompt_for_config')
+    mock_gen_context = mocker.patch('cookieninja.main.generate_context')
+    mock_gen_files = mocker.patch('cookieninja.main.generate_files')
+    mock_replay_dump = mocker.patch('cookieninja.main.dump')
+    mock_replay_load = mocker.patch('cookieninja.main.load')
 
     main.cookiecutter('tests/fake-repo-tmpl/', replay=False)
 

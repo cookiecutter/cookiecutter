@@ -31,7 +31,7 @@ class TestRenderVariable:
         """Verify simple items correctly rendered to strings."""
         env = environment.StrictEnvironment()
         from_string = mocker.patch(
-            'cookiecutter.prompt.StrictEnvironment.from_string', wraps=env.from_string
+            'cookieninja.prompt.StrictEnvironment.from_string', wraps=env.from_string
         )
         context = {'project': 'foobar'}
 
@@ -80,7 +80,7 @@ class TestPrompt:
     def test_prompt_for_config(self, monkeypatch, context):
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable',
+            'cookieninja.prompt.read_user_variable',
             lambda var, default: default,
         )
 
@@ -90,7 +90,7 @@ class TestPrompt:
     def test_prompt_for_config_dict(self, monkeypatch):
         """Verify `prompt_for_config` call `read_user_variable` on dict request."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_dict',
+            'cookieninja.prompt.read_user_dict',
             lambda var, default: {"key": "value", "integer": 37},
         )
         context = {'cookiecutter': {'details': {}}}
@@ -163,7 +163,7 @@ class TestPrompt:
     def test_prompt_for_templated_config(self, monkeypatch):
         """Verify Jinja2 templating works in unicode prompts."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable', lambda var, default: default
+            'cookieninja.prompt.read_user_variable', lambda var, default: default
         )
         context = {
             'cookiecutter': OrderedDict(
@@ -187,7 +187,7 @@ class TestPrompt:
     def test_dont_prompt_for_private_context_var(self, monkeypatch):
         """Verify `read_user_variable` not called for private context variables."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable',
+            'cookieninja.prompt.read_user_variable',
             lambda var, default: pytest.fail(
                 'Should not try to read a response for private context var'
             ),
@@ -258,14 +258,14 @@ class TestReadUserChoice:
     def test_should_invoke_read_user_choice(self, mocker):
         """Verify correct function called for select(list) variables."""
         prompt_choice = mocker.patch(
-            'cookiecutter.prompt.prompt_choice_for_config',
+            'cookieninja.prompt.prompt_choice_for_config',
             wraps=prompt.prompt_choice_for_config,
         )
 
-        read_user_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_user_choice = mocker.patch('cookieninja.prompt.read_user_choice')
         read_user_choice.return_value = 'all'
 
-        read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_user_variable = mocker.patch('cookieninja.prompt.read_user_variable')
 
         choices = ['landscape', 'portrait', 'all']
         context = {'cookiecutter': {'orientation': choices}}
@@ -279,12 +279,12 @@ class TestReadUserChoice:
 
     def test_should_invoke_read_user_variable(self, mocker):
         """Verify correct function called for string input variables."""
-        read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_user_variable = mocker.patch('cookieninja.prompt.read_user_variable')
         read_user_variable.return_value = 'Audrey Roy'
 
-        prompt_choice = mocker.patch('cookiecutter.prompt.prompt_choice_for_config')
+        prompt_choice = mocker.patch('cookieninja.prompt.prompt_choice_for_config')
 
-        read_user_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_user_choice = mocker.patch('cookieninja.prompt.read_user_choice')
 
         context = {'cookiecutter': {'full_name': 'Your Name'}}
 
@@ -297,10 +297,10 @@ class TestReadUserChoice:
 
     def test_should_render_choices(self, mocker):
         """Verify Jinja2 templating engine works inside choices variables."""
-        read_user_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_user_choice = mocker.patch('cookieninja.prompt.read_user_choice')
         read_user_choice.return_value = 'anewproject'
 
-        read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_user_variable = mocker.patch('cookieninja.prompt.read_user_variable')
         read_user_variable.return_value = 'A New Project'
 
         rendered_choices = ['foo', 'anewproject', 'bar']
@@ -347,7 +347,7 @@ class TestPromptChoiceForConfig:
 
     def test_should_return_first_option_if_no_input(self, mocker, choices, context):
         """Verify prompt_choice_for_config return first list option on no_input=True."""
-        read_user_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_user_choice = mocker.patch('cookieninja.prompt.read_user_choice')
 
         expected_choice = choices[0]
 
@@ -364,7 +364,7 @@ class TestPromptChoiceForConfig:
 
     def test_should_read_user_choice(self, mocker, choices, context):
         """Verify prompt_choice_for_config return user selection on no_input=False."""
-        read_user_choice = mocker.patch('cookiecutter.prompt.read_user_choice')
+        read_user_choice = mocker.patch('cookieninja.prompt.read_user_choice')
         read_user_choice.return_value = 'all'
 
         expected_choice = 'all'
@@ -392,10 +392,10 @@ class TestReadUserYesNo(object):
     )
     def test_should_invoke_read_user_yes_no(self, mocker, run_as_docker):
         """Verify correct function called for boolean variables."""
-        read_user_yes_no = mocker.patch('cookiecutter.prompt.read_user_yes_no')
+        read_user_yes_no = mocker.patch('cookieninja.prompt.read_user_yes_no')
         read_user_yes_no.return_value = run_as_docker
 
-        read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+        read_user_variable = mocker.patch('cookieninja.prompt.read_user_variable')
 
         context = {'cookiecutter': {'run_as_docker': run_as_docker}}
 

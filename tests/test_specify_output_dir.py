@@ -29,24 +29,24 @@ def template(tmp_path):
 @pytest.fixture(autouse=True)
 def mock_gen_context(mocker, context):
     """Fixture. Automatically mock cookiecutter's function with expected output."""
-    mocker.patch('cookiecutter.main.generate_context', return_value=context)
+    mocker.patch('cookieninja.main.generate_context', return_value=context)
 
 
 @pytest.fixture(autouse=True)
 def mock_prompt(mocker):
     """Fixture. Automatically mock cookiecutter's function with expected output."""
-    mocker.patch('cookiecutter.main.prompt_for_config')
+    mocker.patch('cookieninja.main.prompt_for_config')
 
 
 @pytest.fixture(autouse=True)
 def mock_replay(mocker):
     """Fixture. Automatically mock cookiecutter's function with expected output."""
-    mocker.patch('cookiecutter.main.dump')
+    mocker.patch('cookieninja.main.dump')
 
 
 def test_api_invocation(mocker, template, output_dir, context):
     """Verify output dir location is correctly passed."""
-    mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
+    mock_gen_files = mocker.patch('cookieninja.main.generate_files')
 
     main.cookiecutter(template, output_dir=output_dir)
 
@@ -63,7 +63,7 @@ def test_api_invocation(mocker, template, output_dir, context):
 
 def test_default_output_dir(mocker, template, context):
     """Verify default output dir is current working folder."""
-    mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
+    mock_gen_files = mocker.patch('cookieninja.main.generate_files')
 
     main.cookiecutter(template)
 

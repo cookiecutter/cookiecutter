@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Cookiecutter: Better Project Templates
+Cookieninja: Better Project Templates
 ======================================
 
 Cookiecutter creates projects from **cookiecutters** (project templates), e.g. Python package projects from Python package templates.
@@ -31,7 +31,7 @@ API Reference
 .. toctree::
    :maxdepth: 2
 
-   cookiecutter
+   cookieninja
 
 Project Info
 ------------

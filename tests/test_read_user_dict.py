@@ -75,7 +75,7 @@ def test_process_json_deep_dict():
 
 def test_should_raise_type_error(mocker):
     """Test `default_value` arg verification in `read_user_dict` function."""
-    prompt = mocker.patch('cookiecutter.prompt.click.prompt')
+    prompt = mocker.patch('cookieninja.prompt.click.prompt')
 
     with pytest.raises(TypeError):
         read_user_dict('name', 'russell')
@@ -88,7 +88,7 @@ def test_should_call_prompt_with_process_json(mocker):
 
     Verifies generation of a processor for the user input.
     """
-    mock_prompt = mocker.patch('cookiecutter.prompt.click.prompt', autospec=True)
+    mock_prompt = mocker.patch('cookieninja.prompt.click.prompt', autospec=True)
 
     read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
@@ -103,7 +103,7 @@ def test_should_call_prompt_with_process_json(mocker):
 def test_should_not_load_json_from_sentinel(mocker):
     """Make sure that `json.loads` is not called when using default value."""
     mock_json_loads = mocker.patch(
-        'cookiecutter.prompt.json.loads', autospec=True, return_value={}
+        'cookieninja.prompt.json.loads', autospec=True, return_value={}
     )
 
     runner = click.testing.CliRunner()
