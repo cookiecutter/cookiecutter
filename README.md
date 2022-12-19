@@ -15,7 +15,7 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 - PyPI: [https://pypi.org/project/cookiecutter/](https://pypi.org/project/cookiecutter/)
 - Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE)
 
-![Cookiecutter](https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
+<img src="https://raw.githubusercontent.com/cookieninja-generator/cookieninja/main/logo/cookieninja_large.png" width="400" height="400">
 
 ## Features
 
