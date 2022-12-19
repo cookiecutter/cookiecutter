@@ -1,4 +1,4 @@
-# Cookiecutter
+# Cookieninja - A Cookiecutter Fork
 
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
@@ -17,6 +17,13 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 
 <img src="https://raw.githubusercontent.com/cookieninja-generator/cookieninja/main/logo/cookieninja_large.png" width="400" height="400">
 
+## Why the fork
+We have decided to fork the original `cookiecutter` project because the project is on hiatus and the maintainers aren't
+working on it anymore. We strive to bring the life back to the project. We would like the community to contribute to this fork.
+to make it as good as possible!
+
+## Installation
+`pip install cookieninja`
 ## Features
 
 - Cross-platform: Windows, Mac, and Linux are officially supported.
@@ -31,33 +38,33 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 - Simple command line usage:
 
   ```bash
-  # Create project from the cookiecutter-pypackage.git repo template
+  # Create project from the cookieninja-pypackage.git repo template
   # You'll be prompted to enter values.
   # Then it'll create your Python package in the current working directory,
   # based on those values.
-  $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage
+  $ cookieninja https://github.com/audreyfeldroy/cookiecutter-pypackage
   # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-  $ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
+  $ cookieninja gh:audreyfeldroy/cookiecutter-pypackage
   ```
 
 - Use it at the command line with a local template:
 
   ```bash
   # Create project in the current working directory, from the local
-  # cookiecutter-pypackage/ template
-  $ cookiecutter cookiecutter-pypackage/
+  # cookieninja-pypackage/ template
+  $ cookieninja cookieninja-pypackage/
   ```
 
 - Or use it from Python:
 
   ```py
-  from cookiecutter.main import cookiecutter
+  from cookieninja.main import cookiecutter
 
-  # Create project from the cookiecutter-pypackage/ template
-  cookiecutter('cookiecutter-pypackage/')
+  # Create project from the cookieninja-pypackage/ template
+  cookiecutter('cookieninja-pypackage/')
 
-  # Create project from the cookiecutter-pypackage.git repo template
-  cookiecutter('https://github.com/audreyfeldroy/cookiecutter-pypackage.git')
+  # Create project from the cookieninja-pypackage.git repo template
+  cookiecutter('https://github.com/audreyfeldroy/cookieninja-pypackage.git')
   ```
 
 - Unless you suppress it with `--no-input`, you are prompted for input:
@@ -78,10 +85,10 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 - If you have already cloned a cookiecutter into `~/.cookiecutters/`,  you can reference it by directory name:
 
   ```bash
-  # Clone cookiecutter-pypackage
-  $ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
-  # Now you can use the already cloned cookiecutter by name
-  $ cookiecutter cookiecutter-pypackage
+  # Clone cookieninja-pypackage
+  $ cookieninja gh:audreyfeldroy/cookiecutter-pypackage
+  # Now you can use the already cloned cookieninja by name
+  $ cookieninja cookieninja-pypackage
   ```
 
 - You can use local cookiecutters, or remote cookiecutters directly from Git repos or from Mercurial repos on Bitbucket.
@@ -89,7 +96,7 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 - Inject extra context with command-line arguments:
 
   ```bash
-  cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
+  cookieninja --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
   ```
 
 - Direct access to the Cookiecutter API allows for injection of extra context.
@@ -215,6 +222,7 @@ This includes, but is not limited to, issue trackers, chat rooms, mailing lists,
 
 ## Creator / Leader
 
-This project was created and is led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy).
+The original `cookiecutter` project was created and is led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy).
 
-She is supported by a team of maintainers.
+The fork was created and maintained by [Yuval Dolev](https://github.com/yuvaldolev) and [Lior Weissman](https://github.com/liortct).
+
