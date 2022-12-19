@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import zipfile
-from cookiecutter.exceptions import InvalidZipRepository
+from cookieninja import zipfile
+from cookieninja.exceptions import InvalidZipRepository
 
 
 def mock_download():

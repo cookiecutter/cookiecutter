@@ -6,7 +6,7 @@ cookiecutter.replay.
 import json
 import os
 
-from cookiecutter.utils import make_sure_path_exists
+from .utils import make_sure_path_exists
 
 
 def get_file_name(replay_dir, template_name):

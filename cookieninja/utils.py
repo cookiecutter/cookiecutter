@@ -9,7 +9,7 @@ from pathlib import Path
 
 from jinja2.ext import Extension
 
-from cookiecutter.prompt import read_user_yes_no
+from .prompt import read_user_yes_no
 
 logger = logging.getLogger(__name__)
 

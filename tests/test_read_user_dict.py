@@ -2,7 +2,7 @@
 import click
 import pytest
 
-from cookiecutter.prompt import (
+from cookieninja.prompt import (
     process_json,
     read_user_dict,
 )

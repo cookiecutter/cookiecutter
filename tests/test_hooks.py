@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import hooks, utils, exceptions
+from cookieninja import hooks, utils, exceptions
 
 
 def make_test_repo(name, multiple_hooks=False):

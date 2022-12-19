@@ -11,7 +11,7 @@ import sys
 
 import pytest
 
-from cookiecutter import utils
+from cookieninja import utils
 
 
 @pytest.fixture

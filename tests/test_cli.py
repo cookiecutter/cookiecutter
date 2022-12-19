@@ -8,11 +8,11 @@ from pathlib import Path
 import pytest
 from click.testing import CliRunner
 
-from cookiecutter import utils
-from cookiecutter.__main__ import main
-from cookiecutter.environment import StrictEnvironment
-from cookiecutter.exceptions import UnknownExtension
-from cookiecutter.main import cookiecutter
+from cookieninja import utils
+from cookieninja.__main__ import main
+from cookieninja.environment import StrictEnvironment
+from cookieninja.exceptions import UnknownExtension
+from cookieninja.main import cookiecutter
 
 
 @pytest.fixture(scope='session')

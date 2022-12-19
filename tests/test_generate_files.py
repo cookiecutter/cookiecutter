@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 from binaryornot.check import is_binary
 
-from cookiecutter import exceptions, generate
+from cookieninja import exceptions, generate
 
 
 @pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])

@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from cookiecutter import main, utils
+from cookieninja import main, utils
 
 
 @pytest.fixture(scope='function')

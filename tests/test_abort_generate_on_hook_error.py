@@ -7,7 +7,7 @@ errors occur in (optional) pre- or pos-gen hooks.
 
 import pytest
 
-from cookiecutter import exceptions, generate
+from cookieninja import exceptions, generate
 
 
 @pytest.mark.parametrize(

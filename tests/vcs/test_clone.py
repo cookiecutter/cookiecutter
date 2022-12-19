@@ -4,7 +4,7 @@ import subprocess
 
 import pytest
 
-from cookiecutter import exceptions, vcs
+from cookieninja import exceptions, vcs
 
 
 def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):

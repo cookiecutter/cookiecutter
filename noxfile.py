@@ -75,7 +75,7 @@ def docs(session, batch_run: bool = False):
                 "--watch",
                 "../*.py",
                 "--watch",
-                "../cookiecutter",
+                "../cookieninja",
             ]
         )
 

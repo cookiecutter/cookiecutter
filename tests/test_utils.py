@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import utils
+from cookieninja import utils
 
 
 def make_readonly(path):

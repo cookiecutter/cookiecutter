@@ -6,9 +6,9 @@ import subprocess  # nosec
 import sys
 import tempfile
 
-from cookiecutter import utils
-from cookiecutter.environment import StrictEnvironment
-from cookiecutter.exceptions import FailedHookException
+from . import utils
+from .environment import StrictEnvironment
+from .exceptions import FailedHookException
 
 logger = logging.getLogger(__name__)
 

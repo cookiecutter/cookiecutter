@@ -1,7 +1,7 @@
 """test_read_user_variable."""
 import click
 
-from cookiecutter.prompt import read_user_variable
+from cookieninja.prompt import read_user_variable
 
 VARIABLE = 'project_name'
 DEFAULT = 'Kivy Project'

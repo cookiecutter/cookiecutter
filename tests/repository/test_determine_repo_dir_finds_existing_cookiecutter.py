@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import repository
+from cookieninja import repository
 
 
 @pytest.fixture

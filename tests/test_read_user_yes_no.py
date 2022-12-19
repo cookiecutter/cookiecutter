@@ -1,7 +1,7 @@
 """test_read_user_yes_no."""
 import click
 
-from cookiecutter.prompt import read_user_yes_no
+from cookieninja.prompt import read_user_yes_no
 
 QUESTION = 'Is it okay to delete and re-clone it?'
 DEFAULT = 'y'

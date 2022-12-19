@@ -1,8 +1,8 @@
 """Collection of tests around common path and url shorthands."""
 import pytest
 
-from cookiecutter.config import BUILTIN_ABBREVIATIONS
-from cookiecutter.repository import expand_abbreviations
+from cookieninja.config import BUILTIN_ABBREVIATIONS
+from cookieninja.repository import expand_abbreviations
 
 
 @pytest.mark.parametrize(

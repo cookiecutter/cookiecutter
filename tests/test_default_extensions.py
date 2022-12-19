@@ -6,7 +6,7 @@ from pathlib import Path
 import freezegun
 import pytest
 
-from cookiecutter.main import cookiecutter
+from cookieninja.main import cookiecutter
 
 
 @pytest.fixture(autouse=True)

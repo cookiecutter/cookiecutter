@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 import pytest
 
-from cookiecutter import prompt, exceptions, environment
+from cookieninja import prompt, exceptions, environment
 
 
 @pytest.fixture(autouse=True)

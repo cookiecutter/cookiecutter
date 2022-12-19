@@ -2,9 +2,9 @@
 import os
 import re
 
-from cookiecutter.exceptions import RepositoryNotFound
-from cookiecutter.vcs import clone
-from cookiecutter.zipfile import unzip
+from .exceptions import RepositoryNotFound
+from .vcs import clone
+from .zipfile import unzip
 
 REPO_REGEX = re.compile(
     r"""

@@ -6,7 +6,7 @@ import os
 
 import yaml
 
-from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
+from .exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
 logger = logging.getLogger(__name__)
 

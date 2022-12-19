@@ -1,5 +1,5 @@
 """Tests around handling repositories which require authentication."""
-from cookiecutter.prompt import read_repo_password
+from cookieninja.prompt import read_repo_password
 
 
 def test_click_invocation(mocker):

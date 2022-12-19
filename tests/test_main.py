@@ -1,5 +1,5 @@
 """Collection of tests around cookiecutter's replay feature."""
-from cookiecutter.main import cookiecutter
+from cookieninja.main import cookiecutter
 
 
 def test_replay_dump_template_name(

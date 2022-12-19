@@ -1,7 +1,7 @@
 """Collection of tests around VCS detection."""
 import pytest
 
-from cookiecutter import vcs
+from cookieninja import vcs
 
 
 @pytest.mark.parametrize(

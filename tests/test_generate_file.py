@@ -8,8 +8,8 @@ import pytest
 from jinja2 import FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError
 
-from cookiecutter import generate
-from cookiecutter.environment import StrictEnvironment
+from cookieninja import generate
+from cookieninja.environment import StrictEnvironment
 
 
 @pytest.fixture(scope='function', autouse=True)

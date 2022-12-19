@@ -1,7 +1,7 @@
 """Jinja2 environment and extensions loading."""
 from jinja2 import Environment, StrictUndefined
 
-from cookiecutter.exceptions import UnknownExtension
+from .exceptions import UnknownExtension
 
 
 class ExtensionLoaderMixin:
