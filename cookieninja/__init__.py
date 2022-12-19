@@ -1,2 +1,2 @@
 """Main package for Cookiecutter."""
-__version__ = "2.1.2.dev0"
+__version__ = "0.1.0"

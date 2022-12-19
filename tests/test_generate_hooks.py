@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import generate, utils
-from cookiecutter.exceptions import FailedHookException
+from cookieninja import generate, utils
+from cookieninja.exceptions import FailedHookException
 
 WINDOWS = sys.platform.startswith('win')
 

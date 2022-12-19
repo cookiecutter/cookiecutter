@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from cookiecutter import exceptions, repository
+from cookieninja import exceptions, repository
 
 
 @pytest.mark.parametrize(
@@ -21,7 +21,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
     is passed a zipfile, or a URL to a zipfile.
     """
     mock_clone = mocker.patch(
-        'cookiecutter.repository.unzip',
+        'cookieninja.repository.unzip',
         return_value='tests/fake-repo-tmpl',
         autospec=True,
     )
@@ -64,7 +64,7 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data):
     passed a repository template url.
     """
     mock_clone = mocker.patch(
-        'cookiecutter.repository.clone',
+        'cookieninja.repository.clone',
         return_value='tests/fake-repo-tmpl',
         autospec=True,
     )
@@ -92,7 +92,7 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data):
 def test_repository_url_with_no_context_file(mocker, template_url, user_config_data):
     """Verify cloned repository without `cookiecutter.json` file raises error."""
     mocker.patch(
-        'cookiecutter.repository.clone',
+        'cookieninja.repository.clone',
         return_value='tests/fake-repo-bad',
         autospec=True,
     )

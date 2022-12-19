@@ -5,8 +5,8 @@ from collections import OrderedDict
 
 import pytest
 
-from cookiecutter import generate
-from cookiecutter.exceptions import ContextDecodingException
+from cookieninja import generate
+from cookieninja.exceptions import ContextDecodingException
 
 
 def context_data():

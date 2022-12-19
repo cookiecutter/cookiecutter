@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from cookiecutter import main, utils
+from cookieninja import main, utils
 
 
 @pytest.fixture(scope='function')
@@ -20,7 +20,7 @@ def remove_additional_dirs(request):
 def test_cookiecutter_local_with_input(monkeypatch):
     """Verify simple cookiecutter run results, without extra_context provided."""
     monkeypatch.setattr(
-        'cookiecutter.prompt.read_user_variable', lambda var, default: default
+        'cookieninja.prompt.read_user_variable', lambda var, default: default
     )
     main.cookiecutter('tests/fake-repo-pre/', no_input=False)
     assert os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}')
@@ -34,7 +34,7 @@ def test_cookiecutter_local_with_input(monkeypatch):
 def test_cookiecutter_input_extra_context(monkeypatch):
     """Verify simple cookiecutter run results, with extra_context provided."""
     monkeypatch.setattr(
-        'cookiecutter.prompt.read_user_variable', lambda var, default: default
+        'cookieninja.prompt.read_user_variable', lambda var, default: default
     )
     main.cookiecutter(
         'tests/fake-repo-pre',

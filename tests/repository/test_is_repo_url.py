@@ -1,8 +1,8 @@
 """Tests for all supported cookiecutter template repository locations."""
 import pytest
 
-from cookiecutter.config import BUILTIN_ABBREVIATIONS
-from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_file
+from cookieninja.config import BUILTIN_ABBREVIATIONS
+from cookieninja.repository import expand_abbreviations, is_repo_url, is_zip_file
 
 
 @pytest.fixture(

@@ -1,7 +1,7 @@
 """Collection of tests around general exception handling."""
 from jinja2.exceptions import UndefinedError
 
-from cookiecutter import exceptions
+from cookieninja import exceptions
 
 
 def test_undefined_variable_to_str():

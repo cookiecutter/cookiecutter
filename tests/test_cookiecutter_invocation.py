@@ -11,7 +11,7 @@ import sys
 
 import pytest
 
-from cookiecutter import utils
+from cookieninja import utils
 
 
 @pytest.fixture
@@ -29,7 +29,7 @@ def test_should_invoke_main(monkeypatch, project_dir):
     monkeypatch.setenv('PYTHONPATH', '.')
 
     exit_code = subprocess.check_call(
-        [sys.executable, '-m', 'cookiecutter.cli', 'tests/fake-repo-tmpl', '--no-input']
+        [sys.executable, '-m', 'cookieninja.cli', 'tests/fake-repo-tmpl', '--no-input']
     )
     assert exit_code == 0
     assert os.path.isdir(project_dir)

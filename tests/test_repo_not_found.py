@@ -1,7 +1,7 @@
 """Testing invalid cookiecutter template repositories."""
 import pytest
 
-from cookiecutter import exceptions, main
+from cookieninja import exceptions, main
 
 
 def test_should_raise_error_if_repo_does_not_exist():

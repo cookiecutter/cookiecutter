@@ -7,9 +7,9 @@ from zipfile import BadZipFile, ZipFile
 
 import requests
 
-from cookiecutter.exceptions import InvalidZipRepository
-from cookiecutter.prompt import read_repo_password
-from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
+from .exceptions import InvalidZipRepository
+from .prompt import read_repo_password
+from .utils import make_sure_path_exists, prompt_and_delete
 
 
 def unzip(

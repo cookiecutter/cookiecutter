@@ -1,7 +1,7 @@
 """Collection of tests around VCS detection."""
 import pytest
 
-from cookiecutter import vcs
+from cookieninja import vcs
 
 
 @pytest.mark.parametrize(
@@ -10,5 +10,5 @@ from cookiecutter import vcs
 )
 def test_is_vcs_installed(mocker, which_return, result):
     """Verify `is_vcs_installed` function correctly handles `which` answer."""
-    mocker.patch('cookiecutter.vcs.which', autospec=True, return_value=which_return)
+    mocker.patch('cookieninja.vcs.which', autospec=True, return_value=which_return)
     assert vcs.is_vcs_installed('git') == result

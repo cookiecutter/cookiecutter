@@ -2,7 +2,7 @@
 import click
 import pytest
 
-from cookiecutter.prompt import read_user_choice
+from cookieninja.prompt import read_user_choice
 
 OPTIONS = ['hello', 'world', 'foo', 'bar']
 

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import repository, exceptions
+from cookieninja import repository, exceptions
 
 
 def test_finds_local_repo(tmp_path):

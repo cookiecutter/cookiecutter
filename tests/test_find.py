@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import find
+from cookieninja import find
 
 
 @pytest.fixture(params=['fake-repo-pre', 'fake-repo-pre2'])

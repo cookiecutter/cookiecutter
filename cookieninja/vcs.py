@@ -6,13 +6,13 @@ from pathlib import Path
 from shutil import which
 from typing import Optional
 
-from cookiecutter.exceptions import (
+from .exceptions import (
     RepositoryCloneFailed,
     RepositoryNotFound,
     UnknownRepoType,
     VCSNotInstalled,
 )
-from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
+from .utils import make_sure_path_exists, prompt_and_delete
 
 logger = logging.getLogger(__name__)
 

@@ -6,8 +6,8 @@ from collections import OrderedDict
 import click
 from jinja2.exceptions import UndefinedError
 
-from cookiecutter.environment import StrictEnvironment
-from cookiecutter.exceptions import UndefinedVariableInTemplate
+from .environment import StrictEnvironment
+from .exceptions import UndefinedVariableInTemplate
 
 
 def read_user_variable(var_name, default_value):

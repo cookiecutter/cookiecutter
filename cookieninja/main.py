@@ -9,13 +9,13 @@ import logging
 import os
 import sys
 
-from cookiecutter.config import get_user_config
-from cookiecutter.exceptions import InvalidModeException
-from cookiecutter.generate import generate_context, generate_files
-from cookiecutter.prompt import prompt_for_config
-from cookiecutter.replay import dump, load
-from cookiecutter.repository import determine_repo_dir
-from cookiecutter.utils import rmtree
+from .config import get_user_config
+from .exceptions import InvalidModeException
+from .generate import generate_context, generate_files
+from .prompt import prompt_for_config
+from .replay import dump, load
+from .repository import determine_repo_dir
+from .utils import rmtree
 
 logger = logging.getLogger(__name__)
 

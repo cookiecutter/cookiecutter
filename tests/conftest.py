@@ -4,8 +4,8 @@ import shutil
 
 import pytest
 
-from cookiecutter import utils
-from cookiecutter.config import DEFAULT_CONFIG
+from cookieninja import utils
+from cookieninja.config import DEFAULT_CONFIG
 
 
 USER_CONFIG = """

@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import main
+from cookieninja import main
 
 
 @pytest.fixture(

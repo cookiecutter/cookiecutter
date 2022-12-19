@@ -6,8 +6,8 @@ import sys
 
 import click
 
-from cookiecutter import __version__
-from cookiecutter.exceptions import (
+from . import __version__
+from .exceptions import (
     ContextDecodingException,
     FailedHookException,
     InvalidModeException,
@@ -18,9 +18,9 @@ from cookiecutter.exceptions import (
     UndefinedVariableInTemplate,
     UnknownExtension,
 )
-from cookiecutter.log import configure_logger
-from cookiecutter.main import cookiecutter
-from cookiecutter.config import get_user_config
+from .log import configure_logger
+from .main import cookiecutter
+from .config import get_user_config
 
 
 def version_msg():

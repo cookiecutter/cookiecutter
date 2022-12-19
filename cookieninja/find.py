@@ -3,7 +3,7 @@ import logging
 import os
 from pathlib import Path
 
-from cookiecutter.exceptions import NonTemplatedInputDirException
+from .exceptions import NonTemplatedInputDirException
 
 logger = logging.getLogger(__name__)
 

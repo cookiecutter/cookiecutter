@@ -1,7 +1,7 @@
 """Provides custom extension, exposing a ``foobar`` filter."""
 
 from jinja2.ext import Extension
-from cookiecutter.utils import simple_filter
+from cookieninja.utils import simple_filter
 
 
 class FoobarExtension(Extension):

@@ -10,7 +10,7 @@ jobs:
 
     environment:
       name: pypi.org
-      url: https://pypi.org/project/cookiecutter/
+      url: https://pypi.org/project/cookieninja/
 
     steps:
 

@@ -3,22 +3,22 @@ import logging
 
 import pytest
 
-from cookiecutter.log import configure_logger
+from cookieninja.log import configure_logger
 
 
 def create_log_records():
     """Test function, create log entries in expected stage of test."""
-    cookiecutter_logger = logging.getLogger('cookiecutter')
-    foo_logger = logging.getLogger('cookiecutter.foo')
-    foobar_logger = logging.getLogger('cookiecutter.foo.bar')
+    cookieninja_logger = logging.getLogger('cookieninja')
+    foo_logger = logging.getLogger('cookieninja.foo')
+    foobar_logger = logging.getLogger('cookieninja.foo.bar')
 
-    cookiecutter_logger.info('Welcome to Cookiecutter')
-    cookiecutter_logger.debug('Generating project from pytest-plugin')
+    cookieninja_logger.info('Welcome to Cookiecutter')
+    cookieninja_logger.debug('Generating project from pytest-plugin')
     foo_logger.info('Loading user config from home dir')
     foobar_logger.debug("I don't know.")
     foobar_logger.debug('I wanted to save the world.')
     foo_logger.error('Aw, snap! Something went wrong')
-    cookiecutter_logger.debug('Successfully generated project')
+    cookieninja_logger.debug('Successfully generated project')
 
 
 @pytest.fixture
@@ -35,13 +35,13 @@ def info_messages():
 def debug_messages():
     """Fixture. List of test debug messages."""
     return [
-        "INFO cookiecutter: Welcome to Cookiecutter",
-        "DEBUG cookiecutter: Generating project from pytest-plugin",
-        "INFO cookiecutter.foo: Loading user config from home dir",
-        "DEBUG cookiecutter.foo.bar: I don't know.",
-        "DEBUG cookiecutter.foo.bar: I wanted to save the world.",
-        "ERROR cookiecutter.foo: Aw, snap! Something went wrong",
-        "DEBUG cookiecutter: Successfully generated project",
+        "INFO cookieninja: Welcome to Cookiecutter",
+        "DEBUG cookieninja: Generating project from pytest-plugin",
+        "INFO cookieninja.foo: Loading user config from home dir",
+        "DEBUG cookieninja.foo.bar: I don't know.",
+        "DEBUG cookieninja.foo.bar: I wanted to save the world.",
+        "ERROR cookieninja.foo: Aw, snap! Something went wrong",
+        "DEBUG cookieninja: Successfully generated project",
     ]
 
 

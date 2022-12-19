@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import exceptions, repository
+from cookieninja import exceptions, repository
 
 
 @pytest.fixture

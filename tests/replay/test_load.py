@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from cookiecutter import replay
+from cookieninja import replay
 
 
 @pytest.fixture

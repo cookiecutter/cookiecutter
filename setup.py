@@ -1,7 +1,7 @@
 """cookiecutter distutils configuration."""
 from setuptools import setup
 
-version = "2.1.2.dev0"
+version = "0.1.0"
 
 with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
@@ -17,7 +17,7 @@ requirements = [
 ]
 
 setup(
-    name='cookiecutter',
+    name='cookieninja',
     version=version,
     description=(
         'A command-line utility that creates projects from project '
@@ -26,12 +26,11 @@ setup(
     ),
     long_description=readme,
     long_description_content_type='text/markdown',
-    author='Audrey Feldroy',
-    author_email='audreyr@gmail.com',
-    url='https://github.com/cookiecutter/cookiecutter',
-    packages=['cookiecutter'],
-    package_dir={'cookiecutter': 'cookiecutter'},
-    entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
+    author='Yuval Dolev & Lior Weissman',
+    author_email='cookieninja.gen@gmail.com',
+    url='https://github.com/cookieninja-generator/cookieninja',
+    packages=['cookieninja'],
+    entry_points={'console_scripts': ['cookieninja = cookieninja.__main__:main']},
     include_package_data=True,
     python_requires='>=3.7',
     install_requires=requirements,
@@ -55,6 +54,7 @@ setup(
         "Topic :: Software Development",
     ],
     keywords=[
+        "cookieninja",
         "cookiecutter",
         "Python",
         "projects",
