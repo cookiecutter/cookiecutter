@@ -1,7 +1,7 @@
 """cookiecutter distutils configuration."""
 from setuptools import setup
 
-version = "0.1.0"
+version = "0.1.1"
 
 with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
