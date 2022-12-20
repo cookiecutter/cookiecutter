@@ -1,18 +1,17 @@
 # Cookieninja - A Cookiecutter Fork
 
-[![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
-[![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
-[![Build Status](https://github.com/cookiecutter/cookiecutter/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/cookiecutter/cookiecutter/actions)
-[![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/github/cookiecutter/cookiecutter?branch=master)
-[![discord](https://img.shields.io/badge/Discord-cookiecutter-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/9BrxzPKuEW)
-[![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
-[![Code Quality](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master)
+[![pypi](https://img.shields.io/pypi/v/cookieninja.svg)](https://pypi.org/project/cookieninja/)
+[![python](https://img.shields.io/pypi/pyversions/cookieninja.svg)](https://pypi.org/project/cookieninja/)
+[![Build Status](https://github.com/cookieninja-generator/cookieninja/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/cookieninja-generator/cookieninja/actions)
+[![codecov](https://codecov.io/gh/cookieninja-generator/cookieninja/branch/main/graphs/badge.svg?branch=main)](https://codecov.io/github/cookieninja-generator/cookieninja?branch=main)
+[![docs](https://readthedocs.org/projects/cookieninja/badge/?version=latest)](https://cookieninja.readthedocs.io/en/latest)
+[![Code Quality](https://scrutinizer-ci.com/g/cookieninja-generator/cookieninja/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/cookieninja-generator/cookieninja/?branch=main)
 
 A command-line utility that creates projects from **cookiecutters** (project templates), e.g. creating a Python package project from a Python package project template.
 
 - Documentation: [https://cookiecutter.readthedocs.io](https://cookiecutter.readthedocs.io)
 - GitHub: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
-- PyPI: [https://pypi.org/project/cookiecutter/](https://pypi.org/project/cookiecutter/)
+- PyPI: [https://pypi.org/project/cookieninja/](https://pypi.org/project/cookieninja/)
 - Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE)
 
 <img src="https://raw.githubusercontent.com/cookieninja-generator/cookieninja/main/logo/cookieninja_large.png" width="400" height="400">
