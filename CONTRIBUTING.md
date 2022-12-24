@@ -317,7 +317,7 @@ New features require a +1 from 2 other core committers (besides yourself).
 ### Process: Roadmap
 
 The roadmap located [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
-# TODO: change road map linj
+TODO: change road map to cookieninja
 
 Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
 

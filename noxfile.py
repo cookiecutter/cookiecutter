@@ -50,7 +50,7 @@ def documentation_tests(session):
     return docs(session, batch_run=True)
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.8")
 def docs(session, batch_run: bool = False):
     """Build the documentation or serve documentation interactively."""
     shutil.rmtree(Path("docs").joinpath("_build"), ignore_errors=True)
