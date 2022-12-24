@@ -170,11 +170,12 @@ def main(
     list_installed,
     keep_project_on_failure,
 ):
-    """Create a project from a Cookiecutter project template (TEMPLATE).
+    """Create a project from a Cookieninja project template (TEMPLATE).
 
-    Cookiecutter is free and open source software, developed and managed by
+    Cookieninja is a fork from Cookiecutter project and free and open source software,
+    developed and managed by
     volunteers. If you would like to help out or fund the project, please get
-    in touch at https://github.com/cookiecutter/cookiecutter.
+    in touch at https://github.com/cookieninja-generator/cookieninja.
     """
     # Commands that should work without arguments
     if list_installed:

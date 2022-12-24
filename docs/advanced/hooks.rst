@@ -3,13 +3,11 @@
 Using Pre/Post-Generate Hooks
 =============================
 
-*New in cookiecutter 0.7*
-
 You can have Python or Shell scripts that run before and/or after your project is generated.
 
 Put them in ``hooks/`` like this::
 
-    cookiecutter-something/
+    cookieninja-something/
     ├── {{cookiecutter.project_slug}}/
     ├── hooks
     │   ├── pre_gen_project.py
@@ -18,14 +16,14 @@ Put them in ``hooks/`` like this::
 
 Shell scripts work similarly::
 
-    cookiecutter-something/
+    cookieninja-something/
     ├── {{cookiecutter.project_slug}}/
     ├── hooks
     │   ├── pre_gen_project.sh
     │   └── post_gen_project.sh
     └── cookiecutter.json
 
-It shouldn't be too hard to extend Cookiecutter to work with other types of scripts too.
+It shouldn't be too hard to extend Cookieninja to work with other types of scripts too.
 Pull requests are welcome.
 
 For portability, you should use Python scripts (with extension `.py`) for your hooks, as these can be run on any platform.
@@ -51,9 +49,9 @@ This makes it easy for a post-generate hook to find generated files using relati
 Template variables are rendered in the script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Just like your project template, Cookiecutter also renders Jinja template syntax in your scripts.
+Just like your project template, Cookieninja also renders Jinja template syntax in your scripts.
 This lets you incorporate Jinja template variables in your scripts.
-For example, this line of Python sets ``module_name`` to the value of the ``cookiecutter.module_name`` template variable:
+For example, this line of Python sets ``module_name`` to the value of the ``cookieninja.module_name`` template variable:
 
 .. code-block:: python
 

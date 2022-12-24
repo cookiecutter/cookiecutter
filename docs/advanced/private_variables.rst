@@ -3,7 +3,7 @@
 Private Variables
 -----------------
 
-Cookiecutter allows the definition private variables by prepending an underscore to the variable name.
+Cookieninja allows the definition private variables by prepending an underscore to the variable name.
 The user will not be required to fill those variables in.
 These can either be not rendered, by using a prepending underscore, or rendered, prepending a double underscore.
 For example, the ``cookiecutter.json``:

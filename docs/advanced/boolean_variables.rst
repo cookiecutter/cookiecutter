@@ -1,8 +1,6 @@
 Boolean Variables
 -----------------
 
-.. versionadded:: 2.2.0
-
 Boolean variables are used for answering True/False questions.
 
 Basic Usage
@@ -18,11 +16,11 @@ For example, if you provide the following boolean variable in your
        "run_as_docker": true
    }
 
-you will get the following user input when running Cookiecutter::
+You will get the following user input when running Cookieninja::
 
   run_as_docker [True]:
 
-User input will be parsed by :func:`~cookiecutter.prompt.read_user_yes_no`. The
+User input will be parsed by :func:`~cookieninja.prompt.read_user_yes_no`. The
 following values are considered as valid user input:
 
     - ``True`` values: "1", "true", "t", "yes", "y", "on"

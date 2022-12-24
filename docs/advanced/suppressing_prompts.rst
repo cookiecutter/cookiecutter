@@ -10,11 +10,11 @@ Note: this option will force a refresh of cached resources.
 Basic Example: Using the Defaults
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Cookiecutter will pick a default value if used with ``no_input``:
+Cookieninja will pick a default value if used with ``no_input``:
 
 .. code-block:: python
 
-    from cookiecutter.main import cookiecutter
+    from cookieninja.main import cookiecutter
     cookiecutter(
         'cookiecutter-django',
         no_input=True,

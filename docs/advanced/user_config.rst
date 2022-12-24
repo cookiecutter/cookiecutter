@@ -3,18 +3,15 @@
 User Config
 ===========
 
-*New in Cookiecutter 0.7*
+If you use Cookieninja a lot, you'll find it useful to have a user config file.
+By default Cookieninja tries to retrieve settings from a `.cookiecutterrc` file in your home directory.
 
-If you use Cookiecutter a lot, you'll find it useful to have a user config file.
-By default Cookiecutter tries to retrieve settings from a `.cookiecutterrc` file in your home directory.
-
-*New in Cookiecutter 1.3*
 
 You can also specify a config file on the command line via ``--config-file``.
 
 .. code-block:: bash
 
-    cookiecutter --config-file /home/audreyr/my-custom-config.yaml cookiecutter-pypackage
+    cookieninja --config-file /home/audreyr/my-custom-config.yaml cookiecutter-pypackage
 
 Or you can set the ``COOKIECUTTER_CONFIG`` environment variable:
 
@@ -23,7 +20,7 @@ Or you can set the ``COOKIECUTTER_CONFIG`` environment variable:
     export COOKIECUTTER_CONFIG=/home/audreyr/my-custom-config.yaml
 
 If you wish to stick to the built-in config and not load any user config file at all, use the CLI option ``--default-config`` instead.
-Preventing Cookiecutter from loading user settings is crucial for writing integration tests in an isolated environment.
+Preventing Cookieninja from loading user settings is crucial for writing integration tests in an isolated environment.
 
 Example user config:
 
@@ -43,12 +40,12 @@ Example user config:
 Possible settings are:
 
 ``default_context``:
-    A list of key/value pairs that you want injected as context whenever you generate a project with Cookiecutter.
+    A list of key/value pairs that you want injected as context whenever you generate a project with Cookieninja.
     These values are treated like the defaults in ``cookiecutter.json``, upon generation of any project.
 ``cookiecutters_dir``
-    Directory where your cookiecutters are cloned to when you use Cookiecutter with a repo argument.
+    Directory where your cookiecutters are cloned to when you use Cookieninja with a repo argument.
 ``replay_dir``
-    Directory where Cookiecutter dumps context data to, which you can fetch later on when using the
+    Directory where Cookieninja dumps context data to, which you can fetch later on when using the
     :ref:`replay feature <replay-feature>`.
 ``abbreviations``
     A list of abbreviations for cookiecutters.
