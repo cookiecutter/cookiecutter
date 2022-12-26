@@ -2,7 +2,7 @@
 
 [![pypi](https://img.shields.io/pypi/v/cookieninja.svg)](https://pypi.org/project/cookieninja/)
 [![python](https://img.shields.io/pypi/pyversions/cookieninja.svg)](https://pypi.org/project/cookieninja/)
-[![Build Status](https://github.com/cookieninja-generator/cookieninja/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/cookieninja-generator/cookieninja/actions)
+[![Build Status](https://github.com/cookieninja-generator/cookieninja/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/cookieninja-generator/cookieninja/actions)
 [![codecov](https://codecov.io/gh/cookieninja-generator/cookieninja/branch/main/graphs/badge.svg?branch=main)](https://codecov.io/github/cookieninja-generator/cookieninja?branch=main)
 [![docs](https://readthedocs.org/projects/cookieninja/badge/?version=latest)](https://cookieninja.readthedocs.io/en/latest)
 [![Code Quality](https://scrutinizer-ci.com/g/cookieninja-generator/cookieninja/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/cookieninja-generator/cookieninja/?branch=main)
@@ -124,7 +124,7 @@ to make it as good as possible!
     "project_short_description": "Refreshingly simple static site generator.",
     "release_date": "2013-07-10",
     "year": "2013",
-    "version": "0.1.1"
+    "version": "0.1.0"
   }
   ```
 - Pre- and post-generate hooks: Python or shell scripts to run before or after generating a project.
