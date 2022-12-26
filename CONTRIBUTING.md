@@ -43,7 +43,7 @@ Whenever possible, it's best to try and implement feature ideas as separate proj
 
 ### Write Documentation
 
-Cookieninja could always use more documentation, whether as part of the official Cookiejinja docs, in docstrings, or even on the web in blog posts, articles, and such.
+Cookieninja could always use more documentation, whether as part of the official Cookieninja docs, in docstrings, or even on the web in blog posts, articles, and such.
 
 If you want to review your changes on the documentation locally, you can do:
 
@@ -66,13 +66,13 @@ If you are proposing a feature:
 
 ## Setting Up the Code for Local Development
 
-Here's how to set up `cookiejinja` for local development.
+Here's how to set up `cookieninja` for local development.
 
-1. Fork the `cookiejinja` repo on GitHub.
+1. Fork the `cookieninja` repo on GitHub.
 2. Clone your fork locally:
 
    ```bash
-   git clone git@github.com:your_name_here/cookiejinja.git
+   git clone git@github.com:your_name_here/cookieninja.git
    ```
 
 3. Install your local copy into a virtualenv.
@@ -316,8 +316,7 @@ New features require a +1 from 2 other core committers (besides yourself).
 
 ### Process: Roadmap
 
-The roadmap located [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
-TODO: change road map to cookieninja
+The roadmap located [here](https://github.com/cookieninja-generator/cookieninja/milestones)
 
 Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
 

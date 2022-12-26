@@ -49,7 +49,7 @@ Would output:
 Random string extension
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``cookiejinja.extensions.RandomStringExtension`` extension provides a ``random_ascii_string`` method in templates that generates a random fixed-length string, optionally with punctuation.
+The ``cookieninja.extensions.RandomStringExtension`` extension provides a ``random_ascii_string`` method in templates that generates a random fixed-length string, optionally with punctuation.
 
 Generate a random n-size character string.
 Example for n=12:
