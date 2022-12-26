@@ -16,7 +16,7 @@ This works as command-line parameters as well:
 
 .. code-block:: bash
 
-    cookiecutter --no-input cookiecutter-pypackage/ project_name=TheGreatest
+    cookieninja --no-input cookiecutter-pypackage/ project_name=TheGreatest
 
 You will also need to add these keys to the ``cookiecutter.json`` or ``.cookiecutterrc``.
 
@@ -38,7 +38,7 @@ generated:
 
 .. code-block:: python
 
-    from cookiecutter.main import cookiecutter
+    from cookieninja.main import cookiecutter
 
     from datetime import datetime
 

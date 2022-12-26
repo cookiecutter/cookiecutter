@@ -3,8 +3,6 @@
 Dictionary Variables
 --------------------
 
-*New in Cookiecutter 1.5*
-
 Dictionary variables provide a way to define deep structured information when rendering a template.
 
 Basic Usage
@@ -63,4 +61,4 @@ The above ``file_types`` dictionary variable creates ``cookiecutter.file_types``
     {% endfor %}
 
 
-Cookiecutter is using `Jinja2's for expression <https://jinja.palletsprojects.com/en/latest/templates/#for>`_ to iterate over the items in the dictionary.
+Cookieninja is using `Jinja2's for expression <https://jinja.palletsprojects.com/en/latest/templates/#for>`_ to iterate over the items in the dictionary.

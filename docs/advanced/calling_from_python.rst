@@ -1,13 +1,13 @@
 .. _calling-from-python:
 
-Calling Cookiecutter Functions From Python
+Calling Cookieninja Functions From Python
 ------------------------------------------
 
-You can use Cookiecutter from Python:
+You can use Cookieninja from Python:
 
 .. code-block:: python
 
-    from cookiecutter.main import cookiecutter
+    from cookieninja.main import cookiecutter
 
     # Create project from the cookiecutter-pypackage/ template
     cookiecutter('cookiecutter-pypackage/')

@@ -1,14 +1,12 @@
 .. _templates:
 
-Templates inheritance (2.2+)
+Templates inheritance
 ---------------------------------------------------
-
-*New in Cookiecutter 2.2+*
 
 Sometimes you need to extend a base template with a different
 configuration to avoid nested blocks.
 
-Cookiecutter introduces the ability to use common templates
+Cookieninja introduces the ability to use common templates
 using the power of jinja: `extends`, `include` and `super`.
 
 Here's an example repository::

@@ -1,18 +1,15 @@
 =============================
-Getting to Know Cookiecutter
+Getting to Know Cookieninja
 =============================
 
-.. note:: Before you begin, please install Cookiecutter 0.7.0 or higher.
-   Instructions are in :doc:`../installation`.
-
-Cookiecutter is a tool for creating projects from *cookiecutters* (project templates).
+Cookieninja is a tool for creating projects from *cookieninjas* (project templates).
 
 What exactly does this mean? Read on!
 
-Case Study: cookiecutter-pypackage
+Case Study: cookieninja -pypackage
 -----------------------------------
 
-*cookiecutter-pypackage* is a cookiecutter template that creates the starter boilerplate for a Python package.
+*cookieninja-pypackage* is a cookieninja template that creates the starter boilerplate for a Python package.
 
 .. note:: There are several variations of it, but for this tutorial we'll use
    the original version at https://github.com/audreyfeldroy/cookiecutter-pypackage/.
@@ -22,17 +19,17 @@ Step 1: Generate a Python Package Project
 
 Open your shell and cd into the directory where you'd like to create a starter Python package project.
 
-At the command line, run the cookiecutter command, passing in the link to cookiecutter-pypackage's HTTPS clone URL like this:
+At the command line, run the cookieninja command, passing in the link to cookieninja-pypackage's HTTPS clone URL like this:
 
 .. code-block:: bash
 
-    $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
+    $ cookieninja https://github.com/audreyfeldroy/cookiecutter-pypackage.git
 
 Local Cloning of Project Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, cookiecutter-pypackage gets cloned to `~/.cookiecutters/` (or equivalent on Windows).
-Cookiecutter does this for you, so sit back and wait.
+First, cookieninja-pypackage gets cloned to `~/.cookiecutters/` (or equivalent on Windows).
+Cookieninja does this for you, so sit back and wait.
 
 Local Generation of Project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,7 +91,7 @@ How did that work?
 Step 3: Observe How It Was Generated
 ------------------------------------
 
-Let's take a look at cookiecutter-pypackage together. Open https://github.com/audreyfeldroy/cookiecutter-pypackage in a new browser window.
+Let's take a look at cookieninja-pypackage together. Open https://github.com/audreyfeldroy/cookiecutter-pypackage in a new browser window.
 
 {{ cookiecutter.project_slug }}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,7 +114,7 @@ Observe how it corresponds to the `AUTHORS.rst` file that you generated.
 cookiecutter.json
 ~~~~~~~~~~~~~~~~~
 
-Now navigate back up to `cookiecutter-pypackage/` and look at the `cookiecutter.json` file.
+Now navigate back up to `cookieninja-pypackage/` and look at the `cookiecutter.json` file.
 
 You should see JSON that corresponds to the prompts and default values shown earlier during project generation:
 
@@ -147,6 +144,6 @@ about this tutorial.
 Summary
 -------
 
-You have learned how to use Cookiecutter to generate your first project from a cookiecutter project template.
+You have learned how to use Cookieninja to generate your first project from a cookieninja project template.
 
-In tutorial 2 (:ref:`tutorial2`), you'll see how to create cookiecutters of your own, from scratch.
+In tutorial 2 (:ref:`tutorial2`), you'll see how to create cookieninjas of your own, from scratch.

@@ -15,7 +15,7 @@ You can contribute in many ways:
 
 ### Report Bugs
 
-Report bugs at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
+Report bugs at [https://github.com/cookieninja-generator/cookieninja/issues](https://github.com/cookieninja-generator/cookieninja/issues).
 
 If you are reporting a bug, please include:
 
@@ -43,7 +43,7 @@ Whenever possible, it's best to try and implement feature ideas as separate proj
 
 ### Write Documentation
 
-Cookiecutter could always use more documentation, whether as part of the official Cookiecutter docs, in docstrings, or even on the web in blog posts, articles, and such.
+Cookieninja could always use more documentation, whether as part of the official Cookieninja docs, in docstrings, or even on the web in blog posts, articles, and such.
 
 If you want to review your changes on the documentation locally, you can do:
 
@@ -56,7 +56,7 @@ This will compile the documentation, open it in your browser and start watching 
 
 ### Submit Feedback
 
-The best way to send feedback is to file an issue at [https://github.com/cookiecutter/cookiecutter/issues](https://github.com/cookiecutter/cookiecutter/issues).
+The best way to send feedback is to file an issue at [https://github.com/cookieninja-generator/cookieninja/issues](https://github.com/cookieninja-generator/cookieninja/issues).
 
 If you are proposing a feature:
 
@@ -66,20 +66,20 @@ If you are proposing a feature:
 
 ## Setting Up the Code for Local Development
 
-Here's how to set up `cookiecutter` for local development.
+Here's how to set up `cookieninja` for local development.
 
-1. Fork the `cookiecutter` repo on GitHub.
+1. Fork the `cookieninja` repo on GitHub.
 2. Clone your fork locally:
 
    ```bash
-   git clone git@github.com:your_name_here/cookiecutter.git
+   git clone git@github.com:your_name_here/cookieninja.git
    ```
 
 3. Install your local copy into a virtualenv.
    Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
 
    ```bash
-   cd cookiecutter/
+   cd cookieninja/
    pip install -e .
    ```
 
@@ -231,7 +231,7 @@ Core committers, use this section to:
 
 - Sets a standard baseline for project template creators, facilitating reuse
 - Minimizes the learning curve for those who already use Flask or Django
-- Minimizes scope of Cookiecutter codebase
+- Minimizes scope of Cookieninja codebase
 
 #### Extensible
 
@@ -241,14 +241,14 @@ Being extendable by people with different ideas for Jinja2-based project templat
 - Aim for statelessness
 - Lets anyone write more opinionated tools
 
-Freedom for Cookiecutter users to build and extend.
+Freedom for Cookieninja users to build and extend.
 
-- No officially-maintained cookiecutter templates, only ones by individuals
+- No officially-maintained cookieninja templates, only ones by individuals
 - Commercial project-friendly licensing, allowing for private cookiecutters and private Cookiecutter-based tools
 
 #### Fast and Focused
 
-Cookiecutter is designed to do one thing, and do that one thing very well.
+Cookieninja is designed to do one thing, and do that one thing very well.
 
 - Cover the use cases that the core committers need, and as little as possible beyond that :)
 - Generates project templates from the command-line or API, nothing more
@@ -270,7 +270,7 @@ Cookiecutter is designed to do one thing, and do that one thing very well.
 
 #### VCS-Hosted Templates
 
-Cookiecutter project templates are intentionally hosted VCS repos as-is.
+Cookieninja project templates are intentionally hosted VCS repos as-is.
 
 - They are easily forkable
 - It's easy for users to browse forks and files
@@ -316,7 +316,7 @@ New features require a +1 from 2 other core committers (besides yourself).
 
 ### Process: Roadmap
 
-The roadmap located [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
+The roadmap located [here](https://github.com/cookieninja-generator/cookieninja/milestones)
 
 Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
 
@@ -356,8 +356,8 @@ Exceptions:
 
 Contributors may be given core commit privileges. Preference will be given to those with:
 
-1. Past contributions to Cookiecutter and other open-source projects.
-   Contributions to Cookiecutter include both code (both accepted and pending) and friendly participation in the issue tracker.
+1. Past contributions to Cookieninja and other open-source projects.
+   Contributions to Cookieninja include both code (both accepted and pending) and friendly participation in the issue tracker.
    Quantity and quality are considered.
 2. A coding style that the other core committers find simple, minimal, and clean.
 3. Access to resources for cross-platform development and testing.

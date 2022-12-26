@@ -2,7 +2,7 @@
 Overview
 ========
 
-Cookiecutter takes a template provided as a directory structure with template-files.
+Cookieninja takes a template provided as a directory structure with template-files.
 Templates can be located in the filesystem, as a ZIP-file or on a VCS-Server (Git/Hg) like GitHub.
 
 It reads a settings file and prompts the user interactively whether or not to change the settings.
@@ -15,9 +15,9 @@ Additionally the template can provide code (Python or shell-script) to be execut
 Input
 -----
 
-This is a directory structure for a simple cookiecutter::
+This is a directory structure for a simple cookieninja::
 
-    cookiecutter-something/
+    cookieninja-something/
     ├── {{ cookiecutter.project_name }}/  <--------- Project template
     │   └── ...
     ├── blah.txt                      <--------- Non-templated files/dirs

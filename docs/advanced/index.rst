@@ -3,7 +3,7 @@
 Advanced Usage
 ==============
 
-Various advanced topics regarding cookiecutter usage.
+Various advanced topics regarding cookieninja usage.
 
 .. toctree::
    :maxdepth: 2

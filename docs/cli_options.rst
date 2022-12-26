@@ -4,4 +4,4 @@ Command Line Options
 --------------------
 
 .. click:: cookieninja.__main__:main
-  :prog: cookiecutter
+  :prog: cookieninja

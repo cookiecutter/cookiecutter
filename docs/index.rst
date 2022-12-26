@@ -6,7 +6,8 @@
 Cookieninja: Better Project Templates
 ======================================
 
-Cookiecutter creates projects from **cookiecutters** (project templates), e.g. Python package projects from Python package templates.
+Cookieninja creates projects from **cookiecutters** (project templates), e.g. Python package projects from Python package templates.
+This project is a fork from cookiecutter project.
 
 Basics
 ------

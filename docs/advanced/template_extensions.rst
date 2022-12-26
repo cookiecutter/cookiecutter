@@ -3,9 +3,7 @@
 Template Extensions
 -------------------
 
-*New in Cookiecutter 1.4*
-
-A template may extend the Cookiecutter environment with custom `Jinja2 extensions`_.
+A template may extend the Cookieninja environment with custom `Jinja2 extensions`_.
 It can add extra filters, tests, globals or even extend the parser.
 
 To do so, a template author must specify the required extensions in ``cookiecutter.json`` as follows:
@@ -18,14 +16,14 @@ To do so, a template author must specify the required extensions in ``cookiecutt
         "_extensions": ["jinja2_time.TimeExtension"]
     }
 
-On invocation Cookiecutter tries to import the extensions and add them to its environment respectively.
+On invocation Cookieninja tries to import the extensions and add them to its environment respectively.
 
-In the above example, Cookiecutter provides the additional tag `now`_, after installing the `jinja2_time.TimeExtension`_ and enabling it in ``cookiecutter.json``.
+In the above example, Cookieninja provides the additional tag `now`_, after installing the `jinja2_time.TimeExtension`_ and enabling it in ``cookiecutter.json``.
 
-Please note that Cookiecutter will **not** install any dependencies on its own!
-As a user you need to make sure you have all the extensions installed, before running Cookiecutter on a template that requires custom Jinja2 extensions.
+Please note that Cookieninja will **not** install any dependencies on its own!
+As a user you need to make sure you have all the extensions installed, before running Cookieninja on a template that requires custom Jinja2 extensions.
 
-By default Cookiecutter includes the following extensions:
+By default Cookieninja includes the following extensions:
 
 - ``cookiecutter.extensions.JsonifyExtension``
 - ``cookiecutter.extensions.RandomStringExtension``
@@ -36,7 +34,7 @@ By default Cookiecutter includes the following extensions:
 Jsonify extension
 ~~~~~~~~~~~~~~~~~
 
-The ``cookiecutter.extensions.JsonifyExtension`` extension provides a ``jsonify`` filter in templates that converts a Python object to JSON:
+The ``cookieninja.extensions.JsonifyExtension`` extension provides a ``jsonify`` filter in templates that converts a Python object to JSON:
 
 .. code-block:: jinja
 
@@ -51,9 +49,7 @@ Would output:
 Random string extension
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-*New in Cookiecutter 1.7*
-
-The ``cookiecutter.extensions.RandomStringExtension`` extension provides a ``random_ascii_string`` method in templates that generates a random fixed-length string, optionally with punctuation.
+The ``cookieninja.extensions.RandomStringExtension`` extension provides a ``random_ascii_string`` method in templates that generates a random fixed-length string, optionally with punctuation.
 
 Generate a random n-size character string.
 Example for n=12:
@@ -83,7 +79,7 @@ Outputs:
 Slugify extension
 ~~~~~~~~~~~~~~~~~
 
-The ``cookiecutter.extensions.SlugifyExtension`` extension provides a ``slugify`` filter in templates that converts string into its dashed ("slugified") version:
+The ``cookieninja.extensions.SlugifyExtension`` extension provides a ``slugify`` filter in templates that converts string into its dashed ("slugified") version:
 
 .. code-block:: jinja
 
@@ -107,9 +103,7 @@ For example to change the output from ``it-s-a-random-version``` to ``it_s_a_ran
 UUID4 extension
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-*New in Cookiecutter 1.x*
-
-The ``cookiecutter.extensions.UUIDExtension`` extension provides a ``uuid4()``
+The ``cookieninja.extensions.UUIDExtension`` extension provides a ``uuid4()``
 method in templates that generates a uuid4.
 
 Generate a uuid4 string:
