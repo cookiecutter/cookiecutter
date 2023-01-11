@@ -16,6 +16,7 @@ from .prompt import prompt_for_config
 from .replay import dump, load
 from .repository import determine_repo_dir
 from .utils import rmtree
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -105,6 +106,27 @@ def cookiecutter(
         # except when 'no-input' flag is set
         with import_patch:
             context['cookiecutter'] = prompt_for_config(context, no_input)
+
+        if "template" in context["cookiecutter"]:
+            nested_template = re.search(
+                r'\((.*?)\)', context["cookiecutter"]["template"]
+            ).group(1)
+            return cookiecutter(
+                template=os.path.join(template, nested_template),
+                checkout=checkout,
+                no_input=no_input,
+                extra_context=extra_context,
+                replay=replay,
+                overwrite_if_exists=overwrite_if_exists,
+                output_dir=output_dir,
+                config_file=config_file,
+                default_config=default_config,
+                password=password,
+                directory=directory,
+                skip_if_file_exists=skip_if_file_exists,
+                accept_hooks=accept_hooks,
+                keep_project_on_failure=keep_project_on_failure,
+            )
 
         # include template dir or url in the context dict
         context['cookiecutter']['_template'] = template
