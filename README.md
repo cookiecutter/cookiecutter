@@ -14,7 +14,7 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 - PyPI: [https://pypi.org/project/cookieninja/](https://pypi.org/project/cookieninja/)
 - Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE)
 
-<img src="https://raw.githubusercontent.com/cookieninja-generator/cookieninja/main/logo/cookieninja_large.png" width="400" height="400">
+<img src="https://raw.githubusercontent.com/cookieninja-generator/cookieninja/main/logo/cookieninja_small.jpg" width="400" height="400">
 
 ## Why the fork
 We have decided to fork the original `cookiecutter` project because the project is on hiatus and the maintainers aren't
