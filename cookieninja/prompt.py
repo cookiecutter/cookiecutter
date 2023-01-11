@@ -211,7 +211,6 @@ def prompt_for_config(context, no_input=False):
             cookiecutter_dict[key] = rendered_raw
             continue
 
-        raw = rendered_raw
         if isinstance(rendered_raw, list):
             # We are dealing with a choice variable
             val = prompt_choice_for_config(
@@ -226,7 +225,7 @@ def prompt_for_config(context, no_input=False):
                 cookiecutter_dict[key] = read_user_yes_no(key, rendered_raw)
         elif not isinstance(rendered_raw, dict):
             # We are dealing with a regular variable
-            val = raw
+            val = rendered_raw
             if not no_input:
                 val = read_user_variable(key, rendered_raw)
 

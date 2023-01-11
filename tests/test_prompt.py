@@ -119,7 +119,7 @@ class TestPrompt:
         """
         Verify dynamic choice variable, rendered correctly.
 
-        Added because issue #1774.
+        Tests the fix for issue #22.
         """
         context = {
             'cookiecutter': {
