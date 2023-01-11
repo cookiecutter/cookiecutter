@@ -5,7 +5,7 @@ from pathlib import Path
 
 from jinja2 import Environment
 
-from exceptions import NonTemplatedInputDirException
+from .exceptions import NonTemplatedInputDirException
 
 logger = logging.getLogger(__name__)
 
