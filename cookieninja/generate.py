@@ -294,8 +294,10 @@ def generate_files(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
-    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
-    env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+    jinja2_env_vars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+    env = StrictEnvironment(
+        context=context, keep_trailing_newline=True, **jinja2_env_vars
+    )
 
     template_dir = find_template(repo_dir, env)
     logger.debug('Generating project from %s...', template_dir)

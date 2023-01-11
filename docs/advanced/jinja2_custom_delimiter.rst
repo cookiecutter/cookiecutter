@@ -3,10 +3,10 @@
 Jinja2 custom delimiter
 -----------------------
 
-You can specify an ``_jinja2_env_vars`` in ``cookiecutter.json`` file for change the default jinja2 delimiter ``{{``.
-This is very useful when you templates contains files like:
+You can specify a dictionary under the ``_jinja2_env_vars`` key in the ``cookiecutter.json`` file to modify the default jinja2 delimiter (``{{``).
+This is very useful for templates which contain files that have expressions with that use the default delimiters ``{{ ... }}``  such as:
 
-1. Helm Chart
+1. Helm Charts
 2. Jinja2 files
 
 Example usages in ``cookiecutter.json``::
