@@ -94,11 +94,11 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and lint check:
 
    ```bash
-   pip install tox
-   tox
+   pip install nox
+   nox
    ```
 
-   Please note that tox runs lint check automatically, since we have a test environment for it.
+   Please note that nox runs lint check automatically, since we have a test environment for it.
 
    If you feel like running only the lint environment, please use the following command:
 
