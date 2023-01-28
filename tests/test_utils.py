@@ -70,6 +70,10 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
         utils.make_sure_path_exists(Path('protected_path'))
     assert str(err.value) == "Unable to create directory at protected_path"
 
+    with pytest.raises(OSError) as err:
+        utils.make_sure_path_exists(Path('invalid\\path'))
+    assert str(err.value) == "Unable to create directory at invalid\\path"
+
 
 def test_work_in(tmp_path):
     """Verify returning to original folder after `utils.work_in` use."""
