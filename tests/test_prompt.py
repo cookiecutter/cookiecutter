@@ -21,7 +21,7 @@ class TestRenderVariable:
         'raw_var, rendered_var',
         [
             (1, '1'),
-            (True, 'True'),
+            (True, True),
             ('foo', 'foo'),
             ('{{cookiecutter.project}}', 'foobar'),
             (None, None),
@@ -39,7 +39,7 @@ class TestRenderVariable:
         assert result == rendered_var
 
         # Make sure that non None non str variables are converted beforehand
-        if raw_var is not None:
+        if raw_var is not None and not isinstance(raw_var, bool):
             if not isinstance(raw_var, str):
                 raw_var = str(raw_var)
             from_string.assert_called_once_with(raw_var)
@@ -49,10 +49,10 @@ class TestRenderVariable:
     @pytest.mark.parametrize(
         'raw_var, rendered_var',
         [
-            ({1: True, 'foo': False}, {'1': 'True', 'foo': 'False'}),
+            ({1: True, 'foo': False}, {'1': True, 'foo': False}),
             (
                 {'{{cookiecutter.project}}': ['foo', 1], 'bar': False},
-                {'foobar': ['foo', '1'], 'bar': 'False'},
+                {'foobar': ['foo', '1'], 'bar': False},
             ),
             (['foo', '{{cookiecutter.project}}', None], ['foo', 'foobar', None]),
         ],
@@ -378,6 +378,42 @@ class TestPromptChoiceForConfig:
         )
         read_user_choice.assert_called_once_with('orientation', choices)
         assert expected_choice == actual_choice
+
+
+class TestReadUserYesNo(object):
+    """Class to unite boolean prompt related tests."""
+
+    @pytest.mark.parametrize(
+        'run_as_docker',
+        (
+            True,
+            False,
+        ),
+    )
+    def test_should_invoke_read_user_yes_no(self, mocker, run_as_docker):
+        """Verify correct function called for boolean variables."""
+        read_user_yes_no = mocker.patch('cookiecutter.prompt.read_user_yes_no')
+        read_user_yes_no.return_value = run_as_docker
+
+        read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
+
+        context = {'cookiecutter': {'run_as_docker': run_as_docker}}
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+
+        assert not read_user_variable.called
+        read_user_yes_no.assert_called_once_with('run_as_docker', run_as_docker)
+        assert cookiecutter_dict == {'run_as_docker': run_as_docker}
+
+    def test_boolean_parameter_no_input(self):
+        """Verify boolean parameter sent to prompt for config with no input."""
+        context = {
+            'cookiecutter': {
+                'run_as_docker': True,
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == context['cookiecutter']
 
 
 @pytest.mark.parametrize(

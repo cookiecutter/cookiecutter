@@ -16,10 +16,9 @@ def get_file_name(replay_dir, template_name):
     return os.path.join(replay_dir, file_name)
 
 
-def dump(replay_dir, template_name, context):
+def dump(replay_dir: "os.PathLike[str]", template_name: str, context: dict):
     """Write json data to file."""
-    if not make_sure_path_exists(replay_dir):
-        raise OSError(f'Unable to create replay dir at {replay_dir}')
+    make_sure_path_exists(replay_dir)
 
     if not isinstance(template_name, str):
         raise TypeError('Template name is required to be of type str')
