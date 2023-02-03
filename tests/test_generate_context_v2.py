@@ -354,7 +354,7 @@ def context_data_value_errors():
                 ]
             )
         },
-        False
+        False,
     )
     context_choices_with_extra_value_error = (
         {
@@ -391,7 +391,7 @@ def context_data_value_errors():
                 ]
             )
         },
-        True
+        True,
     )
     yield context_choices_with_default_value_error
     yield context_choices_with_extra_value_error
@@ -409,7 +409,9 @@ def test_generate_context(input_params, expected_context):
 
 
 @pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context, raise_exception', context_data_value_errors())
+@pytest.mark.parametrize(
+    'input_params, expected_context, raise_exception', context_data_value_errors()
+)
 def test_generate_context_value_error(input_params, expected_context, raise_exception):
     """
     Test the generated context for several input parameters against the
@@ -419,7 +421,7 @@ def test_generate_context_value_error(input_params, expected_context, raise_exce
         with pytest.raises(ValueError) as excinfo:
             generate.generate_context(**input_params)
     else:
-            generate.generate_context(**input_params)
+        generate.generate_context(**input_params)
 
 
 @pytest.mark.usefixtures('clean_system')
