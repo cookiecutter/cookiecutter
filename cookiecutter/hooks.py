@@ -125,9 +125,8 @@ def run_script_with_context(script_path, cwd, context):
                 suffix=extension,
                 dir=tempfile.gettempdir(),
                 prefix=os.path.basename(_) + '+',
-            ) as temp:
-                debug_temp = pathlib.Path(temp.name)
-                temp.unlink()
+            ) as debug_temp:
+                debug_temp = pathlib.Path(debug_temp.name)
                 debug_temp = pathlib.Path(
                     os.path.join(
                         debug_temp.parent, debug_temp.stem.split('+')[0] + debug_temp.suffix
