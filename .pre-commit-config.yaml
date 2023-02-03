@@ -35,7 +35,7 @@ repos:
       - id: check-xml
       - id: check-yaml
         exclude: "not_rendered.yml|invalid-config.yaml"
-  - repo: https://gitlab.com/pycqa/flake8
+  - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:
       - id: flake8

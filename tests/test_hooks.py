@@ -1,4 +1,8 @@
 """Tests for `cookiecutter.hooks` module."""
+import pathlib
+import shutil
+import tempfile
+
 import errno
 import os
 import stat
@@ -215,6 +219,35 @@ class TestExternalHooks:
 
             hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
+
+    def test_run_hook_debug(self):
+        """Execute hook from specified template in specified output \
+        directory."""
+        tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
+        assert os.path.isdir(tempfile.gettempdir()), tempfile.gettempdir()
+        debug_hooks_dir = os.path.join(
+            tempfile.gettempdir(), 'cookiecutter-debug-hooks'
+        )
+        if os.path.isdir(debug_hooks_dir):
+            shutil.rmtree(debug_hooks_dir)
+        os.mkdir(debug_hooks_dir)
+        for location in (debug_hooks_dir, '1'):
+            os.environ['COOKIECUTTER_DEBUG_HOOKS'] = location
+            with utils.work_in(self.repo_path):
+                hooks.run_hook('pre_gen_project', tests_dir, {})
+                assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
+                assert os.path.isfile(os.path.join(tests_dir, 'shell_pre.txt'))
+
+                hooks.run_hook('post_gen_project', tests_dir, {})
+                assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
+            hook_traces = list(
+                pathlib.Path(os.environ['COOKIECUTTER_DEBUG_HOOKS']).glob('*')
+            )
+            assert len(hook_traces) > 2, os.system(
+                "ls -l " + os.environ['COOKIECUTTER_DEBUG_HOOKS']
+            )
+            del os.environ['COOKIECUTTER_DEBUG_HOOKS']
+        shutil.rmtree(debug_hooks_dir)
 
     def test_run_failing_hook(self):
         """Test correct exception raise if hook exit code is not zero."""

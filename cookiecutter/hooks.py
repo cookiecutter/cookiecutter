@@ -105,19 +105,36 @@ def run_script_with_context(script_path, cwd, context):
     with open(script_path, encoding='utf-8') as file:
         contents = file.read()
 
-    temp_name = None
+    temp_name = None  # Just to make sure it's defined in this scope.
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
         env = StrictEnvironment(context=context, keep_trailing_newline=True)
         template = env.from_string(contents)
         output = template.render(**context)
-        if os.getenv('COOKIECUTTER_DEBUG_HOOKS', None):
+        debug_hooks_path = os.getenv('COOKIECUTTER_DEBUG_HOOKS', None)
+        if debug_hooks_path:
             import pathlib
-            temp = tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension, dir='/tmp', prefix=os.path.basename(_)+'+')
-            temp = pathlib.Path(temp.name)
-            temp.unlink()
-            temp = pathlib.Path(os.path.join(temp.parent, temp.stem.split('+')[0]+temp.suffix))
-            temp.write_text(output, encoding='utf-8')
-            temp_name = str(temp)
+
+            debug_hooks_path = pathlib.Path(debug_hooks_path)
+            if not debug_hooks_path.exists():
+                debug_hooks_path = tempfile.gettempdir()
+                os.environ['COOKIECUTTER_DEBUG_HOOKS'] = debug_hooks_path
+            with tempfile.NamedTemporaryFile(
+                delete=False,
+                mode='wb',
+                suffix=extension,
+                dir=debug_hooks_path,
+                prefix=os.path.basename(_) + '+',
+            ) as debug_temp:
+                debug_temp = pathlib.Path(debug_temp.name)
+                debug_temp = pathlib.Path(
+                    os.path.join(
+                        debug_temp.parent,
+                        debug_temp.stem.split('+')[0] + debug_temp.suffix,
+                    )
+                )
+                debug_temp.write_text(output, encoding='utf-8')
+                temp_name = str(debug_temp)
+                sys.stderr.write(f"DEBUG: Hook {script_path} rendered to {debug_temp}")
         else:
             temp.write(output.encode('utf-8'))
             temp_name = temp.name
