@@ -105,20 +105,39 @@ def run_script_with_context(script_path, cwd, context):
     with open(script_path, encoding='utf-8') as file:
         contents = file.read()
 
-    temp_name = None
-    with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
-        env = StrictEnvironment(context=context, keep_trailing_newline=True)
-        template = env.from_string(contents)
-        output = template.render(**context)
-        if os.getenv('COOKIECUTTER_DEBUG_HOOKS', None):
-            import pathlib
-            temp = tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension, dir='/tmp', prefix=os.path.basename(_)+'+')
-            temp = pathlib.Path(temp.name)
+    temp_name = None  # Just to make sure it's defined in this scope.
+    env = StrictEnvironment(context=context, keep_trailing_newline=True)
+    template = env.from_string(contents)
+    output = template.render(**context)
+    if os.getenv('COOKIECUTTER_DEBUG_HOOKS', "").lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+        "enabled",
+    ):
+        import pathlib
+
+        with tempfile.NamedTemporaryFile(
+            delete=False,
+            mode='wb',
+            suffix=extension,
+            dir=tempfile.gettempdir(),
+            prefix=os.path.basename(_) + '+',
+        ) as temp:
+            debug_temp = pathlib.Path(temp.name)
             temp.unlink()
-            temp = pathlib.Path(os.path.join(temp.parent, temp.stem.split('+')[0]+temp.suffix))
-            temp.write_text(output, encoding='utf-8')
-            temp_name = str(temp)
-        else:
+            debug_temp = pathlib.Path(
+                os.path.join(
+                    debug_temp.parent, debug_temp.stem.split('+')[0] + debug_temp.suffix
+                )
+            )
+            debug_temp.write_text(output, encoding='utf-8')
+            temp_name = str(debug_temp)
+    else:
+        with tempfile.NamedTemporaryFile(
+            delete=False, mode='wb', suffix=extension
+        ) as temp:
             temp.write(output.encode('utf-8'))
             temp_name = temp.name
 

@@ -118,6 +118,7 @@ def cookiecutter(
         dump(config_dict['replay_dir'], template_name, context)
 
     from cookiecutter import __version__ as cookiecutter__version__
+
     context['__version__'] = cookiecutter__version__
     # Create project from local context and project template.
     with import_patch:
