@@ -1,10 +1,8 @@
 """Collection of tests around cookiecutter's replay feature."""
 import collections
 import os
-import pathlib
 import shutil
 
-from cookiecutter.find import find_template
 from cookiecutter.main import cookiecutter
 
 
@@ -68,8 +66,7 @@ def test_replay_load_template_name(
     )
 
 
-def test_version_2_load_context_call(
-        monkeypatch, mocker, user_config_file):
+def test_version_2_load_context_call(monkeypatch, mocker, user_config_file):
     """Check that the version 2 load_context() is called.
 
     Change the current working directory temporarily to
@@ -82,17 +79,23 @@ def test_version_2_load_context_call(
     mock_replay_dump = mocker.patch('cookiecutter.main.dump')
 
     counts = {}
+
     def patch_load_context(counts):
         counts['load_context'] = 0
+
         def load_context(json_object, no_input=False, verbose=True, counts=counts):
             counts["load_context"] += 1
-            return collections.OrderedDict({
-                'repo_name': 'test-repo',
-            })
+            return collections.OrderedDict(
+                {
+                    'repo_name': 'test-repo',
+                }
+            )
+
         return load_context
 
     def patch_prompt_for_config(counts):
         counts['prompt_for_config'] = 0
+
         def prompt_for_config(context, no_input=False):
             counts["prompt_for_config"] += 1
             return {}
