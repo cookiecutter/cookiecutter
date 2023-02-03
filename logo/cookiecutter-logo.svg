@@ -2,22 +2,21 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="497.34503"
-   height="91.443459"
-   id="svg2"
-   version="1.1"
-   inkscape:version="0.48.1 r9760"
-   sodipodi:docname="cookiecutter-logo.svg"
-   inkscape:export-filename="/Users/audreyr/code/cookiecutter-repos/cookiecutter/logo/cookiecutter-logo-large.png"
-   inkscape:export-xdpi="720.44519"
-   inkscape:export-ydpi="720.44519">
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:cc="http://creativecommons.org/ns#"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+        width="497.34503"
+        height="91.443459"
+        id="svg2"
+        version="1.1"
+        inkscape:version="0.48.1 r9760"
+        sodipodi:docname="cookiecutter-logo.svg"
+        inkscape:export-filename="/Users/audreyr/code/cookiecutter-repos/cookiecutter/logo/cookiecutter-logo-large.png"
+        inkscape:export-xdpi="720.44519"
+        inkscape:export-ydpi="720.44519">
   <defs
      id="defs4" />
   <sodipodi:namedview

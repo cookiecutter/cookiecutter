@@ -1,1 +1,0 @@
-Testing {{ generate_file }}

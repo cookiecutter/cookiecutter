@@ -1,0 +1,3 @@
+newline is CRLF
+newline is CRLF
+newline is CRLF

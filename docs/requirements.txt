@@ -1,2 +1,7 @@
-watchdog==0.8.3
-sphinx-rtd-theme==0.1.9
+sphinx-rtd-theme>=1.0.0
+sphinx-click>=4.1.0
+myst-parser>=0.17.2
+sphinx-autobuild>=2021.3.14
+Sphinx>=4.5.0
+sphinxcontrib-apidoc>=0.3.0
+sphinx-autodoc-typehints>=1.18.2

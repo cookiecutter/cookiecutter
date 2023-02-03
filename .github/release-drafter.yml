@@ -1,0 +1,76 @@
+filter-by-commitish: true
+commitish: master
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
+version-resolver:
+  major:
+    labels:
+      - 'breaking-change'
+      - 'major'
+  minor:
+    labels:
+      - 'enhancement'
+      - 'feature'
+  patch:
+    labels:
+      - 'bug'
+      - 'CI/CD'
+      - 'code style'
+      - 'documentation'
+      - 'tests'
+      - 'patch'
+  default: patch
+autolabeler:
+  - label: 'CI/CD'
+    files:
+      - '.github/*'
+      - '.pre-commit-config.yaml'
+      - '*.cfg'
+      - '*.ini'
+      - 'noxfile.py'
+      - 'setup.*'
+      - 'docs/conf.py'
+      - 'Makefile'
+      - 'make.bat'
+      - '*requirements*.txt'
+  - label: 'documentation'
+    files:
+      - '*.md'
+      - '*.rst'
+categories:
+  - title: 'Breaking Changes'
+    labels:
+      - 'breaking-change'
+  - title: 'Non-Breaking Changes'
+    labels:
+      - 'major'
+  - title: 'Minor Changes'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: 'CI/CD and QA changes'
+    labels:
+      - 'CI/CD'
+      - 'tests'
+      - 'code style'
+  - title: 'Documentation updates'
+    labels:
+      - 'documentation'
+  - title: 'Bugfixes'
+    labels:
+      - 'bug'
+  - title: 'Deprecations'
+    labels:
+      - 'deprecated'
+sort-by: title
+sort-direction: ascending
+exclude-labels:
+  - 'skip-changelog'
+template: |
+  ## Changes
+
+  $CHANGES
+
+  ## This release is made by wonderful contributors:
+
+  $CONTRIBUTORS

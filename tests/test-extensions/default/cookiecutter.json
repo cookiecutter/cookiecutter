@@ -1,4 +1,4 @@
 {
-    "project_slug": "Foobar",
+    "project_slug": "{{ 'It\\'s slugified Foobar' | slugify() }}",
     "year": "{% now 'utc', '%Y' %}"
 }
