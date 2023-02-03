@@ -1,11 +1,20 @@
 include AUTHORS.md
+include CODE_OF_CONDUCT.md
 include CONTRIBUTING.md
 include HISTORY.md
 include LICENSE
 include README.md
 
+exclude Makefile
+exclude __main__.py
+exclude .*
+exclude codecov.yml
+exclude test_requirements.txt
+exclude tox.ini
+exclude noxfile.py
+
 recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
-
-recursive-include docs *.rst conf.py Makefile make.bat
+recursive-exclude docs *
+recursive-exclude logo *

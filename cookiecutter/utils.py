@@ -1,11 +1,13 @@
 """Helper functions used throughout Cookiecutter."""
 import contextlib
-import errno
 import logging
 import os
 import shutil
 import stat
 import sys
+from pathlib import Path
+
+from jinja2.ext import Extension
 
 from cookiecutter.prompt import read_user_yes_no
 
@@ -30,19 +32,16 @@ def rmtree(path):
     shutil.rmtree(path, onerror=force_delete)
 
 
-def make_sure_path_exists(path):
+def make_sure_path_exists(path: "os.PathLike[str]") -> None:
     """Ensure that a directory exists.
 
-    :param path: A directory path.
+    :param path: A directory tree path for creation.
     """
-    logger.debug('Making sure path exists: %s', path)
+    logger.debug('Making sure path exists (creates tree if not exist): %s', path)
     try:
-        os.makedirs(path)
-        logger.debug('Created directory at: %s', path)
-    except OSError as exception:
-        if exception.errno != errno.EEXIST:
-            return False
-    return True
+        Path(path).mkdir(parents=True, exist_ok=True)
+    except OSError as error:
+        raise OSError(f'Unable to create directory at {path}') from error
 
 
 @contextlib.contextmanager
@@ -85,8 +84,8 @@ def prompt_and_delete(path, no_input=False):
         ok_to_delete = True
     else:
         question = (
-            "You've downloaded {} before. Is it okay to delete and re-download it?"
-        ).format(path)
+            f"You've downloaded {path} before. Is it okay to delete and re-download it?"
+        )
 
         ok_to_delete = read_user_yes_no(question, 'yes')
 
@@ -105,3 +104,15 @@ def prompt_and_delete(path, no_input=False):
             return False
 
         sys.exit()
+
+
+def simple_filter(filter_function):
+    """Decorate a function to wrap it in a simplified jinja2 extension."""
+
+    class SimpleFilterExtension(Extension):
+        def __init__(self, environment):
+            super().__init__(environment)
+            environment.filters[filter_function.__name__] = filter_function
+
+    SimpleFilterExtension.__name__ = filter_function.__name__
+    return SimpleFilterExtension
