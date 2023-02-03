@@ -110,20 +110,17 @@ def run_script_with_context(script_path, cwd, context):
         env = StrictEnvironment(context=context, keep_trailing_newline=True)
         template = env.from_string(contents)
         output = template.render(**context)
-        if os.getenv('COOKIECUTTER_DEBUG_HOOKS', "").lower() in (
-            "1",
-            "true",
-            "yes",
-            "on",
-            "enabled",
-        ):
+        debug_hooks_path = os.getenv('COOKIECUTTER_DEBUG_HOOKS', None)
+        if debug_hooks_path:
             import pathlib
-
+            debug_hooks_path = pathlib.Path(debug_hooks_path)
+            if not debug_hooks_path.exists():
+                debug_hooks_path = tempfile.gettempdir()
             with tempfile.NamedTemporaryFile(
                 delete=False,
                 mode='wb',
                 suffix=extension,
-                dir=tempfile.gettempdir(),
+                dir=debug_hooks_path,
                 prefix=os.path.basename(_) + '+',
             ) as debug_temp:
                 debug_temp = pathlib.Path(debug_temp.name)
@@ -134,6 +131,7 @@ def run_script_with_context(script_path, cwd, context):
                 )
                 debug_temp.write_text(output, encoding='utf-8')
                 temp_name = str(debug_temp)
+                sys.stderr.write(f"DEBUG: Hook {script_path} rendered to {debug_temp}")
         else:
             temp.write(output.encode('utf-8'))
             temp_name = temp.name
