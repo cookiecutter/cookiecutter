@@ -14,6 +14,8 @@
 - Sorin Sbarnea ([@ssbarnea](https://github.com/ssbarnea))
 - Fábio C. Barrionuevo da Luz ([@luzfcb](https://github.com/luzfcb))
 - Simone Basso ([@simobasso](https://github.com/simobasso))
+- Jens Klein ([@jensens](https://github.com/jensens))
+- Érico Andrei ([@ericof](https://github.com/ericof))
 
 ## Contributors
 
@@ -169,3 +171,45 @@
 - Tom Forbes ([@orf](https://github.com/orf))
 - Xie Yanbo ([@xyb](https://github.com/xyb))
 - Maxim Ivanov ([@ivanovmg](https://github.com/ivanovmg))
+
+## Backers
+
+We would like to thank the following people for supporting us in our efforts to maintain and improve Cookiecutter:
+
+- Alex DeBrie
+- Alexandre Y. Harano
+- Bruno Alla
+- Carol Willing
+- Russell Keith-Magee
+
+## Sprint Contributors
+
+### PyCon 2016 Sprint
+
+The following people made contributions to the cookiecutter project at the PyCon sprints in Portland, OR from June 2-5 2016.
+Contributions include user testing, debugging, improving documentation, reviewing issues, writing tutorials, creating and updating project templates, and teaching each other.
+
+- Adam Chainz ([@adamchainz](https://github.com/adamchainz))
+- Andrew Ittner ([@tephyr](https://github.com/tephyr))
+- Audrey Roy Greenfeld ([@audreyfeldroy](https://github.com/audreyfeldroy))
+- Carol Willing ([@willingc](https://github.com/willingc))
+- Christopher Clarke ([@chrisdev](https://github.com/chrisdev))
+- Citlalli Murillo ([@citmusa](https://github.com/citmusa))
+- Daniel Roy Greenfeld ([@pydanny](https://github.com/pydanny))
+- Diane DeMers Chen ([@purplediane](https://github.com/purplediane))
+- Elaine Wong ([@elainewong](https://github.com/elainewong))
+- Elias Dorneles ([@eliasdorneles](https://github.com/eliasdorneles))
+- Emily Cain ([@emcain](https://github.com/emcain))
+- John Roa ([@jhonjairoroa87](https://github.com/jhonjairoroa87))
+- Jonan Scheffler ([@1337807](https://github.com/1337807))
+- Phoebe Bauer ([@phoebebauer](https://github.com/phoebebauer))
+- Kartik Sundararajan ([@skarbot](https://github.com/skarbot))
+- Katia Lira ([@katialira](https://github.com/katialira))
+- Leonardo Jimenez ([@xpostudio4](https://github.com/xpostudio4))
+- Lindsay Slazakowski ([@lslaz1](https://github.com/lslaz1))
+- Meghan Heintz ([@dot2dotseurat](https://github.com/dot2dotseurat))
+- Raphael Pierzina ([@hackebrot](https://github.com/hackebrot))
+- Umair Ashraf ([@umrashrf](https://github.com/umrashrf))
+- Valdir Stumm Junior ([@stummjr](https://github.com/stummjr))
+- Vivian Guillen ([@viviangb](https://github.com/viviangb))
+- Zaro ([@zaro0508](https://github.com/zaro0508))

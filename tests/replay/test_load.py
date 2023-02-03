@@ -16,7 +16,7 @@ def template_name():
 @pytest.fixture
 def replay_file(replay_test_dir, template_name):
     """Fixture to return a actual file name of the dump."""
-    file_name = '{}.json'.format(template_name)
+    file_name = f'{template_name}.json'
     return os.path.join(replay_test_dir, file_name)
 
 

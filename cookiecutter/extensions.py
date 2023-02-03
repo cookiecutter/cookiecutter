@@ -13,7 +13,7 @@ class JsonifyExtension(Extension):
 
     def __init__(self, environment):
         """Initialize the extension with the given environment."""
-        super(JsonifyExtension, self).__init__(environment)
+        super().__init__(environment)
 
         def jsonify(obj):
             return json.dumps(obj, sort_keys=True, indent=4)
@@ -26,7 +26,7 @@ class RandomStringExtension(Extension):
 
     def __init__(self, environment):
         """Jinja2 Extension Constructor."""
-        super(RandomStringExtension, self).__init__(environment)
+        super().__init__(environment)
 
         def random_ascii_string(length, punctuation=False):
             if punctuation:
@@ -43,7 +43,7 @@ class SlugifyExtension(Extension):
 
     def __init__(self, environment):
         """Jinja2 Extension constructor."""
-        super(SlugifyExtension, self).__init__(environment)
+        super().__init__(environment)
 
         def slugify(value, **kwargs):
             """Slugifies the value."""
@@ -57,7 +57,7 @@ class UUIDExtension(Extension):
 
     def __init__(self, environment):
         """Jinja2 Extension constructor."""
-        super(UUIDExtension, self).__init__(environment)
+        super().__init__(environment)
 
         def uuid4():
             """Generate UUID4."""

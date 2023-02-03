@@ -12,14 +12,13 @@ from cookiecutter.utils import make_sure_path_exists
 def get_file_name(replay_dir, template_name):
     """Get the name of file."""
     suffix = '.json' if not template_name.endswith('.json') else ''
-    file_name = '{}{}'.format(template_name, suffix)
+    file_name = f'{template_name}{suffix}'
     return os.path.join(replay_dir, file_name)
 
 
-def dump(replay_dir, template_name, context):
+def dump(replay_dir: "os.PathLike[str]", template_name: str, context: dict):
     """Write json data to file."""
-    if not make_sure_path_exists(replay_dir):
-        raise IOError('Unable to create replay dir at {}'.format(replay_dir))
+    make_sure_path_exists(replay_dir)
 
     if not isinstance(template_name, str):
         raise TypeError('Template name is required to be of type str')
@@ -43,7 +42,7 @@ def load(replay_dir, template_name):
 
     replay_file = get_file_name(replay_dir, template_name)
 
-    with open(replay_file, 'r') as infile:
+    with open(replay_file) as infile:
         context = json.load(infile)
 
     if 'cookiecutter' not in context:
