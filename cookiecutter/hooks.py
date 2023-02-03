@@ -110,7 +110,6 @@ def run_script_with_context(script_path, cwd, context):
         env = StrictEnvironment(context=context, keep_trailing_newline=True)
         template = env.from_string(contents)
         output = template.render(**context)
-        temp.write(output.encode('utf-8'))
         if os.getenv('COOKIECUTTER_DEBUG_HOOKS', "").lower() in (
             "1",
             "true",
