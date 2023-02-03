@@ -117,6 +117,7 @@ def run_script_with_context(script_path, cwd, context):
             debug_hooks_path = pathlib.Path(debug_hooks_path)
             if not debug_hooks_path.exists():
                 debug_hooks_path = tempfile.gettempdir()
+                os.environ['COOKIECUTTER_DEBUG_HOOKS'] = debug_hooks_path
             with tempfile.NamedTemporaryFile(
                 delete=False,
                 mode='wb',
