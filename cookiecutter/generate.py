@@ -140,8 +140,10 @@ def resolve_changed_variable_names(context, variables_to_resolve):
 
 
 def apply_overwrites_to_context_v2(context, extra_context):
-    """
-    Modify the given version 2 context in place based on extra_context.
+    """Modify the given version 2 context in place based on extra_context.
+
+    :parameter context: cookiecutter context.
+    :parameter extra_context: optional dictionary of key/value pairs to
 
     The extra_context parameter may be a dictionary or a list of dictionaries.
 
@@ -168,20 +170,17 @@ def apply_overwrites_to_context_v2(context, extra_context):
     Changing the 'name' field requires a special syntax. Because the algorithm
     chosen to find a variable’s dictionary entry in the variables list of
     OrderDicts uses the variable’s ‘name’ field; it could not be used to
-    simultaneously hold a new ‘name’ field value. Therefore the following
-    extra context dictionary entry snytax was introduced to allow the ‘name’
+    simultaneously hold a new ‘name’ field value. Therefor the following
+    extra context dictionary entry sytax was introduced to allow the ‘name’
     field of a variable to be changed:
 
-        {
-           'name': 'CURRENT_VARIABLE_NAME::NEW_VARIABLE_NAME',
-        }
+        { 'name': 'CURRENT_VARIABLE_NAME::NEW_VARIABLE_NAME',}
 
     So, for example, to change a variable’s ‘name’ field from
     ‘director_credit’ to ‘producer_credit’, would require:
 
-        {
-           'name': 'director_credit::producer_credit',
-        }
+        { 'name': 'director_credit::producer_credit', }
+
 
     Removing a Field from a Variable
     --------------------------------
@@ -191,10 +190,8 @@ def apply_overwrites_to_context_v2(context, extra_context):
     In order to accomplish this a remove field token is used in the extra
     context as follows:
 
-        {
-           'name': 'director_cut',
-           'skip_if': '<<REMOVE::FIELD>>',
-        }
+        { 'name': 'director_cut',
+           'skip_if': '<<REMOVE::FIELD>>', }
 
     In the example above, the extra context overwrite results in the variable
     named ‘director_cut’ having it’s ‘skip_if’ field removed.

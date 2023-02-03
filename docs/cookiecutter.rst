@@ -25,9 +25,9 @@ cookiecutter.context module
 ---------------------------
 
 .. automodule:: cookiecutter.context
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 cookiecutter.environment module
 -------------------------------
