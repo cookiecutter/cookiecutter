@@ -237,11 +237,15 @@ class TestExternalHooks:
                 hooks.run_hook('pre_gen_project', tests_dir, {})
                 assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
                 assert os.path.isfile(os.path.join(tests_dir, 'shell_pre.txt'))
-    
+
                 hooks.run_hook('post_gen_project', tests_dir, {})
                 assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
-            hook_traces = list(pathlib.Path(os.environ['COOKIECUTTER_DEBUG_HOOKS']).glob('*'))
-            assert len(hook_traces) > 2, os.system("ls -l " + os.environ['COOKIECUTTER_DEBUG_HOOKS'])
+            hook_traces = list(
+                pathlib.Path(os.environ['COOKIECUTTER_DEBUG_HOOKS']).glob('*')
+            )
+            assert len(hook_traces) > 2, os.system(
+                "ls -l " + os.environ['COOKIECUTTER_DEBUG_HOOKS']
+            )
             del os.environ['COOKIECUTTER_DEBUG_HOOKS']
         shutil.rmtree(debug_hooks_dir)
 
