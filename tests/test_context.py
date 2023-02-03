@@ -683,7 +683,7 @@ def test_cookiecutter_template_repr():
     assert repr(cct) == "<CookiecutterTemplate cookiecutter_template_repr_test>"
 
 
-def test_load_context_with_input_chioces(mocker):
+def test_load_context_with_input_choices(mocker):
     cc = load_cookiecutter('tests/test-context/cookiecutter_choices.json')
 
     INPUT_1 = 'E.R. Uber'

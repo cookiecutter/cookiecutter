@@ -230,6 +230,43 @@ def context_data():
         },
     )
 
+    context_choices_with_extra = (
+        {
+            'context_file': 'tests/test-generate-context-v2/test_choices.json',
+            'default_context': {'license': 'Apache2'},
+            'extra_context': {'license': 'MIT'},
+        },
+        {
+            "test_choices": OrderedDict(
+                [
+                    ("name", "cookiecutter-pytest-plugin"),
+                    ("cookiecutter_version", "2.0.0"),
+                    (
+                        "variables",
+                        [
+                            OrderedDict(
+                                [
+                                    ("name", "license"),
+                                    ("default", "MIT"),
+                                    (
+                                        "choices",
+                                        [
+                                            "MIT",
+                                            "Apache2",
+                                            "BSD3",
+                                            "GNU-GPL3",
+                                            "Mozilla2",
+                                        ],
+                                    ),
+                                ]
+                            )
+                        ],
+                    ),
+                ]
+            )
+        },
+    )
+
     context_choices_with_default_not_in_choices = (
         {
             'context_file': 'tests/test-generate-context-v2/test.json',
@@ -278,7 +315,86 @@ def context_data():
     yield context_with_extra
     yield context_with_default_and_extra
     yield context_choices_with_default
+    yield context_choices_with_extra
     yield context_choices_with_default_not_in_choices
+
+
+def context_data_value_errors():
+    context_choices_with_default_value_error = (
+        {
+            'context_file': 'tests/test-generate-context-v2/test_choices.json',
+            'default_context': [{'license': 'MIT'}],
+        },
+        {
+            "test_choices": OrderedDict(
+                [
+                    ("name", "cookiecutter-pytest-plugin"),
+                    ("cookiecutter_version", "2.0.0"),
+                    (
+                        "variables",
+                        [
+                            OrderedDict(
+                                [
+                                    ("name", "license"),
+                                    ("default", "MIT"),
+                                    (
+                                        "choices",
+                                        [
+                                            "MIT",
+                                            "Apache2",
+                                            "BSD3",
+                                            "GNU-GPL3",
+                                            "Mozilla2",
+                                        ],
+                                    ),
+                                ]
+                            )
+                        ],
+                    ),
+                ]
+            )
+        },
+        False
+    )
+    context_choices_with_extra_value_error = (
+        {
+            'context_file': 'tests/test-generate-context-v2/test_choices.json',
+            'default_context': {'license': 'Apache2'},
+            'extra_context': [{'license': 'MIT'}],
+        },
+        {
+            "test_choices": OrderedDict(
+                [
+                    ("name", "cookiecutter-pytest-plugin"),
+                    ("cookiecutter_version", "2.0.0"),
+                    (
+                        "variables",
+                        [
+                            OrderedDict(
+                                [
+                                    ("name", "license"),
+                                    ("default", "MIT"),
+                                    (
+                                        "choices",
+                                        [
+                                            "MIT",
+                                            "Apache2",
+                                            "BSD3",
+                                            "GNU-GPL3",
+                                            "Mozilla2",
+                                        ],
+                                    ),
+                                ]
+                            )
+                        ],
+                    ),
+                ]
+            )
+        },
+        True
+    )
+    yield context_choices_with_default_value_error
+    yield context_choices_with_extra_value_error
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -288,7 +404,22 @@ def test_generate_context(input_params, expected_context):
     Test the generated context for several input parameters against the
     according expected context.
     """
-    assert generate.generate_context(**input_params) == expected_context
+    generated_context = generate.generate_context(**input_params)
+    assert generated_context == expected_context
+
+
+@pytest.mark.usefixtures('clean_system')
+@pytest.mark.parametrize('input_params, expected_context, raise_exception', context_data_value_errors())
+def test_generate_context_value_error(input_params, expected_context, raise_exception):
+    """
+    Test the generated context for several input parameters against the
+    according expected context.
+    """
+    if raise_exception:
+        with pytest.raises(ValueError) as excinfo:
+            generate.generate_context(**input_params)
+    else:
+            generate.generate_context(**input_params)
 
 
 @pytest.mark.usefixtures('clean_system')
