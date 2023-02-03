@@ -21,7 +21,9 @@ https://github.com/hackebrot/cookiecutter/tree/new-context-format
 import logging
 import collections
 import json
+import posix
 import re
+import sys
 
 import click
 from jinja2 import Environment
@@ -556,7 +558,10 @@ def load_context(json_object, no_input=False, verbose=True):
                     break
 
             if verbose:
-                width, _ = click.get_terminal_size()
+                if sys.stdout.isatty():
+                    width, _ = posix.get_terminal_size()
+                else:
+                    width = 80
                 click.echo('-' * width)
 
             context[variable.name] = deserialize(value)

@@ -583,19 +583,20 @@ def test_variable_str():
         validation_flags=['ignorecase'],
         hide_input=True)
 
-    assert '<Variable module_name>:' in str(v)
-    assert "name='module_name'" in str(v)
-    assert "default='{{cookiecutter.plugin_name|lower|replace('-','_')}}'" in str(v)
-    assert "description='None'" in str(v)
-    assert "prompt='Please enter a name for your base python module'" in str(v)
-    assert "hide_input='True'" in str(v)
-    assert "var_type='string'" in str(v)
-    assert "skip_if=''" in str(v)
-    assert "prompt_user='True'" in str(v)
-    assert "choices='[]'" in str(v)
-    assert "validation='^[a-z_]+$'" in str(v)
-    assert "validation_flag_names='['ignorecase']'" in str(v)
-    assert "validation_flags='2'" in str(v)
+    str_v = str(v)
+    assert '<Variable module_name>:' in str_v
+    assert "name='module_name'" in str_v
+    assert "default='{{cookiecutter.plugin_name|lower|replace('-','_')}}'" in str_v
+    assert "description='None'" in str_v
+    assert "prompt='Please enter a name for your base python module'" in str_v
+    assert "hide_input='True'" in str_v
+    assert "var_type='string'" in str_v
+    assert "skip_if=''" in str_v
+    assert "prompt_user='True'" in str_v
+    assert "choices='[]'" in str_v
+    assert "validation='^[a-z_]+$'" in str_v
+    assert "validation_flag_names='['ignorecase']'" in str_v
+    assert "validation_flags='2'" in str_v or "validation_flags='re.IGNORECASE'" in str_v
 
     if sys.version_info >= (3, 4):
         assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in str(v)
