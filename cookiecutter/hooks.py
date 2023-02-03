@@ -113,6 +113,7 @@ def run_script_with_context(script_path, cwd, context):
         debug_hooks_path = os.getenv('COOKIECUTTER_DEBUG_HOOKS', None)
         if debug_hooks_path:
             import pathlib
+
             debug_hooks_path = pathlib.Path(debug_hooks_path)
             if not debug_hooks_path.exists():
                 debug_hooks_path = tempfile.gettempdir()
@@ -126,7 +127,8 @@ def run_script_with_context(script_path, cwd, context):
                 debug_temp = pathlib.Path(debug_temp.name)
                 debug_temp = pathlib.Path(
                     os.path.join(
-                        debug_temp.parent, debug_temp.stem.split('+')[0] + debug_temp.suffix
+                        debug_temp.parent,
+                        debug_temp.stem.split('+')[0] + debug_temp.suffix,
                     )
                 )
                 debug_temp.write_text(output, encoding='utf-8')

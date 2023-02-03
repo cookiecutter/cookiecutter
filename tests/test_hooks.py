@@ -225,7 +225,9 @@ class TestExternalHooks:
         directory."""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
         assert os.path.isdir(tempfile.gettempdir()), tempfile.gettempdir()
-        debug_hooks_dir = os.path.join(tempfile.gettempdir(), 'cookiecutter-debug-hooks')
+        debug_hooks_dir = os.path.join(
+            tempfile.gettempdir(), 'cookiecutter-debug-hooks'
+        )
         if os.path.isdir(debug_hooks_dir):
             shutil.rmtree(debug_hooks_dir)
         os.mkdir(debug_hooks_dir)
