@@ -581,9 +581,12 @@ def load_context(json_object, no_input=False, verbose=True):
                         if variable.validation_msg:
                             click.echo(variable.validation_msg)
                 else:
+                    # Assign a random variable here to disable the peephole
+                    # optimizer so that coverage can see this line.
+                    # See bpo-2506 for more information.
+                    no_peephole_opt = None
                     # no validation defined
-                    # Only py3.8 does not detect coverage here
-                    break  # pragma: no cover
+                    break
 
             if verbose:
                 width, _ = shutil.get_terminal_size()
