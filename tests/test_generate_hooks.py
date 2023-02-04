@@ -2,6 +2,7 @@
 import errno
 import os
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -123,7 +124,7 @@ def test_run_failing_hook_removes_output_directory():
 
     hook_path = os.path.join(hooks_path, 'pre_gen_project.py')
 
-    with open(hook_path, 'w') as f:
+    with Path(hook_path).open('w') as f:
         f.write("#!/usr/bin/env python\n")
         f.write("import sys; sys.exit(1)\n")
 
@@ -152,7 +153,7 @@ def test_run_failing_hook_preserves_existing_output_directory():
 
     hook_path = os.path.join(hooks_path, 'pre_gen_project.py')
 
-    with open(hook_path, 'w') as f:
+    with Path(hook_path).open('w') as f:
         f.write("#!/usr/bin/env python\n")
         f.write("import sys; sys.exit(1)\n")
 

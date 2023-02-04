@@ -83,14 +83,14 @@ def run_script(script_path, cwd='.'):
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
-                'Hook script failed (exit status: {})'.format(exit_status)
+                f'Hook script failed (exit status: {exit_status})'
             )
-    except OSError as os_error:
-        if os_error.errno == errno.ENOEXEC:
+    except OSError as err:
+        if err.errno == errno.ENOEXEC:
             raise FailedHookException(
                 'Hook script failed, might be an empty file or missing a shebang'
-            )
-        raise FailedHookException('Hook script failed (error: {})'.format(os_error))
+            ) from err
+        raise FailedHookException(f'Hook script failed (error: {err})') from err
 
 
 def run_script_with_context(script_path, cwd, context):
@@ -102,16 +102,44 @@ def run_script_with_context(script_path, cwd, context):
     """
     _, extension = os.path.splitext(script_path)
 
-    with open(script_path, 'r', encoding='utf-8') as file:
+    with open(script_path, encoding='utf-8') as file:
         contents = file.read()
 
+    temp_name = None  # Just to make sure it's defined in this scope.
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
         env = StrictEnvironment(context=context, keep_trailing_newline=True)
         template = env.from_string(contents)
         output = template.render(**context)
-        temp.write(output.encode('utf-8'))
+        debug_hooks_path = os.getenv('COOKIECUTTER_DEBUG_HOOKS', None)
+        if debug_hooks_path:
+            import pathlib
 
-    run_script(temp.name, cwd)
+            debug_hooks_path = pathlib.Path(debug_hooks_path)
+            if not debug_hooks_path.exists():
+                debug_hooks_path = tempfile.gettempdir()
+                os.environ['COOKIECUTTER_DEBUG_HOOKS'] = debug_hooks_path
+            with tempfile.NamedTemporaryFile(
+                delete=False,
+                mode='wb',
+                suffix=extension,
+                dir=debug_hooks_path,
+                prefix=os.path.basename(_) + '+',
+            ) as debug_temp:
+                debug_temp = pathlib.Path(debug_temp.name)
+                debug_temp = pathlib.Path(
+                    os.path.join(
+                        debug_temp.parent,
+                        debug_temp.stem.split('+')[0] + debug_temp.suffix,
+                    )
+                )
+                debug_temp.write_text(output, encoding='utf-8')
+                temp_name = str(debug_temp)
+                sys.stderr.write(f"DEBUG: Hook {script_path} rendered to {debug_temp}")
+        else:
+            temp.write(output.encode('utf-8'))
+            temp_name = temp.name
+
+    run_script(temp_name, cwd)
 
 
 def run_hook(hook_name, project_dir, context):

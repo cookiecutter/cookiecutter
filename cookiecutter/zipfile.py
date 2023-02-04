@@ -1,6 +1,8 @@
 """Utility functions for handling and fetching repo archives in zip format."""
 import os
 import tempfile
+from pathlib import Path
+from typing import Optional
 from zipfile import BadZipFile, ZipFile
 
 import requests
@@ -10,7 +12,13 @@ from cookiecutter.prompt import read_repo_password
 from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
 
 
-def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
+def unzip(
+    zip_uri: str,
+    is_url: bool,
+    clone_to_dir: "os.PathLike[str]" = ".",
+    no_input: bool = False,
+    password: Optional[str] = None,
+):
     """Download and unpack a zipfile at a given URI.
 
     This will download the zipfile to the cookiecutter repository,
@@ -20,11 +28,12 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
     :param is_url: Is the zip URI a URL or a file?
     :param clone_to_dir: The cookiecutter repository directory
         to put the archive into.
-    :param no_input: Suppress any prompts
+    :param no_input: Do not prompt for user input and eventually force a refresh of
+        cached resources.
     :param password: The password to use when unpacking the repository.
     """
     # Ensure that clone_to_dir exists
-    clone_to_dir = os.path.expanduser(clone_to_dir)
+    clone_to_dir = Path(clone_to_dir).expanduser()
     make_sure_path_exists(clone_to_dir)
 
     if is_url:
@@ -55,15 +64,14 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
         zip_file = ZipFile(zip_path)
 
         if len(zip_file.namelist()) == 0:
-            raise InvalidZipRepository('Zip repository {} is empty'.format(zip_uri))
+            raise InvalidZipRepository(f'Zip repository {zip_uri} is empty')
 
         # The first record in the zipfile should be the directory entry for
         # the archive. If it isn't a directory, there's a problem.
         first_filename = zip_file.namelist()[0]
         if not first_filename.endswith('/'):
             raise InvalidZipRepository(
-                'Zip repository {} does not include '
-                'a top-level directory'.format(zip_uri)
+                f"Zip repository {zip_uri} does not include a top-level directory"
             )
 
         # Construct the final target directory
@@ -106,7 +114,7 @@ def unzip(zip_uri, is_url, clone_to_dir='.', no_input=False, password=None):
 
     except BadZipFile:
         raise InvalidZipRepository(
-            'Zip repository {} is not a valid zip archive:'.format(zip_uri)
+            f'Zip repository {zip_uri} is not a valid zip archive:'
         )
 
     return unzip_path

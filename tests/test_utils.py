@@ -17,9 +17,7 @@ def make_readonly(path):
 def test_force_delete(mocker, tmp_path):
     """Verify `utils.force_delete` makes files writable."""
     ro_file = Path(tmp_path, 'bar')
-
-    with open(ro_file, "w") as f:
-        f.write("Test data")
+    ro_file.write_text("Test data")
     make_readonly(ro_file)
 
     rmtree = mocker.Mock()
@@ -33,9 +31,9 @@ def test_force_delete(mocker, tmp_path):
 
 def test_rmtree(tmp_path):
     """Verify `utils.rmtree` remove files marked as read-only."""
-    with open(Path(tmp_path, 'bar'), "w") as f:
-        f.write("Test data")
-    make_readonly(Path(tmp_path, 'bar'))
+    file_path = Path(tmp_path, "bar")
+    file_path.write_text("Test data")
+    make_readonly(file_path)
 
     utils.rmtree(tmp_path)
 
@@ -51,8 +49,8 @@ def test_make_sure_path_exists(tmp_path):
     existing_directory = tmp_path
     directory_to_create = Path(tmp_path, "not_yet_created")
 
-    assert utils.make_sure_path_exists(existing_directory)
-    assert utils.make_sure_path_exists(directory_to_create)
+    utils.make_sure_path_exists(existing_directory)
+    utils.make_sure_path_exists(directory_to_create)
 
     # Ensure by base system methods.
     assert existing_directory.is_dir()
@@ -67,14 +65,10 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
     Should return True if directory exist or created.
     Should return False if impossible to create directory (for example protected)
     """
-
-    def raiser(*args, **kwargs):
-        raise OSError()
-
-    mocker.patch("os.makedirs", raiser)
-    uncreatable_directory = Path('protected_path')
-
-    assert not utils.make_sure_path_exists(uncreatable_directory)
+    mocker.patch("pathlib.Path.mkdir", side_effect=OSError)
+    with pytest.raises(OSError) as err:
+        utils.make_sure_path_exists(Path('protected_path'))
+    assert str(err.value) == "Unable to create directory at protected_path"
 
 
 def test_work_in(tmp_path):
@@ -122,7 +116,8 @@ def test_prompt_should_ask_and_exit_on_user_no_answer(mocker, tmp_path):
     """In `prompt_and_delete()`, if the user decline to delete/reclone the \
     repo, cookiecutter should exit."""
     mock_read_user = mocker.patch(
-        'cookiecutter.utils.read_user_yes_no', return_value=False,
+        'cookiecutter.utils.read_user_yes_no',
+        return_value=False,
     )
     mock_sys_exit = mocker.patch('sys.exit', return_value=True)
     repo_dir = Path(tmp_path, 'repo')
@@ -174,10 +169,7 @@ def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmp_path):
     cloned template repo, it should not be deleted."""
 
     def answer(question, default):
-        if 'okay to delete' in question:
-            return False
-        else:
-            return True
+        return 'okay to delete' not in question
 
     mock_read_user = mocker.patch(
         'cookiecutter.utils.read_user_yes_no', side_effect=answer, autospec=True

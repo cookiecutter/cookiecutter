@@ -1,0 +1,51 @@
+{%- macro automodule(modname, options) -%}
+.. automodule:: {{ modname }}
+{%- for option in options %}
+   :{{ option }}:
+{%- endfor %}
+{%- endmacro %}
+{%- macro toctree(docnames) -%}
+.. toctree::
+   :maxdepth: {{ maxdepth }}
+{% for docname in docnames %}
+   {{ docname }}
+{%- endfor %}
+{%- endmacro -%}
+===
+API
+===
+
+
+{%- if modulefirst and not is_namespace %}
+{{ automodule(pkgname, automodule_options) }}
+{% endif %}
+
+{%- if subpackages %}
+Subpackages
+-----------
+
+{{ toctree(subpackages) }}
+{% endif %}
+
+{%- if submodules %}
+
+This is the Cookiecutter modules API documentation.
+
+{% if separatemodules %}
+{{ toctree(submodules) }}
+{% else %}
+{%- for submodule in submodules %}
+{% if show_headings %}
+{{- [submodule, "module"] | join(" ") | e | heading(2) }}
+{% endif %}
+{{ automodule(submodule, automodule_options) }}
+{% endfor %}
+{%- endif %}
+{%- endif %}
+
+{%- if not modulefirst and not is_namespace %}
+Module contents
+---------------
+
+{{ automodule(pkgname, automodule_options) }}
+{% endif %}

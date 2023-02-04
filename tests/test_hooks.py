@@ -1,9 +1,14 @@
 """Tests for `cookiecutter.hooks` module."""
-import os
+import pathlib
+import shutil
+import tempfile
+
 import errno
+import os
 import stat
 import sys
 import textwrap
+from pathlib import Path
 
 import pytest
 
@@ -18,10 +23,9 @@ def make_test_repo(name, multiple_hooks=False):
     os.mkdir(hook_dir)
     os.mkdir(template)
 
-    with open(os.path.join(template, 'README.rst'), 'w') as f:
-        f.write("foo\n===\n\nbar\n")
+    Path(template, 'README.rst').write_text("foo\n===\n\nbar\n")
 
-    with open(os.path.join(hook_dir, 'pre_gen_project.py'), 'w') as f:
+    with Path(hook_dir, 'pre_gen_project.py').open('w') as f:
         f.write("#!/usr/bin/env python\n")
         f.write("# -*- coding: utf-8 -*-\n")
         f.write("from __future__ import print_function\n")
@@ -32,7 +36,7 @@ def make_test_repo(name, multiple_hooks=False):
 
     if sys.platform.startswith('win'):
         post = 'post_gen_project.bat'
-        with open(os.path.join(hook_dir, post), 'w') as f:
+        with Path(hook_dir, post).open('w') as f:
             f.write("@echo off\n")
             f.write("\n")
             f.write("echo post generation hook\n")
@@ -40,7 +44,7 @@ def make_test_repo(name, multiple_hooks=False):
     else:
         post = 'post_gen_project.sh'
         filename = os.path.join(hook_dir, post)
-        with open(filename, 'w') as f:
+        with Path(filename).open('w') as f:
             f.write("#!/bin/bash\n")
             f.write("\n")
             f.write("echo 'post generation hook';\n")
@@ -52,7 +56,7 @@ def make_test_repo(name, multiple_hooks=False):
     if multiple_hooks:
         if sys.platform.startswith('win'):
             pre = 'pre_gen_project.bat'
-            with open(os.path.join(hook_dir, pre), 'w') as f:
+            with Path(hook_dir, pre).open('w') as f:
                 f.write("@echo off\n")
                 f.write("\n")
                 f.write("echo post generation hook\n")
@@ -60,7 +64,7 @@ def make_test_repo(name, multiple_hooks=False):
         else:
             pre = 'pre_gen_project.sh'
             filename = os.path.join(hook_dir, pre)
-            with open(filename, 'w') as f:
+            with Path(filename).open('w') as f:
                 f.write("#!/bin/bash\n")
                 f.write("\n")
                 f.write("echo 'post generation hook';\n")
@@ -71,7 +75,7 @@ def make_test_repo(name, multiple_hooks=False):
     return post
 
 
-class TestFindHooks(object):
+class TestFindHooks:
     """Class to unite find hooks related tests in one place."""
 
     repo_path = 'tests/test-hooks'
@@ -91,7 +95,7 @@ class TestFindHooks(object):
             actual_hook_path = hooks.find_hook('pre_gen_project')
             assert expected_pre == actual_hook_path[0]
 
-            expected_post = os.path.abspath('hooks/{}'.format(self.post_hook))
+            expected_post = os.path.abspath(f'hooks/{self.post_hook}')
             actual_hook_path = hooks.find_hook('post_gen_project')
             assert expected_post == actual_hook_path[0]
 
@@ -111,7 +115,7 @@ class TestFindHooks(object):
             assert hooks.find_hook('unknown_hook') is None
 
 
-class TestExternalHooks(object):
+class TestExternalHooks:
     """Class to unite tests for hooks with different project paths."""
 
     repo_path = os.path.abspath('tests/test-hooks/')
@@ -154,7 +158,7 @@ class TestExternalHooks(object):
 
         with pytest.raises(exceptions.FailedHookException) as excinfo:
             hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
-        assert 'Hook script failed (error: {})'.format(err) in str(excinfo.value)
+        assert f'Hook script failed (error: {err})' in str(excinfo.value)
 
     def test_run_failing_script_enoexec(self, mocker):
         """Test correct exception raise if run_script fails."""
@@ -182,13 +186,13 @@ class TestExternalHooks(object):
 
         if sys.platform.startswith('win'):
             post = 'post_gen_project.bat'
-            with open(os.path.join(self.hooks_path, post), 'w') as f:
+            with Path(self.hooks_path, post).open('w') as f:
                 f.write("@echo off\n")
                 f.write("\n")
                 f.write("echo post generation hook\n")
                 f.write("echo. >{{cookiecutter.file}}\n")
         else:
-            with open(hook_path, 'w') as fh:
+            with Path(hook_path).open('w') as fh:
                 fh.write("#!/bin/bash\n")
                 fh.write("\n")
                 fh.write("echo 'post generation hook';\n")
@@ -216,12 +220,41 @@ class TestExternalHooks(object):
             hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
 
+    def test_run_hook_debug(self):
+        """Execute hook from specified template in specified output \
+        directory."""
+        tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
+        assert os.path.isdir(tempfile.gettempdir()), tempfile.gettempdir()
+        debug_hooks_dir = os.path.join(
+            tempfile.gettempdir(), 'cookiecutter-debug-hooks'
+        )
+        if os.path.isdir(debug_hooks_dir):
+            shutil.rmtree(debug_hooks_dir)
+        os.mkdir(debug_hooks_dir)
+        for location in (debug_hooks_dir, '1'):
+            os.environ['COOKIECUTTER_DEBUG_HOOKS'] = location
+            with utils.work_in(self.repo_path):
+                hooks.run_hook('pre_gen_project', tests_dir, {})
+                assert os.path.isfile(os.path.join(tests_dir, 'python_pre.txt'))
+                assert os.path.isfile(os.path.join(tests_dir, 'shell_pre.txt'))
+
+                hooks.run_hook('post_gen_project', tests_dir, {})
+                assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
+            hook_traces = list(
+                pathlib.Path(os.environ['COOKIECUTTER_DEBUG_HOOKS']).glob('*')
+            )
+            assert len(hook_traces) > 2, os.system(
+                "ls -l " + os.environ['COOKIECUTTER_DEBUG_HOOKS']
+            )
+            del os.environ['COOKIECUTTER_DEBUG_HOOKS']
+        shutil.rmtree(debug_hooks_dir)
+
     def test_run_failing_hook(self):
         """Test correct exception raise if hook exit code is not zero."""
         hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
 
-        with open(hook_path, 'w') as f:
+        with Path(hook_path).open('w') as f:
             f.write("#!/usr/bin/env python\n")
             f.write("import sys; sys.exit(1)\n")
 

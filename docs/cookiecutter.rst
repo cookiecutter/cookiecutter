@@ -1,8 +1,9 @@
+===
 API
 ===
 
-Submodules
-----------
+This is the Cookiecutter modules API documentation.
+
 
 cookiecutter.cli module
 -----------------------
@@ -16,6 +17,14 @@ cookiecutter.config module
 --------------------------
 
 .. automodule:: cookiecutter.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cookiecutter.context module
+---------------------------
+
+.. automodule:: cookiecutter.context
    :members:
    :undoc-members:
    :show-inheritance:
@@ -131,7 +140,6 @@ cookiecutter.zipfile module
    :members:
    :undoc-members:
    :show-inheritance:
-
 
 Module contents
 ---------------

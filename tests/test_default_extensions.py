@@ -1,9 +1,10 @@
 """Verify Jinja2 filters/extensions are available from pre-gen/post-gen hooks."""
 import os
+import uuid
+from pathlib import Path
 
 import freezegun
 import pytest
-import uuid
 
 from cookiecutter.main import cookiecutter
 
@@ -25,7 +26,7 @@ def test_jinja2_time_extension(tmp_path):
     changelog_file = os.path.join(project_dir, 'HISTORY.rst')
     assert os.path.isfile(changelog_file)
 
-    with open(changelog_file, 'r', encoding='utf-8') as f:
+    with Path(changelog_file).open(encoding='utf-8') as f:
         changelog_lines = f.readlines()
 
     expected_lines = [
@@ -57,8 +58,7 @@ def test_jinja2_uuid_extension(tmp_path):
     changelog_file = os.path.join(project_dir, 'id')
     assert os.path.isfile(changelog_file)
 
-    with open(changelog_file, 'r', encoding='utf-8') as f:
+    with Path(changelog_file).open(encoding='utf-8') as f:
         changelog_lines = f.readlines()
 
     uuid.UUID(changelog_lines[0], version=4)
-    assert True

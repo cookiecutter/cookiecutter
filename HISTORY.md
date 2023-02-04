@@ -2,10 +2,152 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 1.8.0 (Current master, in development)
 
-* Do not modify this file, since 1.7.1 Changes are generated on Pull request
-title and will be added before release.
+## 2.1.2 (unreleased)
+
+## 2.1.1 (2022-06-01)
+
+### Documentation updates
+
+* Fix local extensions documentation (#1686) @alkatar21
+
+### Bugfixes
+
+* Sanitize Mercurial branch information before checkout. (#1689) @ericof
+
+### This release is made by wonderfull contributors:
+
+@alkatar21, @ericof and @jensens
+
+
+## 2.1.0 (2022-05-30)
+
+### Changes
+
+* Move contributors and backers to credits section (#1599) @doobrie
+* test_generate_file_verbose_template_syntax_error fixed (#1671) @MaciejPatro
+* Removed changes related to setuptools_scm (#1629) @ozer550
+* Feature/local extensions (#1240) @mwesterhof
+
+### CI/CD and QA changes
+
+* Check manifest: pre-commit, fixes, cleaning (#1683) @jensens
+* Follow PyPA guide to release package using GitHub Actions. (#1682) @ericof
+
+### Documentation updates
+
+* Fix typo in dict_variables.rst (#1680) @ericof
+* Documentation overhaul (#1677) @jensens
+* Fixed incorrect link on docs. (#1649) @luzfcb
+
+### Bugfixes
+
+* Restore accidentally deleted support for click 8.x (#1643) @jaklan
+
+### This release was made possible by our wonderful contributors:
+
+@doobrie, @jensens, @ericof, @luzfcb
+
+## 2.0.2 (2021-12-27)
+
+*Remark: This release never made it to official PyPI*
+
+* Fix Python version number in cookiecutter --version and test on Python 3.10 (#1621) @ozer550
+* Removed changes related to setuptools_scm (#1629) @audreyfeldroy @ozer550
+
+## 2.0.1 (2021-12-11)
+
+*Remark: This release never made it to official PyPI*
+
+### Breaking Changes
+
+* Release preparation for 2.0.1rc1 (#1608) @audreyfeldroy
+* Replace poyo with pyyaml. (#1489) @dHannasch
+* Added: Path templates will be rendered when copy_without_render used (#839) @noirbizarre
+* Added: End of line detection and configuration. (#1407) @insspb
+* Remove support for python2.7 (#1386) @ssbarnea
+
+### Minor Changes
+
+* Adopt setuptools-scm packaging (#1577) @ssbarnea
+* Log the error message when git clone fails, not just the return code (#1505) @logworthy
+* allow jinja 3.0.0 (#1548) @wouterdb
+* Added uuid extension to be able to generate uuids (#1493) @jonaswre
+* Alert user if choice is invalid (#1496) @dHannasch
+* Replace poyo with pyyaml. (#1489) @dHannasch
+* update AUTHOR lead (#1532) @HosamAlmoghraby
+* Add Python 3.9 (#1478) @gliptak
+* Added: --list-installed cli option, listing already downloaded cookiecutter packages (#1096) @chrisbrake
+* Added: Jinja2 Environment extension on files generation stage (#1419) @insspb
+* Added: --replay-file cli option, for replay file distributing (#906) @Cadair
+* Added: _output_dir to cookiecutter context (#1034) @Casyfill
+* Added: CLI option to ignore hooks (#992) @rgreinho
+* Changed: Generated projects can use multiple type hooks at same time. (sh + py) (#974) @milonimrod
+* Added: Path templates will be rendered when copy_without_render used (#839) @noirbizarre
+* Added: End of line detection and configuration. (#1407) @insspb
+* Making code python 3 only: Remove python2 u' sign, fix some strings (#1402) @insspb
+* py3: remove futures, six and encoding (#1401) @insspb
+* Render variables starting with an underscore. (#1339) @smoothml
+* Tests refactoring: test_utils write issues fixed #1405 (#1406) @insspb
+
+### CI/CD and QA changes
+
+* enable branch coverage (#1542) @simobasso
+* Make release-drafter diff only between master releases (#1568) @SharpEdgeMarshall
+* ensure filesystem isolation during tests execution (#1564) @simobasso
+* add safety ci step (#1560) @simobasso
+* pre-commit: add bandit hook (#1559) @simobasso
+* Replace tmpdir in favour of tmp_path (#1545) @SharpEdgeMarshall
+* Fix linting in CI (#1546) @SharpEdgeMarshall
+* Coverage 100% (#1526) @SharpEdgeMarshall
+* Run coverage with matrix (#1521) @SharpEdgeMarshall
+* Lint rst files (#1443) @ssbarnea
+* Python3: Changed io.open to build-in open (PEP3116) (#1408) @insspb
+* Making code python 3 only: Remove python2 u' sign, fix some strings (#1402) @insspb
+* py3: remove futures, six and encoding (#1401) @insspb
+* Removed: Bumpversion, setup.py arguments. (#1404) @insspb
+* Tests refactoring: test_utils write issues fixed #1405 (#1406) @insspb
+* Added: Automatic PyPI deploy on tag creation (#1400) @insspb
+* Changed: Restored coverage reporter (#1399) @insspb
+
+### Documentation updates
+
+* Fix pull requests checklist reference (#1537) @glumia
+* Fix author name (#1544) @HosamAlmoghraby
+* Add missing contributors (#1535) @glumia
+* Update CONTRIBUTING.md (#1529) @glumia
+* Update LICENSE (#1519) @simobasso
+* docs: rewrite the conditional files / directories example description. (#1437) @lyz-code
+* Fix incorrect years in release history (#1473) @graue70
+* Add slugify in the default extensions list (#1470) @oncleben31
+* Renamed cookiecutter.package to API (#1442) @grrlic
+* Fixed wording detail (#1427) @steltenpower
+* Changed: CLI Commands documentation engine (#1418) @insspb
+* Added: Example for conditional files / directories in hooks (#1397) @xyb
+* Changed: README.md PyPI URLs changed to the modern PyPI last version (#1391) @brettcannon
+* Fixed: Comma in README.md (#1390) @Cy-dev-tex
+* Fixed: Replaced no longer maintained pipsi by pipx (#1395) @ndclt
+
+### Bugfixes
+
+* Add support for click 8.x (#1569) @cjolowicz
+* Force click<8.0.0 (#1562) @SharpEdgeMarshall
+* Remove direct dependency on markupsafe (#1549) @ssbarnea
+* fixes prompting private rendered dicts (#1504) @juhuebner
+* User's JSON parse error causes ugly Python exception #809 (#1468) @noone234
+* config: set default on missing default_context key (#1516) @simobasso
+* Fixed: Values encoding on Windows (#1414) @agateau
+* Fixed: Fail with gitolite repositories (#1144) @javiersanp
+* MANIFEST: Fix file name extensions (#1387) @sebix
+
+### Deprecations
+
+* Removed: Bumpversion, setup.py arguments. (#1404) @insspb
+* Removed support for Python 3.6 and PyPy (#1608) @audreyfeldroy
+
+### This release was made possible by our wonderful contributors:
+
+@Cadair, @Casyfill, @Cy-dev-tex, @HosamAlmoghraby, @SharpEdgeMarshall, @agateau, @audreyfeldroy, @brettcannon, @chrisbrake, @cjolowicz, @dHannasch, @gliptak, @glumia, @graue70, @grrlic, @insspb, @javiersanp, @jonaswre, @jsoref, @Jthevos, @juhuebner, @logworthy, @lyz-code, @milonimrod, @ndclt, @noirbizarre, @noone234, @oncleben31, @ozer550, @rgreinho, @sebix, @Sahil-101, @simobasso, @smoothml, @ssbarnea, @steltenpower, @wouterdb, @xyb, Christopher Wolfe and Hosam Almoghraby ( RIAG Digital )
 
 ## 1.7.2 (2020-04-21)
 
@@ -14,7 +156,7 @@ title and will be added before release.
 ## 1.7.1 (2020-04-21)
 
 This release was focused on internal code and CI/CD changes. During this release
-all code was verified to match pep8, pep257 and other code-styling guides.  
+all code was verified to match pep8, pep257 and other code-styling guides.
 Project CI/CD was significantly changed, Windows platform checks based on Appveyor
 engine was replaced by GitHub actions tests. Appveyor was removed. Also our
 CI/CD was extended with Mac builds, to verify project builds on Apple devices.
@@ -84,7 +226,7 @@ Other Changes:
 * Tests update: use sys.executable when invoking python in python 3 only environment thanks to [@vincentbernat](https://github.com/vincentbernat) (#1221)
 * Prevent `click` API v7.0 from showing choices when already shown, thanks to [@rly](https://github.com/rly) and [@luzfcb](https://github.com/luzfcb) (#1168)
 * Test the codebase with python3.8 beta on tox and travis-ci (#1206), thanks to [@mihrab34](https://github.com/mihrab34)
-* Add a [CODE\_OF\_CONDUCT.md](https://github.com/audreyr/cookiecutter/blob/master/CODE_OF_CONDUCT.md) file to the project, thanks to [@andreagrandi](https://github.com/andreagrandi) (#1009)
+* Add a [CODE\_OF\_CONDUCT.md](https://github.com/audreyfeldroy/cookiecutter/blob/master/CODE_OF_CONDUCT.md) file to the project, thanks to [@andreagrandi](https://github.com/andreagrandi) (#1009)
 * Update docstrings in `cookiecutter/main.py`, `cookiecutter/__init__.py`, and `cookiecutter/log.py` to follow the PEP 257 style guide, thanks to [@meahow](https://github.com/meahow) (#998, #999, #1000)
 * Update docstrings in `cookiecutter/utils.py` to follow the PEP 257 style guide, thanks to [@dornheimer](https://github.com/dornheimer)(#1026)
 * Fix grammar in *Choice Variables* documentation, thanks to [@jubrilissa](https://github.com/jubrilissa) (#1011)
@@ -261,7 +403,7 @@ Other Changes:
 * Refactor cookiecutter template identification, thanks to [@michaeljoseph](https://github.com/michaeljoseph) (#777)
 * Add a `cli_runner` test fixture to simplify CLI tests, thanks to [@hackebrot](https://github.com/hackebrot) (#790)
 * Add a check to ensure cookiecutter repositories have JSON context, thanks to [@michaeljoseph](https://github.com/michaeljoseph)(#782)
-* Rename the internal function that determines whether a file should be rendered, thanks to [@audreyr](https://github.com/audreyr) for raising the issue and [@hackebrot](https://github.com/hackebrot)for the PR (#741, #802)
+* Rename the internal function that determines whether a file should be rendered, thanks to [@audreyfeldroy](https://github.com/audreyfeldroy) for raising the issue and [@hackebrot](https://github.com/hackebrot)for the PR (#741, #802)
 * Fix typo in docs, thanks to [@mwarkentin](https://github.com/mwarkentin) (#828)
 * Fix broken link to *Invoke* docs, thanks to [@B3QL](https://github.com/B3QL) (#820)
 * Add documentation to `render_variable` function in `prompt.py`, thanks to [@pydanny](https://github.com/pydanny) (#678)
@@ -339,11 +481,11 @@ Other Changes:
 * Removed xfail in test\_cookiecutters, thanks to [@hackebrot](https://github.com/hackebrot) (#618)
 * Removed django-cms-plugin on account of 404 error, thanks to [@mativs](https://github.com/mativs) and [@pydanny](https://github.com/pydanny) (#593)
 * Fixed docs/usage.rst, thanks to [@macrotim](https://github.com/macrotim) (#604)
-* Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to [@audreyr](https://github.com/audreyr)
+* Update .gitignore to latest Python.gitignore and ignore PyCharm files, thanks to [@audreyfeldroy](https://github.com/audreyfeldroy)
 * Use open context manager to read context\_file in generate() function, thanks to [@hackebrot](https://github.com/hackebrot)
 (#607, #608)
 * Added documentation for choice variables, thanks to [@maiksensi](https://github.com/maiksensi) (#611)
-* Set up Scrutinizer to check code quality, thanks to [@audreyr](https://github.com/audreyr)
+* Set up Scrutinizer to check code quality, thanks to [@audreyfeldroy](https://github.com/audreyfeldroy)
 * Drop distutils support in setup.py, thanks to [@hackebrot](https://github.com/hackebrot) (#606, #609)
 * Change cookiecutter-pypackage-minimal link, thanks to [@kragniz](https://github.com/kragniz) (#614)
 * Fix typo in one of the template\'s description, thanks to [@ryanfreckleton](https://github.com/ryanfreckleton) (#643)
@@ -406,7 +548,7 @@ Other Changes:
 
 * Enable py35 support on Travis by using Python 3.5 as base Python ([@maiksensi](https://github.com/maiksensi) / #540)
 * If a filename is empty, do not generate. Log instead ([@iljabauer](https://github.com/iljabauer) / #444)
-* Fix tests as per last changes in [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage), thanks to [@eliasdorneles](https://github.com/eliasdorneles)(#555).
+* Fix tests as per last changes in [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage), thanks to [@eliasdorneles](https://github.com/eliasdorneles)(#555).
 * Removed deprecated cookiecutter-pylibrary-minimal from the list, thanks to [@ionelmc](https://github.com/ionelmc) (#556)
 * Moved to using rualmel.yaml instead of PyYAML, except for Windows users on Python 2.7, thanks
     to [@pydanny](https://github.com/pydanny) (#557)
@@ -529,7 +671,7 @@ The goal of this release was to allow for injection of extra context via the Coo
 
 Features:
 
-* cookiecutter() now takes an optional extra\_context parameter, thanks to [@michaeljoseph](https://github.com/michaeljoseph), [@fcurella](https://github.com/fcurella), [@aventurella](https://github.com/aventurella),  [@emonty](https://github.com/emonty), [@schacki](https://github.com/schacki), [@ryanolson](https://github.com/ryanolson), [@pfmoore](https://github.com/pfmoore), [@pydanny](https://github.com/pydanny), [@audreyr](https://github.com/audreyr) (#260).
+* cookiecutter() now takes an optional extra\_context parameter, thanks to [@michaeljoseph](https://github.com/michaeljoseph), [@fcurella](https://github.com/fcurella), [@aventurella](https://github.com/aventurella),  [@emonty](https://github.com/emonty), [@schacki](https://github.com/schacki), [@ryanolson](https://github.com/ryanolson), [@pfmoore](https://github.com/pfmoore), [@pydanny](https://github.com/pydanny), [@audreyfeldroy](https://github.com/audreyfeldroy) (#260).
 * Context is now injected into hooks, thanks to [@michaeljoseph](https://github.com/michaeljoseph) and [@dinopetrone](https://github.com/dinopetrone).
 * Moved all Python 2/3 compatibility code into cookiecutter.compat, making the eventual move to six easier, thanks to [@michaeljoseph](https://github.com/michaeljoseph) (#60, #102).
 * Added cookiecutterrc defined aliases for cookiecutters, thanks to [@pfmoore](https://github.com/pfmoore) (#246)
@@ -569,12 +711,12 @@ Bug Fixes:
 
 Other Changes:
 
-* [@audreyr](https://github.com/audreyr) formally accepted position as **BDFL of cookiecutter**.
+* [@audreyfeldroy](https://github.com/audreyfeldroy) formally accepted position as **BDFL of cookiecutter**.
 * Elevated [@pydanny](https://github.com/pydanny), [@michaeljoseph](https://github.com/michaeljoseph), and [@pfmoore](https://github.com/pfmoore) to core committer status.
-* Added Core Committer guide, by [@audreyr](https://github.com/audreyr).
-* Generated apidocs from make docs, by [@audreyr](https://github.com/audreyr).
+* Added Core Committer guide, by [@audreyfeldroy](https://github.com/audreyfeldroy).
+* Generated apidocs from make docs, by [@audreyfeldroy](https://github.com/audreyfeldroy).
 * Added contributing command to the makedocs function, by [@pydanny](https://github.com/pydanny).
-* Refactored contributing documentation, included adding core committer instructions, by [@pydanny](https://github.com/pydanny) and [@audreyr](https://github.com/audreyr).
+* Refactored contributing documentation, included adding core committer instructions, by [@pydanny](https://github.com/pydanny) and [@audreyfeldroy](https://github.com/audreyfeldroy).
 * Do not convert input prompt to bytes, thanks to [@uranusjr](https://github.com/uranusjr) (#192).
 * Added troubleshooting info about Python 3.3 tests and tox.
 * Added documentation about command line arguments, thanks to [@saxix](https://github.com/saxix).
@@ -681,7 +823,7 @@ Other changes:
     # Create project from the cookiecutter-pypackage/ template
     $ cookiecutter cookiecutter-pypackage/
     # Create project from the cookiecutter-pypackage.git repo template
-    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+    $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
 ```  
 
 * Can now use Cookiecutter from Python as a package:
@@ -693,7 +835,7 @@ Other changes:
     cookiecutter('cookiecutter-pypackage/')
 
     # Create project from the cookiecutter-pypackage.git repo template
-    cookiecutter('https://github.com/audreyr/cookiecutter-pypackage.git')
+    cookiecutter('https://github.com/audreyfeldroy/cookiecutter-pypackage.git')
 ```
 
 * Internal refactor to remove any code that changes the working

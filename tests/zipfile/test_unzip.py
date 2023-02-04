@@ -1,8 +1,9 @@
 """Tests for function unzip() from zipfile module."""
+import shutil
 import tempfile
+from pathlib import Path
 
 import pytest
-import shutil
 
 from cookiecutter import zipfile
 from cookiecutter.exceptions import InvalidZipRepository
@@ -10,7 +11,7 @@ from cookiecutter.exceptions import InvalidZipRepository
 
 def mock_download():
     """Fake download function."""
-    with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:
+    with Path('tests/files/fake-repo-tmpl.zip').open('rb') as zf:
         chunk = zf.read(1024)
         while chunk:
             yield chunk
@@ -20,7 +21,7 @@ def mock_download():
 def mock_download_with_empty_chunks():
     """Fake download function."""
     yield
-    with open('tests/files/fake-repo-tmpl.zip', 'rb') as zf:
+    with Path('tests/files/fake-repo-tmpl.zip').open('rb') as zf:
         chunk = zf.read(1024)
         while chunk:
             yield chunk
@@ -168,7 +169,9 @@ def test_unzip_url(mocker, clone_dir):
     request.iter_content.return_value = mock_download()
 
     mocker.patch(
-        'cookiecutter.zipfile.requests.get', return_value=request, autospec=True,
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
     )
 
     output_dir = zipfile.unzip(
@@ -191,7 +194,9 @@ def test_unzip_url_with_empty_chunks(mocker, clone_dir):
     request.iter_content.return_value = mock_download_with_empty_chunks()
 
     mocker.patch(
-        'cookiecutter.zipfile.requests.get', return_value=request, autospec=True,
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
     )
 
     output_dir = zipfile.unzip(
@@ -214,7 +219,9 @@ def test_unzip_url_existing_cache(mocker, clone_dir):
     request.iter_content.return_value = mock_download()
 
     mocker.patch(
-        'cookiecutter.zipfile.requests.get', return_value=request, autospec=True,
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
     )
 
     # Create an existing cache of the zipfile
@@ -237,7 +244,9 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir):
     request.iter_content.return_value = mock_download()
 
     mocker.patch(
-        'cookiecutter.zipfile.requests.get', return_value=request, autospec=True,
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
     )
 
     # Create an existing cache of the zipfile
@@ -261,7 +270,8 @@ def test_unzip_should_abort_if_no_redownload(mocker, clone_dir):
     )
 
     mock_requests_get = mocker.patch(
-        'cookiecutter.zipfile.requests.get', autospec=True,
+        'cookiecutter.zipfile.requests.get',
+        autospec=True,
     )
 
     # Create an existing cache of the zipfile

@@ -1,0 +1,20 @@
+{
+    "name": "cookiecutter-pytest-plugin",
+    "cookiecutter_version": "2.0.0",
+    "variables" : [
+        {
+            "name": "full_name",
+            "default": "J. Paul Getty",
+            "prompt": "What's your full name?",
+            "description": "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "default": "jpg@rich.de",
+            "prompt": "What's your email?",
+            "description": "Please enter an email address for the meta information in setup.py.",
+            "type": "string"
+        }
+    ]
+}

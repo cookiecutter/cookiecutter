@@ -1,0 +1,26 @@
+{
+    "name": "cc-representative",
+    "cookiecutter_version": "2.0.0",
+    "variables" : [
+        {
+            "name": "director_credit",
+            "default": true,
+            "prompt": "Is there a director credit on this film?",
+            "description": "Directors take credit for most of their films, usually...",
+            "type": "boolean"
+        },
+        {
+            "name": "director_name",
+            "default": "Allan Smithe",
+            "prompt": "What's the Director's full name?",
+            "prompt_user": true,
+            "description": "The default director is not proud of their work, we hope you are.",
+            "hide_input": false,
+            "choices": ["Allan Smithe", "Ridley Scott", "Victor Fleming", "John Houston", "{{cookiecutter.director_credit}}"],
+            "validation": "^[a-z][A-Z]+$",
+            "validation_flags": ["verbose", "ascii"],
+            "skip_if": "{{cookiecutter.director_credit == False}}",
+            "type": "string"
+        }
+    ]
+}
