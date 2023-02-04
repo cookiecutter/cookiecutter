@@ -168,7 +168,9 @@ def test_prompt_string(mocker):
     expected_value = 'Input String'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -180,7 +182,10 @@ def test_prompt_string(mocker):
     r = context.prompt_string(v, default='Alpha')
 
     assert mock_prompt.call_args == mocker.call(
-        v.prompt, default='Alpha', hide_input=v.hide_input, type=click.STRING,
+        v.prompt,
+        default='Alpha',
+        hide_input=v.hide_input,
+        type=click.STRING,
     )
 
     assert r == expected_value
@@ -191,7 +196,9 @@ def test_prompt_bool(mocker):
     expected_value = True
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -203,7 +210,10 @@ def test_prompt_bool(mocker):
     r = context.prompt_boolean(v, default=False)
 
     assert mock_prompt.call_args == mocker.call(
-        v.prompt, default=False, hide_input=v.hide_input, type=click.BOOL,
+        v.prompt,
+        default=False,
+        hide_input=v.hide_input,
+        type=click.BOOL,
     )
 
     assert r  # expected_value
@@ -214,7 +224,9 @@ def test_prompt_int(mocker):
     expected_value = 777
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -226,7 +238,10 @@ def test_prompt_int(mocker):
     r = context.prompt_int(v, default=1000)
 
     assert mock_prompt.call_args == mocker.call(
-        v.prompt, default=1000, hide_input=v.hide_input, type=click.INT,
+        v.prompt,
+        default=1000,
+        hide_input=v.hide_input,
+        type=click.INT,
     )
 
     assert r == expected_value
@@ -237,7 +252,9 @@ def test_prompt_float(mocker):
     expected_value = 3.14
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -249,7 +266,10 @@ def test_prompt_float(mocker):
     r = context.prompt_float(v, default=3.0)
 
     assert mock_prompt.call_args == mocker.call(
-        v.prompt, default=3.0, hide_input=v.hide_input, type=click.FLOAT,
+        v.prompt,
+        default=3.0,
+        hide_input=v.hide_input,
+        type=click.FLOAT,
     )
 
     assert r == expected_value
@@ -260,7 +280,9 @@ def test_prompt_uuid(mocker):
     expected_value = '931ef56c3e7b45eea0427bac386f0a98'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -272,7 +294,10 @@ def test_prompt_uuid(mocker):
     r = context.prompt_uuid(v, default=None)
 
     assert mock_prompt.call_args == mocker.call(
-        v.prompt, default=None, hide_input=v.hide_input, type=click.UUID,
+        v.prompt,
+        default=None,
+        hide_input=v.hide_input,
+        type=click.UUID,
     )
 
     assert r == expected_value
@@ -283,7 +308,9 @@ def test_prompt_json(monkeypatch, mocker):
     expected_value = '{"port": 67888, "colors": ["red", "green", "blue"]}'
 
     mocker.patch(
-        'click.termui.visible_prompt_func', autospec=True, return_value=expected_value,
+        'click.termui.visible_prompt_func',
+        autospec=True,
+        return_value=expected_value,
     )
     m = mocker.Mock()
     m.side_effect = context.Variable
@@ -325,7 +352,9 @@ def test_prompt_json_default(mocker):
     cfg = '{"port": 67888, "colors": ["red", "green", "blue"]}'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -352,7 +381,9 @@ def test_prompt_yes_no_default_no(mocker):
     expected_value = 'y'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -368,7 +399,10 @@ def test_prompt_yes_no_default_no(mocker):
     r = context.prompt_yes_no(v, default=False)
 
     assert mock_prompt.call_args == mocker.call(
-        v.prompt, default='n', hide_input=v.hide_input, type=click.BOOL,
+        v.prompt,
+        default='n',
+        hide_input=v.hide_input,
+        type=click.BOOL,
     )
 
     assert r  # expected_value
@@ -379,7 +413,9 @@ def test_prompt_yes_no_default_yes(mocker):
     expected_value = 'y'
 
     mock_prompt = mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -395,7 +431,10 @@ def test_prompt_yes_no_default_yes(mocker):
     r = context.prompt_yes_no(v, default=True)
 
     assert mock_prompt.call_args == mocker.call(
-        v.prompt, default='y', hide_input=v.hide_input, type=click.BOOL,
+        v.prompt,
+        default='y',
+        hide_input=v.hide_input,
+        type=click.BOOL,
     )
 
     assert r  # expected_value
@@ -411,7 +450,9 @@ def test_prompt_choice(mocker):
     expected_license = 'MIT'
 
     mocker.patch(
-        'cookiecutter.prompt.click.prompt', autospec=True, return_value=expected_value,
+        'cookiecutter.prompt.click.prompt',
+        autospec=True,
+        return_value=expected_value,
     )
 
     m = mocker.Mock()
@@ -535,7 +576,7 @@ def test_variable_str():
     assert "validation='^[a-z_]+$'" in v_str
     assert "validation_flag_names='['ignorecase']'" in v_str
     assert ("validation_flags='2'" in v_str) | (".IGNORECASE" in v_str)
-    
+
     if sys.version_info >= (3, 4):
         assert "validate='re.compile('^[a-z_]+$', re.IGNORECASE)'" in v_str
     else:

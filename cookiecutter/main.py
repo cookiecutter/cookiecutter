@@ -96,13 +96,13 @@ def cookiecutter(
         else:
             context_file = os.path.join(repo_dir, 'cookiecutter.json')
             logger.debug('context_file is %s', context_file)
-    
+
             context = generate_context(
                 context_file=context_file,
                 default_context=config_dict['default_context'],
                 extra_context=extra_context,
             )
-    
+
             # prompt the user to manually configure at the command line.
             # except when 'no-input' flag is set
             if infer_schema_version(context['cookiecutter']) in ['2.0']:
@@ -111,18 +111,18 @@ def cookiecutter(
                 )
             else:
                 context['cookiecutter'] = prompt_for_config(context, no_input)
-    
+
             # include template dir or url in the context dict
             context['cookiecutter']['_template'] = template
-    
+
             # include repo dir or url in the context dict
             context['cookiecutter']['_repo_dir'] = repo_dir
-    
+
             # include output+dir in the context dict
             context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
-    
+
             dump(config_dict['replay_dir'], template_name, context)
-    
+
         # Create project from local context and project template.
         result = generate_files(
             repo_dir=repo_dir,

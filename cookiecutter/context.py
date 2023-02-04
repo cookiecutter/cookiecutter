@@ -132,7 +132,6 @@ def prompt_int(variable, default):
 
 def prompt_float(variable, default):
     """Prompts the user for float."""
-
     return click.prompt(
         variable.prompt,
         default=default,
@@ -143,7 +142,6 @@ def prompt_float(variable, default):
 
 def prompt_uuid(variable, default):
     """Prompts the user for a uuid."""
-
     return click.prompt(
         variable.prompt,
         default=default,
@@ -155,13 +153,16 @@ def prompt_uuid(variable, default):
 def prompt_json(variable, default):
     """Prompts the user for a JSON entry."""
     # The JSON object from cookiecutter.json might be very large
-    # We only show 'default'
 
+    # We only show 'default'
     default_json = 'default'
 
     def process_json(user_value):
         try:
-            return json.loads(user_value, object_pairs_hook=collections.OrderedDict,)
+            return json.loads(
+                user_value,
+                object_pairs_hook=collections.OrderedDict,
+            )
         except ValueError:
             # json.decoder.JSONDecodeError raised in Python 3.5, 3.6
             # but it inherits from ValueError which is raised in Python 3.4
@@ -441,7 +442,8 @@ class Variable(object):
     def __repr__(self):
         """Provide a representation with variable name."""
         return "<{class_name} {variable_name}>".format(
-            class_name=self.__class__.__name__, variable_name=self.name,
+            class_name=self.__class__.__name__,
+            variable_name=self.name,
         )
 
     def __str__(self):
@@ -504,7 +506,8 @@ class CookiecutterTemplate:
     def __repr__(self):
         """Provide a classname with template name."""
         return "<{class_name} {template_name}>".format(
-            class_name=self.__class__.__name__, template_name=self.name,
+            class_name=self.__class__.__name__,
+            template_name=self.name,
         )
 
     def __iter__(self):

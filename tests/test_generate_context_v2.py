@@ -635,7 +635,10 @@ def gen_context_data_inputs_expected():
                     'prompt': 'Is there a producer credit on this film?',
                     'description': 'There are usually a lot of producers...',
                 },
-                {'name': 'director_name', 'skip_if': '<<REMOVE::FIELD>>',},
+                {
+                    'name': 'director_name',
+                    'skip_if': '<<REMOVE::FIELD>>',
+                },
             ],
         },
         {"representative": expected_file2_v1},
@@ -797,7 +800,12 @@ def gen_context_data_inputs_expected():
     context_with_valid_extra_6 = (
         {
             'context_file': 'tests/test-generate-context-v2/representative.json',
-            'extra_context': [{'name': 'director_name', 'default': 'John Ford',}],
+            'extra_context': [
+                {
+                    'name': 'director_name',
+                    'default': 'John Ford',
+                }
+            ],
         },
         {"representative": expected_file2_v5},
     )
@@ -827,7 +835,12 @@ def gen_context_data_inputs_expected():
     context_with_valid_extra_8 = (
         {
             'context_file': 'tests/test-generate-context-v2/representative.json',
-            'extra_context': [{'name': 'director_name', 'default': 'Peter Sellers',}],
+            'extra_context': [
+                {
+                    'name': 'director_name',
+                    'default': 'Peter Sellers',
+                }
+            ],
         },
         {"representative": expected_file2_v7},
     )
@@ -1034,7 +1047,10 @@ def test_raise_exception_when_attempting_to_remove_mandatory_field():
     used to specify which variable to remove.
     """
     xtra_context = [
-        {'name': 'director_name', 'default': '<<REMOVE::FIELD>>',},
+        {
+            'name': 'director_name',
+            'default': '<<REMOVE::FIELD>>',
+        },
     ]
 
     with pytest.raises(ValueError) as excinfo:
