@@ -1,4 +1,8 @@
 """Collection of tests around cookiecutter's replay feature."""
+import collections
+import os
+import shutil
+
 from cookiecutter.main import cookiecutter
 
 
@@ -60,6 +64,57 @@ def test_replay_load_template_name(
         user_config_data['replay_dir'],
         'fake-repo-tmpl',
     )
+
+
+def test_version_2_load_context_call(monkeypatch, mocker, user_config_file):
+    """Check that the version 2 load_context() is called.
+
+    Change the current working directory temporarily to
+    'tests/test-generate-context-v2/min-v2-cookiecutter'
+    for this test and call cookiecutter with '.' for the target template.
+    """
+    monkeypatch.chdir('tests/test-generate-context-v2/min-v2-cookiecutter')
+    if os.path.exists('test-repo'):
+        shutil.rmtree('test-repo')
+    mock_replay_dump = mocker.patch('cookiecutter.main.dump')
+
+    counts = {}
+
+    def patch_load_context(counts):
+        counts['load_context'] = 0
+
+        def load_context(json_object, no_input=False, verbose=True, counts=counts):
+            counts["load_context"] += 1
+            return collections.OrderedDict(
+                {
+                    'repo_name': 'test-repo',
+                }
+            )
+
+        return load_context
+
+    def patch_prompt_for_config(counts):
+        counts['prompt_for_config'] = 0
+
+        def prompt_for_config(context, no_input=False):
+            counts["prompt_for_config"] += 1
+            return {}
+
+    mocker.patch('cookiecutter.main.prompt_for_config', patch_prompt_for_config(counts))
+    mocker.patch('cookiecutter.main.load_context', patch_load_context(counts))
+
+    cookiecutter(
+        '.',
+        no_input=True,
+        replay=False,
+        config_file=user_config_file,
+    )
+
+    if os.path.exists('test-repo'):
+        shutil.rmtree('test-repo')
+    assert mock_replay_dump.call_count == 1
+    assert counts["load_context"] == 1
+    assert counts["prompt_for_config"] == 0
 
 
 def test_custom_replay_file(monkeypatch, mocker, user_config_file):

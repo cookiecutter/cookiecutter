@@ -1,0 +1,88 @@
+{
+    "name": "cookiecutter-testing-skips",
+    "cookiecutter_version": "2.0.0",
+    "version": "0.1.0",
+    "variables": [
+        {
+            "name": "project_configuration_enabled",
+            "default": true,
+            "prompt": "Will this project require a configuration file?",
+            "type": "yes_no",
+            "if_no_skip_to": "project_uses_existing_logging_facilities"
+        },
+        {
+            "name": "project_config_format",
+            "default": "toml",
+            "prompt": "Select a configuration file format.",
+            "type": "string",
+            "choices": [
+                "toml",
+                "yaml",
+                "json",
+                "ini"
+            ]
+        },
+        {
+            "name": "project_uses_existing_logging_facilities",
+            "default": false,
+            "prompt": "Will this project use existing external logging facilities?",
+            "type": "yes_no",
+            "if_yes_skip_to": "github_username"
+        },
+        {
+            "name": "project_logging_enabled",
+            "default": true,
+            "prompt": "Will this project provide its own logging facilities?",
+            "type": "yes_no",
+            "if_no_skip_to": "github_username"
+        },
+        {
+            "name": "project_console_logging_enabled",
+            "default": true,
+            "prompt": "Will the project's logging facilities include logging to the console?",
+            "type": "yes_no",
+            "if_no_skip_to": "project_file_logging_enabled",
+            "do_if": "{{cookiecutter.project_logging_enabled == True}}"
+        },
+        {
+            "name": "project_console_logging_level",
+            "default": "WARN",
+            "prompt": "Select the minimum logging level to log to the console.",
+            "type": "string",
+            "choices": [
+                "WARN",
+                "INFO",
+                "DEBUG",
+                "ERROR"
+            ],
+            "do_if": "{{cookiecutter.project_logging_enabled == True}}"
+        },
+        {
+            "name": "project_file_logging_enabled",
+            "default": true,
+            "prompt": "Will the project's logging facilities include logging to a file?",
+            "type": "yes_no",
+            "if_no_skip_to": "github_username",
+            "do_if": "{{cookiecutter.project_logging_enabled == True}}"
+        },
+        {
+            "name": "project_file_logging_level",
+            "default": "DEBUG",
+            "prompt": "Select the minimum logging level to log to a file",
+            "type": "string",
+            "choices": [
+                "DEBUG",
+                "INFO",
+                "WARN",
+                "ERROR"
+            ],
+            "do_if": "{{cookiecutter.project_logging_enabled == False}}"
+        },
+        {
+            "name": "github_username",
+            "default": "eruber",
+            "prompt": "Enter your GitHub User Name",
+            "type": "string"
+        }
+    ]
+}
