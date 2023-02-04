@@ -36,7 +36,8 @@ class ExtensionLoaderMixin:
         except ImportError as err:
             raise UnknownExtension(f'Unable to load extension: {err}') from err
 
-    def _read_extensions(self, context):
+    @staticmethod
+    def _read_extensions(context):
         """Return list of extensions as str to be passed on to the Jinja2 env.
 
         If context does not contain the relevant info, return an empty

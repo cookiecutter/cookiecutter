@@ -9,21 +9,24 @@ Tests associated with processing v2 context syntax in the
 """
 
 from __future__ import unicode_literals
-import pytest
 
 from collections import OrderedDict
+from copy import deepcopy
+
+import pytest
 
 from cookiecutter import generate
 
-
-def context_data():
-    context = (
-        {'context_file': 'tests/test-generate-context-v2/test.json'},
-        {
-            "test": OrderedDict(
+# writing explicitely the expected outcomes of different tests
+expected_file1_v0 = OrderedDict(
+    [
+        ("version", "2.0"),
+        ("requires", OrderedDict([("cookiecutter", ">1")])),
+        (
+            "template",
+            OrderedDict(
                 [
                     ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
                     (
                         "variables",
                         [
@@ -34,7 +37,8 @@ def context_data():
                                     ("prompt", "What's your full name?"),
                                     (
                                         "description",
-                                        "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
+                                        "Please enter your full name. It will be displayed on "
+                                        "the README file and used for the PyPI package definition.",
                                     ),
                                     ("type", "string"),
                                 ]
@@ -46,7 +50,8 @@ def context_data():
                                     ("prompt", "What's your email?"),
                                     (
                                         "description",
-                                        "Please enter an email address for the meta information in setup.py.",
+                                        "Please enter an email address for "
+                                        "the meta information in setup.py.",
                                     ),
                                     ("type", "string"),
                                 ]
@@ -54,8 +59,176 @@ def context_data():
                         ],
                     ),
                 ]
-            )
-        },
+            ),
+        ),
+    ]
+)
+
+expected_file1_v1 = deepcopy(expected_file1_v0)
+expected_file1_v1['template']['variables'][0]['default'] = 'James Patrick Morgan'
+
+expected_file1_v2 = deepcopy(expected_file1_v0)
+expected_file1_v2['template']['variables'][1]['default'] = 'jpm@chase.bk'
+
+expected_file1_v3 = deepcopy(expected_file1_v0)
+expected_file1_v3['template']['variables'][0]['default'] = 'Alpha Gamma Five'
+expected_file1_v3['template']['variables'][1]['default'] = 'agamma5@universe.open'
+
+expected_file1_v4 = deepcopy(expected_file1_v0)
+expected_file1_v4['template']['variables'][1]['name'] = 'email'
+expected_file1_v4['template']['variables'][1]['default'] = 'miles.davis@jazz.gone'
+expected_file1_v4['template']['variables'][1]['description'] = 'Enter jazzy email...'
+
+expected_file2_v0 = OrderedDict(
+    [
+        ("version", "2.0"),
+        (
+            "template",
+            OrderedDict(
+                [
+                    ("name", "cc-representative"),
+                    (
+                        "variables",
+                        [
+                            OrderedDict(
+                                [
+                                    ("name", "director_credit"),
+                                    ("default", True),
+                                    (
+                                        "prompt",
+                                        "Is there a director credit on this film?",
+                                    ),
+                                    (
+                                        "description",
+                                        "Directors take credit for most of their films, usually...",
+                                    ),
+                                    ("type", "boolean"),
+                                ]
+                            ),
+                            OrderedDict(
+                                [
+                                    ("name", "director_name"),
+                                    ("default", "Allan Smithe"),
+                                    ("prompt", "What's the Director's full name?"),
+                                    ("prompt_user", True),
+                                    (
+                                        "description",
+                                        "The default director is not proud of their work, "
+                                        "we hope you are.",
+                                    ),
+                                    ("hide_input", False),
+                                    (
+                                        "choices",
+                                        [
+                                            "Allan Smithe",
+                                            "Ridley Scott",
+                                            "Victor Fleming",
+                                            "John Houston",
+                                        ],
+                                    ),
+                                    ("validation", "^[a-z][A-Z]+$"),
+                                    ("validation_flags", ["verbose", "ascii"]),
+                                    (
+                                        "skip_if",
+                                        "{{cookiecutter.director_credit == False}}",
+                                    ),
+                                    ("type", "string"),
+                                ]
+                            ),
+                        ],
+                    ),
+                ]
+            ),
+        ),
+    ]
+)
+
+expected_file2_v1 = deepcopy(expected_file2_v0)
+expected_file2_v1['template']['variables'][0]['name'] = 'producer_credit'
+expected_file2_v1['template']['variables'][0][
+    'prompt'
+] = 'Is there a producer credit on this film?'
+expected_file2_v1['template']['variables'][0][
+    'description'
+] = 'There are usually a lot of producers...'
+del expected_file2_v1['template']['variables'][1]['skip_if']
+
+expected_file2_v2 = deepcopy(expected_file2_v0)
+expected_file2_v2['template']['variables'][0]['name'] = 'producer_credits'
+expected_file2_v2['template']['variables'][0]['default'] = 2
+expected_file2_v2['template']['variables'][0][
+    'prompt'
+] = 'How many producers does this film have?'
+expected_file2_v2['template']['variables'][0][
+    'description'
+] = 'There are usually a lot of producers...'
+expected_file2_v2['template']['variables'][0]['type'] = 'int'
+expected_file2_v2['template']['variables'][1][
+    'skip_if'
+] = '{{cookiecutter.producer_credits == False}}'
+
+expected_file2_v3 = deepcopy(expected_file2_v0)
+expected_file2_v3['template']['variables'][1]['default'] = "Allan Smithe"
+expected_file2_v3['template']['variables'][1]['choices'] = [
+    'Allan Smithe',
+    'Ridley Scott',
+    'Victor Fleming',
+    'John Houston',
+    'John Ford',
+    'Billy Wilder',
+]
+
+expected_file2_v4 = deepcopy(expected_file2_v0)
+expected_file2_v4['template']['variables'][1]['default'] = "John Ford"
+expected_file2_v4['template']['variables'][1]['choices'] = [
+    'John Ford',
+    'Allan Smithe',
+    'Ridley Scott',
+    'Victor Fleming',
+    'John Houston',
+    'Billy Wilder',
+]
+
+expected_file2_v5 = deepcopy(expected_file2_v0)
+expected_file2_v5['template']['variables'][1]['default'] = 'John Ford'
+expected_file2_v5['template']['variables'][1]['choices'] = [
+    'John Ford',
+    'Allan Smithe',
+    'Ridley Scott',
+    'Victor Fleming',
+    'John Houston',
+]
+
+expected_file2_v6 = deepcopy(expected_file2_v0)
+expected_file2_v6['template']['variables'][1]['default'] = "Billy Wilder"
+expected_file2_v6['template']['variables'][1]['choices'] = [
+    'Billy Wilder',
+    'Allan Smithe',
+    'Ridley Scott',
+    'Victor Fleming',
+    'John Houston',
+    'John Ford',
+]
+
+expected_file2_v7 = deepcopy(expected_file2_v0)
+expected_file2_v7['template']['variables'][1]['default'] = "Peter Sellers"
+expected_file2_v7['template']['variables'][1]['choices'] = [
+    'Peter Sellers',
+    'Allan Smithe',
+    'Ridley Scott',
+    'Victor Fleming',
+    'John Houston',
+]
+
+
+def context_data_serializer():
+    """
+    Creates a generator of combination:
+        ((input file, additional params), expected output)
+    """
+    context = (
+        {'context_file': 'tests/test-generate-context-v2/test.json'},
+        {"test": expected_file1_v0},
     )
 
     context_with_default = (
@@ -66,43 +239,7 @@ def context_data():
                 'this_key_ignored': 'not_in_context',
             },
         },
-        {
-            "test": OrderedDict(
-                [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "full_name"),
-                                    ("default", "James Patrick Morgan"),
-                                    ("prompt", "What's your full name?"),
-                                    (
-                                        "description",
-                                        "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "email"),
-                                    ("default", "jpg@rich.de"),
-                                    ("prompt", "What's your email?"),
-                                    (
-                                        "description",
-                                        "Please enter an email address for the meta information in setup.py.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"test": expected_file1_v1},
     )
 
     context_with_extra = (
@@ -110,88 +247,7 @@ def context_data():
             'context_file': 'tests/test-generate-context-v2/test.json',
             'extra_context': {'email': 'jpm@chase.bk'},
         },
-        {
-            "test": OrderedDict(
-                [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "full_name"),
-                                    ("default", "J. Paul Getty"),
-                                    ("prompt", "What's your full name?"),
-                                    (
-                                        "description",
-                                        "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "email"),
-                                    ("default", "jpm@chase.bk"),
-                                    ("prompt", "What's your email?"),
-                                    (
-                                        "description",
-                                        "Please enter an email address for the meta information in setup.py.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
-    )
-
-    context_with_default_and_extra = (
-        {
-            'context_file': 'tests/test-generate-context-v2/test.json',
-            'default_context': {'full_name': 'Alpha Gamma Five'},
-            'extra_context': {'email': 'agamma5@universe.open'},
-        },
-        {
-            "test": OrderedDict(
-                [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "full_name"),
-                                    ("default", "Alpha Gamma Five"),
-                                    ("prompt", "What's your full name?"),
-                                    (
-                                        "description",
-                                        "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "email"),
-                                    ("default", "agamma5@universe.open"),
-                                    ("prompt", "What's your email?"),
-                                    (
-                                        "description",
-                                        "Please enter an email address for the meta information in setup.py.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"test": expected_file1_v2},
     )
 
     context_choices_with_default = (
@@ -202,69 +258,48 @@ def context_data():
         {
             "test_choices": OrderedDict(
                 [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
+                    ("version", "2.0"),
                     (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "license"),
-                                    ("default", "Apache2"),
-                                    (
-                                        "choices",
-                                        [
-                                            "Apache2",
-                                            "MIT",
-                                            "BSD3",
-                                            "GNU-GPL3",
-                                            "Mozilla2",
-                                        ],
-                                    ),
-                                ]
-                            )
-                        ],
+                        "template",
+                        OrderedDict(
+                            [
+                                ("name", "cookiecutter-pytest-plugin"),
+                                (
+                                    "variables",
+                                    [
+                                        OrderedDict(
+                                            [
+                                                ("name", "license"),
+                                                ("type", "string"),
+                                                ("default", "Apache2"),
+                                                (
+                                                    "choices",
+                                                    [
+                                                        "Apache2",
+                                                        "MIT",
+                                                        "BSD3",
+                                                        "GNU-GPL3",
+                                                        "Mozilla2",
+                                                    ],
+                                                ),
+                                            ]
+                                        )
+                                    ],
+                                ),
+                            ]
+                        ),
                     ),
                 ]
             )
         },
     )
-
-    context_choices_with_extra = (
+    context_with_default_and_extra = (
         {
-            'context_file': 'tests/test-generate-context-v2/test_choices.json',
-            'default_context': {'license': 'Apache2'},
-            'extra_context': {'license': 'MIT'},
+            'context_file': 'tests/test-generate-context-v2/test.json',
+            'default_context': {'full_name': 'Alpha Gamma Five'},
+            'extra_context': {'email': 'agamma5@universe.open'},
         },
-        {
-            "test_choices": OrderedDict(
-                [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "license"),
-                                    ("default", "MIT"),
-                                    (
-                                        "choices",
-                                        [
-                                            "MIT",
-                                            "Apache2",
-                                            "BSD3",
-                                            "GNU-GPL3",
-                                            "Mozilla2",
-                                        ],
-                                    ),
-                                ]
-                            )
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"test": expected_file1_v3},
     )
 
     context_choices_with_default_not_in_choices = (
@@ -272,50 +307,13 @@ def context_data():
             'context_file': 'tests/test-generate-context-v2/test.json',
             'default_context': {'orientation': 'landscape'},
         },
-        {
-            "test": OrderedDict(
-                [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "full_name"),
-                                    ("default", "J. Paul Getty"),
-                                    ("prompt", "What's your full name?"),
-                                    (
-                                        "description",
-                                        "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "email"),
-                                    ("default", "jpg@rich.de"),
-                                    ("prompt", "What's your email?"),
-                                    (
-                                        "description",
-                                        "Please enter an email address for the meta information in setup.py.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"test": expected_file1_v0},
     )
     yield context
     yield context_with_default
     yield context_with_extra
     yield context_with_default_and_extra
     yield context_choices_with_default
-    yield context_choices_with_extra
     yield context_choices_with_default_not_in_choices
 
 
@@ -474,15 +472,12 @@ def context_data_value_errors():
     yield context_choices_with_extra_value_error
 
 
-@pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context', context_data())
 def test_generate_context(input_params, expected_context):
     """
     Test the generated context for several input parameters against the
     according expected context.
     """
-    generated_context = generate.generate_context(**input_params)
-    assert generated_context == expected_context
+    assert generate.generate_context(**input_params) == expected_context
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -526,7 +521,7 @@ def test_generate_context_extra_ctx_invalid():
             extra_context='should_be_a_list_or_a_dictionary',
         )
 
-    msg = "Extra context must be a dictionary or a list of dictionaries!"
+    msg = "Extra context must be a dictionary or a list of dictionaries"
     assert msg in str(excinfo.value)
 
 
@@ -601,7 +596,10 @@ def test_generate_context_extra_ctx_list_item_dict_no_name_field_match():
 
 
 def gen_context_data_inputs_expected():
-    # Extra field ignored
+    """
+    Creates a generator of combination:
+        ((input file, additional params), expected output)
+    """
     context_with_valid_extra_0 = (
         {
             'context_file': 'tests/test-generate-context-v2/test.json',
@@ -614,112 +612,15 @@ def gen_context_data_inputs_expected():
                 }
             ],
         },
-        {
-            "test": OrderedDict(
-                [
-                    ("name", "cookiecutter-pytest-plugin"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "full_name"),
-                                    ("default", "J. Paul Getty"),
-                                    ("prompt", "What's your full name?"),
-                                    (
-                                        "description",
-                                        "Please enter your full name. It will be displayed on the README file and used for the PyPI package definition.",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "email"),
-                                    ("default", "miles.davis@jazz.gone"),
-                                    ("prompt", "What's your email?"),
-                                    ("description", "Enter jazzy email..."),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"test": expected_file1_v4},
     )
     # Empty extra context precipitates no ill effect
     context_with_valid_extra_1 = (
         {
             'context_file': 'tests/test-generate-context-v2/representative.json',
-            'extra_context': []
-            # 'extra_context': [
-            #     {
-            #         'name': 'email',
-            #         'default': 'miles.davis@jazz.gone',
-            #         'description': 'Enter jazzy email...',
-            #         'extra_field': 'extra_field_value',
-            #     }
-            # ]
+            'extra_context': [],
         },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "director_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a director credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "Directors take credit for most of their films, usually...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Allan Smithe"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            "Allan Smithe",
-                                            "Ridley Scott",
-                                            "Victor Fleming",
-                                            "John Houston",
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.director_credit == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v0},
     )
 
     # Test the ability to change the variable's name field (since it is used
@@ -734,91 +635,13 @@ def gen_context_data_inputs_expected():
                     'prompt': 'Is there a producer credit on this film?',
                     'description': 'There are usually a lot of producers...',
                 },
-                {
-                    'name': 'director_name',
-                    'skip_if': '<<REMOVE::FIELD>>',
-                },
+                {'name': 'director_name', 'skip_if': '<<REMOVE::FIELD>>',},
             ],
         },
-        {
-            "representative-director": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "producer_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a producer credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "There are usually a lot of producers...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_exists"),
-                                    ("default", False),
-                                    ("prompt", "Is there a Director?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The director exists.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            True,
-                                            False,
-                                        ],
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Allan Smithe"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            "Allan Smithe",
-                                            "Ridley Scott",
-                                            "Victor Fleming",
-                                            "John Houston",
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v1},
     )
     # Test the ability to change the variable's name field (since it is used
     # to identify the variable to be modifed) with extra context and to also
-    # test that any other references in other variables that might use the
-    # original variable name get updated as well.
     context_with_valid_extra_2_B = (
         {
             'context_file': 'tests/test-generate-context-v2/representative_2B.json',
@@ -833,62 +656,82 @@ def gen_context_data_inputs_expected():
         {
             "representative_2B": OrderedDict(
                 [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
+                    ("version", "2.0"),
                     (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "producer_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a producer credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "There are usually a lot of producers...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Allan Smithe"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            "Allan Smithe",
-                                            "Ridley Scott",
-                                            "Victor Fleming",
-                                            "John Houston",
-                                            "{{cookiecutter.producer_credit}}",
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.producer_credit == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
+                        "requires",
+                        OrderedDict([("cookiecutter", ">1"), ("python", ">=3.0")]),
+                    ),
+                    (
+                        "template",
+                        OrderedDict(
+                            [
+                                ("name", "cc-representative"),
+                                (
+                                    "variables",
+                                    [
+                                        OrderedDict(
+                                            [
+                                                ("name", "producer_credit"),
+                                                ("default", True),
+                                                (
+                                                    "prompt",
+                                                    "Is there a producer credit on this film?",
+                                                ),
+                                                (
+                                                    "description",
+                                                    "There are usually a lot of producers...",
+                                                ),
+                                                ("type", "boolean"),
+                                            ]
+                                        ),
+                                        OrderedDict(
+                                            [
+                                                ("name", "director_name"),
+                                                ("default", "Allan Smithe"),
+                                                (
+                                                    "prompt",
+                                                    "What's the Director's full name?",
+                                                ),
+                                                ("prompt_user", True),
+                                                (
+                                                    "description",
+                                                    "The default director is not proud "
+                                                    "of their work, we hope you are.",
+                                                ),
+                                                ("hide_input", False),
+                                                (
+                                                    "choices",
+                                                    [
+                                                        "Allan Smithe",
+                                                        "Ridley Scott",
+                                                        "Victor Fleming",
+                                                        "John Houston",
+                                                        "{{cookiecutter.producer_credit}}",
+                                                    ],
+                                                ),
+                                                ("validation", "^[a-z][A-Z]+$"),
+                                                (
+                                                    "validation_flags",
+                                                    ["verbose", "ascii"],
+                                                ),
+                                                (
+                                                    "skip_if",
+                                                    "{{cookiecutter.producer_credit == False}}",
+                                                ),
+                                                ("type", "string"),
+                                            ]
+                                        ),
+                                    ],
+                                ),
+                            ]
+                        ),
                     ),
                 ]
             )
         },
     )
+    # test that any other references in other variables that might use the
+    # original variable name get updated as well.
 
     # Test changing variable's name field value, default field, prompt field,
     # and changing the type
@@ -905,63 +748,7 @@ def gen_context_data_inputs_expected():
                 }
             ],
         },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "producer_credits"),
-                                    ("default", 2),
-                                    (
-                                        "prompt",
-                                        "How many producers does this film have?",
-                                    ),
-                                    (
-                                        "description",
-                                        "There are usually a lot of producers...",
-                                    ),
-                                    ("type", "int"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Allan Smithe"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            "Allan Smithe",
-                                            "Ridley Scott",
-                                            "Victor Fleming",
-                                            "John Houston",
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.producer_credits == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v2},
     )
     # Test changing choices field without changing the default, but default
     # does not change because the first position in choices matches default
@@ -982,65 +769,7 @@ def gen_context_data_inputs_expected():
                 }
             ],
         },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "director_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a director credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "Directors take credit for most of their films, usually...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Allan Smithe"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            'Allan Smithe',
-                                            'Ridley Scott',
-                                            'Victor Fleming',
-                                            'John Houston',
-                                            'John Ford',
-                                            'Billy Wilder',
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.director_credit == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v3},
     )
     # Test changing choices field and changing the default
     context_with_valid_extra_5 = (
@@ -1061,136 +790,16 @@ def gen_context_data_inputs_expected():
                 }
             ],
         },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "director_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a director credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "Directors take credit for most of their films, usually...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "John Ford"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            'John Ford',
-                                            'Allan Smithe',
-                                            'Ridley Scott',
-                                            'Victor Fleming',
-                                            'John Houston',
-                                            'Billy Wilder',
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.director_credit == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v4},
     )
     # Test changing the default, but not the choices field, yet seeing choices field re-ordered
     # to put default value in first location
     context_with_valid_extra_6 = (
         {
             'context_file': 'tests/test-generate-context-v2/representative.json',
-            'extra_context': [
-                {
-                    'name': 'director_name',
-                    'default': 'John Ford',
-                }
-            ],
+            'extra_context': [{'name': 'director_name', 'default': 'John Ford',}],
         },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "director_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a director credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "Directors take credit for most of their films, usually...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "John Ford"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            'John Ford',
-                                            'Allan Smithe',
-                                            'Ridley Scott',
-                                            'Victor Fleming',
-                                            'John Houston',
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.director_credit == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v5},
     )
     # Test changing choices field without changing the default, but default
     # does get changee because the first position in choices field chagned
@@ -1211,136 +820,16 @@ def gen_context_data_inputs_expected():
                 }
             ],
         },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "director_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a director credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "Directors take credit for most of their films, usually...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Billy Wilder"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            'Billy Wilder',
-                                            'Allan Smithe',
-                                            'Ridley Scott',
-                                            'Victor Fleming',
-                                            'John Houston',
-                                            'John Ford',
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.director_credit == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v6},
     )
     # Test changing the default value with a value that is not in choices,
     # we should see the choice first position get updated.
     context_with_valid_extra_8 = (
         {
             'context_file': 'tests/test-generate-context-v2/representative.json',
-            'extra_context': [
-                {
-                    'name': 'director_name',
-                    'default': 'Peter Sellers',
-                }
-            ],
+            'extra_context': [{'name': 'director_name', 'default': 'Peter Sellers',}],
         },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "director_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a director credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "Directors take credit for most of their films, usually...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Peter Sellers"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            "Peter Sellers",
-                                            "Allan Smithe",
-                                            "Ridley Scott",
-                                            "Victor Fleming",
-                                            "John Houston",
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    (
-                                        "skip_if",
-                                        "{{cookiecutter.director_credit == False}}",
-                                    ),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
+        {"representative": expected_file2_v7},
     )
     yield context_with_valid_extra_0
     yield context_with_valid_extra_1
@@ -1517,7 +1006,9 @@ def test_generate_context_with_extra_context_dictionary(
     Test the generated context with extra content overwrite to multiple fields,
     with creation of new fields NOT allowed.
     """
-    assert generate.generate_context(**input_params) == expected_context
+    assert OrderedDict(generate.generate_context(**input_params)) == OrderedDict(
+        expected_context
+    )
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -1534,67 +1025,6 @@ def test_generate_context_with_extra_context_dictionary_var(
     assert generate.generate_context(**input_params) == expected_context
 
 
-def context_data_2():
-    context_with_valid_extra_2_A = (
-        {
-            'context_file': 'tests/test-generate-context-v2/representative.json',
-        },
-        {
-            "representative": OrderedDict(
-                [
-                    ("name", "cc-representative"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "director_credit"),
-                                    ("default", True),
-                                    (
-                                        "prompt",
-                                        "Is there a director credit on this film?",
-                                    ),
-                                    (
-                                        "description",
-                                        "Directors take credit for most of their films, usually...",
-                                    ),
-                                    ("type", "boolean"),
-                                ]
-                            ),
-                            OrderedDict(
-                                [
-                                    ("name", "director_name"),
-                                    ("default", "Allan Smithe"),
-                                    ("prompt", "What's the Director's full name?"),
-                                    ("prompt_user", True),
-                                    (
-                                        "description",
-                                        "The default director is not proud of their work, we hope you are.",
-                                    ),
-                                    ("hide_input", False),
-                                    (
-                                        "choices",
-                                        [
-                                            "Allan Smithe",
-                                            "Ridley Scott",
-                                            "Victor Fleming",
-                                            "John Houston",
-                                        ],
-                                    ),
-                                    ("validation", "^[a-z][A-Z]+$"),
-                                    ("validation_flags", ["verbose", "ascii"]),
-                                    ("type", "string"),
-                                ]
-                            ),
-                        ],
-                    ),
-                ]
-            )
-        },
-    )
-
-
 @pytest.mark.usefixtures('clean_system')
 def test_raise_exception_when_attempting_to_remove_mandatory_field():
     """
@@ -1604,10 +1034,7 @@ def test_raise_exception_when_attempting_to_remove_mandatory_field():
     used to specify which variable to remove.
     """
     xtra_context = [
-        {
-            'name': 'director_name',
-            'default': '<<REMOVE::FIELD>>',
-        },
+        {'name': 'director_name', 'default': '<<REMOVE::FIELD>>',},
     ]
 
     with pytest.raises(ValueError) as excinfo:

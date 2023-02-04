@@ -19,7 +19,6 @@ schema_1_0 = {
     "properties": {},
 }
 
-# this is a teaser of what we could do with a JsonSchema for advanced context features
 schema_2_0 = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "cookiecutter-schema-2.0",
@@ -166,6 +165,7 @@ def validate(d: dict, version=None) -> None:
     the cookiecutter.json is used. If no version declaration is found,
     schema version 1.0 is assumed. Raises a ValidationError if schema validation
     failed. Raises a ValueError, if the specified schema version is not supported.
+
     :param d: the cookiecutter.json as Python dict
     :param version: the schema version to validate against (optional)
     :return: None, if validation was successful, otherwise errors are raised
@@ -187,6 +187,7 @@ def _validate(d: dict, version: str):
     Validate the specified cookiecutter.json (as Python dict) against the specified
     cookiecutter schema version. If the version number is undefined or not supported,
     a ValueError is raised.
+
     :param d: the cookiecutter.json as Python dict
     :param version: use this schema version to validate the cookiecutter.json
     :return: None, if validation was successful, otherwise errors are raised
@@ -205,6 +206,7 @@ def infer_schema_version(d: dict) -> Optional[str]:
     Detect the schema version of the specified cookiecutter.json (as Python dict).
     The schema will not be validated, this function will only try to return the
     schema version. If the schema version could not be detected, None is returned.
+
     :param d: the cookiecutter.json as Python dict
     :return: the schema version, defaults to v1.0 with a warning
     """
