@@ -540,7 +540,8 @@ def load_context(json_object, no_input=False, verbose=True):
 
         if variable.skip_if:
             skip_template = env.from_string(variable.skip_if)
-            if skip_template.render(cookiecutter=context) == 'True':
+            skip_value = skip_template.render(cookiecutter=context)
+            if skip_value == 'True':
                 continue
 
         if variable.do_if:
