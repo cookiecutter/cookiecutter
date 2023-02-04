@@ -89,6 +89,18 @@
             "skip_if": "{{cookiecutter.docs == False}}"
         },
         {
+            "name": "docs_tool_skip",
+            "default": "mkdocs",
+            "prompt": "Which tool do you want to choose for generating docs?",
+            "description": "There are a number of options for documentation generators. Please choose one. We will create a separate folder for you",
+            "type": "string",
+            "choices": [
+                "mkdocs",
+                "sphinx"
+            ],
+            "skip_if": "{{cookiecutter.docs == True}}"
+        },
+        {
             "name": "year",
             "default": "{% now 'utc', '%Y' %}",
             "prompt_user": false,

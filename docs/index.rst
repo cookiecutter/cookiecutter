@@ -6,7 +6,7 @@
 Cookiecutter: Better Project Templates
 ======================================
 
-Cookiecutter creates projects from project templates, e.g. Python package projects.
+Cookiecutter creates projects from **cookiecutters** (project templates), e.g. Python package projects from Python package templates.
 
 Basics
 ------
@@ -14,14 +14,12 @@ Basics
 .. toctree::
    :maxdepth: 2
 
-   readme
+   README
    overview
    installation
    usage
-   first_steps
-   tutorials
-   tutorial1
-   tutorial2
+   cli_options
+   tutorials/index
    advanced/index
    troubleshooting
 
@@ -41,11 +39,11 @@ Project Info
 .. toctree::
    :maxdepth: 2
 
-   contributing
-   authors
-   sprint-contributors
-   history
+   CONTRIBUTING
+   AUTHORS
+   HISTORY
    case_studies
+   CODE_OF_CONDUCT
 
 Index
 -----

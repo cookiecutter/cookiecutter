@@ -1,0 +1,2 @@
+---
+- name: {{cookiecutter.render_test}}

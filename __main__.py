@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Allow cookiecutter to be executable from a checkout or zip file."""
 import runpy
 

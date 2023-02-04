@@ -20,6 +20,7 @@ lib64/
 parts/
 sdist/
 var/
+venv/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -37,6 +38,7 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
+.nox/
 .coverage
 .coverage.*
 .cache
@@ -44,6 +46,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.pytest_cache
 
 # Translations
 *.mo
@@ -61,3 +64,14 @@ target/
 # PyCharm
 .idea/
 .env
+
+# VS code
+.vscode
+
+# PyEnv
+.python-version
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride

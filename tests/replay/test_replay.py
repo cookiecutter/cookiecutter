@@ -1,37 +1,35 @@
-# -*- coding: utf-8 -*-
-
-"""
-test_replay
------------
-"""
-
+"""test_replay."""
 import os
+
 import pytest
 
-from cookiecutter import replay, main, exceptions
+from cookiecutter import exceptions, main, replay
 
 
-def test_get_replay_file_name():
+@pytest.mark.parametrize("replay_file_name", ['bar', 'bar.json'])
+def test_get_replay_file_name(replay_file_name):
     """Make sure that replay.get_file_name generates a valid json file path."""
-    exp_replay_file_name = os.path.join('foo', 'bar.json')
-    assert replay.get_file_name('foo', 'bar') == exp_replay_file_name
+    exp_replay_file_path = os.path.join('foo', 'bar.json')
+    replay_file_path = replay.get_file_name('foo', replay_file_name)
+    assert replay_file_path == exp_replay_file_path
 
 
-@pytest.fixture(params=[
-    {'no_input': True},
-    {'extra_context': {}},
-    {'no_input': True, 'extra_context': {}},
-])
-def invalid_kwargs(request):
-    return request.param
-
-
+@pytest.mark.parametrize(
+    'invalid_kwargs',
+    (
+        {'no_input': True},
+        {'extra_context': {}},
+        {'no_input': True, 'extra_context': {}},
+    ),
+)
 def test_raise_on_invalid_mode(invalid_kwargs):
+    """Test `cookiecutter` raise exception on unacceptable `replay` request."""
     with pytest.raises(exceptions.InvalidModeException):
         main.cookiecutter('foo', replay=True, **invalid_kwargs)
 
 
 def test_main_does_not_invoke_dump_but_load(mocker):
+    """Test `cookiecutter` calling correct functions on `replay`."""
     mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
     mock_gen_context = mocker.patch('cookiecutter.main.generate_context')
     mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
@@ -48,6 +46,7 @@ def test_main_does_not_invoke_dump_but_load(mocker):
 
 
 def test_main_does_not_invoke_load_but_dump(mocker):
+    """Test `cookiecutter` calling correct functions on non-replay launch."""
     mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
     mock_gen_context = mocker.patch('cookiecutter.main.generate_context')
     mock_gen_files = mocker.patch('cookiecutter.main.generate_files')

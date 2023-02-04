@@ -58,6 +58,19 @@
             "do_if": "{{cookiecutter.project_logging_enabled == True}}"
         },
         {
+            "name": "project_console_logging_level_skip",
+            "default": "WARN",
+            "prompt": "Select the minimum logging level to log to the console.",
+            "type": "string",
+            "choices": [
+                "WARN",
+                "INFO",
+                "DEBUG",
+                "ERROR"
+            ],
+            "skip_if": "{{cookiecutter.project_logging_enabled == False}}"
+        },
+        {
             "name": "project_file_logging_enabled",
             "default": true,
             "prompt": "Will the project's logging facilities include logging to a file?",

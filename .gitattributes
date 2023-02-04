@@ -1,0 +1,7 @@
+*           text=auto
+# CRLF sets for test files! Or tests will fail on CI/CD
+*crlf.txt   text eol=crlf
+simple-with-newline-crlf.txt        text eol=crlf
+simple-with-newline.txt             text eol=lf
+*_crlf_newlines.txt                 text eol=crlf
+*_lf_newlines.txt                   text eol=lf
