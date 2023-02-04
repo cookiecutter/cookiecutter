@@ -130,7 +130,7 @@ def resolve_changed_variable_names(context, variables_to_resolve):
                         )  # noqa
 
                 elif isinstance(variable[field_name], list):
-                    # a choices field could have an str item to update
+                    # a choices field could have a str item to update
                     for i, item in enumerate(variable[field_name]):
                         if isinstance(item, str):
                             if var_name_to_resolve in item:

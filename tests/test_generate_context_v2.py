@@ -1245,11 +1245,177 @@ def gen_context_data_inputs_expected():
     yield context_with_valid_extra_8
 
 
+def gen_context_data_inputs_expected_var():
+    # Test the ability to change the variable's name field (since it is used
+    # to identify the variable to be modifed) with extra context and to remove
+    # a key from the context via the removal token: '<<REMOVE::FIELD>>'
+    context_with_valid_extra_2 = (
+        {
+            'context_file': 'tests/test-generate-context-v2/representative.json',
+            'extra_context': [
+                {
+                    'name': 'director_credit::producer_credit',
+                    'prompt': 'Is there a producer credit on this film?',
+                    'description': 'There are usually a lot of producers...',
+                },
+                {
+                    'name': 'director_name',
+                    'skip_if': '<<REMOVE::FIELD>>',
+                },
+            ],
+        },
+        {
+            "representative": OrderedDict(
+                [
+                    ("name", "cc-representative"),
+                    ("cookiecutter_version", "2.0.0"),
+                    (
+                        "variables",
+                        [
+                            OrderedDict(
+                                [
+                                    ("name", "producer_credit"),
+                                    ("default", True),
+                                    (
+                                        "prompt",
+                                        "Is there a producer credit on this film?",
+                                    ),
+                                    (
+                                        "description",
+                                        "There are usually a lot of producers...",
+                                    ),
+                                    ("type", "boolean"),
+                                ]
+                            ),
+                            OrderedDict(
+                                [
+                                    ("name", "director_name"),
+                                    ("default", "Allan Smithe"),
+                                    ("prompt", "What's the Director's full name?"),
+                                    ("prompt_user", True),
+                                    (
+                                        "description",
+                                        "The default director is not proud of their work, we hope you are.",
+                                    ),
+                                    ("hide_input", False),
+                                    (
+                                        "choices",
+                                        [
+                                            "Allan Smithe",
+                                            "Ridley Scott",
+                                            "Victor Fleming",
+                                            "John Houston",
+                                        ],
+                                    ),
+                                    ("validation", "^[a-z][A-Z]+$"),
+                                    ("validation_flags", ["verbose", "ascii"]),
+                                    ("type", "string"),
+                                ]
+                            ),
+                        ],
+                    ),
+                ]
+            )
+        },
+    )
+    # Test the ability to change the variable's name field (since it is used
+    # to identify the variable to be modifed) with extra context and to also
+    # test that any other references in other variables that might use the
+    # original variable name get updated as well.
+    context_with_valid_extra_2_B = (
+        {
+            'context_file': 'tests/test-generate-context-v2/representative_2B.json',
+            'extra_context': [
+                {
+                    'name': 'director_credit::producer_credit',
+                    'prompt': 'Is there a producer credit on this film?',
+                    'description': 'There are usually a lot of producers...',
+                },
+            ],
+        },
+        {
+            "representative_2B": OrderedDict(
+                [
+                    ("name", "cc-representative"),
+                    ("cookiecutter_version", "2.0.0"),
+                    (
+                        "variables",
+                        [
+                            OrderedDict(
+                                [
+                                    ("name", "producer_credit"),
+                                    ("default", True),
+                                    (
+                                        "prompt",
+                                        "Is there a producer credit on this film?",
+                                    ),
+                                    (
+                                        "description",
+                                        "There are usually a lot of producers...",
+                                    ),
+                                    ("type", "boolean"),
+                                ]
+                            ),
+                            OrderedDict(
+                                [
+                                    ("name", "director_name"),
+                                    ("default", "Allan Smithe"),
+                                    ("prompt", "What's the Director's full name?"),
+                                    ("prompt_user", True),
+                                    (
+                                        "description",
+                                        "The default director is not proud of their work, we hope you are.",
+                                    ),
+                                    ("hide_input", False),
+                                    (
+                                        "choices",
+                                        [
+                                            "Allan Smithe",
+                                            "Ridley Scott",
+                                            "Victor Fleming",
+                                            "John Houston",
+                                            "{{cookiecutter.producer_credit}}",
+                                        ],
+                                    ),
+                                    ("validation", "^[a-z][A-Z]+$"),
+                                    ("validation_flags", ["verbose", "ascii"]),
+                                    (
+                                        "skip_if",
+                                        "{{cookiecutter.producer_credit == False}}",
+                                    ),
+                                    ("type", "string"),
+                                ]
+                            ),
+                        ],
+                    ),
+                ]
+            )
+        },
+    )
+
+    yield context_with_valid_extra_2
+    yield context_with_valid_extra_2_B
+
+
 @pytest.mark.usefixtures('clean_system')
 @pytest.mark.parametrize(
     'input_params, expected_context', gen_context_data_inputs_expected()
 )
 def test_generate_context_with_extra_context_dictionary(
+    input_params, expected_context, monkeypatch
+):
+    """
+    Test the generated context with extra content overwrite to multiple fields,
+    with creation of new fields NOT allowed.
+    """
+    assert generate.generate_context(**input_params) == expected_context
+
+
+@pytest.mark.usefixtures('clean_system')
+@pytest.mark.parametrize(
+    'input_params, expected_context', gen_context_data_inputs_expected_var()
+)
+def test_generate_context_with_extra_context_dictionary_var(
     input_params, expected_context, monkeypatch
 ):
     """
