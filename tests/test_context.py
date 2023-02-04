@@ -714,7 +714,9 @@ def test_load_context_with_input_choices_no_verbose(mocker):
         side_effect=[INPUT_1, INPUT_2, INPUT_3],
     )
 
-    cc_cfg = context.load_context(cc['cookiecutter_choices'], no_input=False, verbose=False)
+    cc_cfg = context.load_context(
+        cc['cookiecutter_choices'], no_input=False, verbose=False
+    )
 
     assert cc_cfg['full_name'] == INPUT_1
     assert cc_cfg['email'] == INPUT_2
