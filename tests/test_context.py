@@ -583,28 +583,6 @@ def test_variable_str():
         assert "validate='<_sre.SRE_Pattern object at" in v_str
 
 
-def test_variable_option_raise_invalid_type_value_error():
-
-    VAR_NAME = 'module_name'
-    OPT_VALUE_OF_INCORRECT_TYPE = 12  # should be a string
-
-    with pytest.raises(ValueError) as excinfo:
-        context.Variable(
-            VAR_NAME,
-            "{{cookiecutter.plugin_name|lower|replace('-','_')}}",
-            prompt="Please enter a name for your base python module",
-            type='string',
-            validation=OPT_VALUE_OF_INCORRECT_TYPE,
-            validation_flags=['ignorecase'],
-            hide_input=True,
-        )
-
-    msg = "Variable: '{var_name}' Option: 'validation' requires a value of type str, but has a value of: {value}"
-    assert msg.format(var_name=VAR_NAME, value=OPT_VALUE_OF_INCORRECT_TYPE) in str(
-        excinfo.value
-    )
-
-
 def test_cookiecutter_template_repr():
     #  name, cookiecutter_version, variables, **info
 

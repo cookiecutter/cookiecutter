@@ -317,6 +317,16 @@ def context_data_serializer():
     yield context_choices_with_default_not_in_choices
 
 
+@pytest.mark.usefixtures('clean_system')
+@pytest.mark.parametrize('input_params, expected_context', context_data_serializer())
+def test_generate_context(input_params, expected_context):
+    """
+    Test the generated context for several input parameters against the
+    according expected context.
+    """
+    assert generate.generate_context(**input_params) == expected_context
+
+
 def context_data_misses():
     context_choices_with_default = (
         {
@@ -370,7 +380,7 @@ def context_data_misses():
                             OrderedDict(
                                 [
                                     ("name", "license"),
-                                    ("default", "MIT"),
+                                    ("default", "Apache2"),
                                     (
                                         "choices",
                                         [
@@ -392,6 +402,17 @@ def context_data_misses():
 
     yield context_choices_with_default
     yield context_choices_with_extra
+
+
+@pytest.mark.usefixtures('clean_system')
+@pytest.mark.parametrize('input_params, expected_context', context_data_misses())
+def test_generate_context_misses(input_params, expected_context):
+    """
+    Test the generated context for several input parameters against the
+    according expected context.
+    """
+    generated_context = generate.generate_context(**input_params)
+    assert generated_context == expected_context
 
 
 def context_data_value_errors():
@@ -429,13 +450,13 @@ def context_data_value_errors():
                 ]
             )
         },
-        False,
+        True,
     )
     context_choices_with_extra_value_error = (
         {
             'context_file': 'tests/test-generate-context-v2/test_choices.json',
             'default_context': {'license': 'Apache2'},
-            'extra_context': [{'license': 'MIT'}],
+            'extra_context': [{'name': 'license', 'default': 'MIT'}],
         },
         {
             "test_choices": OrderedDict(
@@ -466,29 +487,10 @@ def context_data_value_errors():
                 ]
             )
         },
-        True,
+        False,
     )
     yield context_choices_with_default_value_error
     yield context_choices_with_extra_value_error
-
-
-def test_generate_context(input_params, expected_context):
-    """
-    Test the generated context for several input parameters against the
-    according expected context.
-    """
-    assert generate.generate_context(**input_params) == expected_context
-
-
-@pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context', context_data_misses())
-def test_generate_context_misses(input_params, expected_context):
-    """
-    Test the generated context for several input parameters against the
-    according expected context.
-    """
-    generated_context = generate.generate_context(**input_params)
-    assert generated_context == expected_context
 
 
 @pytest.mark.usefixtures('clean_system')

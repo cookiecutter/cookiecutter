@@ -14,6 +14,7 @@ https://github.com/audreyr/cookiecutter/pull/848
 https://github.com/hackebrot/cookiecutter/tree/new-context-format
 
 """
+import shutil
 
 import collections
 import json
@@ -602,7 +603,7 @@ def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
 
         # for prompt esthetics
         if verbose:
-            width, _ = click.get_terminal_size()
+            width, _ = shutil.get_terminal_size()
             click.echo('-' * width)
 
         # updating the skipping variables for the continuation
