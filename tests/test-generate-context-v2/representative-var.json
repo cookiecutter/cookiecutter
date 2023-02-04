@@ -4,7 +4,7 @@
     "variables" : [
         {
             "name": "director_credit",
-            "default": true,
+            "default": false,
             "prompt": "Is there a director credit on this film?",
             "description": "Directors take credit for most of their films, usually...",
             "type": "boolean"
