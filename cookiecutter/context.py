@@ -582,7 +582,8 @@ def load_context(json_object, no_input=False, verbose=True):
                             click.echo(variable.validation_msg)
                 else:
                     # no validation defined
-                    break
+                    # Only py3.8 does not detect coverage here
+                    break  # pragma: no cover
 
             if verbose:
                 width, _ = shutil.get_terminal_size()
