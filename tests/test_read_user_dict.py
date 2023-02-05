@@ -110,7 +110,8 @@ def test_should_not_load_json_from_sentinel(mocker):
 def test_should_not_call_process_json_default_value(mocker, monkeypatch):
     """Make sure that `process_json` is not called when using default value."""
     mock_process_json = mocker.patch(
-        'cookiecutter.prompt.process_json', autospec=True, return_value='default')
+        'cookiecutter.prompt.process_json', autospec=True, return_value='default'
+    )
 
     runner = click.testing.CliRunner()
     with runner.isolation(input="\n") as streams:

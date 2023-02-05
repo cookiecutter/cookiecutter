@@ -94,7 +94,9 @@ def test_load_context_defaults():
 def test_load_context_defaults_no_requires():
 
     cc = load_cookiecutter('tests/test-context/cookiecutter-no-requires.json')
-    cc_cfg = context.load_context(cc['cookiecutter-no-requires'], no_input=True, verbose=False)
+    cc_cfg = context.load_context(
+        cc['cookiecutter-no-requires'], no_input=True, verbose=False
+    )
 
     assert cc_cfg['full_name'] == 'Raphael Pierzina'
     assert cc_cfg['email'] == 'raphael@hackebrot.de'
