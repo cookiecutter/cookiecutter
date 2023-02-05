@@ -106,6 +106,12 @@ def test_should_not_load_json_from_sentinel(mocker):
         'cookiecutter.prompt.json.loads', autospec=True, return_value={}
     )
 
+    runner = click.testing.CliRunner()
+    with runner.isolation(input="\n"):
+        read_user_dict('name', {'project_slug': 'pytest-plugin'})
+
+    mock_json_loads.assert_not_called()
+
 
 def test_should_not_call_process_json_default_value(mocker, monkeypatch):
     """Make sure that `process_json` is not called when using default value."""
