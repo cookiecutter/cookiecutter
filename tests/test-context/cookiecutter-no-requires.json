@@ -1,7 +1,6 @@
 {
   "version": "2.0",
   "requires": {
-    "cookiecutter": ">=2a",
     "python": ">=3"
   },
   "jinja": {

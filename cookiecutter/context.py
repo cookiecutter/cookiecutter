@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-# flake8: noqa
 """
-cookiecutter.context
---------------------
+Parses a cookiecutter JSON content and prompts the users for input.
 
-Process the version 2 cookiecutter context (previsously loaded via
+Process the version 2 cookiecutter context (previously loaded via
 cookiecutter.json) and handle any user input that might be associated with
 initializing the settings defined in the 'variables' OrderedDict part of the
 context.
@@ -17,35 +14,27 @@ https://github.com/audreyr/cookiecutter/pull/848
 https://github.com/hackebrot/cookiecutter/tree/new-context-format
 
 """
+import shutil
 
-import logging
 import collections
 import json
+import logging
+import platform
 import re
-import shutil
+from operator import eq, ge, gt, le, lt, ne
+from typing import Any, Callable, Dict, Tuple
 
 import click
 from jinja2 import Environment
+from packaging import version
+
+from cookiecutter import __version__
+from cookiecutter.exceptions import IncompatibleVersion, InvalidConfiguration
+from cookiecutter.schema import validate
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_PROMPT = 'Please enter a value for "{variable.name}"'
-
-VALID_TYPES = [
-    'boolean',
-    'yes_no',
-    'int',
-    'float',
-    'uuid',
-    'json',
-    'string',
-]
-
-SET_OF_REQUIRED_FIELDS = {
-    'name',
-    'cookiecutter_version',
-    'variables',
-}
 
 REGEX_COMPILE_FLAGS = {
     'ascii': re.ASCII,
@@ -57,22 +46,63 @@ REGEX_COMPILE_FLAGS = {
     'verbose': re.VERBOSE,
 }
 
+op_mapping = {'==': eq, '<=': le, '<': lt, '>=': ge, '>': gt, '!=': ne}
 
-def context_is_version_2(cookiecutter_context):
+
+def _split_version_op(
+    version_op: str, default='=='
+) -> Tuple[str, str, Callable[[Any, Any], bool]]:
     """
-    Return True if the cookiecutter_context meets the current requirements for
-    a version 2 cookiecutter.json file format.
+    Parse the version requirement string.
+
+    Split a version string that may contain an operator and return just the version,
+    the operator and the Python function that implements this operator.
+    If no operator was detected, use the default operator instead.
+    Supported operators are ==, <=, <, >=, >, !=.
+
+    Example: ">= 1.5.0" becomes ("1.5.0", ">=", <built-in function ge>)
+
+    :param version_op: a version string with an optional operator at the start
+    :param default: the default operator to return, if no operator was found
+    :return: a tuple of (version string, operator string, operator function)
     """
-    # This really is not sufficient since a v1 context could define each of
-    # these fields; perhaps a more thorough test would be to also check if the
-    # 'variables' field was defined as a list of OrderedDict items.
-    if (cookiecutter_context.keys() & SET_OF_REQUIRED_FIELDS) == SET_OF_REQUIRED_FIELDS:
-        return True
-    else:
-        return False
+    version_op = version_op.strip()
+    for code, op in op_mapping.items():
+        if version_op.startswith(code):
+            version_str = version_op[len(code) :].strip()  # noqa
+            return version_str, code, op
+    return version_op, default, op_mapping[default]
+
+
+def validate_requirement(requires: str, actual: str, message=None):
+    """
+    Check if a version number fits a version requirement.
+
+    Mostly adheres to PEP 440 with a few limitations:
+
+    * no wildcard version matching, e.g. "!= 3.1.*"
+    * no compatible release matching, e.g. "~= 1.4.5"
+
+    :param requires: string with list of version requirements (e.g ">=3, <4")
+    :param actual: the actual version to compare to
+    :param message: error message to use when the version check fails
+    :raises IncompatibleVersion: if a version check fails
+    """
+    # parse version numbers
+    requires_ops = [_split_version_op(s) for s in requires.split(',')]
+    version_actual = version.parse(actual)
+    # check each version
+    for version_str, op_str, op_fun in requires_ops:
+        version_requires = version.parse(version_str)
+        if not op_fun(version_actual, version_requires):
+            error_text = f"{actual} {op_str} {version_str}"
+            if message:
+                error_text = f"{message}: {error_text}"
+            raise IncompatibleVersion(error_text)
 
 
 def prompt_string(variable, default):
+    """Prompts the user for a text value."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -82,6 +112,7 @@ def prompt_string(variable, default):
 
 
 def prompt_boolean(variable, default):
+    """Prompts the user for a boolean."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -91,6 +122,7 @@ def prompt_boolean(variable, default):
 
 
 def prompt_int(variable, default):
+    """Prompts the user for an int."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -100,6 +132,7 @@ def prompt_int(variable, default):
 
 
 def prompt_float(variable, default):
+    """Prompts the user for float."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -109,6 +142,7 @@ def prompt_float(variable, default):
 
 
 def prompt_uuid(variable, default):
+    """Prompts the user for a uuid."""
     return click.prompt(
         variable.prompt,
         default=default,
@@ -118,9 +152,11 @@ def prompt_uuid(variable, default):
 
 
 def prompt_json(variable, default):
+    """Prompts the user for a JSON entry."""
     # The JSON object from cookiecutter.json might be very large
+
     # We only show 'default'
-    DEFAULT_JSON = 'default'
+    default_json = 'default'
 
     def process_json(user_value):
         try:
@@ -140,19 +176,20 @@ def prompt_json(variable, default):
 
     dict_value = click.prompt(
         variable.prompt,
-        default=DEFAULT_JSON,
+        default=default_json,
         hide_input=variable.hide_input,
         type=click.STRING,
         value_proc=process_json,
     )
-
-    if dict_value == DEFAULT_JSON:
+    # working around the default process of click
+    if dict_value == default_json:
         # Return the given default w/o any processing
         return default
     return dict_value
 
 
 def prompt_yes_no(variable, default):
+    """Prompts the user for a yes or no option."""
     if default is True:
         default_display = 'y'
     else:
@@ -182,7 +219,7 @@ def prompt_yes_no(variable, default):
 
 
 def prompt_choice(variable, default):
-    """Returns prompt, default and callback for a choice variable"""
+    """Return prompt, default and callback for a choice variable."""
     choice_map = collections.OrderedDict(
         (u'{}'.format(i), value) for i, value in enumerate(variable.choices, 1)
     )
@@ -206,6 +243,7 @@ def prompt_choice(variable, default):
     return choice_map[user_choice]
 
 
+# each variable type need specific handling in prompting
 PROMPTS = {
     'string': prompt_string,
     'boolean': prompt_boolean,
@@ -217,57 +255,58 @@ PROMPTS = {
 }
 
 
-def deserialize_string(value):
+def _deserialize_string(value) -> str:
     return str(value)
 
 
-def deserialize_boolean(value):
+def _deserialize_boolean(value) -> bool:
     return bool(value)
 
 
-def deserialize_yes_no(value):
+def _deserialize_yes_no(value) -> bool:
     return bool(value)
 
 
-def deserialize_int(value):
+def _deserialize_int(value) -> int:
     return int(value)
 
 
-def deserialize_float(value):
+def _deserialize_float(value) -> float:
     return float(value)
 
 
-def deserialize_uuid(value):
-    return click.UUID(value)
+def _deserialize_uuid(value) -> str:
+    # standard UUID is not JSON Serializable
+    return click.UUID(value).hex
 
 
-def deserialize_json(value):
+def _deserialize_json(value) -> Dict:
     return value
 
 
+# mapping of functions used to process every possible click input type
 DESERIALIZERS = {
-    'string': deserialize_string,
-    'boolean': deserialize_boolean,
-    'int': deserialize_int,
-    'float': deserialize_float,
-    'uuid': deserialize_uuid,
-    'json': deserialize_json,
-    'yes_no': deserialize_yes_no,
+    'string': _deserialize_string,
+    'boolean': _deserialize_boolean,
+    'int': _deserialize_int,
+    'float': _deserialize_float,
+    'uuid': _deserialize_uuid,
+    'json': _deserialize_json,
+    'yes_no': _deserialize_yes_no,
 }
 
 
 class Variable(object):
-    """
-    Embody attributes of variables while processing the variables field of
-    a cookiecutter version 2 context.
-    """
+    """Parse the attributes and functionalities of a version 2 variable."""
 
-    def __init__(self, name, default, **info):
+    def __init__(self, name: str, type: str, **info):
         """
+        Mandatory parameters.
+
         :param name: A string containing the variable's name in the jinja2
                      context.
-        :param default: The variable's default value. Can any type defined
-                        below.
+        :param type: The variable's type. Suported types are listed in the schema
+
         :param kwargs info: Keyword/Argument pairs recognized are shown below.
 
         Recognized Keyword/Arguments, but optional:
@@ -276,8 +315,8 @@ class Variable(object):
             - `prompt` -- A string to show user when prompted for input.
             - `prompt_user` -- A boolean, if True prompt user; else no prompt.
             - `hide_input` -- A boolean, if True hide user's input.
-            - `type` -- Specifies the variable's data type see below,
-                    defaults to string.
+            - `default` -- Specify a fall back value if no input is provided
+                        (highly recommended).
             - `skip_if` -- A string of a jinja2 renderable boolean expression,
                     the variable will be skipped if it renders True.
             - `do_if` -- A string of a jinja2 renderable boolean expression,
@@ -323,114 +362,93 @@ class Variable(object):
             * yes_no
 
         """
-
         # mandatory fields
         self.name = name
-        self.default = default
+        self.var_type = type
 
         # optional fields
         self.info = info
 
         # -- DESCRIPTION -----------------------------------------------------
-        self.description = self.check_type('description', None, str)
-
+        self.description = info.get('description')
         # -- PROMPT ----------------------------------------------------------
-        self.prompt = self.check_type(
-            'prompt', DEFAULT_PROMPT.format(variable=self), str
-        )
+        self.prompt = info.get('prompt', DEFAULT_PROMPT.format(variable=self))
 
         # -- HIDE_INPUT ------------------------------------------------------
-        self.hide_input = self.check_type('hide_input', False, bool)
+        self.hide_input = info.get('hide_input', False)
 
-        # -- TYPE ------------------------------------------------------------
-        self.var_type = info.get('type', 'string')
-        if self.var_type not in VALID_TYPES:
-            msg = 'Variable: {var_name} has an invalid type {var_type}. Valid types are: {types}'
-            raise ValueError(
-                msg.format(
-                    var_type=self.var_type, var_name=self.name, types=VALID_TYPES
-                )
-            )
+        # -- DEFAULT ------------------------------------------------------------
+        self.default = info.get('default')
 
         # -- SKIP_IF ---------------------------------------------------------
-        self.skip_if = self.check_type('skip_if', '', str)
+        self.skip_if = info.get('skip_if')
 
         # -- DO_IF ---------------------------------------------------------
-        self.do_if = self.check_type('do_if', '', str)
+        self.do_if = info.get('do_if')
 
         # -- IF_YES_SKIP_TO ---------------------------------------------------------
-        self.if_yes_skip_to = self.check_type('if_yes_skip_to', None, str)
-        if self.if_yes_skip_to:
-            if self.var_type not in ['yes_no']:
-                msg = "Variable: '{var_name}' specifies 'if_yes_skip_to' field, but variable not of type 'yes_no'"
-                raise ValueError(msg.format(var_name=self.name))
+        self.if_yes_skip_to = info.get('if_yes_skip_to')
 
         # -- IF_NO_SKIP_TO ---------------------------------------------------------
-        self.if_no_skip_to = self.check_type('if_no_skip_to', None, str)
-        if self.if_no_skip_to:
-            if self.var_type not in ['yes_no']:
-                msg = "Variable: '{var_name}' specifies 'if_no_skip_to' field, but variable not of type 'yes_no'"
-                raise ValueError(msg.format(var_name=self.name))
+        self.if_no_skip_to = info.get('if_no_skip_to')
 
         # -- PROMPT_USER -----------------------------------------------------
-        self.prompt_user = self.check_type('prompt_user', True, bool)
+        self.prompt_user = info.get('prompt_user')
         # do not prompt for private variable names (beginning with _)
-        if self.name.startswith('_'):
-            self.prompt_user = False
+        if self.prompt_user is None:
+            self.prompt_user = not self.name.startswith('_')
 
         # -- CHOICES ---------------------------------------------------------
-        # choices are somewhat special as they can be of every type
-        self.choices = self.check_type('choices', [], list)
-        if self.choices and default not in self.choices:
-            msg = "Variable: {var_name} has an invalid default value {default} for choices: {choices}."
-            raise ValueError(
+        self.choices = info.get('choices', [])
+        # making sure that the default value is present in the choices
+        if self.choices and "default" in info and self.default not in self.choices:
+            msg = (
+                "Variable: {var_name} has an invalid default "
+                "value {default} for choices: {choices}."
+            )
+            raise InvalidConfiguration(
                 msg.format(
                     var_name=self.name, default=self.default, choices=self.choices
                 )
             )
 
         # -- VALIDATION STARTS -----------------------------------------------
-        self.validation = self.check_type('validation', None, str)
-
-        self.validation_msg = self.check_type('validation_msg', None, str)
-
-        self.validation_flag_names = self.check_type('validation_flags', [], list)
-
-        self.validation_flags = 0
-
-        for vflag in self.validation_flag_names:
-            if vflag in REGEX_COMPILE_FLAGS.keys():
-                self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
-            else:
-                msg = (
-                    "Variable: {var_name} - Ignoring unkown RegEx validation Control Flag named '{flag}'\n"
-                    "Legal flag names are: {names}"
-                )
-                logger.warn(
-                    msg.format(
-                        var_name=self.name, flag=vflag, names=REGEX_COMPILE_FLAGS.keys()
-                    )
-                )
-                self.validation_flag_names.remove(vflag)
-
+        self.validation = info.get('validation')
         self.validate = None
         if self.validation:
+
+            self.validation_msg = info.get('validation_msg')
+            self.validation_flag_names = info.get('validation_flags', [])
+
+            self.validation_flags = 0
+            for vflag in self.validation_flag_names:
+                self.validation_flags |= REGEX_COMPILE_FLAGS[vflag]
             try:
                 self.validate = re.compile(self.validation, self.validation_flags)
             except re.error as e:
-                msg = "Variable: {var_name} - Validation Setup Error: Invalid RegEx '{value}' - does not compile - {err}"
-                raise ValueError(
-                    msg.format(var_name=self.name, value=self.validation, err=e)
+                raise InvalidConfiguration(
+                    f"Variable: {self.name} - Validation Setup Error:"
+                    f" Invalid RegEx '{self.validation}' - does not compile - {e}"
                 )
+
+            # -- making a few sanity checks
+            # checking fo key as default value could be 'False' or ''
+            if self.var_type != "string":
+                raise InvalidConfiguration(
+                    "attempting regex validation on non-string input"
+                )
+
         # -- VALIDATION ENDS -------------------------------------------------
 
     def __repr__(self):
+        """Provide a representation with variable name."""
         return "<{class_name} {variable_name}>".format(
             class_name=self.__class__.__name__,
             variable_name=self.name,
         )
 
     def __str__(self):
+        """Provide a JSON representation of the variable content."""
         s = [
             "{key}='{value}'".format(key=key, value=self.__dict__[key])
             for key in self.__dict__
@@ -438,162 +456,157 @@ class Variable(object):
         ]
         return self.__repr__() + ':\n' + ',\n'.join(s)
 
-    def check_type(self, option_name, option_default_value, option_type):
-        """
-        Retrieve the option_value named option_name from info and check its type.
-        Raise ValueError if the type is incorrect; otherwise return option's value.
-        """
-        option_value = self.info.get(option_name, option_default_value)
 
-        if option_value is not None:
-            if not isinstance(option_value, option_type):
-                msg = "Variable: '{var_name}' Option: '{opt_name}' requires a value of type {type_name}, but has a value of: {value}"
-                raise ValueError(
-                    msg.format(
-                        var_name=self.name,
-                        opt_name=option_name,
-                        type_name=option_type.__name__,
-                        value=option_value,
-                    )
+class CookiecutterTemplate:
+    """Embodies all attributes of a version 2 Cookiecutter template."""
+
+    def __init__(self, template, requires=None, extensions=None, **kwargs):
+        """
+        Mandatory Parameters.
+
+        :param template: A dictionary containing the template fields of
+               schema 2.0, including:
+                - name: the template name
+                - variables: a list of context variables
+                - additional template info (e.g. Authors, URL, etc.)
+        :param requires: A list of env. requirement (python version and CC version)
+        :param extensions: a list of jinja2 environment parameters
+        :param kwargs: Other template info not used here
+        """
+        # mandatory fields
+        self.name = template["name"]
+        self.requirements = requires
+        self.extensions = extensions
+
+        if self.requirements:
+            self.cookiecutter_version = self.requirements.get('cookiecutter', None)
+            if self.cookiecutter_version:
+                validate_requirement(
+                    self.cookiecutter_version,
+                    __version__,
+                    "cookiecutter version check failed",
+                )
+            self.python_version = self.requirements.get('python')
+            if self.python_version:
+                validate_requirement(
+                    self.python_version,
+                    platform.python_version(),
+                    "Python version check failed",
                 )
 
-        return option_value
-
-
-class CookiecutterTemplate(object):
-    """
-    Embodies all attributes of a version 2 Cookiecutter template.
-    """
-
-    def __init__(self, name, cookiecutter_version, variables, **info):
-        """
-        Mandatorty Parameters
-
-        :param name: A string, the cookiecutter template name
-        :param cookiecutter_version: A string containing the version of the
-            cookiecutter application that is compatible with this template.
-        :param variables: A list of OrderedDict items that describe each
-            variable in the template. These variables are essentially what
-            is found in the version 1 cookiecutter.json file.
-
-        Optional Parameters (via \**info)
-
-        :param authors: An array of string - maintainers of the template.
-        :param description: A string, human readable description of template.
-        :param keywords: An array of string - similar to PyPI keywords.
-        :param license: A string identifying the license of the template code.
-        :param url: A string containing the URL for the template project.
-        :param version: A string containing a version identifier, ideally
-            following the semantic versioning spec.
-
-        """
-
-        # mandatory fields
-        self.name = name
-        self.cookiecutter_version = cookiecutter_version
-        self.variables = [Variable(**v) for v in variables]
+        self.variables = [Variable(**v) for v in template["variables"]]
 
         # optional fields
-        self.authors = info.get('authors', [])
-        self.description = info.get('description', None)
-        self.keywords = info.get('keywords', [])
-        self.license = info.get('license', None)
-        self.url = info.get('url', None)
-        self.version = info.get('version', None)
+        self.authors = template.get('authors', [])
+        self.description = template.get('description')
+        self.keywords = template.get('keywords', [])
+        self.license = template.get('license')
+        self.url = template.get('url')
+        self.version = template.get('version', None)
 
     def __repr__(self):
+        """Provide a classname with template name."""
         return "<{class_name} {template_name}>".format(
             class_name=self.__class__.__name__,
             template_name=self.name,
         )
 
     def __iter__(self):
+        """Iterate through the templates variables."""
         for v in self.variables:
             yield v
 
 
-def load_context(json_object, no_input=False, verbose=True):
+def prompt_variable(variable: Variable, verbose: bool):
     """
-    Load a version 2 context & process the json_object for declared variables
-    in the Cookiecutter template.
+    Prompt variable value from user in the terminal.
+
+    :param variable: the variable object to be prompted
+    :param verbose: option for more elaborate display
+    :return: the value provided by user
+    """
+    if variable.choices:
+        # which prompt depends of the variable type except if its a choice list
+        prompt = prompt_choice
+    else:
+        prompt = PROMPTS[variable.var_type]
+
+    if verbose and variable.description:
+        click.echo(variable.description)
+
+    while True:
+        value = prompt(variable, variable.default)
+        # if a regex pattern has been used for validation, we repeat the prompting
+        # until regex validation patter has been matched
+        if variable.validate:
+            if variable.validate.match(value):
+                return value
+            else:
+                msg = (
+                    f"Input validation failure against regex:"
+                    f" '{variable.validation}', try again!"
+                )
+
+                click.echo(msg)
+                if variable.validation_msg:
+                    click.echo(variable.validation_msg)
+        else:
+            return value
+
+
+def load_context(json_object: Dict, no_input=False, verbose=True) -> Dict:
+    """
+    Load a v2 cookiecutter.json and prompts/loads the variable inputs.
 
     :param json_object: A JSON file that has be loaded into a Python OrderedDict.
     :param no_input: Prompt the user at command line for manual configuration if False,
                      if True, no input prompts are made, all defaults are accepted.
-    :param verbose: Emit maximum varible information.
+    :param verbose: Emit maximum variable information.
     """
-    env = Environment(extensions=['jinja2_time.TimeExtension'], autoescape=True)
+    # checking that the context shell is valid
+    validate(json_object)
+
+    # setting up jinja for rendering dynamical variables
+    env = Environment(extensions=['jinja2_time.TimeExtension'])  # nosec
     context = collections.OrderedDict({})
 
+    def jinja_render(string):
+        template = env.from_string(string)
+        return template.render(cookiecutter=context)
+
     skip_to_variable_name = None
-
     for variable in CookiecutterTemplate(**json_object):
-        if skip_to_variable_name:
-            if variable.name == skip_to_variable_name:
-                skip_to_variable_name = None
-            else:
-                # Is executed, but not marked so in coverage report, due to
-                # CPython's peephole optimizer's optimizations.
-                # See https://bitbucket.org/ned/coveragepy/issues/198/continue-marked-as-not-covered
-                # Issue #198 in coverage.py marked WONTFIX
-                continue  # pragma: no cover
 
-        if variable.skip_if:
-            skip_template = env.from_string(variable.skip_if)
-            skip_value = skip_template.render(cookiecutter=context)
-            if skip_value == 'True':
-                continue
+        # checking all scenarios for which this variable should be skipped
+        if skip_to_variable_name and variable.name != skip_to_variable_name:
+            continue
+        skip_to_variable_name = None
 
-        if variable.do_if:
-            do_template = env.from_string(variable.do_if)
-            if do_template.render(cookiecutter=context) == 'False':
-                continue
+        if variable.skip_if and jinja_render(variable.skip_if) == 'True':
+            continue
 
-        default = variable.default
+        if variable.do_if and jinja_render(variable.do_if) == 'False':
+            continue
 
-        if isinstance(default, str):
-            template = env.from_string(default)
-            default = template.render(cookiecutter=context)
+        # rendering dynamical default value
+        if isinstance(variable.default, str):
+            variable.default = jinja_render(variable.default)
+
+        # actually getting the variable value
+        if no_input or (not variable.prompt_user):
+            value = variable.default
+        else:
+            value = prompt_variable(variable, verbose)
 
         deserialize = DESERIALIZERS[variable.var_type]
+        context[variable.name] = deserialize(value)
 
-        if no_input or (not variable.prompt_user):
-            context[variable.name] = deserialize(default)
-        else:
-            if variable.choices:
-                prompt = prompt_choice
-            else:
-                prompt = PROMPTS[variable.var_type]
+        # for prompt esthetics
+        if verbose:
+            width, _ = shutil.get_terminal_size()
+            click.echo('-' * width)
 
-            if verbose and variable.description:
-                click.echo(variable.description)
-
-            while True:
-                value = prompt(variable, default)
-                if variable.validate:
-                    if variable.validate.match(value):
-                        break
-                    else:
-                        msg = "Input validation failure against regex: '{val_string}', try again!".format(
-                            val_string=variable.validation
-                        )
-                        click.echo(msg)
-                        if variable.validation_msg:
-                            click.echo(variable.validation_msg)
-                else:
-                    # Assign a random variable here to disable the peephole
-                    # optimizer so that coverage can see this line.
-                    # See bpo-2506 for more information.
-                    no_peephole_opt = None
-                    # no validation defined
-                    break
-
-            if verbose:
-                width, _ = shutil.get_terminal_size()
-                click.echo('-' * width)
-
-            context[variable.name] = deserialize(value)
-
+        # updating the skipping variables for the continuation
         if variable.if_yes_skip_to and context[variable.name] is True:
             skip_to_variable_name = variable.if_yes_skip_to
 
@@ -601,10 +614,21 @@ def load_context(json_object, no_input=False, verbose=True):
             skip_to_variable_name = variable.if_no_skip_to
 
     if skip_to_variable_name:
-        logger.warn(
-            "Processed all variables, but skip_to_variable_name '{}' was never found.".format(
-                skip_to_variable_name
-            )
+        logger.warning(
+            f"Processed all variables, but skip_to_variable_name "
+            f"'{skip_to_variable_name}' was never found."
         )
+
+    # TODO: here we match the v2 context to the v1 conventions for Jinja env variables
+    #  if this PR goes through, next step is to refactor the whole context
+    #  structure and the namings
+    context_parameters = json_object.get('jinja')
+    if context_parameters:
+        context['_extensions'] = context_parameters.get('extensions')
+        context['_jinja2_env_vars'] = {
+            param: context_parameters[param]
+            for param in context_parameters.keys()
+            if param != 'extensions'
+        }
 
     return context
