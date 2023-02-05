@@ -53,6 +53,8 @@ def test_main_does_not_invoke_load_but_dump(mocker):
     mock_replay_dump = mocker.patch('cookiecutter.main.dump')
     mock_replay_load = mocker.patch('cookiecutter.main.load')
 
+    mock_gen_context.return_value = {"cookiecutter": {"some_parameter": "some_value"}}
+
     main.cookiecutter('tests/fake-repo-tmpl/', replay=False)
 
     assert mock_prompt.called

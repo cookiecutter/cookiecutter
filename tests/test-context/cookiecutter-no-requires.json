@@ -1,12 +1,18 @@
 {
   "version": "2.0",
   "requires": {
-    "cookiecutter": ">=2a",
-    "python": ">=3.0"
+    "python": ">=3"
+  },
+  "jinja": {
+    "optimized": true,
+    "extensions": [
+    "cookiecutter.extensions.SlugifyExtension",
+    "jinja2_time.TimeExtension"
+  ]
   },
   "template": {
     "name": "cookiecutter-pytest-plugin",
-    "version": "1.0.0",
+    "version": "0.1",
     "description": "a cookiecutter to create pytest plugins with ease.",
     "authors": [
       "Raphael Pierzina <raphael@hackebrot.de>",
@@ -33,6 +39,12 @@
         "prompt": "What's your email?",
         "description": "Please enter an email address for the meta information in setup.py.",
         "type": "string"
+      },
+      {
+        "name": "secret_token",
+        "prompt": "Please enter your secret token",
+        "type": "string",
+        "hide_input": true
       },
       {
         "name": "plugin_name",
@@ -64,7 +76,7 @@
       },
       {
         "name": "docs",
-        "default": true,
+        "default": false,
         "prompt": "Do you want to generate a base for docs?",
         "description": "Would you like to generate documentation for your plugin? You will be able to choose from a number of generators.",
         "type": "yes_no"
@@ -84,6 +96,40 @@
       {
         "name": "year",
         "default": "{% now 'utc', '%Y' %}",
+        "prompt_user": false,
+        "type": "string"
+      },
+      {
+        "name": "incept_year",
+        "default": 2017,
+        "prompt_user": false,
+        "type": "int"
+      },
+      {
+        "name": "released",
+        "default": false,
+        "prompt_user": false,
+        "type": "boolean"
+      },
+      {
+        "name": "temperature",
+        "default": 77.3,
+        "prompt_user": false,
+        "type": "float"
+      },
+      {
+        "name": "Release-GUID",
+        "default": "04f5eaa9ee7345469dccffc538b27194",
+        "prompt_user": false,
+        "type": "uuid"
+      },
+      {
+        "name": "copy_with_out_render",
+        "default": [
+          "*.html",
+          "*not_rendered_dir",
+          "rendered_dir/not_rendered_file.ini"
+        ],
         "prompt_user": false,
         "type": "string"
       },

@@ -3,6 +3,7 @@
 """
 test_schema
 ------------
+
 Tests for `cookiecutter.scherma` module that defines, infers and validate
 a cookiecutter schema
 """

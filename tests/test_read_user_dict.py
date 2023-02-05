@@ -1,6 +1,7 @@
 """Test `process_json`, `read_user_dict` functions in `cookiecutter.prompt`."""
-import click
 import pytest
+import click.testing
+import packaging.version
 
 from cookiecutter.prompt import (
     process_json,
@@ -111,6 +112,24 @@ def test_should_not_load_json_from_sentinel(mocker):
         read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
     mock_json_loads.assert_not_called()
+
+
+def test_should_not_call_process_json_default_value(mocker, monkeypatch):
+    """Make sure that `process_json` is not called when using default value."""
+    mock_process_json = mocker.patch(
+        'cookiecutter.prompt.process_json', autospec=True, return_value='default'
+    )
+
+    runner = click.testing.CliRunner()
+    with runner.isolation(input="\n") as streams:
+        read_user_dict('name', {'project_slug': 'pytest-plugin'})
+        stdout, stderr = streams
+        assert not stdout.getvalue().decode().strip() == 'name [default]:\n'
+
+    if packaging.version.parse(click.__version__) < packaging.version.parse('8.0'):
+        mock_process_json.assert_not_called()
+    else:
+        mock_process_json.assert_called()
 
 
 @pytest.mark.parametrize("input", ["\n", "default\n"])
