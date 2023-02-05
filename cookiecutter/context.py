@@ -479,7 +479,7 @@ class CookiecutterTemplate:
         self.extensions = extensions
 
         if self.requirements:
-            self.cookiecutter_version = self.requirements.get('cookiecutter')
+            self.cookiecutter_version = self.requirements.get('cookiecutter', None)
             if self.cookiecutter_version:
                 validate_requirement(
                     self.cookiecutter_version,

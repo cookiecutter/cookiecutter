@@ -91,6 +91,41 @@ def test_load_context_defaults():
 
 
 @pytest.mark.usefixtures('clean_system')
+def test_load_context_defaults_no_requires():
+
+    cc = load_cookiecutter('tests/test-context/cookiecutter-no-requires.json')
+    cc_cfg = context.load_context(cc['cookiecutter-no-requires'], no_input=True, verbose=False)
+
+    assert cc_cfg['full_name'] == 'Raphael Pierzina'
+    assert cc_cfg['email'] == 'raphael@hackebrot.de'
+    assert cc_cfg['plugin_name'] == 'emoji'
+    assert cc_cfg['module_name'] == 'emoji'
+    assert cc_cfg['license'] == 'MIT'
+    assert cc_cfg['docs'] is False
+    assert 'docs_tool' not in cc_cfg.keys()  # skip_if worked
+    assert cc_cfg['year'] == time.strftime('%Y')
+    assert cc_cfg['incept_year'] == 2017
+    assert cc_cfg['released'] is False
+    assert cc_cfg['temperature'] == 77.3
+    assert cc_cfg['Release-GUID'] == UUID('04f5eaa9ee7345469dccffc538b27194').hex
+    assert cc_cfg['_extensions'] == [
+        'cookiecutter.extensions.SlugifyExtension',
+        'jinja2_time.TimeExtension',
+    ]
+    assert cc_cfg['_jinja2_env_vars'] == {"optimized": True}
+    assert (
+        cc_cfg['copy_with_out_render']
+        == "['*.html', '*not_rendered_dir', 'rendered_dir/not_rendered_file.ini']"
+    )
+    assert cc_cfg['fixtures'] == OrderedDict(
+        [
+            ('foo', OrderedDict([('scope', 'session'), ('autouse', True)])),
+            ('bar', OrderedDict([('scope', 'function'), ('autouse', False)])),
+        ]
+    )
+
+
+@pytest.mark.usefixtures('clean_system')
 def test_load_context_defaults_skips_branch():
     """
     Test that if_no_skip_to and if_yes_skip_to actually do branch and
