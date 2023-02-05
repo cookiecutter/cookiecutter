@@ -309,12 +309,103 @@ def context_data_serializer():
         },
         {"test": expected_file1_v0},
     )
+
+    context_choices_with_default_misses = (
+        {
+            'context_file': 'tests/test-generate-context-v2/test_choices-miss.json',
+            'default_context': {'license': 'Cherokee'},
+        },
+        {
+            "test_choices-miss": OrderedDict(
+                [
+                    ("version", "2.0"),
+                    (
+                        "template",
+                        OrderedDict(
+                            [
+                                ("name", "test_choices-miss"),
+                                (
+                                    "variables",
+                                    [
+                                        OrderedDict(
+                                            [
+                                                ("name", "license"),
+                                                ("type", "string"),
+                                                ("default", "MIT"),
+                                                (
+                                                    "choices",
+                                                    [
+                                                        "MIT",
+                                                        "BSD3",
+                                                        "GNU-GPL3",
+                                                        "Apache2",
+                                                        "Mozilla2",
+                                                    ],
+                                                ),
+                                            ]
+                                        )
+                                    ],
+                                ),
+                            ]
+                        ),
+                    ),
+                ]
+            )
+        },
+    )
+
+    context_choices_with_extra_misses = (
+        {
+            'context_file': 'tests/test-generate-context-v2/test_choices-miss.json',
+            'extra_context': {'license': 'MIT'},
+        },
+        {
+            "test_choices-miss": OrderedDict(
+                [
+                    ("version", "2.0"),
+                    (
+                        "template",
+                        OrderedDict(
+                            [
+                                ("name", "test_choices-miss"),
+                                (
+                                    "variables",
+                                    [
+                                        OrderedDict(
+                                            [
+                                                ("name", "license"),
+                                                ("type", "string"),
+                                                ("default", "MIT"),
+                                                (
+                                                    "choices",
+                                                    [
+                                                        "MIT",
+                                                        "BSD3",
+                                                        "GNU-GPL3",
+                                                        "Apache2",
+                                                        "Mozilla2",
+                                                    ],
+                                                ),
+                                            ]
+                                        )
+                                    ],
+                                ),
+                            ]
+                        ),
+                    ),
+                ]
+            )
+        },
+    )
+
     yield context
     yield context_with_default
     yield context_with_extra
     yield context_with_default_and_extra
     yield context_choices_with_default
     yield context_choices_with_default_not_in_choices
+    yield context_choices_with_default_misses
+    yield context_choices_with_extra_misses
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -325,94 +416,6 @@ def test_generate_context(input_params, expected_context):
     according expected context.
     """
     assert generate.generate_context(**input_params) == expected_context
-
-
-def context_data_misses():
-    context_choices_with_default = (
-        {
-            'context_file': 'tests/test-generate-context-v2/test_choices-miss.json',
-            'default_context': {'license': 'Cherokee'},
-        },
-        {
-            "test_choices-miss": OrderedDict(
-                [
-                    ("name", "test_choices-miss"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "license"),
-                                    ("default", "Apache2"),
-                                    (
-                                        "choices",
-                                        [
-                                            "MIT",
-                                            "BSD3",
-                                            "GNU-GPL3",
-                                            "Apache2",
-                                            "Mozilla2",
-                                        ],
-                                    ),
-                                ]
-                            )
-                        ],
-                    ),
-                ]
-            )
-        },
-    )
-
-    context_choices_with_extra = (
-        {
-            'context_file': 'tests/test-generate-context-v2/test_choices-miss.json',
-            'extra_context': {'license': 'MIT'},
-        },
-        {
-            "test_choices-miss": OrderedDict(
-                [
-                    ("name", "test_choices-miss"),
-                    ("cookiecutter_version", "2.0.0"),
-                    (
-                        "variables",
-                        [
-                            OrderedDict(
-                                [
-                                    ("name", "license"),
-                                    ("default", "Apache2"),
-                                    (
-                                        "choices",
-                                        [
-                                            "MIT",
-                                            "BSD3",
-                                            "GNU-GPL3",
-                                            "Apache2",
-                                            "Mozilla2",
-                                        ],
-                                    ),
-                                ]
-                            )
-                        ],
-                    ),
-                ]
-            )
-        },
-    )
-
-    yield context_choices_with_default
-    yield context_choices_with_extra
-
-
-@pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context', context_data_misses())
-def test_generate_context_misses(input_params, expected_context):
-    """
-    Test the generated context for several input parameters against the
-    according expected context.
-    """
-    generated_context = generate.generate_context(**input_params)
-    assert generated_context == expected_context
 
 
 def context_data_value_errors():
