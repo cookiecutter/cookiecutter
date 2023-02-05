@@ -1,6 +1,7 @@
 """Test `process_json`, `read_user_dict` functions in `cookiecutter.prompt`."""
 import pytest
 import click.testing
+import packaging.version
 
 from cookiecutter.prompt import (
     process_json,
@@ -125,7 +126,10 @@ def test_should_not_call_process_json_default_value(mocker, monkeypatch):
         stdout, stderr = streams
         assert not stdout.getvalue().decode().strip() == 'name [default]:\n'
 
-    mock_process_json.assert_not_called()
+    if packaging.version.parse(click.__version__) < packaging.version.parse('8.0'):
+        mock_process_json.assert_not_called()
+    else:
+        mock_process_json.assert_called()
 
 
 @pytest.mark.parametrize("input", ["\n", "default\n"])
