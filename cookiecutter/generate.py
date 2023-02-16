@@ -322,11 +322,17 @@ def generate_files(
 
         # if we created the output directory, then it's ok to remove it
         # if rendering fails
-        delete_project_on_failure = output_directory_created and not keep_project_on_failure
+        delete_project_on_failure = (
+            output_directory_created and not keep_project_on_failure
+        )
 
         if accept_hooks:
             _run_hook_from_repo_dir(
-                repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
+                repo_dir,
+                'pre_gen_project',
+                project_dir,
+                context,
+                delete_project_on_failure,
             )
 
         with work_in(template_dir):
@@ -354,7 +360,9 @@ def generate_files(
                     indir = os.path.normpath(os.path.join(root, copy_dir))
                     outdir = os.path.normpath(os.path.join(project_dir, indir))
                     outdir = env.from_string(outdir).render(**context)
-                    logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+                    logger.debug(
+                        'Copying dir %s to %s without rendering', indir, outdir
+                    )
 
                     # The outdir is not the root dir, it is the dir which marked as copy
                     # only in the config file. If the program hits this line, which means
@@ -370,7 +378,11 @@ def generate_files(
                     unrendered_dir = os.path.join(project_dir, root, d)
                     try:
                         render_and_create_dir(
-                            unrendered_dir, context, output_dir, env, overwrite_if_exists
+                            unrendered_dir,
+                            context,
+                            output_dir,
+                            env,
+                            overwrite_if_exists,
                         )
                     except UndefinedError as err:
                         if delete_project_on_failure:
