@@ -35,6 +35,7 @@ def cookiecutter(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    multi_repositories=False,
 ):
     """
     Run Cookiecutter just as if using it from the command line.
@@ -58,6 +59,7 @@ def cookiecutter(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
+    :param multi_repositories: Allow to manage multiple repositories
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -119,7 +121,7 @@ def cookiecutter(
 
     # Create project from local context and project template.
     with import_patch:
-        results = generate_files(
+        result = generate_files(
             repo_dir=repo_dir,
             context=context,
             overwrite_if_exists=overwrite_if_exists,
@@ -127,13 +129,14 @@ def cookiecutter(
             output_dir=output_dir,
             accept_hooks=accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            multi_repositories=multi_repositories,
         )
 
     # Cleanup (if required)
     if cleanup:
         rmtree(repo_dir)
 
-    return results
+    return result
 
 
 class _patch_import_path_for_repo:

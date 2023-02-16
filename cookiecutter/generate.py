@@ -277,6 +277,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    multi_repositories=False,
 ):
     """Render the templates and saves them to files.
 
@@ -290,6 +291,7 @@ def generate_files(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
+    :param multi_repositories: Allow to manage multiple repositories
     """
     project_dirs = []
     for template_dir in find_templates(repo_dir):
@@ -308,7 +310,6 @@ def generate_files(
         except UndefinedError as err:
             msg = f"Unable to create project directory '{unrendered_dir}'"
             raise UndefinedVariableInTemplate(msg, err, context) from err
-        project_dirs.append(project_dir)
 
         # We want the Jinja path and the OS paths to match. Consequently, we'll:
         #   + CD to the template folder
@@ -365,8 +366,8 @@ def generate_files(
                     )
 
                     # The outdir is not the root dir, it is the dir which marked as copy
-                    # only in the config file. If the program hits this line, which means
-                    # the overwrite_if_exists = True, and root dir exists
+                    # only in the config file. If the program hits this line, which
+                    # means the overwrite_if_exists = True, and root dir exists
                     if os.path.isdir(outdir):
                         shutil.rmtree(outdir)
                     shutil.copytree(indir, outdir)
@@ -422,4 +423,6 @@ def generate_files(
                 delete_project_on_failure,
             )
 
-    return project_dirs
+        project_dirs.append(project_dir)
+
+    return project_dirs if multi_repositories else project_dirs[0]

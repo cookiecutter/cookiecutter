@@ -1,0 +1,14 @@
+{
+	"full_name": "Audrey Roy",
+	"email": "audreyr@gmail.com",
+	"github_username": "audreyr",
+	"project_name": "Fake Project",
+	"other_project_name": "Fake Project",
+	"repo_name": "fake-project",
+	"other_repo_name": "other-fake-project",
+	"project_short_description": "This is a fake project.",
+	"other_project_short_description": "This is an other fake project.",
+	"release_date": "2013-07-28",
+	"year": "2013",
+	"version": "0.1"
+}
