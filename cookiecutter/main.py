@@ -119,7 +119,7 @@ def cookiecutter(
 
     # Create project from local context and project template.
     with import_patch:
-        result = generate_files(
+        results = generate_files(
             repo_dir=repo_dir,
             context=context,
             overwrite_if_exists=overwrite_if_exists,
@@ -133,7 +133,7 @@ def cookiecutter(
     if cleanup:
         rmtree(repo_dir)
 
-    return result
+    return results
 
 
 class _patch_import_path_for_repo:

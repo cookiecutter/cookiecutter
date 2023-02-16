@@ -19,7 +19,7 @@ from cookiecutter.exceptions import (
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
-from cookiecutter.find import find_template
+from cookiecutter.find import find_templates
 from cookiecutter.hooks import run_hook
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
@@ -291,121 +291,123 @@ def generate_files(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
-    template_dir = find_template(repo_dir)
-    logger.debug('Generating project from %s...', template_dir)
-    context = context or OrderedDict([])
+    project_dirs = []
+    for template_dir in find_templates(repo_dir):
+        logger.debug('Generating project from %s...', template_dir)
+        context = context or OrderedDict([])
 
-    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+        envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
 
-    unrendered_dir = os.path.split(template_dir)[1]
-    ensure_dir_is_templated(unrendered_dir)
-    env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
-    try:
-        project_dir, output_directory_created = render_and_create_dir(
-            unrendered_dir, context, output_dir, env, overwrite_if_exists
-        )
-    except UndefinedError as err:
-        msg = f"Unable to create project directory '{unrendered_dir}'"
-        raise UndefinedVariableInTemplate(msg, err, context) from err
+        unrendered_dir = os.path.split(template_dir)[1]
+        ensure_dir_is_templated(unrendered_dir)
+        env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+        try:
+            project_dir, output_directory_created = render_and_create_dir(
+                unrendered_dir, context, output_dir, env, overwrite_if_exists
+            )
+        except UndefinedError as err:
+            msg = f"Unable to create project directory '{unrendered_dir}'"
+            raise UndefinedVariableInTemplate(msg, err, context) from err
+        project_dirs.append(project_dir)
 
-    # We want the Jinja path and the OS paths to match. Consequently, we'll:
-    #   + CD to the template folder
-    #   + Set Jinja's path to '.'
-    #
-    #  In order to build our files to the correct folder(s), we'll use an
-    # absolute path for the target folder (project_dir)
+        # We want the Jinja path and the OS paths to match. Consequently, we'll:
+        #   + CD to the template folder
+        #   + Set Jinja's path to '.'
+        #
+        #  In order to build our files to the correct folder(s), we'll use an
+        # absolute path for the target folder (project_dir)
 
-    project_dir = os.path.abspath(project_dir)
-    logger.debug('Project directory is %s', project_dir)
+        project_dir = os.path.abspath(project_dir)
+        logger.debug('Project directory is %s', project_dir)
 
-    # if we created the output directory, then it's ok to remove it
-    # if rendering fails
-    delete_project_on_failure = output_directory_created and not keep_project_on_failure
+        # if we created the output directory, then it's ok to remove it
+        # if rendering fails
+        delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
-    if accept_hooks:
-        _run_hook_from_repo_dir(
-            repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
-        )
+        if accept_hooks:
+            _run_hook_from_repo_dir(
+                repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
+            )
 
-    with work_in(template_dir):
-        env.loader = FileSystemLoader(['.', '../templates'])
+        with work_in(template_dir):
+            env.loader = FileSystemLoader(['.', '../templates'])
 
-        for root, dirs, files in os.walk('.'):
-            # We must separate the two types of dirs into different lists.
-            # The reason is that we don't want ``os.walk`` to go through the
-            # unrendered directories, since they will just be copied.
-            copy_dirs = []
-            render_dirs = []
+            for root, dirs, files in os.walk('.'):
+                # We must separate the two types of dirs into different lists.
+                # The reason is that we don't want ``os.walk`` to go through the
+                # unrendered directories, since they will just be copied.
+                copy_dirs = []
+                render_dirs = []
 
-            for d in dirs:
-                d_ = os.path.normpath(os.path.join(root, d))
-                # We check the full path, because that's how it can be
-                # specified in the ``_copy_without_render`` setting, but
-                # we store just the dir name
-                if is_copy_only_path(d_, context):
-                    logger.debug('Found copy only path %s', d)
-                    copy_dirs.append(d)
-                else:
-                    render_dirs.append(d)
+                for d in dirs:
+                    d_ = os.path.normpath(os.path.join(root, d))
+                    # We check the full path, because that's how it can be
+                    # specified in the ``_copy_without_render`` setting, but
+                    # we store just the dir name
+                    if is_copy_only_path(d_, context):
+                        logger.debug('Found copy only path %s', d)
+                        copy_dirs.append(d)
+                    else:
+                        render_dirs.append(d)
 
-            for copy_dir in copy_dirs:
-                indir = os.path.normpath(os.path.join(root, copy_dir))
-                outdir = os.path.normpath(os.path.join(project_dir, indir))
-                outdir = env.from_string(outdir).render(**context)
-                logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+                for copy_dir in copy_dirs:
+                    indir = os.path.normpath(os.path.join(root, copy_dir))
+                    outdir = os.path.normpath(os.path.join(project_dir, indir))
+                    outdir = env.from_string(outdir).render(**context)
+                    logger.debug('Copying dir %s to %s without rendering', indir, outdir)
 
-                # The outdir is not the root dir, it is the dir which marked as copy
-                # only in the config file. If the program hits this line, which means
-                # the overwrite_if_exists = True, and root dir exists
-                if os.path.isdir(outdir):
-                    shutil.rmtree(outdir)
-                shutil.copytree(indir, outdir)
+                    # The outdir is not the root dir, it is the dir which marked as copy
+                    # only in the config file. If the program hits this line, which means
+                    # the overwrite_if_exists = True, and root dir exists
+                    if os.path.isdir(outdir):
+                        shutil.rmtree(outdir)
+                    shutil.copytree(indir, outdir)
 
-            # We mutate ``dirs``, because we only want to go through these dirs
-            # recursively
-            dirs[:] = render_dirs
-            for d in dirs:
-                unrendered_dir = os.path.join(project_dir, root, d)
-                try:
-                    render_and_create_dir(
-                        unrendered_dir, context, output_dir, env, overwrite_if_exists
-                    )
-                except UndefinedError as err:
-                    if delete_project_on_failure:
-                        rmtree(project_dir)
-                    _dir = os.path.relpath(unrendered_dir, output_dir)
-                    msg = f"Unable to create directory '{_dir}'"
-                    raise UndefinedVariableInTemplate(msg, err, context) from err
+                # We mutate ``dirs``, because we only want to go through these dirs
+                # recursively
+                dirs[:] = render_dirs
+                for d in dirs:
+                    unrendered_dir = os.path.join(project_dir, root, d)
+                    try:
+                        render_and_create_dir(
+                            unrendered_dir, context, output_dir, env, overwrite_if_exists
+                        )
+                    except UndefinedError as err:
+                        if delete_project_on_failure:
+                            rmtree(project_dir)
+                        _dir = os.path.relpath(unrendered_dir, output_dir)
+                        msg = f"Unable to create directory '{_dir}'"
+                        raise UndefinedVariableInTemplate(msg, err, context) from err
 
-            for f in files:
-                infile = os.path.normpath(os.path.join(root, f))
-                if is_copy_only_path(infile, context):
-                    outfile_tmpl = env.from_string(infile)
-                    outfile_rendered = outfile_tmpl.render(**context)
-                    outfile = os.path.join(project_dir, outfile_rendered)
-                    logger.debug(
-                        'Copying file %s to %s without rendering', infile, outfile
-                    )
-                    shutil.copyfile(infile, outfile)
-                    shutil.copymode(infile, outfile)
-                    continue
-                try:
-                    generate_file(
-                        project_dir, infile, context, env, skip_if_file_exists
-                    )
-                except UndefinedError as err:
-                    if delete_project_on_failure:
-                        rmtree(project_dir)
-                    msg = f"Unable to create file '{infile}'"
-                    raise UndefinedVariableInTemplate(msg, err, context) from err
+                for f in files:
+                    infile = os.path.normpath(os.path.join(root, f))
+                    if is_copy_only_path(infile, context):
+                        outfile_tmpl = env.from_string(infile)
+                        outfile_rendered = outfile_tmpl.render(**context)
+                        outfile = os.path.join(project_dir, outfile_rendered)
+                        logger.debug(
+                            'Copying file %s to %s without rendering', infile, outfile
+                        )
+                        shutil.copyfile(infile, outfile)
+                        shutil.copymode(infile, outfile)
+                        continue
+                    try:
+                        generate_file(
+                            project_dir, infile, context, env, skip_if_file_exists
+                        )
+                    except UndefinedError as err:
+                        if delete_project_on_failure:
+                            rmtree(project_dir)
+                        msg = f"Unable to create file '{infile}'"
+                        raise UndefinedVariableInTemplate(msg, err, context) from err
 
-    if accept_hooks:
-        _run_hook_from_repo_dir(
-            repo_dir,
-            'post_gen_project',
-            project_dir,
-            context,
-            delete_project_on_failure,
-        )
+        if accept_hooks:
+            _run_hook_from_repo_dir(
+                repo_dir,
+                'post_gen_project',
+                project_dir,
+                context,
+                delete_project_on_failure,
+            )
 
-    return project_dir
+    return project_dirs
