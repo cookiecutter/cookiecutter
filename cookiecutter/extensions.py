@@ -19,6 +19,7 @@ class JsonifyExtension(Extension):
             return json.dumps(obj, sort_keys=True, indent=4)
 
         environment.filters['jsonify'] = jsonify
+        environment.globals.update(jsonify=jsonify)
 
 
 class RandomStringExtension(Extension):
