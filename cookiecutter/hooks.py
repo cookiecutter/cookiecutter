@@ -79,9 +79,13 @@ def run_script(script_path, cwd='.'):
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd,  # nosec
-                                stderr=subprocess.PIPE,   # pipe only errors
-                                universal_newlines=True)  # to convert from b' format
+        proc = subprocess.Popen(
+            script_command,
+            shell=run_thru_shell,  # nosec
+            cwd=cwd,
+            stderr=subprocess.PIPE,  # pipe only errors
+            universal_newlines=True,  # convert from b' format
+        )
         # catch error during hook execution, if any
         sp_output, sp_error = proc.communicate()
         # if hook does not yield an error message, don't attempt to publish
