@@ -4,6 +4,7 @@ import copy
 import logging
 import os
 
+import platformdirs
 import yaml
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
@@ -11,6 +12,11 @@ from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfigur
 logger = logging.getLogger(__name__)
 
 USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+
+USER_XDG_CONFIG_PATH = os.path.join(
+    platformdirs.user_config_dir('cookiecutter'),
+    "cookiecutter-config.yaml",
+)
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
@@ -109,7 +115,10 @@ def get_user_config(config_file=None, default_config=False):
     except KeyError:
         # Load an optional user config if it exists
         # otherwise return the defaults
-        if os.path.exists(USER_CONFIG_PATH):
+        if os.path.exists(USER_XDG_CONFIG_PATH):
+            logger.debug("Loading config from %s.", USER_XDG_CONFIG_PATH)
+            return get_config(USER_XDG_CONFIG_PATH)
+        elif os.path.exists(USER_CONFIG_PATH):
             logger.debug("Loading config from %s.", USER_CONFIG_PATH)
             return get_config(USER_CONFIG_PATH)
         else:

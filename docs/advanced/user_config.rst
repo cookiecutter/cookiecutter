@@ -3,10 +3,20 @@
 User Config
 ===========
 
+If you use Cookiecutter a lot, you'll find it useful to have a user config file.
+
+*New in ???*
+
+By default, Cookiecutter tries to find its config file as the XDG specification prescribes:
+
+ - Mac OS X: `~/Library/Preferences/cookiecutter/cookiecutter-config.yaml`
+ - Linux/Unix: `~/.config/cookiecutter/cookiecutter-config.yaml` or in `$XDG_CONFIG_HOME/cookiecutter/cookiecutter-config.yaml`, if defined
+ - Windows (not roaming): `C:\Users\<username>\AppData\Local\cookiecutter\cookiecutter\cookiecutter-config.yaml`
+ - Windows (roaming): `C:\Users\<username>\AppData\Roaming\cookiecutter\cookiecutter\cookiecutter-config.yaml`
+
 *New in Cookiecutter 0.7*
 
-If you use Cookiecutter a lot, you'll find it useful to have a user config file.
-By default Cookiecutter tries to retrieve settings from a `.cookiecutterrc` file in your home directory.
+If no `cookiecutter-config.yaml` can be found in the XDG-directories, Cookiecutter tries to retrieve settings from a `.cookiecutterrc` file in your home directory.
 
 *New in Cookiecutter 1.3*
 
