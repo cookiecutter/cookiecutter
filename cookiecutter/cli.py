@@ -8,17 +8,13 @@ import click
 
 from cookiecutter import __version__
 from cookiecutter.config import get_user_config
-from cookiecutter.exceptions import (
-    ContextDecodingException,
-    FailedHookException,
-    InvalidModeException,
-    InvalidZipRepository,
-    OutputDirExistsException,
-    RepositoryCloneFailed,
-    RepositoryNotFound,
-    UndefinedVariableInTemplate,
-    UnknownExtension,
-)
+from cookiecutter.exceptions import (ContextDecodingException,
+                                     FailedHookException, InvalidModeException,
+                                     InvalidZipRepository,
+                                     OutputDirExistsException,
+                                     RepositoryCloneFailed, RepositoryNotFound,
+                                     UndefinedVariableInTemplate,
+                                     UnknownExtension)
 from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
 

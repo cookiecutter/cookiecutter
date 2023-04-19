@@ -5,7 +5,8 @@ import pytest
 import yaml
 
 from cookiecutter import config
-from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
+from cookiecutter.exceptions import (ConfigDoesNotExistException,
+                                     InvalidConfiguration)
 
 
 def test_merge_configs():
