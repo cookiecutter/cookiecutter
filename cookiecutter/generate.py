@@ -235,16 +235,15 @@ def render_and_create_dir(
     return dir_to_create, not output_dir_exists
 
 
-def ensure_dir_is_templated(dirname, env=Environment()):
+def ensure_dir_is_templated(dirname: str, environment: Environment) -> bool:
     """Ensure that dirname is a templated directory name."""
     if (
-        env.variable_start_string in dirname
-        and env.variable_end_string in dirname
+        environment.variable_start_string in dirname
+        and environment.variable_end_string in dirname
     ):
         return True
     else:
         raise NonTemplatedInputDirException
-
 
 def _run_hook_from_repo_dir(
     repo_dir, hook_name, project_dir, context, delete_project_on_failure
@@ -275,7 +274,7 @@ def _run_hook_from_repo_dir(
 def generate_files(
     repo_dir,
     context=None,
-    output_dir='.',
+    output_dir=".",
     overwrite_if_exists=False,
     skip_if_file_exists=False,
     accept_hooks=True,
@@ -294,12 +293,14 @@ def generate_files(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
-    context = context or OrderedDict([])
-    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
-    env = StrictEnvironment(context=context, **envvars)
+    jinja2_env_vars = context.get("cookiecutter", {}).get("_jinja2_env_vars", {})
+    env = StrictEnvironment(
+        context=context, keep_trailing_newline=True, **jinja2_env_vars
+    )
 
     template_dir = find_template(repo_dir, env)
-    logger.debug('Generating project from %s...', template_dir)
+    logger.debug("Generating project from %s...", template_dir)
+    context = context or OrderedDict([])
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir, env)
