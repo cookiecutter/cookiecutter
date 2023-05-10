@@ -31,6 +31,7 @@ By default Cookiecutter includes the following extensions:
 - ``cookiecutter.extensions.RandomStringExtension``
 - ``cookiecutter.extensions.SlugifyExtension``
 - ``cookiecutter.extensions.UUIDExtension``
+- ``cookiecutter.extensions.SecretKeyExtension``
 - ``jinja2_time.TimeExtension``
 
 Jsonify extension
@@ -123,3 +124,23 @@ Outputs:
 .. code-block:: text
 
     83b5de62-31b4-4a1e-83fa-8c548de65a11
+
+Secret key extension
+~~~~~~~~~~~~~~~~~~~~
+
+*New in Cookiecutter 2.x*
+
+The ``cookiecutter.extensions.SecretKeyExtension`` extension provides a ``get_random_secret_key()``
+method in templates that generates a secret key.
+
+Generate a secret key:
+
+.. code-block:: jinja
+
+    {{ get_random_secret_key() }}
+
+Outputs:
+
+.. code-block:: text
+
+    w1e%zt918$6$qa@z*f@71d6zn(1&xi^ynld8b8f8@@wfr@0jpb

@@ -62,3 +62,19 @@ def test_jinja2_uuid_extension(tmp_path):
         changelog_lines = f.readlines()
 
     uuid.UUID(changelog_lines[0], version=4)
+
+
+def test_jinja2_secret_key_extension(tmp_path):
+    """Verify Jinja2 secret key extension work correctly."""
+    project_dir = cookiecutter(
+        'tests/test-extensions/default/', no_input=True, output_dir=str(tmp_path)
+    )
+    secret_file = os.path.join(project_dir, 'secret')
+    assert os.path.isfile(secret_file)
+
+    with Path(secret_file).open(encoding='utf-8') as f:
+        secret_key1, secret_key2 = f.read().split("\n")
+
+    assert len(secret_key1) == 50
+    assert len(secret_key2) == 50
+    assert secret_key1 != secret_key2

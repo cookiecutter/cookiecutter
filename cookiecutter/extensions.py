@@ -64,3 +64,17 @@ class UUIDExtension(Extension):
             return str(uuid.uuid4())
 
         environment.globals.update(uuid4=uuid4)
+
+
+class SecretKeyExtension(Extension):
+    """Jinja2 Extension to create a secret key."""
+
+    def __init__(self, environment):
+        """Jinja2 Extension constructor."""
+        super().__init__(environment)
+
+        def get_random_secret_key():
+            chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)"
+            return "".join(choice(chars) for _ in range(50))
+
+        environment.globals.update(get_random_secret_key=get_random_secret_key)
