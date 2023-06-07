@@ -1,5 +1,6 @@
 """Tests around locally cached cookiecutter template repositories."""
 import os
+from pathlib import Path
 
 import pytest
 
@@ -24,7 +25,7 @@ def cloned_cookiecutter_path(user_config_data, template):
     subdir_template_path = os.path.join(cloned_template_path, 'my-dir')
     if not os.path.exists(subdir_template_path):
         os.mkdir(subdir_template_path)
-    open(os.path.join(subdir_template_path, 'cookiecutter.json'), 'w')
+    Path(subdir_template_path, 'cookiecutter.json').touch()  # creates file
 
     return subdir_template_path
 

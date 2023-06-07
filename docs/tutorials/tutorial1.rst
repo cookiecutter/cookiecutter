@@ -14,9 +14,8 @@ Case Study: cookiecutter-pypackage
 
 *cookiecutter-pypackage* is a cookiecutter template that creates the starter boilerplate for a Python package.
 
-.. note::
-    There are several variations of it.
-    For this tutorial we'll use the original version at https://github.com/audreyr/cookiecutter-pypackage/.
+.. note:: There are several variations of it, but for this tutorial we'll use
+   the original version at https://github.com/audreyfeldroy/cookiecutter-pypackage/.
 
 Step 1: Generate a Python Package Project
 ------------------------------------------
@@ -27,7 +26,7 @@ At the command line, run the cookiecutter command, passing in the link to cookie
 
 .. code-block:: bash
 
-    $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
+    $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
 
 Local Cloning of Project Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,8 +94,7 @@ How did that work?
 Step 3: Observe How It Was Generated
 ------------------------------------
 
-Let's take a look at cookiecutter-pypackage together.
-Open https://github.com/audreyr/cookiecutter-pypackage in a new browser window.
+Let's take a look at cookiecutter-pypackage together. Open https://github.com/audreyfeldroy/cookiecutter-pypackage in a new browser window.
 
 {{ cookiecutter.project_slug }}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -111,7 +109,8 @@ This happens in `find.py`, where the `find_template()` method looks for the firs
 AUTHORS.rst
 ~~~~~~~~~~~
 
-Look at the raw version of `{{ cookiecutter.project_slug }}/AUTHORS.rst`, at https://raw.github.com/audreyr/cookiecutter-pypackage/master/%7B%7Bcookiecutter.project_slug%7D%7D/AUTHORS.rst.
+Look at the raw version of `{{ cookiecutter.project_slug }}/AUTHORS.rst`, at
+https://raw.github.com/audreyfeldroy/cookiecutter-pypackage/master/%7B%7Bcookiecutter.project_slug%7D%7D/AUTHORS.rst.
 
 Observe how it corresponds to the `AUTHORS.rst` file that you generated.
 
@@ -142,7 +141,8 @@ You should see JSON that corresponds to the prompts and default values shown ear
 Questions?
 ----------
 
-If anything needs better explanation, please take a moment to file an issue at https://github.com/audreyr/cookiecutter/issues with what could be improved about this tutorial.
+If anything needs better explanation, please take a moment to file an issue at https://github.com/audreyfeldroy/cookiecutter/issues with what could be improved
+about this tutorial.
 
 Summary
 -------
