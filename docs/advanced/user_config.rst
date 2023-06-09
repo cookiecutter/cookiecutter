@@ -36,7 +36,7 @@ Example user config:
     cookiecutters_dir: "/home/audreyr/my-custom-cookiecutters-dir/"
     replay_dir: "/home/audreyr/my-custom-replay-dir/"
     abbreviations:
-        pp: https://github.com/audreyr/cookiecutter-pypackage.git
+        pp: https://github.com/audreyfeldroy/cookiecutter-pypackage.git
         gh: https://github.com/{0}.git
         bb: https://bitbucket.org/{0}
 

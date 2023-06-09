@@ -32,7 +32,7 @@ This example uses a simple module ``local_extensions.py`` which exists in the te
 
 This will register the ``foobar`` filter for the template.
 
-For many cases, this will be unneccessarily complicated.
+For many cases, this will be unnecessarily complicated.
 It's likely that we'd only want to register a single function as a filter. For this, we can use the ``simple_filter`` decorator:
 
 .. code-block:: json

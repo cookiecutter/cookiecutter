@@ -85,12 +85,12 @@ def run_script(script_path, cwd='.'):
             raise FailedHookException(
                 f'Hook script failed (exit status: {exit_status})'
             )
-    except OSError as os_error:
-        if os_error.errno == errno.ENOEXEC:
+    except OSError as err:
+        if err.errno == errno.ENOEXEC:
             raise FailedHookException(
                 'Hook script failed, might be an empty file or missing a shebang'
-            )
-        raise FailedHookException(f'Hook script failed (error: {os_error})')
+            ) from err
+        raise FailedHookException(f'Hook script failed (error: {err})') from err
 
 
 def run_script_with_context(script_path, cwd, context):

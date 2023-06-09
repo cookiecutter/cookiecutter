@@ -1,0 +1,86 @@
+name: CI/CD Tests
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  documentation_build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nox virtualenv
+      - name: Build docs
+        run: nox -s docs
+      - uses: actions/upload-artifact@v3
+        with:
+          name: DocumentationHTML
+          path: docs/_build/html/
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nox virtualenv
+      - name: Lint
+        run: "nox -s lint"
+  tests_run:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        python:
+          - "3.7"
+          - "3.8"
+          - "3.9"
+          - "3.10"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nox virtualenv
+      - name: Project internals test build
+        run: "nox -p ${{ matrix.python }} -s tests"
+      - name: Project security test
+        run: "nox -p ${{ matrix.python }} -s safety_tests"
+      - name: Send coverage report to codeclimate
+        continue-on-error: true
+        uses: paambaati/codeclimate-action@v3.0.0
+        with:
+          coverageCommand: echo "Ignore rerun"
+          coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      - name: Send coverage report to codecov
+        uses: codecov/codecov-action@v3
+        with:
+          env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python }}
+          file: ./coverage.xml
