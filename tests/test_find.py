@@ -1,6 +1,5 @@
 """Tests for `cookiecutter.find` module."""
 from pathlib import Path
-from jinja2 import Environment
 
 import pytest
 

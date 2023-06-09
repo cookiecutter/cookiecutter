@@ -245,6 +245,7 @@ def ensure_dir_is_templated(dirname: str, environment: Environment) -> bool:
     else:
         raise NonTemplatedInputDirException
 
+
 def _run_hook_from_repo_dir(
     repo_dir, hook_name, project_dir, context, delete_project_on_failure
 ):
