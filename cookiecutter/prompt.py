@@ -202,10 +202,15 @@ def prompt_for_config(context, no_input=False):
         try:
             if isinstance(raw, list):
                 # We are dealing with a choice variable
-                val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
-                )
-                cookiecutter_dict[key] = val
+                if no_input:
+                    cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
+
+                else:
+                    val = prompt_choice_for_config(
+                        cookiecutter_dict, env, key, raw, no_input
+                    )
+                    cookiecutter_dict[key] = val
+
             elif isinstance(raw, bool):
                 # We are dealing with a boolean variable
                 if no_input:
@@ -226,7 +231,7 @@ def prompt_for_config(context, no_input=False):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
                 
-                if isinstance(val, list):
+                if isinstance(val, list) and not no_input:
                     val = prompt_choice_for_config(
                         cookiecutter_dict, env, key, val, no_input
                     )
