@@ -50,9 +50,9 @@ def cookiecutter(
     :param replay: Do not prompt for input, instead read from saved json. If
         ``True`` read from the ``replay_dir``.
         if it exists
-    :param overwrite_if_exists: Overwrite the contents of the output 
+    :param overwrite_if_exists: Overwrite the contents of the output
            directory if it exists.
-    :param output_dir: Where to output the generated project dir into.    
+    :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
