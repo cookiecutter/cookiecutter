@@ -16,7 +16,7 @@ This allow template developers to have both types of files in the same template.
 Developers should correctly configure their ``.gitattributes`` file to avoid line-end character overwrite by git.
 
 The special template variable ``_new_lines`` enforces a specific line ending.
-Acceptable variables: ``'\n\r'`` for CRLF and ``'\n'`` for POSIX.
+Acceptable variables: ``'\r\n'`` for CRLF and ``'\n'`` for POSIX.
 
 Here is example how to force line endings to CRLF on any deployment:
 
@@ -24,5 +24,5 @@ Here is example how to force line endings to CRLF on any deployment:
 
     {
         "project_slug": "sample",
-        "_new_lines": "\n\r"
+        "_new_lines": "\r\n"
     }
