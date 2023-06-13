@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: 'recursive'
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       - name: Install dependencies
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       - name: Install dependencies
@@ -57,10 +57,11 @@ jobs:
           - "3.8"
           - "3.9"
           - "3.10"
+          - "3.11"
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
       - name: Install dependencies
@@ -73,7 +74,7 @@ jobs:
         run: "nox -p ${{ matrix.python }} -s safety_tests"
       - name: Send coverage report to codeclimate
         continue-on-error: true
-        uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v4.0.0
         with:
           coverageCommand: echo "Ignore rerun"
           coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
