@@ -74,7 +74,7 @@ jobs:
         run: "nox -p ${{ matrix.python }} -s safety_tests"
       - name: Send coverage report to codeclimate
         continue-on-error: true
-        uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v4.0.0
         with:
           coverageCommand: echo "Ignore rerun"
           coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
