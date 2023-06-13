@@ -398,6 +398,7 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
             'github_username': 'hackebrot',
             'project_slug': 'testproject',
             '_template': template_path,
+            '_repo_dir': template_path,
             '_output_dir': output_dir,
         }
     }
