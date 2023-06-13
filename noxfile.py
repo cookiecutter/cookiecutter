@@ -28,12 +28,14 @@ def lint(session):
 def tests(session):
     """Run test suite with pytest."""
     session = base_install(session)
+    posargs = session.posargs or ""
     session.run(
         "pytest",
         "--cov-report=html",
         "--cov-report=xml",
         "--cov-branch",
         "--cov-fail-under=100",
+        *posargs,
     )
 
 
