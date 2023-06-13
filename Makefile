@@ -14,10 +14,6 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 .DEFAULT_GOAL := help
 
-.PHONY: clean-tox
-clean-tox: ## Remove tox testing artifacts
-	@echo "+ $@"
-	@rm -rf .tox/
 
 .PHONY: clean-nox
 clean-nox: ## Remove nox testing artifacts
@@ -56,7 +52,7 @@ clean-pyc: ## Remove Python file artifacts
 	@find . -name '*~' -exec rm -f {} +
 
 .PHONY: clean ## Remove all file artifacts
-clean: clean-tox clean-build clean-pyc clean-nox clean-coverage clean-pytest clean-docs-build
+clean: clean-build clean-pyc clean-nox clean-coverage clean-pytest clean-docs-build
 
 .PHONY: lint
 lint: ## Check code style
@@ -69,7 +65,7 @@ test: ## Run tests quickly with the default Python
 	@nox -p 3.10
 
 .PHONY: test-all
-test-all: ## Run tests on every Python version with tox
+test-all: ## Run tests on every Python version with nox
 	@echo "+ $@"
 	@nox
 

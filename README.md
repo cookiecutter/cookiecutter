@@ -1,4 +1,8 @@
-# Cookiecutter
+<h1 align="center">
+    <img alt="cookiecutter Logo" width="200px" src="https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png">
+</h1>
+
+<div align="center">
 
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
@@ -8,14 +12,17 @@
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
 [![Code Quality](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=master)
 
+</div>
+
+# cookiecutter
+
 A command-line utility that creates projects from **cookiecutters** (project templates), e.g. creating a Python package project from a Python package project template.
 
 - Documentation: [https://cookiecutter.readthedocs.io](https://cookiecutter.readthedocs.io)
 - GitHub: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
 - PyPI: [https://pypi.org/project/cookiecutter/](https://pypi.org/project/cookiecutter/)
-- Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/master/LICENSE)
+- Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/main/LICENSE)
 
-![Cookiecutter](https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png)
 
 ## Features
 
@@ -84,17 +91,17 @@ A command-line utility that creates projects from **cookiecutters** (project tem
   $ cookiecutter cookiecutter-pypackage
   ```
 
-- You can use local cookiecutters, or remote cookiecutters directly from Git repos or from Mercurial repos on Bitbucket.
-- Default context: specify key/value pairs that you want used as defaults  whenever you generate a project.
+- You can use local cookiecutters, or remote cookiecutters directly from Git repos or Mercurial repos on Bitbucket.
+- Default context: specify key/value pairs that you want to be used as defaults whenever you generate a project.
 - Inject extra context with command-line arguments:
 
   ```bash
   cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
   ```
 
-- Direct access to the Cookiecutter API allows for injection of extra context.
+- Direct access to the Cookiecutter API allows for the injection of extra context.
 - Paths to local projects can be specified as absolute or relative.
-- Projects generated to your current directory or to target directory if specified with `-o` option.
+Projects are generated to your current directory or to the target directory if specified with `-o` option.
 
 ### For template creators
 
@@ -131,17 +138,17 @@ We hope you find a cookiecutter that is just right for your needs.
 
 ### A Pantry Full of Cookiecutters
 
-The best place to start searching for specific and ready to use cookiecutter template is [Github search](https://github.com/search?q=cookiecutter&type=Repositories).
+The best place to start searching for specific and ready-to-use cookiecutter templates is [Github](https://github.com/search?q=cookiecutter&type=Repositories) search](https://github.com/search?q=cookiecutter&type=Repositories).
 Just type `cookiecutter` and you will discover over 4000 related repositories.
 
-We also recommend you to check related GitHub topics.
+We also recommend you check related GitHub topics.
 For general search use [cookiecutter-template](https://github.com/topics/cookiecutter-template).
 For specific topics try to use `cookiecutter-yourtopic`, like `cookiecutter-python` or `cookiecutter-datascience`.
 This is a new GitHub feature, so not all active repositories use it at the moment.
 
-If you are template developer please add related [topics](https://help.github.com/en/github/administering-a-repository/classifying-your-repository-with-topics) with `cookiecutter` prefix to you repository.
+If you are a template developer please add related [topics](https://help.github.com/en/github/administering-a-repository/classifying-your-repository-with-topics) with `cookiecutter` prefix to your repository.
 We believe it will make it more discoverable.
-You are almost not limited in topics amount, use it!
+You are almost not limited in topic amount, use it!
 
 ### Cookiecutter Specials
 
@@ -151,13 +158,13 @@ These Cookiecutters are maintained by the cookiecutter team:
   ultimate Python package project template by [@audreyfeldroy's](https://github.com/audreyfeldroy).
 - [cookiecutter-django](https://github.com/pydanny/cookiecutter-django):
   a framework for jumpstarting production-ready Django projects quickly.
-  It is bleeding edge with Bootstrap 5, customizable users app, starter templates, working user registration, celery setup, and much more.
+  It is bleeding edge with Bootstrap 5, a customizable users app, starter templates, working user registration, celery setup, and much more.
 - [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin):
   Minimal Cookiecutter template for authoring [pytest](https://docs.pytest.org/) plugins that help you to write better programs.
 
 ## Community
 
-The core committer team can be found in [authors section](AUTHORS.md).
+The core committer team can be found in the [authors' section](AUTHORS.md).
 We are always welcome and invite you to participate.
 
 Stuck? Try one of the following:
@@ -211,10 +218,10 @@ Shortly we will be providing means for organizations and individuals to support 
 ## Code of Conduct
 
 Everyone interacting in the Cookiecutter project's codebases and documentation is expected to follow the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
-This includes, but is not limited to, issue trackers, chat rooms, mailing lists, and other virtual or in real life communication.
+This includes but is not limited to, issue trackers, chat rooms, mailing lists, and other virtual or in real-life communication.
 
 ## Creator / Leader
 
-This project was created and is led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy).
+This project was created and led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy).
 
 She is supported by a team of maintainers.
