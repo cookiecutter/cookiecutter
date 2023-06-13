@@ -49,7 +49,6 @@ def unzip(
 
         if download:
             # (Re) download the zipfile
-            # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
             r = requests.get(zip_uri, stream=True, timeout=100)
             with open(zip_path, 'wb') as f:
                 for chunk in r.iter_content(chunk_size=1024):
