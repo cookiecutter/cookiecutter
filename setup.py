@@ -11,9 +11,9 @@ requirements = [
     'Jinja2>=2.7,<4.0.0',
     'click>=7.0,<9.0.0',
     'pyyaml>=5.3.1',
-    'jinja2-time>=0.2.0',
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
+    'arrow',
 ]
 
 setup(
