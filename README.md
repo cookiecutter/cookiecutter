@@ -21,7 +21,7 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 
 - Cross-platform: Windows, Mac, and Linux are officially supported.
 - You don't have to know/write Python code to use Cookiecutter.
-- Works with Python 3.7, 3.8, 3.9., 3.10
+- Works with Python 3.7, 3.8, 3.9, 3.10, 3.11
 - Project templates can be in any programming language or markup format:
   Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name it.
   You can use multiple languages in the same project template.
