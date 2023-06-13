@@ -84,10 +84,10 @@ def run_script(script_path, cwd='.'):
             shell=run_thru_shell,  # nosec
             cwd=cwd,
             stderr=subprocess.PIPE,  # pipe only errors
-            universal_newlines=True,  # convert from b' format
+            text=True,
         )
         # catch error during hook execution, if any
-        sp_output, sp_error = proc.communicate()
+        _, sp_error = proc.communicate()
         # if hook does not yield an error message, don't attempt to publish
         error_message = f': {sp_error}' if sp_error else ''
         exit_status = proc.returncode
