@@ -29,6 +29,11 @@ setup(
     author='Audrey Feldroy',
     author_email='audreyr@gmail.com',
     url='https://github.com/cookiecutter/cookiecutter',
+    project_urls={
+        "Documentation": "https://cookiecutter.readthedocs.io",
+        "Issues": "https://github.com/cookiecutter/cookiecutter/issues",
+        "Discord": "https://discord.gg/9BrxzPKuEW",
+    },
     packages=['cookiecutter'],
     package_dir={'cookiecutter': 'cookiecutter'},
     entry_points={'console_scripts': ['cookiecutter = cookiecutter.__main__:main']},
