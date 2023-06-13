@@ -6,7 +6,7 @@ Every little bit helps, and credit will always be given.
 - [Types of Contributions](#types-of-contributions)
 - [Contributor Setup](#setting-up-the-code-for-local-development)
 - [Contributor Guidelines](#contributor-guidelines)
-- [Contributor Testing](#testing-with-tox)
+- [Contributor Testing](#testing-with-nox)
 - [Core Committer Guide](#core-committer-guide)
 
 ## Types of Contributions
@@ -94,11 +94,11 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and lint check:
 
    ```bash
-   pip install tox
-   tox
+   pip install nox
+   nox
    ```
 
-   Please note that tox runs lint check automatically, since we have a test environment for it.
+   Please note that `nox` runs lint check automatically, since we have a test environment for it.
 
    If you feel like running only the lint environment, please use the following command:
 
@@ -106,7 +106,7 @@ Now you can make your changes locally.
    make lint
    ```
 
-6. Ensure that your feature or commit is fully covered by tests. Check report after regular tox run.
+6. Ensure that your feature or commit is fully covered by tests. Check report after regular `nox` run.
    You can also run coverage only report and get html report with statement by statement highlighting:
 
    ```bash
@@ -164,22 +164,22 @@ Before you submit a pull request, check that it meets these guidelines:
         return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
     ```
 
-## Testing with tox
+## Testing with nox
 
-Tox uses py.test under the hood, hence it supports the same syntax for selecting tests.
+`nox` uses `pytest` under the hood, hence it supports the same syntax for selecting tests.
 
 For further information please consult the [pytest usage docs](http://pytest.org/en/latest/example/index.html).
 
-To run a particular test class with tox:
+To run a particular test class with `nox`:
 
 ```bash
-tox -e py '-k TestFindHooks'
+nox -p 3.10 -- '-k TestFindHooks'
 ```
 
 To run some tests with names matching a string expression:
 
 ```bash
-tox -e py '-k generate'
+nox -p 3.10 -- '-k generate'
 ```
 
 Will run all tests matching "generate", test_generate_files for example.
@@ -187,13 +187,13 @@ Will run all tests matching "generate", test_generate_files for example.
 To run just one method:
 
 ```bash
-tox -e py '-k "TestFindHooks and test_find_hook"'
+nox -p 3.10 -- '-k "TestFindHooks and test_find_hook"'
 ```
 
-To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox:
+To run all tests using various versions of python in virtualenvs defined in `noxfile.py`, just run `nox`:
 
 ```bash
-tox
+nox
 ```
 
 This configuration file setup the pytest-cov plugin and it is an additional dependency.
@@ -202,7 +202,7 @@ It generate a coverage report after the tests.
 It is possible to test with specific versions of Python. To do this, the command is:
 
 ```bash
-tox -e py37,py38
+nox -p 3.10 3.11
 ```
 
 This will run `py.test` with the `python3.7` and `python3.8` interpreters.
