@@ -3,7 +3,7 @@ name: CI/CD Tests
 on:
   push:
     branches:
-      - master
+      - main
     tags:
       - "*"
   pull_request:
