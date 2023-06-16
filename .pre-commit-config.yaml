@@ -32,7 +32,7 @@ repos:
       - id: pretty-format-json
         args:
           - "--autofix"
-          - "--indent=4"
+          - "--indent=2"
           - "--no-sort-keys"
           - "--no-ensure-ascii"
         exclude: "invalid-syntax.json|tests/fake-repo-bad-json/cookiecutter.json|tests/fake-repo/cookiecutter.json"

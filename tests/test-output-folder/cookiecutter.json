@@ -1,9 +1,9 @@
 {
-    "full_name": "Audrey Greenfeld",
-    "year": "2014",
-    "color": "green",
-    "letter": "D",
-    "folder_name": "im_a.dir",
-    "filename": "im_a.file",
-    "test_name": "output_folder"
+  "full_name": "Audrey Greenfeld",
+  "year": "2014",
+  "color": "green",
+  "letter": "D",
+  "folder_name": "im_a.dir",
+  "filename": "im_a.file",
+  "test_name": "output_folder"
 }
