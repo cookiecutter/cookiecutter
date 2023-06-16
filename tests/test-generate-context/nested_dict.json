@@ -5,6 +5,10 @@
         "name": "Kivy Project",
         "description": "Kivy Project",
         "repo_name": "{{cookiecutter.project_name|lower}}",
-        "orientation": ["all", "landscape", "portrait"]
+        "orientation": [
+            "all",
+            "landscape",
+            "portrait"
+        ]
     }
 }
