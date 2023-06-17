@@ -23,9 +23,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install nox virtualenv
+          pip install tox
       - name: Build docs
-        run: nox -s docs
+        run: tox -e docs
       - uses: actions/upload-artifact@v3
         with:
           name: DocumentationHTML
@@ -54,11 +54,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install nox virtualenv
+          pip install tox
       - name: Project internals test build
-        run: "nox -p ${{ matrix.python }} -s tests"
+        run: "tox -e py${{ matrix.python }}"
       - name: Project security test
-        run: "nox -p ${{ matrix.python }} -s safety_tests"
+        run: "tox -e safety"
       - name: Send coverage report to codeclimate
         continue-on-error: true
         uses: paambaati/codeclimate-action@v4.0.0

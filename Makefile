@@ -15,10 +15,10 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 .DEFAULT_GOAL := help
 
 
-.PHONY: clean-nox
-clean-nox: ## Remove nox testing artifacts
+.PHONY: clean-tox
+clean-tox: ## Remove tox testing artifacts
 	@echo "+ $@"
-	@rm -rf .nox/
+	@rm -rf .tox/
 
 .PHONY: clean-coverage
 clean-coverage: ## Remove coverage reports
@@ -52,39 +52,39 @@ clean-pyc: ## Remove Python file artifacts
 	@find . -name '*~' -exec rm -f {} +
 
 .PHONY: clean ## Remove all file artifacts
-clean: clean-build clean-pyc clean-nox clean-coverage clean-pytest clean-docs-build
+clean: clean-build clean-pyc clean-tox clean-coverage clean-pytest clean-docs-build
 
 .PHONY: lint
 lint: ## Check code style
 	@echo "+ $@"
-	@nox -s lint
+	@tox -e lint
 
 .PHONY: test
 test: ## Run tests quickly with the default Python
 	@echo "+ $@"
-	@nox -p 3.10
+	@tox -e py310
 
 .PHONY: test-all
-test-all: ## Run tests on every Python version with nox
+test-all: ## Run tests on every Python version
 	@echo "+ $@"
-	@nox
+	@tox
 
 .PHONY: coverage
 coverage: ## Check code coverage quickly with the default Python
 	@echo "+ $@"
-	@nox -s tests -p 3.10
+	@tox -e py310
 	@$(BROWSER) htmlcov/index.html
 
 .PHONY: docs
 docs: ## Generate Sphinx HTML documentation, including API docs
 	@echo "+ $@"
-	@nox --non-interactive -s docs
+	@tox -e docs
 	@$(BROWSER) docs/_build/html/index.html
 
 .PHONY: servedocs
 servedocs: ## Rebuild docs automatically
 	@echo "+ $@"
-	@nox -s docs
+	@tox -e servedocs
 
 .PHONY: submodules
 submodules: ## Pull and update git submodules recursively

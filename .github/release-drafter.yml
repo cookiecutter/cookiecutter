@@ -27,7 +27,6 @@ autolabeler:
       - '.pre-commit-config.yaml'
       - '*.cfg'
       - '*.ini'
-      - 'noxfile.py'
       - 'setup.*'
       - 'docs/conf.py'
       - 'Makefile'
