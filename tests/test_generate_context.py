@@ -171,18 +171,19 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite():
         )
     }
 
-    generated_context = generate.generate_context(
-        context_file='tests/test-generate-context/choices_template.json',
-        default_context={
-            'not_in_template': 'foobar',
-            'project_name': 'Kivy Project',
-            'orientation': 'foobar',
-        },
-        extra_context={
-            'also_not_in_template': 'foobar2',
-            'github_username': 'hackebrot',
-        },
-    )
+    with pytest.warns(UserWarning, match="Invalid default received"):
+        generated_context = generate.generate_context(
+            context_file='tests/test-generate-context/choices_template.json',
+            default_context={
+                'not_in_template': 'foobar',
+                'project_name': 'Kivy Project',
+                'orientation': 'foobar',
+            },
+            extra_context={
+                'also_not_in_template': 'foobar2',
+                'github_username': 'hackebrot',
+            },
+        )
 
     assert generated_context == expected_context
 
