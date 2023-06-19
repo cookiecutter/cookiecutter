@@ -1,5 +1,6 @@
 """Functions for prompting the user for project info."""
 import functools
+import ast
 import json
 from collections import OrderedDict
 
@@ -158,9 +159,14 @@ def render_variable(env, raw, cookiecutter_dict):
         raw = str(raw)
 
     template = env.from_string(raw)
+    out = template.render(cookiecutter=cookiecutter_dict)
 
-    return template.render(cookiecutter=cookiecutter_dict)
-
+    try:
+        return ast.literal_eval(out)
+    except:
+        pass
+    
+    return out
 
 def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
     """Prompt user with a set of options to choose from.
@@ -196,10 +202,15 @@ def prompt_for_config(context, no_input=False):
         try:
             if isinstance(raw, list):
                 # We are dealing with a choice variable
-                val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
-                )
-                cookiecutter_dict[key] = val
+                if no_input:
+                    cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
+
+                else:
+                    val = prompt_choice_for_config(
+                        cookiecutter_dict, env, key, raw, no_input
+                    )
+                    cookiecutter_dict[key] = val
+
             elif isinstance(raw, bool):
                 # We are dealing with a boolean variable
                 if no_input:
@@ -208,26 +219,7 @@ def prompt_for_config(context, no_input=False):
                     )
                 else:
                     cookiecutter_dict[key] = read_user_yes_no(key, raw)
-            elif not isinstance(raw, dict):
-                # We are dealing with a regular variable
-                val = render_variable(env, raw, cookiecutter_dict)
-
-                if not no_input:
-                    val = read_user_variable(key, val)
-
-                cookiecutter_dict[key] = val
-        except UndefinedError as err:
-            msg = f"Unable to render variable '{key}'"
-            raise UndefinedVariableInTemplate(msg, err, context) from err
-
-    # Second pass; handle the dictionaries.
-    for key, raw in context['cookiecutter'].items():
-        # Skip private type dicts not to be rendered.
-        if key.startswith('_') and not key.startswith('__'):
-            continue
-
-        try:
-            if isinstance(raw, dict):
+            elif isinstance(raw, dict):
                 # We are dealing with a dict variable
                 val = render_variable(env, raw, cookiecutter_dict)
 
@@ -235,6 +227,20 @@ def prompt_for_config(context, no_input=False):
                     val = read_user_dict(key, val)
 
                 cookiecutter_dict[key] = val
+            elif not isinstance(raw, dict):
+                # We are dealing with a regular variable
+                val = render_variable(env, raw, cookiecutter_dict)
+                
+                if isinstance(val, list) and not no_input:
+                    val = prompt_choice_for_config(
+                        cookiecutter_dict, env, key, val, no_input
+                    )
+
+                if not no_input:
+                    val = read_user_variable(key, val)
+
+                cookiecutter_dict[key] = val
+
         except UndefinedError as err:
             msg = f"Unable to render variable '{key}'"
             raise UndefinedVariableInTemplate(msg, err, context) from err
