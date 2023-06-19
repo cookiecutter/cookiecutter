@@ -138,7 +138,7 @@ We hope you find a cookiecutter that is just right for your needs.
 
 ### A Pantry Full of Cookiecutters
 
-The best place to start searching for specific and ready-to-use cookiecutter templates is [Github](https://github.com/search?q=cookiecutter&type=Repositories) search](https://github.com/search?q=cookiecutter&type=Repositories).
+The best place to start searching for specific and ready-to-use cookiecutter templates is [Github search](https://github.com/search?q=cookiecutter&type=Repositories).
 Just type `cookiecutter` and you will discover over 4000 related repositories.
 
 We also recommend you check related GitHub topics.
