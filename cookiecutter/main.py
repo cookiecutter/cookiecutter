@@ -147,7 +147,7 @@ def cookiecutter(
                 accept_hooks=accept_hooks,
                 keep_project_on_failure=keep_project_on_failure,
             )
-    
+
     logger.debug('contex is %s', context)
 
     # include template dir or url in the context dict
