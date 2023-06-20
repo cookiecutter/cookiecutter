@@ -3,7 +3,7 @@ name: CI/CD Tests
 on:
   push:
     branches:
-      - master
+      - main
     tags:
       - "*"
   pull_request:
@@ -17,32 +17,19 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: 'recursive'
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install nox virtualenv
+          pip install tox
       - name: Build docs
-        run: nox -s docs
+        run: tox -e docs
       - uses: actions/upload-artifact@v3
         with:
           name: DocumentationHTML
           path: docs/_build/html/
-  linting:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        with:
-          python-version: "3.10"
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install nox virtualenv
-      - name: Lint
-        run: "nox -s lint"
   tests_run:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -57,23 +44,24 @@ jobs:
           - "3.8"
           - "3.9"
           - "3.10"
+          - "3.11"
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install nox virtualenv
+          pip install tox
       - name: Project internals test build
-        run: "nox -p ${{ matrix.python }} -s tests"
+        run: "tox -e py${{ matrix.python }}"
       - name: Project security test
-        run: "nox -p ${{ matrix.python }} -s safety_tests"
+        run: "tox -e safety"
       - name: Send coverage report to codeclimate
         continue-on-error: true
-        uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v4.0.0
         with:
           coverageCommand: echo "Ignore rerun"
           coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
