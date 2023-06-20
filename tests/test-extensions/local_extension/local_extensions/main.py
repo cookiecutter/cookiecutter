@@ -22,5 +22,5 @@ def simplefilterextension(v):
 @simple_test
 def palindrome(v):
     """Provide a simple function-based test extension."""
-    v_reverse =  v[::-1]
+    v_reverse = v[::-1]
     return v_reverse == v
