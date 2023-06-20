@@ -116,3 +116,15 @@ def simple_filter(filter_function):
 
     SimpleFilterExtension.__name__ = filter_function.__name__
     return SimpleFilterExtension
+
+
+def simple_test(test_function):
+    """Decorate a function to wrap it in a simplified jinja2 extension."""
+
+    class SimpleTestExtension(Extension):
+        def __init__(self, environment):
+            super().__init__(environment)
+            environment.tests[test_function.__name__] = test_function
+
+    SimpleTestExtension.__name__ = test_function.__name__
+    return SimpleTestExtension
