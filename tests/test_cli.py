@@ -439,6 +439,10 @@ def test_local_extension(tmpdir, cli_runner):
     content = Path(output_dir, 'Foobar', 'HISTORY.rst').read_text()
     assert 'FoobarFoobar' in content
     assert 'FOOBAR' in content
+    assert 'PASS1' in content
+    assert 'FAIL2' not in content
+    assert 'PASS2' in content
+    assert 'FAIL2' not in content
 
 
 def test_local_extension_not_available(tmpdir, cli_runner):

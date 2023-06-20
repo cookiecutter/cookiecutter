@@ -2,8 +2,11 @@
   "project_slug": "Foobar",
   "test_value_class_based": "{{cookiecutter.project_slug | foobar}}",
   "test_value_function_based": "{{cookiecutter.project_slug | simplefilterextension}}",
+  "test_value_function_test_pos_based": "{% if 'XAX' is palindrome%}PASS1{%else%}PASS1{% endif %}",
+  "test_value_function_test_neg_based": "{% if 'XAY' is palindrome%}FAIL2{%else%}PASS2{% endif %}",
   "_extensions": [
     "local_extensions.simplefilterextension",
+    "local_extensions.palindrome",
     "local_extensions.FoobarExtension"
   ]
 }
