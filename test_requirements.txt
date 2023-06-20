@@ -4,4 +4,3 @@ pytest-mock
 freezegun
 safety
 pre-commit
-defer
