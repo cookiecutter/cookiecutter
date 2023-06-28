@@ -1,5 +1,5 @@
 """Collection of tests around cookiecutter's command-line interface."""
-
+import json
 import os
 import re
 from pathlib import Path
@@ -393,15 +393,20 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
     assert message in result.output
 
     context = {
-        'github_username': 'hackebrot',
-        'project_slug': 'testproject',
-        '_template': template_path,
-        '_repo_dir': template_path,
-        '_output_dir': output_dir,
+        '_cookiecutter': {
+            'github_username': 'hackebrot',
+            'project_slug': 'testproject',
+        },
+        'cookiecutter': {
+            'github_username': 'hackebrot',
+            'project_slug': 'testproject',
+            '_template': template_path,
+            '_repo_dir': template_path,
+            '_output_dir': output_dir,
+        },
     }
-
-    for k, v in context.items():
-        assert f'"{k}": "{v}"' in result.output
+    context_str = json.dumps(context, indent=4, sort_keys=True)
+    assert context_str in result.output
 
 
 def test_echo_unknown_extension_error(output_dir, cli_runner):

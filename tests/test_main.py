@@ -6,7 +6,6 @@ def test_original_cookiecutter_options_preserved_in__cookiecutter(
     monkeypatch,
     mocker,
     user_config_file,
-    user_config_data,
 ):
     """Preserve original context options.
 
