@@ -22,6 +22,16 @@ repos:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
       - id: mixed-line-ending
+        name: "Enforce LF newlines on most files"
+        args:
+          - "--fix=lf"
+        # Exclude files with "crlf" in their names.
+        exclude: "crlf"
+      - id: mixed-line-ending
+        name: "Enforce CRLF newlines on files named '*crlf*'"
+        args:
+          - "--fix=crlf"
+        files: "crlf"
       - id: fix-byte-order-marker
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable

@@ -1,7 +1,5 @@
-*           text=auto
-# CRLF sets for test files! Or tests will fail on CI/CD
-*crlf.txt   text eol=crlf
-simple-with-newline-crlf.txt        text eol=crlf
-simple-with-newline.txt             text eol=lf
-*_crlf_newlines.txt                 text eol=crlf
-*_lf_newlines.txt                   text eol=lf
+# By default, all text files should use LF newlines.
+*       text=auto eol=lf
+
+# Use CRLF newlines for text files containing "crlf" in their names.
+*crlf*  text=auto eol=crlf
