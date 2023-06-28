@@ -23,6 +23,7 @@ Various advanced topics regarding cookiecutter usage.
    templates
    template_extensions
    directories
+   jinja_env
    new_line_characters
    local_extensions
    nested_config_files
