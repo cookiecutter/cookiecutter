@@ -119,7 +119,7 @@ def simple_filter(filter_function):
 
 
 def simple_test(test_function):
-    """Decorate a function to wrap it in a simplified jinja2 extension."""
+    """Register a function for use as a test in Jinja templates."""
 
     class SimpleTestExtension(Extension):
         def __init__(self, environment):

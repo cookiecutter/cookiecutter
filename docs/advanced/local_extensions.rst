@@ -62,7 +62,7 @@ the ``simple_test`` decorator:
     {
         "project_slug": "Foobar",
         "year": "{% now 'utc', '%Y' %}",
-        "_extensions": ["local_extensions.simpletestextesion"]
+        "_extensions": ["local_extensions.simpletestextension"]
     }
 
 .. code-block:: python
@@ -71,8 +71,8 @@ the ``simple_test`` decorator:
 
 
     @simple_test
-    def simpletestextesion(v):
-        return v in [True, "True", "true]
+    def simpletestextension(v):
+        return v in [True, "True", "true"]
 
 
 
