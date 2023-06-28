@@ -116,14 +116,12 @@ def simple_filter(filter_function):
 
     Example:
 
-        @simple_test
-        def mirror(value):
-          ''' Mirror(reverse) a string  '''
-          return value[::-1] if value else value
+    @simple_test
+    def mirror(value):
 
     Which can then be used in jinja template as
 
-         {{ cookiecutter.param | mirror }}
+    {{ cookiecutter.param | mirror }}
 
     """
 
@@ -146,15 +144,12 @@ def simple_test(test_function):
 
     Example:
 
-        @simple_test
-        def valid(value):
-          ''' Check if value is valid '''
-          return value and len(value) > 3
+    @simple_test
+    def valid(value):
 
     Which can then be used in jinja template as
 
-         {% if cookiecutter.param is valid %}valid{% endif %}
-
+    {% if cookiecutter.param is valid %}valid{% endif %}
     """
 
     class SimpleTestExtension(Extension):
