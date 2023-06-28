@@ -824,7 +824,7 @@ Other changes:
     $ cookiecutter cookiecutter-pypackage/
     # Create project from the cookiecutter-pypackage.git repo template
     $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
-```  
+```
 
 * Can now use Cookiecutter from Python as a package:
 

@@ -20,7 +20,6 @@ repos:
     rev: v4.4.0
     hooks:
       - id: trailing-whitespace
-        args: [--markdown-linebreak-ext=md]
       - id: mixed-line-ending
         name: "Enforce LF newlines on most files"
         args:
