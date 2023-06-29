@@ -184,16 +184,16 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
         raise
     rendered_file = tmpl.render(**context)
 
-    # Detect original file newline to output the rendered file
-    # note: newline='' ensures newlines are not converted
-    with open(infile, encoding='utf-8', newline='') as rd:
-        rd.readline()  # Read the first line to load 'newlines' value
-
-        # Use `_new_lines` overwrite from context, if configured.
+    if context['cookiecutter'].get('_new_lines', False):
+        # Use `_new_lines` from context, if configured.
+        newline = context['cookiecutter']['_new_lines']
+        logger.debug('Using configured newline character %s', repr(newline))
+    else:
+        # Detect original file newline to output the rendered file.
+        with open(infile, encoding='utf-8') as rd:
+            rd.readline()  # Read only the first line to load a 'newlines' value.
         newline = rd.newlines
-        if context['cookiecutter'].get('_new_lines', False):
-            newline = context['cookiecutter']['_new_lines']
-            logger.debug('Overwriting end line character with %s', newline)
+        logger.debug('Using detected newline character %s', repr(newline))
 
     logger.debug('Writing contents to file %s', outfile)
 
