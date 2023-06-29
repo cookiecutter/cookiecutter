@@ -50,4 +50,3 @@ If a non valid value is inserted to a boolean field, the following error will be
 
    run_as_docker [True]: docker
    Error: docker is not a valid boolean
-

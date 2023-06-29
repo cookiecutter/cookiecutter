@@ -56,4 +56,3 @@ This snippet will achieve the exact same result as the previous one.
 
 For complex use cases, a python module ``local_extensions`` (a folder with an ``__init__.py``) can also be created in the template root.
 Here, for example, a module ``main.py`` would have to export all extensions with ``from .main import FoobarExtension, simplefilterextension`` or ``from .main import *`` in the ``__init__.py``.
-
