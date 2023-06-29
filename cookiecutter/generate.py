@@ -167,36 +167,38 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
     if is_binary(infile):
         logger.debug('Copying binary %s to %s without rendering', infile, outfile)
         shutil.copyfile(infile, outfile)
-    else:
-        # Force fwd slashes on Windows for get_template
-        # This is a by-design Jinja issue
-        infile_fwd_slashes = infile.replace(os.path.sep, '/')
+        shutil.copymode(infile, outfile)
+        return
 
-        # Render the file
-        try:
-            tmpl = env.get_template(infile_fwd_slashes)
-        except TemplateSyntaxError as exception:
-            # Disable translated so that printed exception contains verbose
-            # information about syntax error location
-            exception.translated = False
-            raise
-        rendered_file = tmpl.render(**context)
+    # Force fwd slashes on Windows for get_template
+    # This is a by-design Jinja issue
+    infile_fwd_slashes = infile.replace(os.path.sep, '/')
 
-        # Detect original file newline to output the rendered file
-        # note: newline='' ensures newlines are not converted
-        with open(infile, encoding='utf-8', newline='') as rd:
-            rd.readline()  # Read the first line to load 'newlines' value
+    # Render the file
+    try:
+        tmpl = env.get_template(infile_fwd_slashes)
+    except TemplateSyntaxError as exception:
+        # Disable translated so that printed exception contains verbose
+        # information about syntax error location
+        exception.translated = False
+        raise
+    rendered_file = tmpl.render(**context)
 
-            # Use `_new_lines` overwrite from context, if configured.
-            newline = rd.newlines
-            if context['cookiecutter'].get('_new_lines', False):
-                newline = context['cookiecutter']['_new_lines']
-                logger.debug('Overwriting end line character with %s', newline)
+    # Detect original file newline to output the rendered file
+    # note: newline='' ensures newlines are not converted
+    with open(infile, encoding='utf-8', newline='') as rd:
+        rd.readline()  # Read the first line to load 'newlines' value
 
-        logger.debug('Writing contents to file %s', outfile)
+        # Use `_new_lines` overwrite from context, if configured.
+        newline = rd.newlines
+        if context['cookiecutter'].get('_new_lines', False):
+            newline = context['cookiecutter']['_new_lines']
+            logger.debug('Overwriting end line character with %s', newline)
 
-        with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
-            fh.write(rendered_file)
+    logger.debug('Writing contents to file %s', outfile)
+
+    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
+        fh.write(rendered_file)
 
     # Apply file permissions to output file
     shutil.copymode(infile, outfile)
