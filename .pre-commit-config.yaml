@@ -31,6 +31,7 @@ repos:
         args:
           - "--fix=crlf"
         files: "crlf"
+      - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
