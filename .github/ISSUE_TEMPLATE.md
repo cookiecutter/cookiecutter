@@ -12,4 +12,3 @@
 ```
 // REPLACE ME: Paste a log of command(s) you ran and cookiecutter's output, tracebacks, etc, here
 ```
-

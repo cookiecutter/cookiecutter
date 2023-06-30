@@ -45,7 +45,7 @@ def test_generate_files(tmp_path):
     assert simple_file.is_file()
 
     simple_text = Path(simple_file).read_text(encoding='utf-8')
-    assert simple_text == 'I eat pizzä'
+    assert simple_text == 'I eat pizzä\n'
 
 
 def test_generate_files_with_linux_newline(tmp_path):
@@ -305,7 +305,7 @@ def test_generate_files_with_overwrite_if_exists(tmp_path):
     assert Path(simple_with_new_line_file).exists()
 
     simple_text = Path(simple_file).read_text(encoding='utf-8')
-    assert simple_text == 'I eat pizzä'
+    assert simple_text == 'I eat pizzä\n'
 
 
 @pytest.fixture
