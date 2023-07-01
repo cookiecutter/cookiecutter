@@ -102,6 +102,9 @@ def cookiecutter(
             extra_context=extra_context,
         )
 
+        # preserve the original cookiecutter options
+        context['_cookiecutter'] = context['cookiecutter']
+
         # prompt the user to manually configure at the command line.
         # except when 'no-input' flag is set
         with import_patch:
