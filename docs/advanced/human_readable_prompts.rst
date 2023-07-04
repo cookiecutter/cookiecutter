@@ -36,4 +36,3 @@ You can add human-readable prompts that will be shown to the user for each varia
             "black_formatting": "Enable black formatting:"
         }
     }
-
