@@ -64,12 +64,12 @@ def read_user_choice(var_name, options, descriptions):
     choices = choice_map.keys()
     default = '1'
 
-    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
+    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else f"Select {var_name}"
 
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join(
         (
-            f"Select {question}:",
+            f"{question}:",
             "\n".join(choice_lines),
             f"Choose from {', '.join(choices)}",
         )
