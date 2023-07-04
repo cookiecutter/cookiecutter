@@ -9,17 +9,17 @@ from jinja2.exceptions import UndefinedError
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UndefinedVariableInTemplate
 
-
-def read_user_variable(var_name, default_value):
+def read_user_variable(var_name, default_value, descriptions):
     """Prompt user for variable and return the entered value or given default.
 
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
-    return click.prompt(var_name, default=default_value)
+    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
+    return click.prompt(question, default=default_value)
 
 
-def read_user_yes_no(question, default_value):
+def read_user_yes_no(var_name, default_value, descriptions):
     """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
 
     - These input values will be converted to ``True``:
@@ -33,6 +33,7 @@ def read_user_yes_no(question, default_value):
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
+    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
     return click.prompt(question, default=default_value, type=click.BOOL)
 
 
@@ -44,7 +45,7 @@ def read_repo_password(question):
     return click.prompt(question, hide_input=True)
 
 
-def read_user_choice(var_name, options):
+def read_user_choice(var_name, options, descriptions):
     """Prompt the user to choose from several options for the given variable.
 
     The first item will be returned if no input happens.
@@ -63,10 +64,12 @@ def read_user_choice(var_name, options):
     choices = choice_map.keys()
     default = '1'
 
+    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
+
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join(
         (
-            f"Select {var_name}:",
+            f"Select {question}:",
             "\n".join(choice_lines),
             f"Choose from {', '.join(choices)}",
         )
@@ -162,7 +165,7 @@ def render_variable(env, raw, cookiecutter_dict):
     return template.render(cookiecutter=cookiecutter_dict)
 
 
-def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
+def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input, descriptions):
     """Prompt user with a set of options to choose from.
 
     :param no_input: Do not prompt for user input and return the first available option.
@@ -170,7 +173,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input):
     rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
     if no_input:
         return rendered_options[0]
-    return read_user_choice(key, rendered_options)
+    return read_user_choice(key, rendered_options, descriptions)
 
 
 def prompt_for_config(context, no_input=False):
@@ -181,6 +184,12 @@ def prompt_for_config(context, no_input=False):
     """
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
+
+    descriptions = {}
+    if '__internal_use' in context['cookiecutter'].keys():
+        if 'descriptions' in context['cookiecutter']['__internal_use'].keys():
+            descriptions = context['cookiecutter']['__internal_use']['descriptions']
+        del context['cookiecutter']['__internal_use']
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
@@ -197,7 +206,7 @@ def prompt_for_config(context, no_input=False):
             if isinstance(raw, list):
                 # We are dealing with a choice variable
                 val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input
+                    cookiecutter_dict, env, key, raw, no_input, descriptions
                 )
                 cookiecutter_dict[key] = val
             elif isinstance(raw, bool):
@@ -213,7 +222,7 @@ def prompt_for_config(context, no_input=False):
                 val = render_variable(env, raw, cookiecutter_dict)
 
                 if not no_input:
-                    val = read_user_variable(key, val)
+                    val = read_user_variable(key, val, descriptions)
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
