@@ -4,19 +4,22 @@ import json
 from collections import OrderedDict
 
 import click
+from rich.prompt import Prompt, Confirm
+from rich.progress import track, Progress
+from rich.text import Text
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UndefinedVariableInTemplate
 
-def read_user_variable(var_name, default_value, descriptions):
+def read_user_variable(var_name, default_value, descriptions, prefix):
     """Prompt user for variable and return the entered value or given default.
 
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
     question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
-    return click.prompt(question, default=default_value)
+    return Prompt.ask(f"{prefix}[bold]{question}[/bold]", default=default_value)
 
 
 def read_user_yes_no(var_name, default_value, descriptions):
@@ -27,14 +30,15 @@ def read_user_yes_no(var_name, default_value, descriptions):
     - These input values will be converted to ``False``:
       "0", "false", "f", "no", "n", "off"
 
-    Actual parsing done by :func:`click.prompt`; Check this function codebase change in
+    Actual parsing done by :func:`prompt`; Check this function codebase change in
     case of unexpected behaviour.
 
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
     question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
-    return click.prompt(question, default=default_value, type=click.BOOL)
+    # return prompt(question, default=default_value, type=click.BOOL)
+    return Prompt.ask(f"[bold]{question}[/bold]", default=default_value, choices=["yes", "no"])
 
 
 def read_repo_password(question):
@@ -42,7 +46,8 @@ def read_repo_password(question):
 
     :param str question: Question to the user
     """
-    return click.prompt(question, hide_input=True)
+    return Prompt.ask(question, hide_input=True)
+    # return prompt(question, hide_input=True)
 
 
 def read_user_choice(var_name, options, descriptions):
@@ -66,6 +71,11 @@ def read_user_choice(var_name, options, descriptions):
 
     question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else f"Select {var_name}"
 
+    print(choices)
+    user_choice = Prompt.ask(question, choices=['yes','no','Toto la valise','Henry'], default=list(choices)[0])
+    user_choice = Confirm.ask(question, default=True)
+    print(user_choice)
+
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join(
         (
@@ -78,6 +88,7 @@ def read_user_choice(var_name, options, descriptions):
     user_choice = click.prompt(
         prompt, type=click.Choice(choices), default=default, show_choices=False
     )
+    print(user_choice)
     return choice_map[user_choice]
 
 
@@ -194,7 +205,11 @@ def prompt_for_config(context, no_input=False):
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
+
+    count = 0
     for key, raw in context['cookiecutter'].items():
+        count += 1
+        prefix = f"  [grey][{count}/{len(context['cookiecutter'].keys())}][/grey] "
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
@@ -216,13 +231,13 @@ def prompt_for_config(context, no_input=False):
                         env, raw, cookiecutter_dict
                     )
                 else:
-                    cookiecutter_dict[key] = read_user_yes_no(key, raw)
+                    cookiecutter_dict[key] = read_user_yes_no(key, raw, descriptions)
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
 
                 if not no_input:
-                    val = read_user_variable(key, val, descriptions)
+                    val = read_user_variable(key, val, descriptions, prefix)
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
