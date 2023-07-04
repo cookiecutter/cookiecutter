@@ -125,7 +125,11 @@ Projects are generated to your current directory or to the target directory if s
     "project_short_description": "Refreshingly simple static site generator.",
     "release_date": "2013-07-10",
     "year": "2013",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "__questions__": {
+      "full_name": "Provide your full name",
+      "email": "Provide your email"
+    }
   }
   ```
 - Pre- and post-generate hooks: Python or shell scripts to run before or after generating a project.

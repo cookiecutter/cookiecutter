@@ -81,7 +81,42 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, descriptions: default,
+            lambda var, default, questions: default,
+        )
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == context['cookiecutter']
+
+    @pytest.mark.parametrize(
+        'context',
+        [
+            {
+                'cookiecutter': {
+                    'full_name': 'Your Name',
+                    'check': ['yes', 'no'],
+                    'nothing': 'ok',
+                    '__questions__': {
+                        'full_name': 'Name please',
+                        'check': 'Checking',
+                    },
+                }
+            },
+        ],
+        ids=['ASCII default prompt/input'],
+    )
+    def test_prompt_for_config_with_questions(self, monkeypatch, context):
+        """Verify `prompt_for_config` call `read_user_variable` on text request."""
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default, questions: default,
+        )
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_yes_no',
+            lambda var, default, questions: default,
+        )
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_choice',
+            lambda var, default, questions: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -91,7 +126,7 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on dict request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_dict',
-            lambda var, default, descriptions: {"key": "value", "integer": 37},
+            lambda var, default, questions: {"key": "value", "integer": 37},
         )
         context = {'cookiecutter': {'details': {}}}
 
@@ -160,11 +195,53 @@ class TestPrompt:
             },
         }
 
+    def test_should_render_deep_dict_with_questions(self):
+        """Verify nested structures like dict in dict, rendered correctly when questions."""
+        context = {
+            'cookiecutter': {
+                'project_name': "Slartibartfast",
+                'details': {
+                    "key": "value",
+                    "integer_key": 37,
+                    "other_name": '{{cookiecutter.project_name}}',
+                    "dict_key": {
+                        "deep_key": "deep_value",
+                    },
+                },
+                '__questions__': {'project_name': 'Project name'},
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == {
+            'project_name': "Slartibartfast",
+            'details': {
+                "key": "value",
+                "integer_key": "37",
+                "other_name": "Slartibartfast",
+                "dict_key": {
+                    "deep_key": "deep_value",
+                },
+            },
+        }
+
+    def test_internal_use_no_questions(self):
+        """Verify nested structures like dict in dict, rendered correctly when questions."""
+        context = {
+            'cookiecutter': {
+                'project_name': "Slartibartfast",
+                '__questions__': {},
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == {
+            'project_name': "Slartibartfast",
+        }
+
     def test_prompt_for_templated_config(self, monkeypatch):
         """Verify Jinja2 templating works in unicode prompts."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, descriptions: default,
+            lambda var, default, questions: default,
         )
         context = {
             'cookiecutter': OrderedDict(
