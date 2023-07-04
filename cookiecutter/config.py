@@ -77,6 +77,40 @@ def get_config(config_path):
     return config_dict
 
 
+def add_user_config_from_git(config):
+    """Add the user full_name and email extracted from git in the user config if not already set"""
+    if not 'default_context' in config.keys():
+        config['default_context'] = {}
+    if 'full_name' not in config['default_context'].keys():
+        full_name = os.environ.get('GIT_AUTHOR_NAME')
+        if full_name is None:
+            import subprocess
+
+            try:
+                full_name = subprocess.check_output(
+                    ['git', 'config', '--get', 'user.name'], text=True
+                ).strip()
+            except Exception:
+                pass
+        if full_name:
+            config['default_context']['full_name'] = full_name
+
+    if 'email' not in config['default_context'].keys():
+        email = os.environ.get('GIT_AUTHOR_EMAIL')
+        if email is None:
+            import subprocess
+
+            try:
+                email = subprocess.check_output(
+                    ['git', 'config', '--get', 'user.email'], text=True
+                ).strip()
+            except Exception:
+                pass
+        if email:
+            config['default_context']['email'] = email
+    return config
+
+
 def get_user_config(config_file=None, default_config=False):
     """Return the user config as a dict.
 
@@ -93,15 +127,16 @@ def get_user_config(config_file=None, default_config=False):
     If the environment variable is not set, try the default config file path
     before falling back to the default config values.
     """
+    user_config = None
     # Do NOT load a config. Return defaults instead.
     if default_config:
         logger.debug("Force ignoring user config with default_config switch.")
-        return copy.copy(DEFAULT_CONFIG)
+        return add_user_config_from_git(copy.copy(DEFAULT_CONFIG))
 
     # Load the given config file
     if config_file and config_file is not USER_CONFIG_PATH:
         logger.debug("Loading custom config from %s.", config_file)
-        return get_config(config_file)
+        return add_user_config_from_git(get_config(config_file))
 
     try:
         # Does the user set up a config environment variable?
@@ -111,12 +146,12 @@ def get_user_config(config_file=None, default_config=False):
         # otherwise return the defaults
         if os.path.exists(USER_CONFIG_PATH):
             logger.debug("Loading config from %s.", USER_CONFIG_PATH)
-            return get_config(USER_CONFIG_PATH)
+            return add_user_config_from_git(get_config(USER_CONFIG_PATH))
         else:
             logger.debug("User config not found. Loading default config.")
-            return copy.copy(DEFAULT_CONFIG)
+            return add_user_config_from_git(copy.copy(DEFAULT_CONFIG))
     else:
         # There is a config environment variable. Try to load it.
         # Do not check for existence, so invalid file paths raise an error.
         logger.debug("User config not found or not specified. Loading default config.")
-        return get_config(env_config_file)
+        return add_user_config_from_git(get_config(env_config_file))
