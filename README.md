@@ -113,7 +113,7 @@ Projects are generated to your current directory or to the target directory if s
   ```py
   {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
   ```
-- Simply define your template variables in a `cookiecutter.json` file.
+- Simply define your template variables in a `cookiecutter.json` file. You can also add human-readable questions that will be prompted to the user for each variable using the `__prompts__` key.
   For example:
 
   ```json
@@ -126,7 +126,7 @@ Projects are generated to your current directory or to the target directory if s
     "release_date": "2013-07-10",
     "year": "2013",
     "version": "0.1.1",
-    "__questions__": {
+    "__prompts__": {
       "full_name": "Provide your full name",
       "email": "Provide your email"
     }

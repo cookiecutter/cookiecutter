@@ -27,3 +27,4 @@ Various advanced topics regarding cookiecutter usage.
    new_line_characters
    local_extensions
    nested_config_files
+   human_readable_prompts

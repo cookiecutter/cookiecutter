@@ -81,7 +81,7 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, questions: default,
+            lambda var, default, prompts: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -95,7 +95,7 @@ class TestPrompt:
                     'full_name': 'Your Name',
                     'check': ['yes', 'no'],
                     'nothing': 'ok',
-                    '__questions__': {
+                    '__prompts__': {
                         'full_name': 'Name please',
                         'check': 'Checking',
                     },
@@ -104,19 +104,19 @@ class TestPrompt:
         ],
         ids=['ASCII default prompt/input'],
     )
-    def test_prompt_for_config_with_questions(self, monkeypatch, context):
-        """Verify `prompt_for_config` call `read_user_variable` on text request."""
+    def test_prompt_for_config_with_human_prompts(self, monkeypatch, context):
+        """Verify call `read_user_variable` on request when human-readable prompts."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, questions: default,
+            lambda var, default, prompts: default,
         )
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_yes_no',
-            lambda var, default, questions: default,
+            lambda var, default, prompts: default,
         )
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_choice',
-            lambda var, default, questions: default,
+            lambda var, default, prompts: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -126,7 +126,7 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on dict request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_dict',
-            lambda var, default, questions: {"key": "value", "integer": 37},
+            lambda var, default, prompts: {"key": "value", "integer": 37},
         )
         context = {'cookiecutter': {'details': {}}}
 
@@ -195,8 +195,8 @@ class TestPrompt:
             },
         }
 
-    def test_should_render_deep_dict_with_questions(self):
-        """Verify nested structures like dict in dict, rendered correctly when questions."""
+    def test_should_render_deep_dict_with_human_prompts(self):
+        """Verify dict rendered correctly when human-readable prompts."""
         context = {
             'cookiecutter': {
                 'project_name': "Slartibartfast",
@@ -208,7 +208,7 @@ class TestPrompt:
                         "deep_key": "deep_value",
                     },
                 },
-                '__questions__': {'project_name': 'Project name'},
+                '__prompts__': {'project_name': 'Project name'},
             }
         }
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
@@ -224,12 +224,12 @@ class TestPrompt:
             },
         }
 
-    def test_internal_use_no_questions(self):
-        """Verify nested structures like dict in dict, rendered correctly when questions."""
+    def test_internal_use_no_human_prompts(self):
+        """Verify dict rendered correctly when human-readable prompts empty."""
         context = {
             'cookiecutter': {
                 'project_name': "Slartibartfast",
-                '__questions__': {},
+                '__prompts__': {},
             }
         }
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
@@ -241,7 +241,7 @@ class TestPrompt:
         """Verify Jinja2 templating works in unicode prompts."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, questions: default,
+            lambda var, default, prompts: default,
         )
         context = {
             'cookiecutter': OrderedDict(
