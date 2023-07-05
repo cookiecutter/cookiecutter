@@ -4,25 +4,30 @@ import json
 from collections import OrderedDict
 
 import click
-from rich.prompt import Prompt, Confirm
+from rich.prompt import Prompt, Confirm, IntPrompt
 from rich.progress import track, Progress
-from rich.text import Text
+from rich import print
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UndefinedVariableInTemplate
 
-def read_user_variable(var_name, default_value, descriptions, prefix):
+
+def read_user_variable(var_name, default_value, prompts=None, prefix=""):
     """Prompt user for variable and return the entered value or given default.
 
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
-    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
+    question = (
+        prompts[var_name]
+        if prompts and var_name in prompts.keys() and prompts[var_name]
+        else var_name
+    )
     return Prompt.ask(f"{prefix}[bold]{question}[/bold]", default=default_value)
 
 
-def read_user_yes_no(var_name, default_value, descriptions):
+def read_user_yes_no(var_name, default_value, prompts=None):
     """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
 
     - These input values will be converted to ``True``:
@@ -36,9 +41,13 @@ def read_user_yes_no(var_name, default_value, descriptions):
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
-    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else var_name
-    # return prompt(question, default=default_value, type=click.BOOL)
-    return Prompt.ask(f"[bold]{question}[/bold]", default=default_value, choices=["yes", "no"])
+    question = (
+        prompts[var_name]
+        if prompts and var_name in prompts.keys() and prompts[var_name]
+        else var_name
+    )
+    return click.prompt(question, default=default_value, type=click.BOOL)
+    # return Prompt.ask(f"[bold]{question}[/bold]", default=default_value, choices=["yes", "no"])
 
 
 def read_repo_password(question):
@@ -50,7 +59,7 @@ def read_repo_password(question):
     # return prompt(question, hide_input=True)
 
 
-def read_user_choice(var_name, options, descriptions):
+def read_user_choice(var_name, options, prompts=None, prefix=""):
     """Prompt the user to choose from several options for the given variable.
 
     The first item will be returned if no input happens.
@@ -69,25 +78,33 @@ def read_user_choice(var_name, options, descriptions):
     choices = choice_map.keys()
     default = '1'
 
-    question = descriptions[var_name] if var_name in descriptions.keys() and descriptions[var_name] else f"Select {var_name}"
+    question = (
+        prompts[var_name]
+        if prompts and var_name in prompts.keys() and prompts[var_name]
+        else f"Select {var_name}"
+    )
 
-    print(choices)
-    user_choice = Prompt.ask(question, choices=['yes','no','Toto la valise','Henry'], default=list(choices)[0])
-    user_choice = Confirm.ask(question, default=True)
-    print(user_choice)
-
+    # user_choice = Prompt.ask(question, choices=['yes','no'], default=list(choices)[0])
+    # user_choice = Prompt.ask(question, choices=options, default=options[0])
+    # selected = pick(options, question)
+    # user_choice = enquiries.choose(question, options)
+    # user_choice = Confirm.ask(question, default=True)
+    # print(user_choice)
+    # Text(question)
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
     prompt = '\n'.join(
         (
-            f"{question}:",
+            f"{prefix}{question}",
             "\n".join(choice_lines),
-            f"Choose from {', '.join(choices)}",
+            # f"Choose from {', '.join(choices)}",
         )
     )
+    print(prompt)
 
-    user_choice = click.prompt(
-        prompt, type=click.Choice(choices), default=default, show_choices=False
-    )
+    # user_choice = click.prompt(
+    #     f"Choose from {', '.join(choices)}", type=click.Choice(choices), default=default, show_choices=False
+    # )
+    user_choice = Prompt.ask("Choose from ", choices=list(choices), default=list(choices)[0])
     print(user_choice)
     return choice_map[user_choice]
 
@@ -117,7 +134,7 @@ def process_json(user_value, default_value=None):
     return user_dict
 
 
-def read_user_dict(var_name, default_value):
+def read_user_dict(var_name, default_value, prompts=None):
     """Prompt the user to provide a dictionary of data.
 
     :param str var_name: Variable as specified in the context
@@ -127,8 +144,13 @@ def read_user_dict(var_name, default_value):
     if not isinstance(default_value, dict):
         raise TypeError
 
+    question = (
+        prompts[var_name]
+        if prompts and var_name in prompts.keys() and prompts[var_name]
+        else var_name
+    )
     user_value = click.prompt(
-        var_name,
+        question,
         default=DEFAULT_DISPLAY,
         type=click.STRING,
         value_proc=functools.partial(process_json, default_value=default_value),
@@ -176,7 +198,9 @@ def render_variable(env, raw, cookiecutter_dict):
     return template.render(cookiecutter=cookiecutter_dict)
 
 
-def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input, descriptions):
+def prompt_choice_for_config(
+    cookiecutter_dict, env, key, options, no_input, prompts=None, prefix=""
+):
     """Prompt user with a set of options to choose from.
 
     :param no_input: Do not prompt for user input and return the first available option.
@@ -184,7 +208,7 @@ def prompt_choice_for_config(cookiecutter_dict, env, key, options, no_input, des
     rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
     if no_input:
         return rendered_options[0]
-    return read_user_choice(key, rendered_options, descriptions)
+    return read_user_choice(key, rendered_options, prompts, prefix)
 
 
 def prompt_for_config(context, no_input=False):
@@ -196,11 +220,10 @@ def prompt_for_config(context, no_input=False):
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
 
-    descriptions = {}
-    if '__internal_use' in context['cookiecutter'].keys():
-        if 'descriptions' in context['cookiecutter']['__internal_use'].keys():
-            descriptions = context['cookiecutter']['__internal_use']['descriptions']
-        del context['cookiecutter']['__internal_use']
+    prompts = {}
+    if '__prompts__' in context['cookiecutter'].keys():
+        prompts = context['cookiecutter']['__prompts__']
+        del context['cookiecutter']['__prompts__']
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
@@ -221,7 +244,7 @@ def prompt_for_config(context, no_input=False):
             if isinstance(raw, list):
                 # We are dealing with a choice variable
                 val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input, descriptions
+                    cookiecutter_dict, env, key, raw, no_input, prompts, prefix
                 )
                 cookiecutter_dict[key] = val
             elif isinstance(raw, bool):
@@ -231,13 +254,13 @@ def prompt_for_config(context, no_input=False):
                         env, raw, cookiecutter_dict
                     )
                 else:
-                    cookiecutter_dict[key] = read_user_yes_no(key, raw, descriptions)
+                    cookiecutter_dict[key] = read_user_yes_no(key, raw, prompts)
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
 
                 if not no_input:
-                    val = read_user_variable(key, val, descriptions, prefix)
+                    val = read_user_variable(key, val, prompts, prefix)
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
@@ -256,7 +279,7 @@ def prompt_for_config(context, no_input=False):
                 val = render_variable(env, raw, cookiecutter_dict)
 
                 if not no_input and not key.startswith('__'):
-                    val = read_user_dict(key, val)
+                    val = read_user_dict(key, val, prompts)
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:
