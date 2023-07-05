@@ -1,9 +1,8 @@
-===
-API
-===
+cookiecutter package
+====================
 
-This is the Cookiecutter modules API documentation.
-
+Submodules
+----------
 
 cookiecutter.cli module
 -----------------------
