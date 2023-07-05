@@ -25,5 +25,6 @@ Various advanced topics regarding cookiecutter usage.
    directories
    jinja_env
    new_line_characters
+   conditional_variables
    local_extensions
    nested_config_files

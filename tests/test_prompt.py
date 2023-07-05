@@ -251,6 +251,48 @@ class TestPrompt:
         cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
         assert cookiecutter_dict == context['cookiecutter']
 
+    def test_render_conditional_variables(self):
+        """Verify rendering of conditional variables."""
+        context = {
+            'cookiecutter': {
+                'project_name': "Render conditional",
+                'project_instance': "yes",
+                '_if_use_project_instance': {
+                    "added_variable": "nice",
+                    "second_variable": "very nice",
+                },
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == OrderedDict(
+            [
+                ('project_name', 'Render conditional'),
+                ('project_instance', 'yes'),
+                ('added_variable', 'nice'),
+                ('second_variable', 'very nice'),
+            ]
+        )
+
+    def test_dont_render_conditional_variables(self):
+        """Verify that conditional variables are not rendered."""
+        context = {
+            'cookiecutter': {
+                'project_name': "Render conditional",
+                'project_instance': "no",
+                '_if_use_project_instance': {
+                    "added_variable": "nice",
+                    "second_variable": "very nice",
+                },
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == OrderedDict(
+            [
+                ('project_name', 'Render conditional'),
+                ('project_instance', 'no'),
+            ]
+        )
+
 
 class TestReadUserChoice:
     """Class to unite choices prompt related tests."""
