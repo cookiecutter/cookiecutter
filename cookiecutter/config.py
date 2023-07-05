@@ -78,25 +78,24 @@ def get_config(config_path):
 
 
 def add_user_config_from_git(config):
-    """Add the user full_name and email extracted from git in the user config if not already set"""
-    if not 'default_context' in config.keys():
-        config['default_context'] = {}
+    """Add the user name/email extracted from git in the config if not already set."""
     if 'full_name' not in config['default_context'].keys():
-        full_name = os.environ.get('GIT_AUTHOR_NAME')
+        full_name = os.getenv('GIT_AUTHOR_NAME')
         if full_name is None:
             import subprocess
 
             try:
                 full_name = subprocess.check_output(
-                    ['git', 'config', '--get', 'user.name'], text=True
+                    ['git', 'config', '--get', 'user.name'],
+                    text=True,
                 ).strip()
-            except Exception:
+            except subprocess.CalledProcessError:
                 pass
         if full_name:
             config['default_context']['full_name'] = full_name
 
     if 'email' not in config['default_context'].keys():
-        email = os.environ.get('GIT_AUTHOR_EMAIL')
+        email = os.getenv('GIT_AUTHOR_EMAIL')
         if email is None:
             import subprocess
 
@@ -104,7 +103,7 @@ def add_user_config_from_git(config):
                 email = subprocess.check_output(
                     ['git', 'config', '--get', 'user.email'], text=True
                 ).strip()
-            except Exception:
+            except subprocess.CalledProcessError:
                 pass
         if email:
             config['default_context']['email'] = email
@@ -127,7 +126,6 @@ def get_user_config(config_file=None, default_config=False):
     If the environment variable is not set, try the default config file path
     before falling back to the default config values.
     """
-    user_config = None
     # Do NOT load a config. Return defaults instead.
     if default_config:
         logger.debug("Force ignoring user config with default_config switch.")

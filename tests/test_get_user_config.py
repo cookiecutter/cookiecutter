@@ -105,6 +105,26 @@ def test_specify_config_path(mocker, custom_config_path, custom_config):
     assert user_config == custom_config
 
 
+def test_get_config_from_git_cmd(monkeypatch):
+    """Try to get name from git cmd, fails because git config not available in tox."""
+    user_config = config.get_user_config(default_config=True)
+    monkeypatch.setattr('subprocess.check_output', lambda cmd, txt: 'something')
+    assert 'full_name' not in user_config['default_context'].keys()
+
+
+def test_get_config_from_git_env(monkeypatch):
+    """Try to get name from git env variables."""
+    email = "email@email.com"
+    name = "Firstname Lastname"
+    monkeypatch.setenv('GIT_AUTHOR_NAME', name)
+    monkeypatch.setenv('GIT_AUTHOR_EMAIL', email)
+    user_config = config.get_user_config(default_config=True)
+    assert user_config['default_context']['full_name'] == name
+    assert user_config['default_context']['email'] == email
+    monkeypatch.delenv('GIT_AUTHOR_NAME')
+    monkeypatch.delenv('GIT_AUTHOR_EMAIL')
+
+
 def test_default_config_path(user_config_path):
     """Validate app configuration. User config path should match default path."""
     assert config.USER_CONFIG_PATH == user_config_path
