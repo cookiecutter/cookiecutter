@@ -3,7 +3,7 @@
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
 
-## 2.2.0 (2023-07-05)
+## 2.2.0 (2023-07-06)
 
 ### Changes
 
