@@ -4,9 +4,7 @@ import json
 from collections import OrderedDict
 
 import click
-from rich.prompt import Prompt, Confirm, IntPrompt
-from rich.progress import track, Progress
-from rich import print
+from rich.prompt import Prompt, Confirm
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
@@ -24,10 +22,10 @@ def read_user_variable(var_name, default_value, prompts=None, prefix=""):
         if prompts and var_name in prompts.keys() and prompts[var_name]
         else var_name
     )
-    return Prompt.ask(f"{prefix}[bold]{question}[/bold]", default=default_value)
+    return Prompt.ask(f"{prefix}{question}", default=default_value)
 
 
-def read_user_yes_no(var_name, default_value, prompts=None):
+def read_user_yes_no(var_name, default_value, prompts=None, prefix=""):
     """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
 
     - These input values will be converted to ``True``:
@@ -46,8 +44,7 @@ def read_user_yes_no(var_name, default_value, prompts=None):
         if prompts and var_name in prompts.keys() and prompts[var_name]
         else var_name
     )
-    return click.prompt(question, default=default_value, type=click.BOOL)
-    # return Prompt.ask(f"[bold]{question}[/bold]", default=default_value, choices=["yes", "no"])
+    return Confirm.ask(f"{prefix}{question}", default=default_value)
 
 
 def read_repo_password(question):
@@ -56,7 +53,6 @@ def read_repo_password(question):
     :param str question: Question to the user
     """
     return Prompt.ask(question, hide_input=True)
-    # return prompt(question, hide_input=True)
 
 
 def read_user_choice(var_name, options, prompts=None, prefix=""):
@@ -76,7 +72,6 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
 
     choice_map = OrderedDict((f'{i}', value) for i, value in enumerate(options, 1))
     choices = choice_map.keys()
-    default = '1'
 
     question = (
         prompts[var_name]
@@ -84,28 +79,18 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
         else f"Select {var_name}"
     )
 
-    # user_choice = Prompt.ask(question, choices=['yes','no'], default=list(choices)[0])
-    # user_choice = Prompt.ask(question, choices=options, default=options[0])
-    # selected = pick(options, question)
-    # user_choice = enquiries.choose(question, options)
-    # user_choice = Confirm.ask(question, default=True)
-    # print(user_choice)
-    # Text(question)
-    choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
+    choice_lines = [
+        '    [bold magenta]{}[/] - [bold]{}[/]'.format(*c) for c in choice_map.items()
+    ]
     prompt = '\n'.join(
         (
             f"{prefix}{question}",
             "\n".join(choice_lines),
-            # f"Choose from {', '.join(choices)}",
+            "    Choose from",
         )
     )
-    print(prompt)
 
-    # user_choice = click.prompt(
-    #     f"Choose from {', '.join(choices)}", type=click.Choice(choices), default=default, show_choices=False
-    # )
-    user_choice = Prompt.ask("Choose from ", choices=list(choices), default=list(choices)[0])
-    print(user_choice)
+    user_choice = Prompt.ask(prompt, choices=list(choices), default=list(choices)[0])
     return choice_map[user_choice]
 
 
@@ -232,7 +217,7 @@ def prompt_for_config(context, no_input=False):
     count = 0
     for key, raw in context['cookiecutter'].items():
         count += 1
-        prefix = f"  [grey][{count}/{len(context['cookiecutter'].keys())}][/grey] "
+        prefix = f"  [dim][{count}/{len(context['cookiecutter'].keys())}][/] "
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
@@ -254,7 +239,7 @@ def prompt_for_config(context, no_input=False):
                         env, raw, cookiecutter_dict
                     )
                 else:
-                    cookiecutter_dict[key] = read_user_yes_no(key, raw, prompts)
+                    cookiecutter_dict[key] = read_user_yes_no(key, raw, prompts, prefix)
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
