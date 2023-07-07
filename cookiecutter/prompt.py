@@ -52,7 +52,7 @@ def read_repo_password(question):
 
     :param str question: Question to the user
     """
-    return Prompt.ask(question, hide_input=True)
+    return Prompt.ask(question, password=True)
 
 
 def read_user_choice(var_name, options, prompts=None, prefix=""):
@@ -119,7 +119,7 @@ def process_json(user_value, default_value=None):
     return user_dict
 
 
-def read_user_dict(var_name, default_value, prompts=None):
+def read_user_dict(var_name, default_value, prompts=None, prefix=""):
     """Prompt the user to provide a dictionary of data.
 
     :param str var_name: Variable as specified in the context
@@ -135,7 +135,7 @@ def read_user_dict(var_name, default_value, prompts=None):
         else var_name
     )
     user_value = click.prompt(
-        question,
+        f"{prefix}{question}",
         default=DEFAULT_DISPLAY,
         type=click.STRING,
         value_proc=functools.partial(process_json, default_value=default_value),
@@ -264,7 +264,7 @@ def prompt_for_config(context, no_input=False):
                 val = render_variable(env, raw, cookiecutter_dict)
 
                 if not no_input and not key.startswith('__'):
-                    val = read_user_dict(key, val, prompts)
+                    val = read_user_dict(key, val, prompts, prefix)
 
                 cookiecutter_dict[key] = val
         except UndefinedError as err:

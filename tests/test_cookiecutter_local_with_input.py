@@ -21,7 +21,7 @@ def test_cookiecutter_local_with_input(monkeypatch):
     """Verify simple cookiecutter run results, without extra_context provided."""
     monkeypatch.setattr(
         'cookiecutter.prompt.read_user_variable',
-        lambda var, default, prompts: default,
+        lambda var, default, prompts, prefix: default,
     )
     main.cookiecutter('tests/fake-repo-pre/', no_input=False)
     assert os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}')
@@ -36,7 +36,7 @@ def test_cookiecutter_input_extra_context(monkeypatch):
     """Verify simple cookiecutter run results, with extra_context provided."""
     monkeypatch.setattr(
         'cookiecutter.prompt.read_user_variable',
-        lambda var, default, prompts: default,
+        lambda var, default, prompts, prefix: default,
     )
     main.cookiecutter(
         'tests/fake-repo-pre',

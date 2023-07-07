@@ -1,6 +1,4 @@
 """test_read_user_yes_no."""
-import click
-
 from cookiecutter.prompt import read_user_yes_no
 
 QUESTION = 'Is it okay to delete and re-clone it?'
@@ -12,9 +10,9 @@ def test_click_invocation(mocker):
 
     Test for boolean type invocation.
     """
-    prompt = mocker.patch('click.prompt')
+    prompt = mocker.patch('rich.prompt.Confirm.ask')
     prompt.return_value = DEFAULT
 
     assert read_user_yes_no(QUESTION, DEFAULT) == DEFAULT
 
-    click.prompt.assert_called_once_with(QUESTION, default=DEFAULT, type=click.BOOL)
+    prompt.assert_called_once_with(QUESTION, default=DEFAULT)

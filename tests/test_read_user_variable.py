@@ -1,6 +1,4 @@
 """test_read_user_variable."""
-import click
-
 from cookiecutter.prompt import read_user_variable
 
 VARIABLE = 'project_name'
@@ -12,9 +10,9 @@ def test_click_invocation(mocker):
 
     Test for string type invocation.
     """
-    prompt = mocker.patch('click.prompt')
+    prompt = mocker.patch('rich.prompt.Prompt.ask')
     prompt.return_value = DEFAULT
 
     assert read_user_variable(VARIABLE, DEFAULT) == DEFAULT
 
-    click.prompt.assert_called_once_with(VARIABLE, default=DEFAULT)
+    prompt.assert_called_once_with(VARIABLE, default=DEFAULT)
