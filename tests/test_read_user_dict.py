@@ -2,10 +2,7 @@
 import click
 import pytest
 
-from cookiecutter.prompt import (
-    process_json,
-    read_user_dict,
-)
+from cookiecutter.prompt import process_json, read_user_dict, JsonPrompt
 from rich.prompt import InvalidResponse
 
 
@@ -124,18 +121,9 @@ def test_read_user_dict_default_value(mocker, input):
     assert val == {'project_slug': 'pytest-plugin'}
 
 
-# def test_json_prompt_invalid_json():
-#     """Test `JsonPrompt` for correct error on malformed input."""
-#     # JsonPrompt.ask(
-#     #     "Nope", default='nope]', show_default=False, stream=io.StringIO('nope]')
-#     # )
-#     runner = click.testing.CliRunner()
-#     with pytest.raises(InvalidResponse) as exc_info:
-#         with runner.isolation(input='\n{"aa": "aa"}\n'):
-#             read_user_dict('name', '{"aa": "aa"}')
-#     # resp = JsonPrompt.ask(
-#     #     "Nope", default='nope]', show_default=False, stream=io.StringIO('nope]')
-#     # )
-
-#     # assert str(resp) == 'Unable to decode to JSON.'
-#     assert str(exc_info.value) == 'Unable to decode to JSON.'
+def test_json_prompt_process_response():
+    """Test `JsonPrompt` process_response to convert str to json."""
+    jp = JsonPrompt()
+    assert jp.process_response('{"project_slug": "something"}') == {
+        'project_slug': 'something'
+    }
