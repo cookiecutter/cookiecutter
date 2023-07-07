@@ -81,7 +81,42 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default: default,
+            lambda var, default, prompts: default,
+        )
+
+        cookiecutter_dict = prompt.prompt_for_config(context)
+        assert cookiecutter_dict == context['cookiecutter']
+
+    @pytest.mark.parametrize(
+        'context',
+        [
+            {
+                'cookiecutter': {
+                    'full_name': 'Your Name',
+                    'check': ['yes', 'no'],
+                    'nothing': 'ok',
+                    '__prompts__': {
+                        'full_name': 'Name please',
+                        'check': 'Checking',
+                    },
+                }
+            },
+        ],
+        ids=['ASCII default prompt/input'],
+    )
+    def test_prompt_for_config_with_human_prompts(self, monkeypatch, context):
+        """Verify call `read_user_variable` on request when human-readable prompts."""
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default, prompts: default,
+        )
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_yes_no',
+            lambda var, default, prompts: default,
+        )
+        monkeypatch.setattr(
+            'cookiecutter.prompt.read_user_choice',
+            lambda var, default, prompts: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -91,7 +126,7 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on dict request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_dict',
-            lambda var, default: {"key": "value", "integer": 37},
+            lambda var, default, prompts: {"key": "value", "integer": 37},
         )
         context = {'cookiecutter': {'details': {}}}
 
@@ -160,10 +195,53 @@ class TestPrompt:
             },
         }
 
+    def test_should_render_deep_dict_with_human_prompts(self):
+        """Verify dict rendered correctly when human-readable prompts."""
+        context = {
+            'cookiecutter': {
+                'project_name': "Slartibartfast",
+                'details': {
+                    "key": "value",
+                    "integer_key": 37,
+                    "other_name": '{{cookiecutter.project_name}}',
+                    "dict_key": {
+                        "deep_key": "deep_value",
+                    },
+                },
+                '__prompts__': {'project_name': 'Project name'},
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == {
+            'project_name': "Slartibartfast",
+            'details': {
+                "key": "value",
+                "integer_key": "37",
+                "other_name": "Slartibartfast",
+                "dict_key": {
+                    "deep_key": "deep_value",
+                },
+            },
+        }
+
+    def test_internal_use_no_human_prompts(self):
+        """Verify dict rendered correctly when human-readable prompts empty."""
+        context = {
+            'cookiecutter': {
+                'project_name': "Slartibartfast",
+                '__prompts__': {},
+            }
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == {
+            'project_name': "Slartibartfast",
+        }
+
     def test_prompt_for_templated_config(self, monkeypatch):
         """Verify Jinja2 templating works in unicode prompts."""
         monkeypatch.setattr(
-            'cookiecutter.prompt.read_user_variable', lambda var, default: default
+            'cookiecutter.prompt.read_user_variable',
+            lambda var, default, prompts: default,
         )
         context = {
             'cookiecutter': OrderedDict(
@@ -274,7 +352,7 @@ class TestReadUserChoice:
 
         assert not read_user_variable.called
         assert prompt_choice.called
-        read_user_choice.assert_called_once_with('orientation', choices)
+        read_user_choice.assert_called_once_with('orientation', choices, {})
         assert cookiecutter_dict == {'orientation': 'all'}
 
     def test_should_invoke_read_user_variable(self, mocker):
@@ -292,7 +370,7 @@ class TestReadUserChoice:
 
         assert not prompt_choice.called
         assert not read_user_choice.called
-        read_user_variable.assert_called_once_with('full_name', 'Your Name')
+        read_user_variable.assert_called_once_with('full_name', 'Your Name', {})
         assert cookiecutter_dict == {'full_name': 'Audrey Roy'}
 
     def test_should_render_choices(self, mocker):
@@ -327,8 +405,8 @@ class TestReadUserChoice:
         }
         cookiecutter_dict = prompt.prompt_for_config(context)
 
-        read_user_variable.assert_called_once_with('project_name', 'A New Project')
-        read_user_choice.assert_called_once_with('pkg_name', rendered_choices)
+        read_user_variable.assert_called_once_with('project_name', 'A New Project', {})
+        read_user_choice.assert_called_once_with('pkg_name', rendered_choices, {})
         assert cookiecutter_dict == expected
 
 
@@ -376,7 +454,7 @@ class TestPromptChoiceForConfig:
             options=choices,
             no_input=False,  # Ask the user for input
         )
-        read_user_choice.assert_called_once_with('orientation', choices)
+        read_user_choice.assert_called_once_with('orientation', choices, None)
         assert expected_choice == actual_choice
 
 
