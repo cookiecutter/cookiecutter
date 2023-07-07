@@ -1,10 +1,8 @@
 """Functions for prompting the user for project info."""
-import functools
 import json
 from collections import OrderedDict
 
-import click
-from rich.prompt import Prompt, Confirm
+from rich.prompt import Prompt, Confirm, PromptBase, InvalidResponse
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter.environment import StrictEnvironment
@@ -102,21 +100,29 @@ def process_json(user_value, default_value=None):
 
     :param str user_value: User-supplied value to load as a JSON dict
     """
-    if user_value == DEFAULT_DISPLAY:
-        # Return the given default w/o any processing
-        return default_value
-
     try:
         user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
     except Exception as error:
         # Leave it up to click to ask the user again
-        raise click.UsageError('Unable to decode to JSON.') from error
+        raise InvalidResponse('Unable to decode to JSON.') from error
 
     if not isinstance(user_dict, dict):
         # Leave it up to click to ask the user again
-        raise click.UsageError('Requires JSON dict.')
+        raise InvalidResponse('Requires JSON dict.')
 
     return user_dict
+
+
+class JsonPrompt(PromptBase[dict]):
+    """A prompt that returns a dict from JSON string."""
+
+    default = None
+    response_type = dict
+    validate_error_message = "[prompt.invalid]  Please enter a valid JSON string"
+
+    def process_response(self, value: str) -> dict:
+        """Convert choices to a bool."""
+        return process_json(value, self.default)
 
 
 def read_user_dict(var_name, default_value, prompts=None, prefix=""):
@@ -134,16 +140,22 @@ def read_user_dict(var_name, default_value, prompts=None, prefix=""):
         if prompts and var_name in prompts.keys() and prompts[var_name]
         else var_name
     )
-    user_value = click.prompt(
-        f"{prefix}{question}",
-        default=DEFAULT_DISPLAY,
-        type=click.STRING,
-        value_proc=functools.partial(process_json, default_value=default_value),
+    user_value = JsonPrompt.ask(
+        f"{prefix}{question} [cyan bold]({DEFAULT_DISPLAY})[/]",
+        default=default_value,
+        show_default=False,
     )
 
-    if click.__version__.startswith("7.") and user_value == DEFAULT_DISPLAY:
-        # click 7.x does not invoke value_proc on the default value.
-        return default_value  # pragma: no cover
+    # user_value = click.prompt(
+    #     f"{prefix}{question}",
+    #     default=DEFAULT_DISPLAY,
+    #     typ   e=click.STRING,
+    #     value_proc=functools.partial(process_json, default_value=default_value),
+    # )
+
+    # if click.__version__.startswith("7.") and user_value == DEFAULT_DISPLAY:
+    #     # click 7.x does not invoke value_proc on the default value.
+    #     return default_value  # pragma: no cover
     return user_value
 
 
@@ -215,15 +227,18 @@ def prompt_for_config(context, no_input=False):
     # values might refer to them.
 
     count = 0
+    size = len(context['cookiecutter'].items())
     for key, raw in context['cookiecutter'].items():
-        count += 1
-        prefix = f"  [dim][{count}/{len(context['cookiecutter'].keys())}][/] "
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
         elif key.startswith('__'):
             cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
+
+        if not isinstance(raw, dict):
+            count += 1
+            prefix = f"  [dim][{count}/{size}][/] "
 
         try:
             if isinstance(raw, list):
@@ -261,6 +276,8 @@ def prompt_for_config(context, no_input=False):
         try:
             if isinstance(raw, dict):
                 # We are dealing with a dict variable
+                count += 1
+                prefix = f"  [dim][{count}/{size}][/] "
                 val = render_variable(env, raw, cookiecutter_dict)
 
                 if not no_input and not key.startswith('__'):
