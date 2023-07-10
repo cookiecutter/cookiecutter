@@ -235,7 +235,7 @@ def prompt_for_config(context, no_input=False):
                         env, raw, cookiecutter_dict
                     )
                 else:
-                    cookiecutter_dict[key] = read_user_yes_no(key, raw)
+                    cookiecutter_dict[key] = read_user_yes_no(key, raw, prompts)
             elif not isinstance(raw, dict):
                 # We are dealing with a regular variable
                 val = render_variable(env, raw, cookiecutter_dict)
