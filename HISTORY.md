@@ -2,6 +2,8 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.2.3 (unreleased)
+
 ## 2.2.2 (2023-07-10)
 
 ### CI/CD and QA changes
