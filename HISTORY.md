@@ -2,6 +2,17 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.2.2 (2023-07-10)
+
+### CI/CD and QA changes
+
+* Improve gitignore (#1889) @audreyfeldroy
+* Add warning for jinja2_time (#1890) @henryiii
+
+### This release is made by wonderful contributors:
+
+@audreyfeldroy, @ericof and @henryiii
+
 
 ## 2.2.0 (2023-07-06)
 
