@@ -4,6 +4,7 @@ include CONTRIBUTING.md
 include HISTORY.md
 include LICENSE
 include README.md
+include cookiecutter/VERSION.txt
 
 exclude Makefile
 exclude __main__.py
