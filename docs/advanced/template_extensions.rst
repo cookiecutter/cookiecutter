@@ -33,6 +33,13 @@ By default Cookiecutter includes the following extensions:
 - ``cookiecutter.extensions.TimeExtension``
 - ``cookiecutter.extensions.UUIDExtension``
 
+.. warning::
+
+    The above is just an example to demonstrate how this is used. There is no
+    need to require ``jinja2_time.TimeExtension``, since its functionality is
+    included by default (by ``cookiecutter.extensions.TimeExtension``) without
+    needing an extra install.
+
 Jsonify extension
 ~~~~~~~~~~~~~~~~~
 
