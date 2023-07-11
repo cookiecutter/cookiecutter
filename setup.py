@@ -1,10 +1,21 @@
 """cookiecutter distutils configuration."""
+from pathlib import Path
 from setuptools import setup
 
-version = "2.2.3.dev0"
+
+def _get_version() -> str:
+    """Read cookiecutter/VERSION.txt and return its contents."""
+    path = Path("cookiecutter").resolve()
+    version_file = path / "VERSION.txt"
+    return version_file.read_text().strip()
+
+
+version = _get_version()
+
 
 with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
+
 
 requirements = [
     'binaryornot>=0.4.4',
