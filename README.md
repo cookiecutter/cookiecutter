@@ -132,9 +132,9 @@ Projects are generated to your current directory or to the target directory if s
       "email": "Provide your email",
       "linting": {
         "__prompt__": "Which linting tool do you want to use?",
-          "ruff": "Ruff",
-          "flake8": "Flake8",
-          "none": "No linting tool"
+        "ruff": "Ruff",
+        "flake8": "Flake8",
+        "none": "No linting tool"
       }
     }
   }
