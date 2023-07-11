@@ -480,7 +480,7 @@ class TestReadUserYesNo(object):
         cookiecutter_dict = prompt.prompt_for_config(context)
 
         assert not read_user_variable.called
-        read_user_yes_no.assert_called_once_with('run_as_docker', run_as_docker)
+        read_user_yes_no.assert_called_once_with('run_as_docker', run_as_docker, {})
         assert cookiecutter_dict == {'run_as_docker': run_as_docker}
 
     def test_boolean_parameter_no_input(self):
