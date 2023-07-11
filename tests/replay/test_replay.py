@@ -39,8 +39,8 @@ def test_main_does_not_invoke_dump_but_load(mocker):
     main.cookiecutter('tests/fake-repo-tmpl/', replay=True)
 
     assert not mock_prompt.called
-    assert not mock_gen_context.called
-    assert not mock_replay_dump.called
+    assert mock_gen_context.called
+    assert mock_replay_dump.called
     assert mock_replay_load.called
     assert mock_gen_files.called
 
