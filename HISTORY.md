@@ -2,8 +2,23 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 2.2.3 (unreleased)
+## 2.2.3 (2023-07-11)
+### Changes
 
+* Add support for adding human-readable labels for choices when defining multiple choices questions (#1898) @vemonet
+
+### Bugfixes
+
+* Fix issue where the prompts dict was not passed for yes_no questions (#1895) @vemonet
+* Set cookiecutter/VERSION.txt as source of truth for version number (#1896) @ericof
+
+### CI/CD and QA changes
+
+* Set cookiecutter/VERSION.txt as source of truth for version number (#1896) @ericof
+
+### This release is made by wonderful contributors:
+
+@ericof and @vemonet
 ## 2.2.2 (2023-07-10)
 
 ### CI/CD and QA changes
