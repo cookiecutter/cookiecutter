@@ -11,7 +11,7 @@ repos:
         files: \.rst$
         require_serial: true
   - repo: https://github.com/psf/black.git
-    rev: 23.3.0
+    rev: 23.7.0
     hooks:
       - id: black
         language_version: python3
