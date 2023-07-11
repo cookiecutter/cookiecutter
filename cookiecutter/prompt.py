@@ -72,14 +72,23 @@ def read_user_choice(var_name, options, prompts=None):
     choice_map = OrderedDict((f'{i}', value) for i, value in enumerate(options, 1))
     choices = choice_map.keys()
     default = '1'
-
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
-        else f"Select {var_name}"
-    )
-
+    question = f"Select {var_name}"
     choice_lines = ['{} - {}'.format(*c) for c in choice_map.items()]
+
+    # Handle if human-readable prompt is provided
+    if prompts and var_name in prompts.keys():
+        if isinstance(prompts[var_name], str):
+            question = prompts[var_name]
+        else:
+            if "__prompt__" in prompts[var_name]:
+                question = prompts[var_name]["__prompt__"]
+            choice_lines = [
+                f"{i} - {prompts[var_name][p]}"
+                if p in prompts[var_name]
+                else f"{i} - {p}"
+                for i, p in choice_map.items()
+            ]
+
     prompt = '\n'.join(
         (
             f"{question}:",

@@ -3,7 +3,10 @@
 Human readable prompts
 --------------------------------
 
-You can add human-readable prompts that will be shown to the user for each variable using the ``__prompts__`` key:
+You can add human-readable prompts that will be shown to the user for each variable using the ``__prompts__`` key.
+For multiple choices questions you can also provide labels for each option.
+
+See the following cookiecutter config as example:
 
 
 .. code-block:: json
@@ -16,11 +19,8 @@ You can add human-readable prompts that will be shown to the user for each varia
         "github_username": "your-org-or-username",
         "full_name": "Firstname Lastname",
         "email": "email@example.com",
-        "command_line_interface": ["yes", "no"],
-        "init_git": ["yes", "no"],
-        "enable_pre_commit": ["yes", "no"],
-        "documentation_website": ["yes", "no"],
-        "black_formatting": ["yes", "no"],
+        "init_git": true,
+        "linting": ["ruff", "flake8", "none"],
         "__prompts__": {
             "package_name": "Select your package name:",
             "module_name": "Select your module name:",
@@ -31,8 +31,11 @@ You can add human-readable prompts that will be shown to the user for each varia
             "email": "Author email:",
             "command_line_interface": "Add CLI:",
             "init_git": "Initialize a git repository:",
-            "enable_pre_commit": "Enable pre-commit:",
-            "documentation_website": "Add a documentation website:",
-            "black_formatting": "Enable black formatting:"
+            "linting": {
+                "__prompt__": "Which linting tool do you want to use?",
+                "ruff": "Ruff",
+                "flake8": "Flake8",
+                "none": "No linting tool"
+            }
         }
     }
