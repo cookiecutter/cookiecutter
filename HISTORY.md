@@ -5,20 +5,26 @@ History is important, but our current roadmap can be found [here](https://github
 ## 2.2.3 (2023-07-11)
 ### Changes
 
+### Minor Changes
+
 * Add support for adding human-readable labels for choices when defining multiple choices questions (#1898) @vemonet
+
+* Prompt with replay file (#1758) @w1ndblow
+
+### CI/CD and QA changes
+
+* Set cookiecutter/VERSION.txt as source of truth for version number (#1896) @ericof
+* [pre-commit.ci] pre-commit autoupdate (#1897) @pre-commit-ci
 
 ### Bugfixes
 
 * Fix issue where the prompts dict was not passed for yes_no questions (#1895) @vemonet
 * Set cookiecutter/VERSION.txt as source of truth for version number (#1896) @ericof
 
-### CI/CD and QA changes
-
-* Set cookiecutter/VERSION.txt as source of truth for version number (#1896) @ericof
-
 ### This release is made by wonderful contributors:
 
-@ericof and @vemonet
+@ericof, @pre-commit-ci, @pre-commit-ci[bot], @vemonet and @w1ndblow
+
 ## 2.2.2 (2023-07-10)
 
 ### CI/CD and QA changes
