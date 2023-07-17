@@ -23,6 +23,23 @@ def read_user_variable(var_name, default_value, prompts=None, prefix=""):
     return Prompt.ask(f"{prefix}{question}", default=default_value)
 
 
+class YesNoPrompt(Confirm):
+    """A prompt that returns a boolean for yes/no questions."""
+
+    yes_choices = ["1", "true", "t", "yes", "y", "on"]
+    no_choices = ["0", "false", "f", "no", "n", "off"]
+
+    def process_response(self, value: str) -> bool:
+        """Convert choices to a bool."""
+        value = value.strip().lower()
+        if value in self.yes_choices:
+            return True
+        elif value in self.no_choices:
+            return False
+        else:
+            raise InvalidResponse(self.validate_error_message)
+
+
 def read_user_yes_no(var_name, default_value, prompts=None, prefix=""):
     """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
 
@@ -42,7 +59,7 @@ def read_user_yes_no(var_name, default_value, prompts=None, prefix=""):
         if prompts and var_name in prompts.keys() and prompts[var_name]
         else var_name
     )
-    return Confirm.ask(f"{prefix}{question}", default=default_value)
+    return YesNoPrompt.ask(f"{prefix}{question}", default=default_value)
 
 
 def read_repo_password(question):
@@ -131,7 +148,7 @@ class JsonPrompt(PromptBase[dict]):
     validate_error_message = "[prompt.invalid]  Please enter a valid JSON string"
 
     def process_response(self, value: str) -> dict:
-        """Convert choices to a bool."""
+        """Convert choices to a dict."""
         return process_json(value, self.default)
 
 
