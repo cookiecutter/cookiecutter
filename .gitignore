@@ -1,5 +1,4 @@
-# Source:
-# https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
+# Adapted from https://github.com/github/gitignore/blob/main/Python.gitignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -161,3 +160,9 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
+
+# VSCode settings (e.g. .vscode/settings.json containing personal preferred path to venv)
+.vscode/
+
+# macOS auto-generated file
+.DS_Store

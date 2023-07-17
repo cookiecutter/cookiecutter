@@ -20,9 +20,6 @@ def test_click_invocation(mocker, user_choice, expected_value):
 
     Test for choice type invocation.
     """
-    # choice = mocker.patch('rich.prompt.Prompt.ask')
-    # choice.return_value = click.Choice(OPTIONS)
-
     prompt = mocker.patch('rich.prompt.Prompt.ask')
     prompt.return_value = f'{user_choice}'
 

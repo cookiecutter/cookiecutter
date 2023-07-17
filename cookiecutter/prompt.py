@@ -71,15 +71,25 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
     choice_map = OrderedDict((f'{i}', value) for i, value in enumerate(options, 1))
     choices = choice_map.keys()
 
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
-        else f"Select {var_name}"
-    )
-
+    question = f"Select {var_name}"
     choice_lines = [
         '    [bold magenta]{}[/] - [bold]{}[/]'.format(*c) for c in choice_map.items()
     ]
+
+    # Handle if human-readable prompt is provided
+    if prompts and var_name in prompts.keys():
+        if isinstance(prompts[var_name], str):
+            question = prompts[var_name]
+        else:
+            if "__prompt__" in prompts[var_name]:
+                question = prompts[var_name]["__prompt__"]
+            choice_lines = [
+                f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
+                if p in prompts[var_name]
+                else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
+                for i, p in choice_map.items()
+            ]
+
     prompt = '\n'.join(
         (
             f"{prefix}{question}",
@@ -145,17 +155,6 @@ def read_user_dict(var_name, default_value, prompts=None, prefix=""):
         default=default_value,
         show_default=False,
     )
-
-    # user_value = click.prompt(
-    #     f"{prefix}{question}",
-    #     default=DEFAULT_DISPLAY,
-    #     typ   e=click.STRING,
-    #     value_proc=functools.partial(process_json, default_value=default_value),
-    # )
-
-    # if click.__version__.startswith("7.") and user_value == DEFAULT_DISPLAY:
-    #     # click 7.x does not invoke value_proc on the default value.
-    #     return default_value  # pragma: no cover
     return user_value
 
 
