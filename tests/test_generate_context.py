@@ -135,6 +135,13 @@ def template_context():
             ('project_name', 'Kivy Project'),
             ('repo_name', '{{cookiecutter.project_name|lower}}'),
             ('orientation', ['all', 'landscape', 'portrait']),
+            (
+                'deployments',
+                {
+                    'preprod': ['eu', 'us', 'ap'],
+                    'prod': ['eu', 'us', 'ap'],
+                },
+            ),
         ]
     )
 
@@ -193,6 +200,25 @@ def test_apply_overwrites_invalid_overwrite(template_context):
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
             context=template_context, overwrite_context={'orientation': 'foobar'}
+        )
+
+
+def test_apply_overwrites_sets_multichoice_values(template_context):
+    """Verify variable overwrite for list given multiple valid values."""
+    generate.apply_overwrites_to_context(
+        context=template_context,
+        overwrite_context={'deployments': {'preprod': ['eu'], 'prod': ['eu']}},
+    )
+    assert template_context['deployments']['preprod'] == ['eu']
+    assert template_context['deployments']['prod'] == ['eu']
+
+
+def test_apply_overwrites_invalid_multichoice_values(template_context):
+    """Verify variable overwrite for list given invalid list entries not ignored."""
+    with pytest.raises(ValueError):
+        generate.apply_overwrites_to_context(
+            context=template_context,
+            overwrite_context={'deployments': {'preprod': ['na'], 'prod': ['na']}},
         )
 
 
