@@ -58,8 +58,7 @@ def apply_overwrites_to_context(context, overwrite_context):
         if isinstance(context_value, list) and isinstance(overwrite, list):
             # We are dealing with a multichoice variable
             # Let's confirm all choices are valid for the given context
-            common = set(context_value).intersection(set(overwrite))
-            if len(common) == len(overwrite):
+            if set(overwrite).issubset(set(context_value)):
                 context[variable] = overwrite
             else:
                 raise ValueError(
