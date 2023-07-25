@@ -95,7 +95,8 @@ Discord = "https://discord.gg/9BrxzPKuEW"
 
 ############## TOOLS
 [tool.hatch.version]
-path = "cookiecutter/__init__.py"
+path = "cookiecutter/VERSION.txt"
+pattern = "^(?P<version>[0-9]*.[0-9]*.[0-9]*.*)$"
 
 
 [tool.black]

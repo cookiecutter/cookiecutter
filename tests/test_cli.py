@@ -656,3 +656,13 @@ def test_cli_with_json_decoding_error(cli_runner):
     # this point.
     path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
     assert path in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_prompt_when_replyfile_not_full(mocker):
+    """Test execute prompt when replayfile not full."""
+    mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
+    cookiecutter(
+        'tests/fake-repo-pre/', replay='tests/test-replay/cookiedozer_load.json'
+    )
+    assert mock_prompt.called

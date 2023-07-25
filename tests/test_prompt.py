@@ -2,6 +2,7 @@
 import platform
 from collections import OrderedDict
 
+import click
 import pytest
 
 from cookiecutter import prompt, exceptions, environment
@@ -121,6 +122,48 @@ class TestPrompt:
 
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == context['cookiecutter']
+
+    @pytest.mark.parametrize(
+        'context',
+        [
+            {
+                'cookiecutter': {
+                    'full_name': 'Your Name',
+                    'check': ['yes', 'no'],
+                    '__prompts__': {
+                        'check': 'Checking',
+                    },
+                }
+            },
+            {
+                'cookiecutter': {
+                    'full_name': 'Your Name',
+                    'check': ['yes', 'no'],
+                    '__prompts__': {
+                        'full_name': 'Name please',
+                        'check': {'__prompt__': 'Checking', 'yes': 'Yes', 'no': 'No'},
+                    },
+                }
+            },
+            {
+                'cookiecutter': {
+                    'full_name': 'Your Name',
+                    'check': ['yes', 'no'],
+                    '__prompts__': {
+                        'full_name': 'Name please',
+                        'check': {'no': 'No'},
+                    },
+                }
+            },
+        ],
+    )
+    def test_prompt_for_config_with_human_choices(self, monkeypatch, context):
+        """Test prompts when human-readable labels for user choices."""
+        runner = click.testing.CliRunner()
+        with runner.isolation(input="\n\n\n"):
+            cookiecutter_dict = prompt.prompt_for_config(context)
+
+        assert dict(cookiecutter_dict) == {'full_name': 'Your Name', 'check': 'yes'}
 
     def test_prompt_for_config_dict(self, monkeypatch):
         """Verify `prompt_for_config` call `read_user_variable` on dict request."""
@@ -480,7 +523,7 @@ class TestReadUserYesNo(object):
         cookiecutter_dict = prompt.prompt_for_config(context)
 
         assert not read_user_variable.called
-        read_user_yes_no.assert_called_once_with('run_as_docker', run_as_docker)
+        read_user_yes_no.assert_called_once_with('run_as_docker', run_as_docker, {})
         assert cookiecutter_dict == {'run_as_docker': run_as_docker}
 
     def test_boolean_parameter_no_input(self):
