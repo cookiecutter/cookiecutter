@@ -139,6 +139,22 @@ def test_cli_replay_file(mocker, cli_runner):
     )
 
 
+def test_cli_replay_generated(mocker, cli_runner):
+    """Test cli invocation correctly generates a project with replay."""
+    template_path = 'tests/fake-repo-replay/'
+    result = cli_runner(
+        template_path,
+        '--replay-file',
+        'tests/test-replay/valid_replay.json',
+        '-o',
+        'tests/tmp/',
+        '-v',
+    )
+    assert result.exit_code == 0
+    assert open('tests/tmp/fake-project-templated/README.md').read() == 'replayed'
+    utils.rmtree('tests/tmp')
+
+
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
     """Test cli invocation fail if both `no-input` and `replay` flags passed."""
