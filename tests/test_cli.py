@@ -38,6 +38,17 @@ def remove_fake_project_dir(request):
 
 
 @pytest.fixture
+def remove_tmp_dir(request):
+    """Remove the fake project directory created during the tests."""
+
+    def fin_remove_tmp_dir():
+        if os.path.isdir('tests/tmp'):
+            utils.rmtree('tests/tmp')
+
+    request.addfinalizer(fin_remove_tmp_dir)
+
+
+@pytest.fixture
 def make_fake_project_dir(request):
     """Create a fake project to be overwritten in the according tests."""
     os.makedirs('fake-project')
@@ -139,6 +150,7 @@ def test_cli_replay_file(mocker, cli_runner):
     )
 
 
+@pytest.mark.usefixtures('remove_tmp_dir')
 def test_cli_replay_generated(mocker, cli_runner):
     """Test cli invocation correctly generates a project with replay."""
     template_path = 'tests/fake-repo-replay/'
@@ -151,8 +163,7 @@ def test_cli_replay_generated(mocker, cli_runner):
         '-v',
     )
     assert result.exit_code == 0
-    assert open('tests/tmp/fake-project-templated/README.md').read() == 'replayed'
-    utils.rmtree('tests/tmp')
+    assert open('tests/tmp/replay-project/README.md').read().strip() == 'replayed'
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
