@@ -1,3 +1,0 @@
-[bandit]
-exclude=tests/*
-targets=cookiecutter/

@@ -62,8 +62,5 @@ repos:
     rev: 1.7.5
     hooks:
       - id: bandit
-        args: [--ini, .bandit]
-  - repo: https://github.com/mgedmin/check-manifest
-    rev: "0.49"
-    hooks:
-    -   id: check-manifest
+        args: [-c, pyproject.toml]
+        additional_dependencies: ["bandit[toml]"]
