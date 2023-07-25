@@ -110,6 +110,7 @@ def cookiecutter(
         }
         context_for_prompting = {}
         context_for_prompting['cookiecutter'] = items_for_prompting
+        context = context_from_replayfile
         logger.debug('prompting context: %s', context_for_prompting)
     else:
         context = generate_context(
