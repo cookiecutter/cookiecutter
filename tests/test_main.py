@@ -78,6 +78,7 @@ def test_replay_load_template_name(
         'cookiecutter': {}
     }
     mocker.patch('cookiecutter.main.generate_files')
+    mocker.patch('cookiecutter.main.dump')
 
     cookiecutter(
         '.',
@@ -100,6 +101,7 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
         'cookiecutter': {}
     }
     mocker.patch('cookiecutter.main.generate_files')
+    mocker.patch('cookiecutter.main.dump')
 
     cookiecutter(
         '.',

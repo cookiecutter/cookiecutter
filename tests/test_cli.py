@@ -38,6 +38,17 @@ def remove_fake_project_dir(request):
 
 
 @pytest.fixture
+def remove_tmp_dir(request):
+    """Remove the fake project directory created during the tests."""
+
+    def fin_remove_tmp_dir():
+        if os.path.isdir('tests/tmp'):
+            utils.rmtree('tests/tmp')
+
+    request.addfinalizer(fin_remove_tmp_dir)
+
+
+@pytest.fixture
 def make_fake_project_dir(request):
     """Create a fake project to be overwritten in the according tests."""
     os.makedirs('fake-project')
@@ -137,6 +148,22 @@ def test_cli_replay_file(mocker, cli_runner):
         accept_hooks=True,
         keep_project_on_failure=False,
     )
+
+
+@pytest.mark.usefixtures('remove_tmp_dir')
+def test_cli_replay_generated(mocker, cli_runner):
+    """Test cli invocation correctly generates a project with replay."""
+    template_path = 'tests/fake-repo-replay/'
+    result = cli_runner(
+        template_path,
+        '--replay-file',
+        'tests/test-replay/valid_replay.json',
+        '-o',
+        'tests/tmp/',
+        '-v',
+    )
+    assert result.exit_code == 0
+    assert open('tests/tmp/replay-project/README.md').read().strip() == 'replayed'
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -656,13 +683,3 @@ def test_cli_with_json_decoding_error(cli_runner):
     # this point.
     path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
     assert path in result.output
-
-
-@pytest.mark.usefixtures('remove_fake_project_dir')
-def test_prompt_when_replyfile_not_full(mocker):
-    """Test execute prompt when replayfile not full."""
-    mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
-    cookiecutter(
-        'tests/fake-repo-pre/', replay='tests/test-replay/cookiedozer_load.json'
-    )
-    assert mock_prompt.called
