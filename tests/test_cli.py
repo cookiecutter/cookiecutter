@@ -40,6 +40,8 @@ def remove_fake_project_dir(request):
 @pytest.fixture
 def remove_tmp_dir(request):
     """Remove the fake project directory created during the tests."""
+    if os.path.isdir('tests/tmp'):
+        utils.rmtree('tests/tmp')
 
     def fin_remove_tmp_dir():
         if os.path.isdir('tests/tmp'):

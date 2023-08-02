@@ -25,6 +25,7 @@ requirements = [
     'python-slugify>=4.0.0',
     'requests>=2.23.0',
     'arrow',
+    'rich',
 ]
 
 setup(
