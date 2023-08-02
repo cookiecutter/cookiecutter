@@ -113,7 +113,7 @@ Projects are generated to your current directory or to the target directory if s
   ```py
   {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
   ```
-- Simply define your template variables in a `cookiecutter.json` file. You can also add human-readable questions and choices that will be prompted to the user for each variable using the `__prompts__` key.
+- Simply define your template variables in a `cookiecutter.json` file. You can also add human-readable questions and choices that will be prompted to the user for each variable using the `__prompts__` key. Those human-readable questions supports [`rich` markup](https://rich.readthedocs.io/en/stable/markup.html) such as `[bold yellow]this is bold and yellow[/]`
   For example:
 
   ```json
@@ -128,10 +128,10 @@ Projects are generated to your current directory or to the target directory if s
     "version": "0.1.1",
     "linting": ["ruff", "flake8", "none"],
     "__prompts__": {
-      "full_name": "Provide your full name",
-      "email": "Provide your email",
+      "full_name": "Provide your [bold yellow]full name[/]",
+      "email": "Provide your [bold yellow]email[/]",
       "linting": {
-        "__prompt__": "Which linting tool do you want to use?",
+        "__prompt__": "Which [bold yellow]linting tool[/] do you want to use?",
         "ruff": "Ruff",
         "flake8": "Flake8",
         "none": "No linting tool"
