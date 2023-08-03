@@ -2,7 +2,25 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 2.2.4 (unreleased)
+## 2.3.0 (2023-08-03)
+
+### Minor Changes
+
+* Improve style of prompts using `rich` (#1901) @vemonet
+
+### CI/CD and QA changes
+
+* Bump paambaati/codeclimate-action from 4.0.0 to 5.0.0 (#1908) @dependabot
+* [pre-commit.ci] pre-commit autoupdate (#1907) @pre-commit-ci
+
+### Bugfixes
+
+* Fix replay (#1904) @vemonet
+* Support multichoice overwrite (#1903) @Meepit
+
+### This release is made by wonderful contributors:
+
+@Meepit, @dependabot, @dependabot[bot], @ericof, @pre-commit-ci, @pre-commit-ci[bot] and @vemonet
 
 ## 2.2.3 (2023-07-11)
 ### Changes
