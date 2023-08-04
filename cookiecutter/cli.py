@@ -151,6 +151,12 @@ def list_installed_templates(default_config, passed_config_file):
     is_flag=True,
     help='Do not delete project folder on failure',
 )
+@click.option(
+    '--dump-input',
+    is_flag=True,
+    help='Generate a cookiecutter.json file that contain the given input from the user as dictionary.',
+    default=False,
+)
 def main(
     template,
     extra_context,
@@ -169,6 +175,7 @@ def main(
     replay_file,
     list_installed,
     keep_project_on_failure,
+    dump_input,
 ):
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -214,6 +221,7 @@ def main(
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            dump_input=dump_input,
         )
     except (
         ContextDecodingException,
