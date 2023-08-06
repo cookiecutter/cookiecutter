@@ -1,4 +1,6 @@
 """Collection of tests around cookiecutter's replay feature."""
+import os
+
 from cookiecutter.main import cookiecutter
 
 
@@ -113,3 +115,14 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
         '.',
         'custom-replay-file',
     )
+
+
+def test_dump_input_flag(monkeypatch):
+    monkeypatch.chdir('tests/fake-repo-tmpl')
+    cookiecutter(
+        '.',
+        no_input=True,
+        dump_input=True,
+        overwrite_if_exists=True
+    )
+    assert os.path.isfile("cookiecutter.json")

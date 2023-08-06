@@ -697,7 +697,7 @@ def test_cli_with_json_decoding_error(cli_runner):
 
 
 def test_dump_input_flag(mocker, cli_runner):
-    """Test cli invocation accepts `default-config` flag correctly."""
+    """Test cli invocation accepts `dump-input` flag correctly."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
     template_path = 'tests/fake-repo-pre/'
