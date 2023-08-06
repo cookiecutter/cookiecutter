@@ -21,6 +21,7 @@ from cookiecutter.utils import rmtree
 
 logger = logging.getLogger(__name__)
 
+
 def cookiecutter(
     template,
     checkout=None,

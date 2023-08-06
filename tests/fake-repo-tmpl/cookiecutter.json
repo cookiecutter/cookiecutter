@@ -1,1 +1,14 @@
-{"full_name": "Audrey Roy", "email": "audreyr@gmail.com", "github_username": "audreyr", "project_name": "Fake Project Templated", "repo_name": "fake-project-templated", "project_short_description": "This is a fake project.", "release_date": "2013-07-28", "year": "2013", "version": "0.1", "_template": ".", "_output_dir": "C:\\adva\\Work\\work_exercise\\cookiecutter\\tests\\fake-repo-tmpl", "_repo_dir": "."}
+{
+  "full_name": "Audrey Roy",
+  "email": "audreyr@gmail.com",
+  "github_username": "audreyr",
+  "project_name": "Fake Project Templated",
+  "repo_name": "fake-project-templated",
+  "project_short_description": "This is a fake project.",
+  "release_date": "2013-07-28",
+  "year": "2013",
+  "version": "0.1",
+  "_template": ".",
+  "_output_dir": "C:\\adva\\Work\\work_exercise\\cookiecutter\\tests\\fake-repo-tmpl",
+  "_repo_dir": "."
+}

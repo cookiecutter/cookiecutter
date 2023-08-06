@@ -120,10 +120,5 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
 def test_dump_input_flag(monkeypatch):
     """Checks the dump-input flag generates the json file."""
     monkeypatch.chdir('tests/fake-repo-tmpl')
-    cookiecutter(
-        '.',
-        no_input=True,
-        dump_input=True,
-        overwrite_if_exists=True
-    )
+    cookiecutter('.', no_input=True, dump_input=True, overwrite_if_exists=True)
     assert os.path.isfile("cookiecutter.json")

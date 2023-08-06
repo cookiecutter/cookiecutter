@@ -155,7 +155,7 @@ def list_installed_templates(default_config, passed_config_file):
     '--dump-input',
     is_flag=True,
     help='Generate a cookiecutter.json file that contain the'
-         ' given input from the user as dictionary.',
+    ' given input from the user as dictionary.',
     default=False,
 )
 def main(
