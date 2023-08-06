@@ -41,7 +41,6 @@ def cookiecutter(
     """
     Run Cookiecutter just as if using it from the command line.
 
-    :param dump_input: creates cookiecutter.json file contains the given input from user.
     :param template: A directory containing a project template directory,
         or a URL to a git repository.
     :param checkout: The branch, tag or commit ID to checkout after clone.
@@ -61,6 +60,8 @@ def cookiecutter(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
+    :param dump_input: creates cookiecutter.json file contains the
+        given input from user.
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (

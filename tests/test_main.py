@@ -118,6 +118,7 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file):
 
 
 def test_dump_input_flag(monkeypatch):
+    """checks the dump-input flag generates the json file"""
     monkeypatch.chdir('tests/fake-repo-tmpl')
     cookiecutter(
         '.',
