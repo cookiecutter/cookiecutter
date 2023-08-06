@@ -4,6 +4,7 @@ Main entry point for the `cookiecutter` command.
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
+import json
 import logging
 import os
 import re
@@ -19,7 +20,6 @@ from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
 
 logger = logging.getLogger(__name__)
-
 
 def cookiecutter(
     template,
@@ -165,6 +165,11 @@ def cookiecutter(
     context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
     # include repo dir or url in the context dict
     context['cookiecutter']['_repo_dir'] = repo_dir
+
+    if dump_input:
+        fp = open(f"{context['cookiecutter']['_output_dir']}\\cookiecutter.json", "w")
+        fp.write(json.dumps(context['cookiecutter']))
+        fp.close()
 
     dump(config_dict['replay_dir'], template_name, context)
 
