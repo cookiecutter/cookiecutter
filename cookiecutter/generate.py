@@ -22,6 +22,7 @@ from cookiecutter.exceptions import (
 from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
+from cookiecutter.replay import dump
 
 logger = logging.getLogger(__name__)
 
@@ -292,6 +293,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False,
 ):
     """Render the templates and saves them to files.
 
@@ -332,7 +334,12 @@ def generate_files(
 
     project_dir = os.path.abspath(project_dir)
     logger.debug('Project directory is %s', project_dir)
-
+    if dump_input:
+        dump(
+            project_dir,
+            '.cookiecutter.json',
+            context,
+        )
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
     delete_project_on_failure = output_directory_created and not keep_project_on_failure
