@@ -21,10 +21,10 @@ def read_user_variable(var_name, default_value, prompts=None, prefix=""):
         else var_name
     )
 
-    while (
-        variable := Prompt.ask(f"{prefix}{question}", default=default_value)
-    ) is None:
-        pass
+    while True:
+        variable = Prompt.ask(f"{prefix}{question}", default=default_value)
+        if variable is not None:
+            break
 
     return variable
 
