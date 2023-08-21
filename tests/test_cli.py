@@ -6,7 +6,6 @@ from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
-
 from cookiecutter import utils
 from cookiecutter.__main__ import main
 from cookiecutter.environment import StrictEnvironment
@@ -432,6 +431,7 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
             '_template': template_path,
             '_repo_dir': template_path,
             '_output_dir': output_dir,
+            '_checkout': None,
         },
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
