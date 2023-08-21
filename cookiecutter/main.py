@@ -138,7 +138,7 @@ def cookiecutter(
                 r'\((.*?)\)', context["cookiecutter"]["template"]
             ).group(1)
             return cookiecutter(
-                template=os.path.join(template, nested_template),
+                template=os.path.join(repo_dir, nested_template),
                 checkout=checkout,
                 no_input=no_input,
                 extra_context=extra_context,
