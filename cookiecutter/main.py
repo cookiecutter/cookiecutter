@@ -154,7 +154,7 @@ def cookiecutter(
                 keep_project_on_failure=keep_project_on_failure,
             )
 
-    logger.debug('contex is %s', context)
+    logger.debug('context is %s', context)
 
     # include template dir or url in the context dict
     context['cookiecutter']['_template'] = template
