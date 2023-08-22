@@ -292,6 +292,7 @@ def generate_files(
     skip_if_file_exists=False,
     accept_hooks=True,
     keep_project_on_failure=False,
+    dump_input=False,
 ):
     """Render the templates and saves them to files.
 
@@ -336,6 +337,10 @@ def generate_files(
     # if we created the output directory, then it's ok to remove it
     # if rendering fails
     delete_project_on_failure = output_directory_created and not keep_project_on_failure
+
+    if dump_input:
+        with open(os.path.join(project_dir, ".cookiecutter.json"), 'w') as outfile:
+            json.dump(context['cookiecutter'], outfile, indent=2)
 
     if accept_hooks:
         _run_hook_from_repo_dir(

@@ -2,6 +2,12 @@
 import logging
 import sys
 
+grey = "\x1b[38;20m"
+yellow = "\x1b[33;20m"
+red = "\x1b[31;20m"
+bold_red = "\x1b[31;1m"
+reset = "\x1b[0m"
+
 LOG_LEVELS = {
     'DEBUG': logging.DEBUG,
     'INFO': logging.INFO,
@@ -11,7 +17,7 @@ LOG_LEVELS = {
 }
 
 LOG_FORMATS = {
-    'DEBUG': '%(levelname)s %(name)s: %(message)s',
+    'DEBUG': yellow + '%(levelname)s %(name)s: %(message)s' + reset,
     'INFO': '%(levelname)s: %(message)s',
 }
 
