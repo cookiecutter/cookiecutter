@@ -122,6 +122,7 @@ def test_cli_replay(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -149,6 +150,7 @@ def test_cli_replay_file(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -201,6 +203,7 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -212,7 +215,7 @@ def overwrite_cli_flag(request):
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
-    mocker, cli_runner, overwrite_cli_flag
+        mocker, cli_runner, overwrite_cli_flag
 ):
     """Test cli invocation with `overwrite-if-exists` and `replay` flags."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
@@ -237,12 +240,13 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
-    cli_runner, overwrite_cli_flag
+        cli_runner, overwrite_cli_flag
 ):
     """Test cli invocation with `overwrite-if-exists` and `no-input` flags.
 
@@ -294,6 +298,7 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -339,6 +344,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -370,6 +376,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -396,6 +403,7 @@ def test_default_user_config(mocker, cli_runner):
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -592,7 +600,7 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
 
 
 def test_debug_list_installed_templates_failure(
-    cli_runner, debug_file, user_config_path
+        cli_runner, debug_file, user_config_path
 ):
     """Verify --list-installed command error on invocation."""
     os.makedirs(os.path.dirname(user_config_path))
@@ -633,13 +641,13 @@ cli_accept_hook_arg_testdata = [
     "accept_hooks_arg,user_input,expected", cli_accept_hook_arg_testdata
 )
 def test_cli_accept_hooks(
-    mocker,
-    cli_runner,
-    output_dir_flag,
-    output_dir,
-    accept_hooks_arg,
-    user_input,
-    expected,
+        mocker,
+        cli_runner,
+        output_dir_flag,
+        output_dir,
+        accept_hooks_arg,
+        user_input,
+        expected,
 ):
     """Test cli invocation works with `accept-hooks` option."""
     mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
@@ -665,6 +673,7 @@ def test_cli_accept_hooks(
         skip_if_file_exists=False,
         accept_hooks=expected,
         keep_project_on_failure=False,
+        dump_input=False,
     )
 
 
@@ -685,3 +694,21 @@ def test_cli_with_json_decoding_error(cli_runner):
     # this point.
     path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
     assert path in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_with_dump_input_option(cli_runner):
+    """Test cli invocation works with `dump_input` flag."""
+    template_path = 'tests/fake-repo-pre/'
+    created_input_file_path = 'fake-project/.cookiecutter.json'
+    result = cli_runner(template_path, '--no-input', '--dump-input')
+
+    assert result.exit_code == 0
+    assert os.path.exists(created_input_file_path)
+
+    with open(os.path.join(template_path, 'cookiecutter.json')) as f:
+        input_dict = json.load(f)
+    with open(created_input_file_path) as f:
+        output_dict = json.load(f)
+    assert all(item in output_dict.items() for item in input_dict.items())
+
