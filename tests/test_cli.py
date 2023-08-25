@@ -215,7 +215,7 @@ def overwrite_cli_flag(request):
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
-        mocker, cli_runner, overwrite_cli_flag
+    mocker, cli_runner, overwrite_cli_flag
 ):
     """Test cli invocation with `overwrite-if-exists` and `replay` flags."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
@@ -246,7 +246,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
-        cli_runner, overwrite_cli_flag
+    cli_runner, overwrite_cli_flag
 ):
     """Test cli invocation with `overwrite-if-exists` and `no-input` flags.
 
@@ -600,7 +600,7 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
 
 
 def test_debug_list_installed_templates_failure(
-        cli_runner, debug_file, user_config_path
+    cli_runner, debug_file, user_config_path
 ):
     """Verify --list-installed command error on invocation."""
     os.makedirs(os.path.dirname(user_config_path))
@@ -641,13 +641,13 @@ cli_accept_hook_arg_testdata = [
     "accept_hooks_arg,user_input,expected", cli_accept_hook_arg_testdata
 )
 def test_cli_accept_hooks(
-        mocker,
-        cli_runner,
-        output_dir_flag,
-        output_dir,
-        accept_hooks_arg,
-        user_input,
-        expected,
+    mocker,
+    cli_runner,
+    output_dir_flag,
+    output_dir,
+    accept_hooks_arg,
+    user_input,
+    expected,
 ):
     """Test cli invocation works with `accept-hooks` option."""
     mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
@@ -711,4 +711,3 @@ def test_cli_with_dump_input_option(cli_runner):
     with open(created_input_file_path) as f:
         output_dict = json.load(f)
     assert all(item in output_dict.items() for item in input_dict.items())
-
