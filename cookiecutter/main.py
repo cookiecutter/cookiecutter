@@ -20,8 +20,13 @@ from cookiecutter.utils import rmtree
 
 logger = logging.getLogger(__name__)
 
+import sys
 
-def cookiecutter(
+if sys.version_info < (3, 6):
+    print("This program requires Python 3.6 or higher to run.")
+else:
+    print("Your Python version is compatible. You can run the program.")
+    def cookiecutter(
     template,
     checkout=None,
     no_input=False,
@@ -196,3 +201,6 @@ class _patch_import_path_for_repo:
 
     def __exit__(self, type, value, traceback):
         sys.path = self._path
+
+    
+
