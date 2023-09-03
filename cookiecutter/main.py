@@ -201,6 +201,3 @@ class _patch_import_path_for_repo:
 
     def __exit__(self, type, value, traceback):
         sys.path = self._path
-
-    
-
