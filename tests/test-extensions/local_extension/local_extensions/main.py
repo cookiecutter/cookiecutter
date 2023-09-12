@@ -1,7 +1,7 @@
 """Provides custom extension, exposing a ``foobar`` filter."""
 
 from jinja2.ext import Extension
-from cookiecutter.utils import simple_filter
+from cookiecutter.utils import simple_filter, simple_test
 
 
 class FoobarExtension(Extension):
@@ -17,3 +17,10 @@ class FoobarExtension(Extension):
 def simplefilterextension(v):
     """Provide a simple function-based filter extension."""
     return v.upper()
+
+
+@simple_test
+def palindrome(v):
+    """Provide a simple function-based test extension."""
+    v_reverse = v[::-1]
+    return v_reverse == v

@@ -107,7 +107,23 @@ def prompt_and_delete(path, no_input=False):
 
 
 def simple_filter(filter_function):
-    """Decorate a function to wrap it in a simplified jinja2 extension."""
+    """
+    Register a function for use as a filter extension for Jinja templates.
+
+    This decorator allows creation of a filter extension to Jinja as a function
+    instead of writing a full class extending jinja2's Extension. The function
+    name becomes the filter name
+
+    Example:
+
+    @simple_test
+    def mirror(value):
+
+    Which can then be used in jinja template as
+
+    {{ cookiecutter.param | mirror }}
+
+    """
 
     class SimpleFilterExtension(Extension):
         def __init__(self, environment):
@@ -116,3 +132,30 @@ def simple_filter(filter_function):
 
     SimpleFilterExtension.__name__ = filter_function.__name__
     return SimpleFilterExtension
+
+
+def simple_test(test_function):
+    """
+    Register a function for use as a test extension for Jinja templates.
+
+    This decorator allows creation of a test extension to Jinja as a function
+    instead of writing a full class extending jinja2's Extension. The function
+    name becomes the test name
+
+    Example:
+
+    @simple_test
+    def valid(value):
+
+    Which can then be used in jinja template as
+
+    {% if cookiecutter.param is valid %}valid{% endif %}
+    """
+
+    class SimpleTestExtension(Extension):
+        def __init__(self, environment):
+            super().__init__(environment)
+            environment.tests[test_function.__name__] = test_function
+
+    SimpleTestExtension.__name__ = test_function.__name__
+    return SimpleTestExtension
