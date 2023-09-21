@@ -243,8 +243,10 @@ def prompt_for_config(context, no_input=False):
     # values might refer to them.
 
     count = 0
-    size = len(context['cookiecutter'].items())
-    for key, raw in context['cookiecutter'].items():
+    all_prompts = context['cookiecutter'].items()
+    visible_prompts = [k for k, _ in all_prompts if not k.startswith("_")]
+    size = len(visible_prompts)
+    for key, raw in all_prompts:
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
