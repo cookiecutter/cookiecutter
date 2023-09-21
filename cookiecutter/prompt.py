@@ -20,7 +20,13 @@ def read_user_variable(var_name, default_value, prompts=None, prefix=""):
         if prompts and var_name in prompts.keys() and prompts[var_name]
         else var_name
     )
-    return Prompt.ask(f"{prefix}{question}", default=default_value)
+
+    while True:
+        variable = Prompt.ask(f"{prefix}{question}", default=default_value)
+        if variable is not None:
+            break
+
+    return variable
 
 
 class YesNoPrompt(Confirm):
