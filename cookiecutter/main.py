@@ -154,15 +154,19 @@ def cookiecutter(
                 keep_project_on_failure=keep_project_on_failure,
             )
 
-    logger.debug('contex is %s', context)
+    logger.debug('context is %s', context)
 
     # include template dir or url in the context dict
     context['cookiecutter']['_template'] = template
 
     # include output+dir in the context dict
     context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
+
     # include repo dir or url in the context dict
     context['cookiecutter']['_repo_dir'] = repo_dir
+
+    # include checkout details in the context dict
+    context['cookiecutter']['_checkout'] = checkout
 
     dump(config_dict['replay_dir'], template_name, context)
 
