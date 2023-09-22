@@ -2,8 +2,27 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
-## 2.3.1 (unreleased)
+## 2.3.1 (2023-09-21)
 
+### Bugfixes
+
+* Fix variables with null default not being required (#1920) @limtis0
+* Fix nested templates in Git repository (#1922) @BTatlock
+* Fix prompt counter (#1940) @ericof
+
+### CI/CD and QA changes
+
+* Update the black pre-commit hook URL and version (#1934) @kurtmckee
+
+### Documentation updates
+
+* Add missing "parent dir" symbol in tutorial 2 (#1932) @tvoirand
+* Remove colons from exemplary prompt messages (#1912) @paduszyk
+* docs: add install instruction for Void Linux (#1917) @tranzystorek-io
+
+### This release is made by wonderful contributors:
+
+@ericof, @kurtmckee, @paduszyk, @tranzystorek-io, @limtis0, @BTatlock and @tvoirand
 
 ## 2.3.0 (2023-08-03)
 
