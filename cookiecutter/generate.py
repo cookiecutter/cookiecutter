@@ -200,9 +200,11 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
         logger.debug('Using configured newline character %s', repr(newline))
     else:
         # Detect original file newline to output the rendered file.
+        # Note that newlines can be a tuple if file contains mixed line endings.
+        # In this case, we pick the first line ending we detected.
         with open(infile, encoding='utf-8') as rd:
             rd.readline()  # Read only the first line to load a 'newlines' value.
-        newline = rd.newlines
+        newline = rd.newlines[0] if isinstance(rd.newlines, tuple) else rd.newlines
         logger.debug('Using detected newline character %s', repr(newline))
 
     logger.debug('Writing contents to file %s', outfile)

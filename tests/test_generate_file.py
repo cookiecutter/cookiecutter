@@ -26,6 +26,10 @@ def tear_down():
         os.remove('tests/files/cheese_lf_newlines.txt')
     if os.path.exists('tests/files/cheese_crlf_newlines.txt'):
         os.remove('tests/files/cheese_crlf_newlines.txt')
+    if os.path.exists('tests/files/cheese_mixed_newlines.txt'):
+        os.remove('tests/files/cheese_mixed_newlines.txt')
+    if os.path.exists('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt'):
+        os.remove('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt')
 
 
 @pytest.fixture
@@ -167,3 +171,24 @@ def test_generate_file_does_not_translate_crlf_newlines_to_lf(env):
         simple_text = f.readline()
     assert simple_text == 'newline is CRLF\r\n'
     assert f.newlines == '\r\n'
+
+
+def test_generate_file_handles_mixed_line_endings(env, tmp_path):
+    """Verify that file generation gracefully handles mixed line endings."""
+    infile = 'tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt'
+    with open(infile, mode='w', encoding='utf-8', newline='') as f:
+        f.write('newline is CRLF\r\n')
+        f.write('newline is LF\n')
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context={'cookiecutter': {'generate_file': 'cheese'}},
+        env=env,
+    )
+
+    # this generated file should have either CRLF or LF line ending
+    gf = 'tests/files/cheese_mixed_newlines.txt'
+    with Path(gf).open(encoding='utf-8', newline='') as f:
+        simple_text = f.readline()
+    assert simple_text in ('newline is CRLF\r\n', 'newline is CRLF\n')
+    assert f.newlines in ('\r\n', '\n')
