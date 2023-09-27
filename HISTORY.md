@@ -3,7 +3,171 @@
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
 
-## 2.1.2 (unreleased)
+## 2.3.2 (unreleased)
+
+## 2.3.1 (2023-09-21)
+
+### Minor Changes
+
+* add checkout details to the context (fixes #1759) (#1923) @JonZeolla
+
+### CI/CD and QA changes
+
+* Update the black pre-commit hook URL and version (#1934) @kurtmckee
+* Use UTF-8 for file reading/writing (#1937) @rmartin16
+
+### Documentation updates
+
+* Add missing "parent dir" symbol in tutorial 2 (#1932) @tvoirand
+* Remove colons from exemplary prompt messages (#1912) @paduszyk
+* docs: add install instruction for Void Linux (#1917) @tranzystorek-io
+
+### Bugfixes
+
+* Fix nested templates in Git repository (#1922) @BTatlock
+* Fix prompt counter. (#1940) @ericof
+* Fix variables with null default not being required (#1919) (#1920) @limtis0
+
+### This release is made by wonderful contributors:
+
+@BTatlock, @JonZeolla, @ericof, @kurtmckee, @limtis0, @paduszyk, @rmartin16, @tranzystorek-io and @tvoirand
+
+## 2.3.0 (2023-08-03)
+
+### Minor Changes
+
+* Improve style of prompts using `rich` (#1901) @vemonet
+
+### CI/CD and QA changes
+
+* Bump paambaati/codeclimate-action from 4.0.0 to 5.0.0 (#1908) @dependabot
+* [pre-commit.ci] pre-commit autoupdate (#1907) @pre-commit-ci
+
+### Bugfixes
+
+* Fix replay (#1904) @vemonet
+* Support multichoice overwrite (#1903) @Meepit
+
+### This release is made by wonderful contributors:
+
+@Meepit, @dependabot, @dependabot[bot], @ericof, @pre-commit-ci, @pre-commit-ci[bot] and @vemonet
+
+## 2.2.3 (2023-07-11)
+### Changes
+
+### Minor Changes
+
+* Add support for adding human-readable labels for choices when defining multiple choices questions (#1898) @vemonet
+
+* Prompt with replay file (#1758) @w1ndblow
+
+### CI/CD and QA changes
+
+* Set cookiecutter/VERSION.txt as source of truth for version number (#1896) @ericof
+* [pre-commit.ci] pre-commit autoupdate (#1897) @pre-commit-ci
+
+### Bugfixes
+
+* Fix issue where the prompts dict was not passed for yes_no questions (#1895) @vemonet
+* Set cookiecutter/VERSION.txt as source of truth for version number (#1896) @ericof
+
+### This release is made by wonderful contributors:
+
+@ericof, @pre-commit-ci, @pre-commit-ci[bot], @vemonet and @w1ndblow
+
+## 2.2.2 (2023-07-10)
+
+### CI/CD and QA changes
+
+* Improve gitignore (#1889) @audreyfeldroy
+* Add warning for jinja2_time (#1890) @henryiii
+
+### This release is made by wonderful contributors:
+
+@audreyfeldroy, @ericof and @henryiii
+
+
+## 2.2.0 (2023-07-06)
+
+### Changes
+
+* Added timeout on request.get() for ensuring that if a recipient serve… (#1772) @openrefactory
+* Fixing Carriage Return Line Feed (CRLF) order in docs #1792 (#1793) @Lahiry
+* Reduce I/O (#1877) @kurtmckee
+* Remove a pre-commit hook special case (#1875) @kurtmckee
+* Remove universal bdist_wheel option; use "python -m build" (#1739) @mwtoews
+* Remove unused import from post-generate hook script example (#1795) @KAZYPinkSaurus
+* Standardize newlines for all platforms (#1870) @kurtmckee
+* feat: Add resolved template repository path as _repo_dir to the context (#1771) @tmeckel
+
+### Minor Changes
+
+* Added support for providing human-readable prompts to the different variables (#1881) @vemonet
+* Added: Boolean variable support in JSON (#1626) @liortct
+* Added: CLI option to keep project files on failure. (#1669) @MaciejPatro
+* Added: Support partially overwrite keys in nested dict (#1692) @cksac
+* Added: Templates inheritance (#1485) @simobasso
+* Code quality: Tests upgrade: Use pathlib for files read/write (#1718) @insspb
+* Inline jinja2-time extension code (#1779) @tranzystorek-io
+* Support Python 3.11 (#1850) @kurtmckee
+* Support nested config files (#1770) @dariocurr
+* preserves original options in `_cookiecutter` (#1874) @kjaymiller
+
+### CI/CD and QA changes
+
+* Add a Dependabot config to autoupdate GitHub workflow actions (#1851) @kurtmckee
+* Added: Readthedocs build config (#1707) @insspb
+* Bump actions/setup-python from 3 to 4 (#1854) @dependabot
+* Bump paambaati/codeclimate-action from 3.0.0 to 4.0.0 (#1853) @dependabot
+* CI/CD: Tox -> Nox: Added nox configuration (#1706) @insspb
+* CI/CD: Tox -> Nox: Github actions definition minimized + Sync nox and github actions (#1714) @insspb
+* CI/CD: Tox -> Nox: Makefile update: Removed watchmedo and sed dependency, tox replaced with nox (#1713) @insspb
+* CI/CD: Updated .pre-commit-config.yaml to use latest hooks versions (#1712) @insspb
+* Code quality: Core files: Added exception reason reraise when exception class changed (PEP 3134) (#1719) @insspb
+* Code quality: Tests upgrade: Use pathlib for files read/write (#1718) @insspb
+* Code quality: core files: Format replaced with f-strings (#1716) @insspb
+* Code quality: find.py refactored and type annotated (#1721) @insspb
+* Code quality: tests files: Simplify statements fixes (#1717) @insspb
+* Code quality: utils.make_sure_path_exists refactored and type annotated (#1722) @insspb
+* Fixed: recommonmark replaced with myst, as recommonmark is deprecated (#1709) @insspb
+* Pretty-format JSON files (#1864) @kurtmckee
+* Rename `master` to `main` so CI runs correctly on merge (#1852) @kurtmckee
+* Standardize EOF newlines (#1876) @kurtmckee
+* Update `.gitignore` and cite where it was copied from (#1879) @kurtmckee
+* Update base docs, remove tox (#1858) @ericof
+* Update pre-commit hook versions (#1849) @kurtmckee
+* Updated: Release drafter configuration (#1704) @insspb
+* Use tox (#1866) @kurtmckee
+* Verify an expected warning is raised (#1869) @kurtmckee
+* fixed failing lint ci action by updating repo of flake8 (#1838) @Tamronimus
+
+### Documentation updates
+
+* Add jinja env docs (#1872) @pamelafox
+* Documentation extension: Create a Cookiecutter From Scratch tutorial (#1592) @miro-jelaska
+* Easy PR! Fix typos and add minor doc updates (#1741) @Alex0Blackwell
+* Expand cli documentation relating to the no-input flag (#1543) (#1587) @jeremyswerdlow
+* Fix @audreyr to @audreyfeldroy github account rename (#1604) @ri0t
+* Fixed broken links to jinja docs (#1691) @insspb
+* Fixed minor typos in docs (#1753) @segunb
+* Fixed: Python code block in the replay documentation (#1715) @juhannc
+* Fixed: recommonmark replaced with myst, as recommonmark is deprecated (#1709) @insspb
+* Improve Docs Readability (#1690) @ryanrussell
+* Update base docs, remove tox (#1858) @ericof
+* Updated: Boolean Variables documentation and docstrings (#1705) @italomaia
+* docs: fix simple typo, shat -> that (#1749) @timgates42
+* fixing badge display problem (#1798) @Paulokim1
+
+### Bugfixes
+
+* Fixed the override not working with copy only dir #1650 (#1651) @zhongdai
+* Fixed: Removed mention of packages versions, to exclude dependabot warnings alerts (#1711) @insspb
+* cleanup files if panics during hooks - bugfix (#1760) @liortct
+
+### This release is made by wonderful contributors:
+
+@Alex0Blackwell, @KAZYPinkSaurus, @Lahiry, @MaciejPatro, @Paulokim1, @Tamronimus, @cksac, @cookies-xor-cream, @dariocurr, @dependabot, @dependabot[bot], @ericof, @insspb, @italomaia, @jeremyswerdlow, @juhannc, @kjaymiller, @kurtmckee, @liortct, @miro-jelaska, @mwtoews, @openrefactory, @pamelafox, @ri0t, @ryanrussell, @segunb, @simobasso, @timgates42, @tmeckel, @tranzystorek-io, @vemonet and @zhongdai
+
 
 ## 2.1.1 (2022-06-01)
 
@@ -824,7 +988,7 @@ Other changes:
     $ cookiecutter cookiecutter-pypackage/
     # Create project from the cookiecutter-pypackage.git repo template
     $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
-```  
+```
 
 * Can now use Cookiecutter from Python as a package:
 

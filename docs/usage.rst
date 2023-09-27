@@ -128,4 +128,3 @@ Pre-0.7.0, this is how it worked:
   is output to your current directory.
 
 * Cloned cookiecutters were not saved locally.
-

@@ -1,5 +1,4 @@
 """Collection of tests around cookiecutter's command-line interface."""
-
 import json
 import os
 import re
@@ -7,7 +6,6 @@ from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
-
 from cookiecutter import utils
 from cookiecutter.__main__ import main
 from cookiecutter.environment import StrictEnvironment
@@ -36,6 +34,19 @@ def remove_fake_project_dir(request):
             utils.rmtree('fake-project')
 
     request.addfinalizer(fin_remove_fake_project_dir)
+
+
+@pytest.fixture
+def remove_tmp_dir(request):
+    """Remove the fake project directory created during the tests."""
+    if os.path.isdir('tests/tmp'):
+        utils.rmtree('tests/tmp')
+
+    def fin_remove_tmp_dir():
+        if os.path.isdir('tests/tmp'):
+            utils.rmtree('tests/tmp')
+
+    request.addfinalizer(fin_remove_tmp_dir)
 
 
 @pytest.fixture
@@ -138,6 +149,22 @@ def test_cli_replay_file(mocker, cli_runner):
         accept_hooks=True,
         keep_project_on_failure=False,
     )
+
+
+@pytest.mark.usefixtures('remove_tmp_dir')
+def test_cli_replay_generated(mocker, cli_runner):
+    """Test cli invocation correctly generates a project with replay."""
+    template_path = 'tests/fake-repo-replay/'
+    result = cli_runner(
+        template_path,
+        '--replay-file',
+        'tests/test-replay/valid_replay.json',
+        '-o',
+        'tests/tmp/',
+        '-v',
+    )
+    assert result.exit_code == 0
+    assert open('tests/tmp/replay-project/README.md').read().strip() == 'replayed'
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
@@ -394,13 +421,18 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
     assert message in result.output
 
     context = {
+        '_cookiecutter': {
+            'github_username': 'hackebrot',
+            'project_slug': 'testproject',
+        },
         'cookiecutter': {
             'github_username': 'hackebrot',
             'project_slug': 'testproject',
             '_template': template_path,
             '_repo_dir': template_path,
             '_output_dir': output_dir,
-        }
+            '_checkout': None,
+        },
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
     assert context_str in result.output

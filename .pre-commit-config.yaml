@@ -10,8 +10,8 @@ repos:
         language: python
         files: \.rst$
         require_serial: true
-  - repo: https://github.com/psf/black.git
-    rev: 23.3.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 23.9.1
     hooks:
       - id: black
         language_version: python3
@@ -20,8 +20,18 @@ repos:
     rev: v4.4.0
     hooks:
       - id: trailing-whitespace
-        args: [--markdown-linebreak-ext=md]
       - id: mixed-line-ending
+        name: "Enforce LF newlines on most files"
+        args:
+          - "--fix=lf"
+        # Exclude files with "crlf" in their names.
+        exclude: "crlf"
+      - id: mixed-line-ending
+        name: "Enforce CRLF newlines on files named '*crlf*'"
+        args:
+          - "--fix=crlf"
+        files: "crlf"
+      - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
@@ -29,14 +39,19 @@ repos:
       - id: check-symlinks
       - id: check-case-conflict
       - id: check-docstring-first
-      - id: check-json
+      - id: pretty-format-json
+        args:
+          - "--autofix"
+          - "--indent=2"
+          - "--no-sort-keys"
+          - "--no-ensure-ascii"
         exclude: "invalid-syntax.json|tests/fake-repo-bad-json/cookiecutter.json|tests/fake-repo/cookiecutter.json"
       - id: check-toml
       - id: check-xml
       - id: check-yaml
         exclude: "not_rendered.yml|invalid-config.yaml"
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: 6.1.0
     hooks:
       - id: flake8
         additional_dependencies:

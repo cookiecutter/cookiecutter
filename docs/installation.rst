@@ -104,6 +104,12 @@ Alternate installations
 
     brew install cookiecutter
 
+**Void Linux:**
+
+.. code-block:: bash
+
+    xbps-install cookiecutter
+
 **Pipx (Linux, OSX and Windows):**
 
 .. code-block:: bash
