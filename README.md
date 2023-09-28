@@ -23,6 +23,12 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 - PyPI: [https://pypi.org/project/cookiecutter/](https://pypi.org/project/cookiecutter/)
 - Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/main/LICENSE)
 
+## Installation
+
+Install cookiecutter using pip package manager:
+```
+python3 -m pip install --user cookiecutter
+```
 
 ## Features
 
