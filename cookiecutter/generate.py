@@ -14,13 +14,12 @@ from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
     ContextDecodingException,
-    FailedHookException,
     NonTemplatedInputDirException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
 from cookiecutter.find import find_template
-from cookiecutter.hooks import run_hook
+from cookiecutter.hooks import run_hook_from_repo_dir
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
 logger = logging.getLogger(__name__)
@@ -269,21 +268,15 @@ def _run_hook_from_repo_dir(
     :param delete_project_on_failure: Delete the project directory on hook
         failure?
     """
-    with work_in(repo_dir):
-        try:
-            run_hook(hook_name, project_dir, context)
-        except (
-            FailedHookException,
-            UndefinedError,
-        ):
-            if delete_project_on_failure:
-                rmtree(project_dir)
-            logger.error(
-                "Stopping generation because %s hook "
-                "script didn't exit successfully",
-                hook_name,
-            )
-            raise
+    warnings.warn(
+        "The '_run_hook_from_repo_dir' function is deprecated, "
+        "use 'cookiecutter.hooks.run_hook_from_repo_dir' instead",
+        DeprecationWarning,
+        2,
+    )
+    run_hook_from_repo_dir(
+        repo_dir, hook_name, project_dir, context, delete_project_on_failure
+    )
 
 
 def generate_files(
@@ -340,7 +333,7 @@ def generate_files(
     delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        run_hook_from_repo_dir(
             repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
         )
 
@@ -417,7 +410,7 @@ def generate_files(
                     raise UndefinedVariableInTemplate(msg, err, context) from err
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        run_hook_from_repo_dir(
             repo_dir,
             'post_gen_project',
             project_dir,
