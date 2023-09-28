@@ -40,6 +40,7 @@ def test_run_pre_prompt_python_hook_fail(monkeypatch):
     assert message in str(excinfo.value)
 
 
+@pytest.mark.skipif(WINDOWS, reason='shell script will not run in Windows')
 def test_run_pre_prompt_shell_hook(remove_tmp_repo_dir):
     """Verify pre_prompt.sh runs and creates a copy of cookiecutter.json."""
     new_repo_dir = hooks.run_pre_prompt_hook(repo_dir='tests/test-pyshellhooks/')
