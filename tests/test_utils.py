@@ -221,3 +221,17 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmp_path):
     assert not mock_read_user.called
     assert not repo_file.exists()
     assert deleted
+
+
+def test_create_tmp_repo_dir(tmp_path):
+    """Verify `utils.create_tmp_repo_dir` creates a copy."""
+    repo_dir = Path(tmp_path) / 'bar'
+    repo_dir.mkdir()
+    subdirs = ('foo', 'bar', 'foobar')
+    for name in subdirs:
+        (repo_dir / name).mkdir()
+
+    new_repo_dir = utils.create_tmp_repo_dir(repo_dir)
+
+    assert new_repo_dir.exists()
+    assert new_repo_dir.glob('*')
