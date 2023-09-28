@@ -9,6 +9,7 @@ import os
 import re
 import sys
 from copy import copy
+from pathlib import Path
 
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
@@ -195,8 +196,8 @@ def cookiecutter(
 
 
 class _patch_import_path_for_repo:
-    def __init__(self, repo_dir):
-        self._repo_dir = repo_dir
+    def __init__(self, repo_dir: "os.PathLike[str]"):
+        self._repo_dir = f"{repo_dir}" if isinstance(repo_dir, Path) else repo_dir
         self._path = None
 
     def __enter__(self):
