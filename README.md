@@ -14,225 +14,114 @@
 
 </div>
 
-# cookiecutter
+# Cookiecutter
 
-A command-line utility that creates projects from **cookiecutters** (project templates), e.g. creating a Python package project from a Python package project template.
+Create projects swiftly from **cookiecutters** (project templates) with this command-line utility. Ideal for generating Python package projects and more.
 
-- Documentation: [https://cookiecutter.readthedocs.io](https://cookiecutter.readthedocs.io)
-- GitHub: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
-- PyPI: [https://pypi.org/project/cookiecutter/](https://pypi.org/project/cookiecutter/)
-- Free and open source software: [BSD license](https://github.com/cookiecutter/cookiecutter/blob/main/LICENSE)
-
+- [Documentation](https://cookiecutter.readthedocs.io)
+- [GitHub](https://github.com/cookiecutter/cookiecutter)
+- [PyPI](https://pypi.org/project/cookiecutter/)
+- [License (BSD)](https://github.com/cookiecutter/cookiecutter/blob/main/LICENSE)
 
 ## Features
 
-- Cross-platform: Windows, Mac, and Linux are officially supported.
-- You don't have to know/write Python code to use Cookiecutter.
-- Works with Python 3.7, 3.8, 3.9, 3.10, 3.11
-- Project templates can be in any programming language or markup format:
-  Python, JavaScript, Ruby, CoffeeScript, RST, Markdown, CSS, HTML, you name it.
-  You can use multiple languages in the same project template.
+- **Cross-Platform:** Supports Windows, Mac, and Linux.
+- **User-Friendly:** No Python knowledge required.
+- **Versatile:** Compatible with Python 3.7 to 3.11.
+- **Multi-Language Support:** Use templates in any language or markup format.
 
-### For users of existing templates
+### For Users
 
-- Simple command line usage:
+#### Quick Start
 
-  ```bash
-  # Create project from the cookiecutter-pypackage.git repo template
-  # You'll be prompted to enter values.
-  # Then it'll create your Python package in the current working directory,
-  # based on those values.
-  $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage
-  # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-  $ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
-  ```
+The recommended way to use Cookiecutter as a command line utility is to run it with [`pipx`](https://pypa.github.io/pipx/), which can be installed with `pip install pipx`, but if you plan to use Cookiecutter programatically, please run `pip install cookiecutter`.
 
-- Use it at the command line with a local template:
+**Use a GitHub template**
 
-  ```bash
-  # Create project in the current working directory, from the local
-  # cookiecutter-pypackage/ template
-  $ cookiecutter cookiecutter-pypackage/
-  ```
+```bash
+# You'll be prompted to enter values.
+# Then it'll create your Python package in the current working directory,
+# based on those values.
+# For the sake of brevity, repos on GitHub can just use the 'gh' prefix
+$ pipx cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
+```
 
-- Or use it from Python:
+**Use a local template**
 
-  ```py
-  from cookiecutter.main import cookiecutter
+```bash
+$ pipx cookiecutter cookiecutter-pypackage/
+```
 
-  # Create project from the cookiecutter-pypackage/ template
-  cookiecutter('cookiecutter-pypackage/')
+**Use it from Python**
 
-  # Create project from the cookiecutter-pypackage.git repo template
-  cookiecutter('https://github.com/audreyfeldroy/cookiecutter-pypackage.git')
-  ```
+```py
+from cookiecutter.main import cookiecutter
 
-- Unless you suppress it with `--no-input`, you are prompted for input:
-  - Prompts are the keys in `cookiecutter.json`.
-  - Default responses are the values in `cookiecutter.json`.
-  - Prompts are shown in order.
-- Cross-platform support for `~/.cookiecutterrc` files:
+# Create project from the cookiecutter-pypackage/ template
+cookiecutter('cookiecutter-pypackage/')
 
-  ```yaml
-  default_context:
-    full_name: "Audrey Roy Greenfeld"
-    email: "audreyr@gmail.com"
-    github_username: "audreyfeldroy"
-  cookiecutters_dir: "~/.cookiecutters/"
-  ```
+# Create project from the cookiecutter-pypackage.git repo template
+cookiecutter('gh:audreyfeldroy//cookiecutter-pypackage.git')
+```
 
-- Cookiecutters (cloned Cookiecutter project templates) are put into `~/.cookiecutters/` by default, or cookiecutters_dir if specified.
-- If you have already cloned a cookiecutter into `~/.cookiecutters/`,  you can reference it by directory name:
+#### Detailed Usage
 
-  ```bash
-  # Clone cookiecutter-pypackage
-  $ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
-  # Now you can use the already cloned cookiecutter by name
-  $ cookiecutter cookiecutter-pypackage
-  ```
+- Generate projects from local or remote templates.
+- Customize projects with `cookiecutter.json` prompts.
+- Utilize pre-prompt, pre- and post-generate hooks.
 
-- You can use local cookiecutters, or remote cookiecutters directly from Git repos or Mercurial repos on Bitbucket.
-- Default context: specify key/value pairs that you want to be used as defaults whenever you generate a project.
-- Inject extra context with command-line arguments:
+[Learn More](https://cookiecutter.readthedocs.io/en/latest/usage.html)
 
-  ```bash
-  cookiecutter --no-input gh:msabramo/cookiecutter-supervisor program_name=foobar startsecs=10
-  ```
+### For Template Creators
 
-- Direct access to the Cookiecutter API allows for the injection of extra context.
-- Paths to local projects can be specified as absolute or relative.
-Projects are generated to your current directory or to the target directory if specified with `-o` option.
+- Utilize unlimited directory nesting.
+- Employ Jinja2 for all templating needs.
+- Define template variables easily with `cookiecutter.json`.
 
-### For template creators
+[Learn More](https://cookiecutter.readthedocs.io/en/latest/template-author.html)
 
-- Supports unlimited levels of directory nesting.
-- 100% of templating is done with Jinja2.
-- Both, directory names and filenames can be templated.
-  For example:
+## Available Templates
 
-  ```py
-  {{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}/{{cookiecutter.repo_name}}.py
-  ```
-- Simply define your template variables in a `cookiecutter.json` file. You can also add human-readable questions and choices that will be prompted to the user for each variable using the `__prompts__` key. Those human-readable questions supports [`rich` markup](https://rich.readthedocs.io/en/stable/markup.html) such as `[bold yellow]this is bold and yellow[/]`
-  For example:
+Discover a variety of ready-to-use templates on [GitHub](https://github.com/search?q=cookiecutter&type=Repositories).
 
-  ```json
-  {
-    "full_name": "Audrey Roy Greenfeld",
-    "email": "audreyr@gmail.com",
-    "project_name": "Complexity",
-    "repo_name": "complexity",
-    "project_short_description": "Refreshingly simple static site generator.",
-    "release_date": "2013-07-10",
-    "year": "2013",
-    "version": "0.1.1",
-    "linting": ["ruff", "flake8", "none"],
-    "__prompts__": {
-      "full_name": "Provide your [bold yellow]full name[/]",
-      "email": "Provide your [bold yellow]email[/]",
-      "linting": {
-        "__prompt__": "Which [bold yellow]linting tool[/] do you want to use?",
-        "ruff": "Ruff",
-        "flake8": "Flake8",
-        "none": "No linting tool"
-      }
-    }
-  }
-  ```
-- Pre- and post-generate hooks: Python or shell scripts to run before or after generating a project.
+### Special Templates
 
-## Available Cookiecutters
-
-Making great cookies takes a lot of cookiecutters and contributors.
-We're so pleased that there are many Cookiecutter project templates to choose from.
-We hope you find a cookiecutter that is just right for your needs.
-
-### A Pantry Full of Cookiecutters
-
-The best place to start searching for specific and ready-to-use cookiecutter templates is [Github search](https://github.com/search?q=cookiecutter&type=Repositories).
-Just type `cookiecutter` and you will discover over 4000 related repositories.
-
-We also recommend you check related GitHub topics.
-For general search use [cookiecutter-template](https://github.com/topics/cookiecutter-template).
-For specific topics try to use `cookiecutter-yourtopic`, like `cookiecutter-python` or `cookiecutter-datascience`.
-This is a new GitHub feature, so not all active repositories use it at the moment.
-
-If you are a template developer please add related [topics](https://help.github.com/en/github/administering-a-repository/classifying-your-repository-with-topics) with `cookiecutter` prefix to your repository.
-We believe it will make it more discoverable.
-You are almost not limited in topic amount, use it!
-
-### Cookiecutter Specials
-
-These Cookiecutters are maintained by the cookiecutter team:
-
-- [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage):
-  ultimate Python package project template by [@audreyfeldroy's](https://github.com/audreyfeldroy).
-- [cookiecutter-django](https://github.com/pydanny/cookiecutter-django):
-  a framework for jumpstarting production-ready Django projects quickly.
-  It is bleeding edge with Bootstrap 5, a customizable users app, starter templates, working user registration, celery setup, and much more.
-- [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin):
-  Minimal Cookiecutter template for authoring [pytest](https://docs.pytest.org/) plugins that help you to write better programs.
+- [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage)
+- [cookiecutter-django](https://github.com/pydanny/cookiecutter-django)
+- [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
+- [cookiecutter-plone-starter](https://github.com/plone/cookiecutter-plone-starter)
 
 ## Community
 
-The core committer team can be found in the [authors' section](AUTHORS.md).
-We are always welcome and invite you to participate.
+Join the community, contribute, or seek assistance.
 
-Stuck? Try one of the following:
+- [Troubleshooting Guide](https://cookiecutter.readthedocs.io/en/latest/troubleshooting.html)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/cookiecutter)
+- [Discord](https://discord.gg/9BrxzPKuEW)
+- [File an Issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
+- [Contributors](AUTHORS.md)
+- [Contribution Guide](CONTRIBUTING.md)
 
-- See the [Troubleshooting](https://cookiecutter.readthedocs.io/en/latest/troubleshooting.html) page.
-- Ask for help on [Stack Overflow](https://stackoverflow.com/questions/tagged/cookiecutter).
-- You are strongly encouraged to [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) about the problem.
-  Do it even if it's just "I can't get it to work on this cookiecutter" with a link to your cookiecutter.
-  Don't worry about naming/pinpointing the issue properly.
-- Ask for help on [Discord](https://discord.gg/9BrxzPKuEW) if you must (but please try one of the other options first, so that others can benefit from the discussion).
+### Support
 
-Development on Cookiecutter is community-driven:
+- Star us on [GitHub](https://github.com/cookiecutter/cookiecutter).
+- Stay tuned for upcoming support options.
 
-- Huge thanks to all the [contributors](AUTHORS.md) who have pitched in to help make Cookiecutter an even better tool.
-- Everyone is invited to contribute.
-  Read the [contributing instructions](CONTRIBUTING.md), then get started.
-- Connect with other Cookiecutter contributors and users on [Discord](https://discord.gg/9BrxzPKuEW)
-  (note: due to work and other commitments, a core committer might not always be available)
+### Feedback
 
-Encouragement is unbelievably motivating.
-If you want more work done on Cookiecutter, show support:
+We value your feedback. Share your criticisms or complaints constructively to help us improve.
 
-- Thank a core committer for their efforts.
-- Star [Cookiecutter on GitHub](https://github.com/cookiecutter/cookiecutter).
-- [Support this project](#support-this-project)
+- [File an Issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
 
-Got criticism or complaints?
+### Waiting for a Response?
 
-- [File an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) so that Cookiecutter can be improved.
-  Be friendly and constructive about what could be better.
-  Make detailed suggestions.
-- **Keep us in the loop so that we can help.**
-  For example, if you are discussing problems with Cookiecutter on a mailing list, [file an issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen) where you link to the discussion thread and/or cc at least 1 core committer on the email.
-- Be encouraging.
-  A comment like "This function ought to be rewritten like this" is much more likely to result in action than a comment like "Eww, look how bad this function is."
-
-Waiting for a response to an issue/question?
-
-- Be patient and persistent. All issues are on the core committer team's radar and will be considered thoughtfully, but we have a lot of issues to work through.
-  If urgent, it's fine to ping a core committer in the issue with a reminder.
-- Ask others to comment, discuss, review, etc.
-- Search the Cookiecutter repo for issues related to yours.
-- Need a fix/feature/release/help urgently, and can't wait?
-  [@audreyfeldroy](https://github.com/audreyfeldroy) is available for hire for consultation or custom development.
-
-## Support This Project
-
-This project is run by volunteers.
-Shortly we will be providing means for organizations and individuals to support the project.
+- Be patient and consider reaching out to the community for assistance.
+- For urgent matters, contact [@audreyfeldroy](https://github.com/audreyfeldroy) for consultation or custom development.
 
 ## Code of Conduct
 
-Everyone interacting in the Cookiecutter project's codebases and documentation is expected to follow the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).
-This includes but is not limited to, issue trackers, chat rooms, mailing lists, and other virtual or in real-life communication.
+Adhere to the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/) during all interactions in the project's ecosystem.
 
-## Creator / Leader
+## Acknowledgements
 
-This project was created and led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy).
-
-She is supported by a team of maintainers.
+Created and led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy), supported by a dedicated team of maintainers and contributors.
