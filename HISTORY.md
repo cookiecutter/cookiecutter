@@ -8,10 +8,16 @@ History is important, but our current roadmap can be found [here](https://github
 ### Minor Changes
 
 * Gracefully handle files with mixed lined endings (#1942) @EricHripko
+* Implement a pre_prompt hook that will run before prompts (#1950) @ericof
+
+### Documentation updates
+
+* Implement a pre_prompt hook that will run before prompts (#1950) @ericof
+* update main docstrings to include overwrite_if_exists and skip_if_file_exists (#1947) @david-abn
 
 ### This release is made by wonderful contributors:
 
-@EricHripko and @ericof
+@EricHripko, @david-abn and @ericof
 
 ## 2.3.1 (2023-09-21)
 
