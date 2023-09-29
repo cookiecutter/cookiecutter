@@ -5,6 +5,7 @@ import os
 import shutil
 import stat
 import sys
+import tempfile
 from pathlib import Path
 
 from jinja2.ext import Extension
@@ -116,3 +117,13 @@ def simple_filter(filter_function):
 
     SimpleFilterExtension.__name__ = filter_function.__name__
     return SimpleFilterExtension
+
+
+def create_tmp_repo_dir(repo_dir: "os.PathLike[str]") -> Path:
+    """Create a temporary dir with a copy of the contents of repo_dir."""
+    repo_dir = Path(repo_dir) if isinstance(repo_dir, str) else repo_dir
+    base_dir = tempfile.mkdtemp(prefix='cookiecutter')
+    new_dir = f"{base_dir}/{repo_dir.name}"
+    logger.debug(f'Copying repo_dir from {repo_dir} to {new_dir}')
+    shutil.copytree(repo_dir, new_dir)
+    return Path(new_dir)
