@@ -3,7 +3,15 @@
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
 
-## 2.3.2 (unreleased)
+## 2.4.0 (2023-09-29)
+
+### Minor Changes
+
+* Gracefully handle files with mixed lined endings (#1942) @EricHripko
+
+### This release is made by wonderful contributors:
+
+@EricHripko and @ericof
 
 ## 2.3.1 (2023-09-21)
 
