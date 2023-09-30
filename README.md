@@ -78,7 +78,7 @@ cookiecutter('gh:audreyfeldroy//cookiecutter-pypackage.git')
 - Employ Jinja2 for all templating needs.
 - Define template variables easily with `cookiecutter.json`.
 
-[Learn More](https://cookiecutter.readthedocs.io/en/latest/template-author.html)
+[Learn More](https://cookiecutter.readthedocs.io/en/latest/tutorials/)
 
 ## Available Templates
 
