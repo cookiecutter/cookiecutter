@@ -21,7 +21,7 @@ Creating Hooks
 
 Hooks are added to the ``hooks/`` folder of your template. Both Python and Shell scripts are supported.
 
-You can create multiple hooks of the same type which run in order. 
+You can create multiple hooks of the same type which run in order.
 i.e. post_gen_project_1.py would run first, post_gen_project_2.sh would run second.
 
 **Python Hooks Structure:**
