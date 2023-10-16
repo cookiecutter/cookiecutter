@@ -45,8 +45,9 @@ def is_copy_only_path(path, context):
     return False
 
 
-def apply_overwrites_to_context(context, overwrite_context, *,
-                                in_dictionary_variable=False):
+def apply_overwrites_to_context(
+    context, overwrite_context, *, in_dictionary_variable=False
+):
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
@@ -83,8 +84,9 @@ def apply_overwrites_to_context(context, overwrite_context, *,
                     )
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
-            apply_overwrites_to_context(context_value, overwrite,
-                                        in_dictionary_variable=True)
+            apply_overwrites_to_context(
+                context_value, overwrite, in_dictionary_variable=True
+            )
             context[variable] = context_value
         else:
             # Simply overwrite the value for this variable
