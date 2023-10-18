@@ -43,13 +43,13 @@ The recommended way to use Cookiecutter as a command line utility is to run it w
 # Then it'll create your Python package in the current working directory,
 # based on those values.
 # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-$ pipx cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
+$ pipx run cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
 ```
 
 **Use a local template**
 
 ```bash
-$ pipx cookiecutter cookiecutter-pypackage/
+$ pipx run cookiecutter cookiecutter-pypackage/
 ```
 
 **Use it from Python**
