@@ -34,7 +34,7 @@ Create projects swiftly from **cookiecutters** (project templates) with this com
 
 #### Quick Start
 
-The recommended way to use Cookiecutter as a command line utility is to run it with [`pipx`](https://pypa.github.io/pipx/), which can be installed with `pip install pipx`, but if you plan to use Cookiecutter programatically, please run `pip install cookiecutter`.
+The recommended way to use Cookiecutter as a command line utility is to run it with [`pipx`](https://pypa.github.io/pipx/), which can be installed with `pip install pipx`, but if you plan to use Cookiecutter programmatically, please run `pip install cookiecutter`.
 
 **Use a GitHub template**
 
