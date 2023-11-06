@@ -7,8 +7,10 @@ import stat
 import sys
 import tempfile
 from pathlib import Path
+from typing import Dict
 
 from jinja2.ext import Extension
+from cookiecutter.environment import StrictEnvironment
 
 from cookiecutter.prompt import read_user_yes_no
 
@@ -127,3 +129,10 @@ def create_tmp_repo_dir(repo_dir: "os.PathLike[str]") -> Path:
     logger.debug(f'Copying repo_dir from {repo_dir} to {new_dir}')
     shutil.copytree(repo_dir, new_dir)
     return Path(new_dir)
+
+
+def create_env_with_context(context: Dict):
+    """Create a jinja environment using the provided context."""
+    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+
+    return StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)

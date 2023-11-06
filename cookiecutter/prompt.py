@@ -7,8 +7,8 @@ from pathlib import Path
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
 
-from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UndefinedVariableInTemplate
+from cookiecutter.utils import create_env_with_context
 
 
 def read_user_variable(var_name, default_value, prompts=None, prefix=""):
@@ -260,7 +260,7 @@ def prompt_for_config(context, no_input=False):
     :param no_input: Do not prompt for user input and use only values from context.
     """
     cookiecutter_dict = OrderedDict([])
-    env = StrictEnvironment(context=context)
+    env = create_env_with_context(context)
     prompts = context['cookiecutter'].pop('__prompts__', {})
 
     # First pass: Handle simple and raw variables, plus choices.
@@ -342,7 +342,7 @@ def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False)
     :returns: Path to the selected template.
     """
     cookiecutter_dict = OrderedDict([])
-    env = StrictEnvironment(context=context)
+    env = create_env_with_context(context)
     prefix = ""
     prompts = context['cookiecutter'].pop('__prompts__', {})
     key = "templates"
