@@ -5,8 +5,8 @@ from collections import OrderedDict
 from rich.prompt import Prompt, Confirm, PromptBase, InvalidResponse
 from jinja2.exceptions import UndefinedError
 
-from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UndefinedVariableInTemplate
+from cookiecutter.utils import create_env_with_context
 
 
 def read_user_variable(var_name, default_value, prompts=None, prefix=""):
@@ -237,7 +237,7 @@ def prompt_for_config(context, no_input=False):
     :param no_input: Do not prompt for user input and use only values from context.
     """
     cookiecutter_dict = OrderedDict([])
-    env = StrictEnvironment(context=context)
+    env = create_env_with_context(context)
 
     prompts = {}
     if '__prompts__' in context['cookiecutter'].keys():

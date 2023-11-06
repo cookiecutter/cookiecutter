@@ -11,7 +11,6 @@ from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader, Environment
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
-from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
     ContextDecodingException,
     NonTemplatedInputDirException,
@@ -20,7 +19,12 @@ from cookiecutter.exceptions import (
 )
 from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook_from_repo_dir
-from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
+from cookiecutter.utils import (
+    create_env_with_context,
+    make_sure_path_exists,
+    rmtree,
+    work_in,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -305,11 +309,9 @@ def generate_files(
     logger.debug('Generating project from %s...', template_dir)
     context = context or OrderedDict([])
 
-    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
-
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
-    env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+    env = create_env_with_context(context)
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
