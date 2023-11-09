@@ -135,6 +135,7 @@ def template_context():
             ('project_name', 'Kivy Project'),
             ('repo_name', '{{cookiecutter.project_name|lower}}'),
             ('orientation', ['all', 'landscape', 'portrait']),
+            ('deployment_regions', ['eu', 'us', 'ap']),
             (
                 'deployments',
                 {
@@ -207,10 +208,9 @@ def test_apply_overwrites_sets_multichoice_values(template_context):
     """Verify variable overwrite for list given multiple valid values."""
     generate.apply_overwrites_to_context(
         context=template_context,
-        overwrite_context={'deployments': {'preprod': ['eu'], 'prod': ['eu']}},
+        overwrite_context={'deployment_regions': ['eu']},
     )
-    assert template_context['deployments']['preprod'] == ['eu']
-    assert template_context['deployments']['prod'] == ['eu']
+    assert template_context['deployment_regions'] == ['eu']
 
 
 def test_apply_overwrites_invalid_multichoice_values(template_context):
@@ -218,7 +218,7 @@ def test_apply_overwrites_invalid_multichoice_values(template_context):
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
             context=template_context,
-            overwrite_context={'deployments': {'preprod': ['na'], 'prod': ['na']}},
+            overwrite_context={'deployment_regions': ['na']},
         )
 
 
@@ -227,10 +227,18 @@ def test_apply_overwrites_error_additional_values(template_context):
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
             context=template_context,
-            overwrite_context={
-                'deployments': {'preprod': ['eu', 'na'], 'prod': ['eu', 'na']}
-            },
+            overwrite_context={'deployment_regions': ['eu', 'na']},
         )
+
+
+def test_apply_overwrites_in_dictionaries(template_context):
+    """Verify variable overwrite for lists nested in dictionary variables."""
+    generate.apply_overwrites_to_context(
+        context=template_context,
+        overwrite_context={'deployments': {'preprod': ['eu'], 'prod': ['ap']}},
+    )
+    assert template_context['deployments']['preprod'] == ['eu']
+    assert template_context['deployments']['prod'] == ['ap']
 
 
 def test_apply_overwrites_sets_default_for_choice_variable(template_context):
