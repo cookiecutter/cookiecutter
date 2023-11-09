@@ -34,7 +34,7 @@ Create projects swiftly from **cookiecutters** (project templates) with this com
 
 #### Quick Start
 
-The recommended way to use Cookiecutter as a command line utility is to run it with [`pipx`](https://pypa.github.io/pipx/), which can be installed with `pip install pipx`, but if you plan to use Cookiecutter programatically, please run `pip install cookiecutter`.
+The recommended way to use Cookiecutter as a command line utility is to run it with [`pipx`](https://pypa.github.io/pipx/), which can be installed with `pip install pipx`, but if you plan to use Cookiecutter programmatically, please run `pip install cookiecutter`.
 
 **Use a GitHub template**
 
@@ -43,13 +43,13 @@ The recommended way to use Cookiecutter as a command line utility is to run it w
 # Then it'll create your Python package in the current working directory,
 # based on those values.
 # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-$ pipx cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
+$ pipx run cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
 ```
 
 **Use a local template**
 
 ```bash
-$ pipx cookiecutter cookiecutter-pypackage/
+$ pipx run cookiecutter cookiecutter-pypackage/
 ```
 
 **Use it from Python**
@@ -89,7 +89,7 @@ Discover a variety of ready-to-use templates on [GitHub](https://github.com/sear
 - [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage)
 - [cookiecutter-django](https://github.com/pydanny/cookiecutter-django)
 - [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
-- [cookiecutter-plone-starter](https://github.com/plone/cookiecutter-plone-starter)
+- [cookiecutter-plone-starter](https://github.com/collective/cookiecutter-plone-starter)
 
 ## Community
 
