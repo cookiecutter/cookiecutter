@@ -228,3 +228,19 @@ def test_ignore_shell_hooks(tmp_path):
     )
     assert not shell_pre_file.exists()
     assert not shell_post_file.exists()
+
+
+@pytest.mark.usefixtures("clean_system", "remove_additional_folders")
+def test_deprecate_run_hook_from_repo_dir(tmp_path):
+    """Test deprecation warning in generate._run_hook_from_repo_dir."""
+    repo_dir = "tests/test-shellhooks/"
+    project_dir = Path(tmp_path.joinpath('test-shellhooks'))
+    project_dir.mkdir()
+    with pytest.deprecated_call():
+        generate._run_hook_from_repo_dir(
+            repo_dir=repo_dir,
+            hook_name="pre_gen_project",
+            project_dir=project_dir,
+            context={},
+            delete_project_on_failure=False,
+        )

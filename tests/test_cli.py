@@ -6,7 +6,6 @@ from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
-
 from cookiecutter import utils
 from cookiecutter.__main__ import main
 from cookiecutter.environment import StrictEnvironment
@@ -31,8 +30,10 @@ def remove_fake_project_dir(request):
     """Remove the fake project directory created during the tests."""
 
     def fin_remove_fake_project_dir():
-        if os.path.isdir('fake-project'):
-            utils.rmtree('fake-project')
+        for prefix in ('', 'input'):
+            dir_name = f'{prefix}fake-project'
+            if os.path.isdir(dir_name):
+                utils.rmtree(dir_name)
 
     request.addfinalizer(fin_remove_fake_project_dir)
 
@@ -432,6 +433,7 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
             '_template': template_path,
             '_repo_dir': template_path,
             '_output_dir': output_dir,
+            '_checkout': None,
         },
     }
     context_str = json.dumps(context, indent=4, sort_keys=True)
@@ -685,3 +687,26 @@ def test_cli_with_json_decoding_error(cli_runner):
     # this point.
     path = os.path.sep.join(['tests', 'fake-repo-bad-json', 'cookiecutter.json'])
     assert path in result.output
+
+
+@pytest.mark.usefixtures('remove_fake_project_dir')
+def test_cli_with_pre_prompt_hook(cli_runner):
+    """Test cli invocation in a template with pre_prompt hook."""
+    template_path = 'tests/test-pyhooks/'
+    result = cli_runner(template_path, '--no-input')
+    assert result.exit_code == 0
+    dir_name = 'inputfake-project'
+    assert os.path.isdir(dir_name)
+    content = Path(dir_name, "README.rst").read_text()
+    assert 'foo' in content
+
+
+def test_cli_with_pre_prompt_hook_fail(cli_runner, monkeypatch):
+    """Test cli invocation will fail when a given env var is present."""
+    template_path = 'tests/test-pyhooks/'
+    with monkeypatch.context() as m:
+        m.setenv('COOKIECUTTER_FAIL_PRE_PROMPT', '1')
+        result = cli_runner(template_path, '--no-input')
+    assert result.exit_code == 1
+    dir_name = 'inputfake-project'
+    assert not Path(dir_name).exists()

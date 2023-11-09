@@ -20,7 +20,13 @@ def read_user_variable(var_name, default_value, prompts=None, prefix=""):
         if prompts and var_name in prompts.keys() and prompts[var_name]
         else var_name
     )
-    return Prompt.ask(f"{prefix}{question}", default=default_value)
+
+    while True:
+        variable = Prompt.ask(f"{prefix}{question}", default=default_value)
+        if variable is not None:
+            break
+
+    return variable
 
 
 class YesNoPrompt(Confirm):
@@ -243,8 +249,10 @@ def prompt_for_config(context, no_input=False):
     # values might refer to them.
 
     count = 0
-    size = len(context['cookiecutter'].items())
-    for key, raw in context['cookiecutter'].items():
+    all_prompts = context['cookiecutter'].items()
+    visible_prompts = [k for k, _ in all_prompts if not k.startswith("_")]
+    size = len(visible_prompts)
+    for key, raw in all_prompts:
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue

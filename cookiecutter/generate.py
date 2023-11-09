@@ -14,13 +14,12 @@ from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
     ContextDecodingException,
-    FailedHookException,
     NonTemplatedInputDirException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
 from cookiecutter.find import find_template
-from cookiecutter.hooks import run_hook
+from cookiecutter.hooks import run_hook_from_repo_dir
 from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
 
 logger = logging.getLogger(__name__)
@@ -46,7 +45,9 @@ def is_copy_only_path(path, context):
     return False
 
 
-def apply_overwrites_to_context(context, overwrite_context):
+def apply_overwrites_to_context(
+    context, overwrite_context, *, in_dictionary_variable=False
+):
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
@@ -54,33 +55,38 @@ def apply_overwrites_to_context(context, overwrite_context):
             continue
 
         context_value = context[variable]
-
-        if isinstance(context_value, list) and isinstance(overwrite, list):
-            # We are dealing with a multichoice variable
-            # Let's confirm all choices are valid for the given context
-            if set(overwrite).issubset(set(context_value)):
+        if isinstance(context_value, list):
+            if in_dictionary_variable:
                 context[variable] = overwrite
+                continue
+            if isinstance(overwrite, list):
+                # We are dealing with a multichoice variable
+                # Let's confirm all choices are valid for the given context
+                if set(overwrite).issubset(set(context_value)):
+                    context[variable] = overwrite
+                else:
+                    raise ValueError(
+                        f"{overwrite} provided for multi-choice variable "
+                        f"{variable}, but valid choices are {context_value}"
+                    )
             else:
-                raise ValueError(
-                    f"{overwrite} provided for multi-choice variable {variable}, "
-                    f"but valid choices are {context_value}"
-                )
-        elif isinstance(context_value, list):
-            # We are dealing with a choice variable
-            if overwrite in context_value:
-                # This overwrite is actually valid for the given context
-                # Let's set it as default (by definition first item in list)
-                # see ``cookiecutter.prompt.prompt_choice_for_config``
-                context_value.remove(overwrite)
-                context_value.insert(0, overwrite)
-            else:
-                raise ValueError(
-                    f"{overwrite} provided for choice variable {variable}, "
-                    f"but the choices are {context_value}."
-                )
+                # We are dealing with a choice variable
+                if overwrite in context_value:
+                    # This overwrite is actually valid for the given context
+                    # Let's set it as default (by definition first item in list)
+                    # see ``cookiecutter.prompt.prompt_choice_for_config``
+                    context_value.remove(overwrite)
+                    context_value.insert(0, overwrite)
+                else:
+                    raise ValueError(
+                        f"{overwrite} provided for choice variable "
+                        f"{variable}, but the choices are {context_value}."
+                    )
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
-            apply_overwrites_to_context(context_value, overwrite)
+            apply_overwrites_to_context(
+                context_value, overwrite, in_dictionary_variable=True
+            )
             context[variable] = context_value
         else:
             # Simply overwrite the value for this variable
@@ -200,9 +206,11 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
         logger.debug('Using configured newline character %s', repr(newline))
     else:
         # Detect original file newline to output the rendered file.
+        # Note that newlines can be a tuple if file contains mixed line endings.
+        # In this case, we pick the first line ending we detected.
         with open(infile, encoding='utf-8') as rd:
             rd.readline()  # Read only the first line to load a 'newlines' value.
-        newline = rd.newlines
+        newline = rd.newlines[0] if isinstance(rd.newlines, tuple) else rd.newlines
         logger.debug('Using detected newline character %s', repr(newline))
 
     logger.debug('Writing contents to file %s', outfile)
@@ -267,21 +275,15 @@ def _run_hook_from_repo_dir(
     :param delete_project_on_failure: Delete the project directory on hook
         failure?
     """
-    with work_in(repo_dir):
-        try:
-            run_hook(hook_name, project_dir, context)
-        except (
-            FailedHookException,
-            UndefinedError,
-        ):
-            if delete_project_on_failure:
-                rmtree(project_dir)
-            logger.error(
-                "Stopping generation because %s hook "
-                "script didn't exit successfully",
-                hook_name,
-            )
-            raise
+    warnings.warn(
+        "The '_run_hook_from_repo_dir' function is deprecated, "
+        "use 'cookiecutter.hooks.run_hook_from_repo_dir' instead",
+        DeprecationWarning,
+        2,
+    )
+    run_hook_from_repo_dir(
+        repo_dir, hook_name, project_dir, context, delete_project_on_failure
+    )
 
 
 def generate_files(
@@ -338,7 +340,7 @@ def generate_files(
     delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        run_hook_from_repo_dir(
             repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
         )
 
@@ -415,7 +417,7 @@ def generate_files(
                     raise UndefinedVariableInTemplate(msg, err, context) from err
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        run_hook_from_repo_dir(
             repo_dir,
             'post_gen_project',
             project_dir,
