@@ -27,7 +27,12 @@ A command-line utility that creates projects from **cookiecutters** (project tem
 
 Install cookiecutter using pip package manager:
 ```
-python3 -m pip install --user cookiecutter
+# pipx is strongly recommended.
+pipx install cookiecutter
+
+# If pipx is not an option,
+# you can install cookiecutter in your Python user directory.
+python -m pip install --user cookiecutter
 ```
 
 ## Features
