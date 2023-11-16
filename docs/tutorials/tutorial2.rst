@@ -101,7 +101,7 @@ Resulting directory should be inside your work directory with a name that matche
         </head>
 
         <body>
-            <h1>Cookiecutter Developer</h1>
-            <p>by Test web</p>
+            <h1>Test web</h1>
+            <p>by Cookiecutter Developer</p>
         </body>
     </html>

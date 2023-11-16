@@ -1,6 +1,7 @@
 commitish: main
 name-template: '$RESOLVED_VERSION'
 tag-template: '$RESOLVED_VERSION'
+category-template: '### $TITLE'
 version-resolver:
   major:
     labels:
@@ -69,6 +70,6 @@ template: |
 
   $CHANGES
 
-  ## This release is made by wonderful contributors:
+  ### This release is made by wonderful contributors:
 
   $CONTRIBUTORS
