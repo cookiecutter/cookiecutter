@@ -96,7 +96,7 @@ def get_user_config(config_file=None, default_config=False):
     If the environment variable is not set, try the default config file path
     before falling back to the default config values.
     """
-    # Do NOT load a config. Merge  provided values with defaults and return them instead
+    # Do NOT load a config. Merge provided values with defaults and return them instead
     if default_config and isinstance(default_config, dict):
         return merge_configs(DEFAULT_CONFIG, default_config)
 

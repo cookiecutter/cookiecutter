@@ -157,7 +157,7 @@ def test_expand_vars_for_directories_in_config(monkeypatch):
 
 
 def test_specify_config_values():
-    """Validate provided custom config values should be respected ."""
+    """Validate provided custom config values should be respected."""
     replay_dir = 'Users/bob/cookies/custom-replay-dir'
     custom_config_updated = {**config.DEFAULT_CONFIG, 'replay_dir': replay_dir}
 
