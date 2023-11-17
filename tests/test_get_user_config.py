@@ -154,3 +154,13 @@ def test_expand_vars_for_directories_in_config(monkeypatch):
     user_config = config.get_user_config(config_file)
     assert user_config['replay_dir'] == 'Users/bob/cookies/replay-files'
     assert user_config['cookiecutters_dir'] == 'Users/bob/cookies/templates'
+
+
+def test_specify_config_values():
+    """Validate provided custom config values should be respected."""
+    replay_dir = 'Users/bob/cookies/custom-replay-dir'
+    custom_config_updated = {**config.DEFAULT_CONFIG, 'replay_dir': replay_dir}
+
+    user_config = config.get_user_config(default_config={'replay_dir': replay_dir})
+
+    assert user_config == custom_config_updated

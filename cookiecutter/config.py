@@ -83,6 +83,9 @@ def get_user_config(config_file=None, default_config=False):
     If ``default_config`` is True, ignore ``config_file`` and return default
     values for the config parameters.
 
+    If ``default_config`` is a dict, merge values with default values and return them
+    for the config parameters.
+
     If a path to a ``config_file`` is given, that is different from the default
     location, load the user config from that.
 
@@ -93,6 +96,10 @@ def get_user_config(config_file=None, default_config=False):
     If the environment variable is not set, try the default config file path
     before falling back to the default config values.
     """
+    # Do NOT load a config. Merge provided values with defaults and return them instead
+    if default_config and isinstance(default_config, dict):
+        return merge_configs(DEFAULT_CONFIG, default_config)
+
     # Do NOT load a config. Return defaults instead.
     if default_config:
         logger.debug("Force ignoring user config with default_config switch.")
