@@ -1,7 +1,9 @@
 """Functions for prompting the user for project info."""
 import json
+import re
 from collections import OrderedDict
 
+from pathlib import Path
 from rich.prompt import Prompt, Confirm, PromptBase, InvalidResponse
 from jinja2.exceptions import UndefinedError
 
@@ -217,6 +219,37 @@ def render_variable(env, raw, cookiecutter_dict):
     return template.render(cookiecutter=cookiecutter_dict)
 
 
+def _extract_prompts(context: dict) -> dict:
+    """Extract __prompts__ from context dict."""
+    key = '__prompts__'
+    prompts = {}
+    if key in context['cookiecutter']:
+        prompts = context['cookiecutter'][key]
+        del context['cookiecutter'][key]
+    return prompts
+
+
+def _prompts_from_options(options: dict) -> dict:
+    """Process template options and return friendly prompt information."""
+    prompts = {"__prompt__": "Select a template"}
+    for option_key, option_value in options.items():
+        title = option_value.get("title", option_key)
+        description = option_value.get("description", option_key)
+        label = f"{title}" if title == description else f"{title} ({description})"
+        prompts[option_key] = label
+    return prompts
+
+
+def prompt_choice_for_template(key, options, no_input):
+    """Prompt user with a set of options to choose from.
+
+    :param no_input: Do not prompt for user input and return the first available option.
+    """
+    opts = list(options.keys())
+    prompts = {"templates": _prompts_from_options(options)}
+    return opts[0] if no_input else read_user_choice(key, opts, prompts, "")
+
+
 def prompt_choice_for_config(
     cookiecutter_dict, env, key, options, no_input, prompts=None, prefix=""
 ):
@@ -238,16 +271,11 @@ def prompt_for_config(context, no_input=False):
     """
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
-
-    prompts = {}
-    if '__prompts__' in context['cookiecutter'].keys():
-        prompts = context['cookiecutter']['__prompts__']
-        del context['cookiecutter']['__prompts__']
+    prompts = _extract_prompts(context=context)
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-
     count = 0
     all_prompts = context['cookiecutter'].items()
     visible_prompts = [k for k, _ in all_prompts if not k.startswith("_")]
@@ -313,3 +341,36 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context) from err
 
     return cookiecutter_dict
+
+
+def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False) -> str:
+    """Prompt user to select the nested template to use.
+
+    :param context: Source for field names and sample values.
+    :param repo_dir: Repository directory.
+    :param no_input: Do not prompt for user input and use only values from context.
+    :returns: Path to the selected template.
+    """
+    cookiecutter_dict = OrderedDict([])
+    env = StrictEnvironment(context=context)
+    prefix = ""
+    prompts = _extract_prompts(context)
+    key = "templates"
+    config = context['cookiecutter'].get(key, {})
+    if config:
+        # Pass
+        val = prompt_choice_for_template(key, config, no_input)
+        template = config[val]["path"]
+    else:
+        # Old style
+        key = "template"
+        config = context['cookiecutter'].get(key)
+        val = prompt_choice_for_config(
+            cookiecutter_dict, env, key, config, no_input, prompts, prefix
+        )
+        template = re.search(r'\((.*?)\)', val).group(1)
+
+    repo_dir = Path(repo_dir).resolve()
+    template_path = (repo_dir / template).resolve()
+    # Return path as string
+    return f"{template_path}"
