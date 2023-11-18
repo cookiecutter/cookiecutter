@@ -45,7 +45,9 @@ def is_copy_only_path(path, context):
     return False
 
 
-def apply_overwrites_to_context(context, overwrite_context):
+def apply_overwrites_to_context(
+    context, overwrite_context, *, in_dictionary_variable=False
+):
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
@@ -53,33 +55,38 @@ def apply_overwrites_to_context(context, overwrite_context):
             continue
 
         context_value = context[variable]
-
-        if isinstance(context_value, list) and isinstance(overwrite, list):
-            # We are dealing with a multichoice variable
-            # Let's confirm all choices are valid for the given context
-            if set(overwrite).issubset(set(context_value)):
+        if isinstance(context_value, list):
+            if in_dictionary_variable:
                 context[variable] = overwrite
+                continue
+            if isinstance(overwrite, list):
+                # We are dealing with a multichoice variable
+                # Let's confirm all choices are valid for the given context
+                if set(overwrite).issubset(set(context_value)):
+                    context[variable] = overwrite
+                else:
+                    raise ValueError(
+                        f"{overwrite} provided for multi-choice variable "
+                        f"{variable}, but valid choices are {context_value}"
+                    )
             else:
-                raise ValueError(
-                    f"{overwrite} provided for multi-choice variable {variable}, "
-                    f"but valid choices are {context_value}"
-                )
-        elif isinstance(context_value, list):
-            # We are dealing with a choice variable
-            if overwrite in context_value:
-                # This overwrite is actually valid for the given context
-                # Let's set it as default (by definition first item in list)
-                # see ``cookiecutter.prompt.prompt_choice_for_config``
-                context_value.remove(overwrite)
-                context_value.insert(0, overwrite)
-            else:
-                raise ValueError(
-                    f"{overwrite} provided for choice variable {variable}, "
-                    f"but the choices are {context_value}."
-                )
+                # We are dealing with a choice variable
+                if overwrite in context_value:
+                    # This overwrite is actually valid for the given context
+                    # Let's set it as default (by definition first item in list)
+                    # see ``cookiecutter.prompt.prompt_choice_for_config``
+                    context_value.remove(overwrite)
+                    context_value.insert(0, overwrite)
+                else:
+                    raise ValueError(
+                        f"{overwrite} provided for choice variable "
+                        f"{variable}, but the choices are {context_value}."
+                    )
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
-            apply_overwrites_to_context(context_value, overwrite)
+            apply_overwrites_to_context(
+                context_value, overwrite, in_dictionary_variable=True
+            )
             context[variable] = context_value
         else:
             # Simply overwrite the value for this variable
