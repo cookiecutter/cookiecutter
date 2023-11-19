@@ -138,9 +138,7 @@ def cookiecutter(
     # except when 'no-input' flag is set
 
     with import_patch:
-        prompt_keys = list(context["cookiecutter"].keys())
-        has_nested_template = "template" in prompt_keys or "templates" in prompt_keys
-        if has_nested_template:
+        if {"template", "templates"} & set(context["cookiecutter"].keys()):
             nested_template = choose_nested_template(context, repo_dir, no_input)
             return cookiecutter(
                 template=nested_template,
