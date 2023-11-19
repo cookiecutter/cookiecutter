@@ -42,10 +42,10 @@ config files as follows:
         }
     }
 
-Then, when ``cookiecutter`` is launched in the main directory it will ask to choice
+Then, when ``cookiecutter`` is launched in the main directory it will ask to choose
 among the possible templates:
 
-.. code-block:: bash
+.. code-block::
 
     Select template:
     1 - Project 1 (A cookiecutter template for a project)
@@ -72,10 +72,10 @@ In the main ``cookiecutter.json`` add a `template` key with the following format
         ]
     }
 
-Then, when ``cookiecutter`` is launched in the main directory it will ask to choice
+Then, when ``cookiecutter`` is launched in the main directory it will ask to choose
 among the possible templates:
 
-.. code-block:: bash
+.. code-block::
 
     Select template:
     1 - Project 1 (./project-1)
