@@ -2,8 +2,8 @@
 import json
 import re
 from collections import OrderedDict
-
 from pathlib import Path
+
 from rich.prompt import Prompt, Confirm, PromptBase, InvalidResponse
 from jinja2.exceptions import UndefinedError
 
