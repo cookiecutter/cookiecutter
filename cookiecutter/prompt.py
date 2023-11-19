@@ -219,16 +219,6 @@ def render_variable(env, raw, cookiecutter_dict):
     return template.render(cookiecutter=cookiecutter_dict)
 
 
-def _extract_prompts(context: dict) -> dict:
-    """Extract __prompts__ from context dict."""
-    key = '__prompts__'
-    prompts = {}
-    if key in context['cookiecutter']:
-        prompts = context['cookiecutter'][key]
-        del context['cookiecutter'][key]
-    return prompts
-
-
 def _prompts_from_options(options: dict) -> dict:
     """Process template options and return friendly prompt information."""
     prompts = {"__prompt__": "Select a template"}
@@ -271,7 +261,7 @@ def prompt_for_config(context, no_input=False):
     """
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
-    prompts = _extract_prompts(context=context)
+    prompts = context['cookiecutter'].pop('__prompts__', {})
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
@@ -354,7 +344,7 @@ def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False)
     cookiecutter_dict = OrderedDict([])
     env = StrictEnvironment(context=context)
     prefix = ""
-    prompts = _extract_prompts(context)
+    prompts = context['cookiecutter'].pop('__prompts__', {})
     key = "templates"
     config = context['cookiecutter'].get(key, {})
     if config:
