@@ -223,9 +223,9 @@ def _prompts_from_options(options: dict) -> dict:
     """Process template options and return friendly prompt information."""
     prompts = {"__prompt__": "Select a template"}
     for option_key, option_value in options.items():
-        title = option_value.get("title", option_key)
+        title = str(option_value.get("title", option_key))
         description = option_value.get("description", option_key)
-        label = f"{title}" if title == description else f"{title} ({description})"
+        label = title if title == description else f"{title} ({description})"
         prompts[option_key] = label
     return prompts
 
@@ -354,11 +354,15 @@ def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False)
     else:
         # Old style
         key = "template"
-        config = context['cookiecutter'].get(key)
+        config = context['cookiecutter'].get(key, [])
         val = prompt_choice_for_config(
             cookiecutter_dict, env, key, config, no_input, prompts, prefix
         )
-        template = re.search(r'\((.*?)\)', val).group(1)
+        template = re.search(r'\((.+)\)', val).group(1)
+
+    template = Path(template) if template else None
+    if not (template and not template.is_absolute()):
+        raise ValueError("Illegal template path")
 
     repo_dir = Path(repo_dir).resolve()
     template_path = (repo_dir / template).resolve()

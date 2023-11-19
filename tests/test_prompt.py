@@ -594,3 +594,24 @@ def test_cookiecutter_nested_templates(template_dir: str, expected: str):
     output_dir = prompt.choose_nested_template(context, main_dir, no_input=True)
     expected = (Path(main_dir) / expected).resolve()
     assert output_dir == f"{expected}"
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "",
+        "/tmp",
+        "/foo",
+    ],
+)
+def test_cookiecutter_nested_templates_invalid_paths(path: str):
+    """Test nested_templates generation."""
+    from cookiecutter import prompt
+
+    main_dir = (Path("tests") / "fake-nested-templates").resolve()
+    cookiecuter_context = json.loads((main_dir / "cookiecutter.json").read_text())
+    cookiecuter_context["templates"]["fake-project"]["path"] = path
+    context = {"cookiecutter": cookiecuter_context}
+    with pytest.raises(ValueError) as exc:
+        prompt.choose_nested_template(context, main_dir, no_input=True)
+    assert "Illegal template path" in str(exc)
