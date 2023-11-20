@@ -6,7 +6,6 @@ library rather than a script.
 """
 import logging
 import os
-import re
 import sys
 from copy import copy
 from pathlib import Path
@@ -15,6 +14,7 @@ from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
 from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.hooks import run_pre_prompt_hook
+from cookiecutter.prompt import choose_nested_template
 from cookiecutter.prompt import prompt_for_config
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
@@ -138,16 +138,10 @@ def cookiecutter(
     # except when 'no-input' flag is set
 
     with import_patch:
-        if context_for_prompting['cookiecutter']:
-            context['cookiecutter'].update(
-                prompt_for_config(context_for_prompting, no_input)
-            )
-        if "template" in context["cookiecutter"]:
-            nested_template = re.search(
-                r'\((.*?)\)', context["cookiecutter"]["template"]
-            ).group(1)
+        if {"template", "templates"} & set(context["cookiecutter"].keys()):
+            nested_template = choose_nested_template(context, repo_dir, no_input)
             return cookiecutter(
-                template=os.path.join(repo_dir, nested_template),
+                template=nested_template,
                 checkout=checkout,
                 no_input=no_input,
                 extra_context=extra_context,
@@ -161,6 +155,10 @@ def cookiecutter(
                 skip_if_file_exists=skip_if_file_exists,
                 accept_hooks=accept_hooks,
                 keep_project_on_failure=keep_project_on_failure,
+            )
+        if context_for_prompting['cookiecutter']:
+            context['cookiecutter'].update(
+                prompt_for_config(context_for_prompting, no_input)
             )
 
     logger.debug('context is %s', context)

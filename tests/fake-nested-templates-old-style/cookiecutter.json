@@ -1,0 +1,11 @@
+{
+  "template": [
+    "fake-package (./fake-package)"
+  ],
+  "__prompts__": {
+    "template": {
+      "__prompt__": "Select a template",
+      "fake-package (./fake-package)": "Fake Package"
+    }
+  }
+}
