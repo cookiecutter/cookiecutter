@@ -1,5 +1,7 @@
 """Tests for `cookiecutter.prompt` module."""
 import platform
+import sys
+
 from collections import OrderedDict
 from pathlib import Path
 
@@ -596,6 +598,7 @@ def test_cookiecutter_nested_templates(template_dir: str, expected: str):
     assert output_dir == f"{expected}"
 
 
+@pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux / macos test")
 @pytest.mark.parametrize(
     "path",
     [
@@ -605,6 +608,28 @@ def test_cookiecutter_nested_templates(template_dir: str, expected: str):
     ],
 )
 def test_cookiecutter_nested_templates_invalid_paths(path: str):
+    """Test nested_templates generation."""
+    from cookiecutter import prompt
+
+    main_dir = (Path("tests") / "fake-nested-templates").resolve()
+    cookiecuter_context = json.loads((main_dir / "cookiecutter.json").read_text())
+    cookiecuter_context["templates"]["fake-project"]["path"] = path
+    context = {"cookiecutter": cookiecuter_context}
+    with pytest.raises(ValueError) as exc:
+        prompt.choose_nested_template(context, main_dir, no_input=True)
+    assert "Illegal template path" in str(exc)
+
+
+@pytest.mark.skipif(not sys.platform.startswith('win'), reason="Win only test")
+@pytest.mark.parametrize(
+    "path",
+    [
+        "",
+        "C:/tmp",
+        "D:/tmp",
+    ],
+)
+def test_cookiecutter_nested_templates_invalid_win_paths(path: str):
     """Test nested_templates generation."""
     from cookiecutter import prompt
 
