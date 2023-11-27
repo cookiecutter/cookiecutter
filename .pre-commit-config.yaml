@@ -1,5 +1,10 @@
 ---
 repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
   - repo: https://github.com/PyCQA/doc8
     rev: v1.1.1
     hooks:
