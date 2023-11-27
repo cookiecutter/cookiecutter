@@ -4,8 +4,8 @@ import re
 from collections import OrderedDict
 from pathlib import Path
 
-from rich.prompt import Prompt, Confirm, PromptBase, InvalidResponse
 from jinja2.exceptions import UndefinedError
+from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
 
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UndefinedVariableInTemplate

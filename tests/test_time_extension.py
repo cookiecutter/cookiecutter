@@ -1,7 +1,6 @@
 """Tests for the TimeExtension Jinja2 extension."""
 import freezegun
 import pytest
-
 from jinja2 import Environment, exceptions
 
 
