@@ -4,8 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import generate
-from cookiecutter import utils
+from cookiecutter import generate, utils
 
 
 @pytest.fixture

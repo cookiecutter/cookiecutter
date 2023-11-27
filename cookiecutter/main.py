@@ -14,8 +14,7 @@ from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
 from cookiecutter.generate import generate_context, generate_files
 from cookiecutter.hooks import run_pre_prompt_hook
-from cookiecutter.prompt import choose_nested_template
-from cookiecutter.prompt import prompt_for_config
+from cookiecutter.prompt import choose_nested_template, prompt_for_config
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree

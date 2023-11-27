@@ -7,8 +7,9 @@ import shutil
 import warnings
 from collections import OrderedDict
 from pathlib import Path
+
 from binaryornot.check import is_binary
-from jinja2 import FileSystemLoader, Environment
+from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
 from cookiecutter.environment import StrictEnvironment

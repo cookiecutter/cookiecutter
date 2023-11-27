@@ -9,9 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import exceptions
-from cookiecutter import generate
-from cookiecutter import utils
+from cookiecutter import exceptions, generate, utils
 
 
 @pytest.fixture(scope='function')

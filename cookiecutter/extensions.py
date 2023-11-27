@@ -1,10 +1,10 @@
 """Jinja2 extensions."""
-import arrow
 import json
 import string
 import uuid
 from secrets import choice
 
+import arrow
 from jinja2 import nodes
 from jinja2.ext import Extension
 from slugify import slugify as pyslugify
