@@ -100,28 +100,35 @@ def clone(
 
     if clone:
         try:
-            subprocess.check_output(  # nosec
+            result = subprocess.run(  # replacing check_output with run
                 [repo_type, 'clone', repo_url],
                 cwd=clone_to_dir,
-                stderr=subprocess.STDOUT,
+                stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                text=True,
+                check=False
             )
+
+            # Handle the result manually
+            if result.returncode != 0:
+                raise subprocess.CalledProcessError(result.returncode, result.args, output=result.stdout, stderr=result.stderr)
+
             if checkout is not None:
-                checkout_params = [checkout]
-                # Avoid Mercurial "--config" and "--debugger" injection vulnerability
-                if repo_type == "hg":
-                    checkout_params.insert(0, "--")
-                subprocess.check_output(  # nosec
-                    [repo_type, 'checkout', *checkout_params],
+                subprocess.run(
+                    [repo_type, 'checkout', checkout],
                     cwd=repo_dir,
-                    stderr=subprocess.STDOUT,
+                    stderr=subprocess.PIPE,
+                    stdout=subprocess.PIPE,
+                    text=True,
+                    check=True
                 )
         except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output.decode('utf-8')
+            output = clone_error.output
             if 'not found' in output.lower():
                 raise RepositoryNotFound(
-                    f'The repository {repo_url} could not be found, '
-                    'have you made a typo?'
-                ) from clone_error
+                    'The repository {} could not be found, '
+                    'have you made a typo?'.format(repo_url)
+                )
             if any(error in output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
                     f'The {checkout} branch of repository '
