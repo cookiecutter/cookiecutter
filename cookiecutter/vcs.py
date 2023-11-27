@@ -106,12 +106,18 @@ def clone(
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 text=True,
-                check=False
+                check=False,
+                shell=False,
             )
 
             # Handle the result manually
             if result.returncode != 0:
-                raise subprocess.CalledProcessError(result.returncode, result.args, output=result.stdout, stderr=result.stderr)
+                raise subprocess.CalledProcessError(
+                    result.returncode,
+                    result.args,
+                    output=result.stdout,
+                    stderr=result.stderr,
+                )
 
             if checkout is not None:
                 subprocess.run(
@@ -120,21 +126,26 @@ def clone(
                     stderr=subprocess.PIPE,
                     stdout=subprocess.PIPE,
                     text=True,
-                    check=True
+                    check=True,
+                    shell=False,
                 )
+
         except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output
-            if 'not found' in output.lower():
+            # Check stderr for specific error messages
+            error_output = clone_error.stderr or ''
+
+            if 'not found' in error_output.lower():
                 raise RepositoryNotFound(
                     'The repository {} could not be found, '
                     'have you made a typo?'.format(repo_url)
                 )
-            if any(error in output for error in BRANCH_ERRORS):
+
+            if any(error in error_output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
                     f'The {checkout} branch of repository '
                     f'{repo_url} could not found, have you made a typo?'
                 ) from clone_error
-            logger.error('git clone failed with error: %s', output)
+            logger.error('git clone failed with error: %s', error_output)
             raise
 
     return repo_dir
