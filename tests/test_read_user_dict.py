@@ -1,9 +1,9 @@
 """Test `process_json`, `read_user_dict` functions in `cookiecutter.prompt`."""
 import click
 import pytest
-
-from cookiecutter.prompt import process_json, read_user_dict, JsonPrompt
 from rich.prompt import InvalidResponse
+
+from cookiecutter.prompt import JsonPrompt, process_json, read_user_dict
 
 
 def test_process_json_invalid_json():

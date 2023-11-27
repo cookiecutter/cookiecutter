@@ -1,5 +1,10 @@
 ---
 repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
   - repo: https://github.com/PyCQA/doc8
     rev: v1.1.1
     hooks:
@@ -16,6 +21,10 @@ repos:
       - id: black
         language_version: python3
         exclude: ^(tests\/hooks-abort-render\/hooks|docs\/HelloCookieCutter1)
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:

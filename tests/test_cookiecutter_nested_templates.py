@@ -1,5 +1,6 @@
 """Test cookiecutter invocation with nested configuration structure."""
 from pathlib import Path
+
 import pytest
 
 from cookiecutter import main
