@@ -107,7 +107,7 @@ def clone(
                 stdout=subprocess.PIPE,
                 text=True,
                 check=False,
-                shell=False,
+                shell=False,  # nosec
             )
 
             # Handle the result manually
@@ -127,7 +127,7 @@ def clone(
                     stdout=subprocess.PIPE,
                     text=True,
                     check=True,
-                    shell=False,
+                    shell=False,  # nosec
                 )
 
         except subprocess.CalledProcessError as clone_error:
