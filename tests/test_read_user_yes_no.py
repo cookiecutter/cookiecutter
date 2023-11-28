@@ -1,9 +1,8 @@
 """test_read_user_yes_no."""
 import pytest
-
 from rich.prompt import InvalidResponse
 
-from cookiecutter.prompt import read_user_yes_no, YesNoPrompt
+from cookiecutter.prompt import YesNoPrompt, read_user_yes_no
 
 QUESTION = 'Is it okay to delete and re-clone it?'
 DEFAULT = 'y'

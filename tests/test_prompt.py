@@ -1,15 +1,14 @@
 """Tests for `cookiecutter.prompt` module."""
+import json
 import platform
 import sys
-
 from collections import OrderedDict
 from pathlib import Path
 
 import click
-import json
 import pytest
 
-from cookiecutter import prompt, exceptions, environment
+from cookiecutter import environment, exceptions, prompt
 
 
 @pytest.fixture(autouse=True)

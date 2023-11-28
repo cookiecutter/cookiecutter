@@ -1,7 +1,7 @@
 """Simple pre-prompt hook that will fail if a specific env var is set."""
-from pathlib import Path
 import os
 import sys
+from pathlib import Path
 
 
 def backup_configuration(cwd: Path) -> Path:
