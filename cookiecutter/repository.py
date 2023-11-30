@@ -6,6 +6,9 @@ from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
 from cookiecutter.zipfile import unzip
 
+from typing import NamedTuple, Optional
+
+
 REPO_REGEX = re.compile(
     r"""
 # something like git:// ssh:// file:// etc.
@@ -16,6 +19,13 @@ REPO_REGEX = re.compile(
 """,
     re.VERBOSE,
 )
+
+
+class AbbreviationResult(NamedTuple):
+    """The result from an expansion of an abbreviation."""
+
+    expansion: str
+    directory: Optional[str]
 
 
 def is_repo_url(value):
@@ -34,16 +44,21 @@ def expand_abbreviations(template, abbreviations):
     :param template: The project template name.
     :param abbreviations: Abbreviation definitions.
     """
-    if template in abbreviations:
-        return abbreviations[template]
-
     # Split on colon. If there is no colon, rest will be empty
     # and prefix will be the whole template
     prefix, sep, rest = template.partition(':')
-    if prefix in abbreviations:
-        return abbreviations[prefix].format(rest)
 
-    return template
+    if prefix in abbreviations:
+        expansion = abbreviations[prefix]
+        directory = None
+        if isinstance(expansion, dict):
+            directory = expansion.get('directory', None)
+            expansion = expansion['expansion']
+        if rest:
+            return AbbreviationResult(expansion.format(rest), directory)
+        return AbbreviationResult(expansion, directory)
+
+    return AbbreviationResult(template, None)
 
 
 def repository_has_cookiecutter_json(repo_directory):
@@ -91,7 +106,8 @@ def determine_repo_dir(
         after the template has been instantiated.
     :raises: `RepositoryNotFound` if a repository directory could not be found.
     """
-    template = expand_abbreviations(template, abbreviations)
+    template, abbrev_directory = expand_abbreviations(template, abbreviations)
+    directory = directory or abbrev_directory
 
     if is_zip_file(template):
         unzipped_dir = unzip(
