@@ -232,10 +232,10 @@ def render_and_create_dir(
     overwrite_if_exists: bool = False,
 ):
     """Render name of a directory, create the directory, return its path."""
-    if not dirname:
-        msg = f'Error: directory name is empty'
+    if not dirname or dirname == "":
+        msg = 'Error: directory name is empty'
         raise EmptyDirNameException(msg)
-        
+
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
 

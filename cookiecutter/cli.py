@@ -226,7 +226,6 @@ def main(
         InvalidZipRepository,
         RepositoryNotFound,
         RepositoryCloneFailed,
-        Emp
     ) as e:
         click.echo(e)
         sys.exit(1)
