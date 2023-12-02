@@ -4,10 +4,10 @@ test_custom_extension_in_hooks.
 Tests to ensure custom cookiecutter extensions are properly made available to
 pre- and post-gen hooks.
 """
+import sys
 from pathlib import Path
 
 import pytest
-import sys
 
 from cookiecutter import main
 
@@ -17,8 +17,12 @@ def output_dir(tmpdir):
     """Fixture. Create and return custom temp directory for test."""
     return str(tmpdir.mkdir('templates'))
 
+
 @pytest.fixture
 def additional_template_paths():
+    """
+    Additional template paths to add.
+    """
     return ['/path/to/other/templates', '/path/to/more/templates']
 
 
