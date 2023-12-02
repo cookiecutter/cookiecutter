@@ -231,6 +231,9 @@ def render_and_create_dir(
     overwrite_if_exists: bool = False,
 ):
     """Render name of a directory, create the directory, return its path."""
+    if not dirname:
+        warnings.warn("Directory name is empty")
+        
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
 
