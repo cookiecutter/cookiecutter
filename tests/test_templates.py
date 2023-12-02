@@ -7,6 +7,7 @@ pre- and post-gen hooks.
 from pathlib import Path
 
 import pytest
+import sys
 
 from cookiecutter import main
 
@@ -16,14 +17,21 @@ def output_dir(tmpdir):
     """Fixture. Create and return custom temp directory for test."""
     return str(tmpdir.mkdir('templates'))
 
+@pytest.fixture
+def additional_template_paths():
+    return ['/path/to/other/templates', '/path/to/more/templates']
+
 
 @pytest.mark.parametrize("template", ["include", "no-templates", "extends", "super"])
-def test_build_templates(template, output_dir):
+def test_build_templates(template, output_dir, additional_template_paths):
     """
     Verify Templates Design keywords.
 
     no-templates is a compatibility tests for repo without `templates` directory
     """
+    # Dynamically add additional template paths to sys.path
+    sys.path.extend(additional_template_paths)
+
     project_dir = main.cookiecutter(
         f'tests/test-templates/{template}',
         no_input=True,
@@ -37,3 +45,7 @@ def test_build_templates(template, output_dir):
         "Click",
         "pytest",
     ]
+
+    # Clean up: Remove dynamically added paths from sys.path
+    for path in additional_template_paths:
+        sys.path.remove(path)
