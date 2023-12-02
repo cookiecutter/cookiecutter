@@ -346,7 +346,13 @@ def generate_files(
         )
 
     with work_in(template_dir):
-        env.loader = FileSystemLoader(['.', '../templates'])
+        default_template_path = ['.', '../templates']
+        # Option for additional tenplate paths (configurable, can be an empty list)
+        # Usage: additional_template_paths = ['/path/to/other/templates', '/path/to/more/templates']
+        additional_template_paths = []
+        all_template_paths = default_template_path + additional_template_paths
+
+        env.loader = FileSystemLoader(all_template_paths)
 
         for root, dirs, files in os.walk('.'):
             # We must separate the two types of dirs into different lists.
