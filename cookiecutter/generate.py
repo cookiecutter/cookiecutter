@@ -15,6 +15,7 @@ from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
     ContextDecodingException,
+    EmptyDirNameException,
     NonTemplatedInputDirException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
@@ -232,7 +233,8 @@ def render_and_create_dir(
 ):
     """Render name of a directory, create the directory, return its path."""
     if not dirname:
-        warnings.warn("Directory name is empty")
+        msg = f'Error: directory name is empty'
+        raise EmptyDirNameException(msg)
         
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)

@@ -89,6 +89,13 @@ class OutputDirExistsException(CookiecutterException):
     Raised when the output directory of the project exists already.
     """
 
+class EmptyDirNameException(CookiecutterException):
+    """
+    Exception for a empty directory name.
+
+    Raised when the directory name provided is empty..
+    """
+
 
 class InvalidModeException(CookiecutterException):
     """
