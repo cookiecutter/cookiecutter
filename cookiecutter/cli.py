@@ -10,6 +10,7 @@ from cookiecutter import __version__
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import (
     ContextDecodingException,
+    EmptyDirNameException,
     FailedHookException,
     InvalidModeException,
     InvalidZipRepository,
@@ -218,12 +219,14 @@ def main(
     except (
         ContextDecodingException,
         OutputDirExistsException,
+        EmptyDirNameException,
         InvalidModeException,
         FailedHookException,
         UnknownExtension,
         InvalidZipRepository,
         RepositoryNotFound,
         RepositoryCloneFailed,
+        Emp
     ) as e:
         click.echo(e)
         sys.exit(1)
