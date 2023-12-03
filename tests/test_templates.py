@@ -20,9 +20,7 @@ def output_dir(tmpdir):
 
 @pytest.fixture
 def additional_template_paths():
-    """
-    Additional template paths to add.
-    """
+    """Additional template paths to add."""
     return ['/path/to/other/templates', '/path/to/more/templates']
 
 
