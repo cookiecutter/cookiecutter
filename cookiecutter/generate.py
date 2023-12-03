@@ -348,7 +348,7 @@ def generate_files(
     with work_in(template_dir):
         default_template_path = ['.', '../templates']
         # Option for additional tenplate paths (configurable, can be an empty list)
-        # Usage: 
+        # Usage:
         # additional_template_paths = ['/path/to/more/templates']
         additional_template_paths = []
         all_template_paths = default_template_path + additional_template_paths
