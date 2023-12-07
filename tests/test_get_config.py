@@ -120,3 +120,20 @@ def test_get_config_with_defaults():
         },
     }
     assert conf == expected_conf
+
+
+def test_get_config_empty_config_file():
+    """An empty config file results in the default config."""
+    conf = config.get_config('tests/test-config/empty-config.yaml')
+    assert conf == config.DEFAULT_CONFIG
+
+
+def test_get_config_file_with_array_as_top_level_element():
+    """An exception should be raised if config file's contains array."""
+    expected_error_msg = (
+        'Top-level element of YAML file '
+        'tests/test-config/invalid-config-w-array.yaml should be an object.'
+    )
+    with pytest.raises(InvalidConfiguration) as exc_info:
+        config.get_config('tests/test-config/invalid-config-w-array.yaml')
+    assert expected_error_msg in str(exc_info.value)
