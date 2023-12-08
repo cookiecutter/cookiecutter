@@ -128,12 +128,23 @@ def test_get_config_empty_config_file():
     assert conf == config.DEFAULT_CONFIG
 
 
-def test_get_config_file_with_array_as_top_level_element():
-    """An exception should be raised if config file's contains array."""
+def test_get_config_invalid_file_with_array_as_top_level_element():
+    """An exception should be raised if top-level element is array."""
     expected_error_msg = (
         'Top-level element of YAML file '
         'tests/test-config/invalid-config-w-array.yaml should be an object.'
     )
     with pytest.raises(InvalidConfiguration) as exc_info:
         config.get_config('tests/test-config/invalid-config-w-array.yaml')
+    assert expected_error_msg in str(exc_info.value)
+
+
+def test_get_config_invalid_file_with_multiple_docs():
+    """An exception should be raised if config file contains multiple docs."""
+    expected_error_msg = (
+        'Unable to parse YAML file '
+        'tests/test-config/invalid-config-w-multiple-docs.yaml.'
+    )
+    with pytest.raises(InvalidConfiguration) as exc_info:
+        config.get_config('tests/test-config/invalid-config-w-multiple-docs.yaml')
     assert expected_error_msg in str(exc_info.value)
