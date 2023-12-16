@@ -51,13 +51,13 @@ def env(context):
             pytest.raises(NonTemplatedInputDirException),
             None,
         ),
-        ("fake-repo-bad", {}, pytest.raises(NonTemplatedInputDirException),None),
+        ("fake-repo-bad", {}, pytest.raises(NonTemplatedInputDirException), None),
     ],
     ids=[
         'template with default jinja strings',
         'template with custom jinja strings',
         'template with custom jinja strings but folder with default jinja strings',
-        'template missing folder'
+        'template missing folder',
     ],
 )
 def test_find_template(repo_name, env, error_expectation, expected):
