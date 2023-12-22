@@ -59,14 +59,22 @@ def test_run_python_hooks():
 def test_run_python_hooks_cwd():
     """Verify pre and post generation python hooks executed and result in current dir.
 
+    Check that multiple hooks can be created with python_post and python_post_2.
+    python_post_2 should be created before python_post to verify it is sorted.
+
     Each hook should create in target directory. Test verifies that these files
     created.
+
     """
     generate.generate_files(
         context={'cookiecutter': {'pyhooks': 'pyhooks'}}, repo_dir='tests/test-pyhooks/'
     )
     assert os.path.exists('inputpyhooks/python_pre.txt')
     assert os.path.exists('inputpyhooks/python_post.txt')
+    assert os.path.exists('inputpyhooks/python_post_2.txt')
+    assert os.path.getmtime('inputpyhooks/python_post.txt') < os.path.getmtime(
+        'inputpyhooks/python_post_2.txt'
+    )
 
 
 @pytest.mark.skipif(WINDOWS, reason='OSError.errno=8 is not thrown on Windows')
