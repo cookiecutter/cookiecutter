@@ -25,7 +25,8 @@ EXIT_SUCCESS = 0
 
 
 def valid_hook(hook_file, hook_name):
-    """Determine if a hook file is valid.
+    """Determine if a hook file is valid. hook_name must be a substring of elements
+    in _HOOKS variable to be valid.
 
     Hook name must be a substring of an element in _HOOKS variable to be valid.
 
@@ -84,7 +85,8 @@ def run_script(script_path, cwd='.'):
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
+        proc = subprocess.Popen(
+            script_command, shell=run_thru_shell, cwd=cwd)  # nosec
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
@@ -95,7 +97,8 @@ def run_script(script_path, cwd='.'):
             raise FailedHookException(
                 'Hook script failed, might be an empty file or missing a shebang'
             ) from err
-        raise FailedHookException(f'Hook script failed (error: {err})') from err
+        raise FailedHookException(
+            f'Hook script failed (error: {err})') from err
 
 
 def run_script_with_context(script_path, cwd, context):
