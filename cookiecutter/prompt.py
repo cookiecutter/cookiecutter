@@ -120,13 +120,11 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
                 for i, p in choice_map.items()
             ]
 
-    prompt = '\n'.join(
-        (
-            f"{prefix}{question}",
-            "\n".join(choice_lines),
-            "    Choose from",
-        )
-    )
+    prompt = '\n'.join((
+        f"{prefix}{question}",
+        "\n".join(choice_lines),
+        "    Choose from",
+    ))
 
     user_choice = Prompt.ask(prompt, choices=list(choices), default=next(iter(choices)))
     return choice_map[user_choice]
