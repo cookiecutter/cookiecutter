@@ -10,7 +10,7 @@ from shutil import which
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from typing import Optional, Tuple, Union, Literal
+    from typing import Literal
 
 from cookiecutter.exceptions import (
     RepositoryCloneFailed,
@@ -30,7 +30,7 @@ BRANCH_ERRORS = [
 ]
 
 
-def identify_repo(repo_url: str) -> Tuple[Literal["git", "hg"], str]:
+def identify_repo(repo_url: str) -> tuple[Literal["git", "hg"], str]:
     """Determine if `repo_url` should be treated as a URL to a git or hg repo.
 
     Repos can be identified by prepending "hg+" or "git+" to the repo URL.
@@ -65,8 +65,8 @@ def is_vcs_installed(repo_type: str) -> bool:
 
 def clone(
     repo_url: str,
-    checkout: Optional[str] = None,
-    clone_to_dir: Union[os.PathLike[str], str] = ".",
+    checkout: str | None = None,
+    clone_to_dir: os.PathLike[str] | str = ".",
     no_input: bool = False,
 ) -> str:
     """Clone a repo to the current directory.

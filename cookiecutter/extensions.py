@@ -7,7 +7,7 @@ import re
 import string
 import uuid
 from secrets import choice
-from typing import Any, Iterable, Optional
+from typing import Any, Iterable
 
 import arrow
 from jinja2 import Environment, nodes
@@ -119,7 +119,7 @@ class TimeExtension(Extension):
         timezone: str,
         operator: str,
         offset: str,
-        datetime_format: Optional[str],
+        datetime_format: str | None,
     ) -> str:
         d = arrow.now(timezone)
 
@@ -134,7 +134,7 @@ class TimeExtension(Extension):
             datetime_format = self.environment.datetime_format
         return d.strftime(datetime_format)
 
-    def _now(self, timezone: str, datetime_format: Optional[str]) -> str:
+    def _now(self, timezone: str, datetime_format: str | None) -> str:
         if datetime_format is None:
             datetime_format = self.environment.datetime_format
         return arrow.now(timezone).strftime(datetime_format)

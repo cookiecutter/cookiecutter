@@ -6,7 +6,7 @@ import collections
 import copy
 import logging
 import os
-from typing import Any, Optional, Union
+from typing import Any
 
 import yaml
 
@@ -86,8 +86,8 @@ def get_config(config_path):
 
 
 def get_user_config(
-    config_file: Optional[str] = None,
-    default_config: Union[bool, dict[str, Any]] = False,
+    config_file: str | None = None,
+    default_config: bool | dict[str, Any] = False,
 ) -> dict[str, Any]:
     """Return the user config as a dict.
 

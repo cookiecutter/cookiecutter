@@ -103,6 +103,6 @@ def test_run_json_dump(
     spy_get_replay_file.assert_called_once_with(replay_test_dir, template_name)
 
     assert mock_json_dump.call_count == 1
-    (dumped_context, outfile_handler), kwargs = mock_json_dump.call_args
+    (dumped_context, outfile_handler), _kwargs = mock_json_dump.call_args
     assert outfile_handler.name == replay_file
     assert dumped_context == context

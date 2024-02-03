@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import os
 import re
-from typing import Optional
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
@@ -43,7 +42,7 @@ def expand_abbreviations(template: str, abbreviations: dict[str, str]) -> str:
 
     # Split on colon. If there is no colon, rest will be empty
     # and prefix will be the whole template
-    prefix, sep, rest = template.partition(':')
+    prefix, _sep, rest = template.partition(':')
     if prefix in abbreviations:
         return abbreviations[prefix].format(rest)
 
@@ -70,8 +69,8 @@ def determine_repo_dir(
     clone_to_dir: os.PathLike[str],
     checkout: str,
     no_input: bool,
-    password: Optional[str] = None,
-    directory: Optional[str] = None,
+    password: str | None = None,
+    directory: str | None = None,
 ) -> tuple[str, bool]:
     """
     Locate the repository directory from a template reference.

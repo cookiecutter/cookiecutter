@@ -9,7 +9,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from jinja2.exceptions import UndefinedError
 
@@ -48,7 +48,7 @@ def valid_hook(hook_file: str, hook_name: str) -> bool:
     return matching_hook and supported_hook and not backup_file
 
 
-def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> Optional[list[str]]:
+def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
@@ -174,7 +174,7 @@ def run_hook_from_repo_dir(
             raise
 
 
-def run_pre_prompt_hook(repo_dir: "os.PathLike[str]") -> Path:
+def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> Path:
     """Run pre_prompt hook from repo directory.
 
     :param repo_dir: Project template input directory.

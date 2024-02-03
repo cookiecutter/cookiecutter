@@ -1,11 +1,9 @@
 """Utility functions for handling and fetching repo archives in zip format."""
 
-from __future__ import annotations
-
 import os
 import tempfile
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional
 from zipfile import BadZipFile, ZipFile
 
 import requests
@@ -18,7 +16,7 @@ from cookiecutter.utils import make_sure_path_exists
 def unzip(
     zip_uri: str,
     is_url: bool,
-    clone_to_dir: Union[os.PathLike[str], str] = ".",
+    clone_to_dir: os.PathLike[str] | str = ".",
     no_input: bool = False,
     password: Optional[str] = None,
 ) -> str:
@@ -85,7 +83,7 @@ def unzip(
         # Extract the zip file into the temporary directory
         try:
             zip_file.extractall(path=unzip_base)
-        except RuntimeError as e:
+        except RuntimeError as runtime_err:
             # File is password protected; try to get a password from the
             # environment; if that doesn't work, ask the user.
             if password is not None:
@@ -98,9 +96,9 @@ def unzip(
             elif no_input:
                 raise InvalidZipRepository(
                     'Unable to unlock password protected repository'
-                ) from e
+                ) from runtime_err
             else:
-                retry: Optional[int] = 0
+                retry: int | None = 0
                 while retry is not None:
                     try:
                         password = read_repo_password('Repo password')

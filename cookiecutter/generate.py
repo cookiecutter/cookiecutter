@@ -317,9 +317,8 @@ def generate_files(
     logger.debug('Generating project from %s...', template_dir)
 
     unrendered_dir = os.path.split(template_dir)[1]
-
-    project_dir: Path | str
     try:
+        project_dir: Path | str
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
         )
