@@ -1,4 +1,5 @@
 """Collection of tests around log handling."""
+
 import logging
 
 import pytest
@@ -118,4 +119,4 @@ def test_debug_file_logging(caplog, info_logger_with_file, debug_file, debug_mes
 
     # Last line in the log file is an empty line
     with debug_file.open() as f:
-        assert f.read().split('\n') == debug_messages + ['']
+        assert f.read().split('\n') == [*debug_messages, '']

@@ -4,6 +4,7 @@ tests_output_folder.
 Test formerly known from a unittest residing in test_generate.py named
 TestOutputFolder.test_output_folder
 """
+
 import os
 from pathlib import Path
 

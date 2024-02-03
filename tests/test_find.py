@@ -1,4 +1,5 @@
 """Tests for `cookiecutter.find` module."""
+
 from pathlib import Path
 
 import pytest

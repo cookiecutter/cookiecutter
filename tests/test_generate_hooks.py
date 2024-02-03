@@ -1,4 +1,5 @@
 """Test work of python and shell hooks for generated projects."""
+
 import errno
 import os
 import sys

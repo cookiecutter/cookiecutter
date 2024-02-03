@@ -3,6 +3,7 @@
 Tests in this file execute `cookiecutter()` with `no_input=True` flag and
 verify result with different settings in `cookiecutter.json`.
 """
+
 import os
 import textwrap
 from pathlib import Path

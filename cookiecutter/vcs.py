@@ -1,7 +1,8 @@
 """Helper functions for working with version control systems."""
+
 import logging
 import os
-import subprocess  # nosec
+import subprocess
 from pathlib import Path
 from shutil import which
 from typing import Optional
@@ -100,7 +101,7 @@ def clone(
 
     if clone:
         try:
-            subprocess.check_output(  # nosec
+            subprocess.check_output(
                 [repo_type, 'clone', repo_url],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
@@ -110,7 +111,7 @@ def clone(
                 # Avoid Mercurial "--config" and "--debugger" injection vulnerability
                 if repo_type == "hg":
                     checkout_params.insert(0, "--")
-                subprocess.check_output(  # nosec
+                subprocess.check_output(
                     [repo_type, 'checkout', *checkout_params],
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,

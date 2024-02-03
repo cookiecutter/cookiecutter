@@ -1,4 +1,5 @@
 """Global configuration handling."""
+
 import collections
 import copy
 import logging

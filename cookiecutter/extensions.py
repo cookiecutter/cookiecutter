@@ -1,4 +1,5 @@
 """Jinja2 extensions."""
+
 import json
 import string
 import uuid

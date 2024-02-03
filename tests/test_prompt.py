@@ -1,4 +1,5 @@
 """Tests for `cookiecutter.prompt` module."""
+
 import json
 import platform
 import sys
@@ -290,15 +291,13 @@ class TestPrompt:
             lambda var, default, prompts, prefix: default,
         )
         context = {
-            'cookiecutter': OrderedDict(
-                [
-                    ('project_name', 'A New Project'),
-                    (
-                        'pkg_name',
-                        '{{ cookiecutter.project_name|lower|replace(" ", "") }}',
-                    ),
-                ]
-            )
+            'cookiecutter': OrderedDict([
+                ('project_name', 'A New Project'),
+                (
+                    'pkg_name',
+                    '{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                ),
+            ])
         }
 
         exp_cookiecutter_dict = {
@@ -330,32 +329,28 @@ class TestPrompt:
            are rendered.
         """
         context = {
-            'cookiecutter': OrderedDict(
-                [
-                    ('foo', 'Hello world'),
-                    ('bar', 123),
-                    ('rendered_foo', '{{ cookiecutter.foo|lower }}'),
-                    ('rendered_bar', 123),
-                    ('_hidden_foo', '{{ cookiecutter.foo|lower }}'),
-                    ('_hidden_bar', 123),
-                    ('__rendered_hidden_foo', '{{ cookiecutter.foo|lower }}'),
-                    ('__rendered_hidden_bar', 123),
-                ]
-            )
-        }
-        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
-        assert cookiecutter_dict == OrderedDict(
-            [
+            'cookiecutter': OrderedDict([
                 ('foo', 'Hello world'),
-                ('bar', '123'),
-                ('rendered_foo', 'hello world'),
-                ('rendered_bar', '123'),
+                ('bar', 123),
+                ('rendered_foo', '{{ cookiecutter.foo|lower }}'),
+                ('rendered_bar', 123),
                 ('_hidden_foo', '{{ cookiecutter.foo|lower }}'),
                 ('_hidden_bar', 123),
-                ('__rendered_hidden_foo', 'hello world'),
-                ('__rendered_hidden_bar', '123'),
-            ]
-        )
+                ('__rendered_hidden_foo', '{{ cookiecutter.foo|lower }}'),
+                ('__rendered_hidden_bar', 123),
+            ])
+        }
+        cookiecutter_dict = prompt.prompt_for_config(context, no_input=True)
+        assert cookiecutter_dict == OrderedDict([
+            ('foo', 'Hello world'),
+            ('bar', '123'),
+            ('rendered_foo', 'hello world'),
+            ('rendered_bar', '123'),
+            ('_hidden_foo', '{{ cookiecutter.foo|lower }}'),
+            ('_hidden_bar', 123),
+            ('__rendered_hidden_foo', 'hello world'),
+            ('__rendered_hidden_bar', '123'),
+        ])
 
     def test_should_not_render_private_variables(self):
         """Verify private(underscored) variables not rendered by `prompt_for_config`.
@@ -437,19 +432,17 @@ class TestReadUserChoice:
         rendered_choices = ['foo', 'anewproject', 'bar']
 
         context = {
-            'cookiecutter': OrderedDict(
-                [
-                    ('project_name', 'A New Project'),
-                    (
-                        'pkg_name',
-                        [
-                            'foo',
-                            '{{ cookiecutter.project_name|lower|replace(" ", "") }}',
-                            'bar',
-                        ],
-                    ),
-                ]
-            )
+            'cookiecutter': OrderedDict([
+                ('project_name', 'A New Project'),
+                (
+                    'pkg_name',
+                    [
+                        'foo',
+                        '{{ cookiecutter.project_name|lower|replace(" ", "") }}',
+                        'bar',
+                    ],
+                ),
+            ])
         }
 
         expected = {
@@ -515,7 +508,7 @@ class TestPromptChoiceForConfig:
         assert expected_choice == actual_choice
 
 
-class TestReadUserYesNo(object):
+class TestReadUserYesNo:
     """Class to unite boolean prompt related tests."""
 
     @pytest.mark.parametrize(

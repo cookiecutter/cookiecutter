@@ -1,4 +1,5 @@
 """Tests around locally cached cookiecutter template repositories."""
+
 import os
 from pathlib import Path
 
@@ -66,8 +67,9 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
             template,
-            '\n'.join(
-                [os.path.join(template, 'wrong-dir'), wrong_full_cookiecutter_path]
-            ),
+            '\n'.join([
+                os.path.join(template, 'wrong-dir'),
+                wrong_full_cookiecutter_path,
+            ]),
         )
     )

@@ -1,4 +1,5 @@
 """Test main cookiecutter invocation with user input enabled (mocked)."""
+
 import os
 
 import pytest

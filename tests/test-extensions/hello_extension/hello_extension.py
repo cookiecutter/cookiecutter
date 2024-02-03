@@ -1,4 +1,5 @@
 """Provides custom extension, exposing a ``hello`` command."""
+
 from jinja2 import nodes
 from jinja2.ext import Extension
 

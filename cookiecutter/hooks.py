@@ -1,8 +1,9 @@
 """Functions for discovering and executing various cookiecutter hooks."""
+
 import errno
 import logging
 import os
-import subprocess  # nosec
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -182,6 +183,6 @@ def run_pre_prompt_hook(repo_dir: "os.PathLike[str]") -> Path:
         for script in scripts:
             try:
                 run_script(script, repo_dir)
-            except FailedHookException:
-                raise FailedHookException('Pre-Prompt Hook script failed')
+            except FailedHookException as e:
+                raise FailedHookException('Pre-Prompt Hook script failed') from e
     return repo_dir

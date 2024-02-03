@@ -3,6 +3,7 @@
 Use the global clean_system fixture and run additional teardown code to remove
 some special folders.
 """
+
 from pathlib import Path
 
 import pytest
@@ -325,7 +326,7 @@ def test_raise_undefined_variable_file_name(output_dir, undefined_context):
             context=undefined_context,
         )
     error = err.value
-    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert error.message == "Unable to create file '{{cookiecutter.foobar}}'"
     assert error.context == undefined_context
 
     assert not Path(output_dir).joinpath('testproject').exists()
@@ -346,7 +347,7 @@ def test_raise_undefined_variable_file_name_existing_project(
             overwrite_if_exists=True,
         )
     error = err.value
-    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert error.message == "Unable to create file '{{cookiecutter.foobar}}'"
     assert error.context == undefined_context
 
     assert testproj_path.exists()
@@ -361,7 +362,7 @@ def test_raise_undefined_variable_file_content(output_dir, undefined_context):
             context=undefined_context,
         )
     error = err.value
-    assert "Unable to create file 'README.rst'" == error.message
+    assert error.message == "Unable to create file 'README.rst'"
     assert error.context == undefined_context
 
     assert not Path(output_dir).joinpath('testproject').exists()

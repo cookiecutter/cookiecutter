@@ -4,6 +4,7 @@ Main entry point for the `cookiecutter` command.
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
+
 import logging
 import os
 import sys
@@ -89,7 +90,7 @@ def cookiecutter(
     # Run pre_prompt hook
     repo_dir = run_pre_prompt_hook(base_repo_dir) if accept_hooks else repo_dir
     # Always remove temporary dir if it was created
-    cleanup = True if repo_dir != base_repo_dir else False
+    cleanup = repo_dir != base_repo_dir
 
     import_patch = _patch_import_path_for_repo(repo_dir)
     template_name = os.path.basename(os.path.abspath(repo_dir))
@@ -114,7 +115,7 @@ def cookiecutter(
         items_for_prompting = {
             k: v
             for k, v in context['cookiecutter'].items()
-            if k not in context_from_replayfile['cookiecutter'].keys()
+            if k not in context_from_replayfile['cookiecutter']
         }
         context_for_prompting = {}
         context_for_prompting['cookiecutter'] = items_for_prompting
@@ -196,7 +197,7 @@ def cookiecutter(
     return result
 
 
-class _patch_import_path_for_repo:
+class _patch_import_path_for_repo:  # noqa: N801
     def __init__(self, repo_dir: "os.PathLike[str]"):
         self._repo_dir = f"{repo_dir}" if isinstance(repo_dir, Path) else repo_dir
         self._path = None

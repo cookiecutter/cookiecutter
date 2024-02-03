@@ -1,4 +1,5 @@
 """Verify generate context behaviour and context overwrite priorities."""
+
 import os
 import re
 from collections import OrderedDict
@@ -81,15 +82,13 @@ def test_default_context_replacement_in_generate_context():
     from `default_context`.
     """
     expected_context = {
-        'choices_template': OrderedDict(
-            [
-                ('full_name', 'Raphael Pierzina'),
-                ('github_username', 'hackebrot'),
-                ('project_name', 'Kivy Project'),
-                ('repo_name', '{{cookiecutter.project_name|lower}}'),
-                ('orientation', ['landscape', 'all', 'portrait']),
-            ]
-        )
+        'choices_template': OrderedDict([
+            ('full_name', 'Raphael Pierzina'),
+            ('github_username', 'hackebrot'),
+            ('project_name', 'Kivy Project'),
+            ('repo_name', '{{cookiecutter.project_name|lower}}'),
+            ('orientation', ['landscape', 'all', 'portrait']),
+        ])
     }
 
     generated_context = generate.generate_context(
@@ -111,11 +110,9 @@ def test_default_context_replacement_in_generate_context():
 def test_generate_context_decodes_non_ascii_chars():
     """Verify `generate_context` correctly decodes non-ascii chars."""
     expected_context = {
-        'non_ascii': OrderedDict(
-            [
-                ('full_name', 'éèà'),
-            ]
-        )
+        'non_ascii': OrderedDict([
+            ('full_name', 'éèà'),
+        ])
     }
 
     generated_context = generate.generate_context(
@@ -128,23 +125,21 @@ def test_generate_context_decodes_non_ascii_chars():
 @pytest.fixture
 def template_context():
     """Fixture. Populates template content for future tests."""
-    return OrderedDict(
-        [
-            ('full_name', 'Raphael Pierzina'),
-            ('github_username', 'hackebrot'),
-            ('project_name', 'Kivy Project'),
-            ('repo_name', '{{cookiecutter.project_name|lower}}'),
-            ('orientation', ['all', 'landscape', 'portrait']),
-            ('deployment_regions', ['eu', 'us', 'ap']),
-            (
-                'deployments',
-                {
-                    'preprod': ['eu', 'us', 'ap'],
-                    'prod': ['eu', 'us', 'ap'],
-                },
-            ),
-        ]
-    )
+    return OrderedDict([
+        ('full_name', 'Raphael Pierzina'),
+        ('github_username', 'hackebrot'),
+        ('project_name', 'Kivy Project'),
+        ('repo_name', '{{cookiecutter.project_name|lower}}'),
+        ('orientation', ['all', 'landscape', 'portrait']),
+        ('deployment_regions', ['eu', 'us', 'ap']),
+        (
+            'deployments',
+            {
+                'preprod': ['eu', 'us', 'ap'],
+                'prod': ['eu', 'us', 'ap'],
+            },
+        ),
+    ])
 
 
 def test_apply_overwrites_does_include_unused_variables(template_context):
@@ -168,15 +163,13 @@ def test_apply_overwrites_sets_non_list_value(template_context):
 def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite():
     """Verify variables overwrite for list if variable not in list ignored."""
     expected_context = {
-        'choices_template': OrderedDict(
-            [
-                ('full_name', 'Raphael Pierzina'),
-                ('github_username', 'hackebrot'),
-                ('project_name', 'Kivy Project'),
-                ('repo_name', '{{cookiecutter.project_name|lower}}'),
-                ('orientation', ['all', 'landscape', 'portrait']),
-            ]
-        )
+        'choices_template': OrderedDict([
+            ('full_name', 'Raphael Pierzina'),
+            ('github_username', 'hackebrot'),
+            ('project_name', 'Kivy Project'),
+            ('repo_name', '{{cookiecutter.project_name|lower}}'),
+            ('orientation', ['all', 'landscape', 'portrait']),
+        ])
     }
 
     with pytest.warns(UserWarning, match="Invalid default received"):
@@ -253,23 +246,19 @@ def test_apply_overwrites_sets_default_for_choice_variable(template_context):
 def test_apply_overwrites_in_nested_dict():
     """Verify nested dict in default content settings are correctly replaced."""
     expected_context = {
-        'nested_dict': OrderedDict(
-            [
-                ('full_name', 'Raphael Pierzina'),
-                ('github_username', 'hackebrot'),
-                (
-                    'project',
-                    OrderedDict(
-                        [
-                            ('name', 'My Kivy Project'),
-                            ('description', 'My Kivy Project'),
-                            ('repo_name', '{{cookiecutter.project_name|lower}}'),
-                            ('orientation', ["all", "landscape", "portrait"]),
-                        ]
-                    ),
-                ),
-            ]
-        )
+        'nested_dict': OrderedDict([
+            ('full_name', 'Raphael Pierzina'),
+            ('github_username', 'hackebrot'),
+            (
+                'project',
+                OrderedDict([
+                    ('name', 'My Kivy Project'),
+                    ('description', 'My Kivy Project'),
+                    ('repo_name', '{{cookiecutter.project_name|lower}}'),
+                    ('orientation', ["all", "landscape", "portrait"]),
+                ]),
+            ),
+        ])
     }
 
     generated_context = generate.generate_context(

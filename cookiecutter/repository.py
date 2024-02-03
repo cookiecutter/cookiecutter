@@ -1,4 +1,5 @@
 """Cookiecutter repository functions."""
+
 import os
 import re
 

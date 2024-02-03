@@ -1,4 +1,5 @@
 """Functions for finding Cookiecutter templates and other components."""
+
 import logging
 import os
 from pathlib import Path

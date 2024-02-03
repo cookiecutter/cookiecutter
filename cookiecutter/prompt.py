@@ -1,4 +1,5 @@
 """Functions for prompting the user for project info."""
+
 import json
 import re
 from collections import OrderedDict
@@ -19,7 +20,7 @@ def read_user_variable(var_name, default_value, prompts=None, prefix=""):
     """
     question = (
         prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
+        if prompts and var_name in prompts and prompts[var_name]
         else var_name
     )
 
@@ -64,7 +65,7 @@ def read_user_yes_no(var_name, default_value, prompts=None, prefix=""):
     """
     question = (
         prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
+        if prompts and var_name in prompts and prompts[var_name]
         else var_name
     )
     return YesNoPrompt.ask(f"{prefix}{question}", default=default_value)
@@ -102,7 +103,7 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
     ]
 
     # Handle if human-readable prompt is provided
-    if prompts and var_name in prompts.keys():
+    if prompts and var_name in prompts:
         if isinstance(prompts[var_name], str):
             question = prompts[var_name]
         else:
@@ -115,15 +116,13 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
                 for i, p in choice_map.items()
             ]
 
-    prompt = '\n'.join(
-        (
-            f"{prefix}{question}",
-            "\n".join(choice_lines),
-            "    Choose from",
-        )
-    )
+    prompt = '\n'.join((
+        f"{prefix}{question}",
+        "\n".join(choice_lines),
+        "    Choose from",
+    ))
 
-    user_choice = Prompt.ask(prompt, choices=list(choices), default=list(choices)[0])
+    user_choice = Prompt.ask(prompt, choices=list(choices), default=next(iter(choices)))
     return choice_map[user_choice]
 
 
@@ -172,7 +171,7 @@ def read_user_dict(var_name, default_value, prompts=None, prefix=""):
 
     question = (
         prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
+        if prompts and var_name in prompts and prompts[var_name]
         else var_name
     )
     user_value = JsonPrompt.ask(
