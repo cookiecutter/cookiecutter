@@ -23,7 +23,7 @@ import sys
 
 # For building docs in foreign environments where we don't have all our
 # dependencies (like readthedocs), mock out imports that cause sphinx to fail.
-# see: https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules  # noqa: E501
+# see: https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
 
 
 # Add parent dir to path
