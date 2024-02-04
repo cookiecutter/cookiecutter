@@ -55,6 +55,6 @@ def test_run_json_load(
     spy_get_replay_file.assert_called_once_with(replay_test_dir, template_name)
 
     assert mock_json_load.call_count == 1
-    (infile_handler,), kwargs = mock_json_load.call_args
+    (infile_handler,), _kwargs = mock_json_load.call_args
     assert infile_handler.name == replay_file
     assert loaded_context == context

@@ -40,7 +40,7 @@ def expand_abbreviations(template, abbreviations):
 
     # Split on colon. If there is no colon, rest will be empty
     # and prefix will be the whole template
-    prefix, sep, rest = template.partition(':')
+    prefix, _sep, rest = template.partition(':')
     if prefix in abbreviations:
         return abbreviations[prefix].format(rest)
 
