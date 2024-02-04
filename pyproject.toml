@@ -26,13 +26,13 @@ select = [
     #    "FLY",    # flynt
     #    "FURB",   # refurb
     #    "G",      # flake8-logging-format
-    "I",   # isort
-    "ICN", # flake8-import-conventions
-    "INT", # flake8-gettext
-    "ISC", # implicit-str-concat
-    "LOG", # flake8-logging
-    "N",   # pep8-naming
-    #    "PERF",   # perflint
+    "I",    # isort
+    "ICN",  # flake8-import-conventions
+    "INT",  # flake8-gettext
+    "ISC",  # implicit-str-concat
+    "LOG",  # flake8-logging
+    "N",    # pep8-naming
+    "PERF", # perflint
     #    "PGH",    # pygrep-hooks
     #    "PIE",    # flake8-pie
     #    "PL",     # pylint
