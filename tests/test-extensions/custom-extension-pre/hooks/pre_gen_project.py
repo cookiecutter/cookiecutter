@@ -2,7 +2,7 @@
 
 import sys
 
-if '{% hello cookiecutter.name %}' == 'Hello Cookiemonster!':
+if "{% hello cookiecutter.name %}" == "Hello Cookiemonster!":
     sys.exit(0)
 else:
     sys.exit(1)

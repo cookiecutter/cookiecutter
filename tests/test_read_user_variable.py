@@ -4,14 +4,14 @@ import pytest
 
 from cookiecutter.prompt import read_user_variable
 
-VARIABLE = 'project_name'
-DEFAULT = 'Kivy Project'
+VARIABLE = "project_name"
+DEFAULT = "Kivy Project"
 
 
 @pytest.fixture
 def mock_prompt(mocker):
     """Return a mocked version of the 'Prompt.ask' function."""
-    return mocker.patch('rich.prompt.Prompt.ask')
+    return mocker.patch("rich.prompt.Prompt.ask")
 
 
 def test_click_invocation(mock_prompt):

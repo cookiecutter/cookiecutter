@@ -21,7 +21,7 @@ class JsonifyExtension(Extension):
         def jsonify(obj):
             return json.dumps(obj, sort_keys=True, indent=4)
 
-        environment.filters['jsonify'] = jsonify
+        environment.filters["jsonify"] = jsonify
 
 
 class RandomStringExtension(Extension):
@@ -52,7 +52,7 @@ class SlugifyExtension(Extension):
             """Slugifies the value."""
             return pyslugify(value, **kwargs)
 
-        environment.filters['slugify'] = slugify
+        environment.filters["slugify"] = slugify
 
 
 class UUIDExtension(Extension):
@@ -72,21 +72,21 @@ class UUIDExtension(Extension):
 class TimeExtension(Extension):
     """Jinja2 Extension for dates and times."""
 
-    tags = {'now'}
+    tags = {"now"}
 
     def __init__(self, environment):
         """Jinja2 Extension constructor."""
         super().__init__(environment)
 
-        environment.extend(datetime_format='%Y-%m-%d')
+        environment.extend(datetime_format="%Y-%m-%d")
 
     def _datetime(self, timezone, operator, offset, datetime_format):
         d = arrow.now(timezone)
 
         # parse shift params from offset and include operator
         shift_params = {}
-        for param in offset.split(','):
-            interval, value = param.split('=')
+        for param in offset.split(","):
+            interval, value = param.split("=")
             shift_params[interval.strip()] = float(operator + value.strip())
         d = d.shift(**shift_params)
 
@@ -105,26 +105,26 @@ class TimeExtension(Extension):
 
         node = parser.parse_expression()
 
-        if parser.stream.skip_if('comma'):
+        if parser.stream.skip_if("comma"):
             datetime_format = parser.parse_expression()
         else:
             datetime_format = nodes.Const(None)
 
         if isinstance(node, nodes.Add):
             call_method = self.call_method(
-                '_datetime',
-                [node.left, nodes.Const('+'), node.right, datetime_format],
+                "_datetime",
+                [node.left, nodes.Const("+"), node.right, datetime_format],
                 lineno=lineno,
             )
         elif isinstance(node, nodes.Sub):
             call_method = self.call_method(
-                '_datetime',
-                [node.left, nodes.Const('-'), node.right, datetime_format],
+                "_datetime",
+                [node.left, nodes.Const("-"), node.right, datetime_format],
                 lineno=lineno,
             )
         else:
             call_method = self.call_method(
-                '_now',
+                "_now",
                 [node, datetime_format],
                 lineno=lineno,
             )

@@ -60,6 +60,5 @@ repos:
     rev: v0.2.0
     hooks:
       - id: ruff
-        args: [ --fix, --preview ]
+        args: [ --fix ]
       - id: ruff-format
-        args: [--preview]  # required for `format.quote-style = "preserve"`

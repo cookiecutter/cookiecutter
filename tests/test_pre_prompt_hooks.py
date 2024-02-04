@@ -8,10 +8,10 @@ import pytest
 from cookiecutter import hooks, utils
 from cookiecutter.exceptions import FailedHookException
 
-WINDOWS = sys.platform.startswith('win')
+WINDOWS = sys.platform.startswith("win")
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def remove_tmp_repo_dir():
     """Remove the generate repo_dir."""
 
@@ -24,7 +24,7 @@ def remove_tmp_repo_dir():
 
 def test_run_pre_prompt_python_hook(remove_tmp_repo_dir):
     """Verify pre_prompt.py runs and creates a copy of cookiecutter.json."""
-    new_repo_dir = hooks.run_pre_prompt_hook(repo_dir='tests/test-pyhooks/')
+    new_repo_dir = hooks.run_pre_prompt_hook(repo_dir="tests/test-pyhooks/")
     assert new_repo_dir.exists()
     bkp_config = new_repo_dir / "_cookiecutter.json"
     assert bkp_config.exists()
@@ -33,18 +33,18 @@ def test_run_pre_prompt_python_hook(remove_tmp_repo_dir):
 
 def test_run_pre_prompt_python_hook_fail(monkeypatch):
     """Verify pre_prompt.py will fail when a given env var is present."""
-    message = 'Pre-Prompt Hook script failed'
+    message = "Pre-Prompt Hook script failed"
     with monkeypatch.context() as m:
-        m.setenv('COOKIECUTTER_FAIL_PRE_PROMPT', '1')
+        m.setenv("COOKIECUTTER_FAIL_PRE_PROMPT", "1")
         with pytest.raises(FailedHookException) as excinfo:
-            hooks.run_pre_prompt_hook(repo_dir='tests/test-pyhooks/')
+            hooks.run_pre_prompt_hook(repo_dir="tests/test-pyhooks/")
     assert message in str(excinfo.value)
 
 
-@pytest.mark.skipif(WINDOWS, reason='shell script will not run in Windows')
+@pytest.mark.skipif(WINDOWS, reason="shell script will not run in Windows")
 def test_run_pre_prompt_shell_hook(remove_tmp_repo_dir):
     """Verify pre_prompt.sh runs and creates a copy of cookiecutter.json."""
-    new_repo_dir = hooks.run_pre_prompt_hook(repo_dir='tests/test-pyshellhooks/')
+    new_repo_dir = hooks.run_pre_prompt_hook(repo_dir="tests/test-pyshellhooks/")
     assert new_repo_dir.exists()
     bkp_config = new_repo_dir / "_cookiecutter.json"
     assert bkp_config.exists()

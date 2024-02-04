@@ -39,11 +39,11 @@ def make_sure_path_exists(path: "os.PathLike[str]") -> None:
 
     :param path: A directory tree path for creation.
     """
-    logger.debug('Making sure path exists (creates tree if not exist): %s', path)
+    logger.debug("Making sure path exists (creates tree if not exist): %s", path)
     try:
         Path(path).mkdir(parents=True, exist_ok=True)
     except OSError as error:
-        raise OSError(f'Unable to create directory at {path}') from error
+        raise OSError(f"Unable to create directory at {path}") from error
 
 
 @contextlib.contextmanager
@@ -89,7 +89,7 @@ def prompt_and_delete(path, no_input=False):
             f"You've downloaded {path} before. Is it okay to delete and re-download it?"
         )
 
-        ok_to_delete = read_user_yes_no(question, 'yes')
+        ok_to_delete = read_user_yes_no(question, "yes")
 
     if ok_to_delete:
         if os.path.isdir(path):
@@ -99,7 +99,7 @@ def prompt_and_delete(path, no_input=False):
         return True
     else:
         ok_to_reuse = read_user_yes_no(
-            "Do you want to re-use the existing version?", 'yes'
+            "Do you want to re-use the existing version?", "yes"
         )
 
         if ok_to_reuse:
@@ -123,8 +123,8 @@ def simple_filter(filter_function):
 def create_tmp_repo_dir(repo_dir: "os.PathLike[str]") -> Path:
     """Create a temporary dir with a copy of the contents of repo_dir."""
     repo_dir = Path(repo_dir).resolve()
-    base_dir = tempfile.mkdtemp(prefix='cookiecutter')
+    base_dir = tempfile.mkdtemp(prefix="cookiecutter")
     new_dir = f"{base_dir}/{repo_dir.name}"
-    logger.debug(f'Copying repo_dir from {repo_dir} to {new_dir}')
+    logger.debug(f"Copying repo_dir from {repo_dir} to {new_dir}")
     shutil.copytree(repo_dir, new_dir)
     return Path(new_dir)

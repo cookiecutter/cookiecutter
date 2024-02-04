@@ -8,9 +8,9 @@ def test_click_invocation(mocker):
 
     Test for password (hidden input) type invocation.
     """
-    prompt = mocker.patch('rich.prompt.Prompt.ask')
-    prompt.return_value = 'sekrit'
+    prompt = mocker.patch("rich.prompt.Prompt.ask")
+    prompt.return_value = "sekrit"
 
-    assert read_repo_password('Password') == 'sekrit'
+    assert read_repo_password("Password") == "sekrit"
 
-    prompt.assert_called_once_with('Password', password=True)
+    prompt.assert_called_once_with("Password", password=True)

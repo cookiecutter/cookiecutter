@@ -8,7 +8,7 @@ from jinja2 import Environment, exceptions
 @pytest.fixture
 def environment():
     """Fixture. Add tested extension to environment."""
-    return Environment(extensions=['cookiecutter.extensions.TimeExtension'])  # noqa: S701
+    return Environment(extensions=["cookiecutter.extensions.TimeExtension"])  # noqa: S701
 
 
 @pytest.fixture(autouse=True)
@@ -23,7 +23,7 @@ def freeze():
 def test_tz_is_required(environment):
     """Verify template parsing fails without a timezone."""
     with pytest.raises(exceptions.TemplateSyntaxError):
-        environment.from_string('{% now %}')
+        environment.from_string("{% now %}")
 
 
 def test_utc_default_datetime_format(environment):
@@ -33,17 +33,17 @@ def test_utc_default_datetime_format(environment):
     assert template.render() == "2015-12-09"
 
 
-@pytest.mark.parametrize("valid_tz", ['utc', 'local', 'Europe/Berlin'])
+@pytest.mark.parametrize("valid_tz", ["utc", "local", "Europe/Berlin"])
 def test_accept_valid_timezones(environment, valid_tz):
     """Verify that valid timezones are accepted."""
     template = environment.from_string(f"{{% now '{valid_tz}', '%Y-%m' %}}")
 
-    assert template.render() == '2015-12'
+    assert template.render() == "2015-12"
 
 
 def test_environment_datetime_format(environment):
     """Verify datetime format can be parsed from environment."""
-    environment.datetime_format = '%a, %d %b %Y %H:%M:%S'
+    environment.datetime_format = "%a, %d %b %Y %H:%M:%S"
 
     template = environment.from_string("{% now 'utc' %}")
 
@@ -52,7 +52,7 @@ def test_environment_datetime_format(environment):
 
 def test_add_time(environment):
     """Verify that added time offset can be parsed."""
-    environment.datetime_format = '%a, %d %b %Y %H:%M:%S'
+    environment.datetime_format = "%a, %d %b %Y %H:%M:%S"
 
     template = environment.from_string("{% now 'utc' + 'hours=2,seconds=30' %}")
 
@@ -61,7 +61,7 @@ def test_add_time(environment):
 
 def test_substract_time(environment):
     """Verify that substracted time offset can be parsed."""
-    environment.datetime_format = '%a, %d %b %Y %H:%M:%S'
+    environment.datetime_format = "%a, %d %b %Y %H:%M:%S"
 
     template = environment.from_string("{% now 'utc' - 'minutes=11' %}")
 
@@ -70,7 +70,7 @@ def test_substract_time(environment):
 
 def test_offset_with_format(environment):
     """Verify that offset works together with datetime format."""
-    environment.datetime_format = '%d %b %Y %H:%M:%S'
+    environment.datetime_format = "%d %b %Y %H:%M:%S"
 
     template = environment.from_string(
         "{% now 'utc' - 'days=2,minutes=33,seconds=1', '%d %b %Y %H:%M:%S' %}"
