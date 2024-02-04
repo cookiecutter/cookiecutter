@@ -1,5 +1,7 @@
 """Functions for discovering and executing various cookiecutter hooks."""
 
+from __future__ import annotations
+
 import errno
 import logging
 import os
@@ -7,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from typing import Any, Optional
 
 from jinja2.exceptions import UndefinedError
 
@@ -29,7 +32,7 @@ _HOOKS = [
 EXIT_SUCCESS = 0
 
 
-def valid_hook(hook_file, hook_name):
+def valid_hook(hook_file: str, hook_name: str) -> bool:
     """Determine if a hook file is valid.
 
     :param hook_file: The hook file to consider for validity
@@ -45,7 +48,7 @@ def valid_hook(hook_file, hook_name):
     return matching_hook and supported_hook and not backup_file
 
 
-def find_hook(hook_name, hooks_dir='hooks'):
+def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> Optional[list[str]]:
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
@@ -73,7 +76,7 @@ def find_hook(hook_name, hooks_dir='hooks'):
     return scripts
 
 
-def run_script(script_path, cwd='.'):
+def run_script(script_path: str, cwd: str = '.') -> None:
     """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
@@ -102,7 +105,9 @@ def run_script(script_path, cwd='.'):
         raise FailedHookException(f'Hook script failed (error: {err})') from err
 
 
-def run_script_with_context(script_path, cwd, context):
+def run_script_with_context(
+    script_path: str, cwd: str, context: dict[str, Any]
+) -> None:
     """Execute a script after rendering it with Jinja.
 
     :param script_path: Absolute path to the script to run.
@@ -123,7 +128,7 @@ def run_script_with_context(script_path, cwd, context):
     run_script(temp.name, cwd)
 
 
-def run_hook(hook_name, project_dir, context):
+def run_hook(hook_name: str, project_dir: str, context: dict[str, Any]) -> None:
     """
     Try to find and execute a hook from the specified project directory.
 

@@ -1,7 +1,10 @@
 """Cookiecutter repository functions."""
 
+from __future__ import annotations
+
 import os
 import re
+from typing import Optional
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
@@ -19,17 +22,17 @@ REPO_REGEX = re.compile(
 )
 
 
-def is_repo_url(value):
+def is_repo_url(value: str) -> bool:
     """Return True if value is a repository URL."""
     return bool(REPO_REGEX.match(value))
 
 
-def is_zip_file(value):
+def is_zip_file(value: str) -> bool:
     """Return True if value is a zip file."""
     return value.lower().endswith('.zip')
 
 
-def expand_abbreviations(template, abbreviations):
+def expand_abbreviations(template: str, abbreviations: dict[str, str]) -> str:
     """Expand abbreviations in a template name.
 
     :param template: The project template name.
@@ -47,7 +50,7 @@ def expand_abbreviations(template, abbreviations):
     return template
 
 
-def repository_has_cookiecutter_json(repo_directory):
+def repository_has_cookiecutter_json(repo_directory: str) -> bool:
     """Determine if `repo_directory` contains a `cookiecutter.json` file.
 
     :param repo_directory: The candidate repository directory.
@@ -62,14 +65,14 @@ def repository_has_cookiecutter_json(repo_directory):
 
 
 def determine_repo_dir(
-    template,
-    abbreviations,
-    clone_to_dir,
-    checkout,
-    no_input,
-    password=None,
-    directory=None,
-):
+    template: str,
+    abbreviations: dict[str, str],
+    clone_to_dir: os.PathLike[str],
+    checkout: str,
+    no_input: bool,
+    password: Optional[str] = None,
+    directory: Optional[str] = None,
+) -> tuple[str, bool]:
     """
     Locate the repository directory from a template reference.
 

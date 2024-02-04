@@ -24,7 +24,7 @@ from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
 
 
-def version_msg():
+def version_msg() -> str:
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -2,6 +2,7 @@
 
 import logging
 import sys
+from typing import Optional
 
 LOG_LEVELS = {
     'DEBUG': logging.DEBUG,
@@ -17,7 +18,9 @@ LOG_FORMATS = {
 }
 
 
-def configure_logger(stream_level='DEBUG', debug_file=None):
+def configure_logger(
+    stream_level: str = 'DEBUG', debug_file: Optional[str] = None
+) -> logging.Logger:
     """Configure logging for cookiecutter.
 
     Set up logging to stdout with given level. If ``debug_file`` is given set

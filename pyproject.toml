@@ -90,3 +90,47 @@ exclude = ["tests/**/hooks/*"]
 
 quote-style = "preserve"
 exclude = ["tests/hooks-abort-render/hooks/*"]
+
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+files = "cookiecutter"
+no_implicit_reexport = true
+
+[[tool.mypy.overrides]]
+module = [
+    "cookiecutter.cli",
+    "cookiecutter.exceptions",
+    "cookiecutter.generate",
+]
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = [
+    "cookiecutter.cli",
+    "cookiecutter.generate",
+]
+disallow_untyped_calls = false
+
+[[tool.mypy.overrides]]
+module = [
+    "cookiecutter.cli",
+]
+disable_error_code = ["arg-type"]
+
+[[tool.mypy.overrides]]
+module = [
+    "cookiecutter.config",
+    "cookiecutter.environment",
+    "cookiecutter.extensions",
+    "cookiecutter.hooks",
+    "cookiecutter.main",
+    "cookiecutter.prompt",
+    "cookiecutter.utils",
+]
+ignore_errors = true
+
+
+[tool.coverage.report]
+exclude_also = ["if TYPE_CHECKING:"]

@@ -8,6 +8,7 @@ import shutil
 import warnings
 from collections import OrderedDict
 from pathlib import Path
+from typing import Any
 
 from binaryornot.check import is_binary
 from jinja2 import Environment, FileSystemLoader
@@ -232,11 +233,11 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
 def render_and_create_dir(
     dirname: str,
-    context: dict,
+    context: dict[str, Any],
     output_dir: "os.PathLike[str]",
     environment: Environment,
     overwrite_if_exists: bool = False,
-):
+) -> tuple[Path, bool]:
     """Render name of a directory, create the directory, return its path."""
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
@@ -316,6 +317,8 @@ def generate_files(
     logger.debug('Generating project from %s...', template_dir)
 
     unrendered_dir = os.path.split(template_dir)[1]
+
+    project_dir: Path | str
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
