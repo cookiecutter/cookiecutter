@@ -1,5 +1,7 @@
 """Helper functions for working with version control systems."""
 
+from __future__ import annotations
+
 import logging
 import os
 import subprocess
@@ -60,8 +62,8 @@ def is_vcs_installed(repo_type):
 
 def clone(
     repo_url: str,
-    checkout: Optional[str] = None,
-    clone_to_dir: "os.PathLike[str]" = ".",
+    checkout: str | None = None,
+    clone_to_dir: os.PathLike[str] = ".",
     no_input: bool = False,
 ):
     """Clone a repo to the current directory.
