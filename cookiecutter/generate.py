@@ -309,11 +309,15 @@ def generate_files(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
-    template_dir = find_template(repo_dir)
-    logger.debug('Generating project from %s...', template_dir)
     context = context or OrderedDict([])
-
     envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+    template_dir = find_template(
+        repo_dir,
+        block_start_string=envvars.get('block_start_string'),
+        block_end_string=envvars.get('block_end_string'),
+    )
+
+    logger.debug('Generating project from %s...', template_dir)
 
     unrendered_dir = os.path.split(template_dir)[1]
     ensure_dir_is_templated(unrendered_dir)
