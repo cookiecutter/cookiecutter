@@ -313,8 +313,8 @@ def generate_files(
     envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
     template_dir = find_template(
         repo_dir,
-        block_start_string=envvars.get('block_start_string'),
-        block_end_string=envvars.get('block_end_string'),
+        block_start_string=envvars.get('block_start_string', '{{'),
+        block_end_string=envvars.get('block_end_string', '}}'),
     )
 
     logger.debug('Generating project from %s...', template_dir)
