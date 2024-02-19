@@ -10,9 +10,13 @@ from pathlib import Path
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter import utils
-from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import FailedHookException
-from cookiecutter.utils import create_tmp_repo_dir, rmtree, work_in
+from cookiecutter.utils import (
+    create_env_with_context,
+    create_tmp_repo_dir,
+    rmtree,
+    work_in,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -110,7 +114,7 @@ def run_script_with_context(script_path, cwd, context):
         contents = file.read()
 
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
-        env = StrictEnvironment(context=context, keep_trailing_newline=True)
+        env = create_env_with_context(context)
         template = env.from_string(contents)
         output = template.render(**context)
         temp.write(output.encode('utf-8'))

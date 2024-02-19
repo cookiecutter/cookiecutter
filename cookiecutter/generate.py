@@ -12,16 +12,19 @@ from binaryornot.check import is_binary
 from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 
-from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import (
     ContextDecodingException,
-    NonTemplatedInputDirException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
 from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook_from_repo_dir
-from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
+from cookiecutter.utils import (
+    create_env_with_context,
+    make_sure_path_exists,
+    rmtree,
+    work_in,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -256,14 +259,6 @@ def render_and_create_dir(
     return dir_to_create, not output_dir_exists
 
 
-def ensure_dir_is_templated(dirname):
-    """Ensure that dirname is a templated directory name."""
-    if '{{' in dirname and '}}' in dirname:
-        return True
-    else:
-        raise NonTemplatedInputDirException
-
-
 def _run_hook_from_repo_dir(
     repo_dir, hook_name, project_dir, context, delete_project_on_failure
 ):
@@ -309,15 +304,14 @@ def generate_files(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
-    template_dir = find_template(repo_dir)
-    logger.debug('Generating project from %s...', template_dir)
     context = context or OrderedDict([])
 
-    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+    env = create_env_with_context(context)
+
+    template_dir = find_template(repo_dir, env)
+    logger.debug('Generating project from %s...', template_dir)
 
     unrendered_dir = os.path.split(template_dir)[1]
-    ensure_dir_is_templated(unrendered_dir)
-    env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
     try:
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
