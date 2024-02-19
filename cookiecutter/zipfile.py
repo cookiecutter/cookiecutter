@@ -1,9 +1,10 @@
 """Utility functions for handling and fetching repo archives in zip format."""
 
+from __future__ import annotations
+
 import os
 import tempfile
 from pathlib import Path
-from typing import Optional
 from zipfile import BadZipFile, ZipFile
 
 import requests
@@ -18,7 +19,7 @@ def unzip(
     is_url: bool,
     clone_to_dir: os.PathLike[str] | str = ".",
     no_input: bool = False,
-    password: Optional[str] = None,
+    password: str | None = None,
 ) -> str:
     """Download and unpack a zipfile at a given URI.
 

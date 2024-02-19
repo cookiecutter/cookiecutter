@@ -17,8 +17,8 @@ select = [
     #    "EM",     # flake8-errmsg
     #    "ERA",    # flake8-eradicate
     #    "EXE",    # flake8-executable
-    "F", # pyflakes
-    #    "FA",     # flake8-future-annotations
+    "F",  # pyflakes
+    "FA", # flake8-future-annotations
     #    "FBT",    # boolean trap
     #    "FLY",    # flynt
     #    "FURB",   # refurb

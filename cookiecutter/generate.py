@@ -1,5 +1,7 @@
 """Functions for generating a project from a project template."""
 
+from __future__ import annotations
+
 import fnmatch
 import json
 import logging
@@ -234,7 +236,7 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 def render_and_create_dir(
     dirname: str,
     context: dict[str, Any],
-    output_dir: "os.PathLike[str]",
+    output_dir: os.PathLike[str],
     environment: Environment,
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
