@@ -4,6 +4,7 @@ Main entry point for the `cookiecutter` command.
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
+
 import logging
 import os
 import sys

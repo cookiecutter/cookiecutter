@@ -1,4 +1,5 @@
 """Tests around prompting for and handling of choice variables."""
+
 import pytest
 
 from cookiecutter.prompt import read_user_choice

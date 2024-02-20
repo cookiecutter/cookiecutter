@@ -1,4 +1,5 @@
 """Test work of python and shell hooks on repository."""
+
 import sys
 from pathlib import Path
 

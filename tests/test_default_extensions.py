@@ -1,4 +1,5 @@
 """Verify Jinja2 filters/extensions are available from pre-gen/post-gen hooks."""
+
 import os
 import uuid
 from pathlib import Path

@@ -1,4 +1,5 @@
 """test_read_user_variable."""
+
 import pytest
 
 from cookiecutter.prompt import read_user_variable

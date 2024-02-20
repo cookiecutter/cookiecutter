@@ -1,4 +1,5 @@
 """Tests for `cookiecutter.hooks` module."""
+
 import errno
 import os
 import stat

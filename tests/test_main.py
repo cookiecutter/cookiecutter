@@ -1,4 +1,5 @@
 """Collection of tests around cookiecutter's replay feature."""
+
 from cookiecutter.main import cookiecutter
 
 

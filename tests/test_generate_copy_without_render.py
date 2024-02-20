@@ -1,4 +1,5 @@
 """Verify correct work of `_copy_without_render` context option."""
+
 import os
 from pathlib import Path
 

@@ -1,4 +1,5 @@
 """Tests around cloning repositories and detection of errors at it."""
+
 import os
 import subprocess
 

@@ -1,4 +1,5 @@
 """test_replay."""
+
 import os
 
 import pytest

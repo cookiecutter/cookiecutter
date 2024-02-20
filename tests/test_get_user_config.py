@@ -1,4 +1,5 @@
 """Tests to verify correct work with user configs and system/user variables inside."""
+
 import os
 import shutil
 

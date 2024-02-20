@@ -1,4 +1,5 @@
 """Functions for discovering and executing various cookiecutter hooks."""
+
 import errno
 import logging
 import os

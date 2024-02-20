@@ -1,4 +1,5 @@
 """test_read_user_yes_no."""
+
 import pytest
 from rich.prompt import InvalidResponse
 

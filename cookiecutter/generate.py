@@ -1,4 +1,5 @@
 """Functions for generating a project from a project template."""
+
 import fnmatch
 import json
 import logging
