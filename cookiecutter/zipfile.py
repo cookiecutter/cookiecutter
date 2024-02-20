@@ -8,8 +8,8 @@ from zipfile import BadZipFile, ZipFile
 import requests
 
 from cookiecutter.exceptions import InvalidZipRepository
-from cookiecutter.prompt import read_repo_password
-from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
+from cookiecutter.prompt import prompt_and_delete, read_repo_password
+from cookiecutter.utils import make_sure_path_exists
 
 
 def unzip(
