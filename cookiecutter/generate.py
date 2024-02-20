@@ -54,12 +54,12 @@ def apply_overwrites_to_context(
 ):
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
-        if variable not in context and in_dictionary_variable:
+        if variable not in context:
+            if not in_dictionary_variable:
+                # We are dealing with a new variable on first level, ignore
+                continue
             # We are dealing with a new dictionary variable in a deeper level
             context[variable] = overwrite
-        if variable not in context and not in_dictionary_variable:
-            # We are dealing with a new variable on first level, ignore
-            continue
 
         context_value = context[variable]
         if isinstance(context_value, list):
