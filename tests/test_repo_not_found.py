@@ -1,4 +1,5 @@
 """Testing invalid cookiecutter template repositories."""
+
 import pytest
 
 from cookiecutter import exceptions, main

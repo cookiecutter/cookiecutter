@@ -1,4 +1,5 @@
 """Simple pre-prompt hook that will fail if a specific env var is set."""
+
 import os
 import sys
 from pathlib import Path

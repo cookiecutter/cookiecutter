@@ -1,4 +1,5 @@
 """Collection of tests around log handling."""
+
 import logging
 
 import pytest

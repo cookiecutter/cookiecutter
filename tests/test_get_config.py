@@ -1,4 +1,5 @@
 """Collection of tests around loading cookiecutter config."""
+
 from pathlib import Path
 
 import pytest

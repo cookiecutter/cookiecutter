@@ -1,4 +1,5 @@
 """Helper functions for working with version control systems."""
+
 import logging
 import os
 import subprocess  # nosec

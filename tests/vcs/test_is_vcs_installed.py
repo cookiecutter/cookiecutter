@@ -1,4 +1,5 @@
 """Collection of tests around VCS detection."""
+
 import pytest
 
 from cookiecutter import vcs

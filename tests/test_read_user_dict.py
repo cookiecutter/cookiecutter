@@ -1,4 +1,5 @@
 """Test `process_json`, `read_user_dict` functions in `cookiecutter.prompt`."""
+
 import click
 import pytest
 from rich.prompt import InvalidResponse

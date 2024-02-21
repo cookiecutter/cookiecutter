@@ -1,4 +1,5 @@
 """Tests around locally cached cookiecutter template repositories."""
+
 import os
 from pathlib import Path
 

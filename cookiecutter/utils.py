@@ -1,4 +1,5 @@
 """Helper functions used throughout Cookiecutter."""
+
 import contextlib
 import logging
 import os
