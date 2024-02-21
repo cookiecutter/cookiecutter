@@ -58,7 +58,7 @@ repos:
       - id: check-toml
       - id: check-xml
       - id: check-yaml
-        exclude: "not_rendered.yml|invalid-config.yaml"
+        exclude: "not_rendered.yml|invalid-config.yaml|invalid-config-w-multiple-docs.yaml"
   - repo: https://github.com/PyCQA/flake8
     rev: 6.1.0
     hooks:
