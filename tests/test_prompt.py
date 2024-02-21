@@ -1,4 +1,5 @@
 """Tests for `cookiecutter.prompt` module."""
+
 import json
 import platform
 import sys

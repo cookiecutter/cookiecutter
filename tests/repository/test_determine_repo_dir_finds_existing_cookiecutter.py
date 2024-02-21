@@ -1,4 +1,5 @@
 """Tests around detection whether cookiecutter templates are cached locally."""
+
 import os
 from pathlib import Path
 

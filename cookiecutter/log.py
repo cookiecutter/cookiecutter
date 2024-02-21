@@ -1,4 +1,5 @@
 """Module for setting up logging."""
+
 import logging
 import sys
 

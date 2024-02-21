@@ -1,4 +1,5 @@
 """pytest fixtures for testing cookiecutter's replay feature."""
+
 import pytest
 
 
