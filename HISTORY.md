@@ -2,6 +2,37 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.5.0 (2023-11-21)
+
+### Minor Changes
+
+* Default values can be passed as a dict (#1924) @matveyvarg
+* Implement new style for nested templates config (#1981) @ericof
+
+### CI/CD and QA changes
+
+* Bump actions/checkout from 3 to 4 (#1953) @dependabot
+* [pre-commit.ci] pre-commit autoupdate (#1977) @pre-commit-ci
+* [pre-commit.ci] pre-commit autoupdate (#1957) @pre-commit-ci
+
+### Documentation updates
+
+* Add argument run to pipx command in README.md (#1964) @staeff
+* Fix tutorial2 generated HTML (#1971) @aantoin
+* Update README.md (#1967) @HarshRanaOC
+* Update README.md to fix broken link (#1952) @david-abn
+* Update README.md to include installation instructions (#1949) @david-abn
+* Update cookiecutter-plone-starter link in readme (#1965) @zahidkizmaz
+
+### Bugfixes
+
+* Fix FileExistsError when using a relative template path (#1968) @pkrueger-cariad
+* Fix recursive context overwrites (#1961) @padraic-padraic
+
+### This release is made by wonderful contributors:
+
+@HarshRanaOC, @aantoin, @david-abn, @dependabot, @dependabot[bot], @ericof, @matveyvarg, @padraic-padraic, @pkrueger-cariad, @pre-commit-ci, @pre-commit-ci[bot], @staeff and @zahidkizmaz
+
 
 ## 2.4.0 (2023-09-29)
 

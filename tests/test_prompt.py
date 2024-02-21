@@ -1,11 +1,14 @@
 """Tests for `cookiecutter.prompt` module."""
+import json
 import platform
+import sys
 from collections import OrderedDict
+from pathlib import Path
 
 import click
 import pytest
 
-from cookiecutter import prompt, exceptions, environment
+from cookiecutter import environment, exceptions, prompt
 
 
 @pytest.fixture(autouse=True)
@@ -32,7 +35,7 @@ class TestRenderVariable:
         """Verify simple items correctly rendered to strings."""
         env = environment.StrictEnvironment()
         from_string = mocker.patch(
-            'cookiecutter.prompt.StrictEnvironment.from_string', wraps=env.from_string
+            'cookiecutter.utils.StrictEnvironment.from_string', wraps=env.from_string
         )
         context = {'project': 'foobar'}
 
@@ -573,3 +576,193 @@ def test_undefined_variable(context):
     error = err.value
     assert error.message == "Unable to render variable 'foo'"
     assert error.context == context
+
+
+@pytest.mark.parametrize(
+    "template_dir,expected",
+    [
+        ["fake-nested-templates", "fake-project"],
+        ["fake-nested-templates-old-style", "fake-package"],
+    ],
+)
+def test_cookiecutter_nested_templates(template_dir: str, expected: str):
+    """Test nested_templates generation."""
+    from cookiecutter import prompt
+
+    main_dir = (Path("tests") / template_dir).resolve()
+    cookiecuter_context = json.loads((main_dir / "cookiecutter.json").read_text())
+    context = {"cookiecutter": cookiecuter_context}
+    output_dir = prompt.choose_nested_template(context, main_dir, no_input=True)
+    expected = (Path(main_dir) / expected).resolve()
+    assert output_dir == f"{expected}"
+
+
+@pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux / macos test")
+@pytest.mark.parametrize(
+    "path",
+    [
+        "",
+        "/tmp",
+        "/foo",
+    ],
+)
+def test_cookiecutter_nested_templates_invalid_paths(path: str):
+    """Test nested_templates generation."""
+    from cookiecutter import prompt
+
+    main_dir = (Path("tests") / "fake-nested-templates").resolve()
+    cookiecuter_context = json.loads((main_dir / "cookiecutter.json").read_text())
+    cookiecuter_context["templates"]["fake-project"]["path"] = path
+    context = {"cookiecutter": cookiecuter_context}
+    with pytest.raises(ValueError) as exc:
+        prompt.choose_nested_template(context, main_dir, no_input=True)
+    assert "Illegal template path" in str(exc)
+
+
+@pytest.mark.skipif(not sys.platform.startswith('win'), reason="Win only test")
+@pytest.mark.parametrize(
+    "path",
+    [
+        "",
+        "C:/tmp",
+        "D:/tmp",
+    ],
+)
+def test_cookiecutter_nested_templates_invalid_win_paths(path: str):
+    """Test nested_templates generation."""
+    from cookiecutter import prompt
+
+    main_dir = (Path("tests") / "fake-nested-templates").resolve()
+    cookiecuter_context = json.loads((main_dir / "cookiecutter.json").read_text())
+    cookiecuter_context["templates"]["fake-project"]["path"] = path
+    context = {"cookiecutter": cookiecuter_context}
+    with pytest.raises(ValueError) as exc:
+        prompt.choose_nested_template(context, main_dir, no_input=True)
+    assert "Illegal template path" in str(exc)
+
+
+def test_prompt_should_ask_and_rm_repo_dir(mocker, tmp_path):
+    """In `prompt_and_delete()`, if the user agrees to delete/reclone the \
+    repo, the repo should be deleted."""
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no', return_value=True
+    )
+    repo_dir = Path(tmp_path, 'repo')
+    repo_dir.mkdir()
+
+    deleted = prompt.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert not repo_dir.exists()
+    assert deleted
+
+
+def test_prompt_should_ask_and_exit_on_user_no_answer(mocker, tmp_path):
+    """In `prompt_and_delete()`, if the user decline to delete/reclone the \
+    repo, cookiecutter should exit."""
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no',
+        return_value=False,
+    )
+    mock_sys_exit = mocker.patch('sys.exit', return_value=True)
+    repo_dir = Path(tmp_path, 'repo')
+    repo_dir.mkdir()
+
+    deleted = prompt.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+    assert not deleted
+    assert mock_sys_exit.called
+
+
+def test_prompt_should_ask_and_rm_repo_file(mocker, tmp_path):
+    """In `prompt_and_delete()`, if the user agrees to delete/reclone a \
+    repo file, the repo should be deleted."""
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
+    )
+
+    repo_file = tmp_path.joinpath('repo.zip')
+    repo_file.write_text('this is zipfile content')
+
+    deleted = prompt.prompt_and_delete(str(repo_file))
+
+    assert mock_read_user.called
+    assert not repo_file.exists()
+    assert deleted
+
+
+def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmp_path):
+    """In `prompt_and_delete()`, if the user wants to keep their old \
+    cloned template repo, it should not be deleted."""
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no', return_value=False, autospec=True
+    )
+    repo_dir = Path(tmp_path, 'repo')
+    repo_dir.mkdir()
+
+    with pytest.raises(SystemExit):
+        prompt.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+
+
+def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmp_path):
+    """In `prompt_and_delete()`, if the user wants to keep their old \
+    cloned template repo, it should not be deleted."""
+
+    def answer(question, default):
+        return 'okay to delete' not in question
+
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no', side_effect=answer, autospec=True
+    )
+    repo_dir = Path(tmp_path, 'repo')
+    repo_dir.mkdir()
+
+    deleted = prompt.prompt_and_delete(str(repo_dir))
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+    assert not deleted
+
+
+def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmp_path):
+    """Prompt should not ask if no input and rm dir.
+
+    In `prompt_and_delete()`, if `no_input` is True, the call to
+    `prompt.read_user_yes_no()` should be suppressed.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
+    )
+    repo_dir = Path(tmp_path, 'repo')
+    repo_dir.mkdir()
+
+    deleted = prompt.prompt_and_delete(str(repo_dir), no_input=True)
+
+    assert not mock_read_user.called
+    assert not repo_dir.exists()
+    assert deleted
+
+
+def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmp_path):
+    """Prompt should not ask if no input and rm file.
+
+    In `prompt_and_delete()`, if `no_input` is True, the call to
+    `prompt.read_user_yes_no()` should be suppressed.
+    """
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
+    )
+
+    repo_file = tmp_path.joinpath('repo.zip')
+    repo_file.write_text('this is zipfile content')
+
+    deleted = prompt.prompt_and_delete(str(repo_file), no_input=True)
+
+    assert not mock_read_user.called
+    assert not repo_file.exists()
+    assert deleted

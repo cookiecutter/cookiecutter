@@ -1,12 +1,16 @@
 """Functions for prompting the user for project info."""
 import json
+import os
+import re
+import sys
 from collections import OrderedDict
+from pathlib import Path
 
-from rich.prompt import Prompt, Confirm, PromptBase, InvalidResponse
 from jinja2.exceptions import UndefinedError
+from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
 
-from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UndefinedVariableInTemplate
+from cookiecutter.utils import create_env_with_context, rmtree
 
 
 def read_user_variable(var_name, default_value, prompts=None, prefix=""):
@@ -217,6 +221,27 @@ def render_variable(env, raw, cookiecutter_dict):
     return template.render(cookiecutter=cookiecutter_dict)
 
 
+def _prompts_from_options(options: dict) -> dict:
+    """Process template options and return friendly prompt information."""
+    prompts = {"__prompt__": "Select a template"}
+    for option_key, option_value in options.items():
+        title = str(option_value.get("title", option_key))
+        description = option_value.get("description", option_key)
+        label = title if title == description else f"{title} ({description})"
+        prompts[option_key] = label
+    return prompts
+
+
+def prompt_choice_for_template(key, options, no_input):
+    """Prompt user with a set of options to choose from.
+
+    :param no_input: Do not prompt for user input and return the first available option.
+    """
+    opts = list(options.keys())
+    prompts = {"templates": _prompts_from_options(options)}
+    return opts[0] if no_input else read_user_choice(key, opts, prompts, "")
+
+
 def prompt_choice_for_config(
     cookiecutter_dict, env, key, options, no_input, prompts=None, prefix=""
 ):
@@ -237,17 +262,12 @@ def prompt_for_config(context, no_input=False):
     :param no_input: Do not prompt for user input and use only values from context.
     """
     cookiecutter_dict = OrderedDict([])
-    env = StrictEnvironment(context=context)
-
-    prompts = {}
-    if '__prompts__' in context['cookiecutter'].keys():
-        prompts = context['cookiecutter']['__prompts__']
-        del context['cookiecutter']['__prompts__']
+    env = create_env_with_context(context)
+    prompts = context['cookiecutter'].pop('__prompts__', {})
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-
     count = 0
     all_prompts = context['cookiecutter'].items()
     visible_prompts = [k for k, _ in all_prompts if not k.startswith("_")]
@@ -313,3 +333,78 @@ def prompt_for_config(context, no_input=False):
             raise UndefinedVariableInTemplate(msg, err, context) from err
 
     return cookiecutter_dict
+
+
+def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False) -> str:
+    """Prompt user to select the nested template to use.
+
+    :param context: Source for field names and sample values.
+    :param repo_dir: Repository directory.
+    :param no_input: Do not prompt for user input and use only values from context.
+    :returns: Path to the selected template.
+    """
+    cookiecutter_dict = OrderedDict([])
+    env = create_env_with_context(context)
+    prefix = ""
+    prompts = context['cookiecutter'].pop('__prompts__', {})
+    key = "templates"
+    config = context['cookiecutter'].get(key, {})
+    if config:
+        # Pass
+        val = prompt_choice_for_template(key, config, no_input)
+        template = config[val]["path"]
+    else:
+        # Old style
+        key = "template"
+        config = context['cookiecutter'].get(key, [])
+        val = prompt_choice_for_config(
+            cookiecutter_dict, env, key, config, no_input, prompts, prefix
+        )
+        template = re.search(r'\((.+)\)', val).group(1)
+
+    template = Path(template) if template else None
+    if not (template and not template.is_absolute()):
+        raise ValueError("Illegal template path")
+
+    repo_dir = Path(repo_dir).resolve()
+    template_path = (repo_dir / template).resolve()
+    # Return path as string
+    return f"{template_path}"
+
+
+def prompt_and_delete(path, no_input=False):
+    """
+    Ask user if it's okay to delete the previously-downloaded file/directory.
+
+    If yes, delete it. If no, checks to see if the old version should be
+    reused. If yes, it's reused; otherwise, Cookiecutter exits.
+
+    :param path: Previously downloaded zipfile.
+    :param no_input: Suppress prompt to delete repo and just delete it.
+    :return: True if the content was deleted
+    """
+    # Suppress prompt if called via API
+    if no_input:
+        ok_to_delete = True
+    else:
+        question = (
+            f"You've downloaded {path} before. Is it okay to delete and re-download it?"
+        )
+
+        ok_to_delete = read_user_yes_no(question, 'yes')
+
+    if ok_to_delete:
+        if os.path.isdir(path):
+            rmtree(path)
+        else:
+            os.remove(path)
+        return True
+    else:
+        ok_to_reuse = read_user_yes_no(
+            "Do you want to re-use the existing version?", 'yes'
+        )
+
+        if ok_to_reuse:
+            return False
+
+        sys.exit()

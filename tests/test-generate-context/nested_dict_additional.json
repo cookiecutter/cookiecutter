@@ -1,0 +1,9 @@
+{
+  "mainkey1": "mainvalue1",
+  "mainkey2": {
+    "subkey1": "subvalue1",
+    "subkey2": {
+      "subsubkey1": "subsubvalue1"
+    }
+  }
+}
