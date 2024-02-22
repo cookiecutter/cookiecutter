@@ -32,17 +32,21 @@ EXIT_SUCCESS = 0
 def valid_hook(hook_file, hook_name):
     """Determine if a hook file is valid.
 
+    Hook name must be a substring of an element in _HOOKS variable to be valid.
+
+    Hook name must be a substring of an element in _HOOKS variable to be valid.
+
     :param hook_file: The hook file to consider for validity
     :param hook_name: The hook to find
     :return: The hook file validity
     """
     filename = os.path.basename(hook_file)
     basename = os.path.splitext(filename)[0]
-    matching_hook = basename == hook_name
-    supported_hook = basename in _HOOKS
+    matching_hook = hook_name in basename
+    supported_hook = [i for i in _HOOKS if i in basename]
     backup_file = filename.endswith('~')
 
-    return matching_hook and supported_hook and not backup_file
+    return matching_hook and bool(supported_hook) and not backup_file
 
 
 def find_hook(hook_name, hooks_dir='hooks'):
@@ -64,10 +68,9 @@ def find_hook(hook_name, hooks_dir='hooks'):
         return None
 
     scripts = []
-    for hook_file in os.listdir(hooks_dir):
+    for hook_file in sorted(os.listdir(hooks_dir)):
         if valid_hook(hook_file, hook_name):
             scripts.append(os.path.abspath(os.path.join(hooks_dir, hook_file)))
-
     if len(scripts) == 0:
         return None
     return scripts
