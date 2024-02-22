@@ -102,34 +102,52 @@ def clone(
 
     if clone:
         try:
-            subprocess.check_output(  # nosec
+            result = subprocess.run(  # replacing check_output with run
                 [repo_type, 'clone', repo_url],
                 cwd=clone_to_dir,
-                stderr=subprocess.STDOUT,
+                stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                text=True,
+                check=False,
+                shell=False,  # nosec
             )
-            if checkout is not None:
-                checkout_params = [checkout]
-                # Avoid Mercurial "--config" and "--debugger" injection vulnerability
-                if repo_type == "hg":
-                    checkout_params.insert(0, "--")
-                subprocess.check_output(  # nosec
-                    [repo_type, 'checkout', *checkout_params],
-                    cwd=repo_dir,
-                    stderr=subprocess.STDOUT,
+
+            # Handle the result manually
+            if result.returncode != 0:
+                raise subprocess.CalledProcessError(
+                    result.returncode,
+                    result.args,
+                    output=result.stdout,
+                    stderr=result.stderr,
                 )
+
+            if checkout is not None:
+                subprocess.run(
+                    [repo_type, 'checkout', checkout],
+                    cwd=repo_dir,
+                    stderr=subprocess.PIPE,
+                    stdout=subprocess.PIPE,
+                    text=True,
+                    check=True,
+                    shell=False,  # nosec
+                )
+
         except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output.decode('utf-8')
-            if 'not found' in output.lower():
+            # Check stderr for specific error messages
+            error_output = clone_error.stderr or ''
+
+            if 'not found' in error_output.lower():
                 raise RepositoryNotFound(
-                    f'The repository {repo_url} could not be found, '
-                    'have you made a typo?'
-                ) from clone_error
-            if any(error in output for error in BRANCH_ERRORS):
+                    'The repository {} could not be found, '
+                    'have you made a typo?'.format(repo_url)
+                )
+
+            if any(error in error_output for error in BRANCH_ERRORS):
                 raise RepositoryCloneFailed(
                     f'The {checkout} branch of repository '
                     f'{repo_url} could not found, have you made a typo?'
                 ) from clone_error
-            logger.error('git clone failed with error: %s', output)
+            logger.error('git clone failed with error: %s', error_output)
             raise
 
     return repo_dir
