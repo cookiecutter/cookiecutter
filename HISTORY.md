@@ -2,6 +2,37 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.6.0 (2024-02-21)
+
+### Minor Changes
+
+* Support Python 3.12 (#1989) @ericof
+* Modifying Jinja2 start and end variable strings (#1997) @sacha-c
+
+### CI/CD and QA changes
+
+* Add isort as a pre-commit hook (#1988) @kurtmckee
+* Bump actions/setup-python from 4 to 5 (#2000) @dependabot
+* Bump actions/upload-artifact from 3 to 4 (#1999) @dependabot
+* Quick resolution of #2003 (#2004) @jensens
+* Support Python 3.12 (#1989) @ericof
+* [pre-commit.ci] pre-commit autoupdate (#1996) @pre-commit-ci
+* Quick resolution of #2003 (#2004) @jensens
+
+### Documentation updates
+
+* Support Python 3.12 (#1989) @ericof
+
+### Bugfixes
+
+* Fix regression #2009: Adding value to nested dicts broken (#2010) @jensens
+* Fixed errors caused by invalid config files. (#1995) @alanverresen
+
+### This release is made by wonderful contributors:
+
+@alanverresen, @dependabot, @dependabot[bot], @ericof, @jensens, @kurtmckee, @pre-commit-ci, @pre-commit-ci[bot] and @sacha-c
+
+
 ## 2.5.0 (2023-11-21)
 
 ### Minor Changes
