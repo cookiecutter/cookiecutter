@@ -12,6 +12,7 @@ from pathlib import Path
 from binaryornot.check import is_binary
 from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateSyntaxError, UndefinedError
+from rich.prompt import InvalidResponse
 
 from cookiecutter.exceptions import (
     ContextDecodingException,
@@ -20,6 +21,7 @@ from cookiecutter.exceptions import (
 )
 from cookiecutter.find import find_template
 from cookiecutter.hooks import run_hook_from_repo_dir
+from cookiecutter.prompt import YesNoPrompt
 from cookiecutter.utils import (
     create_env_with_context,
     make_sure_path_exists,
@@ -96,6 +98,16 @@ def apply_overwrites_to_context(
                 context_value, overwrite, in_dictionary_variable=True
             )
             context[variable] = context_value
+        elif isinstance(context_value, bool) and isinstance(overwrite, str):
+            # We are dealing with a boolean variable
+            # Convert overwrite to its boolean counterpart
+            try:
+                context[variable] = YesNoPrompt().process_response(overwrite)
+            except InvalidResponse:
+                raise ValueError(
+                    f"{overwrite} provided for variable "
+                    f"{variable} could not be converted to a boolean."
+                )
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
