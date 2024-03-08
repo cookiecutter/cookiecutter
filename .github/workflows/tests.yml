@@ -2,13 +2,8 @@ name: CI/CD Tests
 
 on:
   push:
-    branches:
-      - main
-    tags:
-      - "*"
+    branches: [ main ]
   pull_request:
-    branches:
-      - "*"
 
 jobs:
   documentation_build_test:
@@ -60,16 +55,3 @@ jobs:
         run: "tox -e py${{ matrix.python }}"
       - name: Project security test
         run: "tox -e safety"
-      - name: Send coverage report to codeclimate
-        continue-on-error: true
-        uses: paambaati/codeclimate-action@v5.0.0
-        with:
-          coverageCommand: echo "Ignore rerun"
-          coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-      - name: Send coverage report to codecov
-        uses: codecov/codecov-action@v3
-        with:
-          env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python }}
-          file: ./coverage.xml
