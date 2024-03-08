@@ -6,6 +6,7 @@ import os
 import subprocess  # nosec
 import sys
 import tempfile
+import warnings
 from collections import OrderedDict
 from pathlib import Path
 from typing import Dict, Union
@@ -160,6 +161,16 @@ def run_hook_from_repo_dir(
     :param delete_project_on_failure: Delete the project directory on hook
         failure?
     """
+    warnings.warn(
+        "The 'run_hook_from_repo_dir' function is deprecated, "
+        "and will be removed in a future release.\n"
+        "Use 'cookiecutter.hooks.run_hook_from_rendered_hooks_dir' "
+        "after rendering hooks with 'cookiecutter.hooks.render_hooks' "
+        "instead.",
+        DeprecationWarning,
+        2,
+    )
+
     with work_in(repo_dir):
         try:
             run_hook(hook_name, project_dir, context)
