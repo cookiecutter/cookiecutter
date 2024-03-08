@@ -265,11 +265,14 @@ def render_hooks(repo_dir, context=None, keep_project_on_failure: bool = False) 
     output_dir = Path(rendered_hooks_dir.name)
 
     with work_in(hooks_dir):
+        pre_prompt_scripts = set(Path(f) for f in (find_hook('pre_prompt') or []))
         for root, dirs, files in os.walk('.'):
             for d in dirs:
                 make_sure_path_exists(Path(output_dir, root, d))
             for f in files:
                 infile = Path(root, f)
+                if infile in pre_prompt_scripts:
+                    continue
                 outfile = Path(output_dir, root, f)
                 logger.debug('Rendering file %s', infile)
 
