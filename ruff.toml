@@ -5,18 +5,18 @@ select = [
     #    "A",      # flake8-builtins
     #    "ANN",    # flake8-annotations
     #    "ARG",    # flake8-unused-arguments
-    #    "ASYNC",  # flake8-async
-    "B", # flake8-bugbear
+    "ASYNC", # flake8-async
+    "B",     # flake8-bugbear
     #    "BLE",    # flake8-blind-except
     "C4", # flake8-comprehensions
     #    "C90",    # cognitive complexity
     #    "COM",    # flake8-commas
     #    "D", # pydocstyle
-    #    "DTZ",    # flake8-datetimez
-    "E", # pycodestyle errors
+    "DTZ", # flake8-datetimez
+    "E",   # pycodestyle errors
     #    "EM",     # flake8-errmsg
     #    "ERA",    # flake8-eradicate
-    #    "EXE",    # flake8-executable
+    "EXE", # flake8-executable
     #    "F",      # pyflakes
     #    "FA",     # flake8-future-annotations
     #    "FBT",    # boolean trap
@@ -25,10 +25,10 @@ select = [
     #    "G",      # flake8-logging-format
     "I",   # isort
     "ICN", # flake8-import-conventions
-    #    "INT",    # flake8-gettext
-    #    "ISC",    # implicit-str-concat
-    #    "LOG",    # flake8-logging
-    "N", # pep8-naming
+    "INT", # flake8-gettext
+    "ISC", # implicit-str-concat
+    "LOG", # flake8-logging
+    "N",   # pep8-naming
     #    "PERF",   # perflint
     #    "PGH",    # pygrep-hooks
     #    "PIE",    # flake8-pie
@@ -38,19 +38,18 @@ select = [
     #    "PYI",    # flake8-pyi
     #    "Q",      # flake8-quotes
     #    "RET",    # flake8-return
-    #    "RSE",    # flake8-raise
+    "RSE", # flake8-raise
     "RUF", # Ruff-specific lints
     "S",   # flake8-bandit
     "SIM", # flake8-simplify
     #    "SLF",    # flake8-self
-    #    "SLOT",   # flake8-slots
+    "SLOT", # flake8-slots
     #    "T20",    # flake8-print
-    #    "TCH",    # flake8-type-checking
-    #    "TID252", # ban relative imports
+    "TCH",    # flake8-type-checking
+    "TID252", # ban relative imports
     #    "TRY",    # tryceratops
     "UP", # pyupgrade
     "W",  # pycodestyle warnings
-    #    "TRY",    # tryceratops
     #    "YTT",    # flake8-2020
 ]
 
