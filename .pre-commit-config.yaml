@@ -57,7 +57,7 @@ repos:
     -   id: check-manifest
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.2.0
+    rev: v0.3.2
     hooks:
       - id: ruff
         args: [ --fix, --preview ]
