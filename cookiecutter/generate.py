@@ -19,7 +19,11 @@ from cookiecutter.exceptions import (
     UndefinedVariableInTemplate,
 )
 from cookiecutter.find import find_template
-from cookiecutter.hooks import run_hook_from_repo_dir
+from cookiecutter.hooks import (
+    render_hooks,
+    run_hook_from_rendered_hooks_dir,
+    run_hook_from_repo_dir,
+)
 from cookiecutter.utils import (
     create_env_with_context,
     make_sure_path_exists,
@@ -338,9 +342,15 @@ def generate_files(
     # if rendering fails
     delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
+    render_hooks(
+        repo_dir=repo_dir,
+        context=context,
+        keep_project_on_failure=keep_project_on_failure,
+    )
+
     if accept_hooks:
-        run_hook_from_repo_dir(
-            repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
+        run_hook_from_rendered_hooks_dir(
+            repo_dir, 'pre_gen_project', project_dir, delete_project_on_failure
         )
 
     with work_in(template_dir):
@@ -416,12 +426,8 @@ def generate_files(
                     raise UndefinedVariableInTemplate(msg, err, context) from err
 
     if accept_hooks:
-        run_hook_from_repo_dir(
-            repo_dir,
-            'post_gen_project',
-            project_dir,
-            context,
-            delete_project_on_failure,
+        run_hook_from_rendered_hooks_dir(
+            repo_dir, 'post_gen_project', project_dir, delete_project_on_failure
         )
 
     return project_dir
