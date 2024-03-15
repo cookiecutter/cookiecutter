@@ -15,16 +15,7 @@ repos:
         language: python
         files: \.rst$
         require_serial: true
-  - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 24.2.0
-    hooks:
-      - id: black
-        language_version: python3
-        exclude: ^(tests\/hooks-abort-render\/hooks|docs\/HelloCookieCutter1)
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
@@ -59,20 +50,15 @@ repos:
       - id: check-xml
       - id: check-yaml
         exclude: "not_rendered.yml|invalid-config.yaml|invalid-config-w-multiple-docs.yaml"
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.0.0
-    hooks:
-      - id: flake8
-        additional_dependencies:
-          - flake8-absolute-import
-          - flake8-black
-          - flake8-docstrings
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.7
-    hooks:
-      - id: bandit
-        args: [--ini, .bandit]
+
   - repo: https://github.com/mgedmin/check-manifest
     rev: "0.49"
     hooks:
     -   id: check-manifest
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.2
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format

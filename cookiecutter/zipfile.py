@@ -83,20 +83,20 @@ def unzip(
         # Extract the zip file into the temporary directory
         try:
             zip_file.extractall(path=unzip_base)
-        except RuntimeError:
+        except RuntimeError as e:
             # File is password protected; try to get a password from the
             # environment; if that doesn't work, ask the user.
             if password is not None:
                 try:
                     zip_file.extractall(path=unzip_base, pwd=password.encode('utf-8'))
-                except RuntimeError:
+                except RuntimeError as e:
                     raise InvalidZipRepository(
                         'Invalid password provided for protected repository'
-                    )
+                    ) from e
             elif no_input:
                 raise InvalidZipRepository(
                     'Unable to unlock password protected repository'
-                )
+                ) from e
             else:
                 retry = 0
                 while retry is not None:
@@ -106,16 +106,16 @@ def unzip(
                             path=unzip_base, pwd=password.encode('utf-8')
                         )
                         retry = None
-                    except RuntimeError:
+                    except RuntimeError as e:
                         retry += 1
                         if retry == 3:
                             raise InvalidZipRepository(
                                 'Invalid password provided for protected repository'
-                            )
+                            ) from e
 
-    except BadZipFile:
+    except BadZipFile as e:
         raise InvalidZipRepository(
             f'Zip repository {zip_uri} is not a valid zip archive:'
-        )
+        ) from e
 
     return unzip_path

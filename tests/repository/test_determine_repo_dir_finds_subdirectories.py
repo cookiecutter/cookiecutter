@@ -68,7 +68,10 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
         'locations:\n{}'.format(
             template,
             '\n'.join(
-                [os.path.join(template, 'wrong-dir'), wrong_full_cookiecutter_path]
+                [
+                    os.path.join(template, 'wrong-dir'),
+                    wrong_full_cookiecutter_path,
+                ]
             ),
         )
     )

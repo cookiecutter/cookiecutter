@@ -41,7 +41,7 @@ def test_process_json_deep_dict():
 
     Test for dict in dict case.
     """
-    user_value = '''{
+    user_value = """{
         "key": "value",
         "integer_key": 37,
         "dict_key": {
@@ -58,7 +58,7 @@ def test_process_json_deep_dict():
             "value 2",
             "value 3"
         ]
-    }'''
+    }"""
 
     assert process_json(user_value) == {
         "key": "value",

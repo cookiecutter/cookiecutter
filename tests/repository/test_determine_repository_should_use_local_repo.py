@@ -17,7 +17,7 @@ def test_finds_local_repo(tmp_path):
         no_input=True,
     )
 
-    assert 'tests/fake-repo' == project_dir
+    assert project_dir == 'tests/fake-repo'
     assert not cleanup
 
 
@@ -39,7 +39,10 @@ def test_local_repo_with_no_context_raises(tmp_path):
         'locations:\n{}'.format(
             template_path,
             '\n'.join(
-                [template_path, str(tmp_path.joinpath('tests', 'fake-repo-bad'))]
+                [
+                    template_path,
+                    str(tmp_path.joinpath('tests', 'fake-repo-bad')),
+                ]
             ),
         )
     )

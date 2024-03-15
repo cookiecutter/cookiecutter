@@ -168,7 +168,8 @@ def test_cli_replay_generated(mocker, cli_runner):
         '-v',
     )
     assert result.exit_code == 0
-    assert open('tests/tmp/replay-project/README.md').read().strip() == 'replayed'
+    with open('tests/tmp/replay-project/README.md') as f:
+        assert f.read().strip() == 'replayed'
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')

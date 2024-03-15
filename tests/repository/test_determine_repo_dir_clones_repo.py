@@ -46,7 +46,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
 
     assert os.path.isdir(project_dir)
     assert cleanup
-    assert 'tests/fake-repo-tmpl' == project_dir
+    assert project_dir == 'tests/fake-repo-tmpl'
 
 
 @pytest.fixture
@@ -87,7 +87,7 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data):
 
     assert os.path.isdir(project_dir)
     assert not cleanup
-    assert 'tests/fake-repo-tmpl' == project_dir
+    assert project_dir == 'tests/fake-repo-tmpl'
 
 
 def test_repository_url_with_no_context_file(mocker, template_url, user_config_data):

@@ -516,7 +516,7 @@ class TestPromptChoiceForConfig:
         assert expected_choice == actual_choice
 
 
-class TestReadUserYesNo(object):
+class TestReadUserYesNo:
     """Class to unite boolean prompt related tests."""
 
     @pytest.mark.parametrize(

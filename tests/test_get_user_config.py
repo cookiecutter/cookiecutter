@@ -108,7 +108,7 @@ def test_specify_config_path(mocker, custom_config_path, custom_config):
 
 def test_default_config_path(user_config_path):
     """Validate app configuration. User config path should match default path."""
-    assert config.USER_CONFIG_PATH == user_config_path
+    assert user_config_path == config.USER_CONFIG_PATH
 
 
 def test_default_config_from_env_variable(

@@ -68,7 +68,7 @@ def list_installed_templates(default_config, passed_config_file):
         click.echo(f' * {name}')
 
 
-@click.command(context_settings=dict(help_option_names=['-h', '--help']))
+@click.command(context_settings={"help_option_names": ['-h', '--help']})
 @click.version_option(__version__, '-V', '--version', message=version_msg())
 @click.argument('template', required=False)
 @click.argument('extra_context', nargs=-1, callback=validate_extra_context)
