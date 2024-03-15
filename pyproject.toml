@@ -1,6 +1,9 @@
+[tool.ruff]
+
 target-version = "py37"
 
-[lint]
+[tool.ruff.lint]
+
 select = [
     #    "A",      # flake8-builtins
     #    "ANN",    # flake8-annotations
@@ -53,7 +56,7 @@ select = [
     #    "YTT",    # flake8-2020
 ]
 
-pydocstyle.convention = "google"
+# pydocstyle.convention = "google"
 
 ignore = [
     "ANN101", # missing type annotation for 'self' in method
@@ -69,7 +72,7 @@ ignore = [
 
 exclude = ["tests/**/hooks/*"]
 
-[lint.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "tests/*" = [
     "D104", # Missing docstring in public package
     "D200", # One-line docstring should fit on one line with quotes
@@ -83,7 +86,7 @@ exclude = ["tests/**/hooks/*"]
 ]
 "docs/conf.py" = ["A001", "D100"]
 
+[tool.ruff.format]
 
-[format]
 quote-style = "preserve"
 exclude = ["tests/hooks-abort-render/hooks/*"]
