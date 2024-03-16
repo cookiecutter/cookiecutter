@@ -2,6 +2,8 @@
 
 import os
 import shutil
+from pathlib import Path
+from typing import TypedDict
 
 import pytest
 
@@ -150,8 +152,13 @@ def user_dir(tmp_path_factory):
     return tmp_path_factory.mktemp('user_dir')
 
 
+class UserConfigData(TypedDict):
+    cookiecutters_dir: str
+    replay_dir: str
+
+
 @pytest.fixture(scope='session')
-def user_config_data(user_dir):
+def user_config_data(user_dir) -> UserConfigData:
     """Fixture that creates 2 Cookiecutter user config dirs.
 
      It will create it in the user's home directory.
@@ -172,7 +179,7 @@ def user_config_data(user_dir):
 
 
 @pytest.fixture(scope='session')
-def user_config_file(user_dir, user_config_data):
+def user_config_file(user_dir, user_config_data) -> str:
     """Fixture that creates a config file called `config`.
 
      It will create it in the user's home directory, with YAML from
@@ -190,7 +197,7 @@ def user_config_file(user_dir, user_config_data):
 
 
 @pytest.fixture
-def output_dir(tmp_path):
+def output_dir(tmp_path) -> str:
     """Fixture to prepare test output directory."""
     output_path = tmp_path.joinpath("output")
     output_path.mkdir()
@@ -198,7 +205,7 @@ def output_dir(tmp_path):
 
 
 @pytest.fixture
-def clone_dir(tmp_path):
+def clone_dir(tmp_path) -> Path:
     """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
     Returns a str to said directory."""
     clone_dir = tmp_path.joinpath("clone_dir")
