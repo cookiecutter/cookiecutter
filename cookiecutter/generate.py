@@ -267,7 +267,7 @@ def render_and_create_dir(
 
 
 def _run_hook_from_repo_dir(
-    repo_dir, hook_name, project_dir, context, delete_project_on_failure
+    repo_dir, hook_name: str, project_dir, context, delete_project_on_failure: bool
 ) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
