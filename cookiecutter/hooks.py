@@ -8,8 +8,7 @@ import os
 import subprocess
 import sys
 import tempfile
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from jinja2.exceptions import UndefinedError
 
@@ -21,6 +20,9 @@ from cookiecutter.utils import (
     rmtree,
     work_in,
 )
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +149,7 @@ def run_hook(hook_name: str, project_dir: str, context: dict[str, Any]) -> None:
 
 def run_hook_from_repo_dir(
     repo_dir, hook_name, project_dir, context, delete_project_on_failure
-):
+) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.

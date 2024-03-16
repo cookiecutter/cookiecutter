@@ -16,7 +16,7 @@ class ExtensionLoaderMixin:
     the next parent class in line of the child.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """Initialize the Jinja2 Environment object while loading extensions.
 
         Does the following:

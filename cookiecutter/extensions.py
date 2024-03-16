@@ -3,18 +3,21 @@
 from __future__ import annotations
 
 import json
-import re
 import string
 import uuid
 from secrets import choice
-from typing import Any, Iterable
+from typing import TYPE_CHECKING, Any, Iterable
 
 import arrow
 from jinja2 import Environment, nodes
 from jinja2.ext import Extension
-from jinja2.parser import Parser
 from slugify import slugify as pyslugify
 from slugify.slugify import DEFAULT_SEPARATOR
+
+if TYPE_CHECKING:
+    import re
+
+    from jinja2.parser import Parser
 
 
 class JsonifyExtension(Extension):

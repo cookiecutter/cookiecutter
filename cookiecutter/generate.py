@@ -33,7 +33,7 @@ from cookiecutter.utils import (
 logger = logging.getLogger(__name__)
 
 
-def is_copy_only_path(path, context):
+def is_copy_only_path(path, context) -> bool:
     """Check whether the given `path` should only be copied and not rendered.
 
     Returns True if `path` matches a pattern in the given `context` dict,
@@ -55,7 +55,7 @@ def is_copy_only_path(path, context):
 
 def apply_overwrites_to_context(
     context, overwrite_context, *, in_dictionary_variable=False
-):
+) -> None:
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
@@ -151,7 +151,7 @@ def generate_context(
     return context
 
 
-def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
+def generate_file(project_dir, infile, context, env, skip_if_file_exists=False) -> None:
     """Render filename of infile as name of outfile, handle infile correctly.
 
     Dealing with infile appropriately:
@@ -268,7 +268,7 @@ def render_and_create_dir(
 
 def _run_hook_from_repo_dir(
     repo_dir, hook_name, project_dir, context, delete_project_on_failure
-):
+) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.

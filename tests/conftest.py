@@ -15,7 +15,7 @@ replay_dir: '{replay_dir}'
 
 
 @pytest.fixture(autouse=True)
-def isolated_filesystem(monkeypatch, tmp_path):
+def isolated_filesystem(monkeypatch, tmp_path) -> None:
     """Ensure filesystem isolation, set the user home to a tmp_path."""
     root_path = tmp_path.joinpath("home")
     root_path.mkdir()
@@ -28,7 +28,7 @@ def isolated_filesystem(monkeypatch, tmp_path):
     monkeypatch.setenv("USERPROFILE", str(root_path))
 
 
-def backup_dir(original_dir, backup_dir):
+def backup_dir(original_dir, backup_dir) -> bool:
     """Generate backup directory based on original directory."""
     # If the default original_dir is pre-existing, move it to a temp location
     if not os.path.isdir(original_dir):
@@ -42,7 +42,7 @@ def backup_dir(original_dir, backup_dir):
     return True
 
 
-def restore_backup_dir(original_dir, backup_dir, original_dir_found):
+def restore_backup_dir(original_dir, backup_dir, original_dir_found) -> None:
     """Restore default contents."""
     original_dir_is_dir = os.path.isdir(original_dir)
     if original_dir_found:
@@ -63,7 +63,7 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found):
 
 
 @pytest.fixture(scope='function')
-def clean_system(request):
+def clean_system(request) -> None:
     """Fixture. Simulates a clean system with no configured or cloned cookiecutters.
 
     It runs code which can be regarded as setup code as known from a unittest
@@ -120,7 +120,7 @@ def clean_system(request):
         cookiecutter_replay_dir, cookiecutter_replay_dir_backup
     )
 
-    def restore_backup():
+    def restore_backup() -> None:
         # If it existed, restore ~/.cookiecutterrc
         # We never write to ~/.cookiecutterrc, so this logic is simpler.
         if user_config_found and os.path.exists(user_config_path_backup):

@@ -41,13 +41,13 @@ from cookiecutter.repository import expand_abbreviations
         'Correct expansion for builtin abbreviations (bitbucket)',
     ),
 )
-def test_abbreviation_expansion(template, abbreviations, expected_result):
+def test_abbreviation_expansion(template, abbreviations, expected_result) -> None:
     """Verify abbreviation unpacking."""
     expanded = expand_abbreviations(template, abbreviations)
     assert expanded == expected_result
 
 
-def test_abbreviation_expansion_prefix_not_0_in_braces():
+def test_abbreviation_expansion_prefix_not_0_in_braces() -> None:
     """Verify abbreviation unpacking raises error on incorrect index."""
     with pytest.raises(IndexError):
         expand_abbreviations('xx:a', {'xx': '{1}'})

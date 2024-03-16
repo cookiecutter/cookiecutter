@@ -16,7 +16,7 @@ EXPECTED_PROMPT = """Select varname
 
 
 @pytest.mark.parametrize('user_choice, expected_value', enumerate(OPTIONS, 1))
-def test_click_invocation(mocker, user_choice, expected_value):
+def test_click_invocation(mocker, user_choice, expected_value) -> None:
     """Test click function called correctly by cookiecutter.
 
     Test for choice type invocation.
@@ -29,7 +29,7 @@ def test_click_invocation(mocker, user_choice, expected_value):
     prompt.assert_called_once_with(EXPECTED_PROMPT, choices=OPTIONS_INDEX, default='1')
 
 
-def test_raise_if_options_is_not_a_non_empty_list():
+def test_raise_if_options_is_not_a_non_empty_list() -> None:
     """Test function called by cookiecutter raise expected errors.
 
     Test for choice type invocation.
