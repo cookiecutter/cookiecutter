@@ -108,7 +108,7 @@ def unzip(
                         )
                         retry = None
                     except RuntimeError as e:
-                        retry += 1  # type: ignore[operator]  # noqa: PERF203
+                        retry += 1  # type: ignore[operator]
                         if retry == 3:
                             raise InvalidZipRepository(
                                 'Invalid password provided for protected repository'
