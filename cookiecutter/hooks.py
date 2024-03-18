@@ -68,10 +68,11 @@ def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
         logger.debug('No hooks/dir in template_dir')
         return None
 
-    scripts = []
-    for hook_file in os.listdir(hooks_dir):
-        if valid_hook(hook_file, hook_name):
-            scripts.append(os.path.abspath(os.path.join(hooks_dir, hook_file)))
+    scripts = [
+        os.path.abspath(os.path.join(hooks_dir, hook_file))
+        for hook_file in os.listdir(hooks_dir)
+        if valid_hook(hook_file, hook_name)
+    ]
 
     if len(scripts) == 0:
         return None
@@ -194,6 +195,6 @@ def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> Path:
         for script in scripts:
             try:
                 run_script(script, repo_dir)
-            except FailedHookException as e:
+            except FailedHookException as e:  # noqa: PERF203
                 raise FailedHookException('Pre-Prompt Hook script failed') from e
     return repo_dir
