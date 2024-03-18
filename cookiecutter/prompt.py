@@ -5,8 +5,10 @@ import os
 import re
 import sys
 from collections import OrderedDict
+from itertools import starmap
 from pathlib import Path
 
+from jinja2 import Environment
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
 
@@ -14,7 +16,7 @@ from cookiecutter.exceptions import UndefinedVariableInTemplate
 from cookiecutter.utils import create_env_with_context, rmtree
 
 
-def read_user_variable(var_name, default_value, prompts=None, prefix=""):
+def read_user_variable(var_name: str, default_value, prompts=None, prefix: str = ""):
     """Prompt user for variable and return the entered value or given default.
 
     :param str var_name: Variable of the context to query the user
@@ -22,7 +24,7 @@ def read_user_variable(var_name, default_value, prompts=None, prefix=""):
     """
     question = (
         prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
+        if prompts and var_name in prompts and prompts[var_name]
         else var_name
     )
 
@@ -51,7 +53,7 @@ class YesNoPrompt(Confirm):
             raise InvalidResponse(self.validate_error_message)
 
 
-def read_user_yes_no(var_name, default_value, prompts=None, prefix=""):
+def read_user_yes_no(var_name, default_value, prompts=None, prefix: str = ""):
     """Prompt the user to reply with 'yes' or 'no' (or equivalent values).
 
     - These input values will be converted to ``True``:
@@ -67,26 +69,26 @@ def read_user_yes_no(var_name, default_value, prompts=None, prefix=""):
     """
     question = (
         prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
+        if prompts and var_name in prompts and prompts[var_name]
         else var_name
     )
     return YesNoPrompt.ask(f"{prefix}{question}", default=default_value)
 
 
-def read_repo_password(question):
+def read_repo_password(question: str) -> str:
     """Prompt the user to enter a password.
 
-    :param str question: Question to the user
+    :param question: Question to the user
     """
     return Prompt.ask(question, password=True)
 
 
-def read_user_choice(var_name, options, prompts=None, prefix=""):
+def read_user_choice(var_name: str, options, prompts=None, prefix=""):
     """Prompt the user to choose from several options for the given variable.
 
     The first item will be returned if no input happens.
 
-    :param str var_name: Variable as specified in the context
+    :param var_name: Variable as specified in the context
     :param list options: Sequence of options that are available to select from
     :return: Exactly one item of ``options`` that has been chosen by the user
     """
@@ -100,25 +102,24 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
     choices = choice_map.keys()
 
     question = f"Select {var_name}"
-    choice_lines = [
-        '    [bold magenta]{}[/] - [bold]{}[/]'.format(*c) for c in choice_map.items()
-    ]
+
+    choice_lines = starmap(
+        "    [bold magenta]{}[/] - [bold]{}[/]".format, choice_map.items()
+    )
 
     # Handle if human-readable prompt is provided
-    if prompts and var_name in prompts.keys():
+    if prompts and var_name in prompts:
         if isinstance(prompts[var_name], str):
             question = prompts[var_name]
         else:
             if "__prompt__" in prompts[var_name]:
                 question = prompts[var_name]["__prompt__"]
-            choice_lines = [
-                (
-                    f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
-                    if p in prompts[var_name]
-                    else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
-                )
+            choice_lines = (
+                f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
+                if p in prompts[var_name]
+                else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
                 for i, p in choice_map.items()
-            ]
+            )
 
     prompt = '\n'.join(
         (
@@ -128,17 +129,17 @@ def read_user_choice(var_name, options, prompts=None, prefix=""):
         )
     )
 
-    user_choice = Prompt.ask(prompt, choices=list(choices), default=list(choices)[0])
+    user_choice = Prompt.ask(prompt, choices=list(choices), default=next(iter(choices)))
     return choice_map[user_choice]
 
 
 DEFAULT_DISPLAY = 'default'
 
 
-def process_json(user_value, default_value=None):
+def process_json(user_value: str, default_value=None):
     """Load user-supplied value as a JSON dict.
 
-    :param str user_value: User-supplied value to load as a JSON dict
+    :param user_value: User-supplied value to load as a JSON dict
     """
     try:
         user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
@@ -165,10 +166,10 @@ class JsonPrompt(PromptBase[dict]):
         return process_json(value, self.default)
 
 
-def read_user_dict(var_name, default_value, prompts=None, prefix=""):
+def read_user_dict(var_name: str, default_value, prompts=None, prefix=""):
     """Prompt the user to provide a dictionary of data.
 
-    :param str var_name: Variable as specified in the context
+    :param var_name: Variable as specified in the context
     :param default_value: Value that will be returned if no input is provided
     :return: A Python dictionary to use in the context.
     """
@@ -177,7 +178,7 @@ def read_user_dict(var_name, default_value, prompts=None, prefix=""):
 
     question = (
         prompts[var_name]
-        if prompts and var_name in prompts.keys() and prompts[var_name]
+        if prompts and var_name in prompts and prompts[var_name]
         else var_name
     )
     user_value = JsonPrompt.ask(
@@ -188,7 +189,7 @@ def read_user_dict(var_name, default_value, prompts=None, prefix=""):
     return user_value
 
 
-def render_variable(env, raw, cookiecutter_dict):
+def render_variable(env: Environment, raw, cookiecutter_dict):
     """Render the next variable to be displayed in the user prompt.
 
     Inside the prompting taken from the cookiecutter.json file, this renders
@@ -246,7 +247,7 @@ def prompt_choice_for_template(key, options, no_input):
 
 
 def prompt_choice_for_config(
-    cookiecutter_dict, env, key, options, no_input, prompts=None, prefix=""
+    cookiecutter_dict, env, key, options, no_input: bool, prompts=None, prefix: str = ""
 ):
     """Prompt user with a set of options to choose from.
 
@@ -375,7 +376,7 @@ def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False)
     return f"{template_path}"
 
 
-def prompt_and_delete(path, no_input=False):
+def prompt_and_delete(path, no_input=False) -> bool:
     """
     Ask user if it's okay to delete the previously-downloaded file/directory.
 
