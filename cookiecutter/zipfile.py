@@ -107,7 +107,7 @@ def unzip(
                             path=unzip_base, pwd=password.encode('utf-8')
                         )
                         retry = None
-                    except RuntimeError as e:
+                    except RuntimeError as e:  # noqa: PERF203
                         retry += 1  # type: ignore[operator]
                         if retry == 3:
                             raise InvalidZipRepository(
