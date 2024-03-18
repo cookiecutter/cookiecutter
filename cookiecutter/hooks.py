@@ -149,7 +149,11 @@ def run_hook(hook_name: str, project_dir: str, context: dict[str, Any]) -> None:
 
 
 def run_hook_from_repo_dir(
-    repo_dir, hook_name, project_dir, context, delete_project_on_failure
+    repo_dir: str,
+    hook_name: str,
+    project_dir: str,
+    context: dict[str, Any],
+    delete_project_on_failure: bool,
 ) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
@@ -177,7 +181,7 @@ def run_hook_from_repo_dir(
             raise
 
 
-def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> Path:
+def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> os.PathLike[str] | Path:
     """Run pre_prompt hook from repo directory.
 
     :param repo_dir: Project template input directory.
@@ -191,10 +195,10 @@ def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> Path:
     # Create a temporary directory
     repo_dir = create_tmp_repo_dir(repo_dir)
     with work_in(repo_dir):
-        scripts = find_hook('pre_prompt')
+        scripts = find_hook('pre_prompt') or []
         for script in scripts:
             try:
-                run_script(script, repo_dir)
+                run_script(script, str(repo_dir))
             except FailedHookException as e:  # noqa: PERF203
                 raise FailedHookException('Pre-Prompt Hook script failed') from e
     return repo_dir

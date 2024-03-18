@@ -130,7 +130,6 @@ module = [
     "cookiecutter.environment",
     "cookiecutter.extensions",
     "cookiecutter.generate",
-    "cookiecutter.hooks",
     "cookiecutter.main",
     "cookiecutter.prompt",
     "cookiecutter.utils",
