@@ -5,6 +5,7 @@ import os
 import re
 import sys
 from collections import OrderedDict
+from itertools import starmap
 from pathlib import Path
 
 from jinja2 import Environment
@@ -101,9 +102,10 @@ def read_user_choice(var_name: str, options, prompts=None, prefix=""):
     choices = choice_map.keys()
 
     question = f"Select {var_name}"
-    choice_lines = [
-        '    [bold magenta]{}[/] - [bold]{}[/]'.format(*c) for c in choice_map.items()
-    ]
+
+    choice_lines = starmap(
+        "    [bold magenta]{}[/] - [bold]{}[/]".format, choice_map.items()
+    )
 
     # Handle if human-readable prompt is provided
     if prompts and var_name in prompts:
@@ -112,14 +114,12 @@ def read_user_choice(var_name: str, options, prompts=None, prefix=""):
         else:
             if "__prompt__" in prompts[var_name]:
                 question = prompts[var_name]["__prompt__"]
-            choice_lines = [
-                (
-                    f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
-                    if p in prompts[var_name]
-                    else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
-                )
+            choice_lines = (
+                f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
+                if p in prompts[var_name]
+                else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
                 for i, p in choice_map.items()
-            ]
+            )
 
     prompt = '\n'.join(
         (

@@ -23,8 +23,8 @@ select = [
     "F",   # pyflakes
     "FA", # flake8-future-annotations
     #    "FBT",    # boolean trap
-    #    "FLY",    # flynt
-    #    "FURB",   # refurb
+    "FLY", # flynt
+    #    "FURB", # refurb
     #    "G",      # flake8-logging-format
     "I",    # isort
     "ICN",  # flake8-import-conventions

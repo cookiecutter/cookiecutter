@@ -42,7 +42,7 @@ class RandomStringExtension(Extension):
 
         def random_ascii_string(length: int, punctuation: bool = False) -> str:
             if punctuation:
-                corpus = "".join((string.ascii_letters, string.punctuation))
+                corpus = f'{string.ascii_letters}{string.punctuation}'
             else:
                 corpus = string.ascii_letters
             return "".join(choice(corpus) for _ in range(length))
