@@ -61,7 +61,7 @@ def env(context):
         'template missing folder',
     ],
 )
-def test_find_template(repo_name, env, error_expectation, expected):
+def test_find_template(repo_name, env, error_expectation, expected) -> None:
     """Verify correctness of `find.find_template` path detection."""
     repo_dir = Path('tests', repo_name)
 

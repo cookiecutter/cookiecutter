@@ -68,7 +68,7 @@ def custom_config():
 
 
 @pytest.mark.usefixtures('back_up_rc')
-def test_get_user_config_valid(user_config_path, custom_config):
+def test_get_user_config_valid(user_config_path, custom_config) -> None:
     """Validate user config correctly parsed if exist and correctly formatted."""
     shutil.copy('tests/test-config/valid-config.yaml', user_config_path)
     conf = config.get_user_config()
@@ -77,7 +77,7 @@ def test_get_user_config_valid(user_config_path, custom_config):
 
 
 @pytest.mark.usefixtures('back_up_rc')
-def test_get_user_config_invalid(user_config_path):
+def test_get_user_config_invalid(user_config_path) -> None:
     """Validate `InvalidConfiguration` raised when provided user config malformed."""
     shutil.copy('tests/test-config/invalid-config.yaml', user_config_path)
     with pytest.raises(InvalidConfiguration):
@@ -85,18 +85,18 @@ def test_get_user_config_invalid(user_config_path):
 
 
 @pytest.mark.usefixtures('back_up_rc')
-def test_get_user_config_nonexistent():
+def test_get_user_config_nonexistent() -> None:
     """Validate default app config returned, if user does not have own config."""
     assert config.get_user_config() == config.DEFAULT_CONFIG
 
 
 @pytest.fixture
-def custom_config_path():
+def custom_config_path() -> str:
     """Fixture. Return path to custom user config for tests."""
     return 'tests/test-config/valid-config.yaml'
 
 
-def test_specify_config_path(mocker, custom_config_path, custom_config):
+def test_specify_config_path(mocker, custom_config_path, custom_config) -> None:
     """Validate provided custom config path should be respected and parsed."""
     spy_get_config = mocker.spy(config, 'get_config')
 
@@ -106,14 +106,14 @@ def test_specify_config_path(mocker, custom_config_path, custom_config):
     assert user_config == custom_config
 
 
-def test_default_config_path(user_config_path):
+def test_default_config_path(user_config_path) -> None:
     """Validate app configuration. User config path should match default path."""
     assert user_config_path == config.USER_CONFIG_PATH
 
 
 def test_default_config_from_env_variable(
     monkeypatch, custom_config_path, custom_config
-):
+) -> None:
     """Validate app configuration. User config path should be parsed from sys env."""
     monkeypatch.setenv('COOKIECUTTER_CONFIG', custom_config_path)
 
@@ -121,7 +121,7 @@ def test_default_config_from_env_variable(
     assert user_config == custom_config
 
 
-def test_force_default_config(mocker, custom_config_path):
+def test_force_default_config(mocker, custom_config_path) -> None:
     """Validate `default_config=True` should ignore provided custom user config."""
     spy_get_config = mocker.spy(config, 'get_config')
 
@@ -131,7 +131,7 @@ def test_force_default_config(mocker, custom_config_path):
     assert not spy_get_config.called
 
 
-def test_expand_user_for_directories_in_config(monkeypatch):
+def test_expand_user_for_directories_in_config(monkeypatch) -> None:
     """Validate user pointers expanded in user configs."""
 
     def _expanduser(path):
@@ -146,7 +146,7 @@ def test_expand_user_for_directories_in_config(monkeypatch):
     assert user_config['cookiecutters_dir'] == 'Users/bob/templates'
 
 
-def test_expand_vars_for_directories_in_config(monkeypatch):
+def test_expand_vars_for_directories_in_config(monkeypatch) -> None:
     """Validate environment variables expanded in user configs."""
     monkeypatch.setenv('COOKIES', 'Users/bob/cookies')
 
@@ -157,7 +157,7 @@ def test_expand_vars_for_directories_in_config(monkeypatch):
     assert user_config['cookiecutters_dir'] == 'Users/bob/cookies/templates'
 
 
-def test_specify_config_values():
+def test_specify_config_values() -> None:
     """Validate provided custom config values should be respected."""
     replay_dir = 'Users/bob/cookies/custom-replay-dir'
     custom_config_updated = {**config.DEFAULT_CONFIG, 'replay_dir': replay_dir}

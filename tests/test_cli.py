@@ -28,10 +28,10 @@ def cli_runner():
 
 
 @pytest.fixture
-def remove_fake_project_dir(request):
+def remove_fake_project_dir(request) -> None:
     """Remove the fake project directory created during the tests."""
 
-    def fin_remove_fake_project_dir():
+    def fin_remove_fake_project_dir() -> None:
         for prefix in ('', 'input'):
             dir_name = f'{prefix}fake-project'
             if os.path.isdir(dir_name):
@@ -41,12 +41,12 @@ def remove_fake_project_dir(request):
 
 
 @pytest.fixture
-def remove_tmp_dir(request):
+def remove_tmp_dir(request) -> None:
     """Remove the fake project directory created during the tests."""
     if os.path.isdir('tests/tmp'):
         utils.rmtree('tests/tmp')
 
-    def fin_remove_tmp_dir():
+    def fin_remove_tmp_dir() -> None:
         if os.path.isdir('tests/tmp'):
             utils.rmtree('tests/tmp')
 
@@ -54,7 +54,7 @@ def remove_tmp_dir(request):
 
 
 @pytest.fixture
-def make_fake_project_dir(request):
+def make_fake_project_dir(request) -> None:
     """Create a fake project to be overwritten in the according tests."""
     os.makedirs('fake-project')
 
@@ -65,7 +65,7 @@ def version_cli_flag(request):
     return request.param
 
 
-def test_cli_version(cli_runner, version_cli_flag):
+def test_cli_version(cli_runner, version_cli_flag) -> None:
     """Verify Cookiecutter version output by `cookiecutter` on cli invocation."""
     result = cli_runner(version_cli_flag)
     assert result.exit_code == 0
@@ -73,7 +73,7 @@ def test_cli_version(cli_runner, version_cli_flag):
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
-def test_cli_error_on_existing_output_directory(cli_runner):
+def test_cli_error_on_existing_output_directory(cli_runner) -> None:
     """Test cli invocation without `overwrite-if-exists` fail if dir exist."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input')
     assert result.exit_code != 0
@@ -82,7 +82,7 @@ def test_cli_error_on_existing_output_directory(cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli(cli_runner):
+def test_cli(cli_runner) -> None:
     """Test cli invocation work without flags if directory not exist."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input')
     assert result.exit_code == 0
@@ -92,7 +92,7 @@ def test_cli(cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_verbose(cli_runner):
+def test_cli_verbose(cli_runner) -> None:
     """Test cli invocation display log if called with `verbose` flag."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input', '-v')
     assert result.exit_code == 0
@@ -102,7 +102,7 @@ def test_cli_verbose(cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_replay(mocker, cli_runner):
+def test_cli_replay(mocker, cli_runner) -> None:
     """Test cli invocation display log with `verbose` and `replay` flags."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
@@ -129,7 +129,7 @@ def test_cli_replay(mocker, cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_replay_file(mocker, cli_runner):
+def test_cli_replay_file(mocker, cli_runner) -> None:
     """Test cli invocation correctly pass --replay-file option."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
@@ -156,7 +156,7 @@ def test_cli_replay_file(mocker, cli_runner):
 
 
 @pytest.mark.usefixtures('remove_tmp_dir')
-def test_cli_replay_generated(mocker, cli_runner):
+def test_cli_replay_generated(mocker, cli_runner) -> None:
     """Test cli invocation correctly generates a project with replay."""
     template_path = 'tests/fake-repo-replay/'
     result = cli_runner(
@@ -173,7 +173,7 @@ def test_cli_replay_generated(mocker, cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_exit_on_noinput_and_replay(mocker, cli_runner):
+def test_cli_exit_on_noinput_and_replay(mocker, cli_runner) -> None:
     """Test cli invocation fail if both `no-input` and `replay` flags passed."""
     mock_cookiecutter = mocker.patch(
         'cookiecutter.cli.cookiecutter', side_effect=cookiecutter
@@ -217,7 +217,7 @@ def overwrite_cli_flag(request):
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
     mocker, cli_runner, overwrite_cli_flag
-):
+) -> None:
     """Test cli invocation with `overwrite-if-exists` and `replay` flags."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
@@ -247,7 +247,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
     cli_runner, overwrite_cli_flag
-):
+) -> None:
     """Test cli invocation with `overwrite-if-exists` and `no-input` flags.
 
     Case when output dir not exist.
@@ -259,7 +259,9 @@ def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
-def test_cli_overwrite_if_exists_when_output_dir_exists(cli_runner, overwrite_cli_flag):
+def test_cli_overwrite_if_exists_when_output_dir_exists(
+    cli_runner, overwrite_cli_flag
+) -> None:
     """Test cli invocation with `overwrite-if-exists` and `no-input` flags.
 
     Case when output dir already exist.
@@ -275,7 +277,7 @@ def output_dir_flag(request):
     return request.param
 
 
-def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir):
+def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir) -> None:
     """Test cli invocation with `output-dir` flag changes output directory."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
@@ -307,7 +309,7 @@ def help_cli_flag(request):
     return request.param
 
 
-def test_cli_help(cli_runner, help_cli_flag):
+def test_cli_help(cli_runner, help_cli_flag) -> None:
     """Test cli invocation display help message with `help` flag."""
     result = cli_runner(help_cli_flag)
     assert result.exit_code == 0
@@ -320,7 +322,7 @@ def user_config_path(tmp_path):
     return str(tmp_path.joinpath("tests", "config.yaml"))
 
 
-def test_user_config(mocker, cli_runner, user_config_path):
+def test_user_config(mocker, cli_runner, user_config_path) -> None:
     """Test cli invocation works with `config-file` option."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
@@ -346,7 +348,7 @@ def test_user_config(mocker, cli_runner, user_config_path):
     )
 
 
-def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
+def test_default_user_config_overwrite(mocker, cli_runner, user_config_path) -> None:
     """Test cli invocation ignores `config-file` if `default-config` passed."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
@@ -377,7 +379,7 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path):
     )
 
 
-def test_default_user_config(mocker, cli_runner):
+def test_default_user_config(mocker, cli_runner) -> None:
     """Test cli invocation accepts `default-config` flag correctly."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
 
@@ -403,7 +405,7 @@ def test_default_user_config(mocker, cli_runner):
     )
 
 
-def test_echo_undefined_variable_error(output_dir, cli_runner):
+def test_echo_undefined_variable_error(output_dir, cli_runner) -> None:
     """Cli invocation return error if variable undefined in template."""
     template_path = 'tests/undefined-variable/file-name/'
 
@@ -443,7 +445,7 @@ def test_echo_undefined_variable_error(output_dir, cli_runner):
     assert context_str in result.output
 
 
-def test_echo_unknown_extension_error(output_dir, cli_runner):
+def test_echo_unknown_extension_error(output_dir, cli_runner) -> None:
     """Cli return error if extension incorrectly defined in template."""
     template_path = 'tests/test-extensions/unknown/'
 
@@ -460,7 +462,7 @@ def test_echo_unknown_extension_error(output_dir, cli_runner):
     assert 'Unable to load extension: ' in result.output
 
 
-def test_local_extension(tmpdir, cli_runner):
+def test_local_extension(tmpdir, cli_runner) -> None:
     """Test to verify correct work of extension, included in template."""
     output_dir = str(tmpdir.mkdir('output'))
     template_path = 'tests/test-extensions/local_extension/'
@@ -478,7 +480,7 @@ def test_local_extension(tmpdir, cli_runner):
     assert 'FOOBAR' in content
 
 
-def test_local_extension_not_available(tmpdir, cli_runner):
+def test_local_extension_not_available(tmpdir, cli_runner) -> None:
     """Test handling of included but unavailable local extension."""
     context = {'cookiecutter': {'_extensions': ['foobar']}}
 
@@ -489,7 +491,7 @@ def test_local_extension_not_available(tmpdir, cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_extra_context(cli_runner):
+def test_cli_extra_context(cli_runner) -> None:
     """Cli invocation replace content if called with replacement pairs."""
     result = cli_runner(
         'tests/fake-repo-pre/',
@@ -504,7 +506,7 @@ def test_cli_extra_context(cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_extra_context_invalid_format(cli_runner):
+def test_cli_extra_context_invalid_format(cli_runner) -> None:
     """Cli invocation raise error if called with unknown argument."""
     result = cli_runner(
         'tests/fake-repo-pre/',
@@ -524,7 +526,7 @@ def debug_file(tmp_path):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_debug_file_non_verbose(cli_runner, debug_file):
+def test_debug_file_non_verbose(cli_runner, debug_file) -> None:
     """Test cli invocation writes log to `debug-file` if flag enabled.
 
     Case for normal log output.
@@ -550,7 +552,7 @@ def test_debug_file_non_verbose(cli_runner, debug_file):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_debug_file_verbose(cli_runner, debug_file):
+def test_debug_file_verbose(cli_runner, debug_file) -> None:
     """Test cli invocation writes log to `debug-file` if flag enabled.
 
     Case for verbose log output.
@@ -577,7 +579,9 @@ def test_debug_file_verbose(cli_runner, debug_file):
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
-def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path):
+def test_debug_list_installed_templates(
+    cli_runner, debug_file, user_config_path
+) -> None:
     """Verify --list-installed command correct invocation."""
     fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
     os.makedirs(os.path.dirname(user_config_path))
@@ -598,7 +602,7 @@ def test_debug_list_installed_templates(cli_runner, debug_file, user_config_path
 
 def test_debug_list_installed_templates_failure(
     cli_runner, debug_file, user_config_path
-):
+) -> None:
     """Verify --list-installed command error on invocation."""
     os.makedirs(os.path.dirname(user_config_path))
     Path(user_config_path).write_text('cookiecutters_dir: "/notarealplace/"')
@@ -612,7 +616,7 @@ def test_debug_list_installed_templates_failure(
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_directory_repo(cli_runner):
+def test_directory_repo(cli_runner) -> None:
     """Test cli invocation works with `directory` option."""
     result = cli_runner(
         'tests/fake-repo-dir/',
@@ -645,7 +649,7 @@ def test_cli_accept_hooks(
     accept_hooks_arg,
     user_input,
     expected,
-):
+) -> None:
     """Test cli invocation works with `accept-hooks` option."""
     mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
 
@@ -674,7 +678,7 @@ def test_cli_accept_hooks(
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_with_json_decoding_error(cli_runner):
+def test_cli_with_json_decoding_error(cli_runner) -> None:
     """Test cli invocation with a malformed JSON file."""
     template_path = 'tests/fake-repo-bad-json/'
     result = cli_runner(template_path, '--no-input')
@@ -693,7 +697,7 @@ def test_cli_with_json_decoding_error(cli_runner):
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
-def test_cli_with_pre_prompt_hook(cli_runner):
+def test_cli_with_pre_prompt_hook(cli_runner) -> None:
     """Test cli invocation in a template with pre_prompt hook."""
     template_path = 'tests/test-pyhooks/'
     result = cli_runner(template_path, '--no-input')
@@ -704,7 +708,7 @@ def test_cli_with_pre_prompt_hook(cli_runner):
     assert 'foo' in content
 
 
-def test_cli_with_pre_prompt_hook_fail(cli_runner, monkeypatch):
+def test_cli_with_pre_prompt_hook_fail(cli_runner, monkeypatch) -> None:
     """Test cli invocation will fail when a given env var is present."""
     template_path = 'tests/test-pyhooks/'
     with monkeypatch.context() as m:

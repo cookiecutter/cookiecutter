@@ -6,7 +6,7 @@ target-version = "py37"
 
 select = [
     #    "A",      # flake8-builtins
-    #    "ANN",    # flake8-annotations
+    #    "ANN", # flake8-annotations
     #    "ARG",    # flake8-unused-arguments
     "ASYNC", # flake8-async
     "B",     # flake8-bugbear
@@ -21,7 +21,7 @@ select = [
     #    "ERA",    # flake8-eradicate
     "EXE", # flake8-executable
     #    "F",      # pyflakes
-    #    "FA",     # flake8-future-annotations
+    "FA", # flake8-future-annotations
     #    "FBT",    # boolean trap
     #    "FLY",    # flynt
     #    "FURB",   # refurb
@@ -90,3 +90,44 @@ exclude = ["tests/**/hooks/*"]
 
 quote-style = "preserve"
 exclude = ["tests/hooks-abort-render/hooks/*"]
+
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+files = "cookiecutter"
+no_implicit_reexport = true
+
+[[tool.mypy.overrides]]
+module = [
+    "cookiecutter.cli",
+    "cookiecutter.exceptions",
+    "cookiecutter.generate",
+]
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = ["cookiecutter.cli", "cookiecutter.generate"]
+disallow_untyped_calls = false
+
+[[tool.mypy.overrides]]
+module = ["cookiecutter.cli"]
+disable_error_code = ["arg-type"]
+
+[[tool.mypy.overrides]]
+module = [
+    "cookiecutter.config",
+    "cookiecutter.cli",
+    "cookiecutter.environment",
+    "cookiecutter.extensions",
+    "cookiecutter.generate",
+    "cookiecutter.hooks",
+    "cookiecutter.main",
+    "cookiecutter.prompt",
+    "cookiecutter.utils",
+]
+ignore_errors = true
+
+
+[tool.coverage.report]
+exclude_also = ["if TYPE_CHECKING:"]

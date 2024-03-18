@@ -24,7 +24,7 @@ def project_dir():
 
 
 @pytest.mark.usefixtures('clean_system')
-def test_should_invoke_main(monkeypatch, project_dir):
+def test_should_invoke_main(monkeypatch, project_dir) -> None:
     """Should create a project and exit with 0 code on cli invocation."""
     monkeypatch.setenv('PYTHONPATH', '.')
 

@@ -198,7 +198,7 @@ def cookiecutter(
 
 
 class _patch_import_path_for_repo:  # noqa: N801
-    def __init__(self, repo_dir: "os.PathLike[str]"):
+    def __init__(self, repo_dir: "os.PathLike[str]") -> None:
         self._repo_dir = f"{repo_dir}" if isinstance(repo_dir, Path) else repo_dir
         self._path = None
 
