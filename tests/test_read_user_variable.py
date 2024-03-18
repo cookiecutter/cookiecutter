@@ -14,7 +14,7 @@ def mock_prompt(mocker):
     return mocker.patch('rich.prompt.Prompt.ask')
 
 
-def test_click_invocation(mock_prompt):
+def test_click_invocation(mock_prompt) -> None:
     """Test click function called correctly by cookiecutter.
 
     Test for string type invocation.
@@ -26,7 +26,7 @@ def test_click_invocation(mock_prompt):
     mock_prompt.assert_called_once_with(VARIABLE, default=DEFAULT)
 
 
-def test_input_loop_with_null_default_value(mock_prompt):
+def test_input_loop_with_null_default_value(mock_prompt) -> None:
     """Test `Prompt.ask` is run repeatedly until a valid answer is provided.
 
     Test for `default_value` parameter equal to None.

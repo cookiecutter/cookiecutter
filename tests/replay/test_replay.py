@@ -8,7 +8,7 @@ from cookiecutter import exceptions, main, replay
 
 
 @pytest.mark.parametrize("replay_file_name", ['bar', 'bar.json'])
-def test_get_replay_file_name(replay_file_name):
+def test_get_replay_file_name(replay_file_name) -> None:
     """Make sure that replay.get_file_name generates a valid json file path."""
     exp_replay_file_path = os.path.join('foo', 'bar.json')
     replay_file_path = replay.get_file_name('foo', replay_file_name)
@@ -23,13 +23,13 @@ def test_get_replay_file_name(replay_file_name):
         {'no_input': True, 'extra_context': {}},
     ),
 )
-def test_raise_on_invalid_mode(invalid_kwargs):
+def test_raise_on_invalid_mode(invalid_kwargs) -> None:
     """Test `cookiecutter` raise exception on unacceptable `replay` request."""
     with pytest.raises(exceptions.InvalidModeException):
         main.cookiecutter('foo', replay=True, **invalid_kwargs)
 
 
-def test_main_does_not_invoke_dump_but_load(mocker):
+def test_main_does_not_invoke_dump_but_load(mocker) -> None:
     """Test `cookiecutter` calling correct functions on `replay`."""
     mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
     mock_gen_context = mocker.patch('cookiecutter.main.generate_context')
@@ -46,7 +46,7 @@ def test_main_does_not_invoke_dump_but_load(mocker):
     assert mock_gen_files.called
 
 
-def test_main_does_not_invoke_load_but_dump(mocker):
+def test_main_does_not_invoke_load_but_dump(mocker) -> None:
     """Test `cookiecutter` calling correct functions on non-replay launch."""
     mock_prompt = mocker.patch('cookiecutter.main.prompt_for_config')
     mock_gen_context = mocker.patch('cookiecutter.main.generate_context')
