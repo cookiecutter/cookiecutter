@@ -1,10 +1,16 @@
 """Helper functions for working with version control systems."""
+
+from __future__ import annotations
+
 import logging
 import os
-import subprocess  # nosec
+import subprocess
 from pathlib import Path
 from shutil import which
-from typing import Optional
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import Literal
 
 from cookiecutter.exceptions import (
     RepositoryCloneFailed,
@@ -12,7 +18,8 @@ from cookiecutter.exceptions import (
     UnknownRepoType,
     VCSNotInstalled,
 )
-from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
+from cookiecutter.prompt import prompt_and_delete
+from cookiecutter.utils import make_sure_path_exists
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +30,7 @@ BRANCH_ERRORS = [
 ]
 
 
-def identify_repo(repo_url):
+def identify_repo(repo_url: str) -> tuple[Literal["git", "hg"], str]:
     """Determine if `repo_url` should be treated as a URL to a git or hg repo.
 
     Repos can be identified by prepending "hg+" or "git+" to the repo URL.
@@ -35,7 +42,7 @@ def identify_repo(repo_url):
     if len(repo_url_values) == 2:
         repo_type = repo_url_values[0]
         if repo_type in ["git", "hg"]:
-            return repo_type, repo_url_values[1]
+            return repo_type, repo_url_values[1]  # type: ignore[return-value]
         else:
             raise UnknownRepoType
     else:
@@ -47,7 +54,7 @@ def identify_repo(repo_url):
             raise UnknownRepoType
 
 
-def is_vcs_installed(repo_type):
+def is_vcs_installed(repo_type: str) -> bool:
     """
     Check if the version control system for a repo type is installed.
 
@@ -58,10 +65,10 @@ def is_vcs_installed(repo_type):
 
 def clone(
     repo_url: str,
-    checkout: Optional[str] = None,
-    clone_to_dir: "os.PathLike[str]" = ".",
+    checkout: str | None = None,
+    clone_to_dir: os.PathLike[str] | str = ".",
     no_input: bool = False,
-):
+) -> str:
     """Clone a repo to the current directory.
 
     :param repo_url: Repo URL of unknown type.
@@ -100,7 +107,7 @@ def clone(
 
     if clone:
         try:
-            subprocess.check_output(  # nosec
+            subprocess.check_output(
                 [repo_type, 'clone', repo_url],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
@@ -110,7 +117,7 @@ def clone(
                 # Avoid Mercurial "--config" and "--debugger" injection vulnerability
                 if repo_type == "hg":
                     checkout_params.insert(0, "--")
-                subprocess.check_output(  # nosec
+                subprocess.check_output(
                     [repo_type, 'checkout', *checkout_params],
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,

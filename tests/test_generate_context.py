@@ -1,4 +1,5 @@
 """Verify generate context behaviour and context overwrite priorities."""
+
 import os
 import re
 from collections import OrderedDict
@@ -52,13 +53,13 @@ def context_data():
 
 @pytest.mark.usefixtures('clean_system')
 @pytest.mark.parametrize('input_params, expected_context', context_data())
-def test_generate_context(input_params, expected_context):
+def test_generate_context(input_params, expected_context) -> None:
     """Verify input contexts combinations result in expected content on output."""
     assert generate.generate_context(**input_params) == expected_context
 
 
 @pytest.mark.usefixtures('clean_system')
-def test_generate_context_with_json_decoding_error():
+def test_generate_context_with_json_decoding_error() -> None:
     """Verify malformed JSON file generates expected error output."""
     with pytest.raises(ContextDecodingException) as excinfo:
         generate.generate_context('tests/test-generate-context/invalid-syntax.json')
@@ -73,7 +74,7 @@ def test_generate_context_with_json_decoding_error():
     assert path in str(excinfo.value)
 
 
-def test_default_context_replacement_in_generate_context():
+def test_default_context_replacement_in_generate_context() -> None:
     """Verify default content settings are correctly replaced by template settings.
 
     Make sure that the default for list variables of `orientation` is based on
@@ -108,7 +109,7 @@ def test_default_context_replacement_in_generate_context():
     assert generated_context == expected_context
 
 
-def test_generate_context_decodes_non_ascii_chars():
+def test_generate_context_decodes_non_ascii_chars() -> None:
     """Verify `generate_context` correctly decodes non-ascii chars."""
     expected_context = {
         'non_ascii': OrderedDict(
@@ -147,7 +148,7 @@ def template_context():
     )
 
 
-def test_apply_overwrites_does_include_unused_variables(template_context):
+def test_apply_overwrites_does_include_unused_variables(template_context) -> None:
     """Verify `apply_overwrites_to_context` skips variables that are not in context."""
     generate.apply_overwrites_to_context(
         context=template_context, overwrite_context={'not in template': 'foobar'}
@@ -156,7 +157,7 @@ def test_apply_overwrites_does_include_unused_variables(template_context):
     assert 'not in template' not in template_context
 
 
-def test_apply_overwrites_sets_non_list_value(template_context):
+def test_apply_overwrites_sets_non_list_value(template_context) -> None:
     """Verify `apply_overwrites_to_context` work with string variables."""
     generate.apply_overwrites_to_context(
         context=template_context, overwrite_context={'repo_name': 'foobar'}
@@ -165,7 +166,7 @@ def test_apply_overwrites_sets_non_list_value(template_context):
     assert template_context['repo_name'] == 'foobar'
 
 
-def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite():
+def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite() -> None:
     """Verify variables overwrite for list if variable not in list ignored."""
     expected_context = {
         'choices_template': OrderedDict(
@@ -196,7 +197,7 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite():
     assert generated_context == expected_context
 
 
-def test_apply_overwrites_invalid_overwrite(template_context):
+def test_apply_overwrites_invalid_overwrite(template_context) -> None:
     """Verify variables overwrite for list if variable not in list not ignored."""
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
@@ -204,7 +205,7 @@ def test_apply_overwrites_invalid_overwrite(template_context):
         )
 
 
-def test_apply_overwrites_sets_multichoice_values(template_context):
+def test_apply_overwrites_sets_multichoice_values(template_context) -> None:
     """Verify variable overwrite for list given multiple valid values."""
     generate.apply_overwrites_to_context(
         context=template_context,
@@ -213,7 +214,7 @@ def test_apply_overwrites_sets_multichoice_values(template_context):
     assert template_context['deployment_regions'] == ['eu']
 
 
-def test_apply_overwrites_invalid_multichoice_values(template_context):
+def test_apply_overwrites_invalid_multichoice_values(template_context) -> None:
     """Verify variable overwrite for list given invalid list entries not ignored."""
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
@@ -222,7 +223,7 @@ def test_apply_overwrites_invalid_multichoice_values(template_context):
         )
 
 
-def test_apply_overwrites_error_additional_values(template_context):
+def test_apply_overwrites_error_additional_values(template_context) -> None:
     """Verify variable overwrite for list given additional entries not ignored."""
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
@@ -231,7 +232,7 @@ def test_apply_overwrites_error_additional_values(template_context):
         )
 
 
-def test_apply_overwrites_in_dictionaries(template_context):
+def test_apply_overwrites_in_dictionaries(template_context) -> None:
     """Verify variable overwrite for lists nested in dictionary variables."""
     generate.apply_overwrites_to_context(
         context=template_context,
@@ -241,7 +242,7 @@ def test_apply_overwrites_in_dictionaries(template_context):
     assert template_context['deployments']['prod'] == ['ap']
 
 
-def test_apply_overwrites_sets_default_for_choice_variable(template_context):
+def test_apply_overwrites_sets_default_for_choice_variable(template_context) -> None:
     """Verify overwritten list member became a default value."""
     generate.apply_overwrites_to_context(
         context=template_context, overwrite_context={'orientation': 'landscape'}
@@ -250,7 +251,7 @@ def test_apply_overwrites_sets_default_for_choice_variable(template_context):
     assert template_context['orientation'] == ['landscape', 'all', 'portrait']
 
 
-def test_apply_overwrites_in_nested_dict():
+def test_apply_overwrites_in_nested_dict() -> None:
     """Verify nested dict in default content settings are correctly replaced."""
     expected_context = {
         'nested_dict': OrderedDict(
@@ -285,6 +286,77 @@ def test_apply_overwrites_in_nested_dict():
             'github_username': 'hackebrot',
             'project': {
                 'name': 'My Kivy Project',
+            },
+        },
+    )
+
+    assert generated_context == expected_context
+
+
+def test_apply_overwrite_context_as_in_nested_dict_with_additional_values() -> None:
+    """Verify nested dict in default content settings are correctly added.
+
+    The `apply_overwrites_to_context` function should add the extra values to the dict.
+    """
+    expected = OrderedDict({"key1": "value1", "key2": "value2"})
+    context = OrderedDict({"key1": "value1"})
+    overwrite_context = OrderedDict({"key2": "value2"})
+    generate.apply_overwrites_to_context(
+        context,
+        overwrite_context,
+        in_dictionary_variable=True,
+    )
+    assert context == expected
+
+
+def test_apply_overwrites_in_nested_dict_additional_values() -> None:
+    """Verify nested dict in default content settings are correctly added."""
+    expected_context = {
+        'nested_dict_additional': OrderedDict(
+            [
+                ('mainkey1', 'mainvalue1'),
+                (
+                    'mainkey2',
+                    OrderedDict(
+                        [
+                            ('subkey1', 'subvalue1'),
+                            (
+                                'subkey2',
+                                OrderedDict(
+                                    [
+                                        ('subsubkey1', 'subsubvalue1'),
+                                        ('subsubkey2', 'subsubvalue2_default'),
+                                        ('subsubkey3', 'subsubvalue3_extra'),
+                                    ]
+                                ),
+                            ),
+                            ('subkey4', 'subvalue4_default'),
+                            ('subkey5', 'subvalue5_extra'),
+                        ]
+                    ),
+                ),
+            ]
+        )
+    }
+
+    generated_context = generate.generate_context(
+        context_file='tests/test-generate-context/nested_dict_additional.json',
+        default_context={
+            'not_in_template': 'foobar',
+            'mainkey2': {
+                'subkey2': {
+                    'subsubkey2': 'subsubvalue2_default',
+                },
+                'subkey4': 'subvalue4_default',
+            },
+        },
+        extra_context={
+            'also_not_in_template': 'foobar2',
+            'mainkey2': {
+                'subkey2': {
+                    'subsubkey3': 'subsubvalue3_extra',
+                },
+                'subkey5': 'subvalue5_extra',
             },
         },
     )

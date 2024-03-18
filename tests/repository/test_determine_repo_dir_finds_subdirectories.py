@@ -1,4 +1,5 @@
 """Tests around locally cached cookiecutter template repositories."""
+
 import os
 from pathlib import Path
 
@@ -8,7 +9,7 @@ from cookiecutter import exceptions, repository
 
 
 @pytest.fixture
-def template():
+def template() -> str:
     """Fixture. Return simple string as template name."""
     return 'cookiecutter-pytest-plugin'
 
@@ -32,7 +33,7 @@ def cloned_cookiecutter_path(user_config_data, template):
 
 def test_should_find_existing_cookiecutter(
     template, user_config_data, cloned_cookiecutter_path
-):
+) -> None:
     """Find `cookiecutter.json` in sub folder created by `cloned_cookiecutter_path`."""
     project_dir, cleanup = repository.determine_repo_dir(
         template=template,
@@ -47,7 +48,7 @@ def test_should_find_existing_cookiecutter(
     assert not cleanup
 
 
-def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
+def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path) -> None:
     """Wrong pointing to `cookiecutter.json` sub-directory should raise."""
     with pytest.raises(exceptions.RepositoryNotFound) as err:
         repository.determine_repo_dir(
@@ -67,7 +68,10 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path):
         'locations:\n{}'.format(
             template,
             '\n'.join(
-                [os.path.join(template, 'wrong-dir'), wrong_full_cookiecutter_path]
+                [
+                    os.path.join(template, 'wrong-dir'),
+                    wrong_full_cookiecutter_path,
+                ]
             ),
         )
     )

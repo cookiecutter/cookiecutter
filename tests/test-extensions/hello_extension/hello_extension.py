@@ -1,4 +1,5 @@
 """Provides custom extension, exposing a ``hello`` command."""
+
 from jinja2 import nodes
 from jinja2.ext import Extension
 
@@ -8,11 +9,11 @@ class HelloExtension(Extension):
 
     tags = {'hello'}
 
-    def __init__(self, environment):
+    def __init__(self, environment) -> None:
         """Hello Extension Constructor."""
         super().__init__(environment)
 
-    def _hello(self, name):
+    def _hello(self, name) -> str:
         """Do actual tag replace when invoked by parser."""
         return f'Hello {name}!'
 

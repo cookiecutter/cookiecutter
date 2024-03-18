@@ -12,6 +12,7 @@ exclude .*
 exclude codecov.yml
 exclude test_requirements.txt
 exclude tox.ini
+exclude ruff.toml
 
 recursive-include tests *
 recursive-exclude * __pycache__
