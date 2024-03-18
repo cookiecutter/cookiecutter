@@ -54,11 +54,21 @@ repos:
   - repo: https://github.com/mgedmin/check-manifest
     rev: "0.49"
     hooks:
-    -   id: check-manifest
+      - id: check-manifest
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.3.2
     hooks:
       - id: ruff
-        args: [ --fix ]
+        args: [--fix]
       - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.8.0"
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - types-python-slugify
+          - types-PyYAML
+          - types-requests
+        pass_filenames: false

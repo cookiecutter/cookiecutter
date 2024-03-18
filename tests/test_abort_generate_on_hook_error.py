@@ -16,7 +16,7 @@ from cookiecutter import exceptions, generate
     ids=("pre_gen_hook_raises_error", "post_gen_hook_raises_error"),
 )
 @pytest.mark.usefixtures("clean_system")
-def test_hooks_raises_errors(tmp_path, abort_pre_gen, abort_post_gen):
+def test_hooks_raises_errors(tmp_path, abort_pre_gen, abort_post_gen) -> None:
     """Verify pre- and pos-gen errors raises correct error code from script.
 
     This allows developers to make different error codes in their code,

@@ -20,13 +20,13 @@ def freeze():
     freezer.stop()
 
 
-def test_tz_is_required(environment):
+def test_tz_is_required(environment) -> None:
     """Verify template parsing fails without a timezone."""
     with pytest.raises(exceptions.TemplateSyntaxError):
         environment.from_string('{% now %}')
 
 
-def test_utc_default_datetime_format(environment):
+def test_utc_default_datetime_format(environment) -> None:
     """Verify default datetime format can be parsed."""
     template = environment.from_string("{% now 'utc' %}")
 
@@ -34,14 +34,14 @@ def test_utc_default_datetime_format(environment):
 
 
 @pytest.mark.parametrize("valid_tz", ['utc', 'local', 'Europe/Berlin'])
-def test_accept_valid_timezones(environment, valid_tz):
+def test_accept_valid_timezones(environment, valid_tz) -> None:
     """Verify that valid timezones are accepted."""
     template = environment.from_string(f"{{% now '{valid_tz}', '%Y-%m' %}}")
 
     assert template.render() == '2015-12'
 
 
-def test_environment_datetime_format(environment):
+def test_environment_datetime_format(environment) -> None:
     """Verify datetime format can be parsed from environment."""
     environment.datetime_format = '%a, %d %b %Y %H:%M:%S'
 
@@ -50,7 +50,7 @@ def test_environment_datetime_format(environment):
     assert template.render() == "Wed, 09 Dec 2015 23:33:01"
 
 
-def test_add_time(environment):
+def test_add_time(environment) -> None:
     """Verify that added time offset can be parsed."""
     environment.datetime_format = '%a, %d %b %Y %H:%M:%S'
 
@@ -59,7 +59,7 @@ def test_add_time(environment):
     assert template.render() == "Thu, 10 Dec 2015 01:33:31"
 
 
-def test_substract_time(environment):
+def test_substract_time(environment) -> None:
     """Verify that substracted time offset can be parsed."""
     environment.datetime_format = '%a, %d %b %Y %H:%M:%S'
 
@@ -68,7 +68,7 @@ def test_substract_time(environment):
     assert template.render() == "Wed, 09 Dec 2015 23:22:01"
 
 
-def test_offset_with_format(environment):
+def test_offset_with_format(environment) -> None:
     """Verify that offset works together with datetime format."""
     environment.datetime_format = '%d %b %Y %H:%M:%S'
 
