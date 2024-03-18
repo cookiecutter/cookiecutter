@@ -13,8 +13,8 @@ import pytest
 from cookiecutter import exceptions, generate, utils
 
 
-@pytest.fixture(scope='function')
-def remove_output_folder(request):
+@pytest.fixture()
+def _remove_output_folder(request):
     """Remove the output folder after test."""
     yield
     if os.path.exists('output_folder'):

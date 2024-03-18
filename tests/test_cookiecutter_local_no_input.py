@@ -7,29 +7,28 @@ verify result with different settings in `cookiecutter.json`.
 import os
 import textwrap
 from pathlib import Path
+from typing import Iterable
 
 import pytest
 
 from cookiecutter import main, utils
 
 
-@pytest.fixture(scope='function')
-def remove_additional_dirs(request) -> None:
+@pytest.fixture()
+def _remove_additional_dirs(request) -> Iterable[None]:
     """Fixture. Remove special directories which are created during the tests."""
+    yield
 
-    def fin_remove_additional_dirs() -> None:
-        if os.path.isdir('fake-project'):
-            utils.rmtree('fake-project')
-        if os.path.isdir('fake-project-extra'):
-            utils.rmtree('fake-project-extra')
-        if os.path.isdir('fake-project-templated'):
-            utils.rmtree('fake-project-templated')
-        if os.path.isdir('fake-project-dict'):
-            utils.rmtree('fake-project-dict')
-        if os.path.isdir('fake-tmp'):
-            utils.rmtree('fake-tmp')
-
-    request.addfinalizer(fin_remove_additional_dirs)
+    if os.path.isdir('fake-project'):
+        utils.rmtree('fake-project')
+    if os.path.isdir('fake-project-extra'):
+        utils.rmtree('fake-project-extra')
+    if os.path.isdir('fake-project-templated'):
+        utils.rmtree('fake-project-templated')
+    if os.path.isdir('fake-project-dict'):
+        utils.rmtree('fake-project-dict')
+    if os.path.isdir('fake-tmp'):
+        utils.rmtree('fake-tmp')
 
 
 @pytest.mark.parametrize('path', ['tests/fake-repo-pre/', 'tests/fake-repo-pre'])

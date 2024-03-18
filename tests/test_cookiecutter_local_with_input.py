@@ -7,8 +7,8 @@ import pytest
 from cookiecutter import main, utils
 
 
-@pytest.fixture(scope='function')
-def remove_additional_dirs(request):
+@pytest.fixture()
+def _remove_additional_dirs(request):
     """Remove special directories which are created during the tests."""
     yield
     if os.path.isdir('fake-project'):

@@ -6,7 +6,7 @@ from cookiecutter import exceptions, vcs
 
 
 @pytest.mark.parametrize(
-    'repo_url, exp_repo_type, exp_repo_url',
+    ('repo_url', 'exp_repo_type', 'exp_repo_url'),
     [
         (
             'git+https://github.com/pytest-dev/cookiecutter-pytest-plugin.git',

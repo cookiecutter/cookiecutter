@@ -22,7 +22,7 @@ def create_log_records() -> None:
     cookiecutter_logger.debug('Successfully generated project')
 
 
-@pytest.fixture
+@pytest.fixture()
 def info_messages():
     """Fixture. List of test info messages."""
     return [
@@ -32,7 +32,7 @@ def info_messages():
     ]
 
 
-@pytest.fixture
+@pytest.fixture()
 def debug_messages():
     """Fixture. List of test debug messages."""
     return [
@@ -46,25 +46,25 @@ def debug_messages():
     ]
 
 
-@pytest.fixture
+@pytest.fixture()
 def info_logger():
     """Fixture. Call cookiecutter logger setup with `info` debug level."""
     return configure_logger(stream_level='INFO')
 
 
-@pytest.fixture
+@pytest.fixture()
 def debug_logger():
     """Fixture. Call cookiecutter logger setup with `debug` debug level."""
     return configure_logger(stream_level='DEBUG')
 
 
-@pytest.fixture
+@pytest.fixture()
 def debug_file(tmp_path):
     """Fixture. Generate debug file location for tests."""
     return tmp_path.joinpath('pytest-plugin.log')
 
 
-@pytest.fixture
+@pytest.fixture()
 def info_logger_with_file(debug_file):
     """Fixture. Call cookiecutter logger setup with `info` debug level + `file`."""
     return configure_logger(stream_level='INFO', debug_file=str(debug_file))

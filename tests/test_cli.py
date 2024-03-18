@@ -4,6 +4,7 @@ import json
 import os
 import re
 from pathlib import Path
+from typing import Iterable
 
 import pytest
 from click.testing import CliRunner
@@ -27,34 +28,30 @@ def cli_runner():
     return cli_main
 
 
-@pytest.fixture
-def remove_fake_project_dir(request) -> None:
+@pytest.fixture()
+def _remove_fake_project_dir(request) -> Iterable[None]:
     """Remove the fake project directory created during the tests."""
-
-    def fin_remove_fake_project_dir() -> None:
-        for prefix in ('', 'input'):
-            dir_name = f'{prefix}fake-project'
-            if os.path.isdir(dir_name):
-                utils.rmtree(dir_name)
-
-    request.addfinalizer(fin_remove_fake_project_dir)
+    yield
+    for prefix in ('', 'input'):
+        dir_name = f'{prefix}fake-project'
+        if os.path.isdir(dir_name):
+            utils.rmtree(dir_name)
 
 
-@pytest.fixture
-def remove_tmp_dir(request) -> None:
+@pytest.fixture()
+def _remove_tmp_dir(request) -> Iterable[None]:
     """Remove the fake project directory created during the tests."""
     if os.path.isdir('tests/tmp'):
         utils.rmtree('tests/tmp')
 
-    def fin_remove_tmp_dir() -> None:
-        if os.path.isdir('tests/tmp'):
-            utils.rmtree('tests/tmp')
+    yield
 
-    request.addfinalizer(fin_remove_tmp_dir)
+    if os.path.isdir('tests/tmp'):
+        utils.rmtree('tests/tmp')
 
 
-@pytest.fixture
-def make_fake_project_dir(request) -> None:
+@pytest.fixture()
+def _make_fake_project_dir(request) -> None:
     """Create a fake project to be overwritten in the according tests."""
     os.makedirs('fake-project')
 
@@ -316,7 +313,7 @@ def test_cli_help(cli_runner, help_cli_flag) -> None:
     assert result.output.startswith('Usage')
 
 
-@pytest.fixture
+@pytest.fixture()
 def user_config_path(tmp_path):
     """Pytest fixture return `user_config` argument as string."""
     return str(tmp_path.joinpath("tests", "config.yaml"))
@@ -519,7 +516,7 @@ def test_cli_extra_context_invalid_format(cli_runner) -> None:
     assert 'should contain items of the form key=value' in result.output
 
 
-@pytest.fixture
+@pytest.fixture()
 def debug_file(tmp_path):
     """Pytest fixture return `debug_file` argument as path object."""
     return tmp_path.joinpath('fake-repo.log')
@@ -639,7 +636,7 @@ cli_accept_hook_arg_testdata = [
 
 
 @pytest.mark.parametrize(
-    "accept_hooks_arg,user_input,expected", cli_accept_hook_arg_testdata
+    ('accept_hooks_arg', 'user_input', 'expected'), cli_accept_hook_arg_testdata
 )
 def test_cli_accept_hooks(
     mocker,

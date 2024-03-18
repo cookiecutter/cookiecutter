@@ -14,7 +14,7 @@ import pytest
 from cookiecutter import utils
 
 
-@pytest.fixture
+@pytest.fixture()
 def project_dir():
     """Return test project folder name and remove it after the test."""
     yield 'fake-project-templated'

@@ -52,7 +52,7 @@ def context_data():
 
 
 @pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context', context_data())
+@pytest.mark.parametrize(('input_params', 'expected_context'), context_data())
 def test_generate_context(input_params, expected_context) -> None:
     """Verify input contexts combinations result in expected content on output."""
     assert generate.generate_context(**input_params) == expected_context
@@ -126,7 +126,7 @@ def test_generate_context_decodes_non_ascii_chars() -> None:
     assert generated_context == expected_context
 
 
-@pytest.fixture
+@pytest.fixture()
 def template_context():
     """Fixture. Populates template content for future tests."""
     return OrderedDict(

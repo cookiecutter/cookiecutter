@@ -12,7 +12,7 @@ from cookiecutter import exceptions, generate
 
 @pytest.mark.parametrize(
     ("abort_pre_gen", "abort_post_gen"),
-    (("yes", "no"), ("no", "yes")),
+    [("yes", "no"), ("no", "yes")],
     ids=("pre_gen_hook_raises_error", "post_gen_hook_raises_error"),
 )
 @pytest.mark.usefixtures("clean_system")

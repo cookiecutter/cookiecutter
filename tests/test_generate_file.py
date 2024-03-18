@@ -13,8 +13,8 @@ from cookiecutter import generate
 from cookiecutter.environment import StrictEnvironment
 
 
-@pytest.fixture(scope='function', autouse=True)
-def tear_down():
+@pytest.fixture(autouse=True)
+def _tear_down():
     """
     Fixture. Remove the test text file which is created by the tests.
 
@@ -33,7 +33,7 @@ def tear_down():
         os.remove('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt')
 
 
-@pytest.fixture
+@pytest.fixture()
 def env():
     """Fixture. Set Jinja2 environment settings for other tests."""
     environment = StrictEnvironment()
@@ -67,8 +67,8 @@ def test_generate_file_jsonify_filter(env) -> None:
     assert json.loads(generated_text) == data
 
 
-@pytest.mark.parametrize("length", (10, 40))
-@pytest.mark.parametrize("punctuation", (True, False))
+@pytest.mark.parametrize("length", [10, 40])
+@pytest.mark.parametrize("punctuation", [True, False])
 def test_generate_file_random_ascii_string(env, length, punctuation) -> None:
     """Verify correct work of random_ascii_string extension on file generation."""
     infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
@@ -116,7 +116,7 @@ def test_generate_file_with_false_condition(env) -> None:
     assert not os.path.isfile('tests/files/cheese.txt')
 
 
-@pytest.fixture
+@pytest.fixture()
 def expected_msg_regex():
     """Fixture. Used to ensure that exception generated text contain full data."""
     return re.compile(
