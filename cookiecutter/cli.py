@@ -24,7 +24,7 @@ from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
 
 
-def version_msg():
+def version_msg() -> str:
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -45,7 +45,7 @@ def validate_extra_context(ctx, param, value):
     return collections.OrderedDict(s.split('=', 1) for s in value) or None
 
 
-def list_installed_templates(default_config, passed_config_file):
+def list_installed_templates(default_config, passed_config_file) -> None:
     """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
     config = get_user_config(passed_config_file, default_config)
     cookiecutter_folder = config.get('cookiecutters_dir')
@@ -170,7 +170,7 @@ def main(
     replay_file,
     list_installed,
     keep_project_on_failure,
-):
+) -> None:
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by

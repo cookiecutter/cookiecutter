@@ -18,7 +18,7 @@ def remove_additional_dirs(request):
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_local_with_input(monkeypatch):
+def test_cookiecutter_local_with_input(monkeypatch) -> None:
     """Verify simple cookiecutter run results, without extra_context provided."""
     monkeypatch.setattr(
         'cookiecutter.prompt.read_user_variable',
@@ -33,7 +33,7 @@ def test_cookiecutter_local_with_input(monkeypatch):
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_input_extra_context(monkeypatch):
+def test_cookiecutter_input_extra_context(monkeypatch) -> None:
     """Verify simple cookiecutter run results, with extra_context provided."""
     monkeypatch.setattr(
         'cookiecutter.prompt.read_user_variable',

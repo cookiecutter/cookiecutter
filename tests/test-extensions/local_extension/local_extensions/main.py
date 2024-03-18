@@ -8,7 +8,7 @@ from cookiecutter.utils import simple_filter
 class FoobarExtension(Extension):
     """Simple jinja2 extension for cookiecutter test purposes."""
 
-    def __init__(self, environment):
+    def __init__(self, environment) -> None:
         """Foobar Extension Constructor."""
         super().__init__(environment)
         environment.filters['foobar'] = lambda v: v * 2

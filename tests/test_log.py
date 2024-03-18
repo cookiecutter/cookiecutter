@@ -7,7 +7,7 @@ import pytest
 from cookiecutter.log import configure_logger
 
 
-def create_log_records():
+def create_log_records() -> None:
     """Test function, create log entries in expected stage of test."""
     cookiecutter_logger = logging.getLogger('cookiecutter')
     foo_logger = logging.getLogger('cookiecutter.foo')
@@ -70,7 +70,7 @@ def info_logger_with_file(debug_file):
     return configure_logger(stream_level='INFO', debug_file=str(debug_file))
 
 
-def test_info_stdout_logging(caplog, info_logger, info_messages):
+def test_info_stdout_logging(caplog, info_logger, info_messages) -> None:
     """Test that stdout logs use info format and level."""
     [stream_handler] = info_logger.handlers
     assert isinstance(stream_handler, logging.StreamHandler)
@@ -87,7 +87,7 @@ def test_info_stdout_logging(caplog, info_logger, info_messages):
     assert stream_messages == info_messages
 
 
-def test_debug_stdout_logging(caplog, debug_logger, debug_messages):
+def test_debug_stdout_logging(caplog, debug_logger, debug_messages) -> None:
     """Test that stdout logs use debug format and level."""
     [stream_handler] = debug_logger.handlers
     assert isinstance(stream_handler, logging.StreamHandler)
@@ -104,7 +104,9 @@ def test_debug_stdout_logging(caplog, debug_logger, debug_messages):
     assert stream_messages == debug_messages
 
 
-def test_debug_file_logging(caplog, info_logger_with_file, debug_file, debug_messages):
+def test_debug_file_logging(
+    caplog, info_logger_with_file, debug_file, debug_messages
+) -> None:
     """Test that logging to stdout uses a different format and level than \
     the the file handler."""
     [file_handler, stream_handler] = info_logger_with_file.handlers

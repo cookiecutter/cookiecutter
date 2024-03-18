@@ -3,7 +3,7 @@
 from cookiecutter.prompt import read_repo_password
 
 
-def test_click_invocation(mocker):
+def test_click_invocation(mocker) -> None:
     """Test click function called correctly by cookiecutter.
 
     Test for password (hidden input) type invocation.

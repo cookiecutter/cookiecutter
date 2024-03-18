@@ -15,14 +15,14 @@ WINDOWS = sys.platform.startswith('win')
 def remove_tmp_repo_dir():
     """Remove the generate repo_dir."""
 
-    def _func(repo_dir: Path):
+    def _func(repo_dir: Path) -> None:
         if repo_dir.exists():
             utils.rmtree(repo_dir)
 
     return _func
 
 
-def test_run_pre_prompt_python_hook(remove_tmp_repo_dir):
+def test_run_pre_prompt_python_hook(remove_tmp_repo_dir) -> None:
     """Verify pre_prompt.py runs and creates a copy of cookiecutter.json."""
     new_repo_dir = hooks.run_pre_prompt_hook(repo_dir='tests/test-pyhooks/')
     assert new_repo_dir.exists()
@@ -31,7 +31,7 @@ def test_run_pre_prompt_python_hook(remove_tmp_repo_dir):
     remove_tmp_repo_dir(new_repo_dir)
 
 
-def test_run_pre_prompt_python_hook_fail(monkeypatch):
+def test_run_pre_prompt_python_hook_fail(monkeypatch) -> None:
     """Verify pre_prompt.py will fail when a given env var is present."""
     message = 'Pre-Prompt Hook script failed'
     with monkeypatch.context() as m:
@@ -42,7 +42,7 @@ def test_run_pre_prompt_python_hook_fail(monkeypatch):
 
 
 @pytest.mark.skipif(WINDOWS, reason='shell script will not run in Windows')
-def test_run_pre_prompt_shell_hook(remove_tmp_repo_dir):
+def test_run_pre_prompt_shell_hook(remove_tmp_repo_dir) -> None:
     """Verify pre_prompt.sh runs and creates a copy of cookiecutter.json."""
     new_repo_dir = hooks.run_pre_prompt_hook(repo_dir='tests/test-pyshellhooks/')
     assert new_repo_dir.exists()

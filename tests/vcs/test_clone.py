@@ -8,7 +8,7 @@ import pytest
 from cookiecutter import exceptions, vcs
 
 
-def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
+def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir) -> None:
     """In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS \
     is installed."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=False)
@@ -19,7 +19,7 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir):
         vcs.clone(repo_url, clone_to_dir=str(clone_dir))
 
 
-def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
+def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir) -> None:
     """In `clone()`, repo URL's trailing slash should be stripped if one is \
     present."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
@@ -38,7 +38,7 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir):
     )
 
 
-def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
+def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir) -> None:
     """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
     without cloning anything."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
@@ -61,7 +61,7 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir):
     assert not mock_subprocess.called
 
 
-def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
+def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
     """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
     without cloning anything."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
@@ -96,7 +96,7 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir):
 )
 def test_clone_should_invoke_vcs_command(
     mocker, clone_dir, repo_type, repo_url, repo_name
-):
+) -> None:
     """When `clone()` is called with a git/hg repo, the corresponding VCS \
     command should be run via `subprocess.check_output()`.
 
@@ -143,7 +143,7 @@ def test_clone_should_invoke_vcs_command(
         b'hg: abort: HTTP Error 404: Not Found',
     ],
 )
-def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
+def test_clone_handles_repo_typo(mocker, clone_dir, error_message) -> None:
     """In `clone()`, repository not found errors should raise an \
     appropriate exception."""
     # side_effect is set to an iterable here (and below),
@@ -171,7 +171,7 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message):
         b"hg: abort: unknown revision 'unknown_branch'!",
     ],
 )
-def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
+def test_clone_handles_branch_typo(mocker, clone_dir, error_message) -> None:
     """In `clone()`, branch not found errors should raise an \
     appropriate exception."""
     mocker.patch(
@@ -195,7 +195,7 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message):
     )
 
 
-def test_clone_unknown_subprocess_error(mocker, clone_dir):
+def test_clone_unknown_subprocess_error(mocker, clone_dir) -> None:
     """In `clone()`, unknown subprocess errors should be raised."""
     mocker.patch(
         'cookiecutter.vcs.subprocess.check_output',
