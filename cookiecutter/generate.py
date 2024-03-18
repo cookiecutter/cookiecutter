@@ -1,5 +1,7 @@
 """Functions for generating a project from a project template."""
 
+from __future__ import annotations
+
 import fnmatch
 import json
 import logging
@@ -8,6 +10,7 @@ import shutil
 import warnings
 from collections import OrderedDict
 from pathlib import Path
+from typing import Any
 
 from binaryornot.check import is_binary
 from jinja2 import Environment, FileSystemLoader
@@ -30,7 +33,7 @@ from cookiecutter.utils import (
 logger = logging.getLogger(__name__)
 
 
-def is_copy_only_path(path, context):
+def is_copy_only_path(path, context) -> bool:
     """Check whether the given `path` should only be copied and not rendered.
 
     Returns True if `path` matches a pattern in the given `context` dict,
@@ -52,7 +55,7 @@ def is_copy_only_path(path, context):
 
 def apply_overwrites_to_context(
     context, overwrite_context, *, in_dictionary_variable=False
-):
+) -> None:
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
@@ -148,7 +151,7 @@ def generate_context(
     return context
 
 
-def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
+def generate_file(project_dir, infile, context, env, skip_if_file_exists=False) -> None:
     """Render filename of infile as name of outfile, handle infile correctly.
 
     Dealing with infile appropriately:
@@ -232,11 +235,11 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
 def render_and_create_dir(
     dirname: str,
-    context: dict,
-    output_dir: "os.PathLike[str]",
+    context: dict[str, Any],
+    output_dir: os.PathLike[str],
     environment: Environment,
     overwrite_if_exists: bool = False,
-):
+) -> tuple[Path, bool]:
     """Render name of a directory, create the directory, return its path."""
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
@@ -264,8 +267,8 @@ def render_and_create_dir(
 
 
 def _run_hook_from_repo_dir(
-    repo_dir, hook_name, project_dir, context, delete_project_on_failure
-):
+    repo_dir, hook_name: str, project_dir, context, delete_project_on_failure: bool
+) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.
@@ -317,6 +320,7 @@ def generate_files(
 
     unrendered_dir = os.path.split(template_dir)[1]
     try:
+        project_dir: Path | str
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
         )

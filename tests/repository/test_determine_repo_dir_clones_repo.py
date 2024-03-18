@@ -15,7 +15,7 @@ from cookiecutter import exceptions, repository
         ('http://example.com/path/to/zipfile.zip', True),
     ],
 )
-def test_zipfile_unzip(mocker, template, is_url, user_config_data):
+def test_zipfile_unzip(mocker, template, is_url, user_config_data) -> None:
     """Verify zip files correctly handled for different source locations.
 
     `unzip()` should be called with correct args when `determine_repo_dir()`
@@ -50,7 +50,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data):
 
 
 @pytest.fixture
-def template_url():
+def template_url() -> str:
     """URL to example Cookiecutter template on GitHub.
 
     Note: when used, git clone is mocked.
@@ -58,7 +58,7 @@ def template_url():
     return 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
 
-def test_repository_url_should_clone(mocker, template_url, user_config_data):
+def test_repository_url_should_clone(mocker, template_url, user_config_data) -> None:
     """Verify repository url triggers clone function.
 
     `clone()` should be called with correct args when `determine_repo_dir()` is
@@ -90,7 +90,9 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data):
     assert project_dir == 'tests/fake-repo-tmpl'
 
 
-def test_repository_url_with_no_context_file(mocker, template_url, user_config_data):
+def test_repository_url_with_no_context_file(
+    mocker, template_url, user_config_data
+) -> None:
     """Verify cloned repository without `cookiecutter.json` file raises error."""
     mocker.patch(
         'cookiecutter.repository.clone',

@@ -30,7 +30,7 @@ def remove_additional_folders(tmp_path):
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_ignore_hooks_dirs():
+def test_ignore_hooks_dirs() -> None:
     """Verify hooks directory not created in target location on files generation."""
     generate.generate_files(
         context={'cookiecutter': {'pyhooks': 'pyhooks'}},
@@ -41,7 +41,7 @@ def test_ignore_hooks_dirs():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_python_hooks():
+def test_run_python_hooks() -> None:
     """Verify pre and post generation python hooks executed and result in output_dir.
 
     Each hook should create in target directory. Test verifies that these files
@@ -57,7 +57,7 @@ def test_run_python_hooks():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_python_hooks_cwd():
+def test_run_python_hooks_cwd() -> None:
     """Verify pre and post generation python hooks executed and result in current dir.
 
     Each hook should create in target directory. Test verifies that these files
@@ -72,7 +72,7 @@ def test_run_python_hooks_cwd():
 
 @pytest.mark.skipif(WINDOWS, reason='OSError.errno=8 is not thrown on Windows')
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_empty_hooks():
+def test_empty_hooks() -> None:
     """Verify error is raised on empty hook script. Ignored on windows.
 
     OSError.errno=8 is not thrown on Windows when the script is empty
@@ -88,7 +88,7 @@ def test_empty_hooks():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_oserror_hooks(mocker):
+def test_oserror_hooks(mocker) -> None:
     """Verify script error passed correctly to cookiecutter error.
 
     Here subprocess.Popen function mocked, ie we do not call hook script,
@@ -112,7 +112,7 @@ def test_oserror_hooks(mocker):
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_failing_hook_removes_output_directory():
+def test_run_failing_hook_removes_output_directory() -> None:
     """Verify project directory not created or removed if hook failed."""
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
@@ -141,7 +141,7 @@ def test_run_failing_hook_removes_output_directory():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_failing_hook_preserves_existing_output_directory():
+def test_run_failing_hook_preserves_existing_output_directory() -> None:
     """Verify project directory not removed if exist before hook failed."""
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
@@ -172,7 +172,7 @@ def test_run_failing_hook_preserves_existing_output_directory():
 
 @pytest.mark.skipif(sys.platform.startswith('win'), reason="Linux only test")
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_shell_hooks(tmp_path):
+def test_run_shell_hooks(tmp_path) -> None:
     """Verify pre and post generate project shell hooks executed.
 
     This test for .sh files.
@@ -194,7 +194,7 @@ def test_run_shell_hooks(tmp_path):
 
 @pytest.mark.skipif(not sys.platform.startswith('win'), reason="Win only test")
 @pytest.mark.usefixtures('clean_system', 'remove_additional_folders')
-def test_run_shell_hooks_win(tmp_path):
+def test_run_shell_hooks_win(tmp_path) -> None:
     """Verify pre and post generate project shell hooks executed.
 
     This test for .bat files.
@@ -215,7 +215,7 @@ def test_run_shell_hooks_win(tmp_path):
 
 
 @pytest.mark.usefixtures("clean_system", "remove_additional_folders")
-def test_ignore_shell_hooks(tmp_path):
+def test_ignore_shell_hooks(tmp_path) -> None:
     """Verify *.txt files not created, when accept_hooks=False."""
     generate.generate_files(
         context={"cookiecutter": {"shellhooks": "shellhooks"}},
@@ -232,7 +232,7 @@ def test_ignore_shell_hooks(tmp_path):
 
 
 @pytest.mark.usefixtures("clean_system", "remove_additional_folders")
-def test_deprecate_run_hook_from_repo_dir(tmp_path):
+def test_deprecate_run_hook_from_repo_dir(tmp_path) -> None:
     """Test deprecation warning in generate._run_hook_from_repo_dir."""
     repo_dir = "tests/test-shellhooks/"
     project_dir = Path(tmp_path.joinpath('test-shellhooks'))

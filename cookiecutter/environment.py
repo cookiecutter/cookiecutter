@@ -1,5 +1,9 @@
 """Jinja2 environment and extensions loading."""
 
+from __future__ import annotations
+
+from typing import Any
+
 from jinja2 import Environment, StrictUndefined
 
 from cookiecutter.exceptions import UnknownExtension
@@ -12,7 +16,7 @@ class ExtensionLoaderMixin:
     the next parent class in line of the child.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """Initialize the Jinja2 Environment object while loading extensions.
 
         Does the following:
@@ -37,7 +41,7 @@ class ExtensionLoaderMixin:
         except ImportError as err:
             raise UnknownExtension(f'Unable to load extension: {err}') from err
 
-    def _read_extensions(self, context):
+    def _read_extensions(self, context: dict[str, Any]) -> list[str]:
         """Return list of extensions as str to be passed on to the Jinja2 env.
 
         If context does not contain the relevant info, return an empty
@@ -58,7 +62,7 @@ class StrictEnvironment(ExtensionLoaderMixin, Environment):
     rendering context.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """Set the standard Cookiecutter StrictEnvironment.
 
         Also loading extensions defined in cookiecutter.json's _extensions key.

@@ -41,7 +41,7 @@ def env():
     return environment
 
 
-def test_generate_file(env):
+def test_generate_file(env) -> None:
     """Verify simple file is generated with rendered context data."""
     infile = 'tests/files/{{cookiecutter.generate_file}}.txt'
     generate.generate_file(
@@ -55,7 +55,7 @@ def test_generate_file(env):
     assert generated_text == 'Testing cheese'
 
 
-def test_generate_file_jsonify_filter(env):
+def test_generate_file_jsonify_filter(env) -> None:
     """Verify jsonify filter works during files generation process."""
     infile = 'tests/files/{{cookiecutter.jsonify_file}}.txt'
     data = {'jsonify_file': 'cheese', 'type': 'roquefort'}
@@ -69,7 +69,7 @@ def test_generate_file_jsonify_filter(env):
 
 @pytest.mark.parametrize("length", (10, 40))
 @pytest.mark.parametrize("punctuation", (True, False))
-def test_generate_file_random_ascii_string(env, length, punctuation):
+def test_generate_file_random_ascii_string(env, length, punctuation) -> None:
     """Verify correct work of random_ascii_string extension on file generation."""
     infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
     data = {'random_string_file': 'cheese'}
@@ -80,7 +80,7 @@ def test_generate_file_random_ascii_string(env, length, punctuation):
     assert len(generated_text) == length
 
 
-def test_generate_file_with_true_condition(env):
+def test_generate_file_with_true_condition(env) -> None:
     """Verify correct work of boolean condition in file name on file generation.
 
     This test has positive answer, so file should be rendered.
@@ -99,7 +99,7 @@ def test_generate_file_with_true_condition(env):
     assert generated_text == 'Testing that generate_file was y'
 
 
-def test_generate_file_with_false_condition(env):
+def test_generate_file_with_false_condition(env) -> None:
     """Verify correct work of boolean condition in file name on file generation.
 
     This test has negative answer, so file should not be rendered.
@@ -126,7 +126,7 @@ def expected_msg_regex():
     )
 
 
-def test_generate_file_verbose_template_syntax_error(env, expected_msg_regex):
+def test_generate_file_verbose_template_syntax_error(env, expected_msg_regex) -> None:
     """Verify correct exception raised on syntax error in file before generation."""
     with pytest.raises(TemplateSyntaxError) as exception:
         generate.generate_file(
@@ -138,7 +138,7 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg_regex):
     assert expected_msg_regex.match(str(exception.value))
 
 
-def test_generate_file_does_not_translate_lf_newlines_to_crlf(env, tmp_path):
+def test_generate_file_does_not_translate_lf_newlines_to_crlf(env, tmp_path) -> None:
     """Verify that file generation use same line ending, as in source file."""
     infile = 'tests/files/{{cookiecutter.generate_file}}_lf_newlines.txt'
     generate.generate_file(
@@ -156,7 +156,7 @@ def test_generate_file_does_not_translate_lf_newlines_to_crlf(env, tmp_path):
     assert f.newlines == '\n'
 
 
-def test_generate_file_does_not_translate_crlf_newlines_to_lf(env):
+def test_generate_file_does_not_translate_crlf_newlines_to_lf(env) -> None:
     """Verify that file generation use same line ending, as in source file."""
     infile = 'tests/files/{{cookiecutter.generate_file}}_crlf_newlines.txt'
     generate.generate_file(
@@ -174,7 +174,7 @@ def test_generate_file_does_not_translate_crlf_newlines_to_lf(env):
     assert f.newlines == '\r\n'
 
 
-def test_generate_file_handles_mixed_line_endings(env, tmp_path):
+def test_generate_file_handles_mixed_line_endings(env, tmp_path) -> None:
     """Verify that file generation gracefully handles mixed line endings."""
     infile = 'tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt'
     with open(infile, mode='w', encoding='utf-8', newline='') as f:

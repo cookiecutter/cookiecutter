@@ -14,10 +14,10 @@ from cookiecutter import main, utils
 
 
 @pytest.fixture(scope='function')
-def remove_additional_dirs(request):
+def remove_additional_dirs(request) -> None:
     """Fixture. Remove special directories which are created during the tests."""
 
-    def fin_remove_additional_dirs():
+    def fin_remove_additional_dirs() -> None:
         if os.path.isdir('fake-project'):
             utils.rmtree('fake-project')
         if os.path.isdir('fake-project-extra'):
@@ -34,7 +34,7 @@ def remove_additional_dirs(request):
 
 @pytest.mark.parametrize('path', ['tests/fake-repo-pre/', 'tests/fake-repo-pre'])
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_no_input_return_project_dir(path):
+def test_cookiecutter_no_input_return_project_dir(path) -> None:
     """Verify `cookiecutter` create project dir on input with or without slash."""
     project_dir = main.cookiecutter(path, no_input=True)
     assert os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}')
@@ -45,7 +45,7 @@ def test_cookiecutter_no_input_return_project_dir(path):
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_no_input_extra_context():
+def test_cookiecutter_no_input_extra_context() -> None:
     """Verify `cookiecutter` accept `extra_context` argument."""
     main.cookiecutter(
         'tests/fake-repo-pre',
@@ -56,14 +56,14 @@ def test_cookiecutter_no_input_extra_context():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_templated_context():
+def test_cookiecutter_templated_context() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     main.cookiecutter('tests/fake-repo-tmpl', no_input=True)
     assert os.path.isdir('fake-project-templated')
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_no_input_return_rendered_file():
+def test_cookiecutter_no_input_return_rendered_file() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
     assert project_dir == os.path.abspath('fake-project')
@@ -72,7 +72,7 @@ def test_cookiecutter_no_input_return_rendered_file():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_dict_values_in_context():
+def test_cookiecutter_dict_values_in_context() -> None:
     """Verify configured dictionary from `cookiecutter.json` correctly unpacked."""
     project_dir = main.cookiecutter('tests/fake-repo-dict', no_input=True)
     assert project_dir == os.path.abspath('fake-project-dict')
@@ -122,7 +122,7 @@ def test_cookiecutter_dict_values_in_context():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
-def test_cookiecutter_template_cleanup(mocker):
+def test_cookiecutter_template_cleanup(mocker) -> None:
     """Verify temporary folder for zip unpacking dropped."""
     mocker.patch('tempfile.mkdtemp', return_value='fake-tmp', autospec=True)
 
