@@ -1,3 +1,12 @@
+[tool.pytest]
+testpaths = "tests"
+addopts = "-vvv --cov-report term-missing --cov=cookiecutter"
+
+[tool.doc8]
+# TODO: Remove current max-line-length ignore in follow-up and adopt black limit.
+# max-line-length = 88
+ignore = ["D001"]
+
 [tool.ruff]
 
 target-version = "py37"
