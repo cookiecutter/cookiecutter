@@ -17,7 +17,7 @@ def _remove_additional_dirs(request):
         utils.rmtree('fake-project-input-extra')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_local_with_input(monkeypatch) -> None:
     """Verify simple cookiecutter run results, without extra_context provided."""
     monkeypatch.setattr(
@@ -32,7 +32,7 @@ def test_cookiecutter_local_with_input(monkeypatch) -> None:
     assert not os.path.exists('fake-project/json/')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_input_extra_context(monkeypatch) -> None:
     """Verify simple cookiecutter run results, with extra_context provided."""
     monkeypatch.setattr(

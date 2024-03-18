@@ -32,7 +32,7 @@ def _remove_additional_dirs(request) -> Iterable[None]:
 
 
 @pytest.mark.parametrize('path', ['tests/fake-repo-pre/', 'tests/fake-repo-pre'])
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_no_input_return_project_dir(path) -> None:
     """Verify `cookiecutter` create project dir on input with or without slash."""
     project_dir = main.cookiecutter(path, no_input=True)
@@ -43,7 +43,7 @@ def test_cookiecutter_no_input_return_project_dir(path) -> None:
     assert not os.path.exists('fake-project/json/')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_no_input_extra_context() -> None:
     """Verify `cookiecutter` accept `extra_context` argument."""
     main.cookiecutter(
@@ -54,14 +54,14 @@ def test_cookiecutter_no_input_extra_context() -> None:
     assert os.path.isdir('fake-project-extra')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_templated_context() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     main.cookiecutter('tests/fake-repo-tmpl', no_input=True)
     assert os.path.isdir('fake-project-templated')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_no_input_return_rendered_file() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
@@ -70,7 +70,7 @@ def test_cookiecutter_no_input_return_rendered_file() -> None:
     assert "Project name: **Fake Project**" in content
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_dict_values_in_context() -> None:
     """Verify configured dictionary from `cookiecutter.json` correctly unpacked."""
     project_dir = main.cookiecutter('tests/fake-repo-dict', no_input=True)
@@ -120,7 +120,7 @@ def test_cookiecutter_dict_values_in_context() -> None:
     )
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_template_cleanup(mocker) -> None:
     """Verify temporary folder for zip unpacking dropped."""
     mocker.patch('tempfile.mkdtemp', return_value='fake-tmp', autospec=True)
