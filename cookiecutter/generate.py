@@ -19,7 +19,6 @@ from jinja2.exceptions import TemplateSyntaxError, UndefinedError
 from cookiecutter.exceptions import (
     ContextDecodingException,
     EmptyDirNameException,
-    NonTemplatedInputDirException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
