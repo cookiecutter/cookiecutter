@@ -7,7 +7,7 @@ import pytest
 from cookiecutter import exceptions, repository
 
 
-def test_finds_local_repo(tmp_path):
+def test_finds_local_repo(tmp_path) -> None:
     """A valid local repository should be returned."""
     project_dir, cleanup = repository.determine_repo_dir(
         'tests/fake-repo',
@@ -21,7 +21,7 @@ def test_finds_local_repo(tmp_path):
     assert not cleanup
 
 
-def test_local_repo_with_no_context_raises(tmp_path):
+def test_local_repo_with_no_context_raises(tmp_path) -> None:
     """A local repository without a cookiecutter.json should raise a \
     `RepositoryNotFound` exception."""
     template_path = str(Path('tests', 'fake-repo-bad'))
@@ -48,7 +48,7 @@ def test_local_repo_with_no_context_raises(tmp_path):
     )
 
 
-def test_local_repo_typo(tmp_path):
+def test_local_repo_typo(tmp_path) -> None:
     """An unknown local repository should raise a `RepositoryNotFound` \
     exception."""
     template_path = str(Path('tests', 'unknown-repo'))

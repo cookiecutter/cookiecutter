@@ -7,7 +7,7 @@ def test_original_cookiecutter_options_preserved_in__cookiecutter(
     monkeypatch,
     mocker,
     user_config_file,
-):
+) -> None:
     """Preserve original context options.
 
     Tests you can access the original context options via
@@ -31,7 +31,7 @@ def test_original_cookiecutter_options_preserved_in__cookiecutter(
 
 def test_replay_dump_template_name(
     monkeypatch, mocker, user_config_data, user_config_file
-):
+) -> None:
     """Check that replay_dump is called with a valid template_name.
 
     Template name must not be a relative path.
@@ -64,7 +64,7 @@ def test_replay_dump_template_name(
 
 def test_replay_load_template_name(
     monkeypatch, mocker, user_config_data, user_config_file
-):
+) -> None:
     """Check that replay_load is called correctly.
 
     Calls require valid template_name that is not a relative path.
@@ -93,7 +93,7 @@ def test_replay_load_template_name(
     )
 
 
-def test_custom_replay_file(monkeypatch, mocker, user_config_file):
+def test_custom_replay_file(monkeypatch, mocker, user_config_file) -> None:
     """Check that reply.load is called with the custom replay_file."""
     monkeypatch.chdir('tests/fake-repo-tmpl')
 

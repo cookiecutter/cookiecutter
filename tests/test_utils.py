@@ -9,13 +9,13 @@ import pytest
 from cookiecutter import utils
 
 
-def make_readonly(path):
+def make_readonly(path) -> None:
     """Change the access permissions to readonly for a given file."""
     mode = Path.stat(path).st_mode
     Path.chmod(path, mode & ~stat.S_IWRITE)
 
 
-def test_force_delete(mocker, tmp_path):
+def test_force_delete(mocker, tmp_path) -> None:
     """Verify `utils.force_delete` makes files writable."""
     ro_file = Path(tmp_path, 'bar')
     ro_file.write_text("Test data")
@@ -30,7 +30,7 @@ def test_force_delete(mocker, tmp_path):
     utils.rmtree(tmp_path)
 
 
-def test_rmtree(tmp_path):
+def test_rmtree(tmp_path) -> None:
     """Verify `utils.rmtree` remove files marked as read-only."""
     file_path = Path(tmp_path, "bar")
     file_path.write_text("Test data")
@@ -41,7 +41,7 @@ def test_rmtree(tmp_path):
     assert not Path(tmp_path).exists()
 
 
-def test_make_sure_path_exists(tmp_path):
+def test_make_sure_path_exists(tmp_path) -> None:
     """Verify correct True/False response from `utils.make_sure_path_exists`.
 
     Should return True if directory exist or created.
@@ -60,7 +60,7 @@ def test_make_sure_path_exists(tmp_path):
     assert directory_to_create.exists()
 
 
-def test_make_sure_path_exists_correctly_handle_os_error(mocker):
+def test_make_sure_path_exists_correctly_handle_os_error(mocker) -> None:
     """Verify correct True/False response from `utils.make_sure_path_exists`.
 
     Should return True if directory exist or created.
@@ -72,7 +72,7 @@ def test_make_sure_path_exists_correctly_handle_os_error(mocker):
     assert str(err.value) == "Unable to create directory at protected_path"
 
 
-def test_work_in(tmp_path):
+def test_work_in(tmp_path) -> None:
     """Verify returning to original folder after `utils.work_in` use."""
     cwd = Path.cwd()
     ch_to = tmp_path
@@ -87,7 +87,7 @@ def test_work_in(tmp_path):
     assert cwd == Path.cwd()
 
 
-def test_work_in_without_path():
+def test_work_in_without_path() -> None:
     """Folder is not changed if no path provided."""
     cwd = Path.cwd()
 
@@ -97,7 +97,7 @@ def test_work_in_without_path():
     assert cwd == Path.cwd()
 
 
-def test_create_tmp_repo_dir(tmp_path):
+def test_create_tmp_repo_dir(tmp_path) -> None:
     """Verify `utils.create_tmp_repo_dir` creates a copy."""
     repo_dir = Path(tmp_path) / 'bar'
     repo_dir.mkdir()

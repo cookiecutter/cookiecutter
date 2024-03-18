@@ -9,7 +9,6 @@ import shutil
 import stat
 import tempfile
 from pathlib import Path
-from typing import Dict
 
 from jinja2.ext import Extension
 
@@ -18,7 +17,7 @@ from cookiecutter.environment import StrictEnvironment
 logger = logging.getLogger(__name__)
 
 
-def force_delete(func, path, exc_info):
+def force_delete(func, path, exc_info) -> None:
     """Error handler for `shutil.rmtree()` equivalent to `rm -rf`.
 
     Usage: `shutil.rmtree(path, onerror=force_delete)`
@@ -28,7 +27,7 @@ def force_delete(func, path, exc_info):
     func(path)
 
 
-def rmtree(path):
+def rmtree(path) -> None:
     """Remove a directory and all its contents. Like rm -rf on Unix.
 
     :param path: A directory path.
@@ -63,7 +62,7 @@ def work_in(dirname=None):
         os.chdir(curdir)
 
 
-def make_executable(script_path):
+def make_executable(script_path) -> None:
     """Make `script_path` executable.
 
     :param script_path: The file to change
@@ -76,7 +75,7 @@ def simple_filter(filter_function):
     """Decorate a function to wrap it in a simplified jinja2 extension."""
 
     class SimpleFilterExtension(Extension):
-        def __init__(self, environment):
+        def __init__(self, environment) -> None:
             super().__init__(environment)
             environment.filters[filter_function.__name__] = filter_function
 
