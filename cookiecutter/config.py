@@ -1,9 +1,12 @@
 """Global configuration handling."""
 
+from __future__ import annotations
+
 import collections
 import copy
 import logging
 import os
+from typing import Any
 
 import yaml
 
@@ -27,7 +30,7 @@ DEFAULT_CONFIG = {
 }
 
 
-def _expand_path(path):
+def _expand_path(path: str) -> str:
     """Expand both environment variables and user home in the given path."""
     path = os.path.expandvars(path)
     path = os.path.expanduser(path)
@@ -82,7 +85,10 @@ def get_config(config_path):
     return config_dict
 
 
-def get_user_config(config_file=None, default_config=False):
+def get_user_config(
+    config_file: str | None = None,
+    default_config: bool | dict[str, Any] = False,
+) -> dict[str, Any]:
     """Return the user config as a dict.
 
     If ``default_config`` is True, ignore ``config_file`` and return default

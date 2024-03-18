@@ -1,12 +1,14 @@
 """Functions for discovering and executing various cookiecutter hooks."""
 
+from __future__ import annotations
+
 import errno
 import logging
 import os
-import subprocess  # nosec
+import subprocess
 import sys
 import tempfile
-from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 from jinja2.exceptions import UndefinedError
 
@@ -19,6 +21,9 @@ from cookiecutter.utils import (
     work_in,
 )
 
+if TYPE_CHECKING:
+    from pathlib import Path
+
 logger = logging.getLogger(__name__)
 
 _HOOKS = [
@@ -29,7 +34,7 @@ _HOOKS = [
 EXIT_SUCCESS = 0
 
 
-def valid_hook(hook_file, hook_name):
+def valid_hook(hook_file: str, hook_name: str) -> bool:
     """Determine if a hook file is valid.
 
     :param hook_file: The hook file to consider for validity
@@ -45,7 +50,7 @@ def valid_hook(hook_file, hook_name):
     return matching_hook and supported_hook and not backup_file
 
 
-def find_hook(hook_name, hooks_dir='hooks'):
+def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
@@ -63,17 +68,18 @@ def find_hook(hook_name, hooks_dir='hooks'):
         logger.debug('No hooks/dir in template_dir')
         return None
 
-    scripts = []
-    for hook_file in os.listdir(hooks_dir):
-        if valid_hook(hook_file, hook_name):
-            scripts.append(os.path.abspath(os.path.join(hooks_dir, hook_file)))
+    scripts = [
+        os.path.abspath(os.path.join(hooks_dir, hook_file))
+        for hook_file in os.listdir(hooks_dir)
+        if valid_hook(hook_file, hook_name)
+    ]
 
     if len(scripts) == 0:
         return None
     return scripts
 
 
-def run_script(script_path, cwd='.'):
+def run_script(script_path: str, cwd: str = '.') -> None:
     """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
@@ -102,7 +108,9 @@ def run_script(script_path, cwd='.'):
         raise FailedHookException(f'Hook script failed (error: {err})') from err
 
 
-def run_script_with_context(script_path, cwd, context):
+def run_script_with_context(
+    script_path: str, cwd: str, context: dict[str, Any]
+) -> None:
     """Execute a script after rendering it with Jinja.
 
     :param script_path: Absolute path to the script to run.
@@ -123,7 +131,7 @@ def run_script_with_context(script_path, cwd, context):
     run_script(temp.name, cwd)
 
 
-def run_hook(hook_name, project_dir, context):
+def run_hook(hook_name: str, project_dir: str, context: dict[str, Any]) -> None:
     """
     Try to find and execute a hook from the specified project directory.
 
@@ -142,7 +150,7 @@ def run_hook(hook_name, project_dir, context):
 
 def run_hook_from_repo_dir(
     repo_dir, hook_name, project_dir, context, delete_project_on_failure
-):
+) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.
@@ -169,7 +177,7 @@ def run_hook_from_repo_dir(
             raise
 
 
-def run_pre_prompt_hook(repo_dir: "os.PathLike[str]") -> Path:
+def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> Path:
     """Run pre_prompt hook from repo directory.
 
     :param repo_dir: Project template input directory.
@@ -187,6 +195,6 @@ def run_pre_prompt_hook(repo_dir: "os.PathLike[str]") -> Path:
         for script in scripts:
             try:
                 run_script(script, repo_dir)
-            except FailedHookException:
-                raise FailedHookException('Pre-Prompt Hook script failed')
+            except FailedHookException as e:  # noqa: PERF203
+                raise FailedHookException('Pre-Prompt Hook script failed') from e
     return repo_dir

@@ -1,1 +1,1 @@
-from .main import FoobarExtension, simplefilterextension  # noqa
+from .main import FoobarExtension, simplefilterextension  # noqa: F401
