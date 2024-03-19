@@ -128,7 +128,6 @@ module = [
     "cookiecutter.cli",
     "cookiecutter.environment",
     "cookiecutter.extensions",
-    "cookiecutter.hooks",
     "cookiecutter.main",
     "cookiecutter.prompt",
     "cookiecutter.utils",
