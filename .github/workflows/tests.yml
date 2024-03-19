@@ -73,3 +73,5 @@ jobs:
         with:
           env_vars: OS=${{ matrix.os }},PYTHON=${{ matrix.python }}
           file: ./coverage.xml
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
