@@ -97,6 +97,14 @@ class OutputDirExistsException(CookiecutterException):
     """
 
 
+class EmptyDirNameException(CookiecutterException):
+    """
+    Exception for a empty directory name.
+
+    Raised when the directory name provided is empty.
+    """
+
+
 class InvalidModeException(CookiecutterException):
     """
     Exception for incompatible modes.
