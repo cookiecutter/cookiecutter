@@ -1,4 +1,4 @@
-[tool.pytest]
+[tool.pytest.ini_options]
 testpaths = "tests"
 addopts = "-vvv --cov-report term-missing --cov=cookiecutter"
 
@@ -130,7 +130,6 @@ module = [
     "cookiecutter.environment",
     "cookiecutter.extensions",
     "cookiecutter.generate",
-    "cookiecutter.hooks",
     "cookiecutter.main",
     "cookiecutter.prompt",
     "cookiecutter.utils",
