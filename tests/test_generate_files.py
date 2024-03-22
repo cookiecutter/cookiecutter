@@ -308,7 +308,7 @@ def test_generate_files_with_overwrite_if_exists(tmp_path) -> None:
     assert simple_text == 'I eat pizzä\n'
 
 
-@pytest.fixture
+@pytest.fixture()
 def undefined_context():
     """Fixture. Populate context variable for future tests."""
     return {

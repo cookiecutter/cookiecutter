@@ -8,10 +8,10 @@ from cookiecutter import main
 
 
 @pytest.mark.parametrize(
-    "template_dir,output_dir",
+    ("template_dir", "output_dir"),
     [
-        ["fake-nested-templates", "fake-project"],
-        ["fake-nested-templates-old-style", "fake-package"],
+        ("fake-nested-templates", "fake-project"),
+        ("fake-nested-templates-old-style", "fake-package"),
     ],
 )
 def test_cookiecutter_nested_templates(

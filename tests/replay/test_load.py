@@ -8,13 +8,13 @@ import pytest
 from cookiecutter import replay
 
 
-@pytest.fixture
+@pytest.fixture()
 def template_name() -> str:
     """Fixture to return a valid template_name."""
     return 'cookiedozer_load'
 
 
-@pytest.fixture
+@pytest.fixture()
 def replay_file(replay_test_dir, template_name):
     """Fixture to return a actual file name of the dump."""
     file_name = f'{template_name}.json'

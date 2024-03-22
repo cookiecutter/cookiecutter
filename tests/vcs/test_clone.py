@@ -85,7 +85,7 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
 
 
 @pytest.mark.parametrize(
-    'repo_type, repo_url, repo_name',
+    ('repo_type', 'repo_url', 'repo_name'),
     [
         ('git', 'https://github.com/hello/world.git', 'world'),
         ('hg', 'https://bitbucket.org/foo/bar', 'bar'),

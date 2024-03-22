@@ -5,7 +5,7 @@ import pytest
 from cookiecutter import main
 
 
-@pytest.fixture
+@pytest.fixture()
 def context():
     """Fixture to return a valid context as known from a cookiecutter.json."""
     return {
@@ -18,7 +18,7 @@ def context():
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def template(tmp_path):
     """Fixture to prepare test template directory."""
     template_dir = tmp_path.joinpath("template")
@@ -28,19 +28,19 @@ def template(tmp_path):
 
 
 @pytest.fixture(autouse=True)
-def mock_gen_context(mocker, context) -> None:
+def _mock_gen_context(mocker, context) -> None:
     """Fixture. Automatically mock cookiecutter's function with expected output."""
     mocker.patch('cookiecutter.main.generate_context', return_value=context)
 
 
 @pytest.fixture(autouse=True)
-def mock_prompt(mocker) -> None:
+def _mock_prompt(mocker) -> None:
     """Fixture. Automatically mock cookiecutter's function with expected output."""
     mocker.patch('cookiecutter.main.prompt_for_config')
 
 
 @pytest.fixture(autouse=True)
-def mock_replay(mocker) -> None:
+def _mock_replay(mocker) -> None:
     """Fixture. Automatically mock cookiecutter's function with expected output."""
     mocker.patch('cookiecutter.main.dump')
 

@@ -13,7 +13,7 @@ from cookiecutter import environment, exceptions, prompt
 
 
 @pytest.fixture(autouse=True)
-def patch_readline_on_win(monkeypatch) -> None:
+def _patch_readline_on_win(monkeypatch) -> None:
     """Fixture. Overwrite windows end of line to linux standard."""
     if 'windows' in platform.platform().lower():
         monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
@@ -23,7 +23,7 @@ class TestRenderVariable:
     """Class to unite simple and complex tests for render_variable function."""
 
     @pytest.mark.parametrize(
-        'raw_var, rendered_var',
+        ('raw_var', 'rendered_var'),
         [
             (1, '1'),
             (True, True),
@@ -52,7 +52,7 @@ class TestRenderVariable:
             assert not from_string.called
 
     @pytest.mark.parametrize(
-        'raw_var, rendered_var',
+        ('raw_var', 'rendered_var'),
         [
             ({1: True, 'foo': False}, {'1': True, 'foo': False}),
             (
@@ -471,12 +471,12 @@ class TestReadUserChoice:
 class TestPromptChoiceForConfig:
     """Class to unite choices prompt related tests with config test."""
 
-    @pytest.fixture
+    @pytest.fixture()
     def choices(self):
         """Fixture. Just populate choices variable."""
         return ['landscape', 'portrait', 'all']
 
-    @pytest.fixture
+    @pytest.fixture()
     def context(self, choices):
         """Fixture. Just populate context variable."""
         return {'cookiecutter': {'orientation': choices}}
@@ -523,10 +523,10 @@ class TestReadUserYesNo:
 
     @pytest.mark.parametrize(
         'run_as_docker',
-        (
+        [
             True,
             False,
-        ),
+        ],
     )
     def test_should_invoke_read_user_yes_no(self, mocker, run_as_docker) -> None:
         """Verify correct function called for boolean variables."""
@@ -558,12 +558,12 @@ class TestReadUserYesNo:
 
 @pytest.mark.parametrize(
     'context',
-    (
+    [
         {'cookiecutter': {'foo': '{{cookiecutter.nope}}'}},
         {'cookiecutter': {'foo': ['123', '{{cookiecutter.nope}}', '456']}},
         {'cookiecutter': {'foo': {'{{cookiecutter.nope}}': 'value'}}},
         {'cookiecutter': {'foo': {'key': '{{cookiecutter.nope}}'}}},
-    ),
+    ],
     ids=[
         'Undefined variable in cookiecutter dict',
         'Undefined variable in cookiecutter dict with choices',
@@ -582,10 +582,10 @@ def test_undefined_variable(context) -> None:
 
 
 @pytest.mark.parametrize(
-    "template_dir,expected",
+    ('template_dir', 'expected'),
     [
-        ["fake-nested-templates", "fake-project"],
-        ["fake-nested-templates-old-style", "fake-package"],
+        ("fake-nested-templates", "fake-project"),
+        ("fake-nested-templates-old-style", "fake-package"),
     ],
 )
 def test_cookiecutter_nested_templates(template_dir: str, expected: str) -> None:

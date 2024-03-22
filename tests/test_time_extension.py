@@ -5,14 +5,14 @@ import pytest
 from jinja2 import Environment, exceptions
 
 
-@pytest.fixture
+@pytest.fixture()
 def environment():
     """Fixture. Add tested extension to environment."""
     return Environment(extensions=['cookiecutter.extensions.TimeExtension'])  # noqa: S701
 
 
 @pytest.fixture(autouse=True)
-def freeze():
+def _freeze():
     """Fixture. Freeze time for all tests."""
     freezer = freezegun.freeze_time("2015-12-09 23:33:01")
     freezer.start()

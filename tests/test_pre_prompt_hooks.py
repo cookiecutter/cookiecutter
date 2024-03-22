@@ -11,7 +11,7 @@ from cookiecutter.exceptions import FailedHookException
 WINDOWS = sys.platform.startswith('win')
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def remove_tmp_repo_dir():
     """Remove the generate repo_dir."""
 

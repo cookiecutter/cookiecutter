@@ -2,19 +2,20 @@
 
 import json
 import os
+from typing import Iterable
 
 import pytest
 
 from cookiecutter import replay
 
 
-@pytest.fixture
+@pytest.fixture()
 def template_name() -> str:
     """Fixture to return a valid template_name."""
     return 'cookiedozer'
 
 
-@pytest.fixture
+@pytest.fixture()
 def replay_file(replay_test_dir, template_name):
     """Fixture to return a actual file name of the dump."""
     file_name = f'{template_name}.json'
@@ -22,14 +23,12 @@ def replay_file(replay_test_dir, template_name):
 
 
 @pytest.fixture(autouse=True)
-def remove_replay_dump(request, replay_file) -> None:
+def _remove_replay_dump(request, replay_file) -> Iterable[None]:
     """Remove the replay file created by tests."""
+    yield
 
-    def fin_remove_replay_file() -> None:
-        if os.path.exists(replay_file):
-            os.remove(replay_file)
-
-    request.addfinalizer(fin_remove_replay_file)
+    if os.path.exists(replay_file):
+        os.remove(replay_file)
 
 
 def test_type_error_if_no_template_name(replay_test_dir, context) -> None:
@@ -51,7 +50,7 @@ def test_value_error_if_key_missing_in_context(replay_test_dir, template_name) -
         replay.dump(replay_test_dir, template_name, {'foo': 'bar'})
 
 
-@pytest.fixture
+@pytest.fixture()
 def mock_ensure_failure(mocker):
     """Replace cookiecutter.replay.make_sure_path_exists function.
 
@@ -63,7 +62,7 @@ def mock_ensure_failure(mocker):
     )
 
 
-@pytest.fixture
+@pytest.fixture()
 def mock_ensure_success(mocker):
     """Replace cookiecutter.replay.make_sure_path_exists function.
 

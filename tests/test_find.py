@@ -23,7 +23,7 @@ def env(context):
 
 
 @pytest.mark.parametrize(
-    "repo_name,context,error_expectation,expected",
+    ('repo_name', 'context', 'error_expectation', 'expected'),
     [
         ("fake-repo-pre", {}, does_not_raise(), '{{cookiecutter.repo_name}}'),
         (

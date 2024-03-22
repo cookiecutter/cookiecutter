@@ -3,6 +3,7 @@
 import os
 import shutil
 from pathlib import Path
+from typing import Iterable
 
 import pytest
 from typing_extensions import TypedDict
@@ -17,7 +18,7 @@ replay_dir: '{replay_dir}'
 
 
 @pytest.fixture(autouse=True)
-def isolated_filesystem(monkeypatch, tmp_path) -> None:
+def _isolated_filesystem(monkeypatch, tmp_path) -> None:
     """Ensure filesystem isolation, set the user home to a tmp_path."""
     root_path = tmp_path.joinpath("home")
     root_path.mkdir()
@@ -64,8 +65,8 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found) -> None:
         utils.rmtree(backup_dir)
 
 
-@pytest.fixture(scope='function')
-def clean_system(request) -> None:
+@pytest.fixture()
+def _clean_system(request) -> Iterable[None]:
     """Fixture. Simulates a clean system with no configured or cloned cookiecutters.
 
     It runs code which can be regarded as setup code as known from a unittest
@@ -143,7 +144,8 @@ def clean_system(request) -> None:
             cookiecutter_replay_dir_found,
         )
 
-    request.addfinalizer(restore_backup)
+    yield
+    restore_backup()
 
 
 @pytest.fixture(scope='session')
@@ -196,7 +198,7 @@ def user_config_file(user_dir, user_config_data) -> str:
     return str(config_file)
 
 
-@pytest.fixture
+@pytest.fixture()
 def output_dir(tmp_path) -> str:
     """Fixture to prepare test output directory."""
     output_path = tmp_path.joinpath("output")
@@ -204,7 +206,7 @@ def output_dir(tmp_path) -> str:
     return str(output_path)
 
 
-@pytest.fixture
+@pytest.fixture()
 def clone_dir(tmp_path) -> Path:
     """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
     Returns a str to said directory."""

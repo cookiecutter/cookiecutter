@@ -8,7 +8,7 @@ from cookiecutter import exceptions, repository
 
 
 @pytest.mark.parametrize(
-    'template, is_url',
+    ('template', 'is_url'),
     [
         ('/path/to/zipfile.zip', False),
         ('https://example.com/path/to/zipfile.zip', True),
@@ -49,7 +49,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data) -> None:
     assert project_dir == 'tests/fake-repo-tmpl'
 
 
-@pytest.fixture
+@pytest.fixture()
 def template_url() -> str:
     """URL to example Cookiecutter template on GitHub.
 

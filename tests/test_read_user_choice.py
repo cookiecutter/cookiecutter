@@ -15,7 +15,7 @@ EXPECTED_PROMPT = """Select varname
     Choose from"""
 
 
-@pytest.mark.parametrize('user_choice, expected_value', enumerate(OPTIONS, 1))
+@pytest.mark.parametrize(('user_choice', 'expected_value'), enumerate(OPTIONS, 1))
 def test_click_invocation(mocker, user_choice, expected_value) -> None:
     """Test click function called correctly by cookiecutter.
 

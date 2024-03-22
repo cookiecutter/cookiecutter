@@ -11,7 +11,7 @@ from cookiecutter.main import cookiecutter
 
 
 @pytest.fixture(autouse=True)
-def freeze():
+def _freeze():
     """Fixture. Make time stating during all tests in this file."""
     freezer = freezegun.freeze_time("2015-12-09 23:33:01")
     freezer.start()

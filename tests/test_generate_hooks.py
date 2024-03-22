@@ -13,8 +13,8 @@ from cookiecutter.exceptions import FailedHookException
 WINDOWS = sys.platform.startswith('win')
 
 
-@pytest.fixture(scope='function')
-def remove_additional_folders(tmp_path):
+@pytest.fixture()
+def _remove_additional_folders(tmp_path):
     """Remove some special folders which are created by the tests."""
     yield
     directories_to_delete = [

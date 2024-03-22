@@ -15,8 +15,8 @@ def user_config_path():
     return os.path.expanduser('~/.cookiecutterrc')
 
 
-@pytest.fixture(scope='function')
-def back_up_rc(user_config_path):
+@pytest.fixture()
+def _back_up_rc(user_config_path):
     """
     Back up an existing cookiecutter rc and restore it after the test.
 
@@ -39,7 +39,7 @@ def back_up_rc(user_config_path):
         os.remove(user_config_path_backup)
 
 
-@pytest.fixture
+@pytest.fixture()
 def custom_config():
     """Fixture. Return expected custom configuration for future tests validation."""
     return {
@@ -90,7 +90,7 @@ def test_get_user_config_nonexistent() -> None:
     assert config.get_user_config() == config.DEFAULT_CONFIG
 
 
-@pytest.fixture
+@pytest.fixture()
 def custom_config_path() -> str:
     """Fixture. Return path to custom user config for tests."""
     return 'tests/test-config/valid-config.yaml'

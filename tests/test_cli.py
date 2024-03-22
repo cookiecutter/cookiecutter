@@ -4,6 +4,7 @@ import json
 import os
 import re
 from pathlib import Path
+from typing import Iterable
 
 import pytest
 from click.testing import CliRunner
@@ -27,34 +28,30 @@ def cli_runner():
     return cli_main
 
 
-@pytest.fixture
-def remove_fake_project_dir(request) -> None:
+@pytest.fixture()
+def _remove_fake_project_dir(request) -> Iterable[None]:
     """Remove the fake project directory created during the tests."""
-
-    def fin_remove_fake_project_dir() -> None:
-        for prefix in ('', 'input'):
-            dir_name = f'{prefix}fake-project'
-            if os.path.isdir(dir_name):
-                utils.rmtree(dir_name)
-
-    request.addfinalizer(fin_remove_fake_project_dir)
+    yield
+    for prefix in ('', 'input'):
+        dir_name = f'{prefix}fake-project'
+        if os.path.isdir(dir_name):
+            utils.rmtree(dir_name)
 
 
-@pytest.fixture
-def remove_tmp_dir(request) -> None:
+@pytest.fixture()
+def _remove_tmp_dir(request) -> Iterable[None]:
     """Remove the fake project directory created during the tests."""
     if os.path.isdir('tests/tmp'):
         utils.rmtree('tests/tmp')
 
-    def fin_remove_tmp_dir() -> None:
-        if os.path.isdir('tests/tmp'):
-            utils.rmtree('tests/tmp')
+    yield
 
-    request.addfinalizer(fin_remove_tmp_dir)
+    if os.path.isdir('tests/tmp'):
+        utils.rmtree('tests/tmp')
 
 
-@pytest.fixture
-def make_fake_project_dir(request) -> None:
+@pytest.fixture()
+def _make_fake_project_dir(request) -> None:
     """Create a fake project to be overwritten in the according tests."""
     os.makedirs('fake-project')
 
@@ -72,7 +69,7 @@ def test_cli_version(cli_runner, version_cli_flag) -> None:
     assert result.output.startswith('Cookiecutter')
 
 
-@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
+@pytest.mark.usefixtures('_make_fake_project_dir', '_remove_fake_project_dir')
 def test_cli_error_on_existing_output_directory(cli_runner) -> None:
     """Test cli invocation without `overwrite-if-exists` fail if dir exist."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input')
@@ -81,7 +78,7 @@ def test_cli_error_on_existing_output_directory(cli_runner) -> None:
     assert result.output == expected_error_msg
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli(cli_runner) -> None:
     """Test cli invocation work without flags if directory not exist."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input')
@@ -91,7 +88,7 @@ def test_cli(cli_runner) -> None:
     assert 'Project name: **Fake Project**' in content
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_verbose(cli_runner) -> None:
     """Test cli invocation display log if called with `verbose` flag."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input', '-v')
@@ -101,7 +98,7 @@ def test_cli_verbose(cli_runner) -> None:
     assert 'Project name: **Fake Project**' in content
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_replay(mocker, cli_runner) -> None:
     """Test cli invocation display log with `verbose` and `replay` flags."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
@@ -128,7 +125,7 @@ def test_cli_replay(mocker, cli_runner) -> None:
     )
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_replay_file(mocker, cli_runner) -> None:
     """Test cli invocation correctly pass --replay-file option."""
     mock_cookiecutter = mocker.patch('cookiecutter.cli.cookiecutter')
@@ -155,7 +152,7 @@ def test_cli_replay_file(mocker, cli_runner) -> None:
     )
 
 
-@pytest.mark.usefixtures('remove_tmp_dir')
+@pytest.mark.usefixtures('_remove_tmp_dir')
 def test_cli_replay_generated(mocker, cli_runner) -> None:
     """Test cli invocation correctly generates a project with replay."""
     template_path = 'tests/fake-repo-replay/'
@@ -172,7 +169,7 @@ def test_cli_replay_generated(mocker, cli_runner) -> None:
         assert f.read().strip() == 'replayed'
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_exit_on_noinput_and_replay(mocker, cli_runner) -> None:
     """Test cli invocation fail if both `no-input` and `replay` flags passed."""
     mock_cookiecutter = mocker.patch(
@@ -214,7 +211,7 @@ def overwrite_cli_flag(request):
     return request.param
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
     mocker, cli_runner, overwrite_cli_flag
 ) -> None:
@@ -244,7 +241,7 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
     )
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
     cli_runner, overwrite_cli_flag
 ) -> None:
@@ -258,7 +255,7 @@ def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
     assert os.path.isdir('fake-project')
 
 
-@pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
+@pytest.mark.usefixtures('_make_fake_project_dir', '_remove_fake_project_dir')
 def test_cli_overwrite_if_exists_when_output_dir_exists(
     cli_runner, overwrite_cli_flag
 ) -> None:
@@ -316,7 +313,7 @@ def test_cli_help(cli_runner, help_cli_flag) -> None:
     assert result.output.startswith('Usage')
 
 
-@pytest.fixture
+@pytest.fixture()
 def user_config_path(tmp_path):
     """Pytest fixture return `user_config` argument as string."""
     return str(tmp_path.joinpath("tests", "config.yaml"))
@@ -490,7 +487,7 @@ def test_local_extension_not_available(tmpdir, cli_runner) -> None:
     assert 'Unable to load extension: ' in str(err.value)
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_extra_context(cli_runner) -> None:
     """Cli invocation replace content if called with replacement pairs."""
     result = cli_runner(
@@ -505,7 +502,7 @@ def test_cli_extra_context(cli_runner) -> None:
     assert 'Project name: **Awesomez**' in content
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_extra_context_invalid_format(cli_runner) -> None:
     """Cli invocation raise error if called with unknown argument."""
     result = cli_runner(
@@ -519,13 +516,13 @@ def test_cli_extra_context_invalid_format(cli_runner) -> None:
     assert 'should contain items of the form key=value' in result.output
 
 
-@pytest.fixture
+@pytest.fixture()
 def debug_file(tmp_path):
     """Pytest fixture return `debug_file` argument as path object."""
     return tmp_path.joinpath('fake-repo.log')
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_debug_file_non_verbose(cli_runner, debug_file) -> None:
     """Test cli invocation writes log to `debug-file` if flag enabled.
 
@@ -551,7 +548,7 @@ def test_debug_file_non_verbose(cli_runner, debug_file) -> None:
     assert context_log not in result.output
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_debug_file_verbose(cli_runner, debug_file) -> None:
     """Test cli invocation writes log to `debug-file` if flag enabled.
 
@@ -615,7 +612,7 @@ def test_debug_list_installed_templates_failure(
     assert result.exit_code == -1
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_directory_repo(cli_runner) -> None:
     """Test cli invocation works with `directory` option."""
     result = cli_runner(
@@ -639,7 +636,7 @@ cli_accept_hook_arg_testdata = [
 
 
 @pytest.mark.parametrize(
-    "accept_hooks_arg,user_input,expected", cli_accept_hook_arg_testdata
+    ('accept_hooks_arg', 'user_input', 'expected'), cli_accept_hook_arg_testdata
 )
 def test_cli_accept_hooks(
     mocker,
@@ -677,7 +674,7 @@ def test_cli_accept_hooks(
     )
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_with_json_decoding_error(cli_runner) -> None:
     """Test cli invocation with a malformed JSON file."""
     template_path = 'tests/fake-repo-bad-json/'
@@ -696,7 +693,7 @@ def test_cli_with_json_decoding_error(cli_runner) -> None:
     assert path in result.output
 
 
-@pytest.mark.usefixtures('remove_fake_project_dir')
+@pytest.mark.usefixtures('_remove_fake_project_dir')
 def test_cli_with_pre_prompt_hook(cli_runner) -> None:
     """Test cli invocation in a template with pre_prompt hook."""
     template_path = 'tests/test-pyhooks/'
