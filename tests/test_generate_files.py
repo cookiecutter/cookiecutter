@@ -437,3 +437,15 @@ def test_raise_undefined_variable_project_dir(tmp_path) -> None:
     assert error.context == {}
 
     assert not Path(tmp_path, 'testproject').exists()
+
+
+def test_raise_empty_dir_name(output_dir, undefined_context):
+    """Verify correct error raised when directory name is empty."""
+    with pytest.raises(exceptions.EmptyDirNameException):
+        generate.render_and_create_dir(
+            dirname='',
+            output_dir=output_dir,
+            context=undefined_context,
+            environment=None,
+        )
+    assert not Path(output_dir).joinpath('testproject').exists()

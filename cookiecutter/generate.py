@@ -19,6 +19,7 @@ from rich.prompt import InvalidResponse
 
 from cookiecutter.exceptions import (
     ContextDecodingException,
+    EmptyDirNameException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
@@ -35,7 +36,7 @@ from cookiecutter.utils import (
 logger = logging.getLogger(__name__)
 
 
-def is_copy_only_path(path, context) -> bool:
+def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     """Check whether the given `path` should only be copied and not rendered.
 
     Returns True if `path` matches a pattern in the given `context` dict,
@@ -56,7 +57,10 @@ def is_copy_only_path(path, context) -> bool:
 
 
 def apply_overwrites_to_context(
-    context, overwrite_context, *, in_dictionary_variable=False
+    context: dict[str, Any],
+    overwrite_context: dict[str, Any],
+    *,
+    in_dictionary_variable: bool = False,
 ) -> None:
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
@@ -117,8 +121,10 @@ def apply_overwrites_to_context(
 
 
 def generate_context(
-    context_file='cookiecutter.json', default_context=None, extra_context=None
-):
+    context_file: str = 'cookiecutter.json',
+    default_context: dict[str, Any] | None = None,
+    extra_context: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Generate the context for a Cookiecutter project template.
 
     Loads the JSON file as a Python object, with key being the JSON filename.
@@ -163,7 +169,13 @@ def generate_context(
     return context
 
 
-def generate_file(project_dir, infile, context, env, skip_if_file_exists=False) -> None:
+def generate_file(
+    project_dir: str,
+    infile: str,
+    context: dict[str, Any],
+    env: Environment,
+    skip_if_file_exists: bool = False,
+) -> None:
     """Render filename of infile as name of outfile, handle infile correctly.
 
     Dealing with infile appropriately:
@@ -248,11 +260,15 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False) 
 def render_and_create_dir(
     dirname: str,
     context: dict[str, Any],
-    output_dir: os.PathLike[str],
+    output_dir: str | os.PathLike[str],
     environment: Environment,
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
     """Render name of a directory, create the directory, return its path."""
+    if not dirname or dirname == "":
+        msg = 'Error: directory name is empty'
+        raise EmptyDirNameException(msg)
+
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
 
@@ -279,7 +295,11 @@ def render_and_create_dir(
 
 
 def _run_hook_from_repo_dir(
-    repo_dir, hook_name: str, project_dir, context, delete_project_on_failure: bool
+    repo_dir: str,
+    hook_name: str,
+    project_dir: str,
+    context: dict[str, Any],
+    delete_project_on_failure: bool,
 ) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
@@ -302,14 +322,14 @@ def _run_hook_from_repo_dir(
 
 
 def generate_files(
-    repo_dir,
-    context=None,
-    output_dir='.',
-    overwrite_if_exists=False,
-    skip_if_file_exists=False,
-    accept_hooks=True,
-    keep_project_on_failure=False,
-):
+    repo_dir: str,
+    context: dict[str, Any] | None = None,
+    output_dir: str = '.',
+    overwrite_if_exists: bool = False,
+    skip_if_file_exists: bool = False,
+    accept_hooks: bool = True,
+    keep_project_on_failure: bool = False,
+) -> str:
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.

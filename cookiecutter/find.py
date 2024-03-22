@@ -1,17 +1,21 @@
 """Functions for finding Cookiecutter templates and other components."""
 
+from __future__ import annotations
+
 import logging
 import os
 from pathlib import Path
-
-from jinja2 import Environment
+from typing import TYPE_CHECKING
 
 from cookiecutter.exceptions import NonTemplatedInputDirException
+
+if TYPE_CHECKING:
+    from jinja2 import Environment
 
 logger = logging.getLogger(__name__)
 
 
-def find_template(repo_dir: "os.PathLike[str]", env: Environment) -> Path:
+def find_template(repo_dir: str | os.PathLike[str], env: Environment) -> Path:
     """Determine which child directory of ``repo_dir`` is the project template.
 
     :param repo_dir: Local directory of newly cloned repo.
