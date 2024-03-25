@@ -3,23 +3,28 @@ cookiecutter.replay.
 
 -------------------
 """
+
+from __future__ import annotations
+
 import json
 import os
+from typing import Any
 
 from cookiecutter.utils import make_sure_path_exists
 
 
-def get_file_name(replay_dir, template_name):
+def get_file_name(replay_dir: os.PathLike[str], template_name: str) -> str:
     """Get the name of file."""
     suffix = '.json' if not template_name.endswith('.json') else ''
-    file_name = '{}{}'.format(template_name, suffix)
+    file_name = f'{template_name}{suffix}'
     return os.path.join(replay_dir, file_name)
 
 
-def dump(replay_dir, template_name, context):
+def dump(
+    replay_dir: os.PathLike[str], template_name: str, context: dict[str, Any]
+) -> None:
     """Write json data to file."""
-    if not make_sure_path_exists(replay_dir):
-        raise IOError('Unable to create replay dir at {}'.format(replay_dir))
+    make_sure_path_exists(replay_dir)
 
     if not isinstance(template_name, str):
         raise TypeError('Template name is required to be of type str')
@@ -32,19 +37,19 @@ def dump(replay_dir, template_name, context):
 
     replay_file = get_file_name(replay_dir, template_name)
 
-    with open(replay_file, 'w') as outfile:
+    with open(replay_file, 'w', encoding="utf-8") as outfile:
         json.dump(context, outfile, indent=2)
 
 
-def load(replay_dir, template_name):
+def load(replay_dir: os.PathLike[str], template_name: str) -> dict[str, Any]:
     """Read json data from file."""
     if not isinstance(template_name, str):
         raise TypeError('Template name is required to be of type str')
 
     replay_file = get_file_name(replay_dir, template_name)
 
-    with open(replay_file, 'r') as infile:
-        context = json.load(infile)
+    with open(replay_file, encoding="utf-8") as infile:
+        context: dict[str, Any] = json.load(infile)
 
     if 'cookiecutter' not in context:
         raise ValueError('Context is required to contain a cookiecutter key')

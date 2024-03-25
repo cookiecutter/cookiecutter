@@ -1,5 +1,5 @@
-API
-===
+cookiecutter package
+====================
 
 Submodules
 ----------
@@ -131,7 +131,6 @@ cookiecutter.zipfile module
    :members:
    :undoc-members:
    :show-inheritance:
-
 
 Module contents
 ---------------

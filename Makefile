@@ -14,10 +14,28 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 .DEFAULT_GOAL := help
 
+
 .PHONY: clean-tox
 clean-tox: ## Remove tox testing artifacts
 	@echo "+ $@"
 	@rm -rf .tox/
+
+.PHONY: clean-coverage
+clean-coverage: ## Remove coverage reports
+	@echo "+ $@"
+	@rm -rf htmlcov/
+	@rm -rf .coverage
+	@rm -rf coverage.xml
+
+.PHONY: clean-pytest
+clean-pytest: ## Remove pytest cache
+	@echo "+ $@"
+	@rm -rf .pytest_cache/
+
+.PHONY: clean-docs-build
+clean-docs-build: ## Remove local docs
+	@echo "+ $@"
+	@rm -rf docs/_build
 
 .PHONY: clean-build
 clean-build: ## Remove build artifacts
@@ -33,44 +51,40 @@ clean-pyc: ## Remove Python file artifacts
 	@find . -type f -name '*.py[co]' -exec rm -f {} +
 	@find . -name '*~' -exec rm -f {} +
 
-.PHONY: clean
-clean: clean-tox clean-build clean-pyc ## Remove all file artifacts
+.PHONY: clean ## Remove all file artifacts
+clean: clean-build clean-pyc clean-tox clean-coverage clean-pytest clean-docs-build
 
 .PHONY: lint
-lint: ## Check code style with flake8
+lint: ## Check code style
 	@echo "+ $@"
-	@tox -e flake8
+	@tox -e lint
 
 .PHONY: test
 test: ## Run tests quickly with the default Python
 	@echo "+ $@"
-	@tox -e py
+	@tox -e py310
 
 .PHONY: test-all
-test-all: ## Run tests on every Python version with tox
+test-all: ## Run tests on every Python version
 	@echo "+ $@"
 	@tox
 
 .PHONY: coverage
 coverage: ## Check code coverage quickly with the default Python
 	@echo "+ $@"
-	@tox -e cov-report
+	@tox -e py310
 	@$(BROWSER) htmlcov/index.html
 
 .PHONY: docs
 docs: ## Generate Sphinx HTML documentation, including API docs
 	@echo "+ $@"
-	@rm -f docs/cookiecutter.rst
-	@sphinx-apidoc -o docs/ cookiecutter
-	@rm -f docs/modules.rst
-	@$(MAKE) -C docs clean
-	@$(MAKE) -C docs html
+	@tox -e docs
 	@$(BROWSER) docs/_build/html/index.html
 
 .PHONY: servedocs
-servedocs: docs ## Rebuild docs automatically
+servedocs: ## Rebuild docs automatically
 	@echo "+ $@"
-	@watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+	@tox -e servedocs
 
 .PHONY: submodules
 submodules: ## Pull and update git submodules recursively
@@ -81,19 +95,19 @@ submodules: ## Pull and update git submodules recursively
 .PHONY: release
 release: clean ## Package and upload release
 	@echo "+ $@"
-	@python setup.py sdist bdist_wheel
+	@python -m build
 	@twine upload -r $(PYPI_SERVER) dist/*
 
 .PHONY: sdist
 sdist: clean ## Build sdist distribution
 	@echo "+ $@"
-	@python setup.py sdist
+	@python -m build --sdist
 	@ls -l dist
 
 .PHONY: wheel
-wheel: clean ## Build bdist_wheel distribution
+wheel: clean ## Build wheel distribution
 	@echo "+ $@"
-	@python setup.py bdist_wheel
+	@python -m build --wheel
 	@ls -l dist
 
 .PHONY: help

@@ -1,17 +1,22 @@
 """Jinja2 environment and extensions loading."""
+
+from __future__ import annotations
+
+from typing import Any
+
 from jinja2 import Environment, StrictUndefined
 
 from cookiecutter.exceptions import UnknownExtension
 
 
-class ExtensionLoaderMixin(object):
+class ExtensionLoaderMixin:
     """Mixin providing sane loading of extensions specified in a given context.
 
     The context is being extracted from the keyword arguments before calling
     the next parent class in line of the child.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """Initialize the Jinja2 Environment object while loading extensions.
 
         Does the following:
@@ -26,16 +31,17 @@ class ExtensionLoaderMixin(object):
             'cookiecutter.extensions.JsonifyExtension',
             'cookiecutter.extensions.RandomStringExtension',
             'cookiecutter.extensions.SlugifyExtension',
-            'jinja2_time.TimeExtension',
+            'cookiecutter.extensions.TimeExtension',
+            'cookiecutter.extensions.UUIDExtension',
         ]
         extensions = default_extensions + self._read_extensions(context)
 
         try:
-            super(ExtensionLoaderMixin, self).__init__(extensions=extensions, **kwargs)
+            super().__init__(extensions=extensions, **kwargs)
         except ImportError as err:
-            raise UnknownExtension('Unable to load extension: {}'.format(err))
+            raise UnknownExtension(f'Unable to load extension: {err}') from err
 
-    def _read_extensions(self, context):
+    def _read_extensions(self, context: dict[str, Any]) -> list[str]:
         """Return list of extensions as str to be passed on to the Jinja2 env.
 
         If context does not contain the relevant info, return an empty
@@ -56,9 +62,9 @@ class StrictEnvironment(ExtensionLoaderMixin, Environment):
     rendering context.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """Set the standard Cookiecutter StrictEnvironment.
 
         Also loading extensions defined in cookiecutter.json's _extensions key.
         """
-        super(StrictEnvironment, self).__init__(undefined=StrictUndefined, **kwargs)
+        super().__init__(undefined=StrictUndefined, **kwargs)

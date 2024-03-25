@@ -1,0 +1,9 @@
+{
+  "project_slug": "Foobar",
+  "test_value_class_based": "{{cookiecutter.project_slug | foobar}}",
+  "test_value_function_based": "{{cookiecutter.project_slug | simplefilterextension}}",
+  "_extensions": [
+    "local_extensions.simplefilterextension",
+    "local_extensions.FoobarExtension"
+  ]
+}

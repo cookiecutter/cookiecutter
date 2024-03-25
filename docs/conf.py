@@ -23,34 +23,7 @@ import sys
 
 # For building docs in foreign environments where we don't have all our
 # dependencies (like readthedocs), mock out imports that cause sphinx to fail.
-# see: https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules  # noqa
-
-
-# flake8: noqa D107,D105
-
-
-class Mock(object):
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        return Mock()
-
-    @classmethod
-    def __getattr__(cls, name):
-        if name in ('__file__', '__path__'):
-            return '/dev/null'
-        elif name[0] == name[0].upper():
-            mockType = type(name, (), {})
-            mockType.__module__ = __name__
-            return mockType
-        else:
-            return Mock()
-
-
-MOCK_MODULES = ['yaml']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = Mock()
+# see: https://docs.readthedocs.io/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
 
 
 # Add parent dir to path
@@ -58,7 +31,7 @@ cwd = os.getcwd()
 parent = os.path.dirname(cwd)
 sys.path.append(parent)
 
-import cookiecutter  # noqa 402
+import cookiecutter  # noqa: E402
 
 # -- General configuration ----------------------------------------------------
 
@@ -78,7 +51,9 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx_click.ext',
-    'recommonmark',
+    'myst_parser',
+    'sphinxcontrib.apidoc',
+    'sphinx_autodoc_typehints',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -95,7 +70,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'cookiecutter'
-copyright = '2013-2019, Audrey Roy and Cookiecutter community'
+copyright = '2013-2022, Audrey Roy and Cookiecutter community'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -324,7 +299,7 @@ texinfo_documents = [
 epub_title = 'cookiecutter'
 epub_author = 'Audrey Roy'
 epub_publisher = 'Audrey Roy and Cookiecutter community'
-epub_copyright = '2013-2019, Audrey Roy and Cookiecutter community'
+epub_copyright = '2013-2022, Audrey Roy and Cookiecutter community'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
@@ -350,7 +325,7 @@ epub_copyright = '2013-2019, Audrey Roy and Cookiecutter community'
 # The format is a list of tuples containing the path and title.
 # epub_pre_files = []
 
-# HTML files shat should be inserted after the pages created by sphinx.
+# HTML files that should be inserted after the pages created by sphinx.
 # The format is a list of tuples containing the path and title.
 # epub_post_files = []
 
@@ -377,4 +352,22 @@ epub_copyright = '2013-2019, Audrey Roy and Cookiecutter community'
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "requests": ("https://requests.readthedocs.io/en/latest/", None),
+    "click": ("https://click.palletsprojects.com/en/latest", None),
+}
+myst_enable_extensions = [
+    "tasklist",
+    "strikethrough",
+    "fieldlist",
+]
+myst_heading_anchors = 3
+# Apidoc extension config
+apidoc_module_dir = "../cookiecutter"
+apidoc_output_dir = "."
+apidoc_toc_file = False
+apidoc_extra_args = ["-t", "_templates"]
+
+autodoc_member_order = "groupwise"
+autodoc_typehints = "none"

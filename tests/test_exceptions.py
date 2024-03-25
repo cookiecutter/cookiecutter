@@ -1,10 +1,11 @@
 """Collection of tests around general exception handling."""
+
 from jinja2.exceptions import UndefinedError
 
 from cookiecutter import exceptions
 
 
-def test_undefined_variable_to_str():
+def test_undefined_variable_to_str() -> None:
     """Verify string representation of errors formatted in expected form."""
     undefined_var_error = exceptions.UndefinedVariableInTemplate(
         'Beautiful is better than ugly',

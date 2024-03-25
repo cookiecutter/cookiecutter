@@ -1,25 +1,40 @@
 """Functions for discovering and executing various cookiecutter hooks."""
+
+from __future__ import annotations
+
 import errno
 import logging
 import os
 import subprocess
 import sys
 import tempfile
+from typing import TYPE_CHECKING, Any
+
+from jinja2.exceptions import UndefinedError
 
 from cookiecutter import utils
-from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import FailedHookException
+from cookiecutter.utils import (
+    create_env_with_context,
+    create_tmp_repo_dir,
+    rmtree,
+    work_in,
+)
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
 _HOOKS = [
+    'pre_prompt',
     'pre_gen_project',
     'post_gen_project',
 ]
 EXIT_SUCCESS = 0
 
 
-def valid_hook(hook_file, hook_name):
+def valid_hook(hook_file: str, hook_name: str) -> bool:
     """Determine if a hook file is valid.
 
     :param hook_file: The hook file to consider for validity
@@ -28,7 +43,6 @@ def valid_hook(hook_file, hook_name):
     """
     filename = os.path.basename(hook_file)
     basename = os.path.splitext(filename)[0]
-
     matching_hook = basename == hook_name
     supported_hook = basename in _HOOKS
     backup_file = filename.endswith('~')
@@ -36,7 +50,7 @@ def valid_hook(hook_file, hook_name):
     return matching_hook and supported_hook and not backup_file
 
 
-def find_hook(hook_name, hooks_dir='hooks'):
+def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
@@ -54,17 +68,18 @@ def find_hook(hook_name, hooks_dir='hooks'):
         logger.debug('No hooks/dir in template_dir')
         return None
 
-    scripts = []
-    for hook_file in os.listdir(hooks_dir):
-        if valid_hook(hook_file, hook_name):
-            scripts.append(os.path.abspath(os.path.join(hooks_dir, hook_file)))
+    scripts = [
+        os.path.abspath(os.path.join(hooks_dir, hook_file))
+        for hook_file in os.listdir(hooks_dir)
+        if valid_hook(hook_file, hook_name)
+    ]
 
     if len(scripts) == 0:
         return None
     return scripts
 
 
-def run_script(script_path, cwd='.'):
+def run_script(script_path: str, cwd: str = '.') -> None:
     """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
@@ -79,21 +94,23 @@ def run_script(script_path, cwd='.'):
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)
+        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
-                'Hook script failed (exit status: {})'.format(exit_status)
+                f'Hook script failed (exit status: {exit_status})'
             )
-    except OSError as os_error:
-        if os_error.errno == errno.ENOEXEC:
+    except OSError as err:
+        if err.errno == errno.ENOEXEC:
             raise FailedHookException(
                 'Hook script failed, might be an empty file or missing a shebang'
-            )
-        raise FailedHookException('Hook script failed (error: {})'.format(os_error))
+            ) from err
+        raise FailedHookException(f'Hook script failed (error: {err})') from err
 
 
-def run_script_with_context(script_path, cwd, context):
+def run_script_with_context(
+    script_path: str, cwd: str, context: dict[str, Any]
+) -> None:
     """Execute a script after rendering it with Jinja.
 
     :param script_path: Absolute path to the script to run.
@@ -102,11 +119,11 @@ def run_script_with_context(script_path, cwd, context):
     """
     _, extension = os.path.splitext(script_path)
 
-    with open(script_path, 'r', encoding='utf-8') as file:
+    with open(script_path, encoding='utf-8') as file:
         contents = file.read()
 
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
-        env = StrictEnvironment(context=context, keep_trailing_newline=True)
+        env = create_env_with_context(context)
         template = env.from_string(contents)
         output = template.render(**context)
         temp.write(output.encode('utf-8'))
@@ -114,7 +131,7 @@ def run_script_with_context(script_path, cwd, context):
     run_script(temp.name, cwd)
 
 
-def run_hook(hook_name, project_dir, context):
+def run_hook(hook_name: str, project_dir: str, context: dict[str, Any]) -> None:
     """
     Try to find and execute a hook from the specified project directory.
 
@@ -129,3 +146,59 @@ def run_hook(hook_name, project_dir, context):
     logger.debug('Running hook %s', hook_name)
     for script in scripts:
         run_script_with_context(script, project_dir, context)
+
+
+def run_hook_from_repo_dir(
+    repo_dir: str,
+    hook_name: str,
+    project_dir: str,
+    context: dict[str, Any],
+    delete_project_on_failure: bool,
+) -> None:
+    """Run hook from repo directory, clean project directory if hook fails.
+
+    :param repo_dir: Project template input directory.
+    :param hook_name: The hook to execute.
+    :param project_dir: The directory to execute the script from.
+    :param context: Cookiecutter project context.
+    :param delete_project_on_failure: Delete the project directory on hook
+        failure?
+    """
+    with work_in(repo_dir):
+        try:
+            run_hook(hook_name, project_dir, context)
+        except (
+            FailedHookException,
+            UndefinedError,
+        ):
+            if delete_project_on_failure:
+                rmtree(project_dir)
+            logger.error(
+                "Stopping generation because %s hook "
+                "script didn't exit successfully",
+                hook_name,
+            )
+            raise
+
+
+def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> os.PathLike[str] | Path:
+    """Run pre_prompt hook from repo directory.
+
+    :param repo_dir: Project template input directory.
+    """
+    # Check if we have a valid pre_prompt script
+    with work_in(repo_dir):
+        scripts = find_hook('pre_prompt')
+        if not scripts:
+            return repo_dir
+
+    # Create a temporary directory
+    repo_dir = create_tmp_repo_dir(repo_dir)
+    with work_in(repo_dir):
+        scripts = find_hook('pre_prompt') or []
+        for script in scripts:
+            try:
+                run_script(script, str(repo_dir))
+            except FailedHookException as e:  # noqa: PERF203
+                raise FailedHookException('Pre-Prompt Hook script failed') from e
+    return repo_dir

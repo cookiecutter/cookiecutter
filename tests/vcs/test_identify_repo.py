@@ -1,4 +1,5 @@
 """Collection of tests around repository type identification."""
+
 import pytest
 
 from cookiecutter import exceptions, vcs
@@ -24,14 +25,14 @@ from cookiecutter import exceptions, vcs
         ),
         ('https://bitbucket.org/foo/bar.hg', 'hg', 'https://bitbucket.org/foo/bar.hg'),
         (
-            'https://github.com/audreyr/cookiecutter-pypackage.git',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage.git',
             'git',
-            'https://github.com/audreyr/cookiecutter-pypackage.git',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage.git',
         ),
         (
-            'https://github.com/audreyr/cookiecutter-pypackage',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage',
             'git',
-            'https://github.com/audreyr/cookiecutter-pypackage',
+            'https://github.com/audreyfeldroy/cookiecutter-pypackage',
         ),
         (
             'git@gitorious.org:cookiecutter-gitorious/cookiecutter-gitorious.git',
@@ -45,7 +46,7 @@ from cookiecutter import exceptions, vcs
         ),
     ],
 )
-def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url):
+def test_identify_known_repo(repo_url, exp_repo_type, exp_repo_url) -> None:
     """Verify different correct repositories url syntax is correctly transformed."""
     assert vcs.identify_repo(repo_url) == (exp_repo_type, exp_repo_url)
 
@@ -64,7 +65,7 @@ def unknown_repo_type_url(request):
     return request.param
 
 
-def test_identify_raise_on_unknown_repo(unknown_repo_type_url):
+def test_identify_raise_on_unknown_repo(unknown_repo_type_url) -> None:
     """Verify different incorrect repositories url syntax trigger error raising."""
     with pytest.raises(exceptions.UnknownRepoType):
         vcs.identify_repo(unknown_repo_type_url)

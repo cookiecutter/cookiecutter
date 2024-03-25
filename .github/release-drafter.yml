@@ -1,3 +1,41 @@
+commitish: main
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
+category-template: '### $TITLE'
+version-resolver:
+  major:
+    labels:
+      - 'breaking-change'
+      - 'major'
+  minor:
+    labels:
+      - 'enhancement'
+      - 'feature'
+  patch:
+    labels:
+      - 'bug'
+      - 'CI/CD'
+      - 'code style'
+      - 'documentation'
+      - 'tests'
+      - 'patch'
+  default: patch
+autolabeler:
+  - label: 'CI/CD'
+    files:
+      - '.github/*'
+      - '.pre-commit-config.yaml'
+      - '*.cfg'
+      - '*.ini'
+      - 'setup.*'
+      - 'docs/conf.py'
+      - 'Makefile'
+      - 'make.bat'
+      - '*requirements*.txt'
+  - label: 'documentation'
+    files:
+      - '*.md'
+      - '*.rst'
 categories:
   - title: 'Breaking Changes'
     labels:
@@ -23,6 +61,8 @@ categories:
   - title: 'Deprecations'
     labels:
       - 'deprecated'
+sort-by: title
+sort-direction: ascending
 exclude-labels:
   - 'skip-changelog'
 template: |
@@ -30,6 +70,6 @@ template: |
 
   $CHANGES
 
-  ## This release is made by wonderfull contributors:
+  ### This release is made by wonderful contributors:
 
   $CONTRIBUTORS

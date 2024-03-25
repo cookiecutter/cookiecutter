@@ -1,4 +1,5 @@
 """Tests for cookiecutter's output directory customization feature."""
+
 import pytest
 
 from cookiecutter import main
@@ -18,38 +19,33 @@ def context():
 
 
 @pytest.fixture
-def output_dir(tmpdir):
-    """Fixture to prepare test output directory."""
-    return str(tmpdir.mkdir('output'))
-
-
-@pytest.fixture
-def template(tmpdir):
+def template(tmp_path):
     """Fixture to prepare test template directory."""
-    template_dir = tmpdir.mkdir('template')
-    template_dir.join('cookiecutter.json').ensure(file=True)
+    template_dir = tmp_path.joinpath("template")
+    template_dir.mkdir()
+    template_dir.joinpath('cookiecutter.json').touch()
     return str(template_dir)
 
 
 @pytest.fixture(autouse=True)
-def mock_gen_context(mocker, context):
+def mock_gen_context(mocker, context) -> None:
     """Fixture. Automatically mock cookiecutter's function with expected output."""
     mocker.patch('cookiecutter.main.generate_context', return_value=context)
 
 
 @pytest.fixture(autouse=True)
-def mock_prompt(mocker):
+def mock_prompt(mocker) -> None:
     """Fixture. Automatically mock cookiecutter's function with expected output."""
     mocker.patch('cookiecutter.main.prompt_for_config')
 
 
 @pytest.fixture(autouse=True)
-def mock_replay(mocker):
+def mock_replay(mocker) -> None:
     """Fixture. Automatically mock cookiecutter's function with expected output."""
     mocker.patch('cookiecutter.main.dump')
 
 
-def test_api_invocation(mocker, template, output_dir, context):
+def test_api_invocation(mocker, template, output_dir, context) -> None:
     """Verify output dir location is correctly passed."""
     mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
 
@@ -62,10 +58,11 @@ def test_api_invocation(mocker, template, output_dir, context):
         skip_if_file_exists=False,
         output_dir=output_dir,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 
-def test_default_output_dir(mocker, template, context):
+def test_default_output_dir(mocker, template, context) -> None:
     """Verify default output dir is current working folder."""
     mock_gen_files = mocker.patch('cookiecutter.main.generate_files')
 
@@ -78,4 +75,5 @@ def test_default_output_dir(mocker, template, context):
         skip_if_file_exists=False,
         output_dir='.',
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
