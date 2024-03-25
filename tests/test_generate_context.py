@@ -8,6 +8,7 @@ import pytest
 
 from cookiecutter import generate
 from cookiecutter.exceptions import ContextDecodingException
+from cookiecutter.prompt import YesNoPrompt
 
 
 def context_data():
@@ -362,3 +363,24 @@ def test_apply_overwrites_in_nested_dict_additional_values() -> None:
     )
 
     assert generated_context == expected_context
+
+
+@pytest.mark.parametrize(
+    "overwrite_value, expected",
+    [(bool_string, {'key': True}) for bool_string in YesNoPrompt.yes_choices]
+    + [(bool_string, {'key': False}) for bool_string in YesNoPrompt.no_choices],
+)
+def test_apply_overwrites_overwrite_value_as_boolean_string(overwrite_value, expected):
+    """Verify boolean conversion for valid overwrite values."""
+    context = {'key': not expected['key']}
+    overwrite_context = {'key': overwrite_value}
+    generate.apply_overwrites_to_context(context, overwrite_context)
+    assert context == expected
+
+
+def test_apply_overwrites_error_overwrite_value_as_boolean_string():
+    """Verify boolean conversion for invalid overwrite values."""
+    context = {'key': True}
+    overwrite_context = {'key': 'invalid'}
+    with pytest.raises(ValueError):
+        generate.apply_overwrites_to_context(context, overwrite_context)
