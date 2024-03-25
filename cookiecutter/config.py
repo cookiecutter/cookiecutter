@@ -14,7 +14,34 @@ from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfigur
 
 logger = logging.getLogger(__name__)
 
-USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+
+def _expand_path(path):
+    """Expand both environment variables and user home in the given path."""
+    path = os.path.expandvars(path)
+    path = os.path.expanduser(path)
+    return path
+
+
+def _find_first_path(paths):
+    """Find the first existing path from a list."""
+    logger.debug("_find_first_path: %s", paths)
+    for path in paths:
+        if path:
+            path = _expand_path(path)
+            logger.debug("Trying to load: %s", path)
+            if os.path.exists(path):
+                return path
+    return None
+
+
+USER_CONFIG_PATH = _find_first_path(
+    [
+        os.environ.get("COOKIECUTTER_USER_CONFIG_PATH"),
+        "$XDG_CONFIG_HOME/cookiecutter/cookiecutterrc",
+        "$XDG_CONFIG_HOME/cookiecutterrc",
+        os.path.expanduser('~/.cookiecutterrc'),
+    ]
+)
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
@@ -28,13 +55,6 @@ DEFAULT_CONFIG = {
     'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
-
-
-def _expand_path(path: str) -> str:
-    """Expand both environment variables and user home in the given path."""
-    path = os.path.expandvars(path)
-    path = os.path.expanduser(path)
-    return path
 
 
 def merge_configs(default, overwrite):
@@ -127,7 +147,7 @@ def get_user_config(
     except KeyError:
         # Load an optional user config if it exists
         # otherwise return the defaults
-        if os.path.exists(USER_CONFIG_PATH):
+        if USER_CONFIG_PATH and os.path.exists(USER_CONFIG_PATH):
             logger.debug("Loading config from %s.", USER_CONFIG_PATH)
             return get_config(USER_CONFIG_PATH)
         else:
