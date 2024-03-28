@@ -32,7 +32,7 @@ def version_msg() -> str:
     return f"Cookiecutter {__version__} from {location} (Python {python_version})"
 
 
-def validate_extra_context(ctx, param, value):
+def validate_extra_context(_ctx, _param, value):
     """Validate extra context."""
     for string in value:
         if '=' not in string:
