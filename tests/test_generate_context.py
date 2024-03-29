@@ -52,14 +52,14 @@ def context_data():
     yield context_with_default_and_extra
 
 
-@pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context', context_data())
+@pytest.mark.usefixtures('_clean_system')
+@pytest.mark.parametrize(('input_params', 'expected_context'), context_data())
 def test_generate_context(input_params, expected_context) -> None:
     """Verify input contexts combinations result in expected content on output."""
     assert generate.generate_context(**input_params) == expected_context
 
 
-@pytest.mark.usefixtures('clean_system')
+@pytest.mark.usefixtures('_clean_system')
 def test_generate_context_with_json_decoding_error() -> None:
     """Verify malformed JSON file generates expected error output."""
     with pytest.raises(ContextDecodingException) as excinfo:
@@ -127,7 +127,7 @@ def test_generate_context_decodes_non_ascii_chars() -> None:
     assert generated_context == expected_context
 
 
-@pytest.fixture
+@pytest.fixture()
 def template_context():
     """Fixture. Populates template content for future tests."""
     return OrderedDict(

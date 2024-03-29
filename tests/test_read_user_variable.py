@@ -8,7 +8,7 @@ VARIABLE = 'project_name'
 DEFAULT = 'Kivy Project'
 
 
-@pytest.fixture
+@pytest.fixture()
 def mock_prompt(mocker):
     """Return a mocked version of the 'Prompt.ask' function."""
     return mocker.patch('rich.prompt.Prompt.ask')

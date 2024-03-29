@@ -8,13 +8,13 @@ import pytest
 from cookiecutter import exceptions, repository
 
 
-@pytest.fixture
+@pytest.fixture()
 def template() -> str:
     """Fixture. Return simple string as template name."""
     return 'cookiecutter-pytest-plugin'
 
 
-@pytest.fixture
+@pytest.fixture()
 def cloned_cookiecutter_path(user_config_data, template):
     """Fixture. Prepare folder structure for tests in this file."""
     cookiecutters_dir = user_config_data['cookiecutters_dir']

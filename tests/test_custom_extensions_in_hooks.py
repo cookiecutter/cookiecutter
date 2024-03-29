@@ -22,7 +22,7 @@ def template(request) -> str:
 
 
 @pytest.fixture(autouse=True)
-def modify_syspath(monkeypatch) -> None:
+def _modify_syspath(monkeypatch) -> None:
     """Fixture. Make sure that the custom extension can be loaded."""
     monkeypatch.syspath_prepend('tests/test-extensions/hello_extension')
 

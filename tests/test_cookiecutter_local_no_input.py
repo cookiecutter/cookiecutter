@@ -7,33 +7,32 @@ verify result with different settings in `cookiecutter.json`.
 import os
 import textwrap
 from pathlib import Path
+from typing import Iterable
 
 import pytest
 
 from cookiecutter import main, utils
 
 
-@pytest.fixture(scope='function')
-def remove_additional_dirs(request) -> None:
+@pytest.fixture()
+def _remove_additional_dirs(request) -> Iterable[None]:
     """Fixture. Remove special directories which are created during the tests."""
+    yield
 
-    def fin_remove_additional_dirs() -> None:
-        if os.path.isdir('fake-project'):
-            utils.rmtree('fake-project')
-        if os.path.isdir('fake-project-extra'):
-            utils.rmtree('fake-project-extra')
-        if os.path.isdir('fake-project-templated'):
-            utils.rmtree('fake-project-templated')
-        if os.path.isdir('fake-project-dict'):
-            utils.rmtree('fake-project-dict')
-        if os.path.isdir('fake-tmp'):
-            utils.rmtree('fake-tmp')
-
-    request.addfinalizer(fin_remove_additional_dirs)
+    if os.path.isdir('fake-project'):
+        utils.rmtree('fake-project')
+    if os.path.isdir('fake-project-extra'):
+        utils.rmtree('fake-project-extra')
+    if os.path.isdir('fake-project-templated'):
+        utils.rmtree('fake-project-templated')
+    if os.path.isdir('fake-project-dict'):
+        utils.rmtree('fake-project-dict')
+    if os.path.isdir('fake-tmp'):
+        utils.rmtree('fake-tmp')
 
 
 @pytest.mark.parametrize('path', ['tests/fake-repo-pre/', 'tests/fake-repo-pre'])
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_no_input_return_project_dir(path) -> None:
     """Verify `cookiecutter` create project dir on input with or without slash."""
     project_dir = main.cookiecutter(path, no_input=True)
@@ -44,7 +43,7 @@ def test_cookiecutter_no_input_return_project_dir(path) -> None:
     assert not os.path.exists('fake-project/json/')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_no_input_extra_context() -> None:
     """Verify `cookiecutter` accept `extra_context` argument."""
     main.cookiecutter(
@@ -55,14 +54,14 @@ def test_cookiecutter_no_input_extra_context() -> None:
     assert os.path.isdir('fake-project-extra')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_templated_context() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     main.cookiecutter('tests/fake-repo-tmpl', no_input=True)
     assert os.path.isdir('fake-project-templated')
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_no_input_return_rendered_file() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
@@ -71,7 +70,7 @@ def test_cookiecutter_no_input_return_rendered_file() -> None:
     assert "Project name: **Fake Project**" in content
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_dict_values_in_context() -> None:
     """Verify configured dictionary from `cookiecutter.json` correctly unpacked."""
     project_dir = main.cookiecutter('tests/fake-repo-dict', no_input=True)
@@ -121,7 +120,7 @@ def test_cookiecutter_dict_values_in_context() -> None:
     )
 
 
-@pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
+@pytest.mark.usefixtures('_clean_system', '_remove_additional_dirs')
 def test_cookiecutter_template_cleanup(mocker) -> None:
     """Verify temporary folder for zip unpacking dropped."""
     mocker.patch('tempfile.mkdtemp', return_value='fake-tmp', autospec=True)

@@ -12,7 +12,7 @@ import pytest
 from cookiecutter import main
 
 
-@pytest.fixture
+@pytest.fixture()
 def output_dir(tmpdir):
     """Fixture. Create and return custom temp directory for test."""
     return str(tmpdir.mkdir('templates'))
