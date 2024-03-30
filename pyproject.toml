@@ -120,12 +120,11 @@ disallow_untyped_calls = false
 
 [[tool.mypy.overrides]]
 module = ["cookiecutter.cli"]
-disable_error_code = ["arg-type"]
+disable_error_code = ["misc"]
 
 [[tool.mypy.overrides]]
 module = [
     "cookiecutter.config",
-    "cookiecutter.cli",
     "cookiecutter.environment",
     "cookiecutter.extensions",
     "cookiecutter.main",

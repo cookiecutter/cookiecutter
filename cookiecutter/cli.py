@@ -1,9 +1,12 @@
 """Main `cookiecutter` CLI."""
 
+from __future__ import annotations
+
 import collections
 import json
 import os
 import sys
+from typing import Any, Literal
 
 import click
 
@@ -46,10 +49,12 @@ def validate_extra_context(ctx, param, value):
     return collections.OrderedDict(s.split('=', 1) for s in value) or None
 
 
-def list_installed_templates(default_config, passed_config_file) -> None:
+def list_installed_templates(
+    default_config: bool | dict[str, Any], passed_config_file: str | None
+) -> None:
     """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
     config = get_user_config(passed_config_file, default_config)
-    cookiecutter_folder = config.get('cookiecutters_dir')
+    cookiecutter_folder: str = config['cookiecutters_dir']
     if not os.path.exists(cookiecutter_folder):
         click.echo(
             f"Error: Cannot list installed templates. "
@@ -154,23 +159,23 @@ def list_installed_templates(default_config, passed_config_file) -> None:
     help='Do not delete project folder on failure',
 )
 def main(
-    template,
-    extra_context,
-    no_input,
-    checkout,
-    verbose,
-    replay,
-    overwrite_if_exists,
-    output_dir,
-    config_file,
-    default_config,
-    debug_file,
-    directory,
-    skip_if_file_exists,
-    accept_hooks,
-    replay_file,
-    list_installed,
-    keep_project_on_failure,
+    template: str,
+    extra_context: dict[str, Any],
+    no_input: bool,
+    checkout: str,
+    verbose: bool,
+    replay: bool | str,
+    overwrite_if_exists: bool,
+    output_dir: str,
+    config_file: str | None,
+    default_config: bool,
+    debug_file: str | None,
+    directory: str,
+    skip_if_file_exists: bool,
+    accept_hooks: Literal['yes', 'ask', 'no'],
+    replay_file: str | None,
+    list_installed: bool,
+    keep_project_on_failure: bool,
 ) -> None:
     """Create a project from a Cookiecutter project template (TEMPLATE).
 

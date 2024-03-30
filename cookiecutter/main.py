@@ -5,6 +5,8 @@ The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
 
+from __future__ import annotations
+
 import logging
 import os
 import sys
@@ -28,7 +30,7 @@ def cookiecutter(
     checkout=None,
     no_input=False,
     extra_context=None,
-    replay=None,
+    replay: bool | str | None = None,
     overwrite_if_exists=False,
     output_dir='.',
     config_file=None,
@@ -198,7 +200,7 @@ def cookiecutter(
 
 
 class _patch_import_path_for_repo:  # noqa: N801
-    def __init__(self, repo_dir: "os.PathLike[str]") -> None:
+    def __init__(self, repo_dir: os.PathLike[str]) -> None:
         self._repo_dir = f"{repo_dir}" if isinstance(repo_dir, Path) else repo_dir
         self._path = None
 
