@@ -6,11 +6,14 @@ import collections
 import copy
 import logging
 import os
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import yaml
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +40,7 @@ def _expand_path(path: str) -> str:
     return path
 
 
-def merge_configs(default, overwrite):
+def merge_configs(default: dict[str, Any], overwrite: dict[str, Any]) -> dict[str, Any]:
     """Recursively update a dict with the key/value pair of another.
 
     Dict values that are dictionaries themselves will be updated, whilst
@@ -56,7 +59,7 @@ def merge_configs(default, overwrite):
     return new_config
 
 
-def get_config(config_path):
+def get_config(config_path: Path | str) -> dict[str, Any]:
     """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException(f'Config file {config_path} does not exist.')
