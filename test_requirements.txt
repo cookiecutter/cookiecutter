@@ -5,4 +5,3 @@ freezegun
 safety
 pre-commit
 tox
-typing-extensions  # python <3.8 only

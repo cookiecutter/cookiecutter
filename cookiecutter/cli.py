@@ -6,10 +6,13 @@ import collections
 import json
 import os
 import sys
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from typing_extensions import Literal
+
 
 import click
-from typing_extensions import Literal
 
 from cookiecutter import __version__
 from cookiecutter.config import get_user_config
