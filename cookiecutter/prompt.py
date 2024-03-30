@@ -9,7 +9,7 @@ import sys
 from collections import OrderedDict
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Iterator
+from typing import TYPE_CHECKING, Any, Dict, Iterator, List
 
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
@@ -195,7 +195,7 @@ def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = "")
     return user_value
 
 
-_Raw: TypeAlias = bool | dict["_Raw", "_Raw"] | list["_Raw"] | str | None
+_Raw: TypeAlias = bool | Dict["_Raw", "_Raw"] | List["_Raw"] | str | None
 
 
 def render_variable(
