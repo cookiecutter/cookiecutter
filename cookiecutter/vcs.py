@@ -66,7 +66,7 @@ def is_vcs_installed(repo_type: str) -> bool:
 def clone(
     repo_url: str,
     checkout: str | None = None,
-    clone_to_dir: os.PathLike[str] | str = ".",
+    clone_to_dir: Path | str = ".",
     no_input: bool = False,
 ) -> str:
     """Clone a repo to the current directory.
