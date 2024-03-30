@@ -9,10 +9,11 @@ import sys
 from collections import OrderedDict
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Iterator, TypeAlias
+from typing import TYPE_CHECKING, Any, Iterator
 
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
+from typing_extensions import TypeAlias
 
 from cookiecutter.exceptions import UndefinedVariableInTemplate
 from cookiecutter.utils import create_env_with_context, rmtree
