@@ -83,86 +83,86 @@ def list_installed_templates(
         click.echo(f' * {name}')
 
 
-@click.command(context_settings={"help_option_names": ['-h', '--help']})  # type: ignore[misc]
-@click.version_option(__version__, '-V', '--version', message=version_msg())  # type: ignore[misc]
-@click.argument('template', required=False)  # type: ignore[misc]
-@click.argument('extra_context', nargs=-1, callback=validate_extra_context)  # type: ignore[misc]
-@click.option(  # type: ignore[misc]
+@click.command(context_settings={"help_option_names": ['-h', '--help']})
+@click.version_option(__version__, '-V', '--version', message=version_msg())
+@click.argument('template', required=False)
+@click.argument('extra_context', nargs=-1, callback=validate_extra_context)
+@click.option(
     '--no-input',
     is_flag=True,
     help='Do not prompt for parameters and only use cookiecutter.json file content. '
     'Defaults to deleting any cached resources and redownloading them. '
     'Cannot be combined with the --replay flag.',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '-c',
     '--checkout',
     help='branch, tag or commit to checkout after git clone',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--directory',
     help='Directory within repo that holds cookiecutter.json file '
     'for advanced repositories with multi templates in it',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '-v', '--verbose', is_flag=True, help='Print debug information', default=False
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--replay',
     is_flag=True,
     help='Do not prompt for parameters and only use information entered previously. '
     'Cannot be combined with the --no-input flag or with extra configuration passed.',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--replay-file',
     type=click.Path(),
     default=None,
     help='Use this file for replay instead of the default.',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '-f',
     '--overwrite-if-exists',
     is_flag=True,
     help='Overwrite the contents of the output directory if it already exists',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '-s',
     '--skip-if-file-exists',
     is_flag=True,
     help='Skip the files in the corresponding directories if they already exist',
     default=False,
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '-o',
     '--output-dir',
     default='.',
     type=click.Path(),
     help='Where to output the generated project dir into',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--config-file', type=click.Path(), default=None, help='User configuration file'
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--default-config',
     is_flag=True,
     help='Do not load a config file. Use the defaults instead',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--debug-file',
     type=click.Path(),
     default=None,
     help='File to be used as a stream for DEBUG logging',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--accept-hooks',
     type=click.Choice(['yes', 'ask', 'no']),
     default='yes',
     help='Accept pre/post hooks',
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '-l', '--list-installed', is_flag=True, help='List currently installed templates.'
 )
-@click.option(  # type: ignore[misc]
+@click.option(
     '--keep-project-on-failure',
     is_flag=True,
     help='Do not delete project folder on failure',
