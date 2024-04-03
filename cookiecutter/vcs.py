@@ -10,7 +10,7 @@ from shutil import which
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from typing import Literal
+    from typing_extensions import Literal
 
 from cookiecutter.exceptions import (
     RepositoryCloneFailed,

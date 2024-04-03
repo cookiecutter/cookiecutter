@@ -109,23 +109,13 @@ no_implicit_reexport = true
 
 [[tool.mypy.overrides]]
 module = [
-    "cookiecutter.cli",
     "cookiecutter.exceptions",
 ]
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = ["cookiecutter.cli"]
-disallow_untyped_calls = false
-
-[[tool.mypy.overrides]]
-module = ["cookiecutter.cli"]
-disable_error_code = ["arg-type"]
-
-[[tool.mypy.overrides]]
 module = [
     "cookiecutter.config",
-    "cookiecutter.cli",
     "cookiecutter.environment",
     "cookiecutter.extensions",
     "cookiecutter.main",
