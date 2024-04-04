@@ -55,6 +55,21 @@ Would output:
 
     {"a": true}
 
+It supports an optional ``indent`` param, the default value is ``4``:
+
+.. code-block:: jinja
+
+    {% {'a': True, 'foo': 'bar'} | jsonify(2) %}
+
+Would output:
+
+.. code-block:: json
+
+    {
+      "a": true,
+      "foo": "bar"
+    }
+
 Random string extension
 ~~~~~~~~~~~~~~~~~~~~~~~
 
