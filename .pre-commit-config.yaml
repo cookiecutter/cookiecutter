@@ -69,6 +69,7 @@ repos:
       - id: mypy
         additional_dependencies:
           - rich
+          - jinja2
           - click
           - types-python-slugify
           - types-PyYAML

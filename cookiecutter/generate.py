@@ -260,7 +260,7 @@ def generate_file(
 def render_and_create_dir(
     dirname: str,
     context: dict[str, Any],
-    output_dir: str | os.PathLike[str],
+    output_dir: Path | str,
     environment: Environment,
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:

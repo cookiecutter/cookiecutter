@@ -114,7 +114,6 @@ module = [
     "cookiecutter.extensions",
     "cookiecutter.main",
     "cookiecutter.prompt",
-    "cookiecutter.utils",
 ]
 ignore_errors = true
 
