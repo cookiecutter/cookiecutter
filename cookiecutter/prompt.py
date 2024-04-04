@@ -136,7 +136,7 @@ def read_user_choice(var_name: str, options, prompts=None, prefix=""):
 DEFAULT_DISPLAY = 'default'
 
 
-def process_json(user_value: str, default_value=None):
+def process_json(user_value: str):
     """Load user-supplied value as a JSON dict.
 
     :param user_value: User-supplied value to load as a JSON dict
@@ -161,9 +161,10 @@ class JsonPrompt(PromptBase[dict]):
     response_type = dict
     validate_error_message = "[prompt.invalid]  Please enter a valid JSON string"
 
-    def process_response(self, value: str) -> dict:
+    @staticmethod
+    def process_response(value: str) -> dict:
         """Convert choices to a dict."""
-        return process_json(value, self.default)
+        return process_json(value)
 
 
 def read_user_dict(var_name: str, default_value, prompts=None, prefix=""):

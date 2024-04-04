@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def force_delete(func, path, exc_info) -> None:  # type: ignore[no-untyped-def]
+def force_delete(func, path, _exc_info) -> None:  # type: ignore[no-untyped-def]
     """Error handler for `shutil.rmtree()` equivalent to `rm -rf`.
 
     Usage: `shutil.rmtree(path, onerror=force_delete)`

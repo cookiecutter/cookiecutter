@@ -16,7 +16,7 @@ target-version = "py37"
 select = [
     #    "A",      # flake8-builtins
     #    "ANN", # flake8-annotations
-    #    "ARG",    # flake8-unused-arguments
+    "ARG",   # flake8-unused-arguments
     "ASYNC", # flake8-async
     "B",     # flake8-bugbear
     #    "BLE",    # flake8-blind-except
@@ -30,7 +30,7 @@ select = [
     #    "ERA",    # flake8-eradicate
     "EXE", # flake8-executable
     "F",   # pyflakes
-    "FA", # flake8-future-annotations
+    "FA",  # flake8-future-annotations
     #    "FBT",    # boolean trap
     "FLY", # flynt
     #    "FURB", # refurb
@@ -42,7 +42,7 @@ select = [
     "LOG",  # flake8-logging
     "N",    # pep8-naming
     "PERF", # perflint
-    "PGH",    # pygrep-hooks
+    "PGH",  # pygrep-hooks
     #    "PIE",    # flake8-pie
     #    "PL",     # pylint
     #    "PT",     # flake8-pytest-style
