@@ -110,7 +110,7 @@ def test_should_not_load_json_from_sentinel(mocker) -> None:
 
 
 @pytest.mark.parametrize("input", ["\n", "\ndefault\n"])
-def test_read_user_dict_default_value(mocker, input) -> None:
+def test_read_user_dict_default_value(input) -> None:
     """Make sure that `read_user_dict` returns the default value.
 
     Verify return of a dict variable rather than the display value.

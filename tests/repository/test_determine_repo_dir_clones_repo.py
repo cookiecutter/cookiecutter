@@ -90,9 +90,7 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data) -> 
     assert project_dir == 'tests/fake-repo-tmpl'
 
 
-def test_repository_url_with_no_context_file(
-    mocker, template_url, user_config_data
-) -> None:
+def test_repository_url_with_no_context_file(mocker, template_url) -> None:
     """Verify cloned repository without `cookiecutter.json` file raises error."""
     mocker.patch(
         'cookiecutter.repository.clone',
