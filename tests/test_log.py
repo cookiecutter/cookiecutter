@@ -104,9 +104,7 @@ def test_debug_stdout_logging(caplog, debug_logger, debug_messages) -> None:
     assert stream_messages == debug_messages
 
 
-def test_debug_file_logging(
-    caplog, info_logger_with_file, debug_file, debug_messages
-) -> None:
+def test_debug_file_logging(info_logger_with_file, debug_file, debug_messages) -> None:
     """Test that logging to stdout uses a different format and level than \
     the the file handler."""
     [file_handler, stream_handler] = info_logger_with_file.handlers

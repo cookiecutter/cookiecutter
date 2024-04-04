@@ -17,7 +17,7 @@ from cookiecutter.environment import StrictEnvironment
 logger = logging.getLogger(__name__)
 
 
-def force_delete(func, path, exc_info) -> None:
+def force_delete(func, path, _exc_info) -> None:
     """Error handler for `shutil.rmtree()` equivalent to `rm -rf`.
 
     Usage: `shutil.rmtree(path, onerror=force_delete)`

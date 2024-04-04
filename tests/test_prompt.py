@@ -86,7 +86,7 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on text request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, prompts, prefix: default,
+            lambda _var, default, _prompts, _prefix: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -113,15 +113,15 @@ class TestPrompt:
         """Verify call `read_user_variable` on request when human-readable prompts."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, prompts, prefix: default,
+            lambda _var, default, _prompts, _prefix: default,
         )
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_yes_no',
-            lambda var, default, prompts, prefix: default,
+            lambda _var, default, _prompts, _prefix: default,
         )
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_choice',
-            lambda var, default, prompts, prefix: default,
+            lambda _var, default, _prompts, _prefix: default,
         )
 
         cookiecutter_dict = prompt.prompt_for_config(context)
@@ -161,7 +161,7 @@ class TestPrompt:
             },
         ],
     )
-    def test_prompt_for_config_with_human_choices(self, monkeypatch, context) -> None:
+    def test_prompt_for_config_with_human_choices(self, context) -> None:
         """Test prompts when human-readable labels for user choices."""
         runner = click.testing.CliRunner()
         with runner.isolation(input="\n\n\n"):
@@ -173,7 +173,7 @@ class TestPrompt:
         """Verify `prompt_for_config` call `read_user_variable` on dict request."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_dict',
-            lambda var, default, prompts, prefix: {"key": "value", "integer": 37},
+            lambda _var, _default, _prompts, _prefix: {"key": "value", "integer": 37},
         )
         context = {'cookiecutter': {'details': {}}}
 
@@ -288,7 +288,7 @@ class TestPrompt:
         """Verify Jinja2 templating works in unicode prompts."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default, prompts, prefix: default,
+            lambda _var, default, _prompts, _prefix: default,
         )
         context = {
             'cookiecutter': OrderedDict(
@@ -313,7 +313,7 @@ class TestPrompt:
         """Verify `read_user_variable` not called for private context variables."""
         monkeypatch.setattr(
             'cookiecutter.prompt.read_user_variable',
-            lambda var, default: pytest.fail(
+            lambda _var, _default: pytest.fail(
                 'Should not try to read a response for private context var'
             ),
         )
@@ -716,7 +716,7 @@ def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmp_path) -> None:
     """In `prompt_and_delete()`, if the user wants to keep their old \
     cloned template repo, it should not be deleted."""
 
-    def answer(question, default):
+    def answer(question, _default):
         return 'okay to delete' not in question
 
     mock_read_user = mocker.patch(

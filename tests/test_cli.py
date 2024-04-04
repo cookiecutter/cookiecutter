@@ -54,7 +54,7 @@ def remove_tmp_dir(request) -> None:
 
 
 @pytest.fixture
-def make_fake_project_dir(request) -> None:
+def make_fake_project_dir() -> None:
     """Create a fake project to be overwritten in the according tests."""
     os.makedirs('fake-project')
 
@@ -156,7 +156,7 @@ def test_cli_replay_file(mocker, cli_runner) -> None:
 
 
 @pytest.mark.usefixtures('remove_tmp_dir')
-def test_cli_replay_generated(mocker, cli_runner) -> None:
+def test_cli_replay_generated(cli_runner) -> None:
     """Test cli invocation correctly generates a project with replay."""
     template_path = 'tests/fake-repo-replay/'
     result = cli_runner(
@@ -480,7 +480,7 @@ def test_local_extension(tmpdir, cli_runner) -> None:
     assert 'FOOBAR' in content
 
 
-def test_local_extension_not_available(tmpdir, cli_runner) -> None:
+def test_local_extension_not_available() -> None:
     """Test handling of included but unavailable local extension."""
     context = {'cookiecutter': {'_extensions': ['foobar']}}
 
