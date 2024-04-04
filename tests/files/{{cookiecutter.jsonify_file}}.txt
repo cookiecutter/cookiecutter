@@ -1,1 +1,1 @@
-{{ cookiecutter | jsonify }}
+{{ cookiecutter | jsonify(4) }}
