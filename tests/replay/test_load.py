@@ -27,14 +27,14 @@ def test_type_error_if_no_template_name(replay_test_dir) -> None:
         replay.load(replay_test_dir, None)
 
 
-def test_value_error_if_key_missing_in_context(mocker, replay_test_dir) -> None:
+def test_value_error_if_key_missing_in_context(replay_test_dir) -> None:
     """Test that replay.load raises if the loaded context does not contain \
     'cookiecutter'."""
     with pytest.raises(ValueError):
         replay.load(replay_test_dir, 'invalid_replay')
 
 
-def test_io_error_if_no_replay_file(mocker, replay_test_dir) -> None:
+def test_io_error_if_no_replay_file(replay_test_dir) -> None:
     """Test that replay.load raises if it cannot find a replay file."""
     with pytest.raises(IOError):
         replay.load(replay_test_dir, 'no_replay')

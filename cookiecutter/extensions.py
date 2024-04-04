@@ -27,8 +27,8 @@ class JsonifyExtension(Extension):
         """Initialize the extension with the given environment."""
         super().__init__(environment)
 
-        def jsonify(obj: Any) -> str:
-            return json.dumps(obj, sort_keys=True, indent=4)
+        def jsonify(obj: Any, indent: int = 4) -> str:
+            return json.dumps(obj, sort_keys=True, indent=indent)
 
         environment.filters['jsonify'] = jsonify
 
