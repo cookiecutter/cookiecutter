@@ -77,11 +77,11 @@ class TestFindHooks:
 
     repo_path = 'tests/test-hooks'
 
-    def setup_method(self, method) -> None:
+    def setup_method(self, _method) -> None:
         """Find hooks related tests setup fixture."""
         self.post_hook = make_test_repo(self.repo_path)
 
-    def teardown_method(self, method) -> None:
+    def teardown_method(self, _method) -> None:
         """Find hooks related tests teardown fixture."""
         utils.rmtree(self.repo_path)
 
@@ -118,11 +118,11 @@ class TestExternalHooks:
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
-    def setup_method(self, method) -> None:
+    def setup_method(self, _method) -> None:
         """External hooks related tests setup fixture."""
         self.post_hook = make_test_repo(self.repo_path, multiple_hooks=True)
 
-    def teardown_method(self, method) -> None:
+    def teardown_method(self, _method) -> None:
         """External hooks related tests teardown fixture."""
         utils.rmtree(self.repo_path)
 

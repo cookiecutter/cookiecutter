@@ -138,7 +138,7 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg_regex) ->
     assert expected_msg_regex.match(str(exception.value))
 
 
-def test_generate_file_does_not_translate_lf_newlines_to_crlf(env, tmp_path) -> None:
+def test_generate_file_does_not_translate_lf_newlines_to_crlf(env) -> None:
     """Verify that file generation use same line ending, as in source file."""
     infile = 'tests/files/{{cookiecutter.generate_file}}_lf_newlines.txt'
     generate.generate_file(
@@ -174,7 +174,7 @@ def test_generate_file_does_not_translate_crlf_newlines_to_lf(env) -> None:
     assert f.newlines == '\r\n'
 
 
-def test_generate_file_handles_mixed_line_endings(env, tmp_path) -> None:
+def test_generate_file_handles_mixed_line_endings(env) -> None:
     """Verify that file generation gracefully handles mixed line endings."""
     infile = 'tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt'
     with open(infile, mode='w', encoding='utf-8', newline='') as f:

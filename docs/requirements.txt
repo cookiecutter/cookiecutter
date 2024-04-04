@@ -5,3 +5,4 @@ sphinx-autobuild>=2021.3.14
 Sphinx>=4.5.0
 sphinxcontrib-apidoc>=0.3.0
 sphinx-autodoc-typehints>=1.18.2
+typing-extensions
