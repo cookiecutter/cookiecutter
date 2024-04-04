@@ -16,7 +16,7 @@ class ExtensionLoaderMixin:
     the next parent class in line of the child.
     """
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, *, context: dict[str, Any] | None = None, **kwargs) -> None:
         """Initialize the Jinja2 Environment object while loading extensions.
 
         Does the following:
@@ -25,7 +25,7 @@ class ExtensionLoaderMixin:
         2. Reads extensions set in the cookiecutter.json _extensions key.
         3. Attempts to load the extensions. Provides useful error if fails.
         """
-        context = kwargs.pop('context', {})
+        context = context or {}
 
         default_extensions = [
             'cookiecutter.extensions.JsonifyExtension',

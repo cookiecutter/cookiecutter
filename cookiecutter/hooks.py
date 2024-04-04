@@ -181,7 +181,7 @@ def run_hook_from_repo_dir(
             raise
 
 
-def run_pre_prompt_hook(repo_dir: os.PathLike[str]) -> os.PathLike[str] | Path:
+def run_pre_prompt_hook(repo_dir: Path | str) -> Path | str:
     """Run pre_prompt hook from repo directory.
 
     :param repo_dir: Project template input directory.

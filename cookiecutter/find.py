@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def find_template(repo_dir: str | os.PathLike[str], env: Environment) -> Path:
+def find_template(repo_dir: Path | str, env: Environment) -> Path:
     """Determine which child directory of ``repo_dir`` is the project template.
 
     :param repo_dir: Local directory of newly cloned repo.

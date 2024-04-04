@@ -17,7 +17,7 @@ from cookiecutter.utils import make_sure_path_exists
 def unzip(
     zip_uri: str,
     is_url: bool,
-    clone_to_dir: os.PathLike[str] | str = ".",
+    clone_to_dir: Path | str = ".",
     no_input: bool = False,
     password: str | None = None,
 ) -> str:

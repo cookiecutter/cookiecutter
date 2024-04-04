@@ -4,10 +4,14 @@ from __future__ import annotations
 
 import os
 import re
+from typing import TYPE_CHECKING
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
 from cookiecutter.zipfile import unzip
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 REPO_REGEX = re.compile(
     r"""
@@ -66,7 +70,7 @@ def repository_has_cookiecutter_json(repo_directory: str) -> bool:
 def determine_repo_dir(
     template: str,
     abbreviations: dict[str, str],
-    clone_to_dir: os.PathLike[str],
+    clone_to_dir: Path | str,
     checkout: str,
     no_input: bool,
     password: str | None = None,
