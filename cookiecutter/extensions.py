@@ -134,12 +134,12 @@ class TimeExtension(Extension):
         d = d.shift(**shift_params)
 
         if datetime_format is None:
-            datetime_format = self.environment.datetime_format
+            datetime_format = self.environment.datetime_format  # type: ignore[attr-defined]
         return d.strftime(datetime_format)
 
     def _now(self, timezone: str, datetime_format: str | None) -> str:
         if datetime_format is None:
-            datetime_format = self.environment.datetime_format
+            datetime_format = self.environment.datetime_format  # type: ignore[attr-defined]
         return arrow.now(timezone).strftime(datetime_format)
 
     def parse(self, parser: Parser) -> nodes.Output:
