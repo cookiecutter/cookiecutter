@@ -1,5 +1,7 @@
 """Functions for prompting the user for project info."""
 
+from __future__ import annotations
+
 import json
 import os
 import re
@@ -7,13 +9,17 @@ import sys
 from collections import OrderedDict
 from itertools import starmap
 from pathlib import Path
+from typing import TYPE_CHECKING, Any, Dict, Iterator, List, Union
 
-from jinja2 import Environment
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
+from typing_extensions import TypeAlias
 
 from cookiecutter.exceptions import UndefinedVariableInTemplate
 from cookiecutter.utils import create_env_with_context, rmtree
+
+if TYPE_CHECKING:
+    from jinja2 import Environment
 
 
 def read_user_variable(var_name: str, default_value, prompts=None, prefix: str = ""):
@@ -83,7 +89,7 @@ def read_repo_password(question: str) -> str:
     return Prompt.ask(question, password=True)
 
 
-def read_user_choice(var_name: str, options, prompts=None, prefix=""):
+def read_user_choice(var_name: str, options, prompts=None, prefix: str = ""):
     """Prompt the user to choose from several options for the given variable.
 
     The first item will be returned if no input happens.
@@ -103,7 +109,7 @@ def read_user_choice(var_name: str, options, prompts=None, prefix=""):
 
     question = f"Select {var_name}"
 
-    choice_lines = starmap(
+    choice_lines: Iterator[str] = starmap(
         "    [bold magenta]{}[/] - [bold]{}[/]".format, choice_map.items()
     )
 
@@ -162,12 +168,12 @@ class JsonPrompt(PromptBase[dict]):
     validate_error_message = "[prompt.invalid]  Please enter a valid JSON string"
 
     @staticmethod
-    def process_response(value: str) -> dict:
+    def process_response(value: str) -> dict[str, Any]:
         """Convert choices to a dict."""
         return process_json(value)
 
 
-def read_user_dict(var_name: str, default_value, prompts=None, prefix=""):
+def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = ""):
     """Prompt the user to provide a dictionary of data.
 
     :param var_name: Variable as specified in the context
@@ -190,7 +196,14 @@ def read_user_dict(var_name: str, default_value, prompts=None, prefix=""):
     return user_value
 
 
-def render_variable(env: Environment, raw, cookiecutter_dict):
+_Raw: TypeAlias = Union[bool, Dict["_Raw", "_Raw"], List["_Raw"], str, None]
+
+
+def render_variable(
+    env: Environment,
+    raw: _Raw,
+    cookiecutter_dict: dict[str, Any],
+) -> str:
     """Render the next variable to be displayed in the user prompt.
 
     Inside the prompting taken from the cookiecutter.json file, this renders
@@ -237,7 +250,9 @@ def _prompts_from_options(options: dict) -> dict:
     return prompts
 
 
-def prompt_choice_for_template(key, options, no_input):
+def prompt_choice_for_template(
+    key: str, options: dict, no_input: bool
+) -> OrderedDict[str, Any]:
     """Prompt user with a set of options to choose from.
 
     :param no_input: Do not prompt for user input and return the first available option.
@@ -248,8 +263,14 @@ def prompt_choice_for_template(key, options, no_input):
 
 
 def prompt_choice_for_config(
-    cookiecutter_dict, env, key, options, no_input: bool, prompts=None, prefix: str = ""
-):
+    cookiecutter_dict: dict[str, Any],
+    env: Environment,
+    key: str,
+    options,
+    no_input: bool,
+    prompts=None,
+    prefix: str = "",
+) -> OrderedDict[str, Any] | str:
     """Prompt user with a set of options to choose from.
 
     :param no_input: Do not prompt for user input and return the first available option.
@@ -260,7 +281,9 @@ def prompt_choice_for_config(
     return read_user_choice(key, rendered_options, prompts, prefix)
 
 
-def prompt_for_config(context, no_input=False):
+def prompt_for_config(
+    context: dict[str, Any], no_input: bool = False
+) -> OrderedDict[str, Any]:
     """Prompt user to enter a new config.
 
     :param dict context: Source for field names and sample values.
@@ -340,7 +363,9 @@ def prompt_for_config(context, no_input=False):
     return cookiecutter_dict
 
 
-def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False) -> str:
+def choose_nested_template(
+    context: dict[str, Any], repo_dir: Path | str, no_input: bool = False
+) -> str:
     """Prompt user to select the nested template to use.
 
     :param context: Source for field names and sample values.
@@ -348,7 +373,7 @@ def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False)
     :param no_input: Do not prompt for user input and use only values from context.
     :returns: Path to the selected template.
     """
-    cookiecutter_dict = OrderedDict([])
+    cookiecutter_dict: OrderedDict[str, Any] = OrderedDict([])
     env = create_env_with_context(context)
     prefix = ""
     prompts = context['cookiecutter'].pop('__prompts__', {})
@@ -377,7 +402,7 @@ def choose_nested_template(context: dict, repo_dir: str, no_input: bool = False)
     return f"{template_path}"
 
 
-def prompt_and_delete(path, no_input=False) -> bool:
+def prompt_and_delete(path: Path | str, no_input: bool = False) -> bool:
     """
     Ask user if it's okay to delete the previously-downloaded file/directory.
 
