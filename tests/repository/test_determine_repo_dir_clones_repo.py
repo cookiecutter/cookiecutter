@@ -102,7 +102,7 @@ def test_repository_url_with_no_context_file(mocker, template_url) -> None:
         repository.determine_repo_dir(
             template_url,
             abbreviations={},
-            clone_to_dir=None,
+            clone_to_dir=None,  # type: ignore[arg-type]
             checkout=None,
             no_input=True,
         )

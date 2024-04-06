@@ -9,7 +9,7 @@ import pytest
 from click.testing import CliRunner
 
 from cookiecutter import utils
-from cookiecutter.__main__ import main
+from cookiecutter.cli import main
 from cookiecutter.environment import StrictEnvironment
 from cookiecutter.exceptions import UnknownExtension
 from cookiecutter.main import cookiecutter

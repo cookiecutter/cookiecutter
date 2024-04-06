@@ -12,7 +12,7 @@ import pytest
 from cookiecutter import exceptions, hooks, utils
 
 
-def make_test_repo(name, multiple_hooks=False):
+def make_test_repo(name: str, multiple_hooks: bool = False) -> str:
     """Create test repository for test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
@@ -90,10 +90,12 @@ class TestFindHooks:
         with utils.work_in(self.repo_path):
             expected_pre = os.path.abspath('hooks/pre_gen_project.py')
             actual_hook_path = hooks.find_hook('pre_gen_project')
+            assert actual_hook_path
             assert expected_pre == actual_hook_path[0]
 
             expected_post = os.path.abspath(f'hooks/{self.post_hook}')
             actual_hook_path = hooks.find_hook('post_gen_project')
+            assert actual_hook_path
             assert expected_post == actual_hook_path[0]
 
     def test_no_hooks(self) -> None:

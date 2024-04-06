@@ -1,8 +1,11 @@
 """Verify generate context behaviour and context overwrite priorities."""
 
+from __future__ import annotations
+
 import os
 import re
 from collections import OrderedDict
+from typing import Any, Iterator
 
 import pytest
 
@@ -11,7 +14,7 @@ from cookiecutter.exceptions import ContextDecodingException
 from cookiecutter.prompt import YesNoPrompt
 
 
-def context_data():
+def context_data() -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
     """Generate pytest parametrization variables for test.
 
     Return ('input_params, expected_context') tuples.

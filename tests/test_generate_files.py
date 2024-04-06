@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 from binaryornot.check import is_binary
+from jinja2 import Environment
 
 from cookiecutter import exceptions, generate
 
@@ -446,6 +447,6 @@ def test_raise_empty_dir_name(output_dir, undefined_context):
             dirname='',
             output_dir=output_dir,
             context=undefined_context,
-            environment=None,
+            environment=Environment(autoescape=True),
         )
     assert not Path(output_dir).joinpath('testproject').exists()

@@ -79,7 +79,7 @@ def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
     return scripts
 
 
-def run_script(script_path: str, cwd: str = '.') -> None:
+def run_script(script_path: str, cwd: Path | str = '.') -> None:
     """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
@@ -109,7 +109,7 @@ def run_script(script_path: str, cwd: str = '.') -> None:
 
 
 def run_script_with_context(
-    script_path: str, cwd: str, context: dict[str, Any]
+    script_path: Path | str, cwd: Path | str, context: dict[str, Any]
 ) -> None:
     """Execute a script after rendering it with Jinja.
 
@@ -131,7 +131,7 @@ def run_script_with_context(
     run_script(temp.name, cwd)
 
 
-def run_hook(hook_name: str, project_dir: str, context: dict[str, Any]) -> None:
+def run_hook(hook_name: str, project_dir: Path | str, context: dict[str, Any]) -> None:
     """
     Try to find and execute a hook from the specified project directory.
 
@@ -149,9 +149,9 @@ def run_hook(hook_name: str, project_dir: str, context: dict[str, Any]) -> None:
 
 
 def run_hook_from_repo_dir(
-    repo_dir: str,
+    repo_dir: Path | str,
     hook_name: str,
-    project_dir: str,
+    project_dir: Path | str,
     context: dict[str, Any],
     delete_project_on_failure: bool,
 ) -> None:

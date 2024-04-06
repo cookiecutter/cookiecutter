@@ -71,6 +71,7 @@ repos:
           - rich
           - jinja2
           - click
+          - pytest
           - types-python-slugify
           - types-PyYAML
           - types-requests
