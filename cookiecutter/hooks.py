@@ -8,7 +8,8 @@ import os
 import subprocess
 import sys
 import tempfile
-from typing import TYPE_CHECKING, Any
+from pathlib import Path
+from typing import Any
 
 from jinja2.exceptions import UndefinedError
 
@@ -20,9 +21,6 @@ from cookiecutter.utils import (
     rmtree,
     work_in,
 )
-
-if TYPE_CHECKING:
-    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -118,8 +116,7 @@ def run_script_with_context(
     """
     _, extension = os.path.splitext(script_path)
 
-    with open(script_path, encoding='utf-8') as file:
-        contents = file.read()
+    contents = Path(script_path).read_text(encoding='utf-8')
 
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
         env = create_env_with_context(context)

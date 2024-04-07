@@ -33,7 +33,7 @@ select = [
     "FA",  # flake8-future-annotations
     #    "FBT",    # boolean trap
     "FLY", # flynt
-    #    "FURB", # refurb
+        "FURB", # refurb
     #    "G",      # flake8-logging-format
     "I",    # isort
     "ICN",  # flake8-import-conventions
