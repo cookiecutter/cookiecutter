@@ -26,7 +26,7 @@ select = [
     #    "D", # pydocstyle
     "DTZ", # flake8-datetimez
     "E",   # pycodestyle errors
-    #    "EM",     # flake8-errmsg
+    "EM",  # flake8-errmsg
     #    "ERA",    # flake8-eradicate
     "EXE", # flake8-executable
     "F",   # pyflakes

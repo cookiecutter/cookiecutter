@@ -39,7 +39,8 @@ class ExtensionLoaderMixin:
         try:
             super().__init__(extensions=extensions, **kwargs)  #  type: ignore[call-arg]
         except ImportError as err:
-            raise UnknownExtension(f'Unable to load extension: {err}') from err
+            msg = f'Unable to load extension: {err}'
+            raise UnknownExtension(msg) from err
 
     def _read_extensions(self, context: dict[str, Any]) -> list[str]:
         """Return list of extensions as str to be passed on to the Jinja2 env.

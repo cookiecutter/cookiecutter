@@ -125,15 +125,17 @@ def clone(
         except subprocess.CalledProcessError as clone_error:
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
-                raise RepositoryNotFound(
+                msg = (
                     f'The repository {repo_url} could not be found, '
                     'have you made a typo?'
-                ) from clone_error
+                )
+                raise RepositoryNotFound(msg) from clone_error
             if any(error in output for error in BRANCH_ERRORS):
-                raise RepositoryCloneFailed(
+                msg = (
                     f'The {checkout} branch of repository '
                     f'{repo_url} could not found, have you made a typo?'
-                ) from clone_error
+                )
+                raise RepositoryCloneFailed(msg) from clone_error
             logger.error('git clone failed with error: %s', output)
             raise
 

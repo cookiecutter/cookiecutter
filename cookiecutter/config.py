@@ -62,20 +62,19 @@ def merge_configs(default: dict[str, Any], overwrite: dict[str, Any]) -> dict[st
 def get_config(config_path: Path | str) -> dict[str, Any]:
     """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
-        raise ConfigDoesNotExistException(f'Config file {config_path} does not exist.')
+        msg = f'Config file {config_path} does not exist.'
+        raise ConfigDoesNotExistException(msg)
 
     logger.debug('config_path is %s', config_path)
     with open(config_path, encoding='utf-8') as file_handle:
         try:
             yaml_dict = yaml.safe_load(file_handle) or {}
         except yaml.YAMLError as e:
-            raise InvalidConfiguration(
-                f'Unable to parse YAML file {config_path}.'
-            ) from e
+            msg = f'Unable to parse YAML file {config_path}.'
+            raise InvalidConfiguration(msg) from e
         if not isinstance(yaml_dict, dict):
-            raise InvalidConfiguration(
-                f'Top-level element of YAML file {config_path} should be an object.'
-            )
+            msg = f'Top-level element of YAML file {config_path} should be an object.'
+            raise InvalidConfiguration(msg)
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 

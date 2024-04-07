@@ -48,7 +48,8 @@ def make_sure_path_exists(path: Path | str) -> None:
     try:
         Path(path).mkdir(parents=True, exist_ok=True)
     except OSError as error:
-        raise OSError(f'Unable to create directory at {path}') from error
+        msg = f'Unable to create directory at {path}'
+        raise OSError(msg) from error
 
 
 @contextlib.contextmanager

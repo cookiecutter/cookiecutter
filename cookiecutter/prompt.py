@@ -148,11 +148,13 @@ def process_json(user_value: str):
         user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
     except Exception as error:
         # Leave it up to click to ask the user again
-        raise InvalidResponse('Unable to decode to JSON.') from error
+        msg = 'Unable to decode to JSON.'
+        raise InvalidResponse(msg) from error
 
     if not isinstance(user_dict, dict):
         # Leave it up to click to ask the user again
-        raise InvalidResponse('Requires JSON dict.')
+        msg = 'Requires JSON dict.'
+        raise InvalidResponse(msg)
 
     return user_dict
 
@@ -391,7 +393,8 @@ def choose_nested_template(
 
     template = Path(template) if template else None
     if not (template and not template.is_absolute()):
-        raise ValueError("Illegal template path")
+        msg = "Illegal template path"
+        raise ValueError(msg)
 
     repo_dir = Path(repo_dir).resolve()
     template_path = (repo_dir / template).resolve()

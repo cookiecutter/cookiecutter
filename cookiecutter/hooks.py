@@ -97,15 +97,14 @@ def run_script(script_path: str, cwd: Path | str = '.') -> None:
         proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
-            raise FailedHookException(
-                f'Hook script failed (exit status: {exit_status})'
-            )
+            msg = f'Hook script failed (exit status: {exit_status})'
+            raise FailedHookException(msg)
     except OSError as err:
         if err.errno == errno.ENOEXEC:
-            raise FailedHookException(
-                'Hook script failed, might be an empty file or missing a shebang'
-            ) from err
-        raise FailedHookException(f'Hook script failed (error: {err})') from err
+            msg = 'Hook script failed, might be an empty file or missing a shebang'
+            raise FailedHookException(msg) from err
+        msg = f'Hook script failed (error: {err})'
+        raise FailedHookException(msg) from err
 
 
 def run_script_with_context(
@@ -200,5 +199,6 @@ def run_pre_prompt_hook(repo_dir: Path | str) -> Path | str:
             try:
                 run_script(script, str(repo_dir))
             except FailedHookException as e:  # noqa: PERF203
-                raise FailedHookException('Pre-Prompt Hook script failed') from e
+                msg = 'Pre-Prompt Hook script failed'
+                raise FailedHookException(msg) from e
     return repo_dir
