@@ -427,9 +427,7 @@ def prompt_and_delete(path: Path | str, no_input: bool = False) -> bool:
         else:
             os.remove(path)
         return True
-    ok_to_reuse = read_user_yes_no(
-        "Do you want to re-use the existing version?", 'yes'
-    )
+    ok_to_reuse = read_user_yes_no("Do you want to re-use the existing version?", 'yes')
 
     if ok_to_reuse:
         return False

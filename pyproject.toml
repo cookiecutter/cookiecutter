@@ -49,12 +49,12 @@ select = [
     #    "PTH",    # flake8-use-pathlib
     #    "PYI",    # flake8-pyi
     #    "Q",      # flake8-quotes
-    "RET", # flake8-return
-    "RSE", # flake8-raise
-    "RUF", # Ruff-specific lints
-    "S",   # flake8-bandit
-    "SIM", # flake8-simplify
-    #    "SLF",    # flake8-self
+    "RET",  # flake8-return
+    "RSE",  # flake8-raise
+    "RUF",  # Ruff-specific lints
+    "S",    # flake8-bandit
+    "SIM",  # flake8-simplify
+    "SLF",  # flake8-self
     "SLOT", # flake8-slots
     #    "T20",    # flake8-print
     "TCH",    # flake8-type-checking
