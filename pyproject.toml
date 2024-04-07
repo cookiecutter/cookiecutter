@@ -14,7 +14,7 @@ target-version = "py37"
 [tool.ruff.lint]
 
 select = [
-    #    "A",      # flake8-builtins
+    "A", # flake8-builtins
     #    "ANN", # flake8-annotations
     "ARG",   # flake8-unused-arguments
     "ASYNC", # flake8-async

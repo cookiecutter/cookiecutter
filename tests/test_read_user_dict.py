@@ -109,14 +109,14 @@ def test_should_not_load_json_from_sentinel(mocker) -> None:
     mock_json_loads.assert_not_called()
 
 
-@pytest.mark.parametrize("input", ["\n", "\ndefault\n"])
-def test_read_user_dict_default_value(input) -> None:
+@pytest.mark.parametrize("value", ["\n", "\ndefault\n"])
+def test_read_user_dict_default_value(value) -> None:
     """Make sure that `read_user_dict` returns the default value.
 
     Verify return of a dict variable rather than the display value.
     """
     runner = click.testing.CliRunner()
-    with runner.isolation(input=input):
+    with runner.isolation(input=value):
         val = read_user_dict('name', {'project_slug': 'pytest-plugin'})
 
     assert val == {'project_slug': 'pytest-plugin'}
