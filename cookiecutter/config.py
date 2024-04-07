@@ -36,8 +36,7 @@ DEFAULT_CONFIG = {
 def _expand_path(path: str) -> str:
     """Expand both environment variables and user home in the given path."""
     path = os.path.expandvars(path)
-    path = os.path.expanduser(path)
-    return path
+    return os.path.expanduser(path)
 
 
 def merge_configs(default: dict[str, Any], overwrite: dict[str, Any]) -> dict[str, Any]:
@@ -132,9 +131,8 @@ def get_user_config(
         if os.path.exists(USER_CONFIG_PATH):
             logger.debug("Loading config from %s.", USER_CONFIG_PATH)
             return get_config(USER_CONFIG_PATH)
-        else:
-            logger.debug("User config not found. Loading default config.")
-            return copy.copy(DEFAULT_CONFIG)
+        logger.debug("User config not found. Loading default config.")
+        return copy.copy(DEFAULT_CONFIG)
     else:
         # There is a config environment variable. Try to load it.
         # Do not check for existence, so invalid file paths raise an error.
