@@ -112,7 +112,6 @@ no_implicit_reexport = true
 module = [
     "cookiecutter.environment",
     "cookiecutter.extensions",
-    "cookiecutter.main",
     "cookiecutter.prompt",
 ]
 ignore_errors = true
