@@ -136,7 +136,7 @@ def clone(
                     f'{repo_url} could not found, have you made a typo?'
                 )
                 raise RepositoryCloneFailed(msg) from clone_error
-            logger.error('git clone failed with error: %s', output)
+            logger.exception('git clone failed with error: %s', output)
             raise
 
     return repo_dir
