@@ -57,12 +57,12 @@ select = [
     "SLF",  # flake8-self
     "SLOT", # flake8-slots
     #    "T20",    # flake8-print
-    "TCH",    # flake8-type-checking
-    "TID252", # ban relative imports
-    "TRY",    # tryceratops
-    "UP",     # pyupgrade
-    "W",      # pycodestyle warnings
-    "YTT",    # flake8-2020
+    "TCH", # flake8-type-checking
+    "TID", # ban relative imports
+    "TRY", # tryceratops
+    "UP",  # pyupgrade
+    "W",   # pycodestyle warnings
+    "YTT", # flake8-2020
 ]
 
 # pydocstyle.convention = "google"
