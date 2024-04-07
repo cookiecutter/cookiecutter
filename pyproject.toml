@@ -43,7 +43,7 @@ select = [
     "N",    # pep8-naming
     "PERF", # perflint
     "PGH",  # pygrep-hooks
-    #    "PIE",    # flake8-pie
+    "PIE",  # flake8-pie
     #    "PL",     # pylint
     #    "PT",     # flake8-pytest-style
     #    "PTH",    # flake8-use-pathlib
