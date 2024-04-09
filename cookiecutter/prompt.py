@@ -98,6 +98,9 @@ def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = "
     :param list options: Sequence of options that are available to select from
     :return: Exactly one item of ``options`` that has been chosen by the user
     """
+    if not options:
+        raise ValueError
+
     choice_map = OrderedDict((f'{i}', value) for i, value in enumerate(options, 1))
     choices = choice_map.keys()
 

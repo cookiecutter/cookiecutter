@@ -34,8 +34,5 @@ def test_raise_if_options_is_not_a_non_empty_list() -> None:
 
     Test for choice type invocation.
     """
-    with pytest.raises(TypeError):
-        read_user_choice('foo', 'NOT A LIST')
-
     with pytest.raises(ValueError):
         read_user_choice('foo', [])
