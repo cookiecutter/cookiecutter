@@ -71,7 +71,7 @@ def determine_repo_dir(
     template: str,
     abbreviations: dict[str, str],
     clone_to_dir: Path | str,
-    checkout: str,
+    checkout: str | None,
     no_input: bool,
     password: str | None = None,
     directory: str | None = None,
