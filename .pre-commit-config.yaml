@@ -68,10 +68,11 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies:
+          - arrow
           - rich
           - jinja2
           - click
-          - types-python-slugify
+          - python-slugify
           - types-PyYAML
           - types-requests
         pass_filenames: false

@@ -110,8 +110,6 @@ no_implicit_reexport = true
 
 [[tool.mypy.overrides]]
 module = [
-    "cookiecutter.environment",
-    "cookiecutter.extensions",
     "cookiecutter.prompt",
 ]
 ignore_errors = true
