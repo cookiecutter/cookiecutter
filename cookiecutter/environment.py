@@ -37,7 +37,7 @@ class ExtensionLoaderMixin:
         extensions = default_extensions + self._read_extensions(context)
 
         try:
-            super().__init__(extensions=extensions, **kwargs)  #  type: ignore[call-arg]
+            super().__init__(extensions=extensions, **kwargs)  # type: ignore[call-arg]
         except ImportError as err:
             msg = f'Unable to load extension: {err}'
             raise UnknownExtension(msg) from err
