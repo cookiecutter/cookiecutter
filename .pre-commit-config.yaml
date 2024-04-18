@@ -73,7 +73,6 @@ repos:
           - jinja2
           - click
           - pytest
-          - types-python-slugify
           - python-slugify
           - types-PyYAML
           - types-requests
