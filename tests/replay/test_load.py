@@ -21,12 +21,6 @@ def replay_file(replay_test_dir, template_name):
     return os.path.join(replay_test_dir, file_name)
 
 
-def test_type_error_if_no_template_name(replay_test_dir) -> None:
-    """Test that replay.load raises if the template_name is not a valid str."""
-    with pytest.raises(TypeError):
-        replay.load(replay_test_dir, None)
-
-
 def test_value_error_if_key_missing_in_context(replay_test_dir) -> None:
     """Test that replay.load raises if the loaded context does not contain \
     'cookiecutter'."""

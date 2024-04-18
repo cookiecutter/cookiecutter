@@ -297,7 +297,7 @@ def render_and_create_dir(
 def _run_hook_from_repo_dir(
     repo_dir: str,
     hook_name: str,
-    project_dir: str,
+    project_dir: Path | str,
     context: dict[str, Any],
     delete_project_on_failure: bool,
 ) -> None:
@@ -322,9 +322,9 @@ def _run_hook_from_repo_dir(
 
 
 def generate_files(
-    repo_dir: str,
+    repo_dir: Path | str,
     context: dict[str, Any] | None = None,
-    output_dir: str = '.',
+    output_dir: Path | str = '.',
     overwrite_if_exists: bool = False,
     skip_if_file_exists: bool = False,
     accept_hooks: bool = True,

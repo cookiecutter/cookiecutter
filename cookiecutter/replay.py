@@ -27,12 +27,6 @@ def dump(replay_dir: Path | str, template_name: str, context: dict[str, Any]) ->
     """Write json data to file."""
     make_sure_path_exists(replay_dir)
 
-    if not isinstance(template_name, str):
-        raise TypeError('Template name is required to be of type str')
-
-    if not isinstance(context, dict):
-        raise TypeError('Context is required to be of type dict')
-
     if 'cookiecutter' not in context:
         raise ValueError('Context is required to contain a cookiecutter key')
 
@@ -44,9 +38,6 @@ def dump(replay_dir: Path | str, template_name: str, context: dict[str, Any]) ->
 
 def load(replay_dir: Path | str, template_name: str) -> dict[str, Any]:
     """Read json data from file."""
-    if not isinstance(template_name, str):
-        raise TypeError('Template name is required to be of type str')
-
     replay_file = get_file_name(replay_dir, template_name)
 
     with open(replay_file, encoding="utf-8") as infile:

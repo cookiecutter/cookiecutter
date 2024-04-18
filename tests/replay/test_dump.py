@@ -32,18 +32,6 @@ def remove_replay_dump(request, replay_file) -> None:
     request.addfinalizer(fin_remove_replay_file)
 
 
-def test_type_error_if_no_template_name(replay_test_dir, context) -> None:
-    """Test that replay.dump raises if the template_name is not a valid str."""
-    with pytest.raises(TypeError):
-        replay.dump(replay_test_dir, None, context)
-
-
-def test_type_error_if_not_dict_context(replay_test_dir, template_name) -> None:
-    """Test that replay.dump raises if the context is not of type dict."""
-    with pytest.raises(TypeError):
-        replay.dump(replay_test_dir, template_name, 'not_a_dict')
-
-
 def test_value_error_if_key_missing_in_context(replay_test_dir, template_name) -> None:
     """Test that replay.dump raises if the context does not contain a key \
     named 'cookiecutter'."""

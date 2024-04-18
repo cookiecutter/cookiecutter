@@ -205,7 +205,7 @@ def output_dir(tmp_path) -> str:
 
 
 @pytest.fixture
-def clone_dir(tmp_path) -> Path:
+def clone_dir(tmp_path: Path) -> Path:
     """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
     Returns a str to said directory."""
     clone_dir = tmp_path.joinpath("clone_dir")

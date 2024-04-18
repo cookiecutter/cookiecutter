@@ -1,10 +1,13 @@
 """Tests for `cookiecutter.prompt` module."""
 
+from __future__ import annotations
+
 import json
 import platform
 import sys
 from collections import OrderedDict
 from pathlib import Path
+from typing import Any
 
 import click
 import pytest
@@ -175,7 +178,7 @@ class TestPrompt:
             'cookiecutter.prompt.read_user_dict',
             lambda _var, _default, _prompts, _prefix: {"key": "value", "integer": 37},
         )
-        context = {'cookiecutter': {'details': {}}}
+        context: dict[str, Any] = {'cookiecutter': {'details': {}}}
 
         cookiecutter_dict = prompt.prompt_for_config(context)
         assert cookiecutter_dict == {'details': {'key': 'value', 'integer': 37}}
@@ -588,7 +591,7 @@ def test_undefined_variable(context) -> None:
         ["fake-nested-templates-old-style", "fake-package"],
     ],
 )
-def test_cookiecutter_nested_templates(template_dir: str, expected: str) -> None:
+def test_cookiecutter_nested_templates(template_dir: str, expected: Path | str) -> None:
     """Test nested_templates generation."""
     from cookiecutter import prompt
 

@@ -104,7 +104,8 @@ exclude = ["tests/hooks-abort-render/hooks/*"]
 [tool.mypy]
 strict = true
 show_error_codes = true
-files = "cookiecutter"
+files = ["cookiecutter", "tests"]
+exclude = "(?x)(/hooks/ | tests/test-output-folder/)"
 no_implicit_reexport = true
 
 
@@ -114,6 +115,16 @@ module = [
 ]
 ignore_errors = true
 
+[[tool.mypy.overrides]]
+module = [
+    "tests.*",
+]
+disable_error_code = ["no-untyped-def"]
 
 [tool.coverage.report]
 exclude_also = ["if TYPE_CHECKING:"]
+
+[tool.coverage.run]
+omit = [
+    "cookiecutter/__main__.py",
+]

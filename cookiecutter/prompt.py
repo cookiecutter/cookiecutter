@@ -89,7 +89,7 @@ def read_repo_password(question: str) -> str:
     return Prompt.ask(question, password=True)
 
 
-def read_user_choice(var_name: str, options, prompts=None, prefix: str = ""):
+def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = ""):
     """Prompt the user to choose from several options for the given variable.
 
     The first item will be returned if no input happens.
@@ -98,9 +98,6 @@ def read_user_choice(var_name: str, options, prompts=None, prefix: str = ""):
     :param list options: Sequence of options that are available to select from
     :return: Exactly one item of ``options`` that has been chosen by the user
     """
-    if not isinstance(options, list):
-        raise TypeError
-
     if not options:
         raise ValueError
 
