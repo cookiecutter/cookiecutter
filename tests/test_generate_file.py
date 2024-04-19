@@ -1,7 +1,6 @@
 """Tests for `generate_file` function, part of `generate_files` function workflow."""
 
 import json
-import os
 import re
 from pathlib import Path
 
@@ -21,16 +20,17 @@ def tear_down():
     Used for all tests in this file.
     """
     yield
-    if os.path.exists('tests/files/cheese.txt'):
-        os.remove('tests/files/cheese.txt')
-    if os.path.exists('tests/files/cheese_lf_newlines.txt'):
-        os.remove('tests/files/cheese_lf_newlines.txt')
-    if os.path.exists('tests/files/cheese_crlf_newlines.txt'):
-        os.remove('tests/files/cheese_crlf_newlines.txt')
-    if os.path.exists('tests/files/cheese_mixed_newlines.txt'):
-        os.remove('tests/files/cheese_mixed_newlines.txt')
-    if os.path.exists('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt'):
-        os.remove('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt')
+
+    for p in {
+        'tests/files/cheese.txt',
+        'tests/files/cheese_lf_newlines.txt',
+        'tests/files/cheese_crlf_newlines.txt',
+        'tests/files/cheese_mixed_newlines.txt',
+        'tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt',
+    }:
+        path = Path(p)
+        if path.exists():
+            path.unlink()
 
 
 @pytest.fixture
@@ -50,8 +50,9 @@ def test_generate_file(env) -> None:
         context={'cookiecutter': {'generate_file': 'cheese'}},
         env=env,
     )
-    assert os.path.isfile('tests/files/cheese.txt')
-    generated_text = Path('tests/files/cheese.txt').read_text()
+    path = Path('tests/files/cheese.txt')
+    assert path.exists()
+    generated_text = path.read_text()
     assert generated_text == 'Testing cheese'
 
 
@@ -62,9 +63,9 @@ def test_generate_file_jsonify_filter(env) -> None:
     generate.generate_file(
         project_dir=".", infile=infile, context={'cookiecutter': data}, env=env
     )
-    assert os.path.isfile('tests/files/cheese.txt')
-    generated_text = Path('tests/files/cheese.txt').read_text()
-    assert json.loads(generated_text) == data
+    cheese = Path('tests/files/cheese.txt')
+    assert cheese.is_file()
+    assert json.loads(cheese.read_text()) == data
 
 
 @pytest.mark.parametrize("length", (10, 40))
@@ -75,9 +76,9 @@ def test_generate_file_random_ascii_string(env, length, punctuation) -> None:
     data = {'random_string_file': 'cheese'}
     context = {"cookiecutter": data, "length": length, "punctuation": punctuation}
     generate.generate_file(project_dir=".", infile=infile, context=context, env=env)
-    assert os.path.isfile('tests/files/cheese.txt')
-    generated_text = Path('tests/files/cheese.txt').read_text()
-    assert len(generated_text) == length
+    cheese = Path('tests/files/cheese.txt')
+    assert cheese.is_file()
+    assert len(cheese.read_text()) == length
 
 
 def test_generate_file_with_true_condition(env) -> None:
@@ -94,9 +95,9 @@ def test_generate_file_with_true_condition(env) -> None:
         context={'cookiecutter': {'generate_file': 'y'}},
         env=env,
     )
-    assert os.path.isfile('tests/files/cheese.txt')
-    generated_text = Path('tests/files/cheese.txt').read_text()
-    assert generated_text == 'Testing that generate_file was y'
+    cheese = Path('tests/files/cheese.txt')
+    assert cheese.is_file()
+    assert cheese.read_text() == 'Testing that generate_file was y'
 
 
 def test_generate_file_with_false_condition(env) -> None:
@@ -113,7 +114,7 @@ def test_generate_file_with_false_condition(env) -> None:
         context={'cookiecutter': {'generate_file': 'n'}},
         env=env,
     )
-    assert not os.path.isfile('tests/files/cheese.txt')
+    assert not Path('tests/files/cheese.txt').is_file()
 
 
 @pytest.fixture
@@ -176,13 +177,13 @@ def test_generate_file_does_not_translate_crlf_newlines_to_lf(env) -> None:
 
 def test_generate_file_handles_mixed_line_endings(env) -> None:
     """Verify that file generation gracefully handles mixed line endings."""
-    infile = 'tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt'
-    with open(infile, mode='w', encoding='utf-8', newline='') as f:
+    infile = Path('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt')
+    with infile.open(mode='w', encoding='utf-8', newline='') as f:
         f.write('newline is CRLF\r\n')
         f.write('newline is LF\n')
     generate.generate_file(
         project_dir=".",
-        infile=infile,
+        infile=str(infile),
         context={'cookiecutter': {'generate_file': 'cheese'}},
         env=env,
     )

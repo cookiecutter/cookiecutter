@@ -1,5 +1,6 @@
 """Collection of tests around loading cookiecutter config."""
 
+import platform
 from pathlib import Path
 
 import pytest
@@ -83,7 +84,12 @@ def test_get_config() -> None:
 def test_get_config_does_not_exist() -> None:
     """Check that `exceptions.ConfigDoesNotExistException` is raised when \
     attempting to get a non-existent config file."""
-    expected_error_msg = 'Config file tests/not-exist.yaml does not exist.'
+    expected_path = (
+        'tests\\not-exist.yaml'
+        if platform.system() == 'Windows'
+        else 'tests/not-exist.yaml'
+    )
+    expected_error_msg = f'Config file {expected_path} does not exist.'
     with pytest.raises(ConfigDoesNotExistException) as exc_info:
         config.get_config('tests/not-exist.yaml')
     assert str(exc_info.value) == expected_error_msg
@@ -131,9 +137,13 @@ def test_get_config_empty_config_file() -> None:
 
 def test_get_config_invalid_file_with_array_as_top_level_element() -> None:
     """An exception should be raised if top-level element is array."""
+    expected_path = (
+        'tests\\test-config\\invalid-config-w-array.yaml'
+        if platform.system() == "Windows"
+        else 'tests/test-config/invalid-config-w-array.yaml'
+    )
     expected_error_msg = (
-        'Top-level element of YAML file '
-        'tests/test-config/invalid-config-w-array.yaml should be an object.'
+        f'Top-level element of YAML file {expected_path} should be an object.'
     )
     with pytest.raises(InvalidConfiguration) as exc_info:
         config.get_config('tests/test-config/invalid-config-w-array.yaml')
@@ -142,10 +152,11 @@ def test_get_config_invalid_file_with_array_as_top_level_element() -> None:
 
 def test_get_config_invalid_file_with_multiple_docs() -> None:
     """An exception should be raised if config file contains multiple docs."""
-    expected_error_msg = (
-        'Unable to parse YAML file '
-        'tests/test-config/invalid-config-w-multiple-docs.yaml.'
-    )
+    if platform.system() == "Windows":
+        expected_path = 'tests\\test-config\\invalid-config-w-multiple-docs.yaml'
+    else:
+        expected_path = 'tests/test-config/invalid-config-w-multiple-docs.yaml'
+    expected_error_msg = f"Unable to parse YAML file {expected_path}."
     with pytest.raises(InvalidConfiguration) as exc_info:
         config.get_config('tests/test-config/invalid-config-w-multiple-docs.yaml')
     assert expected_error_msg in str(exc_info.value)

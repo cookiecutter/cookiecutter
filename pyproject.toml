@@ -46,7 +46,7 @@ select = [
     #    "PIE",    # flake8-pie
     #    "PL",     # pylint
     #    "PT",     # flake8-pytest-style
-    #    "PTH",    # flake8-use-pathlib
+        "PTH",    # flake8-use-pathlib
     #    "PYI",    # flake8-pyi
     #    "Q",      # flake8-quotes
     #    "RET",    # flake8-return
@@ -92,6 +92,9 @@ exclude = ["tests/**/hooks/*"]
 ]
 "cookiecutter/*" = [
     "S603", # `subprocess` call: check for execution of untrusted input"
+]
+"cookiecutter/{config,generate,main,prompt,replay,repository}.py" = [ # temporary whitelist
+    "PTH",  # use pathlib
 ]
 "docs/conf.py" = ["A001", "D100"]
 

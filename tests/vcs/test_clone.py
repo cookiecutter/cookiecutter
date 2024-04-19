@@ -1,7 +1,7 @@
 """Tests around cloning repositories and detection of errors at it."""
 
-import os
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -95,7 +95,7 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
     ],
 )
 def test_clone_should_invoke_vcs_command(
-    mocker, clone_dir, repo_type, repo_url, repo_name
+    mocker, clone_dir: Path, repo_type: str, repo_url: str, repo_name: str
 ) -> None:
     """When `clone()` is called with a git/hg repo, the corresponding VCS \
     command should be run via `subprocess.check_output()`.
@@ -110,7 +110,7 @@ def test_clone_should_invoke_vcs_command(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
     )
-    expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
+    expected_repo_dir = clone_dir / repo_name
 
     branch = 'foobar'
 

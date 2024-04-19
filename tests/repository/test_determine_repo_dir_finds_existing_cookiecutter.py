@@ -1,6 +1,5 @@
 """Tests around detection whether cookiecutter templates are cached locally."""
 
-import os
 from pathlib import Path
 
 import pytest
@@ -15,16 +14,16 @@ def template() -> str:
 
 
 @pytest.fixture
-def cloned_cookiecutter_path(user_config_data, template):
+def cloned_cookiecutter_path(user_config_data, template) -> Path:
     """Fixture. Create fake project directory in special user folder."""
-    cookiecutters_dir = user_config_data['cookiecutters_dir']
+    cookiecutters_dir = Path(user_config_data['cookiecutters_dir'])
 
-    cloned_template_path = os.path.join(cookiecutters_dir, template)
-    os.mkdir(cloned_template_path)
+    cloned_template_path = cookiecutters_dir / template
+    cloned_template_path.mkdir()
 
-    Path(cloned_template_path, "cookiecutter.json").touch()  # creates file
+    (cloned_template_path / "cookiecutter.json").touch()  # creates file
 
-    return cloned_template_path
+    return cloned_template_path  # type: ignore[no-any-return]
 
 
 def test_should_find_existing_cookiecutter(
@@ -43,5 +42,5 @@ def test_should_find_existing_cookiecutter(
         no_input=True,
     )
 
-    assert cloned_cookiecutter_path == project_dir
+    assert str(cloned_cookiecutter_path) == project_dir
     assert not cleanup

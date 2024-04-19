@@ -68,7 +68,7 @@ def clone(
     checkout: str | None = None,
     clone_to_dir: Path | str = ".",
     no_input: bool = False,
-) -> str:
+) -> Path:
     """Clone a repo to the current directory.
 
     :param repo_url: Repo URL of unknown type.
@@ -95,12 +95,12 @@ def clone(
     repo_name = os.path.split(repo_url)[1]
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+        repo_dir = clone_to_dir / repo_name
     if repo_type == 'hg':
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+        repo_dir = clone_to_dir / repo_name
     logger.debug(f'repo_dir is {repo_dir}')
 
-    if os.path.isdir(repo_dir):
+    if repo_dir.is_dir():
         clone = prompt_and_delete(repo_dir, no_input=no_input)
     else:
         clone = True

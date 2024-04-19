@@ -1,6 +1,5 @@
 """Tests around locally cached cookiecutter template repositories."""
 
-import os
 from pathlib import Path
 
 import pytest
@@ -15,20 +14,20 @@ def template() -> str:
 
 
 @pytest.fixture
-def cloned_cookiecutter_path(user_config_data, template):
+def cloned_cookiecutter_path(user_config_data, template) -> Path:
     """Fixture. Prepare folder structure for tests in this file."""
-    cookiecutters_dir = user_config_data['cookiecutters_dir']
+    cookiecutters_dir = Path(user_config_data['cookiecutters_dir'])
 
-    cloned_template_path = os.path.join(cookiecutters_dir, template)
-    if not os.path.exists(cloned_template_path):
-        os.mkdir(cloned_template_path)  # might exist from other tests.
+    cloned_template_path = cookiecutters_dir / template
+    if not cloned_template_path.exists():
+        cloned_template_path.mkdir()  # might exist from other tests.
 
-    subdir_template_path = os.path.join(cloned_template_path, 'my-dir')
-    if not os.path.exists(subdir_template_path):
-        os.mkdir(subdir_template_path)
-    Path(subdir_template_path, 'cookiecutter.json').touch()  # creates file
+    subdir_template_path = cloned_template_path / 'my-dir'
+    if not subdir_template_path.exists():
+        subdir_template_path.mkdir()
+    (subdir_template_path / 'cookiecutter.json').touch()  # creates file
 
-    return subdir_template_path
+    return subdir_template_path  # type: ignore[no-any-return]
 
 
 def test_should_find_existing_cookiecutter(
@@ -44,7 +43,7 @@ def test_should_find_existing_cookiecutter(
         directory='my-dir',
     )
 
-    assert cloned_cookiecutter_path == project_dir
+    assert str(cloned_cookiecutter_path) == project_dir
     assert not cleanup
 
 
@@ -60,18 +59,10 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path) -
             directory='wrong-dir',
         )
 
-    wrong_full_cookiecutter_path = os.path.join(
-        os.path.dirname(cloned_cookiecutter_path), 'wrong-dir'
-    )
+    wrong_full_cookiecutter_path = cloned_cookiecutter_path.parent / 'wrong-dir'
     assert str(err.value) == (
-        'A valid repository for "{}" could not be found in the following '
-        'locations:\n{}'.format(
-            template,
-            '\n'.join(
-                [
-                    os.path.join(template, 'wrong-dir'),
-                    wrong_full_cookiecutter_path,
-                ]
-            ),
-        )
+        f'A valid repository for "{template}" could not be found in the following '
+        'locations:\n'
+        f'{Path(template, "wrong-dir")}\n'
+        f'{wrong_full_cookiecutter_path}'
     )

@@ -12,8 +12,9 @@ from cookiecutter import generate, utils
 def remove_test_dir():
     """Fixture. Remove the folder that is created by the test."""
     yield
-    if os.path.exists('test_copy_without_render'):
-        utils.rmtree('test_copy_without_render')
+    path = Path('test_copy_without_render')
+    if path.exists():
+        utils.rmtree(path)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_test_dir')

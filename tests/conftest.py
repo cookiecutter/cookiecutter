@@ -1,6 +1,5 @@
 """pytest fixtures which are globally available throughout the suite."""
 
-import os
 import shutil
 from pathlib import Path
 
@@ -30,26 +29,28 @@ def isolated_filesystem(monkeypatch, tmp_path) -> None:
     monkeypatch.setenv("USERPROFILE", str(root_path))
 
 
-def backup_dir(original_dir, backup_dir) -> bool:
+def backup_dir(original_dir: Path, backup_dir: Path) -> bool:
     """Generate backup directory based on original directory."""
     # If the default original_dir is pre-existing, move it to a temp location
-    if not os.path.isdir(original_dir):
+    if not original_dir.is_dir():
         return False
 
     # Remove existing stale backups before backing up.
-    if os.path.isdir(backup_dir):
+    if backup_dir.is_dir():
         utils.rmtree(backup_dir)
 
     shutil.copytree(original_dir, backup_dir)
     return True
 
 
-def restore_backup_dir(original_dir, backup_dir, original_dir_found) -> None:
+def restore_backup_dir(
+    original_dir: Path, backup_dir: Path, original_dir_found: bool
+) -> None:
     """Restore default contents."""
-    original_dir_is_dir = os.path.isdir(original_dir)
+    original_dir_is_dir = original_dir.is_dir()
     if original_dir_found:
         # Delete original_dir if a backup exists
-        if original_dir_is_dir and os.path.isdir(backup_dir):
+        if original_dir_is_dir and backup_dir.is_dir():
             utils.rmtree(original_dir)
     else:
         # Delete the created original_dir.
@@ -58,9 +59,9 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found) -> None:
             utils.rmtree(original_dir)
 
     # Restore the user's default original_dir contents
-    if os.path.isdir(backup_dir):
+    if backup_dir.is_dir():
         shutil.copytree(backup_dir, original_dir)
-    if os.path.isdir(original_dir):
+    if original_dir.is_dir():
         utils.rmtree(backup_dir)
 
 
@@ -99,25 +100,25 @@ def clean_system(request) -> None:
 
     """
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-    user_config_path = os.path.expanduser('~/.cookiecutterrc')
-    user_config_path_backup = os.path.expanduser('~/.cookiecutterrc.backup')
-    if os.path.exists(user_config_path):
+    user_config_path = Path('~/.cookiecutterrc').expanduser()
+    user_config_path_backup = Path('~/.cookiecutterrc.backup').expanduser()
+    if user_config_path.exists():
         user_config_found = True
         shutil.copy(user_config_path, user_config_path_backup)
-        os.remove(user_config_path)
+        user_config_path.unlink()
     else:
         user_config_found = False
 
     # If the default cookiecutters_dir is pre-existing, move it to a
     # temp location
-    cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
-    cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
+    cookiecutters_dir = Path('~/.cookiecutters').expanduser()
+    cookiecutters_dir_backup = Path('~/.cookiecutters.backup').expanduser()
     cookiecutters_dir_found = backup_dir(cookiecutters_dir, cookiecutters_dir_backup)
 
     # If the default cookiecutter_replay_dir is pre-existing, move it to a
     # temp location
-    cookiecutter_replay_dir = os.path.expanduser('~/.cookiecutter_replay')
-    cookiecutter_replay_dir_backup = os.path.expanduser('~/.cookiecutter_replay.backup')
+    cookiecutter_replay_dir = Path('~/.cookiecutter_replay').expanduser()
+    cookiecutter_replay_dir_backup = Path('~/.cookiecutter_replay.backup').expanduser()
     cookiecutter_replay_dir_found = backup_dir(
         cookiecutter_replay_dir, cookiecutter_replay_dir_backup
     )
@@ -125,9 +126,9 @@ def clean_system(request) -> None:
     def restore_backup() -> None:
         # If it existed, restore ~/.cookiecutterrc
         # We never write to ~/.cookiecutterrc, so this logic is simpler.
-        if user_config_found and os.path.exists(user_config_path_backup):
+        if user_config_found and user_config_path_backup.exists():
             shutil.copy(user_config_path_backup, user_config_path)
-            os.remove(user_config_path_backup)
+            user_config_path_backup.unlink()
 
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.

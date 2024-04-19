@@ -1,5 +1,7 @@
 """pytest fixtures for testing cookiecutter's replay feature."""
 
+from pathlib import Path
+
 import pytest
 
 
@@ -17,9 +19,9 @@ def context():
 
 
 @pytest.fixture
-def replay_test_dir() -> str:
+def replay_test_dir() -> Path:
     """Fixture to test directory."""
-    return 'tests/test-replay/'
+    return Path('tests/test-replay/')
 
 
 @pytest.fixture

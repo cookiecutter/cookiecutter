@@ -33,9 +33,9 @@ def remove_fake_project_dir(request) -> None:
 
     def fin_remove_fake_project_dir() -> None:
         for prefix in ('', 'input'):
-            dir_name = f'{prefix}fake-project'
-            if os.path.isdir(dir_name):
-                utils.rmtree(dir_name)
+            dir = Path(f'{prefix}fake-project')
+            if dir.is_dir():
+                utils.rmtree(dir)
 
     request.addfinalizer(fin_remove_fake_project_dir)
 
@@ -43,20 +43,20 @@ def remove_fake_project_dir(request) -> None:
 @pytest.fixture
 def remove_tmp_dir(request) -> None:
     """Remove the fake project directory created during the tests."""
-    if os.path.isdir('tests/tmp'):
-        utils.rmtree('tests/tmp')
+    tmp = Path('tests/tmp')
 
     def fin_remove_tmp_dir() -> None:
-        if os.path.isdir('tests/tmp'):
-            utils.rmtree('tests/tmp')
+        if tmp.is_dir():
+            utils.rmtree(tmp)
 
+    fin_remove_tmp_dir()
     request.addfinalizer(fin_remove_tmp_dir)
 
 
 @pytest.fixture
 def make_fake_project_dir() -> None:
     """Create a fake project to be overwritten in the according tests."""
-    os.makedirs('fake-project')
+    Path('fake-project').mkdir(parents=True)
 
 
 @pytest.fixture(params=['-V', '--version'])
@@ -86,8 +86,9 @@ def test_cli(cli_runner) -> None:
     """Test cli invocation work without flags if directory not exist."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input')
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
-    content = Path("fake-project", "README.rst").read_text()
+    fake_project = Path('fake-project')
+    assert fake_project.is_dir()
+    content = (fake_project / "README.rst").read_text()
     assert 'Project name: **Fake Project**' in content
 
 
@@ -96,8 +97,9 @@ def test_cli_verbose(cli_runner) -> None:
     """Test cli invocation display log if called with `verbose` flag."""
     result = cli_runner('tests/fake-repo-pre/', '--no-input', '-v')
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
-    content = Path("fake-project", "README.rst").read_text()
+    fake_project = Path('fake-project')
+    assert fake_project.is_dir()
+    content = (fake_project / "README.rst").read_text()
     assert 'Project name: **Fake Project**' in content
 
 
@@ -168,7 +170,7 @@ def test_cli_replay_generated(cli_runner) -> None:
         '-v',
     )
     assert result.exit_code == 0
-    with open('tests/tmp/replay-project/README.md') as f:
+    with Path('tests/tmp/replay-project/README.md').open() as f:
         assert f.read().strip() == 'replayed'
 
 
@@ -255,7 +257,7 @@ def test_cli_overwrite_if_exists_when_output_dir_does_not_exist(
     result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag)
 
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
+    assert Path('fake-project').is_dir()
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')
@@ -268,7 +270,7 @@ def test_cli_overwrite_if_exists_when_output_dir_exists(
     """
     result = cli_runner('tests/fake-repo-pre/', '--no-input', overwrite_cli_flag)
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
+    assert Path('fake-project').is_dir()
 
 
 @pytest.fixture(params=['-o', '--output-dir'])
@@ -317,9 +319,9 @@ def test_cli_help(cli_runner, help_cli_flag) -> None:
 
 
 @pytest.fixture
-def user_config_path(tmp_path):
-    """Pytest fixture return `user_config` argument as string."""
-    return str(tmp_path.joinpath("tests", "config.yaml"))
+def user_config_path(tmp_path: Path) -> Path:
+    """Pytest fixture return `user_config` argument as Path."""
+    return tmp_path.joinpath("tests", "config.yaml")
 
 
 def test_user_config(mocker, cli_runner, user_config_path) -> None:
@@ -500,8 +502,9 @@ def test_cli_extra_context(cli_runner) -> None:
         'project_name=Awesomez',
     )
     assert result.exit_code == 0
-    assert os.path.isdir('fake-project')
-    content = Path('fake-project', 'README.rst').read_text()
+    fake_project = Path('fake-project')
+    assert fake_project.is_dir()
+    content = (fake_project / 'README.rst').read_text()
     assert 'Project name: **Awesomez**' in content
 
 
@@ -583,8 +586,8 @@ def test_debug_list_installed_templates(
     cli_runner, debug_file, user_config_path
 ) -> None:
     """Verify --list-installed command correct invocation."""
-    fake_template_dir = os.path.dirname(os.path.abspath('fake-project'))
-    os.makedirs(os.path.dirname(user_config_path))
+    fake_template_dir = Path('fake-project').resolve().parent
+    user_config_path.parent.mkdir(parents=True)
     # Single quotes in YAML will not parse escape codes (\).
     Path(user_config_path).write_text(f"cookiecutters_dir: '{fake_template_dir}'")
     Path("fake-project", "cookiecutter.json").write_text('{}')
@@ -604,7 +607,7 @@ def test_debug_list_installed_templates_failure(
     cli_runner, debug_file, user_config_path
 ) -> None:
     """Verify --list-installed command error on invocation."""
-    os.makedirs(os.path.dirname(user_config_path))
+    user_config_path.parent.mkdir(parents=True)
     Path(user_config_path).write_text('cookiecutters_dir: "/notarealplace/"')
 
     result = cli_runner(
@@ -625,7 +628,7 @@ def test_directory_repo(cli_runner) -> None:
         '--directory=my-dir',
     )
     assert result.exit_code == 0
-    assert os.path.isdir("fake-project")
+    assert Path("fake-project").is_dir()
     content = Path("fake-project", "README.rst").read_text()
     assert "Project name: **Fake Project**" in content
 
@@ -702,9 +705,9 @@ def test_cli_with_pre_prompt_hook(cli_runner) -> None:
     template_path = 'tests/test-pyhooks/'
     result = cli_runner(template_path, '--no-input')
     assert result.exit_code == 0
-    dir_name = 'inputfake-project'
-    assert os.path.isdir(dir_name)
-    content = Path(dir_name, "README.rst").read_text()
+    dir_name = Path('inputfake-project')
+    assert dir_name.is_dir()
+    content = (dir_name / "README.rst").read_text()
     assert 'foo' in content
 
 

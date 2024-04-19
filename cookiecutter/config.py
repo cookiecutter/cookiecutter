@@ -6,18 +6,16 @@ import collections
 import copy
 import logging
 import os
-from typing import TYPE_CHECKING, Any
+from pathlib import Path
+from typing import Any
 
 import yaml
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
 
-if TYPE_CHECKING:
-    from pathlib import Path
-
 logger = logging.getLogger(__name__)
 
-USER_CONFIG_PATH = os.path.expanduser('~/.cookiecutterrc')
+USER_CONFIG_PATH = Path('~/.cookiecutterrc').expanduser()
 
 BUILTIN_ABBREVIATIONS = {
     'gh': 'https://github.com/{0}.git',
@@ -26,8 +24,8 @@ BUILTIN_ABBREVIATIONS = {
 }
 
 DEFAULT_CONFIG = {
-    'cookiecutters_dir': os.path.expanduser('~/.cookiecutters/'),
-    'replay_dir': os.path.expanduser('~/.cookiecutter_replay/'),
+    'cookiecutters_dir': Path('~/.cookiecutters/').expanduser(),
+    'replay_dir': Path('~/.cookiecutter_replay/').expanduser(),
     'default_context': collections.OrderedDict([]),
     'abbreviations': BUILTIN_ABBREVIATIONS,
 }
@@ -61,11 +59,12 @@ def merge_configs(default: dict[str, Any], overwrite: dict[str, Any]) -> dict[st
 
 def get_config(config_path: Path | str) -> dict[str, Any]:
     """Retrieve the config from the specified path, returning a config dict."""
-    if not os.path.exists(config_path):
+    config_path = Path(config_path)
+    if not config_path.exists():
         raise ConfigDoesNotExistException(f'Config file {config_path} does not exist.')
 
     logger.debug('config_path is %s', config_path)
-    with open(config_path, encoding='utf-8') as file_handle:
+    with config_path.open(encoding='utf-8') as file_handle:
         try:
             yaml_dict = yaml.safe_load(file_handle) or {}
         except yaml.YAMLError as e:
@@ -120,7 +119,7 @@ def get_user_config(
         return copy.copy(DEFAULT_CONFIG)
 
     # Load the given config file
-    if config_file and config_file is not USER_CONFIG_PATH:
+    if config_file and config_file is not str(USER_CONFIG_PATH):
         logger.debug("Loading custom config from %s.", config_file)
         return get_config(config_file)
 
@@ -130,7 +129,7 @@ def get_user_config(
     except KeyError:
         # Load an optional user config if it exists
         # otherwise return the defaults
-        if os.path.exists(USER_CONFIG_PATH):
+        if USER_CONFIG_PATH.exists():
             logger.debug("Loading config from %s.", USER_CONFIG_PATH)
             return get_config(USER_CONFIG_PATH)
         else:

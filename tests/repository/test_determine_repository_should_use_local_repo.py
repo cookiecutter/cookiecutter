@@ -12,7 +12,7 @@ def test_finds_local_repo(tmp_path) -> None:
     project_dir, cleanup = repository.determine_repo_dir(
         'tests/fake-repo',
         abbreviations={},
-        clone_to_dir=str(tmp_path),
+        clone_to_dir=tmp_path,
         checkout=None,
         no_input=True,
     )
@@ -29,7 +29,7 @@ def test_local_repo_with_no_context_raises(tmp_path) -> None:
         repository.determine_repo_dir(
             template_path,
             abbreviations={},
-            clone_to_dir=str(tmp_path),
+            clone_to_dir=tmp_path,
             checkout=None,
             no_input=True,
         )
@@ -56,7 +56,7 @@ def test_local_repo_typo(tmp_path) -> None:
         repository.determine_repo_dir(
             template_path,
             abbreviations={},
-            clone_to_dir=str(tmp_path),
+            clone_to_dir=tmp_path,
             checkout=None,
             no_input=True,
         )

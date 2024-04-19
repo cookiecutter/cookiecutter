@@ -1,6 +1,6 @@
 """Test main cookiecutter invocation with user input enabled (mocked)."""
 
-import os
+from pathlib import Path
 
 import pytest
 
@@ -11,10 +11,9 @@ from cookiecutter import main, utils
 def remove_additional_dirs():
     """Remove special directories which are created during the tests."""
     yield
-    if os.path.isdir('fake-project'):
-        utils.rmtree('fake-project')
-    if os.path.isdir('fake-project-input-extra'):
-        utils.rmtree('fake-project-input-extra')
+    for p in {'fake-project', 'fake-project-input-extra'}:
+        if Path(p).is_dir():
+            utils.rmtree(p)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
@@ -25,11 +24,11 @@ def test_cookiecutter_local_with_input(monkeypatch) -> None:
         lambda _var, default, _prompts, _prefix: default,
     )
     main.cookiecutter('tests/fake-repo-pre/', no_input=False)
-    assert os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}')
-    assert not os.path.isdir('tests/fake-repo-pre/fake-project')
-    assert os.path.isdir('fake-project')
-    assert os.path.isfile('fake-project/README.rst')
-    assert not os.path.exists('fake-project/json/')
+    assert Path('tests/fake-repo-pre/{{cookiecutter.repo_name}}').is_dir()
+    assert not Path('tests/fake-repo-pre/fake-project').is_dir()
+    assert Path('fake-project').is_dir()
+    assert Path('fake-project/README.rst').is_file()
+    assert not Path('fake-project/json/').exists()
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
@@ -44,4 +43,4 @@ def test_cookiecutter_input_extra_context(monkeypatch) -> None:
         no_input=False,
         extra_context={'repo_name': 'fake-project-input-extra'},
     )
-    assert os.path.isdir('fake-project-input-extra')
+    assert Path('fake-project-input-extra').is_dir()

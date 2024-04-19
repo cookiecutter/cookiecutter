@@ -1,7 +1,7 @@
 """test_load."""
 
 import json
-import os
+from pathlib import Path
 
 import pytest
 
@@ -15,10 +15,9 @@ def template_name() -> str:
 
 
 @pytest.fixture
-def replay_file(replay_test_dir, template_name):
+def replay_file(replay_test_dir, template_name) -> Path:
     """Fixture to return a actual file name of the dump."""
-    file_name = f'{template_name}.json'
-    return os.path.join(replay_test_dir, file_name)
+    return replay_test_dir / f'{template_name}.json'  # type: ignore[no-any-return]
 
 
 def test_value_error_if_key_missing_in_context(replay_test_dir) -> None:
@@ -50,5 +49,5 @@ def test_run_json_load(
 
     assert mock_json_load.call_count == 1
     (infile_handler,), _kwargs = mock_json_load.call_args
-    assert infile_handler.name == replay_file
+    assert infile_handler.name == str(replay_file)
     assert loaded_context == context

@@ -96,14 +96,14 @@ def cookiecutter(
     cleanup = repo_dir != base_repo_dir
 
     import_patch = _patch_import_path_for_repo(repo_dir)
-    template_name = os.path.basename(os.path.abspath(repo_dir))
+    template_name = Path(repo_dir).resolve().name
     if replay:
         with import_patch:
             if isinstance(replay, bool):
                 context_from_replayfile = load(config_dict['replay_dir'], template_name)
             else:
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
-                context_from_replayfile = load(path, template_name)
+                context_from_replayfile = load(Path(path), template_name)
 
     context_file = os.path.join(repo_dir, 'cookiecutter.json')
     logger.debug('context_file is %s', context_file)
@@ -197,7 +197,7 @@ def cookiecutter(
         rmtree(repo_dir)
     if cleanup_base_repo_dir:
         rmtree(base_repo_dir)
-    return result
+    return str(result)
 
 
 class _patch_import_path_for_repo:  # noqa: N801

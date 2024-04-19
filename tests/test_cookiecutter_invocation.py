@@ -5,9 +5,10 @@ Tests to make sure that cookiecutter can be called from the cli without
 using the entry point set up for the package.
 """
 
-import os
 import subprocess
 import sys
+from pathlib import Path
+from typing import Iterator
 
 import pytest
 
@@ -15,12 +16,13 @@ from cookiecutter import utils
 
 
 @pytest.fixture
-def project_dir():
+def project_dir() -> Iterator[Path]:
     """Return test project folder name and remove it after the test."""
-    yield 'fake-project-templated'
+    project_dir = Path('fake-project-templated')
+    yield project_dir
 
-    if os.path.isdir('fake-project-templated'):
-        utils.rmtree('fake-project-templated')
+    if project_dir.is_dir():
+        utils.rmtree(project_dir)
 
 
 @pytest.mark.usefixtures('clean_system')
@@ -38,4 +40,4 @@ def test_should_invoke_main(monkeypatch, project_dir) -> None:
         ]
     )
     assert exit_code == 0
-    assert os.path.isdir(project_dir)
+    assert project_dir.is_dir()
