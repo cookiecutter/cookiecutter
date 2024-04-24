@@ -40,12 +40,16 @@ jobs:
           - macos-latest
           - windows-latest
         python:
-          - "3.7"
-          - "3.8"
-          - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
+        include:
+          - os: ubuntu-latest
+            python: "3.7"
+          - os: ubuntu-latest
+            python: "3.8"
+          - os: ubuntu-latest
+            python: "3.9"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python }}
