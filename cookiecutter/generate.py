@@ -253,8 +253,7 @@ def generate_file(
 
     logger.debug('Writing contents to file %s', outfile)
 
-    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
-        fh.write(rendered_file)
+    Path(outfile).write_text(rendered_file, encoding='utf-8', newline=newline)
 
     # Apply file permissions to output file
     shutil.copymode(infile, outfile)
