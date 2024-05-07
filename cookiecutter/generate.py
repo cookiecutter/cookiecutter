@@ -170,7 +170,7 @@ def generate_context(
 
 
 def generate_file(
-    project_dir: Path | str,
+    project_dir: Path,
     infile: str,
     context: dict[str, Any],
     env: Environment,
@@ -201,7 +201,7 @@ def generate_file(
     # Render the path to the output file (not including the root project dir)
     outfile_tmpl = env.from_string(infile)
 
-    outfile = Path(project_dir) / outfile_tmpl.render(**context)
+    outfile = project_dir / outfile_tmpl.render(**context)
     file_name_is_empty = outfile.is_dir()
     if file_name_is_empty:
         logger.debug('The resulting file name is empty: %s', outfile)

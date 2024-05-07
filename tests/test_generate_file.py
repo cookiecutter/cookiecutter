@@ -45,7 +45,7 @@ def test_generate_file(env) -> None:
     """Verify simple file is generated with rendered context data."""
     infile = 'tests/files/{{cookiecutter.generate_file}}.txt'
     generate.generate_file(
-        project_dir=".",
+        project_dir=Path.cwd(),
         infile=infile,
         context={'cookiecutter': {'generate_file': 'cheese'}},
         env=env,
@@ -61,7 +61,7 @@ def test_generate_file_jsonify_filter(env) -> None:
     infile = 'tests/files/{{cookiecutter.jsonify_file}}.txt'
     data = {'jsonify_file': 'cheese', 'type': 'roquefort'}
     generate.generate_file(
-        project_dir=".", infile=infile, context={'cookiecutter': data}, env=env
+        project_dir=Path.cwd(), infile=infile, context={'cookiecutter': data}, env=env
     )
     cheese = Path('tests/files/cheese.txt')
     assert cheese.is_file()
@@ -75,7 +75,9 @@ def test_generate_file_random_ascii_string(env, length, punctuation) -> None:
     infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
     data = {'random_string_file': 'cheese'}
     context = {"cookiecutter": data, "length": length, "punctuation": punctuation}
-    generate.generate_file(project_dir=".", infile=infile, context=context, env=env)
+    generate.generate_file(
+        project_dir=Path.cwd(), infile=infile, context=context, env=env
+    )
     cheese = Path('tests/files/cheese.txt')
     assert cheese.is_file()
     assert len(cheese.read_text()) == length
@@ -90,7 +92,7 @@ def test_generate_file_with_true_condition(env) -> None:
         'tests/files/{% if cookiecutter.generate_file == \'y\' %}cheese.txt{% endif %}'
     )
     generate.generate_file(
-        project_dir=".",
+        project_dir=Path.cwd(),
         infile=infile,
         context={'cookiecutter': {'generate_file': 'y'}},
         env=env,
@@ -109,7 +111,7 @@ def test_generate_file_with_false_condition(env) -> None:
         'tests/files/{% if cookiecutter.generate_file == \'y\' %}cheese.txt{% endif %}'
     )
     generate.generate_file(
-        project_dir=".",
+        project_dir=Path.cwd(),
         infile=infile,
         context={'cookiecutter': {'generate_file': 'n'}},
         env=env,
@@ -131,7 +133,7 @@ def test_generate_file_verbose_template_syntax_error(env, expected_msg_regex) ->
     """Verify correct exception raised on syntax error in file before generation."""
     with pytest.raises(TemplateSyntaxError) as exception:
         generate.generate_file(
-            project_dir=".",
+            project_dir=Path.cwd(),
             infile='tests/files/syntax_error.txt',
             context={'syntax_error': 'syntax_error'},
             env=env,
@@ -143,7 +145,7 @@ def test_generate_file_does_not_translate_lf_newlines_to_crlf(env) -> None:
     """Verify that file generation use same line ending, as in source file."""
     infile = 'tests/files/{{cookiecutter.generate_file}}_lf_newlines.txt'
     generate.generate_file(
-        project_dir=".",
+        project_dir=Path.cwd(),
         infile=infile,
         context={'cookiecutter': {'generate_file': 'cheese'}},
         env=env,
@@ -161,7 +163,7 @@ def test_generate_file_does_not_translate_crlf_newlines_to_lf(env) -> None:
     """Verify that file generation use same line ending, as in source file."""
     infile = 'tests/files/{{cookiecutter.generate_file}}_crlf_newlines.txt'
     generate.generate_file(
-        project_dir=".",
+        project_dir=Path.cwd(),
         infile=infile,
         context={'cookiecutter': {'generate_file': 'cheese'}},
         env=env,
@@ -182,7 +184,7 @@ def test_generate_file_handles_mixed_line_endings(env) -> None:
         f.write('newline is CRLF\r\n')
         f.write('newline is LF\n')
     generate.generate_file(
-        project_dir=".",
+        project_dir=Path.cwd(),
         infile=str(infile),
         context={'cookiecutter': {'generate_file': 'cheese'}},
         env=env,
