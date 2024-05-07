@@ -36,4 +36,4 @@ def test_hooks_raises_errors(tmp_path, abort_pre_gen, abort_post_gen) -> None:
             context=context,
             output_dir=str(tmp_path),
         )
-    assert not tmp_path.joinpath("foobar").is_dir()
+    assert not (tmp_path / "foobar").is_dir()

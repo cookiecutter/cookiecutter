@@ -321,7 +321,7 @@ def test_cli_help(cli_runner, help_cli_flag) -> None:
 @pytest.fixture
 def user_config_path(tmp_path: Path) -> Path:
     """Pytest fixture return `user_config` argument as Path."""
-    return tmp_path.joinpath("tests", "config.yaml")
+    return tmp_path / "tests" / "config.yaml"
 
 
 def test_user_config(mocker, cli_runner, user_config_path) -> None:
@@ -523,9 +523,9 @@ def test_cli_extra_context_invalid_format(cli_runner) -> None:
 
 
 @pytest.fixture
-def debug_file(tmp_path):
+def debug_file(tmp_path: Path) -> Path:
     """Pytest fixture return `debug_file` argument as path object."""
-    return tmp_path.joinpath('fake-repo.log')
+    return tmp_path / 'fake-repo.log'
 
 
 @pytest.mark.usefixtures('remove_fake_project_dir')

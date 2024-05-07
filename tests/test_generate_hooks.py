@@ -20,7 +20,7 @@ def remove_additional_folders(tmp_path):
         'tests/test-pyhooks/inputpyhooks',
         'inputpyhooks',
         'inputhooks',
-        tmp_path.joinpath('test-shellhooks'),
+        tmp_path / 'test-shellhooks',
         'tests/test-hooks',
     ]
     for directory in directories_to_delete:

@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 
 import pytest
+from pytest import TempPathFactory
 from typing_extensions import TypedDict
 
 from cookiecutter import utils
@@ -18,10 +19,10 @@ replay_dir: '{replay_dir}'
 @pytest.fixture(autouse=True)
 def isolated_filesystem(monkeypatch, tmp_path) -> None:
     """Ensure filesystem isolation, set the user home to a tmp_path."""
-    root_path = tmp_path.joinpath("home")
+    root_path = tmp_path / "home"
     root_path.mkdir()
-    cookiecutters_dir = root_path.joinpath(".cookiecutters/")
-    replay_dir = root_path.joinpath(".cookiecutter_replay/")
+    cookiecutters_dir = root_path / ".cookiecutters/"
+    replay_dir = root_path / ".cookiecutter_replay/"
     monkeypatch.setitem(DEFAULT_CONFIG, 'cookiecutters_dir', str(cookiecutters_dir))
     monkeypatch.setitem(DEFAULT_CONFIG, 'replay_dir', str(replay_dir))
 
@@ -148,7 +149,7 @@ def clean_system(request) -> None:
 
 
 @pytest.fixture(scope='session')
-def user_dir(tmp_path_factory):
+def user_dir(tmp_path_factory: TempPathFactory) -> Path:
     """Fixture that simulates the user's home directory."""
     return tmp_path_factory.mktemp('user_dir')
 
@@ -159,7 +160,7 @@ class UserConfigData(TypedDict):
 
 
 @pytest.fixture(scope='session')
-def user_config_data(user_dir) -> UserConfigData:
+def user_config_data(user_dir: Path) -> UserConfigData:
     """Fixture that creates 2 Cookiecutter user config dirs.
 
      It will create it in the user's home directory.
@@ -169,9 +170,9 @@ def user_config_data(user_dir) -> UserConfigData:
 
     :returns: Dict with name of both user config dirs
     """
-    cookiecutters_dir = user_dir.joinpath('cookiecutters')
+    cookiecutters_dir = user_dir / 'cookiecutters'
     cookiecutters_dir.mkdir()
-    replay_dir = user_dir.joinpath('cookiecutter_replay')
+    replay_dir = user_dir / 'cookiecutter_replay'
     replay_dir.mkdir()
     return {
         'cookiecutters_dir': str(cookiecutters_dir),
@@ -180,7 +181,7 @@ def user_config_data(user_dir) -> UserConfigData:
 
 
 @pytest.fixture(scope='session')
-def user_config_file(user_dir, user_config_data) -> str:
+def user_config_file(user_dir: Path, user_config_data) -> str:
     """Fixture that creates a config file called `config`.
 
      It will create it in the user's home directory, with YAML from
@@ -190,7 +191,7 @@ def user_config_file(user_dir, user_config_data) -> str:
     :param user_config_data: Dict of config values
     :returns: String of path to config file
     """
-    config_file = user_dir.joinpath('config')
+    config_file = user_dir / 'config'
 
     config_text = USER_CONFIG.format(**user_config_data)
     config_file.write_text(config_text)
@@ -198,9 +199,9 @@ def user_config_file(user_dir, user_config_data) -> str:
 
 
 @pytest.fixture
-def output_dir(tmp_path) -> str:
+def output_dir(tmp_path: Path) -> str:
     """Fixture to prepare test output directory."""
-    output_path = tmp_path.joinpath("output")
+    output_path = tmp_path / "output"
     output_path.mkdir()
     return str(output_path)
 
@@ -209,6 +210,6 @@ def output_dir(tmp_path) -> str:
 def clone_dir(tmp_path: Path) -> Path:
     """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
     Returns a str to said directory."""
-    clone_dir = tmp_path.joinpath("clone_dir")
+    clone_dir = tmp_path / "clone_dir"
     clone_dir.mkdir()
     return clone_dir
