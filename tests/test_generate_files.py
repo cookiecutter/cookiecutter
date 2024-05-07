@@ -396,7 +396,7 @@ def test_keep_project_dir_on_failure(output_dir, undefined_context) -> None:
             context=undefined_context,
             keep_project_on_failure=True,
         )
-    assert Path(output_dir).joinpath('testproject').exists()
+    assert Path(output_dir, 'testproject').exists()
 
 
 def test_raise_undefined_variable_dir_name_existing_project(
@@ -449,4 +449,4 @@ def test_raise_empty_dir_name(output_dir, undefined_context):
             context=undefined_context,
             environment=Environment(autoescape=True),
         )
-    assert not Path(output_dir).joinpath('testproject').exists()
+    assert not Path(output_dir, 'testproject').exists()

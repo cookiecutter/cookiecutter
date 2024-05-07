@@ -51,7 +51,7 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir) 
     )
 
     # Create repo_dir to trigger prompt_and_delete
-    repo_dir = clone_dir.joinpath('cookiecutter-pytest-plugin')
+    repo_dir = clone_dir / 'cookiecutter-pytest-plugin'
     repo_dir.mkdir()
 
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'

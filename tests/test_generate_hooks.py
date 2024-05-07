@@ -179,13 +179,11 @@ def test_run_shell_hooks(tmp_path) -> None:
     generate.generate_files(
         context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks/',
-        output_dir=tmp_path.joinpath('test-shellhooks'),
+        output_dir=tmp_path / 'test-shellhooks',
     )
-    shell_pre_file = tmp_path.joinpath(
-        'test-shellhooks', 'inputshellhooks', 'shell_pre.txt'
-    )
-    shell_post_file = tmp_path.joinpath(
-        'test-shellhooks', 'inputshellhooks', 'shell_post.txt'
+    shell_pre_file = tmp_path / 'test-shellhooks' / 'inputshellhooks' / 'shell_pre.txt'
+    shell_post_file = (
+        tmp_path / 'test-shellhooks' / 'inputshellhooks' / 'shell_post.txt'
     )
     assert shell_pre_file.exists()
     assert shell_post_file.exists()
@@ -201,13 +199,13 @@ def test_run_shell_hooks_win(tmp_path) -> None:
     generate.generate_files(
         context={'cookiecutter': {'shellhooks': 'shellhooks'}},
         repo_dir='tests/test-shellhooks-win/',
-        output_dir=tmp_path.joinpath('test-shellhooks-win'),
+        output_dir=tmp_path / 'test-shellhooks-win',
     )
-    shell_pre_file = tmp_path.joinpath(
-        'test-shellhooks-win', 'inputshellhooks', 'shell_pre.txt'
+    shell_pre_file = (
+        tmp_path / 'test-shellhooks-win' / 'inputshellhooks' / 'shell_pre.txt'
     )
-    shell_post_file = tmp_path.joinpath(
-        'test-shellhooks-win', 'inputshellhooks', 'shell_post.txt'
+    shell_post_file = (
+        tmp_path / 'test-shellhooks-win' / 'inputshellhooks' / 'shell_post.txt'
     )
     assert shell_pre_file.exists()
     assert shell_post_file.exists()
@@ -219,13 +217,11 @@ def test_ignore_shell_hooks(tmp_path) -> None:
     generate.generate_files(
         context={"cookiecutter": {"shellhooks": "shellhooks"}},
         repo_dir="tests/test-shellhooks/",
-        output_dir=tmp_path.joinpath('test-shellhooks'),
+        output_dir=tmp_path / 'test-shellhooks',
         accept_hooks=False,
     )
-    shell_pre_file = tmp_path.joinpath("test-shellhooks/inputshellhooks/shell_pre.txt")
-    shell_post_file = tmp_path.joinpath(
-        "test-shellhooks/inputshellhooks/shell_post.txt"
-    )
+    shell_pre_file = tmp_path / "test-shellhooks/inputshellhooks/shell_pre.txt"
+    shell_post_file = tmp_path / "test-shellhooks/inputshellhooks/shell_post.txt"
     assert not shell_pre_file.exists()
     assert not shell_post_file.exists()
 
@@ -234,7 +230,7 @@ def test_ignore_shell_hooks(tmp_path) -> None:
 def test_deprecate_run_hook_from_repo_dir(tmp_path) -> None:
     """Test deprecation warning in generate._run_hook_from_repo_dir."""
     repo_dir = "tests/test-shellhooks/"
-    project_dir = Path(tmp_path.joinpath('test-shellhooks'))
+    project_dir = tmp_path / 'test-shellhooks'
     project_dir.mkdir()
     with pytest.deprecated_call():
         generate._run_hook_from_repo_dir(

@@ -689,7 +689,7 @@ def test_prompt_should_ask_and_rm_repo_file(mocker, tmp_path) -> None:
         'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
     )
 
-    repo_file = tmp_path.joinpath('repo.zip')
+    repo_file = tmp_path / 'repo.zip'
     repo_file.write_text('this is zipfile content')
 
     deleted = prompt.prompt_and_delete(repo_file)
@@ -764,7 +764,7 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmp_path) ->
         'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
     )
 
-    repo_file = tmp_path.joinpath('repo.zip')
+    repo_file = tmp_path / 'repo.zip'
     repo_file.write_text('this is zipfile content')
 
     deleted = prompt.prompt_and_delete(repo_file, no_input=True)

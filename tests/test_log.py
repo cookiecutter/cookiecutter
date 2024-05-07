@@ -1,6 +1,7 @@
 """Collection of tests around log handling."""
 
 import logging
+from pathlib import Path
 
 import pytest
 
@@ -59,9 +60,9 @@ def debug_logger():
 
 
 @pytest.fixture
-def debug_file(tmp_path):
+def debug_file(tmp_path: Path) -> Path:
     """Fixture. Generate debug file location for tests."""
-    return tmp_path.joinpath('pytest-plugin.log')
+    return tmp_path / 'pytest-plugin.log'
 
 
 @pytest.fixture

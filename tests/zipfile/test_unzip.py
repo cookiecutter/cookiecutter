@@ -231,7 +231,7 @@ def test_unzip_url_existing_cache(mocker, clone_dir) -> None:
     )
 
     # Create an existing cache of the zipfile
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     existing_zip.write_text('This is an existing zipfile')
 
     output_dir = zipfile.unzip(
@@ -256,7 +256,7 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir) -> None:
     )
 
     # Create an existing cache of the zipfile
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     existing_zip.write_text('This is an existing zipfile')
 
     output_dir = zipfile.unzip(
@@ -281,7 +281,7 @@ def test_unzip_should_abort_if_no_redownload(mocker, clone_dir) -> None:
     )
 
     # Create an existing cache of the zipfile
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     existing_zip.write_text('This is an existing zipfile')
 
     zipfile_url = 'https://example.com/path/to/fake-repo-tmpl.zip'
@@ -300,7 +300,7 @@ def test_unzip_is_ok_to_reuse(mocker, clone_dir) -> None:
 
     request = mocker.MagicMock()
 
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     shutil.copy('tests/files/fake-repo-tmpl.zip', existing_zip)
 
     output_dir = zipfile.unzip(

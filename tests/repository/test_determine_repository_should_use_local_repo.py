@@ -41,7 +41,7 @@ def test_local_repo_with_no_context_raises(tmp_path) -> None:
             '\n'.join(
                 [
                     template_path,
-                    str(tmp_path.joinpath('tests', 'fake-repo-bad')),
+                    str(tmp_path / 'tests' / 'fake-repo-bad'),
                 ]
             ),
         )
@@ -65,6 +65,6 @@ def test_local_repo_typo(tmp_path) -> None:
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(
             template_path,
-            '\n'.join([template_path, str(tmp_path.joinpath('tests', 'unknown-repo'))]),
+            '\n'.join([template_path, str(tmp_path / 'tests' / 'unknown-repo')]),
         )
     )
