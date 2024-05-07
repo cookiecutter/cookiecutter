@@ -16,7 +16,7 @@ def test_clone_should_raise_if_vcs_not_installed(mocker, clone_dir) -> None:
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
     with pytest.raises(exceptions.VCSNotInstalled):
-        vcs.clone(repo_url, clone_to_dir=str(clone_dir))
+        vcs.clone(repo_url, clone_to_dir=clone_dir)
 
 
 def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir) -> None:
@@ -57,7 +57,7 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir) 
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
     with pytest.raises(SystemExit):
-        vcs.clone(repo_url, clone_to_dir=str(clone_dir))
+        vcs.clone(repo_url, clone_to_dir=clone_dir)
     assert not mock_subprocess.called
 
 
@@ -80,7 +80,7 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
 
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
-    vcs.clone(repo_url, clone_to_dir=str(clone_to_dir))
+    vcs.clone(repo_url, clone_to_dir=clone_to_dir)
     assert not mock_subprocess.called
 
 
@@ -157,7 +157,7 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message) -> None:
 
     repository_url = 'https://github.com/hackebro/cookiedozer'
     with pytest.raises(exceptions.RepositoryNotFound) as err:
-        vcs.clone(repository_url, clone_to_dir=str(clone_dir), no_input=True)
+        vcs.clone(repository_url, clone_to_dir=clone_dir, no_input=True)
 
     assert str(err.value) == (
         f'The repository {repository_url} could not be found, have you made a typo?'
@@ -184,7 +184,7 @@ def test_clone_handles_branch_typo(mocker, clone_dir, error_message) -> None:
     with pytest.raises(exceptions.RepositoryCloneFailed) as err:
         vcs.clone(
             repository_url,
-            clone_to_dir=str(clone_dir),
+            clone_to_dir=clone_dir,
             checkout='unknown_branch',
             no_input=True,
         )
@@ -208,6 +208,6 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir) -> None:
     with pytest.raises(subprocess.CalledProcessError):
         vcs.clone(
             'https://github.com/pytest-dev/cookiecutter-pytest-plugin',
-            clone_to_dir=str(clone_dir),
+            clone_to_dir=clone_dir,
             no_input=True,
         )

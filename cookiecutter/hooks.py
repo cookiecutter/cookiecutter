@@ -196,7 +196,7 @@ def run_pre_prompt_hook(repo_dir: Path | str) -> Path | str:
         scripts = find_hook('pre_prompt') or []
         for script in scripts:
             try:
-                run_script(script, str(repo_dir))
+                run_script(script, repo_dir)
             except FailedHookException as e:  # noqa: PERF203
                 raise FailedHookException('Pre-Prompt Hook script failed') from e
     return repo_dir

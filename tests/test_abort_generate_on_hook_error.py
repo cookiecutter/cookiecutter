@@ -34,6 +34,6 @@ def test_hooks_raises_errors(tmp_path, abort_pre_gen, abort_post_gen) -> None:
         generate.generate_files(
             repo_dir="tests/hooks-abort-render",
             context=context,
-            output_dir=str(tmp_path),
+            output_dir=tmp_path,
         )
     assert not (tmp_path / "foobar").is_dir()
