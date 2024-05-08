@@ -265,7 +265,7 @@ def render_and_create_dir(
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
     """Render name of a directory, create the directory, return its path."""
-    if not dirname or dirname == "":
+    if not dirname:
         msg = 'Error: directory name is empty'
         raise EmptyDirNameException(msg)
 
@@ -352,7 +352,6 @@ def generate_files(
 
     unrendered_dir = os.path.split(template_dir)[1]
     try:
-        project_dir: Path | str
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
         )
