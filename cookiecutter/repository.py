@@ -19,6 +19,7 @@ REPO_REGEX = re.compile(r"""(?x)             # Verbose mode.
     (\w+@[\w\.]+)                            # something like user@...
 )""")
 
+
 def is_repo_url(value: str) -> bool:
     """Return True if value is a repository URL."""
     return bool(REPO_REGEX.match(value))
