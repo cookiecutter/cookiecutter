@@ -13,16 +13,14 @@ from cookiecutter.zipfile import unzip
 if TYPE_CHECKING:
     from pathlib import Path
 
-REPO_REGEX = re.compile(r"""
-    (?x)                                        # Verbose mode
+REPO_REGEX = re.compile(r"""(?x)                # Verbose mode
     (
-        ((git|hg)\+)?(git|ssh|https?|file)      # Protocols
+        ((git|hg)\+)?(git|ssh|https?|file)    # Protocols
         ://
     )
-    |                                           # or
-    (\w+@[\w\.]+)                               # user@hostname
+    |                                         # or
+    (\w+@[\w\.]+)                             # user@hostname
 """)
-
 
 def is_repo_url(value: str) -> bool:
     """Return True if value is a repository URL."""
