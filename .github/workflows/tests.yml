@@ -66,7 +66,7 @@ jobs:
         run: "tox -e safety"
       - name: Send coverage report to codeclimate
         continue-on-error: true
-        uses: paambaati/codeclimate-action@v5.0.0
+        uses: paambaati/codeclimate-action@v6.0.0
         with:
           coverageCommand: echo "Ignore rerun"
           coverageLocations: ${{github.workspace}}/coverage.xml:coverage.py
