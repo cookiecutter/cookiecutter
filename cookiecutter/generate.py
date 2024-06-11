@@ -121,7 +121,7 @@ def apply_overwrites_to_context(
 
 
 def generate_context(
-    context_file: str = 'cookiecutter.json',
+    context_file: Path | str = 'cookiecutter.json',
     default_context: dict[str, Any] | None = None,
     extra_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
@@ -135,14 +135,15 @@ def generate_context(
     :param extra_context: Dictionary containing configuration overrides
     """
     context = OrderedDict([])
+    context_file = Path(context_file)
 
     try:
-        with open(context_file, encoding='utf-8') as file_handle:
+        with context_file.open(encoding='utf-8') as file_handle:
             obj = json.load(file_handle, object_pairs_hook=OrderedDict)
     except ValueError as e:
         # JSON decoding error.  Let's throw a new exception that is more
         # friendly for the developer or user.
-        full_fpath = os.path.abspath(context_file)
+        full_fpath = context_file.resolve()
         json_exc_message = str(e)
         our_exc_message = (
             f"JSON decoding error while loading '{full_fpath}'. "
@@ -151,8 +152,7 @@ def generate_context(
         raise ContextDecodingException(our_exc_message) from e
 
     # Add the Python object to the context dictionary
-    file_name = os.path.split(context_file)[1]
-    file_stem = file_name.split('.')[0]
+    file_stem = context_file.stem
     context[file_stem] = obj
 
     # Overwrite context variable defaults with the default context from the
@@ -170,7 +170,7 @@ def generate_context(
 
 
 def generate_file(
-    project_dir: str,
+    project_dir: Path,
     infile: str,
     context: dict[str, Any],
     env: Environment,
@@ -201,13 +201,13 @@ def generate_file(
     # Render the path to the output file (not including the root project dir)
     outfile_tmpl = env.from_string(infile)
 
-    outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
-    file_name_is_empty = os.path.isdir(outfile)
+    outfile = project_dir / outfile_tmpl.render(**context)
+    file_name_is_empty = outfile.is_dir()
     if file_name_is_empty:
         logger.debug('The resulting file name is empty: %s', outfile)
         return
 
-    if skip_if_file_exists and os.path.exists(outfile):
+    if skip_if_file_exists and outfile.exists():
         logger.debug('The resulting file already exists: %s', outfile)
         return
 
@@ -250,7 +250,7 @@ def generate_file(
 
     logger.debug('Writing contents to file %s', outfile)
 
-    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
+    with outfile.open('w', encoding='utf-8', newline=newline) as fh:
         fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -265,7 +265,7 @@ def render_and_create_dir(
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
     """Render name of a directory, create the directory, return its path."""
-    if not dirname or dirname == "":
+    if not dirname:
         msg = 'Error: directory name is empty'
         raise EmptyDirNameException(msg)
 
@@ -297,7 +297,7 @@ def render_and_create_dir(
 def _run_hook_from_repo_dir(
     repo_dir: str,
     hook_name: str,
-    project_dir: Path | str,
+    project_dir: Path,
     context: dict[str, Any],
     delete_project_on_failure: bool,
 ) -> None:
@@ -329,7 +329,7 @@ def generate_files(
     skip_if_file_exists: bool = False,
     accept_hooks: bool = True,
     keep_project_on_failure: bool = False,
-) -> str:
+) -> Path:
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -352,7 +352,6 @@ def generate_files(
 
     unrendered_dir = os.path.split(template_dir)[1]
     try:
-        project_dir: Path | str
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
         )
@@ -367,7 +366,7 @@ def generate_files(
     #  In order to build our files to the correct folder(s), we'll use an
     # absolute path for the target folder (project_dir)
 
-    project_dir = os.path.abspath(project_dir)
+    project_dir = project_dir.resolve()
     logger.debug('Project directory is %s', project_dir)
 
     # if we created the output directory, then it's ok to remove it
@@ -402,7 +401,7 @@ def generate_files(
 
             for copy_dir in copy_dirs:
                 indir = os.path.normpath(os.path.join(root, copy_dir))
-                outdir = os.path.normpath(os.path.join(project_dir, indir))
+                outdir = os.path.normpath(project_dir / indir)
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
 
@@ -417,7 +416,7 @@ def generate_files(
             # recursively
             dirs[:] = render_dirs
             for d in dirs:
-                unrendered_dir = os.path.join(project_dir, root, d)
+                unrendered_dir = str(project_dir / root / d)
                 try:
                     render_and_create_dir(
                         unrendered_dir, context, output_dir, env, overwrite_if_exists
@@ -434,7 +433,7 @@ def generate_files(
                 if is_copy_only_path(infile, context):
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
-                    outfile = os.path.join(project_dir, outfile_rendered)
+                    outfile = project_dir / outfile_rendered
                     logger.debug(
                         'Copying file %s to %s without rendering', infile, outfile
                     )

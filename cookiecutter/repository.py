@@ -4,14 +4,11 @@ from __future__ import annotations
 
 import os
 import re
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
 from cookiecutter.zipfile import unzip
-
-if TYPE_CHECKING:
-    from pathlib import Path
 
 REPO_REGEX = re.compile(
     r"""
@@ -53,24 +50,19 @@ def expand_abbreviations(template: str, abbreviations: dict[str, str]) -> str:
     return template
 
 
-def repository_has_cookiecutter_json(repo_directory: str) -> bool:
+def repository_has_cookiecutter_json(repo_directory: Path) -> bool:
     """Determine if `repo_directory` contains a `cookiecutter.json` file.
 
     :param repo_directory: The candidate repository directory.
     :return: True if the `repo_directory` is valid, else False.
     """
-    repo_directory_exists = os.path.isdir(repo_directory)
-
-    repo_config_exists = os.path.isfile(
-        os.path.join(repo_directory, 'cookiecutter.json')
-    )
-    return repo_directory_exists and repo_config_exists
+    return (repo_directory / 'cookiecutter.json').exists()
 
 
 def determine_repo_dir(
     template: str,
     abbreviations: dict[str, str],
-    clone_to_dir: Path | str,
+    clone_to_dir: Path,
     checkout: str | None,
     no_input: bool,
     password: str | None = None,
@@ -117,7 +109,7 @@ def determine_repo_dir(
             clone_to_dir=clone_to_dir,
             no_input=no_input,
         )
-        repository_candidates = [cloned_repo]
+        repository_candidates = [str(cloned_repo)]
         cleanup = False
     else:
         repository_candidates = [template, os.path.join(clone_to_dir, template)]
@@ -129,7 +121,7 @@ def determine_repo_dir(
         ]
 
     for repo_candidate in repository_candidates:
-        if repository_has_cookiecutter_json(repo_candidate):
+        if repository_has_cookiecutter_json(Path(repo_candidate)):
             return repo_candidate, cleanup
 
     raise RepositoryNotFound(

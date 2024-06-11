@@ -8,7 +8,8 @@ import os
 import subprocess
 import sys
 import tempfile
-from typing import TYPE_CHECKING, Any
+from pathlib import Path
+from typing import Any
 
 from jinja2.exceptions import UndefinedError
 
@@ -21,9 +22,6 @@ from cookiecutter.utils import (
     work_in,
 )
 
-if TYPE_CHECKING:
-    from pathlib import Path
-
 logger = logging.getLogger(__name__)
 
 _HOOKS = [
@@ -34,15 +32,15 @@ _HOOKS = [
 EXIT_SUCCESS = 0
 
 
-def valid_hook(hook_file: str, hook_name: str) -> bool:
+def valid_hook(hook_file: Path, hook_name: str) -> bool:
     """Determine if a hook file is valid.
 
     :param hook_file: The hook file to consider for validity
     :param hook_name: The hook to find
     :return: The hook file validity
     """
-    filename = os.path.basename(hook_file)
-    basename = os.path.splitext(filename)[0]
+    filename = hook_file.name
+    basename = hook_file.stem
     matching_hook = basename == hook_name
     supported_hook = basename in _HOOKS
     backup_file = filename.endswith('~')
@@ -50,7 +48,7 @@ def valid_hook(hook_file: str, hook_name: str) -> bool:
     return matching_hook and supported_hook and not backup_file
 
 
-def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
+def find_hook(hook_name: str, hooks_dir: Path = Path('hooks')) -> list[Path] | None:
     """Return a dict of all hook scripts provided.
 
     Must be called with the project template as the current working directory.
@@ -62,16 +60,17 @@ def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
     :param hooks_dir: The hook directory in the template
     :return: The absolute path to the hook script or None
     """
-    logger.debug('hooks_dir is %s', os.path.abspath(hooks_dir))
+    hooks_dir = Path(hooks_dir)
+    logger.debug('hooks_dir is %s', hooks_dir.resolve())
 
-    if not os.path.isdir(hooks_dir):
+    if not hooks_dir.is_dir():
         logger.debug('No hooks/dir in template_dir')
         return None
 
     scripts = [
-        os.path.abspath(os.path.join(hooks_dir, hook_file))
+        (hooks_dir / hook_file).resolve()
         for hook_file in os.listdir(hooks_dir)
-        if valid_hook(hook_file, hook_name)
+        if valid_hook(Path(hook_file), hook_name)
     ]
 
     if len(scripts) == 0:
@@ -79,17 +78,17 @@ def find_hook(hook_name: str, hooks_dir: str = 'hooks') -> list[str] | None:
     return scripts
 
 
-def run_script(script_path: str, cwd: Path | str = '.') -> None:
+def run_script(script_path: Path, cwd: Path | str = '.') -> None:
     """Execute a script from a working directory.
 
     :param script_path: Absolute path to the script to run.
     :param cwd: The directory to run the script from.
     """
     run_thru_shell = sys.platform.startswith('win')
-    if script_path.endswith('.py'):
-        script_command = [sys.executable, script_path]
+    if script_path.suffix == '.py':
+        script_command = [sys.executable, str(script_path)]
     else:
-        script_command = [script_path]
+        script_command = [str(script_path)]
 
     utils.make_executable(script_path)
 
@@ -109,7 +108,7 @@ def run_script(script_path: str, cwd: Path | str = '.') -> None:
 
 
 def run_script_with_context(
-    script_path: Path | str, cwd: Path | str, context: dict[str, Any]
+    script_path: Path, cwd: Path, context: dict[str, Any]
 ) -> None:
     """Execute a script after rendering it with Jinja.
 
@@ -117,10 +116,9 @@ def run_script_with_context(
     :param cwd: The directory to run the script from.
     :param context: Cookiecutter project template context.
     """
-    _, extension = os.path.splitext(script_path)
+    extension = script_path.suffix
 
-    with open(script_path, encoding='utf-8') as file:
-        contents = file.read()
+    contents = script_path.read_text(encoding='utf-8')
 
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
         env = create_env_with_context(context)
@@ -128,10 +126,10 @@ def run_script_with_context(
         output = template.render(**context)
         temp.write(output.encode('utf-8'))
 
-    run_script(temp.name, cwd)
+    run_script(Path(temp.name), cwd)
 
 
-def run_hook(hook_name: str, project_dir: Path | str, context: dict[str, Any]) -> None:
+def run_hook(hook_name: str, project_dir: Path, context: dict[str, Any]) -> None:
     """
     Try to find and execute a hook from the specified project directory.
 
@@ -151,7 +149,7 @@ def run_hook(hook_name: str, project_dir: Path | str, context: dict[str, Any]) -
 def run_hook_from_repo_dir(
     repo_dir: Path | str,
     hook_name: str,
-    project_dir: Path | str,
+    project_dir: Path,
     context: dict[str, Any],
     delete_project_on_failure: bool,
 ) -> None:
@@ -198,7 +196,7 @@ def run_pre_prompt_hook(repo_dir: Path | str) -> Path | str:
         scripts = find_hook('pre_prompt') or []
         for script in scripts:
             try:
-                run_script(script, str(repo_dir))
+                run_script(script, repo_dir)
             except FailedHookException as e:  # noqa: PERF203
                 raise FailedHookException('Pre-Prompt Hook script failed') from e
     return repo_dir

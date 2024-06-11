@@ -5,7 +5,6 @@ Test formerly known from a unittest residing in test_generate.py named
 TestOutputFolder.test_output_folder
 """
 
-import os
 from pathlib import Path
 
 import pytest
@@ -17,8 +16,9 @@ from cookiecutter import exceptions, generate, utils
 def remove_output_folder():
     """Remove the output folder after test."""
     yield
-    if os.path.exists('output_folder'):
-        utils.rmtree('output_folder')
+    output_folder = Path('output_folder')
+    if output_folder.exists():
+        utils.rmtree(output_folder)
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
@@ -40,8 +40,9 @@ It is 2014.
     in_folder2 = Path('output_folder/folder/in_folder.txt').read_text()
     assert in_folder == in_folder2
 
-    assert os.path.isdir('output_folder/im_a.dir')
-    assert os.path.isfile('output_folder/im_a.dir/im_a.file.py')
+    dir = Path('output_folder/im_a.dir')
+    assert dir.is_dir()
+    assert (dir / 'im_a.file.py').is_file()
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_output_folder')
@@ -50,9 +51,9 @@ def test_exception_when_output_folder_exists() -> None:
     context = generate.generate_context(
         context_file='tests/test-output-folder/cookiecutter.json'
     )
-    output_folder = context['cookiecutter']['test_name']
+    output_folder = Path(context['cookiecutter']['test_name'])
 
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    if not output_folder.exists():
+        output_folder.mkdir()
     with pytest.raises(exceptions.OutputDirExistsException):
         generate.generate_files(context=context, repo_dir='tests/test-output-folder')

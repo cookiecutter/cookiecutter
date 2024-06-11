@@ -1,7 +1,7 @@
 """Tests to verify correct work with user configs and system/user variables inside."""
 
-import os
 import shutil
+from pathlib import Path
 
 import pytest
 
@@ -10,9 +10,9 @@ from cookiecutter.exceptions import InvalidConfiguration
 
 
 @pytest.fixture(scope='module')
-def user_config_path():
+def user_config_path() -> Path:
     """Fixture. Return user config path for current user."""
-    return os.path.expanduser('~/.cookiecutterrc')
+    return Path('~/.cookiecutterrc').expanduser()
 
 
 @pytest.fixture(scope='function')
@@ -22,21 +22,21 @@ def back_up_rc(user_config_path):
 
     If ~/.cookiecutterrc is pre-existing, move it to a temp location
     """
-    user_config_path_backup = os.path.expanduser('~/.cookiecutterrc.backup')
+    user_config_path_backup = Path('~/.cookiecutterrc.backup').expanduser()
 
-    if os.path.exists(user_config_path):
+    if user_config_path.exists():
         shutil.copy(user_config_path, user_config_path_backup)
-        os.remove(user_config_path)
+        user_config_path.unlink()
 
     yield
     # Remove the ~/.cookiecutterrc that has been created in the test.
-    if os.path.exists(user_config_path):
-        os.remove(user_config_path)
+    if user_config_path.exists():
+        user_config_path.unlink()
 
     # If it existed, restore the original ~/.cookiecutterrc.
-    if os.path.exists(user_config_path_backup):
+    if user_config_path_backup.exists():
         shutil.copy(user_config_path_backup, user_config_path)
-        os.remove(user_config_path_backup)
+        user_config_path_backup.unlink()
 
 
 @pytest.fixture
@@ -106,7 +106,7 @@ def test_specify_config_path(mocker, custom_config_path, custom_config) -> None:
     assert user_config == custom_config
 
 
-def test_default_config_path(user_config_path) -> None:
+def test_default_config_path(user_config_path: Path) -> None:
     """Validate app configuration. User config path should match default path."""
     assert user_config_path == config.USER_CONFIG_PATH
 

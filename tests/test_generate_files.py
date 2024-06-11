@@ -74,7 +74,7 @@ def test_generate_files_with_jinja2_environment(tmp_path) -> None:
         output_dir=tmp_path,
     )
 
-    conditions_file = tmp_path.joinpath('inputpizzä/simple-with-conditions.txt')
+    conditions_file = tmp_path / 'inputpizzä/simple-with-conditions.txt'
     assert conditions_file.is_file()
     assert conditions_file.exists()
 
@@ -329,7 +329,7 @@ def test_raise_undefined_variable_file_name(output_dir, undefined_context) -> No
     assert error.message == "Unable to create file '{{cookiecutter.foobar}}'"
     assert error.context == undefined_context
 
-    assert not Path(output_dir).joinpath('testproject').exists()
+    assert not Path(output_dir, 'testproject').exists()
 
 
 def test_raise_undefined_variable_file_name_existing_project(
@@ -365,7 +365,7 @@ def test_raise_undefined_variable_file_content(output_dir, undefined_context) ->
     assert error.message == "Unable to create file 'README.rst'"
     assert error.context == undefined_context
 
-    assert not Path(output_dir).joinpath('testproject').exists()
+    assert not Path(output_dir, 'testproject').exists()
 
 
 def test_raise_undefined_variable_dir_name(output_dir, undefined_context) -> None:
@@ -384,7 +384,7 @@ def test_raise_undefined_variable_dir_name(output_dir, undefined_context) -> Non
 
     assert error.context == undefined_context
 
-    assert not Path(output_dir).joinpath('testproject').exists()
+    assert not Path(output_dir, 'testproject').exists()
 
 
 def test_keep_project_dir_on_failure(output_dir, undefined_context) -> None:
@@ -396,7 +396,7 @@ def test_keep_project_dir_on_failure(output_dir, undefined_context) -> None:
             context=undefined_context,
             keep_project_on_failure=True,
         )
-    assert Path(output_dir).joinpath('testproject').exists()
+    assert Path(output_dir, 'testproject').exists()
 
 
 def test_raise_undefined_variable_dir_name_existing_project(
@@ -449,4 +449,4 @@ def test_raise_empty_dir_name(output_dir, undefined_context):
             context=undefined_context,
             environment=Environment(autoescape=True),
         )
-    assert not Path(output_dir).joinpath('testproject').exists()
+    assert not Path(output_dir, 'testproject').exists()

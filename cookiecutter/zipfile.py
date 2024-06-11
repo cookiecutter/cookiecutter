@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import tempfile
 from pathlib import Path
 from zipfile import BadZipFile, ZipFile
@@ -42,9 +41,9 @@ def unzip(
         # Build the name of the cached zipfile,
         # and prompt to delete if it already exists.
         identifier = zip_uri.rsplit('/', 1)[1]
-        zip_path = os.path.join(clone_to_dir, identifier)
+        zip_path = clone_to_dir / identifier
 
-        if os.path.exists(zip_path):
+        if zip_path.exists():
             download = prompt_and_delete(zip_path, no_input=no_input)
         else:
             download = True
@@ -52,13 +51,13 @@ def unzip(
         if download:
             # (Re) download the zipfile
             r = requests.get(zip_uri, stream=True, timeout=100)
-            with open(zip_path, 'wb') as f:
+            with zip_path.open('wb') as f:
                 for chunk in r.iter_content(chunk_size=1024):
                     if chunk:  # filter out keep-alive new chunks
                         f.write(chunk)
     else:
         # Just use the local zipfile as-is.
-        zip_path = os.path.abspath(zip_uri)
+        zip_path = Path(zip_uri).resolve()
 
     # Now unpack the repository. The zipfile will be unpacked
     # into a temporary directory
@@ -78,8 +77,8 @@ def unzip(
 
         # Construct the final target directory
         project_name = first_filename[:-1]
-        unzip_base = tempfile.mkdtemp()
-        unzip_path = os.path.join(unzip_base, project_name)
+        unzip_base = Path(tempfile.mkdtemp())
+        unzip_path = unzip_base / project_name
 
         # Extract the zip file into the temporary directory
         try:
@@ -119,4 +118,4 @@ def unzip(
             f'Zip repository {zip_uri} is not a valid zip archive:'
         ) from e
 
-    return unzip_path
+    return str(unzip_path)

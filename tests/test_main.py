@@ -1,5 +1,7 @@
 """Collection of tests around cookiecutter's replay feature."""
 
+from pathlib import Path
+
 from cookiecutter.main import cookiecutter
 
 
@@ -111,6 +113,6 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file) -> None:
     )
 
     mock_replay_load.assert_called_once_with(
-        '.',
+        Path(),
         'custom-replay-file',
     )

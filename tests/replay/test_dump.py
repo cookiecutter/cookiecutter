@@ -1,7 +1,7 @@
 """test_dump."""
 
 import json
-import os
+from pathlib import Path
 
 import pytest
 
@@ -15,19 +15,18 @@ def template_name() -> str:
 
 
 @pytest.fixture
-def replay_file(replay_test_dir, template_name):
+def replay_file(replay_test_dir: Path, template_name: str) -> Path:
     """Fixture to return a actual file name of the dump."""
-    file_name = f'{template_name}.json'
-    return os.path.join(replay_test_dir, file_name)
+    return replay_test_dir / f'{template_name}.json'
 
 
 @pytest.fixture(autouse=True)
-def remove_replay_dump(request, replay_file) -> None:
+def remove_replay_dump(request, replay_file: Path) -> None:
     """Remove the replay file created by tests."""
 
     def fin_remove_replay_file() -> None:
-        if os.path.exists(replay_file):
-            os.remove(replay_file)
+        if replay_file.exists():
+            replay_file.unlink()
 
     request.addfinalizer(fin_remove_replay_file)
 
@@ -78,7 +77,7 @@ def test_run_json_dump(
     template_name,
     context,
     replay_test_dir,
-    replay_file,
+    replay_file: Path,
 ) -> None:
     """Test that replay.dump runs json.dump under the hood and that the context \
     is correctly written to the expected file in the replay_dir."""
@@ -94,5 +93,5 @@ def test_run_json_dump(
 
     assert mock_json_dump.call_count == 1
     (dumped_context, outfile_handler), _kwargs = mock_json_dump.call_args
-    assert outfile_handler.name == replay_file
+    assert outfile_handler.name == str(replay_file)
     assert dumped_context == context

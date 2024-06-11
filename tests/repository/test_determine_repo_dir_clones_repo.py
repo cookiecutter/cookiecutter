@@ -1,6 +1,6 @@
 """Collection of tests around cloning cookiecutter template repositories."""
 
-import os
+from pathlib import Path
 
 import pytest
 
@@ -44,7 +44,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data) -> None:
         password=None,
     )
 
-    assert os.path.isdir(project_dir)
+    assert Path(project_dir).is_dir()
     assert cleanup
     assert project_dir == 'tests/fake-repo-tmpl'
 
@@ -85,7 +85,7 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data) -> 
         no_input=True,
     )
 
-    assert os.path.isdir(project_dir)
+    assert Path(project_dir).is_dir()
     assert not cleanup
     assert project_dir == 'tests/fake-repo-tmpl'
 
@@ -102,7 +102,7 @@ def test_repository_url_with_no_context_file(mocker, template_url) -> None:
         repository.determine_repo_dir(
             template_url,
             abbreviations={},
-            clone_to_dir=".",
+            clone_to_dir=Path.cwd(),
             checkout=None,
             no_input=True,
         )

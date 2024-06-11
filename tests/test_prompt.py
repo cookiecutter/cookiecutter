@@ -656,7 +656,7 @@ def test_prompt_should_ask_and_rm_repo_dir(mocker, tmp_path) -> None:
     repo_dir = Path(tmp_path, 'repo')
     repo_dir.mkdir()
 
-    deleted = prompt.prompt_and_delete(str(repo_dir))
+    deleted = prompt.prompt_and_delete(repo_dir)
 
     assert mock_read_user.called
     assert not repo_dir.exists()
@@ -674,7 +674,7 @@ def test_prompt_should_ask_and_exit_on_user_no_answer(mocker, tmp_path) -> None:
     repo_dir = Path(tmp_path, 'repo')
     repo_dir.mkdir()
 
-    deleted = prompt.prompt_and_delete(str(repo_dir))
+    deleted = prompt.prompt_and_delete(repo_dir)
 
     assert mock_read_user.called
     assert repo_dir.exists()
@@ -689,10 +689,10 @@ def test_prompt_should_ask_and_rm_repo_file(mocker, tmp_path) -> None:
         'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
     )
 
-    repo_file = tmp_path.joinpath('repo.zip')
+    repo_file = tmp_path / 'repo.zip'
     repo_file.write_text('this is zipfile content')
 
-    deleted = prompt.prompt_and_delete(str(repo_file))
+    deleted = prompt.prompt_and_delete(repo_file)
 
     assert mock_read_user.called
     assert not repo_file.exists()
@@ -709,7 +709,7 @@ def test_prompt_should_ask_and_keep_repo_on_no_reuse(mocker, tmp_path) -> None:
     repo_dir.mkdir()
 
     with pytest.raises(SystemExit):
-        prompt.prompt_and_delete(str(repo_dir))
+        prompt.prompt_and_delete(repo_dir)
 
     assert mock_read_user.called
     assert repo_dir.exists()
@@ -728,7 +728,7 @@ def test_prompt_should_ask_and_keep_repo_on_reuse(mocker, tmp_path) -> None:
     repo_dir = Path(tmp_path, 'repo')
     repo_dir.mkdir()
 
-    deleted = prompt.prompt_and_delete(str(repo_dir))
+    deleted = prompt.prompt_and_delete(repo_dir)
 
     assert mock_read_user.called
     assert repo_dir.exists()
@@ -747,7 +747,7 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_dir(mocker, tmp_path) -> 
     repo_dir = Path(tmp_path, 'repo')
     repo_dir.mkdir()
 
-    deleted = prompt.prompt_and_delete(str(repo_dir), no_input=True)
+    deleted = prompt.prompt_and_delete(repo_dir, no_input=True)
 
     assert not mock_read_user.called
     assert not repo_dir.exists()
@@ -764,10 +764,10 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmp_path) ->
         'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
     )
 
-    repo_file = tmp_path.joinpath('repo.zip')
+    repo_file = tmp_path / 'repo.zip'
     repo_file.write_text('this is zipfile content')
 
-    deleted = prompt.prompt_and_delete(str(repo_file), no_input=True)
+    deleted = prompt.prompt_and_delete(repo_file, no_input=True)
 
     assert not mock_read_user.called
     assert not repo_file.exists()
