@@ -8,7 +8,8 @@ import os
 import subprocess
 import sys
 import tempfile
-from typing import TYPE_CHECKING, Any
+from pathlib import Path
+from typing import Any
 
 from jinja2.exceptions import UndefinedError
 
@@ -20,9 +21,6 @@ from cookiecutter.utils import (
     rmtree,
     work_in,
 )
-
-if TYPE_CHECKING:
-    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -97,15 +95,14 @@ def run_script(script_path: str, cwd: Path | str = '.') -> None:
         proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
         exit_status = proc.wait()
         if exit_status != EXIT_SUCCESS:
-            raise FailedHookException(
-                f'Hook script failed (exit status: {exit_status})'
-            )
+            msg = f'Hook script failed (exit status: {exit_status})'
+            raise FailedHookException(msg)
     except OSError as err:
         if err.errno == errno.ENOEXEC:
-            raise FailedHookException(
-                'Hook script failed, might be an empty file or missing a shebang'
-            ) from err
-        raise FailedHookException(f'Hook script failed (error: {err})') from err
+            msg = 'Hook script failed, might be an empty file or missing a shebang'
+            raise FailedHookException(msg) from err
+        msg = f'Hook script failed (error: {err})'
+        raise FailedHookException(msg) from err
 
 
 def run_script_with_context(
@@ -119,8 +116,7 @@ def run_script_with_context(
     """
     _, extension = os.path.splitext(script_path)
 
-    with open(script_path, encoding='utf-8') as file:
-        contents = file.read()
+    contents = Path(script_path).read_text(encoding='utf-8')
 
     with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix=extension) as temp:
         env = create_env_with_context(context)
@@ -173,7 +169,7 @@ def run_hook_from_repo_dir(
         ):
             if delete_project_on_failure:
                 rmtree(project_dir)
-            logger.error(
+            logger.exception(
                 "Stopping generation because %s hook "
                 "script didn't exit successfully",
                 hook_name,
@@ -200,5 +196,6 @@ def run_pre_prompt_hook(repo_dir: Path | str) -> Path | str:
             try:
                 run_script(script, str(repo_dir))
             except FailedHookException as e:  # noqa: PERF203
-                raise FailedHookException('Pre-Prompt Hook script failed') from e
+                msg = 'Pre-Prompt Hook script failed'
+                raise FailedHookException(msg) from e
     return repo_dir

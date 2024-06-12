@@ -208,5 +208,5 @@ class _patch_import_path_for_repo:  # noqa: N801
         self._path = copy(sys.path)
         sys.path.append(self._repo_dir)
 
-    def __exit__(self, type, value, traceback):  # type: ignore[no-untyped-def]
+    def __exit__(self, _type, _value, _traceback):  # type: ignore[no-untyped-def]
         sys.path = self._path

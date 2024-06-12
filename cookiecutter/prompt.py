@@ -53,10 +53,9 @@ class YesNoPrompt(Confirm):
         value = value.strip().lower()
         if value in self.yes_choices:
             return True
-        elif value in self.no_choices:
+        if value in self.no_choices:
             return False
-        else:
-            raise InvalidResponse(self.validate_error_message)
+        raise InvalidResponse(self.validate_error_message)
 
 
 def read_user_yes_no(var_name, default_value, prompts=None, prefix: str = ""):
@@ -148,11 +147,13 @@ def process_json(user_value: str):
         user_dict = json.loads(user_value, object_pairs_hook=OrderedDict)
     except Exception as error:
         # Leave it up to click to ask the user again
-        raise InvalidResponse('Unable to decode to JSON.') from error
+        msg = 'Unable to decode to JSON.'
+        raise InvalidResponse(msg) from error
 
     if not isinstance(user_dict, dict):
         # Leave it up to click to ask the user again
-        raise InvalidResponse('Requires JSON dict.')
+        msg = 'Requires JSON dict.'
+        raise InvalidResponse(msg)
 
     return user_dict
 
@@ -185,12 +186,11 @@ def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = "")
         if prompts and var_name in prompts and prompts[var_name]
         else var_name
     )
-    user_value = JsonPrompt.ask(
+    return JsonPrompt.ask(
         f"{prefix}{question} [cyan bold]({DEFAULT_DISPLAY})[/]",
         default=default_value,
         show_default=False,
     )
-    return user_value
 
 
 _Raw: TypeAlias = Union[bool, Dict["_Raw", "_Raw"], List["_Raw"], str, None]
@@ -219,16 +219,16 @@ def render_variable(
     """
     if raw is None or isinstance(raw, bool):
         return raw
-    elif isinstance(raw, dict):
+    if isinstance(raw, dict):
         return {
             render_variable(env, k, cookiecutter_dict): render_variable(
                 env, v, cookiecutter_dict
             )
             for k, v in raw.items()
         }
-    elif isinstance(raw, list):
+    if isinstance(raw, list):
         return [render_variable(env, v, cookiecutter_dict) for v in raw]
-    elif not isinstance(raw, str):
+    if not isinstance(raw, str):
         raw = str(raw)
 
     template = env.from_string(raw)
@@ -301,7 +301,7 @@ def prompt_for_config(
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
-        elif key.startswith('__'):
+        if key.startswith('__'):
             cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
             continue
 
@@ -391,7 +391,8 @@ def choose_nested_template(
 
     template = Path(template) if template else None
     if not (template and not template.is_absolute()):
-        raise ValueError("Illegal template path")
+        msg = "Illegal template path"
+        raise ValueError(msg)
 
     repo_dir = Path(repo_dir).resolve()
     template_path = (repo_dir / template).resolve()
@@ -426,12 +427,9 @@ def prompt_and_delete(path: Path | str, no_input: bool = False) -> bool:
         else:
             os.remove(path)
         return True
-    else:
-        ok_to_reuse = read_user_yes_no(
-            "Do you want to re-use the existing version?", 'yes'
-        )
+    ok_to_reuse = read_user_yes_no("Do you want to re-use the existing version?", 'yes')
 
-        if ok_to_reuse:
-            return False
+    if ok_to_reuse:
+        return False
 
-        sys.exit()
+    sys.exit()

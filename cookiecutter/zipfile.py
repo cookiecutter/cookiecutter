@@ -66,15 +66,15 @@ def unzip(
         zip_file = ZipFile(zip_path)
 
         if len(zip_file.namelist()) == 0:
-            raise InvalidZipRepository(f'Zip repository {zip_uri} is empty')
+            msg = f'Zip repository {zip_uri} is empty'
+            raise InvalidZipRepository(msg)
 
         # The first record in the zipfile should be the directory entry for
         # the archive. If it isn't a directory, there's a problem.
         first_filename = zip_file.namelist()[0]
         if not first_filename.endswith('/'):
-            raise InvalidZipRepository(
-                f"Zip repository {zip_uri} does not include a top-level directory"
-            )
+            msg = f"Zip repository {zip_uri} does not include a top-level directory"
+            raise InvalidZipRepository(msg)
 
         # Construct the final target directory
         project_name = first_filename[:-1]
@@ -91,13 +91,11 @@ def unzip(
                 try:
                     zip_file.extractall(path=unzip_base, pwd=password.encode('utf-8'))
                 except RuntimeError as e:
-                    raise InvalidZipRepository(
-                        'Invalid password provided for protected repository'
-                    ) from e
+                    msg = 'Invalid password provided for protected repository'
+                    raise InvalidZipRepository(msg) from e
             elif no_input:
-                raise InvalidZipRepository(
-                    'Unable to unlock password protected repository'
-                ) from runtime_err
+                msg = 'Unable to unlock password protected repository'
+                raise InvalidZipRepository(msg) from runtime_err
             else:
                 retry: int | None = 0
                 while retry is not None:
@@ -110,13 +108,11 @@ def unzip(
                     except RuntimeError as e:  # noqa: PERF203
                         retry += 1  # type: ignore[operator]
                         if retry == 3:
-                            raise InvalidZipRepository(
-                                'Invalid password provided for protected repository'
-                            ) from e
+                            msg = 'Invalid password provided for protected repository'
+                            raise InvalidZipRepository(msg) from e
 
     except BadZipFile as e:
-        raise InvalidZipRepository(
-            f'Zip repository {zip_uri} is not a valid zip archive:'
-        ) from e
+        msg = f'Zip repository {zip_uri} is not a valid zip archive:'
+        raise InvalidZipRepository(msg) from e
 
     return unzip_path

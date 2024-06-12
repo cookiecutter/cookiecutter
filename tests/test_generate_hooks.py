@@ -238,7 +238,7 @@ def test_deprecate_run_hook_from_repo_dir(tmp_path) -> None:
     project_dir = Path(tmp_path.joinpath('test-shellhooks'))
     project_dir.mkdir()
     with pytest.deprecated_call():
-        generate._run_hook_from_repo_dir(
+        generate._run_hook_from_repo_dir(  # noqa: SLF001
             repo_dir=repo_dir,
             hook_name="pre_gen_project",
             project_dir=project_dir,
