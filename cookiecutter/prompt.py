@@ -274,7 +274,10 @@ def prompt_choice_for_config(
     """
     rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
     if no_input:
-        return rendered_options[0]
+        if len(rendered_options) != 0:
+            return rendered_options[0]
+        else:
+            return None
     return read_user_choice(key, rendered_options, prompts, prefix)
 
 
