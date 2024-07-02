@@ -1,4 +1,5 @@
 """Tests for `cookiecutter.hooks` module."""
+
 import errno
 import os
 import stat
@@ -8,10 +9,10 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import hooks, utils, exceptions
+from cookiecutter import exceptions, hooks, utils
 
 
-def make_test_repo(name, multiple_hooks=False):
+def make_test_repo(name: str, multiple_hooks: bool = False) -> str:
     """Create test repository for test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
@@ -76,36 +77,38 @@ class TestFindHooks:
 
     repo_path = 'tests/test-hooks'
 
-    def setup_method(self, method):
+    def setup_method(self, _method) -> None:
         """Find hooks related tests setup fixture."""
         self.post_hook = make_test_repo(self.repo_path)
 
-    def teardown_method(self, method):
+    def teardown_method(self, _method) -> None:
         """Find hooks related tests teardown fixture."""
         utils.rmtree(self.repo_path)
 
-    def test_find_hook(self):
+    def test_find_hook(self) -> None:
         """Finds the specified hook."""
         with utils.work_in(self.repo_path):
             expected_pre = os.path.abspath('hooks/pre_gen_project.py')
             actual_hook_path = hooks.find_hook('pre_gen_project')
+            assert actual_hook_path
             assert expected_pre == actual_hook_path[0]
 
             expected_post = os.path.abspath(f'hooks/{self.post_hook}')
             actual_hook_path = hooks.find_hook('post_gen_project')
+            assert actual_hook_path
             assert expected_post == actual_hook_path[0]
 
-    def test_no_hooks(self):
+    def test_no_hooks(self) -> None:
         """`find_hooks` should return None if the hook could not be found."""
         with utils.work_in('tests/fake-repo'):
             assert None is hooks.find_hook('pre_gen_project')
 
-    def test_unknown_hooks_dir(self):
+    def test_unknown_hooks_dir(self) -> None:
         """`find_hooks` should return None if hook directory not found."""
         with utils.work_in(self.repo_path):
             assert hooks.find_hook('pre_gen_project', hooks_dir='hooks_dir') is None
 
-    def test_hook_not_found(self):
+    def test_hook_not_found(self) -> None:
         """`find_hooks` should return None if the hook could not be found."""
         with utils.work_in(self.repo_path):
             assert hooks.find_hook('unknown_hook') is None
@@ -117,11 +120,11 @@ class TestExternalHooks:
     repo_path = os.path.abspath('tests/test-hooks/')
     hooks_path = os.path.abspath('tests/test-hooks/hooks')
 
-    def setup_method(self, method):
+    def setup_method(self, _method) -> None:
         """External hooks related tests setup fixture."""
         self.post_hook = make_test_repo(self.repo_path, multiple_hooks=True)
 
-    def teardown_method(self, method):
+    def teardown_method(self, _method) -> None:
         """External hooks related tests teardown fixture."""
         utils.rmtree(self.repo_path)
 
@@ -140,12 +143,12 @@ class TestExternalHooks:
         if os.path.exists('tests/context_post.txt'):
             os.remove('tests/context_post.txt')
 
-    def test_run_script(self):
+    def test_run_script(self) -> None:
         """Execute a hook script, independently of project generation."""
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert os.path.isfile('shell_post.txt')
 
-    def test_run_failing_script(self, mocker):
+    def test_run_failing_script(self, mocker) -> None:
         """Test correct exception raise if run_script fails."""
         err = OSError()
 
@@ -156,7 +159,7 @@ class TestExternalHooks:
             hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
         assert f'Hook script failed (error: {err})' in str(excinfo.value)
 
-    def test_run_failing_script_enoexec(self, mocker):
+    def test_run_failing_script_enoexec(self, mocker) -> None:
         """Test correct exception raise if run_script fails."""
         err = OSError()
         err.errno = errno.ENOEXEC
@@ -170,13 +173,13 @@ class TestExternalHooks:
             excinfo.value
         )
 
-    def test_run_script_cwd(self):
+    def test_run_script_cwd(self) -> None:
         """Change directory before running hook."""
         hooks.run_script(os.path.join(self.hooks_path, self.post_hook), 'tests')
         assert os.path.isfile('tests/shell_post.txt')
         assert 'tests' not in os.getcwd()
 
-    def test_run_script_with_context(self):
+    def test_run_script_with_context(self) -> None:
         """Execute a hook script, passing a context."""
         hook_path = os.path.join(self.hooks_path, 'post_gen_project.sh')
 
@@ -204,7 +207,7 @@ class TestExternalHooks:
         assert os.path.isfile('tests/context_post.txt')
         assert 'tests' not in os.getcwd()
 
-    def test_run_hook(self):
+    def test_run_hook(self) -> None:
         """Execute hook from specified template in specified output \
         directory."""
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
@@ -216,7 +219,7 @@ class TestExternalHooks:
             hooks.run_hook('post_gen_project', tests_dir, {})
             assert os.path.isfile(os.path.join(tests_dir, 'shell_post.txt'))
 
-    def test_run_failing_hook(self):
+    def test_run_failing_hook(self) -> None:
         """Test correct exception raise if hook exit code is not zero."""
         hook_path = os.path.join(self.hooks_path, 'pre_gen_project.py')
         tests_dir = os.path.join(self.repo_path, 'input{{hooks}}')
@@ -266,7 +269,7 @@ def dir_with_hooks(tmp_path):
     post_gen_hook_file.unlink()
 
 
-def test_ignore_hook_backup_files(monkeypatch, dir_with_hooks):
+def test_ignore_hook_backup_files(monkeypatch, dir_with_hooks) -> None:
     """Test `find_hook` correctly use `valid_hook` verification function."""
     # Change the current working directory that contains `hooks/`
     monkeypatch.chdir(dir_with_hooks)

@@ -1,4 +1,5 @@
 """Tests around detection whether cookiecutter templates are cached locally."""
+
 import os
 from pathlib import Path
 
@@ -8,7 +9,7 @@ from cookiecutter import repository
 
 
 @pytest.fixture
-def template():
+def template() -> str:
     """Fixture. Return simple string as template name."""
     return 'cookiecutter-pytest-plugin'
 
@@ -28,7 +29,7 @@ def cloned_cookiecutter_path(user_config_data, template):
 
 def test_should_find_existing_cookiecutter(
     template, user_config_data, cloned_cookiecutter_path
-):
+) -> None:
     """
     Should find folder created by `cloned_cookiecutter_path` and return it.
 

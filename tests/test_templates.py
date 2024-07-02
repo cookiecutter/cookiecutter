@@ -4,6 +4,7 @@ test_custom_extension_in_hooks.
 Tests to ensure custom cookiecutter extensions are properly made available to
 pre- and post-gen hooks.
 """
+
 from pathlib import Path
 
 import pytest
@@ -18,7 +19,7 @@ def output_dir(tmpdir):
 
 
 @pytest.mark.parametrize("template", ["include", "no-templates", "extends", "super"])
-def test_build_templates(template, output_dir):
+def test_build_templates(template, output_dir) -> None:
     """
     Verify Templates Design keywords.
 

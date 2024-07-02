@@ -1,4 +1,5 @@
 """Collection of tests around character encodings."""
+
 import codecs
 import locale
 import sys
@@ -9,7 +10,7 @@ PY3 = sys.version_info[0] == 3
 
 
 @pytest.mark.skipif(not PY3, reason='Only necessary on Python3')
-def test_not_ascii():
+def test_not_ascii() -> None:
     """Make sure that the systems preferred encoding is not `ascii`.
 
     Otherwise `click` is raising a RuntimeError for Python3. For a detailed

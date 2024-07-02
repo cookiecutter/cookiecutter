@@ -1,20 +1,27 @@
 """Helper functions used throughout Cookiecutter."""
+
+from __future__ import annotations
+
 import contextlib
 import logging
 import os
 import shutil
 import stat
-import sys
+import tempfile
 from pathlib import Path
+from typing import TYPE_CHECKING, Any, Iterator
 
 from jinja2.ext import Extension
 
-from cookiecutter.prompt import read_user_yes_no
+from cookiecutter.environment import StrictEnvironment
+
+if TYPE_CHECKING:
+    from jinja2 import Environment
 
 logger = logging.getLogger(__name__)
 
 
-def force_delete(func, path, exc_info):
+def force_delete(func, path, _exc_info) -> None:  # type: ignore[no-untyped-def]
     """Error handler for `shutil.rmtree()` equivalent to `rm -rf`.
 
     Usage: `shutil.rmtree(path, onerror=force_delete)`
@@ -24,7 +31,7 @@ def force_delete(func, path, exc_info):
     func(path)
 
 
-def rmtree(path):
+def rmtree(path: Path | str) -> None:
     """Remove a directory and all its contents. Like rm -rf on Unix.
 
     :param path: A directory path.
@@ -32,7 +39,7 @@ def rmtree(path):
     shutil.rmtree(path, onerror=force_delete)
 
 
-def make_sure_path_exists(path: "os.PathLike[str]") -> None:
+def make_sure_path_exists(path: Path | str) -> None:
     """Ensure that a directory exists.
 
     :param path: A directory tree path for creation.
@@ -45,7 +52,7 @@ def make_sure_path_exists(path: "os.PathLike[str]") -> None:
 
 
 @contextlib.contextmanager
-def work_in(dirname=None):
+def work_in(dirname: Path | str | None = None) -> Iterator[None]:
     """Context manager version of os.chdir.
 
     When exited, returns to the working directory prior to entering.
@@ -59,7 +66,7 @@ def work_in(dirname=None):
         os.chdir(curdir)
 
 
-def make_executable(script_path):
+def make_executable(script_path: Path | str) -> None:
     """Make `script_path` executable.
 
     :param script_path: The file to change
@@ -68,51 +75,30 @@ def make_executable(script_path):
     os.chmod(script_path, status.st_mode | stat.S_IEXEC)
 
 
-def prompt_and_delete(path, no_input=False):
-    """
-    Ask user if it's okay to delete the previously-downloaded file/directory.
-
-    If yes, delete it. If no, checks to see if the old version should be
-    reused. If yes, it's reused; otherwise, Cookiecutter exits.
-
-    :param path: Previously downloaded zipfile.
-    :param no_input: Suppress prompt to delete repo and just delete it.
-    :return: True if the content was deleted
-    """
-    # Suppress prompt if called via API
-    if no_input:
-        ok_to_delete = True
-    else:
-        question = (
-            f"You've downloaded {path} before. Is it okay to delete and re-download it?"
-        )
-
-        ok_to_delete = read_user_yes_no(question, 'yes')
-
-    if ok_to_delete:
-        if os.path.isdir(path):
-            rmtree(path)
-        else:
-            os.remove(path)
-        return True
-    else:
-        ok_to_reuse = read_user_yes_no(
-            "Do you want to re-use the existing version?", 'yes'
-        )
-
-        if ok_to_reuse:
-            return False
-
-        sys.exit()
-
-
-def simple_filter(filter_function):
+def simple_filter(filter_function) -> type[Extension]:  # type: ignore[no-untyped-def]
     """Decorate a function to wrap it in a simplified jinja2 extension."""
 
     class SimpleFilterExtension(Extension):
-        def __init__(self, environment):
+        def __init__(self, environment: Environment) -> None:
             super().__init__(environment)
             environment.filters[filter_function.__name__] = filter_function
 
     SimpleFilterExtension.__name__ = filter_function.__name__
     return SimpleFilterExtension
+
+
+def create_tmp_repo_dir(repo_dir: Path | str) -> Path:
+    """Create a temporary dir with a copy of the contents of repo_dir."""
+    repo_dir = Path(repo_dir).resolve()
+    base_dir = tempfile.mkdtemp(prefix='cookiecutter')
+    new_dir = f"{base_dir}/{repo_dir.name}"
+    logger.debug(f'Copying repo_dir from {repo_dir} to {new_dir}')
+    shutil.copytree(repo_dir, new_dir)
+    return Path(new_dir)
+
+
+def create_env_with_context(context: dict[str, Any]) -> StrictEnvironment:
+    """Create a jinja environment using the provided context."""
+    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+
+    return StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)

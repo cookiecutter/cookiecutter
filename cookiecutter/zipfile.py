@@ -1,24 +1,26 @@
 """Utility functions for handling and fetching repo archives in zip format."""
+
+from __future__ import annotations
+
 import os
 import tempfile
 from pathlib import Path
-from typing import Optional
 from zipfile import BadZipFile, ZipFile
 
 import requests
 
 from cookiecutter.exceptions import InvalidZipRepository
-from cookiecutter.prompt import read_repo_password
-from cookiecutter.utils import make_sure_path_exists, prompt_and_delete
+from cookiecutter.prompt import prompt_and_delete, read_repo_password
+from cookiecutter.utils import make_sure_path_exists
 
 
 def unzip(
     zip_uri: str,
     is_url: bool,
-    clone_to_dir: "os.PathLike[str]" = ".",
+    clone_to_dir: Path | str = ".",
     no_input: bool = False,
-    password: Optional[str] = None,
-):
+    password: str | None = None,
+) -> str:
     """Download and unpack a zipfile at a given URI.
 
     This will download the zipfile to the cookiecutter repository,
@@ -82,22 +84,22 @@ def unzip(
         # Extract the zip file into the temporary directory
         try:
             zip_file.extractall(path=unzip_base)
-        except RuntimeError:
+        except RuntimeError as runtime_err:
             # File is password protected; try to get a password from the
             # environment; if that doesn't work, ask the user.
             if password is not None:
                 try:
                     zip_file.extractall(path=unzip_base, pwd=password.encode('utf-8'))
-                except RuntimeError:
+                except RuntimeError as e:
                     raise InvalidZipRepository(
                         'Invalid password provided for protected repository'
-                    )
+                    ) from e
             elif no_input:
                 raise InvalidZipRepository(
                     'Unable to unlock password protected repository'
-                )
+                ) from runtime_err
             else:
-                retry = 0
+                retry: int | None = 0
                 while retry is not None:
                     try:
                         password = read_repo_password('Repo password')
@@ -105,16 +107,16 @@ def unzip(
                             path=unzip_base, pwd=password.encode('utf-8')
                         )
                         retry = None
-                    except RuntimeError:
-                        retry += 1
+                    except RuntimeError as e:  # noqa: PERF203
+                        retry += 1  # type: ignore[operator]
                         if retry == 3:
                             raise InvalidZipRepository(
                                 'Invalid password provided for protected repository'
-                            )
+                            ) from e
 
-    except BadZipFile:
+    except BadZipFile as e:
         raise InvalidZipRepository(
             f'Zip repository {zip_uri} is not a valid zip archive:'
-        )
+        ) from e
 
     return unzip_path

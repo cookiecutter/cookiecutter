@@ -4,16 +4,21 @@ Main entry point for the `cookiecutter` command.
 The code in this module is also a good example of how to use Cookiecutter as a
 library rather than a script.
 """
+
+from __future__ import annotations
+
 import logging
 import os
-import re
 import sys
 from copy import copy
+from pathlib import Path
+from typing import Any
 
 from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import InvalidModeException
 from cookiecutter.generate import generate_context, generate_files
-from cookiecutter.prompt import prompt_for_config
+from cookiecutter.hooks import run_pre_prompt_hook
+from cookiecutter.prompt import choose_nested_template, prompt_for_config
 from cookiecutter.replay import dump, load
 from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
@@ -22,21 +27,21 @@ logger = logging.getLogger(__name__)
 
 
 def cookiecutter(
-    template,
-    checkout=None,
-    no_input=False,
-    extra_context=None,
-    replay=None,
-    overwrite_if_exists=False,
-    output_dir='.',
-    config_file=None,
-    default_config=False,
-    password=None,
-    directory=None,
-    skip_if_file_exists=False,
-    accept_hooks=True,
-    keep_project_on_failure=False,
-):
+    template: str,
+    checkout: str | None = None,
+    no_input: bool = False,
+    extra_context: dict[str, Any] | None = None,
+    replay: bool | str | None = None,
+    overwrite_if_exists: bool = False,
+    output_dir: str = '.',
+    config_file: str | None = None,
+    default_config: bool = False,
+    password: str | None = None,
+    directory: str | None = None,
+    skip_if_file_exists: bool = False,
+    accept_hooks: bool = True,
+    keep_project_on_failure: bool = False,
+) -> str:
     """
     Run Cookiecutter just as if using it from the command line.
 
@@ -51,11 +56,15 @@ def cookiecutter(
     :param replay: Do not prompt for input, instead read from saved json. If
         ``True`` read from the ``replay_dir``.
         if it exists
+    :param overwrite_if_exists: Overwrite the contents of the output directory
+        if it exists.
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
     :param password: The password to use when extracting the repository.
     :param directory: Relative path to a cookiecutter template in a repository.
+    :param skip_if_file_exists: Skip the files in the corresponding directories
+        if they already exist.
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
@@ -71,8 +80,7 @@ def cookiecutter(
         config_file=config_file,
         default_config=default_config,
     )
-
-    repo_dir, cleanup = determine_repo_dir(
+    base_repo_dir, cleanup_base_repo_dir = determine_repo_dir(
         template=template,
         abbreviations=config_dict['abbreviations'],
         clone_to_dir=config_dict['cookiecutters_dir'],
@@ -81,10 +89,14 @@ def cookiecutter(
         password=password,
         directory=directory,
     )
+    repo_dir, cleanup = base_repo_dir, cleanup_base_repo_dir
+    # Run pre_prompt hook
+    repo_dir = str(run_pre_prompt_hook(base_repo_dir)) if accept_hooks else repo_dir
+    # Always remove temporary dir if it was created
+    cleanup = repo_dir != base_repo_dir
+
     import_patch = _patch_import_path_for_repo(repo_dir)
-
     template_name = os.path.basename(os.path.abspath(repo_dir))
-
     if replay:
         with import_patch:
             if isinstance(replay, bool):
@@ -106,7 +118,7 @@ def cookiecutter(
         items_for_prompting = {
             k: v
             for k, v in context['cookiecutter'].items()
-            if k not in context_from_replayfile['cookiecutter'].keys()
+            if k not in context_from_replayfile['cookiecutter']
         }
         context_for_prompting = {}
         context_for_prompting['cookiecutter'] = items_for_prompting
@@ -129,16 +141,10 @@ def cookiecutter(
     # except when 'no-input' flag is set
 
     with import_patch:
-        if context_for_prompting['cookiecutter']:
-            context['cookiecutter'].update(
-                prompt_for_config(context_for_prompting, no_input)
-            )
-        if "template" in context["cookiecutter"]:
-            nested_template = re.search(
-                r'\((.*?)\)', context["cookiecutter"]["template"]
-            ).group(1)
+        if {"template", "templates"} & set(context["cookiecutter"].keys()):
+            nested_template = choose_nested_template(context, repo_dir, no_input)
             return cookiecutter(
-                template=os.path.join(repo_dir, nested_template),
+                template=nested_template,
                 checkout=checkout,
                 no_input=no_input,
                 extra_context=extra_context,
@@ -153,6 +159,10 @@ def cookiecutter(
                 accept_hooks=accept_hooks,
                 keep_project_on_failure=keep_project_on_failure,
             )
+        if context_for_prompting['cookiecutter']:
+            context['cookiecutter'].update(
+                prompt_for_config(context_for_prompting, no_input)
+            )
 
     logger.debug('context is %s', context)
 
@@ -163,7 +173,7 @@ def cookiecutter(
     context['cookiecutter']['_output_dir'] = os.path.abspath(output_dir)
 
     # include repo dir or url in the context dict
-    context['cookiecutter']['_repo_dir'] = repo_dir
+    context['cookiecutter']['_repo_dir'] = f"{repo_dir}"
 
     # include checkout details in the context dict
     context['cookiecutter']['_checkout'] = checkout
@@ -185,18 +195,18 @@ def cookiecutter(
     # Cleanup (if required)
     if cleanup:
         rmtree(repo_dir)
-
+    if cleanup_base_repo_dir:
+        rmtree(base_repo_dir)
     return result
 
 
-class _patch_import_path_for_repo:
-    def __init__(self, repo_dir):
-        self._repo_dir = repo_dir
-        self._path = None
+class _patch_import_path_for_repo:  # noqa: N801
+    def __init__(self, repo_dir: Path | str) -> None:
+        self._repo_dir = f"{repo_dir}" if isinstance(repo_dir, Path) else repo_dir
 
-    def __enter__(self):
+    def __enter__(self) -> None:
         self._path = copy(sys.path)
         sys.path.append(self._repo_dir)
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type, value, traceback):  # type: ignore[no-untyped-def]
         sys.path = self._path

@@ -1,106 +1,125 @@
-.. _user-hooks:
+Hooks
+=====
 
-Using Pre/Post-Generate Hooks
-=============================
+Cookiecutter hooks are scripts executed at specific stages during the project generation process. They are either Python or shell scripts, facilitating automated tasks like data validation, pre-processing, and post-processing. These hooks are instrumental in customizing the generated project structure and executing initial setup tasks.
 
-*New in cookiecutter 0.7*
+Types of Hooks
+--------------
 
-You can have Python or Shell scripts that run before and/or after your project is generated.
++------------------+------------------------------------------+------------------------------------------+--------------------+----------+
+| Hook             | Execution Timing                         | Working Directory                        | Template Variables | Version  |
++==================+==========================================+==========================================+====================+==========+
+| pre_prompt       | Before any question is rendered.         | A copy of the repository directory       | No                 | 2.4.0    |
++------------------+------------------------------------------+------------------------------------------+--------------------+----------+
+| pre_gen_project  | After questions, before template process.| Root of the generated project            | Yes                | 0.7.0    |
++------------------+------------------------------------------+------------------------------------------+--------------------+----------+
+| post_gen_project | After the project generation.            | Root of the generated project            | Yes                | 0.7.0    |
++------------------+------------------------------------------+------------------------------------------+--------------------+----------+
 
-Put them in ``hooks/`` like this::
+Creating Hooks
+--------------
+
+Hooks are added to the ``hooks/`` folder of your template. Both Python and Shell scripts are supported.
+
+**Python Hooks Structure:**
+
+.. code-block::
 
     cookiecutter-something/
     ├── {{cookiecutter.project_slug}}/
     ├── hooks
+    │   ├── pre_prompt.py
     │   ├── pre_gen_project.py
     │   └── post_gen_project.py
     └── cookiecutter.json
 
-Shell scripts work similarly::
+**Shell Scripts Structure:**
+
+.. code-block::
 
     cookiecutter-something/
     ├── {{cookiecutter.project_slug}}/
     ├── hooks
+    │   ├── pre_prompt.sh
     │   ├── pre_gen_project.sh
     │   └── post_gen_project.sh
     └── cookiecutter.json
 
-It shouldn't be too hard to extend Cookiecutter to work with other types of scripts too.
-Pull requests are welcome.
+Python scripts are recommended for cross-platform compatibility. However, shell scripts or `.bat` files can be used for platform-specific templates.
 
-For portability, you should use Python scripts (with extension `.py`) for your hooks, as these can be run on any platform.
-However, if you intend for your template to only be run on a single platform, a shell script (or `.bat` file on Windows) can be a quicker alternative.
+Hook Execution
+--------------
 
-Writing hooks
--------------
+Hooks should be robust and handle errors gracefully. If a hook exits with a nonzero status, the project generation halts, and the generated directory is cleaned.
 
-Here are some details on how to write pre/post-generate hook scripts.
+**Working Directory:**
 
-Exit with an appropriate status
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* ``pre_prompt``: Scripts run in the root directory of a copy of the repository directory. That allows the rewrite of ``cookiecutter.json`` to your own needs.
 
-Make sure your hook scripts work in a robust manner.
-If a hook script fails (that is, `if it finishes with a nonzero exit status <https://docs.python.org/3/library/sys.html#sys.exit>`_), the project generation will stop and the generated directory will be cleaned up.
+* ``pre_gen_project`` and ``post_gen_project``: Scripts run in the root directory of the generated project, simplifying the process of locating generated files using relative paths.
 
-Current working directory
-^^^^^^^^^^^^^^^^^^^^^^^^^
+**Template Variables:**
 
-When the hook scripts script are run, their current working directory is the root of the generated project.
-This makes it easy for a post-generate hook to find generated files using relative paths.
-
-Template variables are rendered in the script
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Just like your project template, Cookiecutter also renders Jinja template syntax in your scripts.
-This lets you incorporate Jinja template variables in your scripts.
-For example, this line of Python sets ``module_name`` to the value of the ``cookiecutter.module_name`` template variable:
+The ``pre_gen_project`` and ``post_gen_project`` hooks support Jinja template rendering, similar to project templates. For instance:
 
 .. code-block:: python
 
     module_name = '{{ cookiecutter.module_name }}'
 
-Example: Validating template variables
---------------------------------------
+Examples
+--------
 
-Here is an example of a pre-generate hook script, defined at ``hooks/pre_gen_project.py``, that validates a template variable before generating the project:
+**Pre-Prompt Sanity Check:**
+
+A ``pre_prompt`` hook, like the one below in ``hooks/pre_prompt.py``, ensures prerequisites, such as Docker, are installed before prompting the user.
+
+.. code-block:: python
+
+    import sys
+    import subprocess
+
+    def is_docker_installed() -> bool:
+        try:
+            subprocess.run(["docker", "--version"], capture_output=True, check=True)
+            return True
+        except Exception:
+            return False
+
+    if __name__ == "__main__":
+        if not is_docker_installed():
+            print("ERROR: Docker is not installed.")
+            sys.exit(1)
+
+**Validating Template Variables:**
+
+A ``pre_gen_project`` hook can validate template variables. The following script checks if the provided module name is valid.
 
 .. code-block:: python
 
     import re
     import sys
 
-
     MODULE_REGEX = r'^[_a-zA-Z][_a-zA-Z0-9]+$'
-
     module_name = '{{ cookiecutter.module_name }}'
 
     if not re.match(MODULE_REGEX, module_name):
-        print('ERROR: %s is not a valid Python module name!' % module_name)
-
-        # exits with status 1 to indicate failure
+        print(f'ERROR: {module_name} is not a valid Python module name!')
         sys.exit(1)
 
-Example: Conditional files / directories
-----------------------------------------
+**Conditional File/Directory Removal:**
 
-Here is an example of a post-generate hook script.
-The file ``hooks/post_gen_project.py`` shows how to achieve conditional control of files and directories after generating the project.
-
-The script ensures that the directory structure is as expected by removing unwanted files and directories:
+A ``post_gen_project`` hook can conditionally control files and directories. The example below removes unnecessary files based on the selected packaging option.
 
 .. code-block:: python
 
-   import os
+    import os
 
-   REMOVE_PATHS = [
-       '{% if cookiecutter.packaging != "pip" %} requirements.txt {% endif %}',
-       '{% if cookiecutter.packaging != "poetry" %} poetry.lock {% endif %}',
-   ]
+    REMOVE_PATHS = [
+        '{% if cookiecutter.packaging != "pip" %}requirements.txt{% endif %}',
+        '{% if cookiecutter.packaging != "poetry" %}poetry.lock{% endif %}',
+    ]
 
-   for path in REMOVE_PATHS:
-       path = path.strip()
-       if path and os.path.exists(path):
-           if os.path.isdir(path):
-               os.rmdir(path)
-           else:
-               os.unlink(path)
+    for path in REMOVE_PATHS:
+        path = path.strip()
+        if path and os.path.exists(path):
+            os.unlink(path) if os.path.isfile(path) else os.rmdir(path)

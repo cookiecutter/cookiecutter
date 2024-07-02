@@ -1,4 +1,7 @@
 """Functions for generating a project from a project template."""
+
+from __future__ import annotations
+
 import fnmatch
 import json
 import logging
@@ -7,26 +10,33 @@ import shutil
 import warnings
 from collections import OrderedDict
 from pathlib import Path
-from binaryornot.check import is_binary
-from jinja2 import FileSystemLoader, Environment
-from jinja2.exceptions import TemplateSyntaxError, UndefinedError
+from typing import Any
 
-from cookiecutter.environment import StrictEnvironment
+from binaryornot.check import is_binary
+from jinja2 import Environment, FileSystemLoader
+from jinja2.exceptions import TemplateSyntaxError, UndefinedError
+from rich.prompt import InvalidResponse
+
 from cookiecutter.exceptions import (
     ContextDecodingException,
-    FailedHookException,
-    NonTemplatedInputDirException,
+    EmptyDirNameException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
 from cookiecutter.find import find_template
-from cookiecutter.hooks import run_hook
-from cookiecutter.utils import make_sure_path_exists, rmtree, work_in
+from cookiecutter.hooks import run_hook_from_repo_dir
+from cookiecutter.prompt import YesNoPrompt
+from cookiecutter.utils import (
+    create_env_with_context,
+    make_sure_path_exists,
+    rmtree,
+    work_in,
+)
 
 logger = logging.getLogger(__name__)
 
 
-def is_copy_only_path(path, context):
+def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     """Check whether the given `path` should only be copied and not rendered.
 
     Returns True if `path` matches a pattern in the given `context` dict,
@@ -46,50 +56,75 @@ def is_copy_only_path(path, context):
     return False
 
 
-def apply_overwrites_to_context(context, overwrite_context):
+def apply_overwrites_to_context(
+    context: dict[str, Any],
+    overwrite_context: dict[str, Any],
+    *,
+    in_dictionary_variable: bool = False,
+) -> None:
     """Modify the given context in place based on the overwrite_context."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
-            # Do not include variables which are not used in the template
-            continue
+            if not in_dictionary_variable:
+                # We are dealing with a new variable on first level, ignore
+                continue
+            # We are dealing with a new dictionary variable in a deeper level
+            context[variable] = overwrite
 
         context_value = context[variable]
-
-        if isinstance(context_value, list) and isinstance(overwrite, list):
-            # We are dealing with a multichoice variable
-            # Let's confirm all choices are valid for the given context
-            if set(overwrite).issubset(set(context_value)):
+        if isinstance(context_value, list):
+            if in_dictionary_variable:
                 context[variable] = overwrite
+                continue
+            if isinstance(overwrite, list):
+                # We are dealing with a multichoice variable
+                # Let's confirm all choices are valid for the given context
+                if set(overwrite).issubset(set(context_value)):
+                    context[variable] = overwrite
+                else:
+                    raise ValueError(
+                        f"{overwrite} provided for multi-choice variable "
+                        f"{variable}, but valid choices are {context_value}"
+                    )
             else:
-                raise ValueError(
-                    f"{overwrite} provided for multi-choice variable {variable}, "
-                    f"but valid choices are {context_value}"
-                )
-        elif isinstance(context_value, list):
-            # We are dealing with a choice variable
-            if overwrite in context_value:
-                # This overwrite is actually valid for the given context
-                # Let's set it as default (by definition first item in list)
-                # see ``cookiecutter.prompt.prompt_choice_for_config``
-                context_value.remove(overwrite)
-                context_value.insert(0, overwrite)
-            else:
-                raise ValueError(
-                    f"{overwrite} provided for choice variable {variable}, "
-                    f"but the choices are {context_value}."
-                )
+                # We are dealing with a choice variable
+                if overwrite in context_value:
+                    # This overwrite is actually valid for the given context
+                    # Let's set it as default (by definition first item in list)
+                    # see ``cookiecutter.prompt.prompt_choice_for_config``
+                    context_value.remove(overwrite)
+                    context_value.insert(0, overwrite)
+                else:
+                    raise ValueError(
+                        f"{overwrite} provided for choice variable "
+                        f"{variable}, but the choices are {context_value}."
+                    )
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
-            apply_overwrites_to_context(context_value, overwrite)
+            apply_overwrites_to_context(
+                context_value, overwrite, in_dictionary_variable=True
+            )
             context[variable] = context_value
+        elif isinstance(context_value, bool) and isinstance(overwrite, str):
+            # We are dealing with a boolean variable
+            # Convert overwrite to its boolean counterpart
+            try:
+                context[variable] = YesNoPrompt().process_response(overwrite)
+            except InvalidResponse as err:
+                raise ValueError(
+                    f"{overwrite} provided for variable "
+                    f"{variable} could not be converted to a boolean."
+                ) from err
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
 
 
 def generate_context(
-    context_file='cookiecutter.json', default_context=None, extra_context=None
-):
+    context_file: str = 'cookiecutter.json',
+    default_context: dict[str, Any] | None = None,
+    extra_context: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Generate the context for a Cookiecutter project template.
 
     Loads the JSON file as a Python object, with key being the JSON filename.
@@ -134,7 +169,13 @@ def generate_context(
     return context
 
 
-def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
+def generate_file(
+    project_dir: str,
+    infile: str,
+    context: dict[str, Any],
+    env: Environment,
+    skip_if_file_exists: bool = False,
+) -> None:
     """Render filename of infile as name of outfile, handle infile correctly.
 
     Dealing with infile appropriately:
@@ -200,9 +241,11 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
         logger.debug('Using configured newline character %s', repr(newline))
     else:
         # Detect original file newline to output the rendered file.
+        # Note that newlines can be a tuple if file contains mixed line endings.
+        # In this case, we pick the first line ending we detected.
         with open(infile, encoding='utf-8') as rd:
             rd.readline()  # Read only the first line to load a 'newlines' value.
-        newline = rd.newlines
+        newline = rd.newlines[0] if isinstance(rd.newlines, tuple) else rd.newlines
         logger.debug('Using detected newline character %s', repr(newline))
 
     logger.debug('Writing contents to file %s', outfile)
@@ -216,12 +259,16 @@ def generate_file(project_dir, infile, context, env, skip_if_file_exists=False):
 
 def render_and_create_dir(
     dirname: str,
-    context: dict,
-    output_dir: "os.PathLike[str]",
+    context: dict[str, Any],
+    output_dir: Path | str,
     environment: Environment,
     overwrite_if_exists: bool = False,
-):
+) -> tuple[Path, bool]:
     """Render name of a directory, create the directory, return its path."""
+    if not dirname or dirname == "":
+        msg = 'Error: directory name is empty'
+        raise EmptyDirNameException(msg)
+
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
 
@@ -247,17 +294,13 @@ def render_and_create_dir(
     return dir_to_create, not output_dir_exists
 
 
-def ensure_dir_is_templated(dirname):
-    """Ensure that dirname is a templated directory name."""
-    if '{{' in dirname and '}}' in dirname:
-        return True
-    else:
-        raise NonTemplatedInputDirException
-
-
 def _run_hook_from_repo_dir(
-    repo_dir, hook_name, project_dir, context, delete_project_on_failure
-):
+    repo_dir: str,
+    hook_name: str,
+    project_dir: Path | str,
+    context: dict[str, Any],
+    delete_project_on_failure: bool,
+) -> None:
     """Run hook from repo directory, clean project directory if hook fails.
 
     :param repo_dir: Project template input directory.
@@ -267,32 +310,26 @@ def _run_hook_from_repo_dir(
     :param delete_project_on_failure: Delete the project directory on hook
         failure?
     """
-    with work_in(repo_dir):
-        try:
-            run_hook(hook_name, project_dir, context)
-        except (
-            FailedHookException,
-            UndefinedError,
-        ):
-            if delete_project_on_failure:
-                rmtree(project_dir)
-            logger.error(
-                "Stopping generation because %s hook "
-                "script didn't exit successfully",
-                hook_name,
-            )
-            raise
+    warnings.warn(
+        "The '_run_hook_from_repo_dir' function is deprecated, "
+        "use 'cookiecutter.hooks.run_hook_from_repo_dir' instead",
+        DeprecationWarning,
+        2,
+    )
+    run_hook_from_repo_dir(
+        repo_dir, hook_name, project_dir, context, delete_project_on_failure
+    )
 
 
 def generate_files(
-    repo_dir,
-    context=None,
-    output_dir='.',
-    overwrite_if_exists=False,
-    skip_if_file_exists=False,
-    accept_hooks=True,
-    keep_project_on_failure=False,
-):
+    repo_dir: Path | str,
+    context: dict[str, Any] | None = None,
+    output_dir: Path | str = '.',
+    overwrite_if_exists: bool = False,
+    skip_if_file_exists: bool = False,
+    accept_hooks: bool = True,
+    keep_project_on_failure: bool = False,
+) -> str:
     """Render the templates and saves them to files.
 
     :param repo_dir: Project template input directory.
@@ -306,16 +343,16 @@ def generate_files(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
-    template_dir = find_template(repo_dir)
-    logger.debug('Generating project from %s...', template_dir)
     context = context or OrderedDict([])
 
-    envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
+    env = create_env_with_context(context)
+
+    template_dir = find_template(repo_dir, env)
+    logger.debug('Generating project from %s...', template_dir)
 
     unrendered_dir = os.path.split(template_dir)[1]
-    ensure_dir_is_templated(unrendered_dir)
-    env = StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
     try:
+        project_dir: Path | str
         project_dir, output_directory_created = render_and_create_dir(
             unrendered_dir, context, output_dir, env, overwrite_if_exists
         )
@@ -338,7 +375,7 @@ def generate_files(
     delete_project_on_failure = output_directory_created and not keep_project_on_failure
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        run_hook_from_repo_dir(
             repo_dir, 'pre_gen_project', project_dir, context, delete_project_on_failure
         )
 
@@ -415,7 +452,7 @@ def generate_files(
                     raise UndefinedVariableInTemplate(msg, err, context) from err
 
     if accept_hooks:
-        _run_hook_from_repo_dir(
+        run_hook_from_repo_dir(
             repo_dir,
             'post_gen_project',
             project_dir,

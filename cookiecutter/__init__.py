@@ -1,4 +1,5 @@
 """Main package for Cookiecutter."""
+
 from pathlib import Path
 
 

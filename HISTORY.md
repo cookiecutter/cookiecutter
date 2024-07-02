@@ -2,8 +2,84 @@
 
 History is important, but our current roadmap can be found [here](https://github.com/cookiecutter/cookiecutter/projects)
 
+## 2.6.0 (2024-02-21)
 
-## 2.3.2 (unreleased)
+### Minor Changes
+
+* Support Python 3.12 (#1989) @ericof
+* Modifying Jinja2 start and end variable strings (#1997) @sacha-c
+
+### CI/CD and QA changes
+
+* Add isort as a pre-commit hook (#1988) @kurtmckee
+* Bump actions/setup-python from 4 to 5 (#2000) @dependabot
+* Bump actions/upload-artifact from 3 to 4 (#1999) @dependabot
+* Quick resolution of #2003 (#2004) @jensens
+* Support Python 3.12 (#1989) @ericof
+* [pre-commit.ci] pre-commit autoupdate (#1996) @pre-commit-ci
+* Quick resolution of #2003 (#2004) @jensens
+
+### Documentation updates
+
+* Support Python 3.12 (#1989) @ericof
+
+### Bugfixes
+
+* Fix regression #2009: Adding value to nested dicts broken (#2010) @jensens
+* Fixed errors caused by invalid config files. (#1995) @alanverresen
+
+### This release is made by wonderful contributors:
+
+@alanverresen, @dependabot, @dependabot[bot], @ericof, @jensens, @kurtmckee, @pre-commit-ci, @pre-commit-ci[bot] and @sacha-c
+
+
+## 2.5.0 (2023-11-21)
+
+### Minor Changes
+
+* Default values can be passed as a dict (#1924) @matveyvarg
+* Implement new style for nested templates config (#1981) @ericof
+
+### CI/CD and QA changes
+
+* Bump actions/checkout from 3 to 4 (#1953) @dependabot
+* [pre-commit.ci] pre-commit autoupdate (#1977) @pre-commit-ci
+* [pre-commit.ci] pre-commit autoupdate (#1957) @pre-commit-ci
+
+### Documentation updates
+
+* Add argument run to pipx command in README.md (#1964) @staeff
+* Fix tutorial2 generated HTML (#1971) @aantoin
+* Update README.md (#1967) @HarshRanaOC
+* Update README.md to fix broken link (#1952) @david-abn
+* Update README.md to include installation instructions (#1949) @david-abn
+* Update cookiecutter-plone-starter link in readme (#1965) @zahidkizmaz
+
+### Bugfixes
+
+* Fix FileExistsError when using a relative template path (#1968) @pkrueger-cariad
+* Fix recursive context overwrites (#1961) @padraic-padraic
+
+### This release is made by wonderful contributors:
+
+@HarshRanaOC, @aantoin, @david-abn, @dependabot, @dependabot[bot], @ericof, @matveyvarg, @padraic-padraic, @pkrueger-cariad, @pre-commit-ci, @pre-commit-ci[bot], @staeff and @zahidkizmaz
+
+
+## 2.4.0 (2023-09-29)
+
+### Minor Changes
+
+* Gracefully handle files with mixed lined endings (#1942) @EricHripko
+* Implement a pre_prompt hook that will run before prompts (#1950) @ericof
+
+### Documentation updates
+
+* Implement a pre_prompt hook that will run before prompts (#1950) @ericof
+* update main docstrings to include overwrite_if_exists and skip_if_file_exists (#1947) @david-abn
+
+### This release is made by wonderful contributors:
+
+@EricHripko, @david-abn and @ericof
 
 ## 2.3.1 (2023-09-21)
 

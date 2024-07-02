@@ -1,14 +1,27 @@
 """Main `cookiecutter` CLI."""
-import collections
+
+from __future__ import annotations
+
 import json
 import os
 import sys
+from collections import OrderedDict
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from click import Context, Parameter
+    from typing_extensions import Literal
+
 
 import click
 
 from cookiecutter import __version__
+from cookiecutter.config import get_user_config
 from cookiecutter.exceptions import (
     ContextDecodingException,
+    EmptyDirNameException,
     FailedHookException,
     InvalidModeException,
     InvalidZipRepository,
@@ -20,17 +33,18 @@ from cookiecutter.exceptions import (
 )
 from cookiecutter.log import configure_logger
 from cookiecutter.main import cookiecutter
-from cookiecutter.config import get_user_config
 
 
-def version_msg():
+def version_msg() -> str:
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     return f"Cookiecutter {__version__} from {location} (Python {python_version})"
 
 
-def validate_extra_context(ctx, param, value):
+def validate_extra_context(
+    _ctx: Context, _param: Parameter, value: Iterable[str]
+) -> OrderedDict[str, str] | None:
     """Validate extra context."""
     for string in value:
         if '=' not in string:
@@ -41,13 +55,15 @@ def validate_extra_context(ctx, param, value):
 
     # Convert tuple -- e.g.: ('program_name=foobar', 'startsecs=66')
     # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
-    return collections.OrderedDict(s.split('=', 1) for s in value) or None
+    return OrderedDict(s.split('=', 1) for s in value) or None
 
 
-def list_installed_templates(default_config, passed_config_file):
+def list_installed_templates(
+    default_config: bool | dict[str, Any], passed_config_file: str | None
+) -> None:
     """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
     config = get_user_config(passed_config_file, default_config)
-    cookiecutter_folder = config.get('cookiecutters_dir')
+    cookiecutter_folder: str = config['cookiecutters_dir']
     if not os.path.exists(cookiecutter_folder):
         click.echo(
             f"Error: Cannot list installed templates. "
@@ -67,7 +83,7 @@ def list_installed_templates(default_config, passed_config_file):
         click.echo(f' * {name}')
 
 
-@click.command(context_settings=dict(help_option_names=['-h', '--help']))
+@click.command(context_settings={"help_option_names": ['-h', '--help']})
 @click.version_option(__version__, '-V', '--version', message=version_msg())
 @click.argument('template', required=False)
 @click.argument('extra_context', nargs=-1, callback=validate_extra_context)
@@ -152,24 +168,24 @@ def list_installed_templates(default_config, passed_config_file):
     help='Do not delete project folder on failure',
 )
 def main(
-    template,
-    extra_context,
-    no_input,
-    checkout,
-    verbose,
-    replay,
-    overwrite_if_exists,
-    output_dir,
-    config_file,
-    default_config,
-    debug_file,
-    directory,
-    skip_if_file_exists,
-    accept_hooks,
-    replay_file,
-    list_installed,
-    keep_project_on_failure,
-):
+    template: str,
+    extra_context: dict[str, Any],
+    no_input: bool,
+    checkout: str,
+    verbose: bool,
+    replay: bool | str,
+    overwrite_if_exists: bool,
+    output_dir: str,
+    config_file: str | None,
+    default_config: bool,
+    debug_file: str | None,
+    directory: str,
+    skip_if_file_exists: bool,
+    accept_hooks: Literal['yes', 'ask', 'no'],
+    replay_file: str | None,
+    list_installed: bool,
+    keep_project_on_failure: bool,
+) -> None:
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
     Cookiecutter is free and open source software, developed and managed by
@@ -218,6 +234,7 @@ def main(
     except (
         ContextDecodingException,
         OutputDirExistsException,
+        EmptyDirNameException,
         InvalidModeException,
         FailedHookException,
         UnknownExtension,

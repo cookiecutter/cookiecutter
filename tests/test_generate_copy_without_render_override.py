@@ -1,11 +1,11 @@
 """Verify correct work of `_copy_without_render` context option."""
+
 import os
 from pathlib import Path
 
 import pytest
 
-from cookiecutter import generate
-from cookiecutter import utils
+from cookiecutter import generate, utils
 
 
 @pytest.fixture
@@ -17,7 +17,7 @@ def remove_test_dir():
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_test_dir')
-def test_generate_copy_without_render_extensions():
+def test_generate_copy_without_render_extensions() -> None:
     """Verify correct work of `_copy_without_render` context option.
 
     Some files/directories should be rendered during invocation,

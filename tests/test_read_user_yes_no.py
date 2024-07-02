@@ -1,15 +1,15 @@
 """test_read_user_yes_no."""
-import pytest
 
+import pytest
 from rich.prompt import InvalidResponse
 
-from cookiecutter.prompt import read_user_yes_no, YesNoPrompt
+from cookiecutter.prompt import YesNoPrompt, read_user_yes_no
 
 QUESTION = 'Is it okay to delete and re-clone it?'
 DEFAULT = 'y'
 
 
-def test_click_invocation(mocker):
+def test_click_invocation(mocker) -> None:
     """Test click function called correctly by cookiecutter.
 
     Test for boolean type invocation.
@@ -22,7 +22,7 @@ def test_click_invocation(mocker):
     prompt.assert_called_once_with(QUESTION, default=DEFAULT)
 
 
-def test_yesno_prompt_process_response():
+def test_yesno_prompt_process_response() -> None:
     """Test `YesNoPrompt` process_response to convert str to bool."""
     ynp = YesNoPrompt()
     with pytest.raises(InvalidResponse):

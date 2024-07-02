@@ -1,12 +1,19 @@
 """Global configuration handling."""
+
+from __future__ import annotations
+
 import collections
 import copy
 import logging
 import os
+from typing import TYPE_CHECKING, Any
 
 import yaml
 
 from cookiecutter.exceptions import ConfigDoesNotExistException, InvalidConfiguration
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -26,14 +33,14 @@ DEFAULT_CONFIG = {
 }
 
 
-def _expand_path(path):
+def _expand_path(path: str) -> str:
     """Expand both environment variables and user home in the given path."""
     path = os.path.expandvars(path)
     path = os.path.expanduser(path)
     return path
 
 
-def merge_configs(default, overwrite):
+def merge_configs(default: dict[str, Any], overwrite: dict[str, Any]) -> dict[str, Any]:
     """Recursively update a dict with the key/value pair of another.
 
     Dict values that are dictionaries themselves will be updated, whilst
@@ -52,7 +59,7 @@ def merge_configs(default, overwrite):
     return new_config
 
 
-def get_config(config_path):
+def get_config(config_path: Path | str) -> dict[str, Any]:
     """Retrieve the config from the specified path, returning a config dict."""
     if not os.path.exists(config_path):
         raise ConfigDoesNotExistException(f'Config file {config_path} does not exist.')
@@ -60,11 +67,15 @@ def get_config(config_path):
     logger.debug('config_path is %s', config_path)
     with open(config_path, encoding='utf-8') as file_handle:
         try:
-            yaml_dict = yaml.safe_load(file_handle)
+            yaml_dict = yaml.safe_load(file_handle) or {}
         except yaml.YAMLError as e:
             raise InvalidConfiguration(
                 f'Unable to parse YAML file {config_path}.'
             ) from e
+        if not isinstance(yaml_dict, dict):
+            raise InvalidConfiguration(
+                f'Top-level element of YAML file {config_path} should be an object.'
+            )
 
     config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
 
@@ -77,11 +88,17 @@ def get_config(config_path):
     return config_dict
 
 
-def get_user_config(config_file=None, default_config=False):
+def get_user_config(
+    config_file: str | None = None,
+    default_config: bool | dict[str, Any] = False,
+) -> dict[str, Any]:
     """Return the user config as a dict.
 
     If ``default_config`` is True, ignore ``config_file`` and return default
     values for the config parameters.
+
+    If ``default_config`` is a dict, merge values with default values and return them
+    for the config parameters.
 
     If a path to a ``config_file`` is given, that is different from the default
     location, load the user config from that.
@@ -93,6 +110,10 @@ def get_user_config(config_file=None, default_config=False):
     If the environment variable is not set, try the default config file path
     before falling back to the default config values.
     """
+    # Do NOT load a config. Merge provided values with defaults and return them instead
+    if default_config and isinstance(default_config, dict):
+        return merge_configs(DEFAULT_CONFIG, default_config)
+
     # Do NOT load a config. Return defaults instead.
     if default_config:
         logger.debug("Force ignoring user config with default_config switch.")

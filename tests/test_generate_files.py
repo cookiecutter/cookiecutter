@@ -3,22 +3,17 @@
 Use the global clean_system fixture and run additional teardown code to remove
 some special folders.
 """
+
 from pathlib import Path
 
 import pytest
 from binaryornot.check import is_binary
+from jinja2 import Environment
 
 from cookiecutter import exceptions, generate
 
 
-@pytest.mark.parametrize('invalid_dirname', ['', '{foo}', '{{foo', 'bar}}'])
-def test_ensure_dir_is_templated_raises(invalid_dirname):
-    """Verify `ensure_dir_is_templated` raises on wrong directories names input."""
-    with pytest.raises(exceptions.NonTemplatedInputDirException):
-        generate.ensure_dir_is_templated(invalid_dirname)
-
-
-def test_generate_files_nontemplated_exception(tmp_path):
+def test_generate_files_nontemplated_exception(tmp_path) -> None:
     """
     Verify `generate_files` raises when no directories to render exist.
 
@@ -32,7 +27,7 @@ def test_generate_files_nontemplated_exception(tmp_path):
         )
 
 
-def test_generate_files(tmp_path):
+def test_generate_files(tmp_path) -> None:
     """Verify directory name correctly rendered with unicode containing context."""
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä'}},
@@ -48,7 +43,7 @@ def test_generate_files(tmp_path):
     assert simple_text == 'I eat pizzä\n'
 
 
-def test_generate_files_with_linux_newline(tmp_path):
+def test_generate_files_with_linux_newline(tmp_path) -> None:
     """Verify new line not removed by templating engine after folder generation."""
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä'}},
@@ -66,7 +61,7 @@ def test_generate_files_with_linux_newline(tmp_path):
     assert f.newlines == '\n'
 
 
-def test_generate_files_with_jinja2_environment(tmp_path):
+def test_generate_files_with_jinja2_environment(tmp_path) -> None:
     """Extend StrictEnvironment with _jinja2_env_vars cookiecutter template option."""
     generate.generate_files(
         context={
@@ -87,7 +82,9 @@ def test_generate_files_with_jinja2_environment(tmp_path):
     assert simple_text == 'I eat pizzä\n'
 
 
-def test_generate_files_with_trailing_newline_forced_to_linux_by_context(tmp_path):
+def test_generate_files_with_trailing_newline_forced_to_linux_by_context(
+    tmp_path,
+) -> None:
     """Verify new line not removed by templating engine after folder generation."""
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä', '_new_lines': '\r\n'}},
@@ -106,7 +103,7 @@ def test_generate_files_with_trailing_newline_forced_to_linux_by_context(tmp_pat
     assert f.newlines == '\r\n'
 
 
-def test_generate_files_with_windows_newline(tmp_path):
+def test_generate_files_with_windows_newline(tmp_path) -> None:
     """Verify windows source line end not changed during files generation."""
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä'}},
@@ -124,7 +121,9 @@ def test_generate_files_with_windows_newline(tmp_path):
     assert f.newlines == '\r\n'
 
 
-def test_generate_files_with_windows_newline_forced_to_linux_by_context(tmp_path):
+def test_generate_files_with_windows_newline_forced_to_linux_by_context(
+    tmp_path,
+) -> None:
     """Verify windows line end changed to linux during files generation."""
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä', '_new_lines': '\n'}},
@@ -143,7 +142,7 @@ def test_generate_files_with_windows_newline_forced_to_linux_by_context(tmp_path
     assert f.newlines == '\n'
 
 
-def test_generate_files_binaries(tmp_path):
+def test_generate_files_binaries(tmp_path) -> None:
     """Verify binary files created during directory generation."""
     generate.generate_files(
         context={'cookiecutter': {'binary_test': 'binary_files'}},
@@ -164,7 +163,7 @@ def test_generate_files_binaries(tmp_path):
     assert is_binary(str(Path(dst_dir, 'binary_files/binary_files/logo.png')))
 
 
-def test_generate_files_absolute_path(tmp_path):
+def test_generate_files_absolute_path(tmp_path) -> None:
     """Verify usage of absolute path does not change files generation behaviour."""
     generate.generate_files(
         context={'cookiecutter': {'food': 'pizzä'}},
@@ -174,7 +173,7 @@ def test_generate_files_absolute_path(tmp_path):
     assert Path(tmp_path, 'inputpizzä/simple.txt').is_file()
 
 
-def test_generate_files_output_dir(tmp_path):
+def test_generate_files_output_dir(tmp_path) -> None:
     """Verify `output_dir` option for `generate_files` changing location correctly."""
     output_dir = Path(tmp_path, 'custom_output_dir')
     output_dir.mkdir()
@@ -190,7 +189,7 @@ def test_generate_files_output_dir(tmp_path):
     assert Path(project_dir) == Path(tmp_path, 'custom_output_dir/inputpizzä')
 
 
-def test_generate_files_permissions(tmp_path):
+def test_generate_files_permissions(tmp_path) -> None:
     """Verify generates files respect source files permissions.
 
     simple.txt and script.sh should retain their respective 0o644 and 0o755
@@ -234,7 +233,9 @@ def test_generate_files_permissions(tmp_path):
     assert tests_script_file_mode == input_script_file_mode
 
 
-def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists(tmp_path):
+def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists(
+    tmp_path,
+) -> None:
     """Verify `skip_if_file_exist` has priority over `overwrite_if_exists`."""
     simple_file = Path(tmp_path, 'inputpizzä/simple.txt')
     simple_with_new_line_file = Path(tmp_path, 'inputpizzä/simple-with-newline.txt')
@@ -260,7 +261,7 @@ def test_generate_files_with_overwrite_if_exists_with_skip_if_file_exists(tmp_pa
     assert simple_text == 'temp'
 
 
-def test_generate_files_with_skip_if_file_exists(tmp_path):
+def test_generate_files_with_skip_if_file_exists(tmp_path) -> None:
     """Verify existed files not removed if error raised with `skip_if_file_exists`."""
     simple_file = Path(tmp_path, 'inputpizzä/simple.txt')
     simple_with_new_line_file = Path(tmp_path, 'inputpizzä/simple-with-newline.txt')
@@ -284,7 +285,7 @@ def test_generate_files_with_skip_if_file_exists(tmp_path):
     assert simple_text == 'temp'
 
 
-def test_generate_files_with_overwrite_if_exists(tmp_path):
+def test_generate_files_with_overwrite_if_exists(tmp_path) -> None:
     """Verify overwrite_if_exists overwrites old files."""
     simple_file = Path(tmp_path, 'inputpizzä/simple.txt')
     simple_with_new_line_file = Path(tmp_path, 'inputpizzä/simple-with-newline.txt')
@@ -316,7 +317,7 @@ def undefined_context():
     }
 
 
-def test_raise_undefined_variable_file_name(output_dir, undefined_context):
+def test_raise_undefined_variable_file_name(output_dir, undefined_context) -> None:
     """Verify correct error raised when file name cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
@@ -325,7 +326,7 @@ def test_raise_undefined_variable_file_name(output_dir, undefined_context):
             context=undefined_context,
         )
     error = err.value
-    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert error.message == "Unable to create file '{{cookiecutter.foobar}}'"
     assert error.context == undefined_context
 
     assert not Path(output_dir).joinpath('testproject').exists()
@@ -333,7 +334,7 @@ def test_raise_undefined_variable_file_name(output_dir, undefined_context):
 
 def test_raise_undefined_variable_file_name_existing_project(
     output_dir, undefined_context
-):
+) -> None:
     """Verify correct error raised when file name cannot be rendered."""
     testproj_path = Path(output_dir, 'testproject')
     testproj_path.mkdir()
@@ -346,13 +347,13 @@ def test_raise_undefined_variable_file_name_existing_project(
             overwrite_if_exists=True,
         )
     error = err.value
-    assert "Unable to create file '{{cookiecutter.foobar}}'" == error.message
+    assert error.message == "Unable to create file '{{cookiecutter.foobar}}'"
     assert error.context == undefined_context
 
     assert testproj_path.exists()
 
 
-def test_raise_undefined_variable_file_content(output_dir, undefined_context):
+def test_raise_undefined_variable_file_content(output_dir, undefined_context) -> None:
     """Verify correct error raised when file content cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
@@ -361,13 +362,13 @@ def test_raise_undefined_variable_file_content(output_dir, undefined_context):
             context=undefined_context,
         )
     error = err.value
-    assert "Unable to create file 'README.rst'" == error.message
+    assert error.message == "Unable to create file 'README.rst'"
     assert error.context == undefined_context
 
     assert not Path(output_dir).joinpath('testproject').exists()
 
 
-def test_raise_undefined_variable_dir_name(output_dir, undefined_context):
+def test_raise_undefined_variable_dir_name(output_dir, undefined_context) -> None:
     """Verify correct error raised when directory name cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
@@ -386,7 +387,7 @@ def test_raise_undefined_variable_dir_name(output_dir, undefined_context):
     assert not Path(output_dir).joinpath('testproject').exists()
 
 
-def test_keep_project_dir_on_failure(output_dir, undefined_context):
+def test_keep_project_dir_on_failure(output_dir, undefined_context) -> None:
     """Verify correct error raised when directory name cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate):
         generate.generate_files(
@@ -400,7 +401,7 @@ def test_keep_project_dir_on_failure(output_dir, undefined_context):
 
 def test_raise_undefined_variable_dir_name_existing_project(
     output_dir, undefined_context
-):
+) -> None:
     """Verify correct error raised when directory name cannot be rendered."""
     testproj_path = Path(output_dir, 'testproject')
     testproj_path.mkdir()
@@ -423,7 +424,7 @@ def test_raise_undefined_variable_dir_name_existing_project(
     assert testproj_path.exists()
 
 
-def test_raise_undefined_variable_project_dir(tmp_path):
+def test_raise_undefined_variable_project_dir(tmp_path) -> None:
     """Verify correct error raised when directory name cannot be rendered."""
     with pytest.raises(exceptions.UndefinedVariableInTemplate) as err:
         generate.generate_files(
@@ -437,3 +438,15 @@ def test_raise_undefined_variable_project_dir(tmp_path):
     assert error.context == {}
 
     assert not Path(tmp_path, 'testproject').exists()
+
+
+def test_raise_empty_dir_name(output_dir, undefined_context):
+    """Verify correct error raised when directory name is empty."""
+    with pytest.raises(exceptions.EmptyDirNameException):
+        generate.render_and_create_dir(
+            dirname='',
+            output_dir=output_dir,
+            context=undefined_context,
+            environment=Environment(autoescape=True),
+        )
+    assert not Path(output_dir).joinpath('testproject').exists()

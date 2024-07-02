@@ -1,5 +1,12 @@
 """All exceptions used in the Cookiecutter code base are defined here."""
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from jinja2 import TemplateError
+
 
 class CookiecutterException(Exception):
     """
@@ -90,6 +97,14 @@ class OutputDirExistsException(CookiecutterException):
     """
 
 
+class EmptyDirNameException(CookiecutterException):
+    """
+    Exception for a empty directory name.
+
+    Raised when the directory name provided is empty.
+    """
+
+
 class InvalidModeException(CookiecutterException):
     """
     Exception for incompatible modes.
@@ -115,13 +130,15 @@ class UndefinedVariableInTemplate(CookiecutterException):
     context.
     """
 
-    def __init__(self, message, error, context):
+    def __init__(
+        self, message: str, error: TemplateError, context: dict[str, Any]
+    ) -> None:
         """Exception for out-of-scope variables."""
         self.message = message
         self.error = error
         self.context = context
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Text representation of UndefinedVariableInTemplate."""
         return (
             f"{self.message}. "
