@@ -12,7 +12,11 @@ import pytest
 from cookiecutter import exceptions, hooks, utils
 
 
-def make_test_repo(name: str, multiple_hooks: bool = False) -> str:
+def make_test_repo(
+        name: str, 
+        multiple_hooks: bool = False, 
+        exit_status: int = 0,
+) -> str:
     """Create test repository for test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
     template = os.path.join(name, 'input{{hooks}}')
@@ -38,6 +42,9 @@ def make_test_repo(name: str, multiple_hooks: bool = False) -> str:
             f.write("\n")
             f.write("echo post generation hook\n")
             f.write("echo. >shell_post.txt\n")
+            if exit_status != 0:
+                f.write("echo this err 1>&2\n")
+            f.write(f"exit /b {exit_status}\n")
     else:
         post = 'post_gen_project.sh'
         filename = os.path.join(hook_dir, post)
@@ -46,6 +53,9 @@ def make_test_repo(name: str, multiple_hooks: bool = False) -> str:
             f.write("\n")
             f.write("echo 'post generation hook';\n")
             f.write("touch 'shell_post.txt'\n")
+            if exit_status != 0:
+                f.write("echo 'this err' >&2\n")
+            f.write(f"exit {exit_status}\n")
         # Set the execute bit
         os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
 
@@ -56,7 +66,7 @@ def make_test_repo(name: str, multiple_hooks: bool = False) -> str:
             with Path(hook_dir, pre).open('w') as f:
                 f.write("@echo off\n")
                 f.write("\n")
-                f.write("echo post generation hook\n")
+                f.write("echo pre generation hook\n")
                 f.write("echo. >shell_pre.txt\n")
         else:
             pre = 'pre_gen_project.sh'
@@ -64,7 +74,7 @@ def make_test_repo(name: str, multiple_hooks: bool = False) -> str:
             with Path(filename).open('w') as f:
                 f.write("#!/bin/bash\n")
                 f.write("\n")
-                f.write("echo 'post generation hook';\n")
+                f.write("echo 'pre generation hook';\n")
                 f.write("touch 'shell_pre.txt'\n")
             # Set the execute bit
             os.chmod(filename, os.stat(filename).st_mode | stat.S_IXUSR)
@@ -233,6 +243,32 @@ class TestExternalHooks:
                 hooks.run_hook('pre_gen_project', tests_dir, {})
             assert 'Hook script failed' in str(excinfo.value)
 
+
+class TestFailingHooks:
+    """Class to unite tests for hooks that are exiting with != 0."""
+
+    repo_path = os.path.abspath('tests/test-hooks/')
+    hooks_path = os.path.abspath('tests/test-hooks/hooks')
+    exit_status = 1
+
+    def setup_method(self, _method) -> None:
+        """External hooks related tests setup fixture."""
+        self.post_hook = make_test_repo(self.repo_path, exit_status=self.exit_status)
+
+    def teardown_method(self, _method) -> None:
+        """Find hooks related tests teardown fixture."""
+        utils.rmtree(self.repo_path)
+
+        if os.path.exists('shell_post.txt'):
+            os.remove('shell_post.txt')
+ 
+    def test_run_non_success_script(self, mocker) -> None:
+        """Test correct exception raise if run_script fails."""
+        with pytest.raises(exceptions.FailedHookException) as excinfo:
+            hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
+        msg = 'Hook script failed (exit status: {}): {}'
+        err = "this err\n"
+        assert msg.format(self.exit_status, err) == str(excinfo.value)
 
 @pytest.fixture()
 def dir_with_hooks(tmp_path):
