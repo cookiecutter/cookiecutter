@@ -13,9 +13,9 @@ from cookiecutter import exceptions, hooks, utils
 
 
 def make_test_repo(
-        name: str, 
-        multiple_hooks: bool = False, 
-        exit_status: int = 0,
+    name: str,
+    multiple_hooks: bool = False,
+    exit_status: int = 0,
 ) -> str:
     """Create test repository for test setup methods."""
     hook_dir = os.path.join(name, 'hooks')
@@ -261,7 +261,7 @@ class TestFailingHooks:
 
         if os.path.exists('shell_post.txt'):
             os.remove('shell_post.txt')
- 
+
     def test_run_non_success_script(self, mocker) -> None:
         """Test correct exception raise if run_script fails."""
         with pytest.raises(exceptions.FailedHookException) as excinfo:
@@ -269,6 +269,7 @@ class TestFailingHooks:
         msg = 'Hook script failed (exit status: {}): {}'
         err = "this err\n"
         assert msg.format(self.exit_status, err) == str(excinfo.value)
+
 
 @pytest.fixture()
 def dir_with_hooks(tmp_path):
