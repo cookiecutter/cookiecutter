@@ -262,7 +262,7 @@ class TestFailingHooks:
         if os.path.exists("shell_post.txt"):
             os.remove("shell_post.txt")
 
-    def test_run_non_success_script(self, mocker) -> None:
+    def test_run_non_success_script(self) -> None:
         """Test correct exception raise if run_script fails."""
         with pytest.raises(exceptions.FailedHookException) as excinfo:
             hooks.run_script(os.path.join(self.hooks_path, self.post_hook))
