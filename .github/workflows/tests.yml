@@ -45,8 +45,6 @@ jobs:
           - "3.12"
         include:
           - os: ubuntu-latest
-            python: "3.7"
-          - os: ubuntu-latest
             python: "3.8"
           - os: ubuntu-latest
             python: "3.9"
