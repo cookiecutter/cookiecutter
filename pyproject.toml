@@ -9,7 +9,7 @@ ignore = ["D001"]
 
 [tool.ruff]
 
-target-version = "py37"
+target-version = "py38"
 
 [tool.ruff.lint]
 
