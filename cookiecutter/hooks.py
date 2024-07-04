@@ -94,11 +94,21 @@ def run_script(script_path: str, cwd: Path | str = '.') -> None:
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
-        exit_status = proc.wait()
+        proc = subprocess.Popen(
+            script_command,
+            shell=run_thru_shell,  # nosec
+            cwd=cwd,
+            stderr=subprocess.PIPE,  # pipe only errors
+            text=True,
+        )
+        # catch error during hook execution, if any
+        _, sp_error = proc.communicate()
+        # if hook does not yield an error message, don't attempt to publish
+        error_message = f': {sp_error}' if sp_error else ''
+        exit_status = proc.returncode
         if exit_status != EXIT_SUCCESS:
             raise FailedHookException(
-                f'Hook script failed (exit status: {exit_status})'
+                f'Hook script failed (exit status: {exit_status}){error_message}'
             )
     except OSError as err:
         if err.errno == errno.ENOEXEC:
