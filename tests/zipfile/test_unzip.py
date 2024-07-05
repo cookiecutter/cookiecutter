@@ -39,7 +39,7 @@ def test_unzip_local_file(mocker, clone_dir) -> None:
     )
 
     output_dir = zipfile.unzip(
-        'tests/files/fake-repo-tmpl.zip', is_url=False, clone_to_dir=str(clone_dir)
+        'tests/files/fake-repo-tmpl.zip', is_url=False, clone_to_dir=clone_dir
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
@@ -55,7 +55,7 @@ def test_unzip_protected_local_file_environment_password(mocker, clone_dir) -> N
     output_dir = zipfile.unzip(
         'tests/files/protected-fake-repo-tmpl.zip',
         is_url=False,
-        clone_to_dir=str(clone_dir),
+        clone_to_dir=clone_dir,
         password='sekrit',
     )
 
@@ -73,7 +73,7 @@ def test_unzip_protected_local_file_bad_environment_password(mocker, clone_dir) 
         zipfile.unzip(
             'tests/files/protected-fake-repo-tmpl.zip',
             is_url=False,
-            clone_to_dir=str(clone_dir),
+            clone_to_dir=clone_dir,
             password='not-the-right-password',
         )
 
@@ -90,7 +90,7 @@ def test_unzip_protected_local_file_user_password_with_noinput(
         zipfile.unzip(
             'tests/files/protected-fake-repo-tmpl.zip',
             is_url=False,
-            clone_to_dir=str(clone_dir),
+            clone_to_dir=clone_dir,
             no_input=True,
         )
 
@@ -105,7 +105,7 @@ def test_unzip_protected_local_file_user_password(mocker, clone_dir) -> None:
     output_dir = zipfile.unzip(
         'tests/files/protected-fake-repo-tmpl.zip',
         is_url=False,
-        clone_to_dir=str(clone_dir),
+        clone_to_dir=clone_dir,
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
@@ -125,7 +125,7 @@ def test_unzip_protected_local_file_user_bad_password(mocker, clone_dir) -> None
         zipfile.unzip(
             'tests/files/protected-fake-repo-tmpl.zip',
             is_url=False,
-            clone_to_dir=str(clone_dir),
+            clone_to_dir=clone_dir,
         )
 
 
@@ -136,9 +136,7 @@ def test_empty_zip_file(mocker, clone_dir) -> None:
     )
 
     with pytest.raises(InvalidZipRepository):
-        zipfile.unzip(
-            'tests/files/empty.zip', is_url=False, clone_to_dir=str(clone_dir)
-        )
+        zipfile.unzip('tests/files/empty.zip', is_url=False, clone_to_dir=clone_dir)
 
 
 def test_non_repo_zip_file(mocker, clone_dir) -> None:
@@ -149,7 +147,7 @@ def test_non_repo_zip_file(mocker, clone_dir) -> None:
 
     with pytest.raises(InvalidZipRepository):
         zipfile.unzip(
-            'tests/files/not-a-repo.zip', is_url=False, clone_to_dir=str(clone_dir)
+            'tests/files/not-a-repo.zip', is_url=False, clone_to_dir=clone_dir
         )
 
 
@@ -161,7 +159,7 @@ def test_bad_zip_file(mocker, clone_dir) -> None:
 
     with pytest.raises(InvalidZipRepository):
         zipfile.unzip(
-            'tests/files/bad-zip-file.zip', is_url=False, clone_to_dir=str(clone_dir)
+            'tests/files/bad-zip-file.zip', is_url=False, clone_to_dir=clone_dir
         )
 
 
@@ -183,7 +181,7 @@ def test_unzip_url(mocker, clone_dir) -> None:
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
-        clone_to_dir=str(clone_dir),
+        clone_to_dir=clone_dir,
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
@@ -208,7 +206,7 @@ def test_unzip_url_with_empty_chunks(mocker, clone_dir) -> None:
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
-        clone_to_dir=str(clone_dir),
+        clone_to_dir=clone_dir,
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
@@ -231,13 +229,13 @@ def test_unzip_url_existing_cache(mocker, clone_dir) -> None:
     )
 
     # Create an existing cache of the zipfile
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     existing_zip.write_text('This is an existing zipfile')
 
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
-        clone_to_dir=str(clone_dir),
+        clone_to_dir=clone_dir,
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
@@ -256,13 +254,13 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir) -> None:
     )
 
     # Create an existing cache of the zipfile
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     existing_zip.write_text('This is an existing zipfile')
 
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
-        clone_to_dir=str(clone_dir),
+        clone_to_dir=clone_dir,
         no_input=True,
     )
 
@@ -281,13 +279,13 @@ def test_unzip_should_abort_if_no_redownload(mocker, clone_dir) -> None:
     )
 
     # Create an existing cache of the zipfile
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     existing_zip.write_text('This is an existing zipfile')
 
     zipfile_url = 'https://example.com/path/to/fake-repo-tmpl.zip'
 
     with pytest.raises(SystemExit):
-        zipfile.unzip(zipfile_url, is_url=True, clone_to_dir=str(clone_dir))
+        zipfile.unzip(zipfile_url, is_url=True, clone_to_dir=clone_dir)
 
     assert not mock_requests_get.called
 
@@ -300,13 +298,13 @@ def test_unzip_is_ok_to_reuse(mocker, clone_dir) -> None:
 
     request = mocker.MagicMock()
 
-    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip = clone_dir / 'fake-repo-tmpl.zip'
     shutil.copy('tests/files/fake-repo-tmpl.zip', existing_zip)
 
     output_dir = zipfile.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
         is_url=True,
-        clone_to_dir=str(clone_dir),
+        clone_to_dir=clone_dir,
     )
 
     assert output_dir.startswith(tempfile.gettempdir())

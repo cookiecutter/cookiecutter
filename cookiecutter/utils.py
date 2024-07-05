@@ -27,7 +27,7 @@ def force_delete(func, path, _exc_info) -> None:  # type: ignore[no-untyped-def]
     Usage: `shutil.rmtree(path, onerror=force_delete)`
     From https://docs.python.org/3/library/shutil.html#rmtree-example
     """
-    os.chmod(path, stat.S_IWRITE)
+    Path(path).chmod(stat.S_IWRITE)
     func(path)
 
 
@@ -57,7 +57,7 @@ def work_in(dirname: Path | str | None = None) -> Iterator[None]:
 
     When exited, returns to the working directory prior to entering.
     """
-    curdir = os.getcwd()
+    curdir = Path.cwd()
     try:
         if dirname is not None:
             os.chdir(dirname)
@@ -66,13 +66,13 @@ def work_in(dirname: Path | str | None = None) -> Iterator[None]:
         os.chdir(curdir)
 
 
-def make_executable(script_path: Path | str) -> None:
+def make_executable(script_path: Path) -> None:
     """Make `script_path` executable.
 
     :param script_path: The file to change
     """
-    status = os.stat(script_path)
-    os.chmod(script_path, status.st_mode | stat.S_IEXEC)
+    status = script_path.stat()
+    script_path.chmod(status.st_mode | stat.S_IEXEC)
 
 
 def simple_filter(filter_function) -> type[Extension]:  # type: ignore[no-untyped-def]

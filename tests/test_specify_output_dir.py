@@ -21,9 +21,9 @@ def context():
 @pytest.fixture
 def template(tmp_path):
     """Fixture to prepare test template directory."""
-    template_dir = tmp_path.joinpath("template")
+    template_dir = tmp_path / "template"
     template_dir.mkdir()
-    template_dir.joinpath('cookiecutter.json').touch()
+    (template_dir / 'cookiecutter.json').touch()
     return str(template_dir)
 
 

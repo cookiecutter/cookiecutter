@@ -1,6 +1,6 @@
 """test_replay."""
 
-import os
+from pathlib import Path
 
 import pytest
 
@@ -10,8 +10,8 @@ from cookiecutter import exceptions, main, replay
 @pytest.mark.parametrize("replay_file_name", ['bar', 'bar.json'])
 def test_get_replay_file_name(replay_file_name) -> None:
     """Make sure that replay.get_file_name generates a valid json file path."""
-    exp_replay_file_path = os.path.join('foo', 'bar.json')
-    replay_file_path = replay.get_file_name('foo', replay_file_name)
+    exp_replay_file_path = Path('foo', 'bar.json')
+    replay_file_path = Path(replay.get_file_name(Path('foo'), replay_file_name))
     assert replay_file_path == exp_replay_file_path
 
 

@@ -4,7 +4,6 @@ Tests in this file execute `cookiecutter()` with `no_input=True` flag and
 verify result with different settings in `cookiecutter.json`.
 """
 
-import os
 import textwrap
 from pathlib import Path
 
@@ -18,16 +17,15 @@ def remove_additional_dirs(request) -> None:
     """Fixture. Remove special directories which are created during the tests."""
 
     def fin_remove_additional_dirs() -> None:
-        if os.path.isdir('fake-project'):
-            utils.rmtree('fake-project')
-        if os.path.isdir('fake-project-extra'):
-            utils.rmtree('fake-project-extra')
-        if os.path.isdir('fake-project-templated'):
-            utils.rmtree('fake-project-templated')
-        if os.path.isdir('fake-project-dict'):
-            utils.rmtree('fake-project-dict')
-        if os.path.isdir('fake-tmp'):
-            utils.rmtree('fake-tmp')
+        for project in {
+            'fake-project',
+            'fake-project-extra',
+            'fake-project-templated',
+            'fake-project-dict',
+            'fake-tmp',
+        }:
+            if Path(project).is_dir():
+                utils.rmtree(project)
 
     request.addfinalizer(fin_remove_additional_dirs)
 
@@ -37,11 +35,11 @@ def remove_additional_dirs(request) -> None:
 def test_cookiecutter_no_input_return_project_dir(path) -> None:
     """Verify `cookiecutter` create project dir on input with or without slash."""
     project_dir = main.cookiecutter(path, no_input=True)
-    assert os.path.isdir('tests/fake-repo-pre/{{cookiecutter.repo_name}}')
-    assert not os.path.isdir('tests/fake-repo-pre/fake-project')
-    assert os.path.isdir(project_dir)
-    assert os.path.isfile('fake-project/README.rst')
-    assert not os.path.exists('fake-project/json/')
+    assert Path('tests/fake-repo-pre/{{cookiecutter.repo_name}}').is_dir()
+    assert not Path('tests/fake-repo-pre/fake-project').is_dir()
+    assert Path(project_dir).is_dir()
+    assert Path('fake-project/README.rst').is_file()
+    assert not Path('fake-project/json/').exists()
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
@@ -52,32 +50,32 @@ def test_cookiecutter_no_input_extra_context() -> None:
         no_input=True,
         extra_context={'repo_name': 'fake-project-extra'},
     )
-    assert os.path.isdir('fake-project-extra')
+    assert Path('fake-project-extra').is_dir()
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_templated_context() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
     main.cookiecutter('tests/fake-repo-tmpl', no_input=True)
-    assert os.path.isdir('fake-project-templated')
+    assert Path('fake-project-templated').is_dir()
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_no_input_return_rendered_file() -> None:
     """Verify Jinja2 templating correctly works in `cookiecutter.json` file."""
-    project_dir = main.cookiecutter('tests/fake-repo-pre', no_input=True)
-    assert project_dir == os.path.abspath('fake-project')
-    content = Path(project_dir, 'README.rst').read_text()
+    project_dir = Path(main.cookiecutter('tests/fake-repo-pre', no_input=True))
+    assert project_dir == Path('fake-project').resolve()
+    content = (project_dir / 'README.rst').read_text()
     assert "Project name: **Fake Project**" in content
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
 def test_cookiecutter_dict_values_in_context() -> None:
     """Verify configured dictionary from `cookiecutter.json` correctly unpacked."""
-    project_dir = main.cookiecutter('tests/fake-repo-dict', no_input=True)
-    assert project_dir == os.path.abspath('fake-project-dict')
+    project_dir = Path(main.cookiecutter('tests/fake-repo-dict', no_input=True))
+    assert project_dir == Path('fake-project-dict').resolve()
 
-    content = Path(project_dir, 'README.md').read_text()
+    content = (project_dir / 'README.md').read_text()
     assert (
         content
         == textwrap.dedent(
@@ -131,9 +129,9 @@ def test_cookiecutter_template_cleanup(mocker) -> None:
     )
 
     main.cookiecutter('tests/files/fake-repo-tmpl.zip', no_input=True)
-    assert os.path.isdir('fake-project-templated')
+    assert Path('fake-project-templated').is_dir()
 
     # The tmp directory will still exist, but the
     # extracted template directory *in* the temp directory will not.
-    assert os.path.exists('fake-tmp')
-    assert not os.path.exists('fake-tmp/fake-repo-tmpl')
+    assert Path('fake-tmp').exists()
+    assert not Path('fake-tmp/fake-repo-tmpl').exists()

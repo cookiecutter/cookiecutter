@@ -1,10 +1,10 @@
 """pytest fixtures which are globally available throughout the suite."""
 
-import os
 import shutil
 from pathlib import Path
 
 import pytest
+from pytest import TempPathFactory
 from typing_extensions import TypedDict
 
 from cookiecutter import utils
@@ -19,10 +19,10 @@ replay_dir: '{replay_dir}'
 @pytest.fixture(autouse=True)
 def isolated_filesystem(monkeypatch, tmp_path) -> None:
     """Ensure filesystem isolation, set the user home to a tmp_path."""
-    root_path = tmp_path.joinpath("home")
+    root_path = tmp_path / "home"
     root_path.mkdir()
-    cookiecutters_dir = root_path.joinpath(".cookiecutters/")
-    replay_dir = root_path.joinpath(".cookiecutter_replay/")
+    cookiecutters_dir = root_path / ".cookiecutters/"
+    replay_dir = root_path / ".cookiecutter_replay/"
     monkeypatch.setitem(DEFAULT_CONFIG, 'cookiecutters_dir', str(cookiecutters_dir))
     monkeypatch.setitem(DEFAULT_CONFIG, 'replay_dir', str(replay_dir))
 
@@ -30,26 +30,28 @@ def isolated_filesystem(monkeypatch, tmp_path) -> None:
     monkeypatch.setenv("USERPROFILE", str(root_path))
 
 
-def backup_dir(original_dir, backup_dir) -> bool:
+def backup_dir(original_dir: Path, backup_dir: Path) -> bool:
     """Generate backup directory based on original directory."""
     # If the default original_dir is pre-existing, move it to a temp location
-    if not os.path.isdir(original_dir):
+    if not original_dir.is_dir():
         return False
 
     # Remove existing stale backups before backing up.
-    if os.path.isdir(backup_dir):
+    if backup_dir.is_dir():
         utils.rmtree(backup_dir)
 
     shutil.copytree(original_dir, backup_dir)
     return True
 
 
-def restore_backup_dir(original_dir, backup_dir, original_dir_found) -> None:
+def restore_backup_dir(
+    original_dir: Path, backup_dir: Path, original_dir_found: bool
+) -> None:
     """Restore default contents."""
-    original_dir_is_dir = os.path.isdir(original_dir)
+    original_dir_is_dir = original_dir.is_dir()
     if original_dir_found:
         # Delete original_dir if a backup exists
-        if original_dir_is_dir and os.path.isdir(backup_dir):
+        if original_dir_is_dir and backup_dir.is_dir():
             utils.rmtree(original_dir)
     else:
         # Delete the created original_dir.
@@ -58,9 +60,9 @@ def restore_backup_dir(original_dir, backup_dir, original_dir_found) -> None:
             utils.rmtree(original_dir)
 
     # Restore the user's default original_dir contents
-    if os.path.isdir(backup_dir):
+    if backup_dir.is_dir():
         shutil.copytree(backup_dir, original_dir)
-    if os.path.isdir(original_dir):
+    if original_dir.is_dir():
         utils.rmtree(backup_dir)
 
 
@@ -99,25 +101,25 @@ def clean_system(request) -> None:
 
     """
     # If ~/.cookiecutterrc is pre-existing, move it to a temp location
-    user_config_path = os.path.expanduser('~/.cookiecutterrc')
-    user_config_path_backup = os.path.expanduser('~/.cookiecutterrc.backup')
-    if os.path.exists(user_config_path):
+    user_config_path = Path('~/.cookiecutterrc').expanduser()
+    user_config_path_backup = Path('~/.cookiecutterrc.backup').expanduser()
+    if user_config_path.exists():
         user_config_found = True
         shutil.copy(user_config_path, user_config_path_backup)
-        os.remove(user_config_path)
+        user_config_path.unlink()
     else:
         user_config_found = False
 
     # If the default cookiecutters_dir is pre-existing, move it to a
     # temp location
-    cookiecutters_dir = os.path.expanduser('~/.cookiecutters')
-    cookiecutters_dir_backup = os.path.expanduser('~/.cookiecutters.backup')
+    cookiecutters_dir = Path('~/.cookiecutters').expanduser()
+    cookiecutters_dir_backup = Path('~/.cookiecutters.backup').expanduser()
     cookiecutters_dir_found = backup_dir(cookiecutters_dir, cookiecutters_dir_backup)
 
     # If the default cookiecutter_replay_dir is pre-existing, move it to a
     # temp location
-    cookiecutter_replay_dir = os.path.expanduser('~/.cookiecutter_replay')
-    cookiecutter_replay_dir_backup = os.path.expanduser('~/.cookiecutter_replay.backup')
+    cookiecutter_replay_dir = Path('~/.cookiecutter_replay').expanduser()
+    cookiecutter_replay_dir_backup = Path('~/.cookiecutter_replay.backup').expanduser()
     cookiecutter_replay_dir_found = backup_dir(
         cookiecutter_replay_dir, cookiecutter_replay_dir_backup
     )
@@ -125,9 +127,9 @@ def clean_system(request) -> None:
     def restore_backup() -> None:
         # If it existed, restore ~/.cookiecutterrc
         # We never write to ~/.cookiecutterrc, so this logic is simpler.
-        if user_config_found and os.path.exists(user_config_path_backup):
+        if user_config_found and user_config_path_backup.exists():
             shutil.copy(user_config_path_backup, user_config_path)
-            os.remove(user_config_path_backup)
+            user_config_path_backup.unlink()
 
         # Carefully delete the created ~/.cookiecutters dir only in certain
         # conditions.
@@ -147,7 +149,7 @@ def clean_system(request) -> None:
 
 
 @pytest.fixture(scope='session')
-def user_dir(tmp_path_factory):
+def user_dir(tmp_path_factory: TempPathFactory) -> Path:
     """Fixture that simulates the user's home directory."""
     return tmp_path_factory.mktemp('user_dir')
 
@@ -158,7 +160,7 @@ class UserConfigData(TypedDict):
 
 
 @pytest.fixture(scope='session')
-def user_config_data(user_dir) -> UserConfigData:
+def user_config_data(user_dir: Path) -> UserConfigData:
     """Fixture that creates 2 Cookiecutter user config dirs.
 
      It will create it in the user's home directory.
@@ -168,9 +170,9 @@ def user_config_data(user_dir) -> UserConfigData:
 
     :returns: Dict with name of both user config dirs
     """
-    cookiecutters_dir = user_dir.joinpath('cookiecutters')
+    cookiecutters_dir = user_dir / 'cookiecutters'
     cookiecutters_dir.mkdir()
-    replay_dir = user_dir.joinpath('cookiecutter_replay')
+    replay_dir = user_dir / 'cookiecutter_replay'
     replay_dir.mkdir()
     return {
         'cookiecutters_dir': str(cookiecutters_dir),
@@ -179,7 +181,7 @@ def user_config_data(user_dir) -> UserConfigData:
 
 
 @pytest.fixture(scope='session')
-def user_config_file(user_dir, user_config_data) -> str:
+def user_config_file(user_dir: Path, user_config_data) -> str:
     """Fixture that creates a config file called `config`.
 
      It will create it in the user's home directory, with YAML from
@@ -189,7 +191,7 @@ def user_config_file(user_dir, user_config_data) -> str:
     :param user_config_data: Dict of config values
     :returns: String of path to config file
     """
-    config_file = user_dir.joinpath('config')
+    config_file = user_dir / 'config'
 
     config_text = USER_CONFIG.format(**user_config_data)
     config_file.write_text(config_text)
@@ -197,9 +199,9 @@ def user_config_file(user_dir, user_config_data) -> str:
 
 
 @pytest.fixture
-def output_dir(tmp_path) -> str:
+def output_dir(tmp_path: Path) -> str:
     """Fixture to prepare test output directory."""
-    output_path = tmp_path.joinpath("output")
+    output_path = tmp_path / "output"
     output_path.mkdir()
     return str(output_path)
 
@@ -208,6 +210,6 @@ def output_dir(tmp_path) -> str:
 def clone_dir(tmp_path: Path) -> Path:
     """Simulate creation of a directory called `clone_dir` inside of `tmp_path`. \
     Returns a str to said directory."""
-    clone_dir = tmp_path.joinpath("clone_dir")
+    clone_dir = tmp_path / "clone_dir"
     clone_dir.mkdir()
     return clone_dir

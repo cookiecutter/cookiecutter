@@ -16,14 +16,14 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-def get_file_name(replay_dir: Path | str, template_name: str) -> str:
+def get_file_name(replay_dir: Path, template_name: str) -> str:
     """Get the name of file."""
     suffix = '.json' if not template_name.endswith('.json') else ''
     file_name = f'{template_name}{suffix}'
     return os.path.join(replay_dir, file_name)
 
 
-def dump(replay_dir: Path | str, template_name: str, context: dict[str, Any]) -> None:
+def dump(replay_dir: Path, template_name: str, context: dict[str, Any]) -> None:
     """Write json data to file."""
     make_sure_path_exists(replay_dir)
 
@@ -36,7 +36,7 @@ def dump(replay_dir: Path | str, template_name: str, context: dict[str, Any]) ->
         json.dump(context, outfile, indent=2)
 
 
-def load(replay_dir: Path | str, template_name: str) -> dict[str, Any]:
+def load(replay_dir: Path, template_name: str) -> dict[str, Any]:
     """Read json data from file."""
     replay_file = get_file_name(replay_dir, template_name)
 

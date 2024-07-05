@@ -6,6 +6,7 @@ import json
 import os
 import sys
 from collections import OrderedDict
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
@@ -38,7 +39,7 @@ from cookiecutter.main import cookiecutter
 def version_msg() -> str:
     """Return the Cookiecutter version, location and Python powering it."""
     python_version = sys.version
-    location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    location = Path(__file__).resolve().parent.parent
     return f"Cookiecutter {__version__} from {location} (Python {python_version})"
 
 
@@ -63,8 +64,8 @@ def list_installed_templates(
 ) -> None:
     """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
     config = get_user_config(passed_config_file, default_config)
-    cookiecutter_folder: str = config['cookiecutters_dir']
-    if not os.path.exists(cookiecutter_folder):
+    cookiecutter_folder = Path(config['cookiecutters_dir'])
+    if not cookiecutter_folder.exists():
         click.echo(
             f"Error: Cannot list installed templates. "
             f"Folder does not exist: {cookiecutter_folder}"
@@ -74,9 +75,7 @@ def list_installed_templates(
     template_names = [
         folder
         for folder in os.listdir(cookiecutter_folder)
-        if os.path.exists(
-            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
-        )
+        if (cookiecutter_folder / folder / 'cookiecutter.json').exists()
     ]
     click.echo(f'{len(template_names)} installed templates: ')
     for name in template_names:

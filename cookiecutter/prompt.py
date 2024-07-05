@@ -399,7 +399,7 @@ def choose_nested_template(
     return f"{template_path}"
 
 
-def prompt_and_delete(path: Path | str, no_input: bool = False) -> bool:
+def prompt_and_delete(path: Path, no_input: bool = False) -> bool:
     """
     Ask user if it's okay to delete the previously-downloaded file/directory.
 
