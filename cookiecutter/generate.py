@@ -82,10 +82,11 @@ def apply_overwrites_to_context(
                 if set(overwrite).issubset(set(context_value)):
                     context[variable] = overwrite
                 else:
-                    raise ValueError(
+                    msg = (
                         f"{overwrite} provided for multi-choice variable "
                         f"{variable}, but valid choices are {context_value}"
                     )
+                    raise ValueError(msg)
             else:
                 # We are dealing with a choice variable
                 if overwrite in context_value:
@@ -95,10 +96,11 @@ def apply_overwrites_to_context(
                     context_value.remove(overwrite)
                     context_value.insert(0, overwrite)
                 else:
-                    raise ValueError(
+                    msg = (
                         f"{overwrite} provided for choice variable "
                         f"{variable}, but the choices are {context_value}."
                     )
+                    raise ValueError(msg)
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
             apply_overwrites_to_context(
@@ -111,10 +113,11 @@ def apply_overwrites_to_context(
             try:
                 context[variable] = YesNoPrompt().process_response(overwrite)
             except InvalidResponse as err:
-                raise ValueError(
+                msg = (
                     f"{overwrite} provided for variable "
                     f"{variable} could not be converted to a boolean."
-                ) from err
+                )
+                raise ValueError(msg) from err
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
@@ -250,7 +253,7 @@ def generate_file(
 
     logger.debug('Writing contents to file %s', outfile)
 
-    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
+    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:  # noqa: FURB103 (false positive for python < 3.10)
         fh.write(rendered_file)
 
     # Apply file permissions to output file

@@ -14,10 +14,7 @@ def _get_version() -> str:
 
 version = _get_version()
 
-
-with open('README.md', encoding='utf-8') as readme_file:
-    readme = readme_file.read()
-
+readme = Path('README.md').read_text(encoding='utf-8')
 
 requirements = [
     'binaryornot>=0.4.4',

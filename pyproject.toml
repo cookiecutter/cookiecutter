@@ -14,7 +14,7 @@ target-version = "py38"
 [tool.ruff.lint]
 
 select = [
-    #    "A",      # flake8-builtins
+    "A", # flake8-builtins
     #    "ANN", # flake8-annotations
     "ARG",   # flake8-unused-arguments
     "ASYNC", # flake8-async
@@ -26,14 +26,14 @@ select = [
     #    "D", # pydocstyle
     "DTZ", # flake8-datetimez
     "E",   # pycodestyle errors
-    #    "EM",     # flake8-errmsg
+    "EM",  # flake8-errmsg
     #    "ERA",    # flake8-eradicate
     "EXE", # flake8-executable
     "F",   # pyflakes
     "FA",  # flake8-future-annotations
     #    "FBT",    # boolean trap
-    "FLY", # flynt
-    #    "FURB", # refurb
+    "FLY",  # flynt
+    "FURB", # refurb
     #    "G",      # flake8-logging-format
     "I",    # isort
     "ICN",  # flake8-import-conventions
@@ -43,26 +43,26 @@ select = [
     "N",    # pep8-naming
     "PERF", # perflint
     "PGH",  # pygrep-hooks
-    #    "PIE",    # flake8-pie
+    "PIE",  # flake8-pie
     #    "PL",     # pylint
     #    "PT",     # flake8-pytest-style
     #    "PTH",    # flake8-use-pathlib
     #    "PYI",    # flake8-pyi
     #    "Q",      # flake8-quotes
-    #    "RET",    # flake8-return
-    "RSE", # flake8-raise
-    "RUF", # Ruff-specific lints
-    "S",   # flake8-bandit
-    "SIM", # flake8-simplify
-    #    "SLF",    # flake8-self
+    "RET",  # flake8-return
+    "RSE",  # flake8-raise
+    "RUF",  # Ruff-specific lints
+    "S",    # flake8-bandit
+    "SIM",  # flake8-simplify
+    "SLF",  # flake8-self
     "SLOT", # flake8-slots
     #    "T20",    # flake8-print
-    "TCH",    # flake8-type-checking
-    "TID252", # ban relative imports
-    #    "TRY",    # tryceratops
-    "UP", # pyupgrade
-    "W",  # pycodestyle warnings
-    #    "YTT",    # flake8-2020
+    "TCH", # flake8-type-checking
+    "TID", # ban relative imports
+    "TRY", # tryceratops
+    "UP",  # pyupgrade
+    "W",   # pycodestyle warnings
+    "YTT", # flake8-2020
 ]
 
 # pydocstyle.convention = "google"

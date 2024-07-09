@@ -43,15 +43,12 @@ def identify_repo(repo_url: str) -> tuple[Literal["git", "hg"], str]:
         repo_type = repo_url_values[0]
         if repo_type in ["git", "hg"]:
             return repo_type, repo_url_values[1]  # type: ignore[return-value]
-        else:
-            raise UnknownRepoType
-    else:
-        if 'git' in repo_url:
-            return 'git', repo_url
-        elif 'bitbucket' in repo_url:
-            return 'hg', repo_url
-        else:
-            raise UnknownRepoType
+        raise UnknownRepoType
+    if 'git' in repo_url:
+        return 'git', repo_url
+    if 'bitbucket' in repo_url:
+        return 'hg', repo_url
+    raise UnknownRepoType
 
 
 def is_vcs_installed(repo_type: str) -> bool:
@@ -125,16 +122,18 @@ def clone(
         except subprocess.CalledProcessError as clone_error:
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
-                raise RepositoryNotFound(
+                msg = (
                     f'The repository {repo_url} could not be found, '
                     'have you made a typo?'
-                ) from clone_error
+                )
+                raise RepositoryNotFound(msg) from clone_error
             if any(error in output for error in BRANCH_ERRORS):
-                raise RepositoryCloneFailed(
+                msg = (
                     f'The {checkout} branch of repository '
                     f'{repo_url} could not found, have you made a typo?'
-                ) from clone_error
-            logger.error('git clone failed with error: %s', output)
+                )
+                raise RepositoryCloneFailed(msg) from clone_error
+            logger.exception('git clone failed with error: %s', output)
             raise
 
     return repo_dir
