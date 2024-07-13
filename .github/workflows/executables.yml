@@ -50,17 +50,17 @@ jobs:
     - name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
-        name: cookiecutter-ubuntu-latest
+        name: cookiecutter-ubuntu-latest.zip
         path: ./artifacts/ubuntu-latest
     - name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
-        name: cookiecutter-macos-latest
+        name: cookiecutter-macos-latest.zip
         path: ./artifacts/macos-latest
     - name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
-        name: cookiecutter-windows-latest
+        name: cookiecutter-windows-latest.zip
         path: ./artifacts/windows-latest
 
     - name: Create Release
