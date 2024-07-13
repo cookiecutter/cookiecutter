@@ -25,10 +25,10 @@ jobs:
       with:
         python-version: '3.x' # specify the Python version you need
 
-    - name: Install PyInstaller
+    - name: Install PyInstaller and cookiecutter dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller
+        pip install pyinstaller binaryornot>=0.4.4 Jinja2>=2.7 click>=7.0 pyyaml>=5.3.1 python-slugify>=4.0.0 requests>=2.23.0 arrow rich
 
     - name: Build executable
       run: |
