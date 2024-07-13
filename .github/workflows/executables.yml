@@ -36,8 +36,8 @@ jobs:
 
     - name: Archive the build output
       run: |
-        zip -r cookiecutter-${{ matrix.os }}.zip dist/
-      shell: bash
+        Compress-Archive -Path "dist" -DestinationPath "cookiecutter-${{ matrix.os }}.zip"
+      shell: powershell
 
     - name: Create GitHub Release
       id: create_release
