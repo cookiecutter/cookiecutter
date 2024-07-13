@@ -34,15 +34,20 @@ jobs:
       run: |
         pyinstaller cookiecutter.spec
 
+    - name: Archive the build output
+      run: |
+        zip -r cookiecutter-${{ matrix.os }}.zip dist/
+      shell: bash
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v0.0.0-${{ matrix.os }}
-        release_name: Release v0.0.0-${{ matrix.os }}
-        draft: true
+        tag_name: v1.0.0-${{ matrix.os }}
+        release_name: Release v1.0.0-${{ matrix.os }}
+        draft: false
         prerelease: false
 
     - name: Upload Release Asset
@@ -51,6 +56,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: dist/cookiecutter-${{ matrix.os }}
+        asset_path: cookiecutter-${{ matrix.os }}.zip
         asset_name: cookiecutter-${{ matrix.os }}.zip
         asset_content_type: application/zip
