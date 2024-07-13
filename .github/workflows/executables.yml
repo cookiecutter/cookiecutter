@@ -39,63 +39,24 @@ jobs:
       with:
         name: cookiecutter-${{ matrix.os }}
         path: dist/
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: cookiecutter-ubuntu-latest.zip
-        path: ./artifacts/ubuntu-latest
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: cookiecutter-macos-latest.zip
-        path: ./artifacts/macos-latest
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: cookiecutter-windows-latest.zip
-        path: ./artifacts/windows-latest
-
-    - name: Create Release
+    
+    - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v0.1.0  # Adjust the version number as needed
-        release_name: Release v0.1.0
-        body: |
-          Pre-release version v0.1.0
+        tag_name: v0.0.0-${{ matrix.os }}
+        release_name: Release v0.0.0-${{ matrix.os }}
         draft: true
         prerelease: false
 
-    - name: Upload Release Asset (Ubuntu)
+    - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/ubuntu-latest/cookiecutter-ubuntu-latest.zip
-        asset_name: cookiecutter-ubuntu-latest.zip
-        asset_content_type: application/zip
-
-    - name: Upload Release Asset (macOS)
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/macos-latest/cookiecutter-macos-latest.zip
-        asset_name: cookiecutter-macos-latest.zip
-        asset_content_type: application/zip
-
-    - name: Upload Release Asset (Windows)
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/windows-latest/cookiecutter-windows-latest.zip
-        asset_name: cookiecutter-windows-latest.zip
+        asset_path: dist/cookiecutter-${{ matrix.os }}
+        asset_name: cookiecutter-${{ matrix.os }}.zip
         asset_content_type: application/zip
