@@ -34,12 +34,6 @@ jobs:
       run: |
         pyinstaller cookiecutter.spec
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: cookiecutter-${{ matrix.os }}
-        path: dist/
-
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
