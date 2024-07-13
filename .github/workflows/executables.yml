@@ -39,7 +39,7 @@ jobs:
       with:
         name: cookiecutter-${{ matrix.os }}
         path: dist/
-    
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
