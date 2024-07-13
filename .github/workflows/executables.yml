@@ -73,8 +73,8 @@ jobs:
         release_name: Release v0.1.0
         body: |
           Pre-release version v0.1.0
-        draft: false
-        prerelease: true
+        draft: true
+        prerelease: false
 
     - name: Upload Release Asset (Ubuntu)
       uses: actions/upload-release-asset@v1
