@@ -37,7 +37,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: cookiecutter-${{ runner.os }}
+        name: cookiecutter-${{ matrix.os }}
         path: dist/
 
   release:
