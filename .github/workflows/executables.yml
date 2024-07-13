@@ -34,10 +34,14 @@ jobs:
       run: |
         pyinstaller cookiecutter.spec
 
-    - name: Archive the build output
-      run: |
-        Compress-Archive -Path "dist" -DestinationPath "cookiecutter-${{ matrix.os }}.zip"
-      shell: powershell
+        - name: Archive the build output
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            Compress-Archive -Path "dist" -DestinationPath "cookiecutter-${{ matrix.os }}.zip"
+          else
+            zip -r "cookiecutter-${{ matrix.os }}.zip" dist/
+          fi
+        shell: bash
 
     - name: Create GitHub Release
       id: create_release
