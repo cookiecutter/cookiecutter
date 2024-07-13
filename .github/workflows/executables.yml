@@ -32,7 +32,7 @@ jobs:
 
     - name: Build executable
       run: |
-        pyinstaller --clean --onefile cookiecutter.spec
+        pyinstaller cookiecutter.spec
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
