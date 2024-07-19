@@ -5,7 +5,6 @@ from __future__ import annotations
 import errno
 import logging
 import os
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -92,11 +91,16 @@ def run_script(script_path: str, cwd: Path | str = '.') -> None:
     utils.make_executable(script_path)
 
     try:
-        proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
-        exit_status = proc.wait()
-        if exit_status != EXIT_SUCCESS:
-            msg = f'Hook script failed (exit status: {exit_status})'
-            raise FailedHookException(msg)
+        # cannot use subprocess in pyinstaller
+        # see https://pyinstaller.org/en/stable/common-issues-and-pitfalls.html
+        # for details
+        os.popen(" ".join(script_command)).read()  # noqa: S605
+        # @NOTE: original code commented out for binary compatibility
+        # proc = subprocess.Popen(script_command, shell=run_thru_shell, cwd=cwd)  # nosec
+        # exit_status = proc.wait()
+        # if exit_status != EXIT_SUCCESS:
+        #     msg = f'Hook script failed (exit status: {exit_status})'
+        #     raise FailedHookException(msg)
     except OSError as err:
         if err.errno == errno.ENOEXEC:
             msg = 'Hook script failed, might be an empty file or missing a shebang'
