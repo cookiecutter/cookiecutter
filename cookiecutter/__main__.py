@@ -1,8 +1,8 @@
 """
 Allow cookiecutter to be executable through `python -m cookiecutter`.
 
-Thi script facilitates the CLI for Cookiecutter, allowing users to execute the 
-tool directly via the `python -m cookiecutter` command.This entry point invokes 
+Thi script facilitates the CLI for Cookiecutter, allowing users to execute the
+tool directly via the `python -m cookiecutter` command.This entry point invokes
 the main function from the Cookiecutter CLI module.
 """
 

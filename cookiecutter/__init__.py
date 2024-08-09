@@ -3,7 +3,7 @@ Main package for Cookiecutter.
 
 This module initializes the Cookiecutter package by setting up the version
 information. It retrieves the version from the VERSION.txt file located in
-the same directory as this module. 
+the same directory as this module.
 """
 
 from pathlib import Path
