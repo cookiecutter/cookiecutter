@@ -94,7 +94,7 @@ def cookiecutter(
     )
     repo_dir, cleanup = base_repo_dir, cleanup_base_repo_dir
     # Run pre_prompt hook
-    repo_dir = str(run_pre_prompt_hook(base_repo_dir)) if accept_hooks else repo_dir
+    repo_dir = str(run_pre_prompt_hook(base_repo_dir, _depth)) if accept_hooks else repo_dir
     # Always remove temporary dir if it was created
     cleanup = repo_dir != base_repo_dir
 

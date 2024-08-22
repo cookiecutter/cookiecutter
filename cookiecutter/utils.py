@@ -88,14 +88,26 @@ def simple_filter(filter_function) -> type[Extension]:  # type: ignore[no-untype
     return SimpleFilterExtension
 
 
-def create_tmp_repo_dir(repo_dir: Path | str) -> Path:
+def create_tmp_repo_dir(repo_dir: Path | str, depth: int) -> Path:
     """Create a temporary dir with a copy of the contents of repo_dir."""
     repo_dir = Path(repo_dir).resolve()
     base_dir = tempfile.mkdtemp(prefix='cookiecutter')
-    new_dir = f"{base_dir}/{repo_dir.name}"
+
+    # Use depth to reconstruct the top-level directory of the cookiecutter repo.
+    repo_top_level_dir = repo_dir
+    for _ in range(depth):
+        repo_top_level_dir = repo_top_level_dir.parent
+
+    # The new repo_dir will be the path descending the cookiecutter repo to the
+    # correct leaf template rebased onto the new temporary directory.
+    new_repo_dir = Path(base_dir) / Path(*repo_dir.parts[-depth - 1:])
+
+    # Copy the whole repo to the new temp directory.
+    new_dir = f"{base_dir}/{repo_top_level_dir.name}"
     logger.debug(f'Copying repo_dir from {repo_dir} to {new_dir}')
-    shutil.copytree(repo_dir, new_dir)
-    return Path(new_dir)
+    shutil.copytree(repo_top_level_dir, new_dir)
+
+    return new_repo_dir
 
 
 def create_env_with_context(context: dict[str, Any]) -> StrictEnvironment:
