@@ -100,7 +100,7 @@ def create_tmp_repo_dir(repo_dir: Path | str, depth: int) -> Path:
 
     # The new repo_dir will be the path descending the cookiecutter repo to the
     # correct leaf template rebased onto the new temporary directory.
-    new_repo_dir = Path(base_dir) / Path(*repo_dir.parts[-depth - 1:])
+    new_repo_dir = Path(base_dir) / Path(*repo_dir.parts[-depth - 1 :])
 
     # Copy the whole repo to the new temp directory.
     new_dir = f"{base_dir}/{repo_top_level_dir.name}"
