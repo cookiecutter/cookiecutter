@@ -105,7 +105,7 @@ def test_create_tmp_repo_dir(tmp_path) -> None:
     for name in subdirs:
         (repo_dir / name).mkdir()
 
-    new_repo_dir = utils.create_tmp_repo_dir(repo_dir)
+    new_repo_dir = utils.create_tmp_repo_dir(repo_dir, 0)
 
     assert new_repo_dir.exists()
     assert new_repo_dir.glob('*')

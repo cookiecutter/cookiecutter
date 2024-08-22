@@ -39,12 +39,13 @@ def test_build_templates(template, output_dir) -> None:
         "pytest",
     ]
 
+
 def test_build_nested_templates(output_dir) -> None:
     """
     Verify nested templates.
     """
     project_dir = main.cookiecutter(
-        f'tests/test-templates/nested-templates',
+        'tests/test-templates/nested-templates',
         no_input=True,
         output_dir=output_dir,
     )
