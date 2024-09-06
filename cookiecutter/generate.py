@@ -268,7 +268,7 @@ def render_and_create_dir(
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
     """Render name of a directory and create the directory.
-    
+
     Returns its path and a bool indicating if it was created.
     """
     if not dirname:
