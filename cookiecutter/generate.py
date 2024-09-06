@@ -274,10 +274,10 @@ def render_and_create_dir(
 
     name_tmpl = environment.from_string(dirname)
     rendered_dirname = name_tmpl.render(**context)
-    
+
     if not rendered_dirname:
         # directory skipped using something like {%if cond %}dirname{% endif %}
-        return
+        return None
 
     dir_to_create = Path(output_dir, rendered_dirname)
 
