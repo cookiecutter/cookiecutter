@@ -310,7 +310,7 @@ def test_generate_files_with_overwrite_if_exists(tmp_path) -> None:
 
 
 def test_skip_empty_dir_name_render(output_dir):
-    """Verify that a dirname that renders to an empty string skips the directory."""    
+    """Verify that a dirname that renders to an empty string skips the directory."""
     with pytest.raises(exceptions.EmptyDirNameException):
         generate.render_and_create_dir(
             dirname='{% if cookiecutter.include_it %}mydir{% endif %}',
