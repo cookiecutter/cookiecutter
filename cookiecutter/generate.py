@@ -267,7 +267,7 @@ def render_and_create_dir(
     environment: Environment,
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
-    """Render name of a directory, create the directory, return its path."""
+    """Render name of a directory, create the directory, return its path and if it was created."""
     if not dirname:
         msg = 'Error: directory name is empty'
         raise EmptyDirNameException(msg)
@@ -277,7 +277,7 @@ def render_and_create_dir(
 
     if not rendered_dirname:
         # directory skipped using something like {%if cond %}dirname{% endif %}
-        return None
+        return output_dir, False
 
     dir_to_create = Path(output_dir, rendered_dirname)
 
