@@ -267,7 +267,10 @@ def render_and_create_dir(
     environment: Environment,
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
-    """Render name of a directory, create the directory, return its path and if it was created."""
+    """Render name of a directory and create the directory.
+    
+    Returns its path and a bool indicating if it was created.
+    """
     if not dirname:
         msg = 'Error: directory name is empty'
         raise EmptyDirNameException(msg)
