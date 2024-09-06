@@ -280,7 +280,7 @@ def render_and_create_dir(
 
     if not rendered_dirname:
         # directory skipped using something like {%if cond %}dirname{% endif %}
-        return output_dir, False
+        return Path(output_dir), False
 
     dir_to_create = Path(output_dir, rendered_dirname)
 
