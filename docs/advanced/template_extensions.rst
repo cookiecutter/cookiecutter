@@ -102,6 +102,18 @@ Outputs:
 
     fQupUkY}W!)!
 
+The second argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
+
+.. code-block:: jinja
+
+    {{ random_ascii_string(12, number=True, punctuation=True) }}
+
+Outputs:
+
+.. code-block:: text
+
+    Q76Om4s(x!=}
+
 Slugify extension
 ~~~~~~~~~~~~~~~~~
 
