@@ -28,33 +28,25 @@ def read_user_variable(var_name: str, default_value, prompts=None, prefix: str =
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts and prompts[var_name]
-        else var_name
-    )
+    question = prompts.get(var_name, var_name) if prompts else var_name
 
-    while True:
-        variable = Prompt.ask(f"{prefix}{question}", default=default_value)
-        if variable is not None:
-            break
-
-    return variable
+    return Prompt.ask(f"{prefix}{question}", default=default_value)
 
 
 class YesNoPrompt(Confirm):
     """A prompt that returns a boolean for yes/no questions."""
 
-    yes_choices = ["1", "true", "t", "yes", "y", "on"]
-    no_choices = ["0", "false", "f", "no", "n", "off"]
+    CHOICES = {
+        True: {"1", "true", "t", "yes", "y", "on"},
+        False: {"0", "false", "f", "no", "n", "off"},
+    }
 
     def process_response(self, value: str) -> bool:
         """Convert choices to a bool."""
         value = value.strip().lower()
-        if value in self.yes_choices:
-            return True
-        if value in self.no_choices:
-            return False
+        for result, choices in self.CHOICES.items():
+            if value in choices:
+                return result
         raise InvalidResponse(self.validate_error_message)
 
 
@@ -72,11 +64,7 @@ def read_user_yes_no(var_name, default_value, prompts=None, prefix: str = ""):
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts and prompts[var_name]
-        else var_name
-    )
+    question = prompts.get(var_name, var_name) if prompts else var_name
     return YesNoPrompt.ask(f"{prefix}{question}", default=default_value)
 
 
@@ -171,21 +159,14 @@ class JsonPrompt(PromptBase[dict]):
         return process_json(value)
 
 
-def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = ""):
+def read_user_dict(var_name: str, default_value: dict, prompts=None, prefix: str = ""):
     """Prompt the user to provide a dictionary of data.
 
     :param var_name: Variable as specified in the context
     :param default_value: Value that will be returned if no input is provided
     :return: A Python dictionary to use in the context.
     """
-    if not isinstance(default_value, dict):
-        raise TypeError
-
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts and prompts[var_name]
-        else var_name
-    )
+    question = prompts.get(var_name, var_name) if prompts else var_name
     return JsonPrompt.ask(
         f"{prefix}{question} [cyan bold]({DEFAULT_DISPLAY})[/]",
         default=default_value,

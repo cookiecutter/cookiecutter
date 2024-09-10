@@ -72,15 +72,6 @@ def test_process_json_deep_dict() -> None:
     }
 
 
-def test_should_raise_type_error(mocker) -> None:
-    """Test `default_value` arg verification in `read_user_dict` function."""
-    prompt = mocker.patch('cookiecutter.prompt.JsonPrompt.ask')
-
-    with pytest.raises(TypeError):
-        read_user_dict('name', 'russell')
-    assert not prompt.called
-
-
 def test_should_call_prompt_with_process_json(mocker) -> None:
     """Test to make sure that `process_json` is actually being used.
 

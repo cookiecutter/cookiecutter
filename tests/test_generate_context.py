@@ -370,8 +370,8 @@ def test_apply_overwrites_in_nested_dict_additional_values() -> None:
 
 @pytest.mark.parametrize(
     "overwrite_value, expected",
-    [(bool_string, {'key': True}) for bool_string in YesNoPrompt.yes_choices]
-    + [(bool_string, {'key': False}) for bool_string in YesNoPrompt.no_choices],
+    [(bool_string, {'key': True}) for bool_string in YesNoPrompt.CHOICES[True]]
+    + [(bool_string, {'key': False}) for bool_string in YesNoPrompt.CHOICES[False]],
 )
 def test_apply_overwrites_overwrite_value_as_boolean_string(overwrite_value, expected):
     """Verify boolean conversion for valid overwrite values."""
