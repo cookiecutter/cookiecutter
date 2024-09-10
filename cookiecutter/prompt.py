@@ -43,9 +43,8 @@ class YesNoPrompt(Confirm):
 
     def process_response(self, value: str) -> bool:
         """Convert choices to a bool."""
-        value = value.strip().lower()
         for result, choices in self.CHOICES.items():
-            if value in choices:
+            if value.strip().lower() in choices:
                 return result
         raise InvalidResponse(self.validate_error_message)
 
