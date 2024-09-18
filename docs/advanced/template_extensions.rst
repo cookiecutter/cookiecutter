@@ -102,7 +102,13 @@ Outputs:
 
     fQupUkY}W!)!
 
-The second argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
+The second argument controls if numbers should be present in the result:
+
+...
+
+The third argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
+
+...
 
 .. code-block:: jinja
 
