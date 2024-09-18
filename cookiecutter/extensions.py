@@ -41,7 +41,7 @@ class RandomStringExtension(Extension):
         super().__init__(environment)
 
         def random_ascii_string(
-            length: int, number: bool = False, punctuation: bool = False
+            length: int, numbers: bool = False, punctuation: bool = False
         ) -> str:
             """Generate a random ASCII string.
 
