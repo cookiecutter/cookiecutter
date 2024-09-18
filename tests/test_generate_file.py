@@ -68,16 +68,16 @@ def test_generate_file_jsonify_filter(env) -> None:
 
 
 @pytest.mark.parametrize("length", (10, 40))
-@pytest.mark.parametrize("number", (True, False))
+@pytest.mark.parametrize("numbers", (True, False))
 @pytest.mark.parametrize("punctuation", (True, False))
-def test_generate_file_random_ascii_string(env, length, number, punctuation) -> None:
+def test_generate_file_random_ascii_string(env, length, numbers, punctuation) -> None:
     """Verify correct work of random_ascii_string extension on file generation."""
     infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
     data = {'random_string_file': 'cheese'}
     context = {
         "cookiecutter": data,
         "length": length,
-        "number": number,
+        "numbers": numbers,
         "punctuation": punctuation,
     }
     generate.generate_file(project_dir=".", infile=infile, context=context, env=env)

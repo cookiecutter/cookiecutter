@@ -90,19 +90,19 @@ Outputs:
 
     bIIUczoNvswh
 
-The second argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
+The second argument controls if numbers should be present in the result:
 
 .. code-block:: jinja
 
-    {{ random_ascii_string(12, punctuation=True) }}
+    {{ random_ascii_string(12, numbers=True) }}
 
 Outputs:
 
 .. code-block:: text
 
-    fQupUkY}W!)!
+    fQu4UkY12Wal9
 
-The second argument controls if numbers should be present in the result:
+The third argument controls if numbers should be present in the result:
 
 ...
 
@@ -112,7 +112,7 @@ The third argument controls if punctuation and special characters ``!"#$%&\'()*+
 
 .. code-block:: jinja
 
-    {{ random_ascii_string(12, number=True, punctuation=True) }}
+    {{ random_ascii_string(12, numbers=True, punctuation=True) }}
 
 Outputs:
 

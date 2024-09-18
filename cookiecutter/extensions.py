@@ -50,9 +50,10 @@ class RandomStringExtension(Extension):
             :param punctuation: Whether to include punctuation.
             :returns: Random ASCII string.
             """
+
             corpus = string.ascii_letters  # Start with letters
 
-            if number:
+            if numbers:
                 corpus += string.digits  # Add digits if requested
             if punctuation:
                 corpus += string.punctuation  # Add punctuation if requested
