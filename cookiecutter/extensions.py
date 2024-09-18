@@ -45,13 +45,10 @@ class RandomStringExtension(Extension):
         ) -> str:
             """Generate a random ASCII string.
 
-            Args:
-                length (int): Length of the generated string.
-                number (bool): Whether to include digits.
-                punctuation (bool): Whether to include punctuation.
-
-            Returns:
-                str: Random ASCII string.
+            :param length: Length of the generated string.
+            :param number: Whether to include digits.
+            :param punctuation: Whether to include punctuation.
+            :returns: Random ASCII string.
             """
             corpus = string.ascii_letters  # Start with letters
 
