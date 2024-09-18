@@ -90,7 +90,7 @@ Outputs:
 
     bIIUczoNvswh
 
-The second argument controls if numbers should be present in the result:
+The first argument controls the length of the result:
 
 .. code-block:: jinja
 
@@ -102,13 +102,7 @@ Outputs:
 
     fQu4UkY12Wal9
 
-The third argument controls if numbers should be present in the result:
-
-...
-
-The third argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
-
-...
+The second argument controls if numbers should be present in the result:
 
 .. code-block:: jinja
 
@@ -119,6 +113,9 @@ Outputs:
 .. code-block:: text
 
     Q76Om4s(x!=}
+
+The third argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
+
 
 Slugify extension
 ~~~~~~~~~~~~~~~~~
