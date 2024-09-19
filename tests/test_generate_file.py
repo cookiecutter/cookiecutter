@@ -85,7 +85,7 @@ def test_generate_file_random_ascii_string(env, length, numbers, punctuation) ->
     assert os.path.isfile('tests/files/cheese.txt')
     generated_text = Path('tests/files/cheese.txt').read_text()
     assert len(generated_text) == length
-    
+
     # If numbers is False,no digits should be in the text
     if not numbers:
         assert not any(
