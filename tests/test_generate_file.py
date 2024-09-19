@@ -84,20 +84,19 @@ def test_generate_file_random_ascii_string(env, length, numbers, punctuation) ->
     generate.generate_file(project_dir=".", infile=infile, context=context, env=env)
     assert os.path.isfile('tests/files/cheese.txt')
     generated_text = Path('tests/files/cheese.txt').read_text()
-
-    # If numbers is True, at least one digit should be in the text (though randomness can affect this)
+    assert len(generated_text) == length
+    
+    # If numbers is False,no digits should be in the text
     if not numbers:
         assert not any(
             char.isdigit() for char in generated_text
         ), "No numbers should be in the generated text."
 
-    # If punctuation is True, at least one punctuation character should be in the text
+    # If punctuation is False,no punctuation should be in the text
     if not punctuation:
         assert not any(
             char in string.punctuation for char in generated_text
         ), "No punctuation should be in the generated text."
-
-    assert len(generated_text) == length
 
 
 def test_generate_file_with_true_condition(env) -> None:
