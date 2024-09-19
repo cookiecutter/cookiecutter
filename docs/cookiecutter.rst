@@ -124,10 +124,10 @@ cookiecutter.vcs module
    :show-inheritance:
    :undoc-members:
 
-cookiecutter.zipfile module
+cookiecutter.zip_file module
 ---------------------------
 
-.. automodule:: cookiecutter.zipfile
+.. automodule:: cookiecutter.zip_file
    :members:
    :show-inheritance:
    :undoc-members:
