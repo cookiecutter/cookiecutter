@@ -80,6 +80,8 @@ The ``cookiecutter.extensions.RandomStringExtension`` extension provides a ``ran
 Generate a random n-size character string.
 Example for n=12:
 
+The first argument controls the length of the result:
+
 .. code-block:: jinja
 
     {{ random_ascii_string(12) }}
@@ -90,7 +92,8 @@ Outputs:
 
     bIIUczoNvswh
 
-The first argument controls the length of the result:
+
+The second argument controls if numbers should be present in the result:
 
 .. code-block:: jinja
 
@@ -102,7 +105,8 @@ Outputs:
 
     fQu4UkY12Wal9
 
-The second argument controls if numbers should be present in the result:
+
+The third argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
 
 .. code-block:: jinja
 
@@ -113,8 +117,6 @@ Outputs:
 .. code-block:: text
 
     Q76Om4s(x!=}
-
-The third argument controls if punctuation and special characters ``!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~`` should be present in the result:
 
 
 Slugify extension
