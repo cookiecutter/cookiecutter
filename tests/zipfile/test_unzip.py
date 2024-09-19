@@ -130,7 +130,7 @@ def test_unzip_protected_local_file_user_bad_password(mocker, clone_dir) -> None
         )
 
 
-def test_empty_zip_file(mocker, clone_dir) -> None:
+def test_empty_zipfile(mocker, clone_dir) -> None:
     """In `unzip()`, an empty file raises an error."""
     mocker.patch(
         'cookiecutter.zip_file.prompt_and_delete', return_value=True, autospec=True
@@ -231,9 +231,9 @@ def test_unzip_url_existing_cache(mocker, clone_dir) -> None:
         autospec=True,
     )
 
-    # Create an existing cache of the zip_file
+    # Create an existing cache of the zipfile
     existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
-    existing_zip.write_text('This is an existing zip_file')
+    existing_zip.write_text('This is an existing zipfile')
 
     output_dir = zip_file.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
@@ -256,9 +256,9 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir) -> None:
         autospec=True,
     )
 
-    # Create an existing cache of the zip_file
+    # Create an existing cache of the zipfile
     existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
-    existing_zip.write_text('This is an existing zip_file')
+    existing_zip.write_text('This is an existing zipfile')
 
     output_dir = zip_file.unzip(
         'https://example.com/path/to/fake-repo-tmpl.zip',
@@ -281,14 +281,14 @@ def test_unzip_should_abort_if_no_redownload(mocker, clone_dir) -> None:
         autospec=True,
     )
 
-    # Create an existing cache of the zip_file
+    # Create an existing cache of the zipfile
     existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
-    existing_zip.write_text('This is an existing zip_file')
+    existing_zip.write_text('This is an existing zipfile')
 
-    zip_file_url = 'https://example.com/path/to/fake-repo-tmpl.zip'
+    zipfile_url = 'https://example.com/path/to/fake-repo-tmpl.zip'
 
     with pytest.raises(SystemExit):
-        zip_file.unzip(zip_file_url, is_url=True, clone_to_dir=str(clone_dir))
+        zip_file.unzip(zipfile_url, is_url=True, clone_to_dir=str(clone_dir))
 
     assert not mock_requests_get.called
 

@@ -125,7 +125,7 @@ cookiecutter.vcs module
    :undoc-members:
 
 cookiecutter.zip_file module
----------------------------
+----------------------------
 
 .. automodule:: cookiecutter.zip_file
    :members:
