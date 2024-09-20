@@ -40,7 +40,8 @@ def test_build_templates(template, output_dir) -> None:
 
 def test_moved_templates(output_dir) -> None:
     """
-    Verify inheritance template directory traversal.
+    Verify inheritance template directory traversal via configuration
+     setting in cookiecutter.json.
     """
 
     template='moved-templates/test-app'
@@ -49,7 +50,6 @@ def test_moved_templates(output_dir) -> None:
         f'tests/test-templates/{template}',
         no_input=True,
         output_dir=output_dir,
-        inheritance_template_dir='../../new-template-dir'
     )
 
     readme = Path(project_dir, 'requirements.txt').read_text()

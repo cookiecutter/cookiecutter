@@ -41,7 +41,6 @@ def cookiecutter(
     skip_if_file_exists: bool = False,
     accept_hooks: bool = True,
     keep_project_on_failure: bool = False,
-    inheritance_template_dir: str | None = None,
 ) -> str:
     """
     Run Cookiecutter just as if using it from the command line.
@@ -69,7 +68,6 @@ def cookiecutter(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
-    :param inheritance_template_dir: Optionally override the default templates directory used for inheritance
     """
     if replay and ((no_input is not False) or (extra_context is not None)):
         err_msg = (
@@ -160,7 +158,6 @@ def cookiecutter(
                 skip_if_file_exists=skip_if_file_exists,
                 accept_hooks=accept_hooks,
                 keep_project_on_failure=keep_project_on_failure,
-                inheritance_template_dir=inheritance_template_dir,
             )
         if context_for_prompting['cookiecutter']:
             context['cookiecutter'].update(
@@ -193,7 +190,6 @@ def cookiecutter(
             output_dir=output_dir,
             accept_hooks=accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
-            inheritance_template_dir=inheritance_template_dir,
         )
 
     # Cleanup (if required)

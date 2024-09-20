@@ -125,7 +125,6 @@ def test_cli_replay(mocker, cli_runner) -> None:
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -153,7 +152,6 @@ def test_cli_replay_file(mocker, cli_runner) -> None:
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -206,7 +204,6 @@ def test_cli_exit_on_noinput_and_replay(mocker, cli_runner) -> None:
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -243,7 +240,6 @@ def test_run_cookiecutter_on_overwrite_if_exists_and_replay(
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -303,7 +299,6 @@ def test_cli_output_dir(mocker, cli_runner, output_dir_flag, output_dir) -> None
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -349,7 +344,6 @@ def test_user_config(mocker, cli_runner, user_config_path) -> None:
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -381,7 +375,6 @@ def test_default_user_config_overwrite(mocker, cli_runner, user_config_path) -> 
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -408,7 +401,6 @@ def test_default_user_config(mocker, cli_runner) -> None:
         directory=None,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -681,42 +673,7 @@ def test_cli_accept_hooks(
         skip_if_file_exists=False,
         accept_hooks=expected,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
-
-@pytest.mark.usefixtures('remove_fake_project_dir')
-def test_inheritance_template_directory(mocker, cli_runner) -> None:
-    """Test cli invocation works with `inheritence-template-dir` option."""
-
-    mock_cookiecutter = mocker.patch("cookiecutter.cli.cookiecutter")
-    template_path='tests/fake-repo-dir/'
-
-    inheritance_template_dir='../../my-dir'
-
-    result = cli_runner(
-        template_path,
-        f'--inheritance-template-dir={inheritance_template_dir}',
-    )
-
-    assert result.exit_code == 0
-    mock_cookiecutter.assert_called_once_with(
-        template_path,
-        None,
-        False,
-        replay=False,
-        overwrite_if_exists=False,
-        output_dir='.',
-        config_file=None,
-        default_config=False,
-        extra_context=None,
-        password=None,
-        directory=None,
-        skip_if_file_exists=False,
-        accept_hooks=True,
-        keep_project_on_failure=False,
-        inheritance_template_dir=inheritance_template_dir,
-    )
-
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_with_json_decoding_error(cli_runner) -> None:

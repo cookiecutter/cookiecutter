@@ -33,6 +33,6 @@ and the path should be relative from the `templates` folder like ::
 
 The template target directory defaults to `../templates`, which is a path relative to the project
 directory. It's possible to override the default directory by passing 
-a new path using `--inheritance-templates-dir`` on the CLI. 
+a new path in the `_inheritance_template_dir` key in cookiecutter.json.
 
 see more on https://jinja.palletsprojects.com/en/2.11.x/templates/

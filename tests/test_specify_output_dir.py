@@ -59,7 +59,6 @@ def test_api_invocation(mocker, template, output_dir, context) -> None:
         output_dir=output_dir,
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
 
 
@@ -77,5 +76,4 @@ def test_default_output_dir(mocker, template, context) -> None:
         output_dir='.',
         accept_hooks=True,
         keep_project_on_failure=False,
-        inheritance_template_dir=None,
     )
