@@ -384,8 +384,7 @@ def generate_files(
 
     with work_in(template_dir):
         inheritance_template_dir = context['cookiecutter'].get(
-            '_inheritance_template_dir', 
-            '../templates'
+            '_inheritance_template_dir', '../templates'
         )
         logger.debug('Inheritance template directory is %s', inheritance_template_dir)
         env.loader = FileSystemLoader(['.', inheritance_template_dir])

@@ -675,6 +675,7 @@ def test_cli_accept_hooks(
         keep_project_on_failure=False,
     )
 
+
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_with_json_decoding_error(cli_runner) -> None:
     """Test cli invocation with a malformed JSON file."""
