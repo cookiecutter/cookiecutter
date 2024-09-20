@@ -1,8 +1,7 @@
 """
-test_custom_extension_in_hooks.
+test_templates.
 
-Tests to ensure custom cookiecutter extensions are properly made available to
-pre- and post-gen hooks.
+Tests to ensure inheritence templates are properly accessed and consumed.
 """
 
 from pathlib import Path
@@ -29,6 +28,28 @@ def test_build_templates(template, output_dir) -> None:
         f'tests/test-templates/{template}',
         no_input=True,
         output_dir=output_dir,
+    )
+
+    readme = Path(project_dir, 'requirements.txt').read_text()
+
+    assert readme.split() == [
+        "pip",
+        "Click",
+        "pytest",
+    ]
+
+def test_moved_templates(output_dir) -> None:
+    """
+    Verify inheritance template directory traversal.
+    """
+
+    template='moved-templates/test-app'
+
+    project_dir = main.cookiecutter(
+        f'tests/test-templates/{template}',
+        no_input=True,
+        output_dir=output_dir,
+        inheritance_template_dir='../../new-template-dir'
     )
 
     readme = Path(project_dir, 'requirements.txt').read_text()

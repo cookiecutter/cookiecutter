@@ -168,6 +168,11 @@ def list_installed_templates(
     is_flag=True,
     help='Do not delete project folder on failure',
 )
+@click.option(
+    '--inheritance-template-dir',
+    default=None,
+    help='Select a non-default inheritance templates directory'
+)
 def main(
     template: str,
     extra_context: dict[str, Any],
@@ -186,6 +191,7 @@ def main(
     replay_file: str | None,
     list_installed: bool,
     keep_project_on_failure: bool,
+    inheritance_template_dir: str | None
 ) -> None:
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -231,6 +237,7 @@ def main(
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            inheritance_template_dir=inheritance_template_dir,
         )
     except (
         ContextDecodingException,
