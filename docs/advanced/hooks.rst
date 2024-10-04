@@ -108,11 +108,12 @@ A ``pre_gen_project`` hook can validate template variables. The following script
 
 **Conditional File/Directory Removal:**
 
-A ``post_gen_project`` hook can conditionally control files and directories. The example below removes unnecessary files based on the selected packaging option.
+A ``post_gen_project`` hook can conditionally control files and directories. The example below removes unnecessary files and directories based on the selected packaging option.
 
 .. code-block:: python
 
     import os
+    import shutil
 
     REMOVE_PATHS = [
         '{% if cookiecutter.packaging != "pip" %}requirements.txt{% endif %}',
@@ -122,4 +123,4 @@ A ``post_gen_project`` hook can conditionally control files and directories. The
     for path in REMOVE_PATHS:
         path = path.strip()
         if path and os.path.exists(path):
-            os.unlink(path) if os.path.isfile(path) else os.rmdir(path)
+            os.unlink(path) if os.path.isfile(path) else shutil.rmtree(path, ignore_errors=True)
