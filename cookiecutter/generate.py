@@ -253,7 +253,7 @@ def generate_file(
 
     logger.debug('Writing contents to file %s', outfile)
 
-    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:  # noqa: FURB103 (false positive for python < 3.10)
+    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
         fh.write(rendered_file)
 
     # Apply file permissions to output file
