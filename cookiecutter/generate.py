@@ -173,8 +173,8 @@ def generate_context(
 
 
 def generate_file(
-    project_dir: str,
-    infile: str,
+    project_dir: Path | str,
+    infile: Path | str,
     context: dict[str, Any],
     env: Environment,
     skip_if_file_exists: bool = False,
@@ -186,6 +186,8 @@ def generate_file(
         a. If infile is a binary file, copy it over without rendering.
         b. If infile is a text file, render its contents and write the
            rendered infile to outfile.
+        c. If infile contains path segments that template expand to an empty string
+           do not include in output.
 
     Precondition:
 
@@ -201,36 +203,50 @@ def generate_file(
     """
     logger.debug('Processing file %s', infile)
 
+    project_dir = Path(project_dir).absolute()
+    infile = Path(infile)
+
     # Render the path to the output file (not including the root project dir)
-    outfile_tmpl = env.from_string(infile)
+    outfile_tmpl = env.from_string(str(infile))
+    out_tmpl_path = project_dir / infile
 
-    outfile = os.path.join(project_dir, outfile_tmpl.render(**context))
-    file_name_is_empty = os.path.isdir(outfile)
-    if file_name_is_empty:
-        logger.debug('The resulting file name is empty: %s', outfile)
+    rendered_relative_path = Path(outfile_tmpl.render(**context))
+
+    # valid relative paths shouldn't have an anchor, only present if a template
+    # removed the first path segment.
+    if len(rendered_relative_path.anchor) > 0:
+        logger.debug('The file is in a template removed directory: %s', infile)
         return
 
-    if skip_if_file_exists and os.path.exists(outfile):
-        logger.debug('The resulting file already exists: %s', outfile)
+    outpath = (project_dir / rendered_relative_path).absolute()
+
+    if outpath.is_dir():
+        logger.debug('The resulting file name is empty: %s', outpath)
         return
 
-    logger.debug('Created file at %s', outfile)
+    if len(outpath.parts) < len(out_tmpl_path.parts):
+        logger.debug('The file is in a template removed directory: %s', infile)
+        return
+
+    if skip_if_file_exists and outpath.exists():
+        logger.debug('The resulting file already exists: %s', outpath)
+        return
+
+    logger.debug('Creating file at %s', outpath)
 
     # Just copy over binary files. Don't render.
     logger.debug("Check %s to see if it's a binary", infile)
-    if is_binary(infile):
-        logger.debug('Copying binary %s to %s without rendering', infile, outfile)
-        shutil.copyfile(infile, outfile)
-        shutil.copymode(infile, outfile)
+    if is_binary(str(infile)):
+        logger.debug('Copying binary %s to %s without rendering', infile, outpath)
+        shutil.copyfile(infile, outpath)
+        shutil.copymode(infile, outpath)
         return
-
-    # Force fwd slashes on Windows for get_template
-    # This is a by-design Jinja issue
-    infile_fwd_slashes = infile.replace(os.path.sep, '/')
 
     # Render the file
     try:
-        tmpl = env.get_template(infile_fwd_slashes)
+        # Force fwd slashes on Windows for get_template
+        # This is a by-design Jinja issue
+        tmpl = env.get_template(infile.as_posix())
     except TemplateSyntaxError as exception:
         # Disable translated so that printed exception contains verbose
         # information about syntax error location
@@ -251,31 +267,55 @@ def generate_file(
         newline = rd.newlines[0] if isinstance(rd.newlines, tuple) else rd.newlines
         logger.debug('Using detected newline character %s', repr(newline))
 
-    logger.debug('Writing contents to file %s', outfile)
+    logger.debug('Writing contents to file %s', outpath)
 
-    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:  # noqa: FURB103 (false positive for python < 3.10)
+    with outpath.open(
+        'w', encoding='utf-8', newline=newline
+    ) as fh:  # (false positive for python < 3.10)
         fh.write(rendered_file)
 
     # Apply file permissions to output file
-    shutil.copymode(infile, outfile)
+    shutil.copymode(infile, outpath)
 
 
 def render_and_create_dir(
-    dirname: str,
+    dirname: Path | str,
     context: dict[str, Any],
     output_dir: Path | str,
     environment: Environment,
     overwrite_if_exists: bool = False,
 ) -> tuple[Path, bool]:
-    """Render name of a directory, create the directory, return its path."""
-    if not dirname or dirname == "":
-        msg = 'Error: directory name is empty'
+    """Render name of a directory and create the directory.
+
+    Returns its path and a bool indicating if it was created.
+
+    Directories containing segments that template expand to an
+    empty string are not created.
+    """
+
+    output_dir = Path(output_dir).absolute()
+    dirname = Path(output_dir, dirname).absolute()
+
+    if dirname == output_dir:
+        msg = 'Error: directory name resolves to output dir'
         raise EmptyDirNameException(msg)
 
-    name_tmpl = environment.from_string(dirname)
+    name_tmpl = environment.from_string(str(dirname))
     rendered_dirname = name_tmpl.render(**context)
 
     dir_to_create = Path(output_dir, rendered_dirname)
+
+    dir_parts = dirname.parts
+    rendered_parts = dir_to_create.parts
+
+    if len(rendered_parts) < len(dir_parts):
+        # directory skipped, eg using conditional expression such as
+        # '{%if cond %}dirname{% endif %}'
+        logger.debug(
+            'Directory contains a path segment that expands to an empty string: %s',
+            dirname,
+        )
+        return dirname, False
 
     logger.debug(
         'Rendered dir %s must exist in output_dir %s', dir_to_create, output_dir
@@ -289,7 +329,8 @@ def render_and_create_dir(
                 'Output directory %s already exists, overwriting it', dir_to_create
             )
         else:
-            msg = f'Error: "{dir_to_create}" directory already exists'
+            msg_dir = dir_to_create.relative_to(output_dir)
+            msg = f'Error: "{msg_dir}" directory already exists'
             raise OutputDirExistsException(msg)
     else:
         make_sure_path_exists(dir_to_create)
@@ -419,12 +460,15 @@ def generate_files(
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively
             dirs[:] = render_dirs
+
             for d in dirs:
                 unrendered_dir = os.path.join(project_dir, root, d)
+
                 try:
                     render_and_create_dir(
                         unrendered_dir, context, output_dir, env, overwrite_if_exists
                     )
+
                 except UndefinedError as err:
                     if delete_project_on_failure:
                         rmtree(project_dir)

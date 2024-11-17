@@ -1,0 +1,38 @@
+{
+  "include_root_file": [
+    true,
+    false
+  ],
+  "include_root_folder": [
+    true,
+    false
+  ],
+  "include_single_nested_file": [
+    true,
+    false
+  ],
+  "include_single_nested_folder": [
+    true,
+    false
+  ],
+  "include_double_nested_file": [
+    true,
+    false
+  ],
+  "include_double_nested_folder": [
+    true,
+    false
+  ],
+  "include_triple_nested_file": [
+    true,
+    false
+  ],
+  "root_file": "{% if cookiecutter.include_root_file %}root_file{% endif %}",
+  "root_folder": "{% if cookiecutter.include_root_folder %}root_folder{% endif %}",
+  "single_nested_file": "{% if cookiecutter.include_single_nested_file %}single_nested_file{% endif %}",
+  "single_nested_folder": "{% if cookiecutter.include_single_nested_folder %}single_nested_folder{% endif %}",
+  "double_nested_file": "{% if cookiecutter.include_double_nested_file %}double_nested_file{% endif %}",
+  "double_nested_folder": "{% if cookiecutter.include_double_nested_folder %}double_nested_folder{% endif %}",
+  "triple_nested_file": "{% if cookiecutter.include_triple_nested_file %}triple_nested_file{% endif %}",
+  "project_slug": "project"
+}
