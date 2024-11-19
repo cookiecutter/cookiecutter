@@ -119,6 +119,7 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file) -> None:
 
 
 def test_patch_import_path_for_repo():
+    """Test the _patch_import_path_for_repo context manager."""
     original_sys_path = sys.path[:]
     repo_dir = '/fake/repo/path'
 
