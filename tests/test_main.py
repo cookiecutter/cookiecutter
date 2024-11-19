@@ -1,11 +1,8 @@
 """Collection of tests around cookiecutter's replay feature."""
 
-import sys 
+import sys
 
-from cookiecutter.main import cookiecutter
-
-from cookiecutter.main import _patch_import_path_for_repo
-
+from cookiecutter.main import _patch_import_path_for_repo, cookiecutter
 
 
 def test_original_cookiecutter_options_preserved_in__cookiecutter(
@@ -120,6 +117,7 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file) -> None:
         'custom-replay-file',
     )
 
+
 def test_patch_import_path_for_repo():
     """Test the _patch_import_path_for_repo context manager."""
     original_sys_path = sys.path[:]
@@ -129,5 +127,3 @@ def test_patch_import_path_for_repo():
         assert sys.path[-1] == repo_dir
 
     assert sys.path == original_sys_path
-
-
