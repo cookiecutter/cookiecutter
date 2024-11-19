@@ -123,9 +123,11 @@ def test_patch_import_path_for_repo():
     repo_dir = '/fake/repo/path'
 
     patch = _patch_import_path_for_repo(repo_dir)
-
     patch.__enter__()
     assert sys.path[-1] == repo_dir
+    patch.__exit__(None, None, None)
+    assert sys.path == original_sys_path
 
+    patch = _patch_import_path_for_repo(repo_dir)
     patch.__exit__(None, None, None)
     assert sys.path == original_sys_path
