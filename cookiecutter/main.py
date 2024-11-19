@@ -203,12 +203,12 @@ def cookiecutter(
 class _patch_import_path_for_repo:  # noqa: N801
     def __init__(self, repo_dir: Path | str) -> None:
         self._repo_dir = f"{repo_dir}" if isinstance(repo_dir, Path) else repo_dir
-        self._path = None  # Intialize _path to None
+        self._path: list[str] | None = None  # Intialize _path to None
 
     def __enter__(self) -> None:
         self._path = copy(sys.path)
         sys.path.append(self._repo_dir)
 
-    def __exit__(self, _type, _value, _traceback):  # type: ignore[no-untyped-def]
+    def __exit__(self, _type, _value, _traceback) -> None:  # type: ignore[no-untyped-def]
         if self._path is not None:  # Check if _path is initialized
             sys.path = self._path
