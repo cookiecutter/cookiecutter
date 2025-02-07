@@ -87,20 +87,19 @@ def apply_overwrites_to_context(
                         f"{variable}, but valid choices are {context_value}"
                     )
                     raise ValueError(msg)
+            # We are dealing with a choice variable
+            elif overwrite in context_value:
+                # This overwrite is actually valid for the given context
+                # Let's set it as default (by definition first item in list)
+                # see ``cookiecutter.prompt.prompt_choice_for_config``
+                context_value.remove(overwrite)
+                context_value.insert(0, overwrite)
             else:
-                # We are dealing with a choice variable
-                if overwrite in context_value:
-                    # This overwrite is actually valid for the given context
-                    # Let's set it as default (by definition first item in list)
-                    # see ``cookiecutter.prompt.prompt_choice_for_config``
-                    context_value.remove(overwrite)
-                    context_value.insert(0, overwrite)
-                else:
-                    msg = (
-                        f"{overwrite} provided for choice variable "
-                        f"{variable}, but the choices are {context_value}."
-                    )
-                    raise ValueError(msg)
+                msg = (
+                    f"{overwrite} provided for choice variable "
+                    f"{variable}, but the choices are {context_value}."
+                )
+                raise ValueError(msg)
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
             apply_overwrites_to_context(
@@ -253,7 +252,7 @@ def generate_file(
 
     logger.debug('Writing contents to file %s', outfile)
 
-    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:  # noqa: FURB103 (false positive for python < 3.10)
+    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
         fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -428,8 +427,8 @@ def generate_files(
                 except UndefinedError as err:
                     if delete_project_on_failure:
                         rmtree(project_dir)
-                    _dir = os.path.relpath(unrendered_dir, output_dir)
-                    msg = f"Unable to create directory '{_dir}'"
+                    dir_ = os.path.relpath(unrendered_dir, output_dir)
+                    msg = f"Unable to create directory '{dir_}'"
                     raise UndefinedVariableInTemplate(msg, err, context) from err
 
             for f in files:
