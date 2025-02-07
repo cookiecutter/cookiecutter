@@ -208,9 +208,9 @@ def main(
     # If needed, prompt the user to ask whether or not they want to execute
     # the pre/post hooks.
     if accept_hooks == "ask":
-        _accept_hooks = click.confirm("Do you want to execute hooks?")
+        accept_hooks_ = click.confirm("Do you want to execute hooks?")
     else:
-        _accept_hooks = accept_hooks == "yes"
+        accept_hooks_ = accept_hooks == "yes"
 
     if replay_file:
         replay = replay_file
@@ -229,7 +229,7 @@ def main(
             password=os.environ.get('COOKIECUTTER_REPO_PASSWORD'),
             directory=directory,
             skip_if_file_exists=skip_if_file_exists,
-            accept_hooks=_accept_hooks,
+            accept_hooks=accept_hooks_,
             keep_project_on_failure=keep_project_on_failure,
         )
     except (

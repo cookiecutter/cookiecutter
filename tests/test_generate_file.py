@@ -120,9 +120,9 @@ def test_generate_file_with_false_condition(env) -> None:
 def expected_msg_regex():
     """Fixture. Used to ensure that exception generated text contain full data."""
     return re.compile(
-        'Missing end of comment tag\n'
-        ' {2}File "(.[/\\\\])*tests[/\\\\]files[/\\\\]syntax_error.txt", line 1\n'
-        ' {4}I eat {{ syntax_error }} {# this comment is not closed}'
+        r'Missing end of comment tag\n'
+        r' {2}File "(.[/\\])*tests[/\\]files[/\\]syntax_error.txt", line 1\n'
+        r' {4}I eat {{ syntax_error }} {# this comment is not closed}'
     )
 
 
