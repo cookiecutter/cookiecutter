@@ -45,6 +45,7 @@ select = [
     "PGH",  # pygrep-hooks
     "PIE",  # flake8-pie
     #    "PL",     # pylint
+    "PLE",  # pylint errors
     #    "PT",     # flake8-pytest-style
     #    "PTH",    # flake8-use-pathlib
     #    "PYI",    # flake8-pyi
