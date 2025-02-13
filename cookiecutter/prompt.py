@@ -243,6 +243,7 @@ def render_variable(
 
     return rendered_value
 
+
 def _prompts_from_options(options: dict) -> dict:
     """Process template options and return friendly prompt information."""
     prompts = {"__prompt__": "Select a template"}
