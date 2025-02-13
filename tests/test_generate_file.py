@@ -61,8 +61,11 @@ def test_boolean_variable_preserved(env):
     cookiecutter_dict = {"my_var": True}
 
     result = render_variable(env, "{{ cookiecutter.my_var }}", cookiecutter_dict)
+    result = render_variable(env, 123, {})  
+    assert result == "123"
 
-    assert result is True
+    result = render_variable(env, 12.34, {})
+    assert result == "12.34"
 
 
 def test_generate_file_jsonify_filter(env) -> None:

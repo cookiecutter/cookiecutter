@@ -231,9 +231,6 @@ def render_variable(
     if not isinstance(raw, str):
         raw = str(raw)
 
-    if not isinstance(raw, (str, bool)):
-        raw = str(raw)
-
     template = env.from_string(raw)
 
     rendered_value = template.render(cookiecutter=cookiecutter_dict)
