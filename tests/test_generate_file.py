@@ -61,7 +61,7 @@ def test_boolean_variable_preserved(env):
     cookiecutter_dict = {"my_var": True}
 
     result = render_variable(env, "{{ cookiecutter.my_var }}", cookiecutter_dict)
-    
+
     assert result is True
 
 
