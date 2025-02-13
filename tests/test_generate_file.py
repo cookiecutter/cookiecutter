@@ -11,7 +11,7 @@ from jinja2.exceptions import TemplateSyntaxError
 
 from cookiecutter import generate
 from cookiecutter.environment import StrictEnvironment
-
+from cookiecutter.prompt import render_variable
 
 @pytest.fixture(scope='function', autouse=True)
 def tear_down():
@@ -54,6 +54,13 @@ def test_generate_file(env) -> None:
     generated_text = Path('tests/files/cheese.txt').read_text()
     assert generated_text == 'Testing cheese'
 
+def test_boolean_variable_preserved(env):
+    """Ensure booleans in cookiecutter.json remain booleans when rendered in Jinja2."""
+    cookiecutter_dict = {"my_var": True}
+
+    result = render_variable(env, "{{ cookiecutter.my_var }}", cookiecutter_dict)
+
+    assert result is True
 
 def test_generate_file_jsonify_filter(env) -> None:
     """Verify jsonify filter works during files generation process."""
