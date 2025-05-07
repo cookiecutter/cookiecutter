@@ -413,5 +413,4 @@ def test_get_osenv_variables():
     context = generate.generate_context(
         context_file='tests/test-generate-context/test.json'
     )
-    print(context)
     assert context['test']['test2'] == 'test'

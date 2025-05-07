@@ -107,4 +107,6 @@ def create_env_with_context(context: dict[str, Any]) -> StrictEnvironment:
 
 def get_cookiecutter_osenv() -> dict[str, str]:
     """Create dict with env variables"""
+    if os.name == 'nt':
+        return {k[3:].lower(): v for k, v in os.environ.items() if k.startswith('CC')}
     return {k[3:]: v for k, v in os.environ.items() if k.startswith('CC')}
