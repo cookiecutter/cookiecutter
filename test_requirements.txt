@@ -5,3 +5,6 @@ freezegun
 safety
 pre-commit
 tox
+binaryornot
+arrow
+python-slugify

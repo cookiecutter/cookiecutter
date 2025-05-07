@@ -14,6 +14,15 @@ from cookiecutter.exceptions import ContextDecodingException
 from cookiecutter.prompt import YesNoPrompt
 
 
+@pytest.fixture
+def set_environ(request):
+    for k, v in request.param.items():
+        os.environ[k] = v
+    yield
+    for k in request.param:
+        del os.environ[k]
+
+
 def context_data() -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
     """Generate pytest parametrization variables for test.
 
@@ -387,3 +396,22 @@ def test_apply_overwrites_error_overwrite_value_as_boolean_string():
     overwrite_context = {'key': 'invalid'}
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(context, overwrite_context)
+
+
+@pytest.mark.usefixtures('clean_system')
+@pytest.mark.parametrize(
+    'set_environ',
+    [
+        {
+            'CC_test2': "test",
+        }
+    ],
+    indirect=True,
+)
+@pytest.mark.usefixtures("set_environ")
+def test_get_osenv_variables():
+    context = generate.generate_context(
+        context_file='tests/test-generate-context/test.json'
+    )
+    print(context)
+    assert context['test']['test2'] == 'test'
