@@ -20,7 +20,9 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5.0.0
         with:
-          projectKey: jabegel_cookiecutter
-          organization: jabegel
+          projectBaseDir: .
+          args: >
+            -Dsonar.projectKey=jabegel_cookiecutter
+            -Dsonar.organization=jabegel
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
