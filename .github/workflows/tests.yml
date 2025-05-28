@@ -43,11 +43,15 @@ jobs:
           - "3.10"
           - "3.11"
           - "3.12"
+          - "3.13"
         include:
           - os: ubuntu-latest
             python: "3.8"
           - os: ubuntu-latest
             python: "3.9"
+        exclude:
+          - os: macos-latest
+            python: "3.13"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python }}
