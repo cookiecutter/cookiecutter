@@ -75,6 +75,7 @@ def determine_repo_dir(
     no_input: bool,
     password: str | None = None,
     directory: str | None = None,
+    skip_download: bool = False,
 ) -> tuple[str, bool]:
     """
     Locate the repository directory from a template reference.
@@ -99,6 +100,8 @@ def determine_repo_dir(
     :raises: `RepositoryNotFound` if a repository directory could not be found.
     """
     template = expand_abbreviations(template, abbreviations)
+    local_repo_path = os.path.join(clone_to_dir, template)
+
 
     if is_zip_file(template):
         unzipped_dir = unzip(
@@ -111,6 +114,11 @@ def determine_repo_dir(
         repository_candidates = [unzipped_dir]
         cleanup = True
     elif is_repo_url(template):
+        template_dir = os.path.join(clone_to_dir, os.path.basename(template))
+        # If the user asked to skip downloading and the folder exists
+        if skip_download and os.path.exists(template_dir):
+            return template_dir, False
+        # Otherwise, clone it as usual
         cloned_repo = clone(
             repo_url=template,
             checkout=checkout,
