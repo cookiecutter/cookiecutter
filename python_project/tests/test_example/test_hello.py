@@ -1,6 +1,6 @@
 """Tests for hello function."""
-import pytest
 
+import pytest
 from python_project.example import hello
 
 

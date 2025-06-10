@@ -90,7 +90,6 @@ def cookiecutter(
         password=password,
         directory=directory,
         skip_download=skip_download,
-
     )
     repo_dir, cleanup = base_repo_dir, cleanup_base_repo_dir
     # Run pre_prompt hook

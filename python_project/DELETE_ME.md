@@ -12,7 +12,7 @@
 cd python-project && git init
 ```
 
-2. If you don't have `Poetry`. 
+2. If you don't have `Poetry`.
 
 Conda environment is is recommended.
 
@@ -75,7 +75,7 @@ When you create this repository, you have already set up the following bots, so 
 
 ### 1.3. Poetry
 
-This project use Poetry to manage dependencies. Poetry is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you. 
+This project use Poetry to manage dependencies. Poetry is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.
 
 Want to know more about Poetry? Check [its documentation](https://python-poetry.org/docs/).
 

@@ -39,7 +39,7 @@ check-codestyle:
 
 
 
-lint: test check-codestyle 
+lint: test check-codestyle
 
 # Example: make docker-build VERSION=latest
 # Example: make docker-build IMAGE=some_name VERSION=0.1.0

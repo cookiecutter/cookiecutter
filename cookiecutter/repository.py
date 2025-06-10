@@ -102,7 +102,6 @@ def determine_repo_dir(
     template = expand_abbreviations(template, abbreviations)
     local_repo_path = os.path.join(clone_to_dir, template)
 
-
     if is_zip_file(template):
         unzipped_dir = unzip(
             zip_uri=template,

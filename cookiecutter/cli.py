@@ -171,9 +171,8 @@ def list_installed_templates(
 @click.option(
     '--skip-download',
     is_flag=True,
-    help='Skip downloading the template if it already exists locally.'
+    help='Skip downloading the template if it already exists locally.',
 )
-
 def main(
     template: str,
     extra_context: dict[str, Any],
