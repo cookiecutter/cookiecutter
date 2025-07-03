@@ -76,9 +76,7 @@ def unzip(
             # the archive. If it isn't a directory, there's a problem.
             first_filename = zip_file.namelist()[0]
             if not first_filename.endswith('/'):
-                msg = (
-                    f"Zip repository {zip_uri} does not include a top-level directory"
-                )
+                msg = f"Zip repository {zip_uri} does not include a top-level directory"
                 raise InvalidZipRepository(msg)
 
             # Construct the final target directory
