@@ -1,0 +1,19 @@
+{
+	"name": "cookiecutter",
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.9-bookworm",
+	"features": {},
+	"postCreateCommand": "pip3 install --user -r test_requirements.txt;pip3 install --user -e .",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+        "charliermarsh.ruff",
+				"hbenl.vscode-test-explorer",
+				"ms-python.mypy-type-checker",
+				"ms-python.python",
+				"redhat.vscode-yaml",
+				"tamasfe.even-better-toml"
+			]
+		}
+	},
+	"forwardPorts": [8080]
+}
