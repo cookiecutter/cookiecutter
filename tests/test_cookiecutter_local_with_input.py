@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from cookiecutter import main, utils
+from cookiecutter import main
 
 
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')

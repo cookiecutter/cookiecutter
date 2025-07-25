@@ -211,6 +211,8 @@ def clone_dir(tmp_path: Path) -> Path:
     clone_dir = tmp_path.joinpath("clone_dir")
     clone_dir.mkdir()
     return clone_dir
+
+
 @pytest.fixture(scope='function')
 def remove_additional_dirs():
     """Remove special directories which are created during the tests."""
@@ -221,7 +223,7 @@ def remove_additional_dirs():
         'fake-project-templated',
         'fake-project-dict',
         'fake-project-input-extra',
-        'fake-tmp'
+        'fake-tmp',
     ]:
         if os.path.isdir(folder):
             utils.rmtree(folder)

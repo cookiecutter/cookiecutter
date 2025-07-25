@@ -10,7 +10,8 @@ from pathlib import Path
 
 import pytest
 
-from cookiecutter import main, utils
+from cookiecutter import main
+
 
 @pytest.mark.parametrize('path', ['tests/fake-repo-pre/', 'tests/fake-repo-pre'])
 @pytest.mark.usefixtures('clean_system', 'remove_additional_dirs')
