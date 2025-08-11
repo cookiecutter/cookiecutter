@@ -122,7 +122,7 @@ def expected_msg_regex():
     return re.compile(
         'Missing end of comment tag\n'
         ' {2}File "(.[/\\\\])*tests[/\\\\]files[/\\\\]syntax_error.txt", line 1\n'
-        ' {4}I eat {{ syntax_error }} {# this comment is not closed}'
+        r' {4}I eat {{ syntax_error }} {# this comment is not closed}'
     )
 
 

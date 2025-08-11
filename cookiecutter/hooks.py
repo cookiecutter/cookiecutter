@@ -170,8 +170,7 @@ def run_hook_from_repo_dir(
             if delete_project_on_failure:
                 rmtree(project_dir)
             logger.exception(
-                "Stopping generation because %s hook "
-                "script didn't exit successfully",
+                "Stopping generation because %s hook script didn't exit successfully",
                 hook_name,
             )
             raise
