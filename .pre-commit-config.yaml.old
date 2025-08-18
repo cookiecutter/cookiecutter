@@ -1,0 +1,79 @@
+---
+repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
+  - repo: https://github.com/PyCQA/doc8
+    rev: v1.1.1
+    hooks:
+      - id: doc8
+        name: doc8
+        description: This hook runs doc8 for linting docs.
+        entry: python -m doc8
+        language: python
+        files: \.rst$
+        require_serial: true
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        name: "Enforce LF newlines on most files"
+        args:
+          - "--fix=lf"
+        # Exclude files with "crlf" in their names.
+        exclude: "crlf"
+      - id: mixed-line-ending
+        name: "Enforce CRLF newlines on files named '*crlf*'"
+        args:
+          - "--fix=crlf"
+        files: "crlf"
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: pretty-format-json
+        args:
+          - "--autofix"
+          - "--indent=2"
+          - "--no-sort-keys"
+          - "--no-ensure-ascii"
+        exclude: "invalid-syntax.json|tests/fake-repo-bad-json/cookiecutter.json|tests/fake-repo/cookiecutter.json"
+      - id: check-toml
+      - id: check-xml
+      - id: check-yaml
+        exclude: "not_rendered.yml|invalid-config.yaml|invalid-config-w-multiple-docs.yaml"
+
+  - repo: https://github.com/mgedmin/check-manifest
+    rev: "0.49"
+    hooks:
+      - id: check-manifest
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.0
+    hooks:
+      - id: ruff
+        args: [--fix, --preview]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.10.1"
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - arrow
+          - rich
+          - jinja2
+          - click
+          - pytest
+          - python-slugify
+          - types-PyYAML
+          - types-requests
+        pass_filenames: false
