@@ -67,7 +67,6 @@ test = [
     "freezegun",
     "safety",
     "ruff"
-
 ]
 
 [tool.pytest.ini_options]
