@@ -37,8 +37,8 @@ setup(
     ),
     long_description=readme,
     long_description_content_type='text/markdown',
-    author='Audrey Feldroy',
-    author_email='audreyr@gmail.com',
+    author='Audrey Roy Greenfeld',
+    author_email='audrey@feldroy.com',
     url='https://github.com/cookiecutter/cookiecutter',
     project_urls={
         "Documentation": "https://cookiecutter.readthedocs.io",
