@@ -63,7 +63,7 @@ jobs:
       - *setup_uv
       - *install_just
       - name: Lint Checking • macOS (via just, uv, ruff)
-        run: just lint
+        run: just lint-check
 #   type-check:
 #     name: Type Checking • macOS (via just, uv, ty)
 #     runs-on: macos-latest
@@ -79,7 +79,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-    name: Tests on Python versions 3.10–>3.13 • "${{ matrix.os }}" (via just, uv, pytest, pytest-pretty)
+    name: Tests on Python versions 3.9–>3.13 • "${{ matrix.os }}" (via just, uv, pytest, pytest-pretty)
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps:
