@@ -3,6 +3,13 @@
 Nested configuration files
 --------------------------
 
+*New in Cookiecutter 2.7.0*
+
+Templates inheritance introduced in Cookiecutter 2.2 now works with nested configuration
+files seamlessly. All ``templates`` directories walking up the tree of nested
+configurations are accessible to their children. This allows for shared assets between
+different configurations.
+
 *New in Cookiecutter 2.5.0*
 
 If you wish to create a hierarchy of templates and use cookiecutter to choose among them,
