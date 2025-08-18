@@ -67,7 +67,6 @@ test = [
     "pytest-mock",
     "freezegun",
     "safety",
-    "pre-commit",
 ]
 
 lint = ["ruff"]  # Linting and formatting
