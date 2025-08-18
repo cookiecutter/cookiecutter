@@ -7,4 +7,4 @@ test-all:
     uv run --python=3.12 --isolated --group test -- pytest
 
 lint:
-    uv run --python=3.8 --isolated --group lint -- ruff check --no-fix .    
+    uv run --python=3.12 --isolated --group lint -- ruff check --no-fix .    
