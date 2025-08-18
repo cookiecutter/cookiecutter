@@ -56,8 +56,9 @@ cookiecutter = "cookiecutter.__main__:main"
 
 [dependency-groups]
 dev = [
-    "rust-just>=1.42.3",  # Justfile tasks
-    { include-group = "test" },     # test runner and helpers
+    "rust-just>=1.42.3",        # Justfile tasks
+    { include-group = "test" }, # test runner and helpers
+    { include-group = "lint" }, # linting and eventually typing
 ]
 
 test = [
@@ -68,6 +69,8 @@ test = [
     "safety",
     "pre-commit",
 ]
+
+lint = ["ruff"]  # Linting and formatting
 
 [tool.pytest.ini_options]
 testpaths = "tests"

@@ -54,16 +54,16 @@ jobs:
         name: Install just
         uses: taiki-e/install-action@just
 
-#   lint:
-#     name: Lint Checking • macOS (via just, uv, ruff)
-#     runs-on: macos-latest
-#     timeout-minutes: 15
-#     steps:
-#       - *checkout
-#       - *setup_uv
-#       - *install_just
-#       - name: Lint Checking • macOS (via just, uv, ruff)
-#         run: just lint
+  lint:
+    name: Lint Checking • macOS (via just, uv, ruff)
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - *checkout
+      - *setup_uv
+      - *install_just
+      - name: Lint Checking • macOS (via just, uv, ruff)
+        run: just lint
 #   type-check:
 #     name: Type Checking • macOS (via just, uv, ty)
 #     runs-on: macos-latest
