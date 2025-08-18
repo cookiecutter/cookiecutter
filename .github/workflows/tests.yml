@@ -3,12 +3,15 @@ name: CI/CD Tests
 on:
   push:
     branches:
-      - main
+      - none
+      # - main
     tags:
-      - "*"
+      - none
+      # - "*"
   pull_request:
     branches:
-      - "*"
+      - none
+      # - "*"
 
 jobs:
   documentation_build_test:
