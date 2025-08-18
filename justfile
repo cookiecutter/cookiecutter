@@ -12,4 +12,4 @@ test-all:
 
 # lint with ruff
 lint:
-    uv run --python=3.12 --isolated --group lint -- ruff check --no-fix .    
+    uv run --python=3.12 --isolated --group test -- ruff check --no-fix .    
