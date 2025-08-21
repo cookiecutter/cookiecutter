@@ -53,6 +53,19 @@ repository::
 You will be prompted to enter a bunch of project config values. (These are
 defined in the project's `cookiecutter.json`.)
 
+
+Example of a pre-prompt rewrite in `cookiecutter.json`:
+
+.. code-block:: json
+
+    {
+      "project_name": "My Cool Project",
+      "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}"
+    }
+
+In this example, `project_slug` is automatically generated from `project_name`.
+
+
 Then, Cookiecutter will generate a project from the template, using the values
 that you entered. It will be placed in your current directory.
 
