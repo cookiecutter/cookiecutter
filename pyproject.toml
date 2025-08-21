@@ -60,6 +60,15 @@ dev = [
     { include-group = "test" }, # test runner and helpers
 ]
 
+docs = [
+    "sphinx",
+    "sphinx_click",
+    "myst_parser",
+    "sphinx_autodoc_typehints",
+    "sphinxcontrib.apidoc",
+    "sphinx_rtd_theme"
+]
+
 test = [
     "pytest",
     "pytest-cov",
