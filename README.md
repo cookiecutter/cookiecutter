@@ -114,6 +114,14 @@ Join the community, contribute, or seek assistance.
 - [Contributors](AUTHORS.md)
 - [Contribution Guide](CONTRIBUTING.md)
 
+## Tutorials and Resources
+
+To help users better understand how Cookiecutter works, you can check out the following resources:
+
+- **Video Tutorial:** [Watch on YouTube](https://www.youtube.com/watch?v=X8kXs5kthKw)
+- **Presentation Slides:** [View the Slides](https://docs.google.com/presentation/d/1r3oEmtbyYWvqZrn5y6cdbtIzaahhvAV0cKIqveMMMT8/edit#slide=id.g25f6af9dd6_0_0)
+
+
 ### Support
 
 - Star us on [GitHub](https://github.com/cookiecutter/cookiecutter).
