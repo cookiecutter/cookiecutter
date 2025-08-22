@@ -73,7 +73,7 @@ from cookiecutter.main import cookiecutter
 cookiecutter('cookiecutter-pypackage/')
 
 # Create project from the cookiecutter-pypackage.git repo template
-cookiecutter('gh:audreyfeldroy//cookiecutter-pypackage.git')
+cookiecutter('gh:audreyfeldroy/cookiecutter-pypackage')
 ```
 
 #### Detailed Usage
