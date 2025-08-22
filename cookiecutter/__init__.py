@@ -1,4 +1,9 @@
-"""Main package for Cookiecutter."""
+"""
+Main package for Cookiecutter.
+
+This module initializes the package and retrieves the version information from
+the VERSION.txt file.
+"""
 
 from pathlib import Path
 
