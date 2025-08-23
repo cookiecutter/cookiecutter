@@ -10,9 +10,11 @@ from collections import OrderedDict
 from collections.abc import Iterator
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Any, Union, Optional, TextIO, TypeVar, overload
 
 from jinja2.exceptions import UndefinedError
+from rich import Console
+from rich.text import Text, TextType
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
 from typing_extensions import TypeAlias
 
@@ -89,6 +91,147 @@ def read_repo_password(question: str) -> str:
     return Prompt.ask(question, password=True)
 
 
+PromptT = TypeVar("PromptT")
+DefaultT = TypeVar("DefaultT")
+
+class MultiPrompt(PromptBase[list[PromptT]]):
+    """A prompt that returns a list[str].
+
+    Example:
+        >>> name = Prompt.ask("Enter your name", choices)
+
+
+    """
+
+    @classmethod  # type: ignore[override]
+    @overload
+    def ask(  # pylint: disable=too-many-arguments
+        cls,
+        prompt: TextType = "",
+        *,
+        choices: list[str],
+        console: Optional[Console] = None,
+        password: bool = False,
+        case_sensitive: bool = True,
+        show_default: bool = True,
+        show_choices: bool = True,
+        default: DefaultT | None,
+        stream: Optional[TextIO] = None,
+    ) -> Union[DefaultT, list[PromptT]]:
+        ...
+
+    @classmethod
+    @overload
+    def ask(  # pylint: disable=arguments-differ, too-many-arguments
+        cls,
+        prompt: TextType = "",
+        *,
+        choices: list[str],
+        console: Optional[Console] = None,
+        password: bool = False,
+        case_sensitive: bool = True,
+        show_default: bool = True,
+        show_choices: bool = True,
+        stream: Optional[TextIO] = None,
+    ) -> list[PromptT]:
+        ...
+
+    @classmethod
+    def ask(  # pylint: disable=too-many-arguments  # type: ignore[override]
+        cls,
+        prompt: TextType = "",
+        *,
+        choices: list[str],
+        console: Optional[Console] = None,
+        password: bool = False,
+        case_sensitive: bool = True,
+        show_default: bool = True,
+        show_choices: bool = True,
+        default: Any = ...,
+        stream: Optional[TextIO] = None,
+    ) -> Any:
+        """Shortcut to construct and run a prompt loop and return the result.
+
+        Example:
+            >>> filename = Prompt.ask("Enter a filename")
+
+        Args:
+            prompt (TextType, optional): Prompt text. Defaults to "".
+            console (Console, optional): A Console instance or None to use global console.
+                Defaults to None.
+            password (bool, optional): Enable password input. Defaults to False.
+            choices (list[str], optional): A list of valid choices. Defaults to None.
+            case_sensitive (bool, optional): Matching of choices should be case-sensitive.
+                Defaults to True.
+            show_default (bool, optional): Show default in prompt. Defaults to True.
+            show_choices (bool, optional): Show choices in prompt. Defaults to True.
+            stream (TextIO, optional): Optional text file open for reading to get input.
+                Defaults to None.
+        """
+        _prompt = cls(
+            prompt,
+            console=console,
+            password=password,
+            choices=choices,
+            case_sensitive=case_sensitive,
+            show_default=show_default,
+            show_choices=show_choices,
+        )
+        return _prompt(default=default, stream=stream)
+
+    def render_default(
+        self, default: Union[DefaultT, list[PromptT], None]
+    ) -> Text:
+        """Render the default as None rather than []."""
+        assert default is None or isinstance(default, list)
+        return Text(
+            "None" if default is None else ",".join(
+                [f"{a}" for a in default]  # pyright: ignore [reportUnknownVariableType]
+            ),
+            style="prompt.default",
+        )
+
+    def check_choice(self, value: str) -> bool:
+        """Check value is in the list of valid choices.
+
+        Args:
+            value (str): Value entered by user.
+
+        Returns:
+            bool: True if choice was valid, otherwise False.
+        """
+        assert self.choices is not None
+        if self.case_sensitive:
+            for v in value.strip().split(","):
+                if v not in self.choices:
+                    return False
+        for v in value.strip().lower().split(","):
+            if v not in [choice.lower() for choice in self.choices]:
+                return False
+        return True
+
+    def process_response(self, value: str) -> list[PromptT]:
+        """Convert choices to a list[str]."""
+        values: list[str] = value.strip().split(",")
+        try:
+            return_value: list[PromptT] = [self.response_type(a) for a in values]
+        except ValueError as exc:
+            raise InvalidResponse(self.validate_error_message) from exc
+
+        if self.choices is not None:
+            if not self.check_choice(value):
+                raise InvalidResponse(self.illegal_choice_message)
+
+            if not self.case_sensitive:
+                # return the original choice, not the lower case version
+                return_value = self.response_type(
+                    self.choices[
+                        [choice.lower() for choice in self.choices].index(value.lower())
+                    ]
+                )
+        return return_value
+
+
 def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = ""):
     """Prompt the user to choose from several options for the given variable.
 
@@ -105,6 +248,7 @@ def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = "
     choices = choice_map.keys()
 
     question = f"Select {var_name}"
+    multiselect = False
 
     choice_lines: Iterator[str] = starmap(
         "    [bold magenta]{}[/] - [bold]{}[/]".format, choice_map.items()
@@ -117,6 +261,8 @@ def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = "
         else:
             if "__prompt__" in prompts[var_name]:
                 question = prompts[var_name]["__prompt__"]
+            if "__multi__" in prompts[var_name]:
+                multiselect = True
             choice_lines = (
                 f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
                 if p in prompts[var_name]
@@ -132,6 +278,14 @@ def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = "
         )
     )
 
+    if multiselect:
+        user_choice = [  # type: ignore[var-annotated]
+            choice_map[a]
+            for a in (  # pyright: ignore [reportUnknownVariableType]
+                MultiPrompt.ask(prompt, choices=list(choices), default=None)
+            )
+        ]
+        return user_choice
     user_choice = Prompt.ask(prompt, choices=list(choices), default=next(iter(choices)))
     return choice_map[user_choice]
 
