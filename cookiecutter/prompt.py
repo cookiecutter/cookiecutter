@@ -10,11 +10,11 @@ from collections import OrderedDict
 from collections.abc import Iterator
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Union, TextIO, TypeVar, overload
+from typing import TYPE_CHECKING, Any, TextIO, TypeVar, Union, overload
 
 from jinja2.exceptions import UndefinedError
-from rich.text import Text, TextType
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
+from rich.text import Text, TextType
 from typing_extensions import TypeAlias
 
 from cookiecutter.exceptions import UndefinedVariableInTemplate
