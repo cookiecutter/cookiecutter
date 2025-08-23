@@ -9,133 +9,133 @@ cookiecutter.cli module
 
 .. automodule:: cookiecutter.cli
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.config module
 --------------------------
 
 .. automodule:: cookiecutter.config
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.environment module
 -------------------------------
 
 .. automodule:: cookiecutter.environment
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.exceptions module
 ------------------------------
 
 .. automodule:: cookiecutter.exceptions
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.extensions module
 ------------------------------
 
 .. automodule:: cookiecutter.extensions
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.find module
 ------------------------
 
 .. automodule:: cookiecutter.find
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.generate module
 ----------------------------
 
 .. automodule:: cookiecutter.generate
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.hooks module
 -------------------------
 
 .. automodule:: cookiecutter.hooks
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.log module
 -----------------------
 
 .. automodule:: cookiecutter.log
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.main module
 ------------------------
 
 .. automodule:: cookiecutter.main
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.prompt module
 --------------------------
 
 .. automodule:: cookiecutter.prompt
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.replay module
 --------------------------
 
 .. automodule:: cookiecutter.replay
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.repository module
 ------------------------------
 
 .. automodule:: cookiecutter.repository
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.utils module
 -------------------------
 
 .. automodule:: cookiecutter.utils
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.vcs module
 -----------------------
 
 .. automodule:: cookiecutter.vcs
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 cookiecutter.zipfile module
 ---------------------------
 
 .. automodule:: cookiecutter.zipfile
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: cookiecutter
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
