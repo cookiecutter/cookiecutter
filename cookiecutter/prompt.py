@@ -13,7 +13,6 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Union, TextIO, TypeVar, overload
 
 from jinja2.exceptions import UndefinedError
-from rich.console import Console
 from rich.text import Text, TextType
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
 from typing_extensions import TypeAlias
@@ -23,6 +22,7 @@ from cookiecutter.utils import create_env_with_context, rmtree
 
 if TYPE_CHECKING:
     from jinja2 import Environment
+    from rich.console import Console
 
 
 def read_user_variable(var_name: str, default_value, prompts=None, prefix: str = ""):
