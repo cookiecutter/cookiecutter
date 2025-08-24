@@ -48,8 +48,8 @@ Cookiecutter could always use more documentation, whether as part of the officia
 If you want to review your changes on the documentation locally, you can do:
 
 ```bash
-pip install -r docs/requirements.txt
-make servedocs
+pip install --group dev
+just servedocs
 ```
 
 This will compile the documentation, open it in your browser and start watching the files for changes, recompiling as you save.

@@ -67,7 +67,8 @@ docs = [
     "myst_parser",
     "sphinx_autodoc_typehints",
     "sphinxcontrib.apidoc",
-    "sphinx_rtd_theme"
+    "sphinx_rtd_theme",
+    "sphinx-autobuild",
 ]
 
 test = [

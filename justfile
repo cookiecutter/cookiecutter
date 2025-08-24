@@ -7,6 +7,12 @@ docs:
     uv run --python=3.13 --isolated --group docs -- sphinx-build docs docs/_build
     open docs/_build/index.html
 
+# Host the docs locally and rebuild on changes
+servedocs:
+    uv run --python=3.13 --isolated --group docs -- \
+        sphinx-autobuild -Wa docs/ docs/_build/html --open-browser --port 9812 \
+            --watch cookiecutter
+
 # lint with ruff
 lint:
     uv run --python=3.13 --isolated --group test -- ruff check . --fix
