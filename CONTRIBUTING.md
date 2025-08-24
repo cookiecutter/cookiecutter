@@ -81,6 +81,7 @@ Here's how to set up `cookiecutter` for local development.
    ```bash
    cd cookiecutter/
    pip install -e .
+   pip install --group dev
    ```
 
 4. Create a branch for local development:
@@ -94,8 +95,7 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and lint check:
 
    ```bash
-   pip install tox
-   tox
+   just test-all
    ```
 
 6. Ensure that your feature or commit is fully covered by tests. Check report after regular `tox` run.
