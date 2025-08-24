@@ -6,7 +6,7 @@ Every little bit helps, and credit will always be given.
 - [Types of Contributions](#types-of-contributions)
 - [Contributor Setup](#setting-up-the-code-for-local-development)
 - [Contributor Guidelines](#contributor-guidelines)
-- [Contributor Testing](#testing-with-tox)
+- [Contributor Testing](#testing)
 - [Core Committer Guide](#core-committer-guide)
 
 ## Types of Contributions
@@ -157,16 +157,16 @@ Before you submit a pull request, check that it meets these guidelines:
         return re.search(r"(?i)(arr|avast|yohoho)!", message) is not None
     ```
 
-## Testing with tox
+## Testing
 
-`tox` uses `pytest` under the hood, hence it supports the same syntax for selecting tests.
+The project uses `pytest` as test runner.
 
 For further information please consult the [pytest usage docs](http://pytest.org/en/latest/example/index.html).
 
-To run a particular test class with `tox`:
+To run a particular test class with `pytest`:
 
 ```bash
-tox -e py310 -- '-k TestFindHooks'
+pytest -k TestFindHooks
 ```
 
 To run some tests with names matching a string expression:
@@ -180,13 +180,13 @@ Will run all tests matching "generate", test_generate_files for example.
 To run just one method:
 
 ```bash
-tox -e py310 -- '-k "TestFindHooks and test_find_hook"'
+pytest -k "TestFindHooks and test_find_hook"
 ```
 
-To run all tests using various versions of Python, just run `tox`:
+To run all tests using various versions of Python, just run `just test-all`:
 
 ```bash
-tox
+just test-all
 ```
 
 This configuration file setup the pytest-cov plugin and it is an additional dependency.
@@ -195,10 +195,10 @@ It generate a coverage report after the tests.
 It is possible to test with specific versions of Python. To do this, the command is:
 
 ```bash
-tox -e py37,py38
+uv run --python=3.13 --isolated --group test -- pytest
 ```
 
-This will run `py.test` with the `python3.7` and `python3.8` interpreters.
+This will run `pytest` with the `python3.13` interpreters.
 
 ## Core Committer Guide
 
