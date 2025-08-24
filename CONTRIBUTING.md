@@ -95,6 +95,7 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the tests and lint check:
 
    ```bash
+   just lint
    just test-all
    ```
 
