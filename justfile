@@ -27,4 +27,9 @@ test-all:
     uv run --python=3.10 --isolated --group test -- pytest
     uv run --python=3.11 --isolated --group test -- pytest
     uv run --python=3.12 --isolated --group test -- pytest
-    uv run --python=3.13 --isolated --group test -- pytest    
+    uv run --python=3.13 --isolated --group test -- pytest
+
+# Run all tests with coverage
+coverage:
+    uv run --python=3.13 --isolated --group test -- \
+        pytest --cov-report=html --cov-report=xml --cov-branch --cov-fail-under=100

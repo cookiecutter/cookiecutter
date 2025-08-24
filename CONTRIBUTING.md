@@ -98,11 +98,11 @@ Now you can make your changes locally.
    just test-all
    ```
 
-6. Ensure that your feature or commit is fully covered by tests. Check report after regular `tox` run.
+6. Ensure that your feature or commit is fully covered by tests. Check report after regular `pytest` run.
    You can also run coverage only report and get html report with statement by statement highlighting:
 
    ```bash
-   make coverage
+   just coverage
    ```
 
    You report will be placed to `htmlcov` directory. Please do not include this directory to your commits.
@@ -171,7 +171,7 @@ tox -e py310 -- '-k TestFindHooks'
 To run some tests with names matching a string expression:
 
 ```bash
-tox -e py310 -- '-k generate'
+pytest -k generate
 ```
 
 Will run all tests matching "generate", test_generate_files for example.
