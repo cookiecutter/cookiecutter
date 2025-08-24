@@ -56,6 +56,7 @@ cookiecutter = "cookiecutter.__main__:main"
 
 [dependency-groups]
 dev = [
+    "uv",                       # Is needed by justfile tasks
     "rust-just>=1.42.3",        # Justfile tasks
     { include-group = "test" }, # test runner and helpers
 ]
