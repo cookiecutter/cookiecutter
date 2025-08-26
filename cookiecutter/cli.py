@@ -127,6 +127,11 @@ def list_installed_templates(
     help='Overwrite the contents of the output directory if it already exists',
 )
 @click.option(
+    '--recurse-submodules', help='Recursively checkout git submodules',
+    is_flag=True,
+    default=False
+)
+@click.option(
     '-s',
     '--skip-if-file-exists',
     is_flag=True,
@@ -176,6 +181,7 @@ def main(
     verbose: bool,
     replay: bool | str,
     overwrite_if_exists: bool,
+    recurse_submodules: bool,
     output_dir: str,
     config_file: str | None,
     default_config: bool,
@@ -223,6 +229,7 @@ def main(
             extra_context=extra_context,
             replay=replay,
             overwrite_if_exists=overwrite_if_exists,
+            recurse_submodules=recurse_submodules,
             output_dir=output_dir,
             config_file=config_file,
             default_config=default_config,
