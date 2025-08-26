@@ -72,8 +72,8 @@ def determine_repo_dir(
     abbreviations: dict[str, str],
     clone_to_dir: Path | str,
     checkout: str | None,
-    recurse_submodules: bool = False,
     no_input: bool,
+    recurse_submodules: bool = False,
     password: str | None = None,
     directory: str | None = None,
 ) -> tuple[str, bool]:
