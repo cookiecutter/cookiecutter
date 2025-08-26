@@ -103,7 +103,7 @@ def clone(
             clone_command.append('--recurse-submodules')
     elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    clone_command.append(repo_url)  
+    clone_command.append(repo_url)
     logger.debug(f'repo_dir is {repo_dir}')
 
     if os.path.isdir(repo_dir):
