@@ -92,11 +92,18 @@ def clone(
 
     repo_url = repo_url.rstrip('/')
     repo_name = os.path.split(repo_url)[1]
+    _repo_args = {'git': ['git', 'clone'],
+                  'hg': ['hg', 'clone'],
+                  }
+    clone_command = _repo_args[repo_type] # avoid warning if defined in if-elif
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    if repo_type == 'hg':
+        if recurse_submodules:
+            clone_command.append('--recurse-submodules')
+    elif repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+    clone_command.append(repo_url)  
     logger.debug(f'repo_dir is {repo_dir}')
 
     if os.path.isdir(repo_dir):
@@ -107,7 +114,7 @@ def clone(
     if clone:
         try:
             subprocess.check_output(
-                [repo_type, 'clone', repo_url],
+                clone_command,
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
