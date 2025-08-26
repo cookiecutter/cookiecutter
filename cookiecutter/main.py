@@ -33,6 +33,7 @@ def cookiecutter(
     extra_context: dict[str, Any] | None = None,
     replay: bool | str | None = None,
     overwrite_if_exists: bool = False,
+    recurse_submodules: bool = False,
     output_dir: str = '.',
     config_file: str | None = None,
     default_config: bool = False,
@@ -86,6 +87,7 @@ def cookiecutter(
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,
+        recurse_submodules=recurse_submodules,
         password=password,
         directory=directory,
     )
