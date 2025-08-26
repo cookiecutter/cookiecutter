@@ -40,6 +40,7 @@ def test_should_find_existing_cookiecutter(
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
+        recurse_submodules=False,
         no_input=True,
         directory='my-dir',
     )
@@ -56,6 +57,7 @@ def test_local_repo_typo(template, user_config_data, cloned_cookiecutter_path) -
             abbreviations={},
             clone_to_dir=user_config_data['cookiecutters_dir'],
             checkout=None,
+            recurse_submodules=False,
             no_input=True,
             directory='wrong-dir',
         )
