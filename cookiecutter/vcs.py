@@ -71,6 +71,7 @@ def clone(
 
     :param repo_url: Repo URL of unknown type.
     :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param recurse_submodules: Clone submodules if set to `True`
     :param clone_to_dir: The directory to clone to.
                          Defaults to the current directory.
     :param no_input: Do not prompt for user input and eventually force a refresh of
