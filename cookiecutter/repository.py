@@ -72,6 +72,7 @@ def determine_repo_dir(
     abbreviations: dict[str, str],
     clone_to_dir: Path | str,
     checkout: str | None,
+    recurse_submodules: bool = False,
     no_input: bool,
     password: str | None = None,
     directory: str | None = None,
@@ -114,6 +115,7 @@ def determine_repo_dir(
         cloned_repo = clone(
             repo_url=template,
             checkout=checkout,
+            recurse_submodules=recurse_submodules,
             clone_to_dir=clone_to_dir,
             no_input=no_input,
         )
