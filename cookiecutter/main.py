@@ -59,6 +59,7 @@ def cookiecutter(
         if it exists
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param recurse_submodules: Recursively clone git submodules if set to `True`.
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
