@@ -229,17 +229,18 @@ def test_user_config_recurse_submodules(mocker, cli_runner, user_config_path):
         template_path,
         None,
         False,
-        recurse_submodules=True,
+        extra_context=None,
         replay=False,
         overwrite_if_exists=False,
-        skip_if_file_exists=False,
+        recurse_submodules=True,
         output_dir='.',
         config_file=user_config_path,
         default_config=False,
-        extra_context=None,
         password=None,
         directory=None,
+        skip_if_file_exists=False,
         accept_hooks=True,
+        keep_project_on_failure=False,
     )
 
 @pytest.mark.usefixtures('remove_fake_project_dir')
