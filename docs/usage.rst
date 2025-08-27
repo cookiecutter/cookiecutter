@@ -113,6 +113,16 @@ whenever a password is required.
 Keeping your cookiecutters organized
 ------------------------------------
 
+As of the Cookiecutter 1.1.0 release:
+
+* Whenever you generate a project with a cookiecutter, the resulting project
+  is by default stored in your current directory. The location is configurable:
+  see :doc:`cli_options` for details.
+
+* Your cloned cookiecutters are stored by default in your `~/.cookiecutters/`
+  directory (or Windows equivalent). The location is configurable: see
+  :doc:`advanced/user_config` for details.
+
 As of the Cookiecutter 0.7.0 release:
 
 * Whenever you generate a project with a cookiecutter, the resulting project
