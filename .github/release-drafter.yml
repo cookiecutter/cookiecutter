@@ -24,7 +24,6 @@ autolabeler:
   - label: 'CI/CD'
     files:
       - '.github/*'
-      - '.pre-commit-config.yaml'
       - '*.cfg'
       - '*.ini'
       - 'setup.*'

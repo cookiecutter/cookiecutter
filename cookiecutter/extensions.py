@@ -5,8 +5,9 @@ from __future__ import annotations
 import json
 import string
 import uuid
+from collections.abc import Iterable
 from secrets import choice
-from typing import TYPE_CHECKING, Any, Iterable
+from typing import TYPE_CHECKING, Any
 
 import arrow
 from jinja2 import Environment, nodes
