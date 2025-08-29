@@ -73,6 +73,19 @@ on a local server::
 
     $ cookiecutter file://server/folder/project.git
 
+Works with git submodules
+-------------------------
+
+If you have complex structures where different templates need to be
+combined, you could use git submodules in your template. Then, by passing
+the parameter '--recurse-submodules' all submodules from your project will
+be also downloaded allowing you to used them in your project.
+
+    $ cookiecutter hg+https://example.com/repo --recurse-submodules
+
+In addition, one can combine it with post processing functions in order to
+have even more flexibility.
+
 Works with Zip files
 --------------------
 
