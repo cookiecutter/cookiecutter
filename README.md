@@ -6,7 +6,7 @@
 
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
-[![Build Status](https://github.com/cookiecutter/cookiecutter/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/cookiecutter/cookiecutter/actions)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/cookiecutter?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/cookiecutter)
 [![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/main/graphs/badge.svg?branch=main)](https://codecov.io/github/cookiecutter/cookiecutter?branch=main)
 [![discord](https://img.shields.io/badge/Discord-cookiecutter-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/9BrxzPKuEW)
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
