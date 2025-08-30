@@ -104,3 +104,8 @@ def create_env_with_context(context: dict[str, Any]) -> StrictEnvironment:
     envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
 
     return StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+
+
+def get_cookiecutter_osenv() -> dict[str, str]:
+    """Create dict with env variables"""
+    return {k[3:].lower(): v for k, v in os.environ.items() if k.startswith('CC')}
