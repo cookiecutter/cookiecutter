@@ -1,0 +1,6 @@
+{
+  "project_slug": "foobar",
+  "command_line_interface": "click",
+  "use_pytest": "y",
+  "_inheritance_template_dir": "../../new-template-dir"
+}
