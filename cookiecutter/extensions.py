@@ -41,11 +41,24 @@ class RandomStringExtension(Extension):
         """Jinja2 Extension Constructor."""
         super().__init__(environment)
 
-        def random_ascii_string(length: int, punctuation: bool = False) -> str:
+        def random_ascii_string(
+            length: int, numbers: bool = False, punctuation: bool = False
+        ) -> str:
+            """Generate a random ASCII string.
+
+            :param length: Length of the generated string.
+            :param number: Whether to include digits.
+            :param punctuation: Whether to include punctuation.
+            :returns: Random ASCII string.
+            """
+
+            corpus = string.ascii_letters  # Start with letters
+
+            if numbers:
+                corpus += string.digits  # Add digits if requested
             if punctuation:
-                corpus = f'{string.ascii_letters}{string.punctuation}'
-            else:
-                corpus = string.ascii_letters
+                corpus += string.punctuation  # Add punctuation if requested
+
             return "".join(choice(corpus) for _ in range(length))
 
         environment.globals.update(random_ascii_string=random_ascii_string)
