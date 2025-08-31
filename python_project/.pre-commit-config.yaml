@@ -1,0 +1,28 @@
+default_language_version:
+  python: python3.8
+
+default_stages: [commit, push]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+        exclude: LICENSE
+
+  - repo: local
+    hooks:
+      - id: check-codestyle
+        name: check-codestyle
+        entry: make check-codestyle
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: test
+        name: test
+        entry: make test
+        types: [python]
+        language: system
