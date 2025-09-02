@@ -30,8 +30,7 @@ Install cookiecutter using pip package manager:
 # pipx is strongly recommended.
 pipx install cookiecutter
 
-# If pipx is not an option,
-# you can install cookiecutter in your Python user directory.
+# If pipx is not available, install cookiecutter in your Python user directory using:
 python -m pip install --user cookiecutter
 ```
 
