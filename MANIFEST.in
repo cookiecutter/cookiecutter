@@ -19,3 +19,4 @@ recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 recursive-exclude docs *
 recursive-exclude logo *
+recursive-exclude .devcontainer *
