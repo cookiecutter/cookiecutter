@@ -41,6 +41,7 @@ dependencies = [
     "python-slugify>=4.0.0",
     "requests>=2.23.0",
     "arrow",
+    "mininterface[basic]<2",
     "rich",
 ]
 requires-python = ">=3.9"
