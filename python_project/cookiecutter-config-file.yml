@@ -1,0 +1,13 @@
+# This file contains values from Cookiecutter
+
+default_context:
+  project_name: "python-project"
+  project_description: "Awesome `python-project` is a Python cli/package created with https://github.com/Undertone0809/python-package-template"
+  organization: "python-project"
+  license: "MIT"
+  minimal_python_version: 3.8
+  github_name: "python_project"
+  email: "hello@python-project.com"
+  version: "0.1.0"
+  line_length: "88"
+  create_example_template: "cli"
