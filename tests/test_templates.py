@@ -38,3 +38,22 @@ def test_build_templates(template, output_dir) -> None:
         "Click",
         "pytest",
     ]
+
+
+def test_build_nested_templates(output_dir) -> None:
+    """
+    Verify nested templates.
+    """
+    project_dir = main.cookiecutter(
+        'tests/test-templates/nested-templates',
+        no_input=True,
+        output_dir=output_dir,
+    )
+
+    readme = Path(project_dir, 'requirements.txt').read_text()
+
+    assert readme.split() == [
+        "pip",
+        "Click",
+        "pytest",
+    ]

@@ -177,7 +177,7 @@ def run_hook_from_repo_dir(
             raise
 
 
-def run_pre_prompt_hook(repo_dir: Path | str) -> Path | str:
+def run_pre_prompt_hook(repo_dir: Path | str, depth: int) -> Path | str:
     """Run pre_prompt hook from repo directory.
 
     :param repo_dir: Project template input directory.
@@ -189,7 +189,7 @@ def run_pre_prompt_hook(repo_dir: Path | str) -> Path | str:
             return repo_dir
 
     # Create a temporary directory
-    repo_dir = create_tmp_repo_dir(repo_dir)
+    repo_dir = create_tmp_repo_dir(repo_dir, depth)
     with work_in(repo_dir):
         scripts = find_hook('pre_prompt') or []
         for script in scripts:
