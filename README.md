@@ -6,7 +6,7 @@
 
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
-[![Build Status](https://github.com/cookiecutter/cookiecutter/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/cookiecutter/cookiecutter/actions)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/cookiecutter?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/cookiecutter)
 [![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/main/graphs/badge.svg?branch=main)](https://codecov.io/github/cookiecutter/cookiecutter?branch=main)
 [![discord](https://img.shields.io/badge/Discord-cookiecutter-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/9BrxzPKuEW)
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
@@ -30,8 +30,7 @@ Install cookiecutter using pip package manager:
 # pipx is strongly recommended.
 pipx install cookiecutter
 
-# If pipx is not an option,
-# you can install cookiecutter in your Python user directory.
+# If pipx is not available, install cookiecutter in your Python user directory using:
 python -m pip install --user cookiecutter
 ```
 
@@ -113,6 +112,14 @@ Join the community, contribute, or seek assistance.
 - [File an Issue](https://github.com/cookiecutter/cookiecutter/issues?q=is%3Aopen)
 - [Contributors](AUTHORS.md)
 - [Contribution Guide](CONTRIBUTING.md)
+
+## Tutorials and Resources
+
+To help users better understand how Cookiecutter works, you can check out the following resources:
+
+- **Video Tutorial:** [Watch on YouTube](https://www.youtube.com/watch?v=X8kXs5kthKw)
+- **Presentation Slides:** [View the Slides](https://docs.google.com/presentation/d/1r3oEmtbyYWvqZrn5y6cdbtIzaahhvAV0cKIqveMMMT8/edit#slide=id.g25f6af9dd6_0_0)
+
 
 ### Support
 
