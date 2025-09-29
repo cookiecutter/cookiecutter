@@ -1,4 +1,5 @@
 {
   "pyhooks": "fake-project",
-  "project_title": "Project Title"
+  "project_title": "Project Title",
+  "empty_list": []
 }
