@@ -520,6 +520,18 @@ class TestPromptChoiceForConfig:
         read_user_choice.assert_called_once_with('orientation', choices, None, '')
         assert expected_choice == actual_choice
 
+    def test_empty_list_returns_empty_string(self) -> None:
+        """Verify empty list returns empty string."""
+        context = {'project': 'foobar'}
+        actual_choice = prompt.prompt_choice_for_config(
+            cookiecutter_dict=context,
+            env=environment.StrictEnvironment(),
+            key='orientation',
+            options=[],
+            no_input=True,  # Suppress user input
+        )
+        assert actual_choice == ""
+
 
 class TestReadUserYesNo:
     """Class to unite boolean prompt related tests."""
