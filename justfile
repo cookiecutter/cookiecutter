@@ -1,5 +1,3 @@
-set windows-shell := ["C:\\Program Files\\Git\\bin\\sh.exe", "-c"]
-
 # List all the justfile recipes
 list:
     just -l
