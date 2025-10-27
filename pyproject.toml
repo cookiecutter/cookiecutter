@@ -1,7 +1,7 @@
 [project]
 name = "cookiecutter"
 version = "2.6.0"
-description = "A command-line utility that creates projects from project templates, e.g. creating a Python package project from a Python package project template."
+description = "A command-line utility that creates projects from cookiecutters (project templates), e.g. generating a Python package from its template."
 readme = "README.md"
 authors = [{ name = "Audrey Roy Greenfeld", email = "audrey@feldroy.com" }]
 classifiers = [
