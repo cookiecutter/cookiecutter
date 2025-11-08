@@ -524,7 +524,7 @@ class TestPromptChoiceForConfig:
         """Verify empty list returns empty string."""
         context = {'project': 'foobar'}
         with pytest.raises(ValueError):
-            actual_choice = prompt.prompt_choice_for_config(
+            prompt.prompt_choice_for_config(
                 cookiecutter_dict=context,
                 env=environment.StrictEnvironment(),
                 key='orientation',
