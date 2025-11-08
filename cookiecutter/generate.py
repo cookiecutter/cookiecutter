@@ -253,7 +253,7 @@ def generate_file(
 
     logger.debug('Writing contents to file %s', outfile)
 
-    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:  # noqa: FURB103 (false positive for python < 3.10)
+    with open(outfile, 'w', encoding='utf-8', newline=newline) as fh:
         fh.write(rendered_file)
 
     # Apply file permissions to output file
@@ -392,7 +392,7 @@ def generate_files(
             copy_dirs = []
             render_dirs = []
 
-            for d in dirs:
+            for d in sorted(dirs):
                 d_ = os.path.normpath(os.path.join(root, d))
                 # We check the full path, because that's how it can be
                 # specified in the ``_copy_without_render`` setting, but
@@ -432,7 +432,7 @@ def generate_files(
                     msg = f"Unable to create directory '{_dir}'"
                     raise UndefinedVariableInTemplate(msg, err, context) from err
 
-            for f in files:
+            for f in sorted(files):
                 infile = os.path.normpath(os.path.join(root, f))
                 if is_copy_only_path(infile, context):
                     outfile_tmpl = env.from_string(infile)
