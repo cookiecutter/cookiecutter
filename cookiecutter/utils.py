@@ -8,8 +8,9 @@ import os
 import shutil
 import stat
 import tempfile
+from collections.abc import Iterator
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Iterator
+from typing import TYPE_CHECKING, Any
 
 from jinja2.ext import Extension
 
