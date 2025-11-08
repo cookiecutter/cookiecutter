@@ -40,6 +40,7 @@ def cookiecutter(
     directory: str | None = None,
     skip_if_file_exists: bool = False,
     accept_hooks: bool = True,
+    skip_download=False,
     keep_project_on_failure: bool = False,
 ) -> str:
     """
@@ -88,6 +89,7 @@ def cookiecutter(
         no_input=no_input,
         password=password,
         directory=directory,
+        skip_download=skip_download,
     )
     repo_dir, cleanup = base_repo_dir, cleanup_base_repo_dir
     # Run pre_prompt hook
