@@ -7,9 +7,10 @@ import os
 import re
 import sys
 from collections import OrderedDict
+from collections.abc import Iterator
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, Iterator, List, Union
+from typing import TYPE_CHECKING, Any, Union
 
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
@@ -193,7 +194,7 @@ def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = "")
     )
 
 
-_Raw: TypeAlias = Union[bool, Dict["_Raw", "_Raw"], List["_Raw"], str, None]
+_Raw: TypeAlias = Union[bool, dict["_Raw", "_Raw"], list["_Raw"], str, None]
 
 
 def render_variable(
