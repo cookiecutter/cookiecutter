@@ -7,9 +7,10 @@ import os
 import re
 import sys
 from collections import OrderedDict
+from collections.abc import Iterator
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, Iterator, List, Union
+from typing import TYPE_CHECKING, Any, Union
 
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
@@ -193,7 +194,7 @@ def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = "")
     )
 
 
-_Raw: TypeAlias = Union[bool, Dict["_Raw", "_Raw"], List["_Raw"], str, None]
+_Raw: TypeAlias = Union[bool, dict["_Raw", "_Raw"], list["_Raw"], str, None]
 
 
 def render_variable(
@@ -279,6 +280,9 @@ def prompt_choice_for_config(
     """
     rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
     if no_input:
+        if not rendered_options:
+            msg = "The list of choices is empty"
+            raise ValueError(msg)
         return rendered_options[0]
     return read_user_choice(key, rendered_options, prompts, prefix)
 

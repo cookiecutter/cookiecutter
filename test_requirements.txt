@@ -1,7 +1,0 @@
-pytest
-pytest-cov
-pytest-mock
-freezegun
-safety
-pre-commit
-tox
