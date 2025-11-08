@@ -201,7 +201,7 @@ def render_variable(
     env: Environment,
     raw: _Raw,
     cookiecutter_dict: dict[str, Any],
-) -> str:
+) -> Any:
     """Render the next variable to be displayed in the user prompt.
 
     Inside the prompting taken from the cookiecutter.json file, this renders
@@ -234,7 +234,12 @@ def render_variable(
 
     template = env.from_string(raw)
 
-    return template.render(cookiecutter=cookiecutter_dict)
+    rendered_value = template.render(cookiecutter=cookiecutter_dict)
+
+    if rendered_value.lower() in ["true", "false"]:
+        return rendered_value.lower() == "true"
+
+    return rendered_value
 
 
 def _prompts_from_options(options: dict) -> dict:
