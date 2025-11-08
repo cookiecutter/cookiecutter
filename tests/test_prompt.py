@@ -523,14 +523,14 @@ class TestPromptChoiceForConfig:
     def test_empty_list_returns_empty_string(self) -> None:
         """Verify empty list returns empty string."""
         context = {'project': 'foobar'}
-        actual_choice = prompt.prompt_choice_for_config(
-            cookiecutter_dict=context,
-            env=environment.StrictEnvironment(),
-            key='orientation',
-            options=[],
-            no_input=True,  # Suppress user input
-        )
-        assert actual_choice == ""
+        with pytest.raises(ValueError):
+            actual_choice = prompt.prompt_choice_for_config(
+                cookiecutter_dict=context,
+                env=environment.StrictEnvironment(),
+                key='orientation',
+                options=[],
+                no_input=True,  # Suppress user input
+            )
 
 
 class TestReadUserYesNo:
