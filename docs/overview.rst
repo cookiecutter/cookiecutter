@@ -38,7 +38,8 @@ of this.
 Output
 ------
 
-This is what will be generated locally, in your current directory::
+This is what will be generated locally, in your output directory. The output directory defaults to your current directory.
+The location is configurable: see :doc:`cli_options` for details.
 
     mysomething/  <---------- Value corresponding to what you enter at the
     │                         project_name prompt
