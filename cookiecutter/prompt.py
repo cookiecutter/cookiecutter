@@ -276,7 +276,8 @@ def prompt_choice_for_config(
     rendered_options = [render_variable(env, raw, cookiecutter_dict) for raw in options]
     if no_input:
         if not rendered_options:
-            raise ValueError("The list of choices is empty")
+            msg = "The list of choices is empty"
+            raise ValueError(msg)
         return rendered_options[0]
     return read_user_choice(key, rendered_options, prompts, prefix)
 
