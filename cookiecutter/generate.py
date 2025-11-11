@@ -332,6 +332,7 @@ def generate_files(
     skip_if_file_exists: bool = False,
     accept_hooks: bool = True,
     keep_project_on_failure: bool = False,
+    depth: int = 0,
 ) -> str:
     """Render the templates and saves them to files.
 
@@ -345,6 +346,7 @@ def generate_files(
     :param accept_hooks: Accept pre and post hooks if set to `True`.
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
+    :param depth: The depth of the template files are being generated for.
     """
     context = context or OrderedDict([])
 
@@ -383,7 +385,13 @@ def generate_files(
         )
 
     with work_in(template_dir):
-        env.loader = FileSystemLoader(['.', '../templates'])
+        # Consider all templates directories recursively up to the top-level
+        # cookiecutter template.
+        template_directories = ['.']
+        template_directories.extend(
+            ['/'.join(['..'] * (i + 1)) + '/templates' for i in range(depth + 1)]
+        )
+        env.loader = FileSystemLoader(template_directories)
 
         for root, dirs, files in os.walk('.'):
             # We must separate the two types of dirs into different lists.
