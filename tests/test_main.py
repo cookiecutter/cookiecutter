@@ -1,6 +1,10 @@
 """Collection of tests around cookiecutter's replay feature."""
 
 from cookiecutter.main import cookiecutter
+from cookiecutter.main import validate_cookiecutter_json
+import pytest
+
+from pathlib import Path
 
 
 def test_original_cookiecutter_options_preserved_in__cookiecutter(
@@ -114,3 +118,8 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file) -> None:
         '.',
         'custom-replay-file',
     )
+
+def test_validate_cookiecutter_json_invalid():
+    invalid_path = Path("tests/fixtures/invalid.json")
+    with pytest.raises(RuntimeError, match="Invalid cookiecutter.json"):
+        validate_cookiecutter_json(invalid_path)

@@ -10,6 +10,7 @@ from __future__ import annotations
 import logging
 import os
 import sys
+import json
 from copy import copy
 from pathlib import Path
 from typing import Any
@@ -210,3 +211,13 @@ class _patch_import_path_for_repo:  # noqa: N801
 
     def __exit__(self, _type, _value, _traceback):  # type: ignore[no-untyped-def]
         sys.path = self._path
+
+def validate_cookiecutter_json(path: Path) -> None:
+    """Validate cookiecutter.json for required fields."""
+    try:
+        with open(path, 'r') as f:
+            data = json.load(f)
+        if 'cookiecutter' not in data:
+            raise ValueError("Missing 'cookiecutter' key in cookiecutter.json")
+    except (json.JSONDecodeError, ValueError) as e:
+        raise RuntimeError(f"Invalid cookiecutter.json: {e}")
