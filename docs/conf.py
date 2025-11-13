@@ -15,6 +15,7 @@
 
 import os
 import sys
+from datetime import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -70,7 +71,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'cookiecutter'
-copyright = '2013-2022, Audrey Roy and Cookiecutter community'
+copyright = f'2013-{datetime.now().year}, Audrey Roy and Cookiecutter community'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
