@@ -85,7 +85,10 @@ lint = [
 
 [tool.pytest.ini_options]
 testpaths = "tests"
-addopts = "-vvv --cov-report term-missing --cov=cookiecutter"
+addopts = "-vvv --cov-report term-missing --cov=cookiecutter --strict-markers"
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
 
 [tool.doc8]
 # TODO: Remove current max-line-length ignore in follow-up and adopt black limit.

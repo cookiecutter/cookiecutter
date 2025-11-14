@@ -86,6 +86,12 @@ jobs:
       - *checkout
       - *setup_uv
       - *install_just
+      - name: Configure Git for Performance (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          git config --global core.preloadindex true
+          git config --global core.fscache true
+          git config --global gc.auto 256
       - name: "Tests on Python versions 3.10–>3.14 • ${{ matrix.os }}"
         run: just test-all
 #   test-coverage:
