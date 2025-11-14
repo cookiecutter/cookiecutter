@@ -1,3 +1,85 @@
+[project]
+name = "cookiecutter"
+version = "2.6.0"
+description = "A command-line utility that creates projects from project templates, e.g. creating a Python package project from a Python package project template."
+readme = "README.md"
+authors = [{ name = "Audrey Roy Greenfeld", email = "audrey@feldroy.com" }]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+]
+keywords = [
+    "cookiecutter",
+    "Python",
+    "projects",
+    "project templates",
+    "Jinja2",
+    "skeleton",
+    "scaffolding",
+    "project directory",
+    "package",
+    "packaging",
+]
+dependencies = [
+    "binaryornot>=0.4.4",
+    "Jinja2>=2.7,<4.0.0",
+    "click>=7.0,<9.0.0",
+    "pyyaml>=5.3.1",
+    "python-slugify>=4.0.0",
+    "requests>=2.23.0",
+    "arrow",
+    "rich",
+]
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://github.com/cookiecutter/cookiecutter"
+Documentation = "https://cookiecutter.readthedocs.io"
+Issues = "https://github.com/cookiecutter/cookiecutter/issues"
+Discord = "https://discord.gg/9BrxzPKuEW"
+
+[project.scripts]
+cookiecutter = "cookiecutter.__main__:main"
+
+[dependency-groups]
+dev = [
+    "uv",                       # Is needed by justfile tasks
+    "rust-just>=1.42.3",        # Justfile tasks
+    { include-group = "test" }, # test runner and helpers
+]
+
+docs = [
+    "sphinx",
+    "sphinx_click",
+    "myst_parser",
+    "sphinx_autodoc_typehints",
+    "sphinxcontrib.apidoc",
+    "sphinx_rtd_theme",
+    "sphinx-autobuild",
+]
+
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "freezegun",
+    "safety",
+    "ruff"
+]
+
 [tool.pytest.ini_options]
 testpaths = "tests"
 addopts = "-vvv --cov-report term-missing --cov=cookiecutter"
@@ -9,7 +91,7 @@ ignore = ["D001"]
 
 [tool.ruff]
 
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 
@@ -77,6 +159,7 @@ ignore = [
     "N818",   # Exception name should be named with an Error suffix
     "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
     "S404",   # `subprocess` module is possibly insecure
+    "TC003",  # Ignore request to put Iterable into TYPE CHECKING block
 ]
 
 exclude = ["tests/**/hooks/*"]
@@ -128,3 +211,14 @@ exclude_also = ["if TYPE_CHECKING:"]
 omit = [
     "cookiecutter/__main__.py",
 ]
+
+[tool.uv]
+# Treat this repo as an installable *package*, not just a “virtual” project.
+# Result: `uv sync` / `uv run` will install *this library itself* into the venv in
+# editable (meaning: linked to your working tree) mode, not only its dependencies.
+# This enables entry points (meaning: auto-created CLI scripts), plugin discovery,
+# and proper distribution metadata (meaning: standard package info used by tools).
+package = true
+
+[tool.setuptools]
+packages = ["cookiecutter"]
