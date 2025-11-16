@@ -299,7 +299,7 @@ texinfo_documents = [
 epub_title = 'cookiecutter'
 epub_author = 'Audrey Roy'
 epub_publisher = 'Audrey Roy and Cookiecutter community'
-epub_copyright = '2013-2022, Audrey Roy and Cookiecutter community'
+epub_copyright = '2013, Audrey Roy and Cookiecutter community'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
