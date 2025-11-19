@@ -81,7 +81,7 @@ combined, you could use git submodules in your template. Then, by passing
 the parameter '--recurse-submodules' all submodules from your project will
 be also downloaded allowing you to used them in your project.
 
-    $ cookiecutter hg+https://example.com/repo --recurse-submodules
+    $ cookiecutter git+https://example.com/repo --recurse-submodules
 
 In addition, one can combine it with post processing functions in order to
 have even more flexibility.
