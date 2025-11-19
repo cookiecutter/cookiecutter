@@ -92,7 +92,7 @@ def clone(
 
     repo_url = repo_url.rstrip('/')
     repo_name = os.path.split(repo_url)[1]
-    
+
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
