@@ -130,7 +130,7 @@ def cookiecutter(
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
                 context_from_replayfile = load(path, template_name)
 
-    # Build Path for cookiecutter.json before generating context.
+    # Build Path for cookiecutter.json before generating context..
     context_file = Path(repo_dir) / 'cookiecutter.json'
     logger.debug('context_file is %s', str(context_file).replace(os.sep, '/'))
 
