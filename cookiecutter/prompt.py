@@ -7,10 +7,10 @@ import os
 import re
 import sys
 from collections import OrderedDict
-from collections.abc import Iterator
+from collections.abc import Iterator, Callable
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
@@ -282,84 +282,173 @@ def prompt_choice_for_config(
     return read_user_choice(key, rendered_options, prompts, prefix)
 
 
+T = TypeVar("T")
+
+
+def _is_private_key(key: str) -> bool:
+    """Return True if key is a private (non-rendered) context variable."""
+    return key.startswith("_") and not key.startswith("__")
+
+
+def _build_prefix(count: int, size: int) -> str:
+    """Build human friendly progress prefix like '  [dim][1/3][/] '."""
+    return f"  [dim][{count}/{size}][/] "
+
+
+def _handle_undefined(
+    key: str,
+    context: dict[str, Any],
+    func: Callable[[], T],
+) -> T:
+    """Run func and normalize UndefinedError into UndefinedVariableInTemplate."""
+    try:
+        return func()
+    except UndefinedError as err:
+        msg = f"Unable to render variable '{key}'"
+        raise UndefinedVariableInTemplate(msg, err, context) from err
+
+
+def _handle_simple_value(
+    *,
+    key: str,
+    raw: _Raw,
+    env: Environment,
+    cookiecutter_dict: dict[str, Any],
+    no_input: bool,
+    prompts: dict[str, Any],
+    prefix: str,
+    context: dict[str, Any],
+) -> Any:
+    """Handle non-dict values: lists (choices), bools and regular scalars."""
+    if isinstance(raw, list):
+        # We are dealing with a choice variable
+        return _handle_undefined(
+            key,
+            context,
+            lambda: prompt_choice_for_config(
+                cookiecutter_dict=cookiecutter_dict,
+                env=env,
+                key=key,
+                options=raw,
+                no_input=no_input,
+                prompts=prompts,
+                prefix=prefix,
+            ),
+        )
+
+    if isinstance(raw, bool):
+        # We are dealing with a boolean variable
+        if no_input:
+            return _handle_undefined(
+                key,
+                context,
+                lambda: render_variable(env, raw, cookiecutter_dict),
+            )
+        return read_user_yes_no(key, raw, prompts, prefix)
+
+    # We are dealing with a regular scalar variable
+    def _render_and_prompt() -> Any:
+        value = render_variable(env, raw, cookiecutter_dict)
+        if not no_input:
+            return read_user_variable(key, value, prompts, prefix)
+        return value
+
+    return _handle_undefined(key, context, _render_and_prompt)
+
+
+def _handle_dict_value(
+    *,
+    key: str,
+    raw: dict[_Raw, _Raw],
+    env: Environment,
+    cookiecutter_dict: dict[str, Any],
+    no_input: bool,
+    prompts: dict[str, Any],
+    prefix: str,
+    context: dict[str, Any],
+) -> Any:
+    """Handle dict values in the second pass."""
+    def _render_and_prompt() -> Any:
+        value = render_variable(env, raw, cookiecutter_dict)
+        if not no_input and not key.startswith("__"):
+            return read_user_dict(key, value, prompts, prefix)
+        return value
+
+    return _handle_undefined(key, context, _render_and_prompt)
+
+
 def prompt_for_config(
-    context: dict[str, Any], no_input: bool = False
+    context: dict[str, Any],
+    no_input: bool = False,
 ) -> OrderedDict[str, Any]:
     """Prompt user to enter a new config.
 
     :param dict context: Source for field names and sample values.
     :param no_input: Do not prompt for user input and use only values from context.
     """
-    cookiecutter_dict = OrderedDict([])
+    cookiecutter_dict: OrderedDict[str, Any] = OrderedDict()
     env = create_env_with_context(context)
-    prompts = context['cookiecutter'].pop('__prompts__', {})
+    prompts: dict[str, Any] = context["cookiecutter"].pop("__prompts__", {})
+
+    all_items: list[tuple[str, Any]] = list(context["cookiecutter"].items())
+    visible_keys: list[str] = [key for key, _ in all_items if not key.startswith("_")]
+    size: int = len(visible_keys)
+    count: int = 0
 
     # First pass: Handle simple and raw variables, plus choices.
     # These must be done first because the dictionaries keys and
     # values might refer to them.
-    count = 0
-    all_prompts = context['cookiecutter'].items()
-    visible_prompts = [k for k, _ in all_prompts if not k.startswith("_")]
-    size = len(visible_prompts)
-    for key, raw in all_prompts:
-        if key.startswith('_') and not key.startswith('__'):
+    for key, raw in all_items:
+        if _is_private_key(key):
             cookiecutter_dict[key] = raw
             continue
-        if key.startswith('__'):
-            cookiecutter_dict[key] = render_variable(env, raw, cookiecutter_dict)
+
+        if key.startswith("__"):
+            cookiecutter_dict[key] = _handle_undefined(
+                key,
+                context,
+                lambda: render_variable(env, raw, cookiecutter_dict),
+            )
+            continue
+
+        if isinstance(raw, dict):
+            # Dict variables are handled in the second pass
+            continue
+
+        count += 1
+        prefix = _build_prefix(count, size)
+        cookiecutter_dict[key] = _handle_simple_value(
+            key=key,
+            raw=raw,
+            env=env,
+            cookiecutter_dict=cookiecutter_dict,
+            no_input=no_input,
+            prompts=prompts,
+            prefix=prefix,
+            context=context,
+        )
+
+    # Second pass; handle the dictionaries.
+    for key, raw in context["cookiecutter"].items():
+        # Skip private type dicts not to be rendered.
+        if _is_private_key(key):
             continue
 
         if not isinstance(raw, dict):
-            count += 1
-            prefix = f"  [dim][{count}/{size}][/] "
-
-        try:
-            if isinstance(raw, list):
-                # We are dealing with a choice variable
-                val = prompt_choice_for_config(
-                    cookiecutter_dict, env, key, raw, no_input, prompts, prefix
-                )
-                cookiecutter_dict[key] = val
-            elif isinstance(raw, bool):
-                # We are dealing with a boolean variable
-                if no_input:
-                    cookiecutter_dict[key] = render_variable(
-                        env, raw, cookiecutter_dict
-                    )
-                else:
-                    cookiecutter_dict[key] = read_user_yes_no(key, raw, prompts, prefix)
-            elif not isinstance(raw, dict):
-                # We are dealing with a regular variable
-                val = render_variable(env, raw, cookiecutter_dict)
-
-                if not no_input:
-                    val = read_user_variable(key, val, prompts, prefix)
-
-                cookiecutter_dict[key] = val
-        except UndefinedError as err:
-            msg = f"Unable to render variable '{key}'"
-            raise UndefinedVariableInTemplate(msg, err, context) from err
-
-    # Second pass; handle the dictionaries.
-    for key, raw in context['cookiecutter'].items():
-        # Skip private type dicts not to be rendered.
-        if key.startswith('_') and not key.startswith('__'):
             continue
 
-        try:
-            if isinstance(raw, dict):
-                # We are dealing with a dict variable
-                count += 1
-                prefix = f"  [dim][{count}/{size}][/] "
-                val = render_variable(env, raw, cookiecutter_dict)
-
-                if not no_input and not key.startswith('__'):
-                    val = read_user_dict(key, val, prompts, prefix)
-
-                cookiecutter_dict[key] = val
-        except UndefinedError as err:
-            msg = f"Unable to render variable '{key}'"
-            raise UndefinedVariableInTemplate(msg, err, context) from err
+        count += 1
+        prefix = _build_prefix(count, size)
+        cookiecutter_dict[key] = _handle_dict_value(
+            key=key,
+            raw=raw,
+            env=env,
+            cookiecutter_dict=cookiecutter_dict,
+            no_input=no_input,
+            prompts=prompts,
+            prefix=prefix,
+            context=context,
+        )
 
     return cookiecutter_dict
 
