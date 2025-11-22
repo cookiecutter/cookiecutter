@@ -132,7 +132,7 @@ def cookiecutter(
 
     # Build Path for cookiecutter.json before generating context.
     context_file = Path(repo_dir) / 'cookiecutter.json'
-    logger.debug('context_file is %s', context_file)
+    logger.debug('context_file is %s', str(context_file).replace(os.sep, '/'))
 
     if replay:
         context = generate_context(
