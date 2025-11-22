@@ -7,7 +7,7 @@ import os
 import re
 import sys
 from collections import OrderedDict
-from collections.abc import Iterator, Callable
+from collections.abc import Callable, Iterator
 from itertools import starmap
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypeVar, Union
@@ -407,7 +407,7 @@ def prompt_for_config(
             cookiecutter_dict[key] = _handle_undefined(
                 key,
                 context,
-                lambda: render_variable(env, raw, cookiecutter_dict),
+                lambda raw=raw: render_variable(env, raw, cookiecutter_dict),
             )
             continue
 
