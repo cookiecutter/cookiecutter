@@ -10,6 +10,7 @@ from __future__ import annotations
 import logging
 import os
 import sys
+import json  # New: needed to validate cookiecutter.json as JSON
 from copy import copy
 from pathlib import Path
 from typing import Any
@@ -24,6 +25,29 @@ from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
 
 logger = logging.getLogger(__name__)
+
+
+# New: basic validation helper for cookiecutter.json before generating context.
+def validate_cookiecutter_json(path: Path) -> None:
+    """Validate cookiecutter.json for basic JSON structure."""
+    try:
+        with path.open() as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError, ValueError) as e:
+        raise RuntimeError(f"Invalid cookiecutter.json: {e}") from e
+
+    if not isinstance(data, dict):
+        raise RuntimeError(
+            "Invalid cookiecutter.json: top-level value must be an object"
+        )
+
+    if "cookiecutter" not in data:
+        raise RuntimeError("Invalid cookiecutter.json: missing 'cookiecutter' key")
+
+    if not isinstance(data["cookiecutter"], dict):
+        raise RuntimeError(
+            "Invalid cookiecutter.json: 'cookiecutter' value must be an object"
+        )
 
 
 def cookiecutter(
@@ -105,12 +129,14 @@ def cookiecutter(
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
                 context_from_replayfile = load(path, template_name)
 
-    context_file = os.path.join(repo_dir, 'cookiecutter.json')
+    # New: build Path for cookiecutter.json and validate it before generating context.
+    context_file = Path(repo_dir) / 'cookiecutter.json'
     logger.debug('context_file is %s', context_file)
+    validate_cookiecutter_json(context_file)
 
     if replay:
         context = generate_context(
-            context_file=context_file,
+            context_file=str(context_file),
             default_context=config_dict['default_context'],
             extra_context=None,
         )
@@ -126,7 +152,7 @@ def cookiecutter(
         logger.debug('prompting context: %s', context_for_prompting)
     else:
         context = generate_context(
-            context_file=context_file,
+            context_file=str(context_file),
             default_context=config_dict['default_context'],
             extra_context=extra_context,
         )
