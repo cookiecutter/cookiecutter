@@ -7,10 +7,10 @@ library rather than a script.
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import sys
-import json  # New: needed to validate cookiecutter.json as JSON
 from copy import copy
 from pathlib import Path
 from typing import Any
@@ -27,27 +27,28 @@ from cookiecutter.utils import rmtree
 logger = logging.getLogger(__name__)
 
 
-# New: basic validation helper for cookiecutter.json before generating context.
+# Basic validation helper for cookiecutter.json before generating context.
 def validate_cookiecutter_json(path: Path) -> None:
     """Validate cookiecutter.json for basic JSON structure."""
     try:
-        with path.open() as f:
-            data = json.load(f)
-    except (OSError, json.JSONDecodeError, ValueError) as e:
-        raise RuntimeError(f"Invalid cookiecutter.json: {e}") from e
+        with path.open() as file:
+            data = json.load(file)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        message = f"Invalid cookiecutter.json: {exc}"
+        raise RuntimeError(message) from exc
 
     if not isinstance(data, dict):
-        raise RuntimeError(
-            "Invalid cookiecutter.json: top-level value must be an object"
-        )
+        message = "Invalid cookiecutter.json: top-level value must be an object"
+        raise TypeError(message)
 
     if "cookiecutter" not in data:
-        raise RuntimeError("Invalid cookiecutter.json: missing 'cookiecutter' key")
+        message = "Invalid cookiecutter.json: missing 'cookiecutter' key"
+        raise RuntimeError(message)
 
-    if not isinstance(data["cookiecutter"], dict):
-        raise RuntimeError(
-            "Invalid cookiecutter.json: 'cookiecutter' value must be an object"
-        )
+    cookiecutter_section = data["cookiecutter"]
+    if not isinstance(cookiecutter_section, dict):
+        message = "Invalid cookiecutter.json: 'cookiecutter' value must be an object"
+        raise TypeError(message)
 
 
 def cookiecutter(
@@ -129,7 +130,7 @@ def cookiecutter(
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
                 context_from_replayfile = load(path, template_name)
 
-    # New: build Path for cookiecutter.json and validate it before generating context.
+    # Build Path for cookiecutter.json and validate it before generating context.
     context_file = Path(repo_dir) / 'cookiecutter.json'
     logger.debug('context_file is %s', context_file)
     validate_cookiecutter_json(context_file)

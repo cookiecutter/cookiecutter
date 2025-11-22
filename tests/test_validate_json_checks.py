@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 import pytest
 
@@ -11,7 +10,7 @@ def test_validate_cookiecutter_json_invalid_json(tmp_path):
     context_file = tmp_path / "cookiecutter.json"
     context_file.write_text("{ invalid json", encoding="utf-8")
 
-    with pytest.raises(RuntimeError, match="Invalid cookiecutter.json"):
+    with pytest.raises(RuntimeError, match=r"Invalid cookiecutter\.json"):
         validate_cookiecutter_json(context_file)
 
 
@@ -31,7 +30,7 @@ def test_validate_cookiecutter_json_cookiecutter_not_dict(tmp_path):
     data = {"cookiecutter": ["not", "a", "dict"]}
     context_file.write_text(json.dumps(data), encoding="utf-8")
 
-    with pytest.raises(RuntimeError, match="'cookiecutter' value must be an object"):
+    with pytest.raises(TypeError, match="'cookiecutter' value must be an object"):
         validate_cookiecutter_json(context_file)
 
 
