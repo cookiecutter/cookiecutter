@@ -130,10 +130,9 @@ def cookiecutter(
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
                 context_from_replayfile = load(path, template_name)
 
-    # Build Path for cookiecutter.json and validate it before generating context.
+    # Build Path for cookiecutter.json before generating context.
     context_file = Path(repo_dir) / 'cookiecutter.json'
     logger.debug('context_file is %s', context_file)
-    validate_cookiecutter_json(context_file)
 
     if replay:
         context = generate_context(
@@ -158,6 +157,7 @@ def cookiecutter(
             extra_context=extra_context,
         )
         context_for_prompting = context
+
     # preserve the original cookiecutter options
     # print(context['cookiecutter'])
     context['_cookiecutter'] = {
