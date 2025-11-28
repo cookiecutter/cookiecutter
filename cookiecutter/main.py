@@ -41,6 +41,7 @@ def cookiecutter(
     skip_if_file_exists: bool = False,
     accept_hooks: bool = True,
     keep_project_on_failure: bool = False,
+    use_env_vars: bool = False,
 ) -> str:
     """
     Run Cookiecutter just as if using it from the command line.
@@ -113,6 +114,7 @@ def cookiecutter(
             context_file=context_file,
             default_context=config_dict['default_context'],
             extra_context=None,
+            use_env_vars=use_env_vars,
         )
         logger.debug('replayfile context: %s', context_from_replayfile)
         items_for_prompting = {
@@ -129,6 +131,7 @@ def cookiecutter(
             context_file=context_file,
             default_context=config_dict['default_context'],
             extra_context=extra_context,
+            use_env_vars=use_env_vars,
         )
         context_for_prompting = context
     # preserve the original cookiecutter options

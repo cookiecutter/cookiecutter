@@ -5,6 +5,7 @@ from __future__ import annotations
 import contextlib
 import logging
 import os
+import re
 import shutil
 import stat
 import tempfile
@@ -104,3 +105,66 @@ def create_env_with_context(context: dict[str, Any]) -> StrictEnvironment:
     envvars = context.get('cookiecutter', {}).get('_jinja2_env_vars', {})
 
     return StrictEnvironment(context=context, keep_trailing_newline=True, **envvars)
+
+# Matches ${VAR:-default}
+_ENV_PATTERN = re.compile(
+    r"\$\{([A-Za-z_][A-Za-z0-9_]*)\:-([^}]+)\}"
+)
+
+# Match plain $VAR or ${VAR}
+_SIMPLE_ENV_PATTERN = re.compile(
+    r"\$(?:\{([A-Za-z_][A-Za-z0-9_]*)\}|([A-Za-z_][A-Za-z0-9_]*))"
+)
+
+
+def _replace_posix_style(match: re.Match[str]) -> str:
+    """Replace matches of ${VAR:-default}."""
+    var = match.group(1)
+    default = match.group(2)
+    return os.getenv(var, default)
+
+
+def _replace_simple(match: re.Match[str]) -> str:
+    """Replace matches of $VAR or ${VAR} with env value or empty string if missing."""
+    var = match.group(1) or match.group(2)
+    return os.getenv(var, "")
+
+
+def expand_env_value(value: str) -> str:
+    """
+    Expand environment variable expressions inside a string.
+
+    Supported forms:
+      - ${VAR:-default}   -> use env VAR if set and non-empty, otherwise "default"
+      - ${VAR} or $VAR    -> replace with env VAR or empty string if not set
+
+    Note: This will first expand POSIX-style `${VAR:-default}`,
+    then the simpler `$VAR` forms.
+    """
+    if not isinstance(value, str) or value == "":
+        return value
+
+    # First expand ${VAR:-default}
+    result = _ENV_PATTERN.sub(_replace_posix_style, value)
+
+    # Then expand simple $VAR / ${VAR}
+    return _SIMPLE_ENV_PATTERN.sub(_replace_simple, result)
+
+
+def expand_env_in_context(obj: Any) -> Any:
+    """
+    Recursively expand env expressions in a
+    context-like structure (dict/list/str/others).
+
+    - dict -> new dict with values expanded
+    - list -> new list with items expanded
+    - str -> expand_env_value
+    - other -> returned as-is
+    """
+    if isinstance(obj, dict):
+        return {k: expand_env_in_context(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [expand_env_in_context(v) for v in obj]
+    if isinstance(obj, str):
+        return expand_env_value(obj)
+    return obj

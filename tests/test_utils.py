@@ -1,5 +1,6 @@
 """Tests for `cookiecutter.utils` module."""
 
+import re
 import stat
 import sys
 from pathlib import Path
@@ -109,3 +110,43 @@ def test_create_tmp_repo_dir(tmp_path) -> None:
 
     assert new_repo_dir.exists()
     assert new_repo_dir.glob('*')
+
+# ruff: noqa: SLF001
+def test_replace_simple_empty(monkeypatch):
+    """Test _replace_simple with unset environment variable"""
+    monkeypatch.delenv("MISSING_VAR", raising=False)
+    pattern = re.compile(r"\$(?:\{([A-Za-z_][A-Za-z0-9_]*)\}|([A-Za-z_][A-Za-z0-9_]*))")
+    match = pattern.match("$MISSING_VAR")
+    assert utils._replace_simple(match) == ""
+
+
+def test_expand_env_value_edge_cases():
+    """Test expand_env_value with non-string inputs"""
+    # None and int should be returned as-is
+    assert utils.expand_env_value(None) is None
+    assert utils.expand_env_value(42) == 42
+    assert utils.expand_env_value("") == ""
+
+
+def test_expand_env_in_context_edge_cases(monkeypatch):
+    """Test expand_env_in_context on dicts, lists, strings, and other types"""
+    monkeypatch.setenv("FOO", "BAR")
+
+    # Dict with nested structures
+    ctx = {
+        "key1": "$FOO",
+        "key2": ["$FOO", "${MISSING:-DEFAULT}"],
+        "key3": {"inner": "$FOO"},
+        "key4": 123
+    }
+
+    result = utils.expand_env_in_context(ctx)
+
+    expected = {
+        "key1": "BAR",
+        "key2": ["BAR", "DEFAULT"],
+        "key3": {"inner": "BAR"},
+        "key4": 123,
+    }
+
+    assert result == expected
