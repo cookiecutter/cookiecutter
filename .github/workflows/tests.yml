@@ -5,7 +5,7 @@
 # - No echo/group commands shown.
 # - Shared bootstrap steps are DRY via YAML anchors.
 
-name: CI/CD Tests (version 2)
+name: Tests
 
 on:
   push:
@@ -79,7 +79,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-    name: Tests on Python versions 3.9–>3.13 • "${{ matrix.os }}" (via just, uv, pytest, pytest-pretty)
+    name: Tests on Python versions 3.10–>3.13 • "${{ matrix.os }}" (via just, uv, pytest, pytest-pretty)
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps:
