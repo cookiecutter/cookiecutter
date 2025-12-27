@@ -1,1 +1,1 @@
-{{ random_ascii_string(length, punctuation) }}
+{{random_ascii_string(length, numbers=numbers, punctuation=punctuation) }}

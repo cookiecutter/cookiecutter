@@ -3,6 +3,7 @@
 import json
 import os
 import re
+import string
 from pathlib import Path
 
 import pytest
@@ -68,16 +69,34 @@ def test_generate_file_jsonify_filter(env) -> None:
 
 
 @pytest.mark.parametrize("length", (10, 40))
+@pytest.mark.parametrize("numbers", (True, False))
 @pytest.mark.parametrize("punctuation", (True, False))
-def test_generate_file_random_ascii_string(env, length, punctuation) -> None:
+def test_generate_file_random_ascii_string(env, length, numbers, punctuation) -> None:
     """Verify correct work of random_ascii_string extension on file generation."""
     infile = 'tests/files/{{cookiecutter.random_string_file}}.txt'
     data = {'random_string_file': 'cheese'}
-    context = {"cookiecutter": data, "length": length, "punctuation": punctuation}
+    context = {
+        "cookiecutter": data,
+        "length": length,
+        "numbers": numbers,
+        "punctuation": punctuation,
+    }
     generate.generate_file(project_dir=".", infile=infile, context=context, env=env)
     assert os.path.isfile('tests/files/cheese.txt')
     generated_text = Path('tests/files/cheese.txt').read_text()
     assert len(generated_text) == length
+
+    # If numbers is False,no digits should be in the text
+    if not numbers:
+        assert not any(
+            char.isdigit() for char in generated_text
+        ), "No numbers should be in the generated text."
+
+    # If punctuation is False,no punctuation should be in the text
+    if not punctuation:
+        assert not any(
+            char in string.punctuation for char in generated_text
+        ), "No punctuation should be in the generated text."
 
 
 def test_generate_file_with_true_condition(env) -> None:
