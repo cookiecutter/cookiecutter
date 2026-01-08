@@ -168,6 +168,11 @@ def list_installed_templates(
     is_flag=True,
     help='Do not delete project folder on failure',
 )
+@click.option(
+    '--skip-download',
+    is_flag=True,
+    help='Skip downloading the template if it already exists locally.',
+)
 def main(
     template: str,
     extra_context: dict[str, Any],
@@ -185,6 +190,7 @@ def main(
     accept_hooks: Literal['yes', 'ask', 'no'],
     replay_file: str | None,
     list_installed: bool,
+    skip_download: bool,
     keep_project_on_failure: bool,
 ) -> None:
     """Create a project from a Cookiecutter project template (TEMPLATE).
@@ -230,6 +236,7 @@ def main(
             directory=directory,
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
+            skip_download=skip_download,
             keep_project_on_failure=keep_project_on_failure,
         )
     except (
