@@ -27,6 +27,7 @@ test-all:
     uv run --python=3.11 --isolated --group test -- pytest
     uv run --python=3.12 --isolated --group test -- pytest
     uv run --python=3.13 --isolated --group test -- pytest
+    uv run --python=3.14 --isolated --group test -- pytest
 
 # Run all tests with coverage
 coverage:
