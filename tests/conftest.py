@@ -5,7 +5,7 @@ import shutil
 from pathlib import Path
 
 import pytest
-from typing_extensions import TypedDict
+from typing import TypedDict
 
 from cookiecutter import utils
 from cookiecutter.config import DEFAULT_CONFIG
