@@ -3,9 +3,9 @@
 import os
 import shutil
 from pathlib import Path
+from typing import TypedDict
 
 import pytest
-from typing import TypedDict
 
 from cookiecutter import utils
 from cookiecutter.config import DEFAULT_CONFIG
