@@ -76,8 +76,11 @@ test = [
     "pytest-cov",
     "pytest-mock",
     "freezegun",
+]
+
+lint = [
+    "ruff",
     "safety",
-    "ruff"
 ]
 
 [tool.pytest.ini_options]
