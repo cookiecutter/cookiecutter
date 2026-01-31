@@ -10,11 +10,10 @@ from collections import OrderedDict
 from collections.abc import Iterator
 from itertools import starmap
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Any, TypeAlias
 
 from jinja2.exceptions import UndefinedError
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
-from typing_extensions import TypeAlias
 
 from cookiecutter.exceptions import UndefinedVariableInTemplate
 from cookiecutter.utils import create_env_with_context, rmtree
@@ -194,7 +193,7 @@ def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = "")
     )
 
 
-_Raw: TypeAlias = Union[bool, dict["_Raw", "_Raw"], list["_Raw"], str, None]
+_Raw: TypeAlias = bool | dict["_Raw", "_Raw"] | list["_Raw"] | str | None
 
 
 def render_variable(

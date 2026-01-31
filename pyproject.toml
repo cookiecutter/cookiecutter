@@ -150,8 +150,6 @@ select = [
 # pydocstyle.convention = "google"
 
 ignore = [
-    "ANN101", # missing type annotation for 'self' in method
-    "ANN102", # missing type annotation for 'cls' in method
     "B028",   # No explicit `stacklevel` keyword argument found
     "COM812", # ignore when using ruff-format
     "G004",   # Logging statement uses f-string
