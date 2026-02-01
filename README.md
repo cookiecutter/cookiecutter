@@ -38,7 +38,7 @@ python -m pip install --user cookiecutter
 
 - **Cross-Platform:** Supports Windows, Mac, and Linux.
 - **User-Friendly:** No Python knowledge required.
-- **Versatile:** Compatible with Python 3.8 to 3.12.
+- **Versatile:** Compatible with Python 3.10 to 3.14.
 - **Multi-Language Support:** Use templates in any language or markup format.
 
 ### For Users

@@ -15,6 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Programming Language :: Python",
@@ -75,8 +76,11 @@ test = [
     "pytest-cov",
     "pytest-mock",
     "freezegun",
+]
+
+lint = [
+    "ruff",
     "safety",
-    "ruff"
 ]
 
 [tool.pytest.ini_options]
@@ -90,7 +94,7 @@ ignore = ["D001"]
 
 [tool.ruff]
 
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 
@@ -149,8 +153,6 @@ select = [
 # pydocstyle.convention = "google"
 
 ignore = [
-    "ANN101", # missing type annotation for 'self' in method
-    "ANN102", # missing type annotation for 'cls' in method
     "B028",   # No explicit `stacklevel` keyword argument found
     "COM812", # ignore when using ruff-format
     "G004",   # Logging statement uses f-string
