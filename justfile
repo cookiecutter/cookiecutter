@@ -3,7 +3,7 @@ list:
     just -l
 
 # Generate Sphinx HTML documentation, including API docs
-docs: 
+docs:
     uv run --python=3.13 --isolated --group docs -- sphinx-build docs docs/_build
     open docs/_build/index.html
 
@@ -19,7 +19,7 @@ lint:
 
 # lint check with ruff
 lint-check:
-    uv run --python=3.13 --isolated --group lint -- ruff check --no-fix .    
+    uv run --python=3.13 --isolated --group lint -- ruff check --no-fix .
 
 # Run all the tests for all the supported Python versions
 test-all:
