@@ -232,8 +232,20 @@
     "TemplateVariable": {
       "anyOf": [
         {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/templates_in_context.html",
+          "type": "null"
+        },
+        {
           "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/boolean_variables.html",
           "type": "boolean"
+        },
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/templates_in_context.html",
+          "type": "number"
+        },
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/templates_in_context.html",
+          "type": "string"
         },
         {
           "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/choice_variables.html",
@@ -242,6 +254,9 @@
             "anyOf": [
               {
                 "type": "boolean"
+              },
+              {
+                "type": "number"
               },
               {
                 "type": "string"
@@ -253,10 +268,6 @@
           "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/dict_variables.html",
           "type": "object",
           "additionalProperties": true
-        },
-        {
-          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/templates_in_context.html",
-          "type": "string"
         }
       ]
     }
