@@ -239,7 +239,14 @@
           "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/choice_variables.html",
           "type": "array",
           "items": {
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              }
+            ]
           }
         },
         {
