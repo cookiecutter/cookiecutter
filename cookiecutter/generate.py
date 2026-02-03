@@ -127,6 +127,7 @@ def generate_context(
     context_file: str = 'cookiecutter.json',
     default_context: dict[str, Any] | None = None,
     extra_context: dict[str, Any] | None = None,
+    reserved_keys: tuple[str, ...] = ('$schema',),
 ) -> dict[str, Any]:
     """Generate the context for a Cookiecutter project template.
 
@@ -136,6 +137,7 @@ def generate_context(
         the cookiecutter's variables.
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
+    :param reserved_keys: Set of reserved keys to remove from the context.
     """
     context = OrderedDict([])
 
@@ -167,6 +169,10 @@ def generate_context(
             warnings.warn(f"Invalid default received: {error}")
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
+
+    # Remove special reserved keys from the context, if present.
+    for reserved in reserved_keys:
+        _ = obj.pop(reserved, None)
 
     logger.debug('Context generated is %s', context)
     return context

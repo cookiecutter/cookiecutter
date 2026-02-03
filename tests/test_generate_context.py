@@ -79,6 +79,31 @@ def test_generate_context_with_json_decoding_error() -> None:
     assert path in str(excinfo.value)
 
 
+@pytest.mark.usefixtures('clean_system')
+def test_generate_context_with_json_schema() -> None:
+    """Verify JSON schema metadata is removed from context."""
+    expected_context = {
+        'json_schema': OrderedDict(
+            [
+                ('full_name', 'Raphael Pierzina'),
+            ]
+        ),
+    }
+
+    generated_context = generate.generate_context(
+        context_file='tests/test-generate-context/json_schema.json',
+        default_context={
+            '$schema': 'http://json-schema.org/draft-07/schema#default_context',
+        },
+        extra_context={
+            '$schema': 'http://json-schema.org/draft-07/schema#extra_context',
+        },
+    )
+
+    assert '$schema' not in generated_context
+    assert generated_context == expected_context
+
+
 def test_default_context_replacement_in_generate_context() -> None:
     """Verify default content settings are correctly replaced by template settings.
 
