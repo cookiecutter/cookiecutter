@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "https://cookiecutter.readthedocs.io/en/stable/index.html",
+  "anyOf": [
+    {
+      "$ref": "#/definitions/NestedConfigs"
+    },
+    {
+      "$ref": "#/definitions/NestedConfigsLegacy"
+    },
+    {
+      "$ref": "#/definitions/ReplayFile"
+    },
+    {
+      "$ref": "#/definitions/TemplateConfig"
+    }
+  ],
+  "definitions": {
+    "NestedConfigs": {
+      "title": "Nested Templates",
+      "description": "Cookiecutter nested configuration files",
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "templates": {
+          "title": "Nested configuration files",
+          "description": "References to other Cookiecutter config files.\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/nested_config_files.html",
+          "type": "object",
+          "additionalProperties": {
+            "description": "Nested configuration file\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/nested_config_files.html",
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          }
+        }
+      },
+      "required": [
+        "templates"
+      ]
+    },
+    "NestedConfigsLegacy": {
+      "title": "Nested Templates (Old Format)",
+      "description": "Cookiecutter nested configuration files",
+      "deprecated": false,
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "template": {
+          "description": "Nested configuration files (Old format)\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/nested_config_files.html#old-format",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^.*\\(.+\\).*$"
+          }
+        }
+      },
+      "required": [
+        "template"
+      ]
+    },
+    "ReplayContext": {
+      "description": "Previous inputs for a template to replay.",
+      "type": "object",
+      "properties": {
+        "_template": {
+          "description": "Cookiecutter template directory or URL.",
+          "type": "string"
+        },
+        "_output_dir": {
+          "description": "Absolute path to the output directory.",
+          "type": "string"
+        },
+        "_repo_dir": {
+          "description": "Absolute path to the local template directory.",
+          "type": "string"
+        },
+        "_checkout": {
+          "description": "Branch, tag or commit ID to checkout after clone.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "description": "Previous template input."
+      }
+    },
+    "ReplayFile": {
+      "title": "Replay File",
+      "description": "Cookiecutter replay file",
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "cookiecutter": {
+          "$ref": "#/definitions/ReplayContext"
+        },
+        "_cookiecutter": {
+          "$ref": "#/definitions/TemplateConfig"
+        }
+      },
+      "required": [
+        "cookiecutter"
+      ]
+    },
+    "TemplateConfig": {
+      "title": "Template Configuration",
+      "description": "Cookiecutter template configuration",
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "_copy_without_render": {
+          "description": "Avoid rendering directories and files. Supports Unix shell-style wildcards.\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/copy_without_render.html",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "_extensions": {
+          "description": "Custom Jinja2 extensions.\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/template_extensions.html\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/local_extensions.html",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "_jinja2_env_vars": {
+          "description": "Custom Jinja2 environment config.\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/jinja_env.html",
+          "type": "object"
+        },
+        "_new_lines": {
+          "description": "Line endings configuration.\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/new_line_characters.html",
+          "oneOf": [
+            {
+              "const": "\r\n"
+            },
+            {
+              "const": "\n"
+            },
+            {
+              "const": "\r"
+            }
+          ]
+        },
+        "__prompts__": {
+          "title": "Human Readable Prompts",
+          "description": "Prompt that will be shown to the user for each variable.\nhttps://cookiecutter.readthedocs.io/en/stable/advanced/human_readable_prompts.html",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/TemplatePrompt"
+          }
+        }
+      },
+      "patternProperties": {
+        "^__(?!^([_]?cookiecutter|template[s]?)$).+$": {
+          "title": "Private variable (Rendered)",
+          "$ref": "#/definitions/TemplateVariable"
+        },
+        "^_(?!^([_]?cookiecutter|template[s]?)$).+$": {
+          "title": "Private variable (Not rendered)",
+          "$ref": "#/definitions/TemplateVariable"
+        },
+        "^(?!^([_]?cookiecutter|template[s]?)$).+$": {
+          "title": "Template variable",
+          "$ref": "#/definitions/TemplateVariable"
+        }
+      },
+      "propertyNames": {
+        "not": {
+          "anyOf": [
+            {
+              "const": "_cookiecutter"
+            },
+            {
+              "const": "cookiecutter"
+            },
+            {
+              "const": "template"
+            },
+            {
+              "const": "templates"
+            }
+          ]
+        }
+      }
+    },
+    "TemplatePrompt": {
+      "description": "Prompt for a template variable.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "__prompt__": {
+              "description": "Prompt for a multiple choice question.",
+              "type": "string"
+            }
+          },
+          "additionalProperties": {
+            "description": "Label for a multiple choice option.",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "TemplateVariable": {
+      "anyOf": [
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/templates_in_context.html",
+          "type": "null"
+        },
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/boolean_variables.html",
+          "type": "boolean"
+        },
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/templates_in_context.html",
+          "type": "number"
+        },
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/templates_in_context.html",
+          "type": "string"
+        },
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/choice_variables.html",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        {
+          "description": "https://cookiecutter.readthedocs.io/en/stable/advanced/dict_variables.html",
+          "type": "object",
+          "additionalProperties": true
+        }
+      ]
+    }
+  }
+}
