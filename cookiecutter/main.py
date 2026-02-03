@@ -7,6 +7,7 @@ library rather than a script.
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import sys
@@ -24,6 +25,30 @@ from cookiecutter.repository import determine_repo_dir
 from cookiecutter.utils import rmtree
 
 logger = logging.getLogger(__name__)
+
+
+# Basic validation helper for cookiecutter.json before generating context.
+def validate_cookiecutter_json(path: Path) -> None:
+    """Validate cookiecutter.json for basic JSON structure."""
+    try:
+        with path.open() as file:
+            data = json.load(file)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        message = f"Invalid cookiecutter.json: {exc}"
+        raise RuntimeError(message) from exc
+
+    if not isinstance(data, dict):
+        message = "Invalid cookiecutter.json: top-level value must be an object"
+        raise TypeError(message)
+
+    if "cookiecutter" not in data:
+        message = "Invalid cookiecutter.json: missing 'cookiecutter' key"
+        raise RuntimeError(message)
+
+    cookiecutter_section = data["cookiecutter"]
+    if not isinstance(cookiecutter_section, dict):
+        message = "Invalid cookiecutter.json: 'cookiecutter' value must be an object"
+        raise TypeError(message)
 
 
 def cookiecutter(
@@ -105,12 +130,13 @@ def cookiecutter(
                 path, template_name = os.path.split(os.path.splitext(replay)[0])
                 context_from_replayfile = load(path, template_name)
 
-    context_file = os.path.join(repo_dir, 'cookiecutter.json')
-    logger.debug('context_file is %s', context_file)
+    # Build Path for cookiecutter.json before generating context..
+    context_file = Path(repo_dir) / 'cookiecutter.json'
+    logger.debug('context_file is %s', str(context_file).replace(os.sep, '/'))
 
     if replay:
         context = generate_context(
-            context_file=context_file,
+            context_file=str(context_file),
             default_context=config_dict['default_context'],
             extra_context=None,
         )
@@ -126,11 +152,12 @@ def cookiecutter(
         logger.debug('prompting context: %s', context_for_prompting)
     else:
         context = generate_context(
-            context_file=context_file,
+            context_file=str(context_file),
             default_context=config_dict['default_context'],
             extra_context=extra_context,
         )
         context_for_prompting = context
+
     # preserve the original cookiecutter options
     # print(context['cookiecutter'])
     context['_cookiecutter'] = {
