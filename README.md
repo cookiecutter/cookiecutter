@@ -143,4 +143,4 @@ Adhere to the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-condu
 
 ## Acknowledgements
 
-Created and led by [Audrey Roy Greenfeld](https://github.com/audreyfeldroy), supported by a dedicated team of maintainers and contributors.
+Created and led by [Audrey M. Roy Greenfeld](https://github.com/audreyfeldroy), supported by a dedicated team of maintainers and contributors.
