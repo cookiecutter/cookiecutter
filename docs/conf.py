@@ -70,7 +70,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'cookiecutter'
-copyright = '2013-2022, Audrey Roy and Cookiecutter community'
+copyright = '2013-2026, Audrey M. Roy Greenfeld'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -219,7 +219,7 @@ latex_documents = [
         'index',
         'cookiecutter.tex',
         'cookiecutter Documentation',
-        'Audrey Roy and Cookiecutter community',
+        'Audrey M. Roy Greenfeld',
         'manual',
     ),
 ]
@@ -254,7 +254,7 @@ man_pages = [
         'index',
         'cookiecutter',
         'cookiecutter Documentation',
-        ['Audrey Roy and Cookiecutter community'],
+        ['Audrey M. Roy Greenfeld'],
         1,
     )
 ]
@@ -273,7 +273,7 @@ texinfo_documents = [
         'index',
         'cookiecutter',
         'cookiecutter Documentation',
-        'Audrey Roy and Cookiecutter community',
+        'Audrey M. Roy Greenfeld',
         'cookiecutter',
         'Creates projects from project templates',
         'Miscellaneous',
@@ -297,9 +297,9 @@ texinfo_documents = [
 
 # Bibliographic Dublin Core info.
 epub_title = 'cookiecutter'
-epub_author = 'Audrey Roy'
-epub_publisher = 'Audrey Roy and Cookiecutter community'
-epub_copyright = '2013-2022, Audrey Roy and Cookiecutter community'
+epub_author = 'Audrey M. Roy Greenfeld'
+epub_publisher = 'Audrey M. Roy Greenfeld'
+epub_copyright = '2013-2026, Audrey M. Roy Greenfeld'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
