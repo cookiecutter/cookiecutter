@@ -413,7 +413,7 @@ class TestReadUserChoice:
     def test_should_invoke_read_user_variable(self, mocker) -> None:
         """Verify correct function called for string input variables."""
         read_user_variable = mocker.patch('cookiecutter.prompt.read_user_variable')
-        read_user_variable.return_value = 'Audrey Roy'
+        read_user_variable.return_value = 'Audrey M. Roy Greenfeld'
 
         prompt_choice = mocker.patch('cookiecutter.prompt.prompt_choice_for_config')
 
@@ -428,7 +428,7 @@ class TestReadUserChoice:
         read_user_variable.assert_called_once_with(
             'full_name', 'Your Name', {}, DEFAULT_PREFIX
         )
-        assert cookiecutter_dict == {'full_name': 'Audrey Roy'}
+        assert cookiecutter_dict == {'full_name': 'Audrey M. Roy Greenfeld'}
 
     def test_should_render_choices(self, mocker) -> None:
         """Verify Jinja2 templating engine works inside choices variables."""

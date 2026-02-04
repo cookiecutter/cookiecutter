@@ -1,7 +1,7 @@
 {
-  "full_name": "Audrey Roy",
-  "email": "audreyr@gmail.com",
-  "github_username": "audreyr",
+  "full_name": "Audrey M. Roy Greenfeld",
+  "email": "audreyroygreenfeld@example.com",
+  "github_username": "audreyfeldroy",
   "project_name": "Replay Project",
   "repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
   "description": "original",
