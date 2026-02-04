@@ -1,13 +1,15 @@
 # Credits
 
-## Development Leads
+## Development Lead
 
-- Audrey Roy Greenfeld ([@audreyfeldroy](https://github.com/audreyfeldroy))
+- Audrey M. Roy Greenfeld ([@audreyfeldroy](https://github.com/audreyfeldroy))
+
+## Past Core Committers
+
+Huge gratitude to all who have served as a Cookiecutter core committer over the years:
+
 - Daniel Roy Greenfeld ([@pydanny](https://github.com/pydanny))
 - Raphael Pierzina ([@hackebrot](https://github.com/hackebrot))
-
-## Core Committers
-
 - Michael Joseph ([@michaeljoseph](https://github.com/michaeljoseph))
 - Paul Moore ([@pfmoore](https://github.com/pfmoore))
 - Andrey Shpak ([@insspb](https://github.com/insspb))
@@ -191,7 +193,7 @@ Contributions include user testing, debugging, improving documentation, reviewin
 
 - Adam Chainz ([@adamchainz](https://github.com/adamchainz))
 - Andrew Ittner ([@tephyr](https://github.com/tephyr))
-- Audrey Roy Greenfeld ([@audreyfeldroy](https://github.com/audreyfeldroy))
+- Audrey M. Roy Greenfeld ([@audreyfeldroy](https://github.com/audreyfeldroy))
 - Carol Willing ([@willingc](https://github.com/willingc))
 - Christopher Clarke ([@chrisdev](https://github.com/chrisdev))
 - Citlalli Murillo ([@citmusa](https://github.com/citmusa))
