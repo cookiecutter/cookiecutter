@@ -76,7 +76,7 @@ If you open the AUTHORS.rst file, you should see something like this:
     Development Lead
     ----------------
 
-    * Audrey Roy <audreyr@gmail.com>
+    * Audrey M. Roy Greenfeld <audreyroygreenfeld@example.com>
 
     Contributors
     ------------
@@ -124,8 +124,8 @@ You should see JSON that corresponds to the prompts and default values shown ear
 .. code-block:: json
 
     {
-        "full_name": "Audrey Roy Greenfeld",
-        "email": "aroy@alum.mit.edu",
+        "full_name": "Audrey M. Roy Greenfeld",
+        "email": "audreyroygreenfeld@example.com",
         "github_username": "audreyr",
         "project_name": "Python Boilerplate",
         "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",

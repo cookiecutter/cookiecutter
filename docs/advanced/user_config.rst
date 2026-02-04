@@ -30,9 +30,9 @@ Example user config:
 .. code-block:: yaml
 
     default_context:
-        full_name: "Audrey Roy"
-        email: "audreyr@example.com"
-        github_username: "audreyr"
+        full_name: "Audrey M. Roy Greenfeld"
+        email: "audreyroygreenfeld@example.com"
+        github_username: "audreyfeldroy"
     cookiecutters_dir: "/home/audreyr/my-custom-cookiecutters-dir/"
     replay_dir: "/home/audreyr/my-custom-replay-dir/"
     abbreviations:
