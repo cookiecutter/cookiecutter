@@ -28,6 +28,7 @@ from cookiecutter.hooks import run_hook_from_repo_dir
 from cookiecutter.prompt import YesNoPrompt
 from cookiecutter.utils import (
     create_env_with_context,
+    get_cookiecutter_osenv,
     make_sure_path_exists,
     rmtree,
     work_in,
@@ -167,6 +168,8 @@ def generate_context(
             warnings.warn(f"Invalid default received: {error}")
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
+
+    context[file_stem].update(get_cookiecutter_osenv())
 
     logger.debug('Context generated is %s', context)
     return context
