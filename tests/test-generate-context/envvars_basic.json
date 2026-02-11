@@ -1,0 +1,4 @@
+{
+  "aws_key": "${AWS_KEY:-default_key}",
+  "region": "${REGION:-us-east-1}"
+}

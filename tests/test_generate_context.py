@@ -388,3 +388,156 @@ def test_apply_overwrites_error_overwrite_value_as_boolean_string():
     overwrite_context = {'key': 'invalid'}
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(context, overwrite_context)
+
+
+@pytest.mark.usefixtures("clean_system")
+def test_envvars_with_defaults_only(monkeypatch):
+    """Environment variables missing → fall back to defaults in template."""
+    monkeypatch.delenv("AWS_KEY", raising=False)
+    monkeypatch.delenv("REGION", raising=False)
+
+    context_file = "tests/test-generate-context/envvars_basic.json"
+
+    ctx = generate.generate_context(
+        context_file=context_file,
+        use_env_vars=True,
+    )["envvars_basic"]
+
+    expected = OrderedDict(
+        [
+            ("aws_key", "default_key"),
+            ("region", "us-east-1"),
+        ]
+    )
+
+    assert ctx == expected
+
+
+@pytest.mark.usefixtures("clean_system")
+def test_envvars_with_all_set(monkeypatch):
+    """All environment variables set → env values override defaults."""
+    monkeypatch.setenv("AWS_KEY", "XYZ123")
+    monkeypatch.setenv("REGION", "ca-central-1")
+
+    context_file = "tests/test-generate-context/envvars_basic.json"
+
+    ctx = generate.generate_context(
+        context_file=context_file,
+        use_env_vars=True,
+    )["envvars_basic"]
+
+    expected = OrderedDict(
+        [
+            ("aws_key", "XYZ123"),
+            ("region", "ca-central-1"),
+        ]
+    )
+
+    assert ctx == expected
+
+
+@pytest.mark.usefixtures("clean_system")
+def test_envvars_with_none_set(monkeypatch):
+    """Missing env vars for both fields → both use defaults."""
+    monkeypatch.delenv("AWS_KEY", raising=False)
+    monkeypatch.delenv("REGION", raising=False)
+
+    context_file = "tests/test-generate-context/envvars_missing.json"
+
+    ctx = generate.generate_context(
+        context_file=context_file,
+        use_env_vars=True,
+    )["envvars_missing"]
+
+    expected = OrderedDict(
+        [
+            ("aws_key", "fallback"),
+            ("region", "fallback"),
+        ]
+    )
+
+    assert ctx == expected
+
+
+@pytest.mark.usefixtures("clean_system")
+def test_envvars_partial_defaults(monkeypatch):
+    """One env var present, the other missing → mixed resolution."""
+    monkeypatch.setenv("REGION", "eu-west-2")
+    monkeypatch.delenv("AWS_KEY", raising=False)
+
+    context_file = "tests/test-generate-context/envvars_partial.json"
+
+    ctx = generate.generate_context(
+        context_file=context_file,
+        use_env_vars=True,
+    )["envvars_partial"]
+
+    expected = OrderedDict(
+        [
+            ("aws_key", "default_key"),
+            ("region", "eu-west-2"),
+        ]
+    )
+
+    assert ctx == expected
+
+
+@pytest.mark.usefixtures("clean_system")
+def test_envvars_preserve_extra_context(monkeypatch):
+    """
+    Extra context must override values, even after env var expansion.
+    Expected flow:
+        template value → expand env vars → apply extra_context override
+    """
+    monkeypatch.setenv("AWS_KEY", "from_env")
+    monkeypatch.setenv("REGION", "us-west-1")
+
+    context_file = "tests/test-generate-context/envvars_basic.json"
+    extra_context = {"aws_key": "from_extra"}
+
+    # unwrap inner dict ("project")
+    ctx = generate.generate_context(
+        context_file=context_file,
+        extra_context=extra_context,
+        use_env_vars=True,
+    )["envvars_basic"]
+
+    expected = OrderedDict(
+        [
+            ("aws_key", "from_extra"),     # extra_context overrides env
+            ("region", "us-west-1"),       # expanded from env
+        ]
+    )
+
+    assert ctx == expected
+
+@pytest.mark.usefixtures("clean_system")
+def test_envvar_expansion_exception_is_caught(monkeypatch):
+    """
+    Force expand_env_in_context() to raise an exception so the
+    exception handler inside generate.py (env expansion block)
+    is executed.
+    """
+
+    # Patch expand_env_in_context to give an error
+    def boom():
+        error_str = "forced expansion failure"
+        raise RuntimeError(error_str)
+
+    monkeypatch.setattr(
+        generate, "expand_env_in_context", boom
+    )
+
+    context_file = "tests/test-generate-context/envvars_basic.json"
+
+    # Should not cause exception
+    # catches expansion errors and logs instead.
+    ctx = generate.generate_context(
+        context_file=context_file,
+        use_env_vars=True,
+    )["envvars_basic"]
+
+    # Expansion failed, so the original, unexpanded dict
+    # must still be present under "envvars_broken".
+    assert ctx["aws_key"] == "${AWS_KEY:-default_key}"
+    assert ctx["region"] == "${REGION:-us-east-1}"

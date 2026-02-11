@@ -28,6 +28,7 @@ from cookiecutter.hooks import run_hook_from_repo_dir
 from cookiecutter.prompt import YesNoPrompt
 from cookiecutter.utils import (
     create_env_with_context,
+    expand_env_in_context,
     make_sure_path_exists,
     rmtree,
     work_in,
@@ -127,6 +128,7 @@ def generate_context(
     context_file: str = 'cookiecutter.json',
     default_context: dict[str, Any] | None = None,
     extra_context: dict[str, Any] | None = None,
+    use_env_vars: bool = False,
 ) -> dict[str, Any]:
     """Generate the context for a Cookiecutter project template.
 
@@ -136,6 +138,8 @@ def generate_context(
         the cookiecutter's variables.
     :param default_context: Dictionary containing config to take into account.
     :param extra_context: Dictionary containing configuration overrides
+    :param use_env_vars: If True, expand environment variable expressions like
+        ${VAR:-default} and $VAR in the loaded context values.
     """
     context = OrderedDict([])
 
@@ -167,6 +171,15 @@ def generate_context(
             warnings.warn(f"Invalid default received: {error}")
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
+
+    # Optionally expand environment variables across the loaded context.
+    if use_env_vars:
+        try:
+            context[file_stem] = expand_env_in_context(context[file_stem])
+        except Exception:
+            logger.exception(
+                "Error while expanding env var in context; leaving values as-is."
+            )
 
     logger.debug('Context generated is %s', context)
     return context
