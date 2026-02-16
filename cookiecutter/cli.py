@@ -10,9 +10,9 @@ from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
+    from typing import Literal
 
     from click import Context, Parameter
-    from typing_extensions import Literal
 
 
 import click

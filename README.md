@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="cookiecutter Logo" width="200px" src="https://raw.githubusercontent.com/cookiecutter/cookiecutter/3ac078356adf5a1a72042dfe72ebfa4a9cd5ef38/logo/cookiecutter_medium.png">
+    <img alt="cookiecutter Logo" width="200px" src="https://raw.githubusercontent.com/cookiecutter/cookiecutter/main/logo/cookiecutter_medium.png">
 </h1>
 
 <div align="center">
@@ -38,7 +38,7 @@ python -m pip install --user cookiecutter
 
 - **Cross-Platform:** Supports Windows, Mac, and Linux.
 - **User-Friendly:** No Python knowledge required.
-- **Versatile:** Compatible with Python 3.8 to 3.12.
+- **Versatile:** Compatible with Python 3.10 to 3.14.
 - **Multi-Language Support:** Use templates in any language or markup format.
 
 ### For Users
