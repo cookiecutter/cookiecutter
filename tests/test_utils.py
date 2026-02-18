@@ -105,7 +105,22 @@ def test_create_tmp_repo_dir(tmp_path) -> None:
     for name in subdirs:
         (repo_dir / name).mkdir()
 
-    new_repo_dir = utils.create_tmp_repo_dir(repo_dir)
+    new_repo_dir = utils.create_tmp_repo_dir(repo_dir, 0)
 
+    assert new_repo_dir.exists()
+    assert new_repo_dir.glob('*')
+
+
+def test_create_nested_tmp_repo_dir(tmp_path) -> None:
+    """Verify `utils.create_tmp_repo_dir` creates a valid nested copy."""
+    repo_dir = Path(tmp_path) / 'bar' / 'baz'
+    repo_dir.mkdir(parents=True)
+    subdirs = ('foo', 'bar', 'foobar')
+    for name in subdirs:
+        (repo_dir / name).mkdir()
+
+    new_repo_dir = utils.create_tmp_repo_dir(repo_dir, 1)
+
+    assert repo_dir != new_repo_dir
     assert new_repo_dir.exists()
     assert new_repo_dir.glob('*')
