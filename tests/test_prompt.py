@@ -784,3 +784,20 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmp_path) ->
     assert not mock_read_user.called
     assert not repo_file.exists()
     assert deleted
+
+
+def test_prompt_for_config_empty_list_default():
+    """Regression test for https://github.com/cookiecutter/cookiecutter/issues/2124.
+
+    An empty list [] as a default value in cookiecutter.json should not crash.
+    It should be kept as an empty list in the output context.
+    """
+    context = {
+        'cookiecutter': OrderedDict([
+            ('project_slug', 'my_slug'),
+            ('other_languages', []),
+        ])
+    }
+    result = prompt.prompt_for_config(context, no_input=True)
+    assert result['project_slug'] == 'my_slug'
+    assert result['other_languages'] == []

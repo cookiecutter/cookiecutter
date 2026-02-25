@@ -313,12 +313,15 @@ def prompt_for_config(
             prefix = f"  [dim][{count}/{size}][/] "
 
         try:
-            if isinstance(raw, list):
+            if isinstance(raw, list) and raw:
                 # We are dealing with a choice variable
                 val = prompt_choice_for_config(
                     cookiecutter_dict, env, key, raw, no_input, prompts, prefix
                 )
                 cookiecutter_dict[key] = val
+            elif isinstance(raw, list):
+                # Empty list: treat as a regular variable with [] default
+                cookiecutter_dict[key] = []
             elif isinstance(raw, bool):
                 # We are dealing with a boolean variable
                 if no_input:
