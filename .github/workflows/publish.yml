@@ -43,9 +43,6 @@ jobs:
       contents: read
       id-token: write
       attestations: write
-    # Requires environment protection rules in GitHub Settings:
-    # Settings > Environments > pypi > Add required reviewers
-    # and restrict deployment to v* tags.
     environment:
       name: pypi
       url: https://pypi.org/p/cookiecutter
