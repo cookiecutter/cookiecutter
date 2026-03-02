@@ -274,12 +274,6 @@ Cookiecutter project templates are intentionally hosted VCS repos as-is.
 
 ### Process: Pull Requests
 
-If a pull request is untriaged:
-
-- Look at the roadmap
-- Set it for the milestone where it makes the most sense
-- Add it to the roadmap
-
 How to prioritize pull requests, from most to least important:
 
 - Fixes for broken tests. Broken means broken on any supported platform or Python version.
@@ -306,21 +300,6 @@ Then either fix it or mark as please-help.
 For other issues: encourage friendly discussion, moderate debate, offer your thoughts.
 
 New features require a +1 from 2 other core committers (besides yourself).
-
-### Process: Roadmap
-
-The roadmap located [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
-
-Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
-
-How to number milestones:
-
-- Follow semantic versioning. Look at: [http://semver.org](http://semver.org)
-
-Milestone size:
-
-- If a milestone contains too much, move some to the next milestone.
-- Err on the side of more frequent patch releases.
 
 ### Process: Releasing a New Version
 
