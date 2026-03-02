@@ -320,10 +320,9 @@ New features require a +1 from 2 other core committers (besides yourself).
    This verifies you're on `main` with a clean working tree and a changelog file,
    creates an annotated `v*` tag from the version in `pyproject.toml`,
    and pushes the commit and tag to GitHub.
-4. **Approve the deployment.** The tag triggers the publish workflow
-   (`.github/workflows/publish.yml`), which builds the package, generates SLSA
-   provenance attestations, and publishes to PyPI via trusted publishing. The `pypi`
-   environment requires reviewer approval before the publish job runs.
+4. **Wait for the publish workflow.** The tag triggers `.github/workflows/publish.yml`,
+   which builds the package, generates SLSA provenance attestations, and publishes
+   to PyPI via trusted publishing.
 5. **Create the GitHub Release.** Use the tag and paste the changelog entry as the
    release body.
 
