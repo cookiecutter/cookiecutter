@@ -41,7 +41,6 @@ Project Info
 
    CONTRIBUTING
    AUTHORS
-   HISTORY
    case_studies
    CODE_OF_CONDUCT
 
