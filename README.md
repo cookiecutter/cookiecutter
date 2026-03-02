@@ -84,9 +84,9 @@ cookiecutter('gh:audreyfeldroy/cookiecutter-pypackage')
 
 ### For Template Creators
 
-- Utilize unlimited directory nesting.
-- Employ Jinja2 for all templating needs.
-- Define template variables easily with `cookiecutter.json`.
+- **Any language, any framework.** A Cookiecutter template is just a directory with variables. It works for Python, Rust, Terraform, docs sites, whatever you build repeatedly.
+- **Hooks for the rest of the setup.** Pre- and post-generate scripts (shell or Python) handle git init, dependency installs, or anything else your boilerplate needs.
+- **One file defines the interface.** `cookiecutter.json` declares every variable and its default. Users answer prompts; the template does the rest.
 
 [Learn More](https://cookiecutter.readthedocs.io/en/latest/tutorials/)
 
