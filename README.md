@@ -7,10 +7,9 @@
 [![pypi](https://img.shields.io/pypi/v/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![python](https://img.shields.io/pypi/pyversions/cookiecutter.svg)](https://pypi.org/project/cookiecutter/)
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/cookiecutter?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/cookiecutter)
-[![codecov](https://codecov.io/gh/cookiecutter/cookiecutter/branch/main/graphs/badge.svg?branch=main)](https://codecov.io/github/cookiecutter/cookiecutter?branch=main)
+[![GitHub Stars](https://img.shields.io/github/stars/cookiecutter/cookiecutter?style=flat&logo=github&label=stars)](https://github.com/cookiecutter/cookiecutter)
 [![discord](https://img.shields.io/badge/Discord-cookiecutter-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/9BrxzPKuEW)
 [![docs](https://readthedocs.org/projects/cookiecutter/badge/?version=latest)](https://readthedocs.org/projects/cookiecutter/?badge=latest)
-[![Code Quality](https://img.shields.io/scrutinizer/g/cookiecutter/cookiecutter.svg)](https://scrutinizer-ci.com/g/cookiecutter/cookiecutter/?branch=main)
 
 </div>
 
@@ -25,13 +24,9 @@ Create projects swiftly from **cookiecutters** (project templates) with this com
 
 ## Installation
 
-Install cookiecutter using pip package manager:
+Install Cookiecutter as a CLI tool with [uv](https://docs.astral.sh/uv/):
 ```
-# pipx is strongly recommended.
-pipx install cookiecutter
-
-# If pipx is not available, install cookiecutter in your Python user directory using:
-python -m pip install --user cookiecutter
+uv tool install cookiecutter
 ```
 
 ## Features
@@ -43,27 +38,29 @@ python -m pip install --user cookiecutter
 
 ### For Users
 
-#### Quick Start
+#### Quickstart
 
-The recommended way to use Cookiecutter as a command line utility is to run it with [`pipx`](https://pypa.github.io/pipx/), which can be installed with `pip install pipx`, but if you plan to use Cookiecutter programmatically, please run `pip install cookiecutter`.
+The most common way to use Cookiecutter is as a command line utility with a GitHub-hosted Cookiecutter template such as https://github.com/audreyfeldroy/cookiecutter-pypackage
 
-**Use a GitHub template**
+**Use a GitHub-hosted Cookiecutter template**
 
 ```bash
 # You'll be prompted to enter values.
 # Then it'll create your Python package in the current working directory,
 # based on those values.
 # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-$ pipx run cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
+$ uvx cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
 ```
 
 **Use a local template**
 
 ```bash
-$ pipx run cookiecutter cookiecutter-pypackage/
+$ uvx cookiecutter cookiecutter-pypackage/
 ```
 
 **Use it from Python**
+
+If you plan to use Cookiecutter programmatically, please run `uv add cookiecutter` to add it to your project. Then you can import and use it like this:
 
 ```py
 from cookiecutter.main import cookiecutter
@@ -74,6 +71,8 @@ cookiecutter('cookiecutter-pypackage/')
 # Create project from the cookiecutter-pypackage.git repo template
 cookiecutter('gh:audreyfeldroy/cookiecutter-pypackage')
 ```
+
+> If Cookiecutter saves you time, [star it on GitHub](https://github.com/cookiecutter/cookiecutter) so other developers can find it too.
 
 #### Detailed Usage
 
@@ -98,7 +97,7 @@ Discover a variety of ready-to-use templates on [GitHub](https://github.com/sear
 ### Special Templates
 
 - [cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage)
-- [cookiecutter-django](https://github.com/pydanny/cookiecutter-django)
+- [cookiecutter-django](https://github.com/cookiecutter/cookiecutter-django)
 - [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
 - [cookiecutter-plone-starter](https://github.com/collective/cookiecutter-plone-starter)
 
@@ -113,19 +112,6 @@ Join the community, contribute, or seek assistance.
 - [Contributors](AUTHORS.md)
 - [Contribution Guide](CONTRIBUTING.md)
 
-## Tutorials and Resources
-
-To help users better understand how Cookiecutter works, you can check out the following resources:
-
-- **Video Tutorial:** [Watch on YouTube](https://www.youtube.com/watch?v=X8kXs5kthKw)
-- **Presentation Slides:** [View the Slides](https://docs.google.com/presentation/d/1r3oEmtbyYWvqZrn5y6cdbtIzaahhvAV0cKIqveMMMT8/edit#slide=id.g25f6af9dd6_0_0)
-
-
-### Support
-
-- Star us on [GitHub](https://github.com/cookiecutter/cookiecutter).
-- Stay tuned for upcoming support options.
-
 ### Feedback
 
 We value your feedback. Share your criticisms or complaints constructively to help us improve.
@@ -135,7 +121,7 @@ We value your feedback. Share your criticisms or complaints constructively to he
 ### Waiting for a Response?
 
 - Be patient and consider reaching out to the community for assistance.
-- For urgent matters, contact [@audreyfeldroy](https://github.com/audreyfeldroy) for consultation or custom development.
+- For enterprise support, contact support@feldroy.com.
 
 ## Code of Conduct
 
