@@ -29,6 +29,33 @@ test-all:
     uv run --python=3.13 --isolated --group test -- pytest
     uv run --python=3.14 --isolated --group test -- pytest
 
+VERSION := `grep -m1 '^version' pyproject.toml | sed -E 's/version = "(.*)"/\1/'`
+
+# Print the current version of the project
+version:
+    @echo "Current version is {{VERSION}}"
+
+# Tag the current version and push to GitHub
+tag:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ "$(git branch --show-current)" != "main" ]; then
+        echo "Error: not on main branch" >&2
+        exit 1
+    fi
+    if [ -n "$(git status --porcelain)" ]; then
+        echo "Error: working tree is not clean" >&2
+        exit 1
+    fi
+    if [ ! -f "CHANGELOG/{{VERSION}}.md" ]; then
+        echo "Error: CHANGELOG/{{VERSION}}.md not found" >&2
+        exit 1
+    fi
+    echo "Tagging v{{VERSION}}"
+    git tag -a v{{VERSION}} -m "Release {{VERSION}}"
+    git push origin main
+    git push origin v{{VERSION}}
+
 # Run all tests with coverage
 coverage:
     uv run --python=3.13 --isolated --group test -- \

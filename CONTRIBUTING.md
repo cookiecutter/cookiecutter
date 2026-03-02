@@ -322,6 +322,32 @@ Milestone size:
 - If a milestone contains too much, move some to the next milestone.
 - Err on the side of more frequent patch releases.
 
+### Process: Releasing a New Version
+
+1. **Bump the version** and **write the changelog:**
+   ```bash
+   uv version <version>        # or: uv version --bump minor
+   ```
+   Then write `CHANGELOG/<version>.md`. See previous entries for the format.
+2. **Commit:**
+   ```bash
+   git add pyproject.toml uv.lock CHANGELOG/
+   git commit -m "Release <version>"
+   ```
+3. **Tag and push:**
+   ```bash
+   just tag
+   ```
+   This verifies you're on `main` with a clean working tree and a changelog file,
+   creates an annotated `v*` tag from the version in `pyproject.toml`,
+   and pushes the commit and tag to GitHub.
+4. **Approve the deployment.** The tag triggers the publish workflow
+   (`.github/workflows/publish.yml`), which builds the package, generates SLSA
+   provenance attestations, and publishes to PyPI via trusted publishing. The `pypi`
+   environment requires reviewer approval before the publish job runs.
+5. **Create the GitHub Release.** Use the tag and paste the changelog entry as the
+   release body.
+
 ### Process: Your own code changes
 
 All code changes, regardless of who does them, need to be reviewed and merged by someone else.
