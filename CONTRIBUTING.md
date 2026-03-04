@@ -323,8 +323,12 @@ New features require a +1 from 2 other core committers (besides yourself).
 4. **Wait for the publish workflow.** The tag triggers `.github/workflows/publish.yml`,
    which builds the package, generates SLSA provenance attestations, and publishes
    to PyPI via trusted publishing.
-5. **Create the GitHub Release.** Use the tag and paste the changelog entry as the
-   release body.
+5. **Create the GitHub Release:**
+   ```bash
+   gh release create v2.7.1 --verify-tag \
+     --title "Cookiecutter 2.7.1: The One Where It Knows Its Own Name" \
+     --notes-file CHANGELOG/2.7.1.md
+   ```
 
 ### Process: Your own code changes
 
