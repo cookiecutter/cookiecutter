@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "https://cookiecutter.readthedocs.io/en/stable/advanced/user_config.html",
+  "$ref": "#/definitions/UserConfig",
+  "definitions": {
+    "UserConfig": {
+      "title": ".cookiecutterrc",
+      "description": "Cookiecutter user config file",
+      "type": "object",
+      "properties": {
+        "default_context": {
+          "description": "Key/value pairs that you want injected as context whenever you generate a project with Cookiecutter. These values are treated like the defaults in `cookiecutter.json`, upon generation of any project.",
+          "type": "object"
+        },
+        "cookiecutters_dir": {
+          "description": "Directory where your cookiecutters are cloned to when you use Cookiecutter with a repo argument.",
+          "type": "string"
+        },
+        "replay_dir": {
+          "description": "Directory where Cookiecutter dumps context data to, which you can fetch later on when using the replay feature.",
+          "type": "string"
+        },
+        "abbreviations": {
+          "description": "Abbreviations can be simple aliases for a repo name, or can be used as a prefix, in the form `abbr:suffix`. Any suffix will be inserted into the expansion in place of the text `{0}`, using standard Python string formatting.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
