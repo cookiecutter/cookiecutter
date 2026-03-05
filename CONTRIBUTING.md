@@ -136,7 +136,7 @@ Before you submit a pull request, check that it meets these guidelines:
 ### Coding Standards
 
 - PEP8
-- Functions over classes except in tests
+- Default to functions. Classes should only be used when there is a compelling reason, for example, when inheritance is required for custom Jinja2 extensions. Tests are another exception.
 - Quotes via [http://stackoverflow.com/a/56190/5549](http://stackoverflow.com/a/56190/5549)
 
   - Use double quotes around strings that are used for interpolation or that are natural language messages
