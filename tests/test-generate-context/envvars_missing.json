@@ -1,0 +1,4 @@
+{
+    "aws_key": "${AWS_KEY:-fallback}",
+    "region": "${REGION:-fallback}"
+}

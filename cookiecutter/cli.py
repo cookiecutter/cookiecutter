@@ -168,6 +168,12 @@ def list_installed_templates(
     is_flag=True,
     help='Do not delete project folder on failure',
 )
+@click.option(
+    "--use-env-vars",
+    is_flag=True,
+    default=False,
+    help="Enable environment variable expansion for ${VAR:-default} syntax."
+)
 def main(
     template: str,
     extra_context: dict[str, Any],
@@ -186,6 +192,7 @@ def main(
     replay_file: str | None,
     list_installed: bool,
     keep_project_on_failure: bool,
+    use_env_vars: bool,
 ) -> None:
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -231,6 +238,7 @@ def main(
             skip_if_file_exists=skip_if_file_exists,
             accept_hooks=_accept_hooks,
             keep_project_on_failure=keep_project_on_failure,
+            use_env_vars=use_env_vars,
         )
     except (
         ContextDecodingException,
