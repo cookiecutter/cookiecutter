@@ -1,0 +1,110 @@
+name: Bug Report
+description: Something isn't working as expected
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill out the sections below so we can reproduce and fix it.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug. What did you expect to happen, and what actually happened?
+      placeholder: |
+        I expected cookiecutter to generate the project directory with all files.
+        Instead, it raised a Jinja2 UndefinedError on the README template.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The exact commands or steps to trigger the bug. Include the template URL if applicable.
+      placeholder: |
+        1. Run `cookiecutter https://github.com/user/template`
+        2. Answer the prompts with default values
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: template
+    attributes:
+      label: Template
+      description: Link to the template repo, or paste the relevant parts of `cookiecutter.json` and any template files involved.
+      placeholder: |
+        https://github.com/user/my-template
+
+        cookiecutter.json:
+        {
+            "project_name": "My Project",
+            "version": "0.1.0"
+        }
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Output / traceback
+      description: Paste the full terminal output, including the command you ran and any traceback.
+      render: shell
+
+  - type: input
+    id: cookiecutter-version
+    attributes:
+      label: Cookiecutter version
+      description: Run `cookiecutter --version` and paste the output.
+      placeholder: "2.6.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: python-version
+    attributes:
+      label: Python version
+      options:
+        - "3.14"
+        - "3.13"
+        - "3.12"
+        - "3.11"
+        - "3.10"
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: How did you install Cookiecutter?
+      options:
+        - pip
+        - uv
+        - pipx
+        - uvx
+        - Homebrew
+        - conda
+        - System package manager (apt, dnf, etc.)
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Anything else that might help (configuration files, environment details, workarounds you've tried).

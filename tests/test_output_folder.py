@@ -30,7 +30,7 @@ def test_output_folder() -> None:
     generate.generate_files(context=context, repo_dir='tests/test-output-folder')
 
     something = """Hi!
-My name is Audrey Greenfeld.
+My name is Audrey M. Roy Greenfeld.
 It is 2014.
 """
     something2 = Path('output_folder/something.txt').read_text()

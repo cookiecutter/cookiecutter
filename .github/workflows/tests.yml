@@ -74,20 +74,25 @@ jobs:
 #       - *install_just
 #       - name: Type Checking • macOS (via just, uv, ty)
 #         run: just type-check
-  test-all:
+  test:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-    name: Tests on Python versions 3.10–>3.14 • "${{ matrix.os }}" (via just, uv, pytest, pytest-pretty)
+        os: [ubuntu-latest, macos-latest]
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        include:
+          - os: windows-latest
+            python-version: '3.10'
+          - os: windows-latest
+            python-version: '3.14'
+    name: "Test • ${{ matrix.os }} • Python ${{ matrix.python-version }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
+    timeout-minutes: 15
     steps:
       - *checkout
       - *setup_uv
-      - *install_just
-      - name: "Tests on Python versions 3.10–>3.14 • ${{ matrix.os }}"
-        run: just test-all
+      - name: "Test • Python ${{ matrix.python-version }}"
+        run: uv run --python=${{ matrix.python-version }} --isolated --group test -- pytest
 #   test-coverage:
 #     name: Measuring Coverage • macOS (via just, uv, pytest, pytest-pretty, pytest-cov and coverage[toml])
 #     runs-on: macos-latest

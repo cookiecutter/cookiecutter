@@ -70,6 +70,12 @@ def test_cli_version(cli_runner, version_cli_flag) -> None:
     result = cli_runner(version_cli_flag)
     assert result.exit_code == 0
     assert result.output.startswith('Cookiecutter')
+    # The CLI-reported version must match pyproject.toml (the single source of truth)
+    pyproject_path = Path(__file__).resolve().parent.parent / 'pyproject.toml'
+    pyproject = pyproject_path.read_text(encoding='utf-8')
+    match = re.search(r'^version\s*=\s*"(.+?)"', pyproject, re.MULTILINE)
+    assert match, 'Could not find version in pyproject.toml'
+    assert match.group(1) in result.output
 
 
 @pytest.mark.usefixtures('make_fake_project_dir', 'remove_fake_project_dir')

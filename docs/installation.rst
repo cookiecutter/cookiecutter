@@ -123,7 +123,7 @@ Upgrading
 from 0.6.4 to 0.7.0 or greater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, read :doc:`HISTORY` in detail.
+First, read the `release notes <https://github.com/cookiecutter/cookiecutter/releases>`_ in detail.
 There are a lot of major changes.
 The big ones are:
 

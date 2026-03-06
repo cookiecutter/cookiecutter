@@ -274,12 +274,6 @@ Cookiecutter project templates are intentionally hosted VCS repos as-is.
 
 ### Process: Pull Requests
 
-If a pull request is untriaged:
-
-- Look at the roadmap
-- Set it for the milestone where it makes the most sense
-- Add it to the roadmap
-
 How to prioritize pull requests, from most to least important:
 
 - Fixes for broken tests. Broken means broken on any supported platform or Python version.
@@ -307,20 +301,34 @@ For other issues: encourage friendly discussion, moderate debate, offer your tho
 
 New features require a +1 from 2 other core committers (besides yourself).
 
-### Process: Roadmap
+### Process: Releasing a New Version
 
-The roadmap located [here](https://github.com/cookiecutter/cookiecutter/milestones?direction=desc&sort=due_date&state=open)
-
-Due dates are flexible. Core committers can change them as needed. Note that GitHub sort on them is buggy.
-
-How to number milestones:
-
-- Follow semantic versioning. Look at: [http://semver.org](http://semver.org)
-
-Milestone size:
-
-- If a milestone contains too much, move some to the next milestone.
-- Err on the side of more frequent patch releases.
+1. **Bump the version** and **write the changelog:**
+   ```bash
+   uv version <version>        # or: uv version --bump minor
+   ```
+   Then write `CHANGELOG/<version>.md`. See previous entries for the format.
+2. **Commit:**
+   ```bash
+   git add pyproject.toml uv.lock CHANGELOG/
+   git commit -m "Release <version>"
+   ```
+3. **Tag and push:**
+   ```bash
+   just tag
+   ```
+   This verifies you're on `main` with a clean working tree and a changelog file,
+   creates an annotated `v*` tag from the version in `pyproject.toml`,
+   and pushes the commit and tag to GitHub.
+4. **Wait for the publish workflow.** The tag triggers `.github/workflows/publish.yml`,
+   which builds the package, generates SLSA provenance attestations, and publishes
+   to PyPI via trusted publishing.
+5. **Create the GitHub Release:**
+   ```bash
+   gh release create v2.7.1 --verify-tag \
+     --title "Cookiecutter 2.7.1: The One Where It Knows Its Own Name" \
+     --notes-file CHANGELOG/2.7.1.md
+   ```
 
 ### Process: Your own code changes
 
