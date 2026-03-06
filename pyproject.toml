@@ -34,6 +34,7 @@ keywords = [
     "packaging",
 ]
 dependencies = [
+    "chardet>=5.0.0,<6.0.0",
     "binaryornot>=0.4.4",
     "Jinja2>=2.7,<4.0.0",
     "click>=7.0,<9.0.0",
