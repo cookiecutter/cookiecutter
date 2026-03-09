@@ -1,0 +1,272 @@
+[
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "NonTemplatedInputDirException",
+        "Line no": "19",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'NonTemplatedInputDirException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "UnknownTemplateDirException",
+        "Line no": "28",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'UnknownTemplateDirException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "MissingProjectDir",
+        "Line no": "39",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'MissingProjectDir' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "ConfigDoesNotExistException",
+        "Line no": "50",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'ConfigDoesNotExistException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "InvalidConfiguration",
+        "Line no": "59",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'InvalidConfiguration' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "UnknownRepoType",
+        "Line no": "68",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'UnknownRepoType' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "VCSNotInstalled",
+        "Line no": "76",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'VCSNotInstalled' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "ContextDecodingException",
+        "Line no": "84",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'ContextDecodingException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "OutputDirExistsException",
+        "Line no": "92",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'OutputDirExistsException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "EmptyDirNameException",
+        "Line no": "100",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'EmptyDirNameException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "InvalidModeException",
+        "Line no": "108",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'InvalidModeException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "FailedHookException",
+        "Line no": "117",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'FailedHookException' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "UndefinedVariableInTemplate",
+        "Line no": "125",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'UndefinedVariableInTemplate' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "UnknownExtension",
+        "Line no": "150",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'UnknownExtension' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "RepositoryNotFound",
+        "Line no": "158",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'RepositoryNotFound' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "RepositoryCloneFailed",
+        "Line no": "166",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'RepositoryCloneFailed' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Broken hierarchy",
+        "Class/Module": "InvalidZipRepository",
+        "Line no": "174",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'InvalidZipRepository' and its superclass 'CookiecutterException' may not share a proper 'IS-A' relationship."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Smell": "Wide hierarchy",
+        "Class/Module": "CookiecutterException",
+        "Line no": "0",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\exceptions.py",
+        "Details": "Class 'CookiecutterException' has a wide hierarchy with 17 direct subclasses."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "TimeExtension",
+        "Line no": "110",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\extensions.py",
+        "Details": "Class 'TimeExtension' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "utils",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\utils.py",
+        "Details": "Module 'utils' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "conftest",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "conftest",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\conftest.py",
+        "Details": "Module 'conftest' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_dump",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_dump.py",
+        "Details": "Module 'test_dump' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_load",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_load.py",
+        "Details": "Module 'test_load' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_replay",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_replay",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_replay.py",
+        "Details": "Module 'test_replay' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_determine_repository_should_use_local_repo",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repository_should_use_local_repo.py",
+        "Details": "Module 'test_determine_repository_should_use_local_repo' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_determine_repo_dir_clones_repo",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_clones_repo.py",
+        "Details": "Module 'test_determine_repo_dir_clones_repo' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_existing_cookiecutter.py",
+        "Details": "Module 'test_determine_repo_dir_finds_existing_cookiecutter' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_determine_repo_dir_finds_subdirectories",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_subdirectories.py",
+        "Details": "Module 'test_determine_repo_dir_finds_subdirectories' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "test_is_repo_url",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_is_repo_url.py",
+        "Details": "Module 'test_is_repo_url' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    },
+    {
+        "Package": "cookiecutter.tests.test-extensions.hello_extension",
+        "Module": "hello_extension",
+        "Smell": "Multifaceted abstraction",
+        "Class/Module": "HelloExtension",
+        "Line no": "8",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\test-extensions\\hello_extension\\hello_extension.py",
+        "Details": "Class 'HelloExtension' has a high LCOM value of 1, indicating it may have multiple responsibilities."
+    }
+]

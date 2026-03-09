@@ -1,5 +1,0 @@
-{% if cookiecutter %}
-    {% if cookiecutter.food %}
-I eat {{ cookiecutter.food }}
-    {% endif %}
-{% endif %}

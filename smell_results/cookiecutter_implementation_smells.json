@@ -1,0 +1,1512 @@
+[
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "main",
+        "Line no": "171 - 254",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "Method 'main' has a cyclomatic complexity of 8, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "main",
+        "Line no": "171 - 254",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "Method 'main' is too long (52 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Long parameter list",
+        "Function/Method": "main",
+        "Line no": "171 - 254",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "main has 17 parameters, exceeding the max of 5."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "validate_extra_context",
+        "Line no": "51",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "A line with 101 chars in validate_extra_context exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "list_installed_templates",
+        "Line no": "75",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "A statement with 153 chars in list_installed_templates exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "main",
+        "Line no": "190",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "A statement with 294 chars in main exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "main",
+        "Line no": "219",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "A line with 400 chars in main exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "main",
+        "Line no": "220",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "A line with 214 chars in main exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Smell": "Magic number",
+        "Function/Method": "main",
+        "Line no": "252",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\cli.py",
+        "Details": "Magic number 4 used in main."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "merge_configs",
+        "Line no": "43",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\config.py",
+        "Details": "A statement with 176 chars in merge_configs exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "get_user_config",
+        "Line no": "93",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\config.py",
+        "Details": "A statement with 756 chars in get_user_config exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "22",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\config.py",
+        "Details": "A statement with 107 chars in module:config exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "28",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\config.py",
+        "Details": "A statement with 211 chars in module:config exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "ExtensionLoaderMixin",
+        "Smell": "Empty catch block",
+        "Function/Method": "_read_extensions",
+        "Line no": "53",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\environment.py",
+        "Details": "Empty catch block found in _read_extensions."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "ExtensionLoaderMixin",
+        "Smell": "Long statement",
+        "Function/Method": "__init__",
+        "Line no": "20",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\environment.py",
+        "Details": "A statement with 338 chars in __init__ exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "ExtensionLoaderMixin",
+        "Smell": "Long statement",
+        "Function/Method": "__init__",
+        "Line no": "30",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\environment.py",
+        "Details": "A statement with 240 chars in __init__ exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "ExtensionLoaderMixin",
+        "Smell": "Long statement",
+        "Function/Method": "_read_extensions",
+        "Line no": "46",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\environment.py",
+        "Details": "A statement with 176 chars in _read_extensions exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "StrictEnvironment",
+        "Smell": "Long statement",
+        "Function/Method": "__init__",
+        "Line no": "67",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\environment.py",
+        "Details": "A statement with 143 chars in __init__ exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "JsonifyExtension",
+        "Smell": "Long statement",
+        "Function/Method": "__init__",
+        "Line no": "31",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\extensions.py",
+        "Details": "A statement with 102 chars in __init__ exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "RandomStringExtension",
+        "Smell": "Long statement",
+        "Function/Method": "__init__",
+        "Line no": "44",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\extensions.py",
+        "Details": "A statement with 260 chars in __init__ exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "SlugifyExtension",
+        "Smell": "Long statement",
+        "Function/Method": "__init__",
+        "Line no": "61",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\extensions.py",
+        "Details": "A statement with 577 chars in __init__ exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "TimeExtension",
+        "Smell": "Long statement",
+        "Function/Method": "parse",
+        "Line no": "158",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\extensions.py",
+        "Details": "A line with 118 chars in parse exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "TimeExtension",
+        "Smell": "Long statement",
+        "Function/Method": "parse",
+        "Line no": "160",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\extensions.py",
+        "Details": "A line with 118 chars in parse exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "JsonifyExtension",
+        "Smell": "Magic number",
+        "Function/Method": "__init__",
+        "Line no": "31",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\extensions.py",
+        "Details": "Magic number 4 used in __init__."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "find",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "find_template",
+        "Line no": "19",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\find.py",
+        "Details": "A statement with 191 chars in find_template exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "find",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "find_template",
+        "Line no": "27",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\find.py",
+        "Details": "A line with 120 chars in find_template exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "apply_overwrites_to_context",
+        "Line no": "59 - 123",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "Method 'apply_overwrites_to_context' has a cyclomatic complexity of 14, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "generate_files",
+        "Line no": "327 - 466",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "Method 'generate_files' has a cyclomatic complexity of 18, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Empty catch block",
+        "Function/Method": "is_copy_only_path",
+        "Line no": "53",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "Empty catch block found in is_copy_only_path."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "apply_overwrites_to_context",
+        "Line no": "59 - 123",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "Method 'apply_overwrites_to_context' is too long (59 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "generate_file",
+        "Line no": "175 - 260",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "Method 'generate_file' is too long (44 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "generate_files",
+        "Line no": "327 - 466",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "Method 'generate_files' is too long (102 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long parameter list",
+        "Function/Method": "generate_files",
+        "Line no": "327 - 466",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "generate_files has 7 parameters, exceeding the max of 5."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "is_copy_only_path",
+        "Line no": "40",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A statement with 335 chars in is_copy_only_path exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "apply_overwrites_to_context",
+        "Line no": "80",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A line with 105 chars in apply_overwrites_to_context exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "generate_context",
+        "Line no": "131",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A statement with 418 chars in generate_context exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "generate_context",
+        "Line no": "148",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A line with 115 chars in generate_context exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "generate_file",
+        "Line no": "182",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A statement with 836 chars in generate_file exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "_run_hook_from_repo_dir",
+        "Line no": "307",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A statement with 390 chars in _run_hook_from_repo_dir exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "_run_hook_from_repo_dir",
+        "Line no": "316",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A statement with 149 chars in _run_hook_from_repo_dir exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "generate_files",
+        "Line no": "336",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A statement with 651 chars in generate_files exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "generate_files",
+        "Line no": "359",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A line with 126 chars in generate_files exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "generate_files",
+        "Line no": "458",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "A line with 101 chars in generate_files exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Smell": "Magic number",
+        "Function/Method": "_run_hook_from_repo_dir",
+        "Line no": "320",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\generate.py",
+        "Details": "Magic number 2 used in _run_hook_from_repo_dir."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "valid_hook",
+        "Line no": "36",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 183 chars in valid_hook exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "find_hook",
+        "Line no": "52",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 482 chars in find_hook exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "find_hook",
+        "Line no": "69",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 138 chars in find_hook exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "run_script",
+        "Line no": "81",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 168 chars in run_script exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "run_script_with_context",
+        "Line no": "111",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 233 chars in run_script_with_context exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "run_hook",
+        "Line no": "131",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 246 chars in run_hook exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "run_hook_from_repo_dir",
+        "Line no": "154",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 390 chars in run_hook_from_repo_dir exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "run_pre_prompt_hook",
+        "Line no": "181",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\hooks.py",
+        "Details": "A statement with 106 chars in run_pre_prompt_hook exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "log",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "configure_logger",
+        "Line no": "25",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\log.py",
+        "Details": "A statement with 166 chars in configure_logger exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "log",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "8",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\log.py",
+        "Details": "A statement with 128 chars in module:log exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "cookiecutter",
+        "Line no": "29 - 200",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "Method 'cookiecutter' has a cyclomatic complexity of 10, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "cookiecutter",
+        "Line no": "29 - 200",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "Method 'cookiecutter' is too long (106 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long parameter list",
+        "Function/Method": "cookiecutter",
+        "Line no": "29 - 200",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "cookiecutter has 14 parameters, exceeding the max of 5."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "45",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A statement with 1490 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "83",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A statement with 247 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "112",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A line with 121 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "114",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A line with 128 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "120",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A line with 130 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "136",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A statement with 106 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "146",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A line with 404 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "cookiecutter",
+        "Line no": "185",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A line with 240 chars in cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "1",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\main.py",
+        "Details": "A statement with 167 chars in module:main exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "prompt_for_config",
+        "Line no": "284 - 363",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "Method 'prompt_for_config' has a cyclomatic complexity of 19, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "prompt_for_config",
+        "Line no": "284 - 363",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "Method 'prompt_for_config' is too long (67 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long parameter list",
+        "Function/Method": "prompt_choice_for_config",
+        "Line no": "262 - 281",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "prompt_choice_for_config has 7 parameters, exceeding the max of 5."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_variable",
+        "Line no": "26",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 224 chars in read_user_variable exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_variable",
+        "Line no": "31",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 105 chars in read_user_variable exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_yes_no",
+        "Line no": "62",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 525 chars in read_user_yes_no exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_yes_no",
+        "Line no": "75",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 105 chars in read_user_yes_no exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_choice",
+        "Line no": "92",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 358 chars in read_user_choice exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_choice",
+        "Line no": "108",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 105 chars in read_user_choice exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_choice",
+        "Line no": "119",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A line with 189 chars in read_user_choice exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "process_json",
+        "Line no": "142",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 117 chars in process_json exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_dict",
+        "Line no": "175",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 253 chars in read_user_dict exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_dict",
+        "Line no": "184",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 105 chars in read_user_dict exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "read_user_dict",
+        "Line no": "189",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 121 chars in read_user_dict exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "render_variable",
+        "Line no": "204",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 697 chars in render_variable exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "render_variable",
+        "Line no": "223",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A line with 121 chars in render_variable exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "prompt_choice_for_template",
+        "Line no": "253",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 149 chars in prompt_choice_for_template exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "prompt_choice_for_config",
+        "Line no": "271",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 149 chars in prompt_choice_for_config exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "prompt_for_config",
+        "Line no": "287",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 197 chars in prompt_for_config exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "choose_nested_template",
+        "Line no": "369",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 297 chars in choose_nested_template exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "prompt_and_delete",
+        "Line no": "407",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\prompt.py",
+        "Details": "A statement with 398 chars in prompt_and_delete exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "replay",
+        "Class": "",
+        "Smell": "Magic number",
+        "Function/Method": "dump",
+        "Line no": "37",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\replay.py",
+        "Details": "Magic number 2 used in dump."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "repository_has_cookiecutter_json",
+        "Line no": "56",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "Identifier'repository_has_cookiecutter_json' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long parameter list",
+        "Function/Method": "determine_repo_dir",
+        "Line no": "70 - 139",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "determine_repo_dir has 7 parameters, exceeding the max of 5."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "expand_abbreviations",
+        "Line no": "39",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "A statement with 152 chars in expand_abbreviations exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "repository_has_cookiecutter_json",
+        "Line no": "57",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "A statement with 205 chars in repository_has_cookiecutter_json exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "determine_repo_dir",
+        "Line no": "79",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "A statement with 1153 chars in determine_repo_dir exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "determine_repo_dir",
+        "Line no": "104",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "A line with 133 chars in determine_repo_dir exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "determine_repo_dir",
+        "Line no": "108",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "A line with 103 chars in determine_repo_dir exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "determine_repo_dir",
+        "Line no": "135",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "A statement with 137 chars in determine_repo_dir exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "16",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\repository.py",
+        "Details": "A statement with 238 chars in module:repository exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "force_delete",
+        "Line no": "26",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\utils.py",
+        "Details": "A statement with 196 chars in force_delete exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "rmtree",
+        "Line no": "36",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\utils.py",
+        "Details": "A statement with 107 chars in rmtree exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "work_in",
+        "Line no": "58",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\utils.py",
+        "Details": "A statement with 116 chars in work_in exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "simple_filter",
+        "Line no": "83",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\utils.py",
+        "Details": "A statement with 208 chars in simple_filter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "clone",
+        "Line no": "63 - 139",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\vcs.py",
+        "Details": "Method 'clone' has a cyclomatic complexity of 11, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "clone",
+        "Line no": "63 - 139",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\vcs.py",
+        "Details": "Method 'clone' is too long (54 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "identify_repo",
+        "Line no": "34",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\vcs.py",
+        "Details": "A statement with 272 chars in identify_repo exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "is_vcs_installed",
+        "Line no": "55",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\vcs.py",
+        "Details": "A statement with 104 chars in is_vcs_installed exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "clone",
+        "Line no": "69",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\vcs.py",
+        "Details": "A statement with 467 chars in clone exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "clone",
+        "Line no": "112",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\vcs.py",
+        "Details": "A line with 106 chars in clone exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Smell": "Magic number",
+        "Function/Method": "identify_repo",
+        "Line no": "42",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\vcs.py",
+        "Details": "Magic number 2 used in identify_repo."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "zipfile",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "unzip",
+        "Line no": "17 - 125",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\zipfile.py",
+        "Details": "Method 'unzip' has a cyclomatic complexity of 16, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "zipfile",
+        "Class": "",
+        "Smell": "Long method",
+        "Function/Method": "unzip",
+        "Line no": "17 - 125",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\zipfile.py",
+        "Details": "Method 'unzip' is too long (85 lines)."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "zipfile",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "unzip",
+        "Line no": "24",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\zipfile.py",
+        "Details": "A statement with 550 chars in unzip exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "zipfile",
+        "Class": "",
+        "Smell": "Magic number",
+        "Function/Method": "unzip",
+        "Line no": "54",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\zipfile.py",
+        "Details": "Magic number 100 used in unzip."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "zipfile",
+        "Class": "",
+        "Smell": "Magic number",
+        "Function/Method": "unzip",
+        "Line no": "56",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\zipfile.py",
+        "Details": "Magic number 1024 used in unzip."
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "zipfile",
+        "Class": "",
+        "Smell": "Magic number",
+        "Function/Method": "unzip",
+        "Line no": "115",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\cookiecutter\\zipfile.py",
+        "Details": "Magic number 3 used in unzip."
+    },
+    {
+        "Package": "cookiecutter.docs",
+        "Module": "conf",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "44",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\docs\\conf.py",
+        "Details": "A statement with 267 chars in module:conf exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.docs",
+        "Module": "conf",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "271",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\docs\\conf.py",
+        "Details": "A statement with 160 chars in module:conf exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.docs",
+        "Module": "conf",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "",
+        "Line no": "355",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\docs\\conf.py",
+        "Details": "A statement with 177 chars in module:conf exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Smell": "Complex method",
+        "Function/Method": "restore_backup_dir",
+        "Line no": "47 - 64",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\conftest.py",
+        "Details": "Method 'restore_backup_dir' has a cyclomatic complexity of 7, exceeding the max of 6."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "conftest",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "context",
+        "Line no": "9",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\conftest.py",
+        "Details": "A statement with 143 chars in context exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_value_error_if_key_missing_in_context",
+        "Line no": "35",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_dump.py",
+        "Details": "Identifier'test_value_error_if_key_missing_in_context' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_ioerror_if_replay_dir_creation_fails",
+        "Line no": "64",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_dump.py",
+        "Details": "Identifier'test_ioerror_if_replay_dir_creation_fails' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "remove_replay_dump",
+        "Line no": "28",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_dump.py",
+        "Details": "A statement with 104 chars in remove_replay_dump exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_value_error_if_key_missing_in_context",
+        "Line no": "24",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_load.py",
+        "Details": "Identifier'test_value_error_if_key_missing_in_context' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_io_error_if_no_replay_file",
+        "Line no": "31",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_load.py",
+        "Details": "Identifier'test_io_error_if_no_replay_file' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Smell": "Long parameter list",
+        "Function/Method": "test_run_json_load",
+        "Line no": "37 - 54",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_load.py",
+        "Details": "test_run_json_load has 6 parameters, exceeding the max of 5."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_run_json_load",
+        "Line no": "40",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_load.py",
+        "Details": "A statement with 127 chars in test_run_json_load exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_replay",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_main_does_not_invoke_dump_but_load",
+        "Line no": "32",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_replay.py",
+        "Details": "Identifier'test_main_does_not_invoke_dump_but_load' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_replay",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_main_does_not_invoke_load_but_dump",
+        "Line no": "49",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\replay\\test_replay.py",
+        "Details": "Identifier'test_main_does_not_invoke_load_but_dump' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_abbreviation_expansion",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_abbreviation_expansion_prefix_not_0_in_braces",
+        "Line no": "50",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_abbreviation_expansion.py",
+        "Details": "Identifier'test_abbreviation_expansion_prefix_not_0_in_braces' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_local_repo_with_no_context_raises",
+        "Line no": "24",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repository_should_use_local_repo.py",
+        "Details": "Identifier'test_local_repo_with_no_context_raises' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_finds_local_repo",
+        "Line no": "12",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repository_should_use_local_repo.py",
+        "Details": "A statement with 149 chars in test_finds_local_repo exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_local_repo_with_no_context_raises",
+        "Line no": "29",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repository_should_use_local_repo.py",
+        "Details": "A line with 120 chars in test_local_repo_with_no_context_raises exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_local_repo_with_no_context_raises",
+        "Line no": "37",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repository_should_use_local_repo.py",
+        "Details": "A statement with 207 chars in test_local_repo_with_no_context_raises exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_local_repo_typo",
+        "Line no": "56",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repository_should_use_local_repo.py",
+        "Details": "A line with 120 chars in test_local_repo_typo exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_local_repo_typo",
+        "Line no": "64",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repository_should_use_local_repo.py",
+        "Details": "A statement with 206 chars in test_local_repo_typo exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_repository_url_should_clone",
+        "Line no": "61",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_clones_repo.py",
+        "Details": "Identifier'test_repository_url_should_clone' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_repository_url_with_no_context_file",
+        "Line no": "93",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_clones_repo.py",
+        "Details": "Identifier'test_repository_url_with_no_context_file' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_zipfile_unzip",
+        "Line no": "19",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_clones_repo.py",
+        "Details": "A statement with 203 chars in test_zipfile_unzip exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_zipfile_unzip",
+        "Line no": "24",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_clones_repo.py",
+        "Details": "A statement with 110 chars in test_zipfile_unzip exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_zipfile_unzip",
+        "Line no": "30",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_clones_repo.py",
+        "Details": "A statement with 179 chars in test_zipfile_unzip exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_zipfile_unzip",
+        "Line no": "39",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_clones_repo.py",
+        "Details": "A statement with 149 chars in test_zipfile_unzip exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_should_find_existing_cookiecutter",
+        "Line no": "30",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_existing_cookiecutter.py",
+        "Details": "Identifier'test_should_find_existing_cookiecutter' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_should_find_existing_cookiecutter",
+        "Line no": "33",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_existing_cookiecutter.py",
+        "Details": "A statement with 160 chars in test_should_find_existing_cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_should_find_existing_cookiecutter",
+        "Line no": "38",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_existing_cookiecutter.py",
+        "Details": "A statement with 173 chars in test_should_find_existing_cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_should_find_existing_cookiecutter",
+        "Line no": "34",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_subdirectories.py",
+        "Details": "Identifier'test_should_find_existing_cookiecutter' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_should_find_existing_cookiecutter",
+        "Line no": "38",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_subdirectories.py",
+        "Details": "A statement with 193 chars in test_should_find_existing_cookiecutter exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_local_repo_typo",
+        "Line no": "54",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_subdirectories.py",
+        "Details": "A line with 171 chars in test_local_repo_typo exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Smell": "Long statement",
+        "Function/Method": "test_local_repo_typo",
+        "Line no": "66",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_determine_repo_dir_finds_subdirectories.py",
+        "Details": "A statement with 204 chars in test_local_repo_typo exceeds the maximum length of 100 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_is_repo_url_for_remote_urls",
+        "Line no": "42",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_is_repo_url.py",
+        "Details": "Identifier'test_is_repo_url_for_remote_urls' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Smell": "Long identifier",
+        "Function/Method": "test_is_repo_url_for_local_urls",
+        "Line no": "62",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\repository\\test_is_repo_url.py",
+        "Details": "Identifier'test_is_repo_url_for_local_urls' exceeds the maximum length of 30 characters."
+    },
+    {
+        "Package": "cookiecutter.tests.test-extensions.local_extension.local_extensions",
+        "Module": "main",
+        "Class": "FoobarExtension",
+        "Smell": "Magic number",
+        "Function/Method": "__init__",
+        "Line no": "15",
+        "File": "C:\\Users\\patel\\OneDrive - Dalhousie University\\Desktop\\Classwork\\Sem 1\\Adance Topics in Software Development\\Assignment\\cookiecutter\\tests\\test-extensions\\local_extension\\local_extensions\\main.py",
+        "Details": "Magic number 2 used in __init__."
+    }
+]

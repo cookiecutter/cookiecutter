@@ -1,0 +1,1217 @@
+[
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Function": "version_msg",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Function": "validate_extra_context",
+        "LOC": 9,
+        "CC": 4,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Function": "list_installed_templates",
+        "LOC": 19,
+        "CC": 3,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "cli",
+        "Class": "",
+        "Function": "main",
+        "LOC": 52,
+        "CC": 8,
+        "PC": 17
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Function": "_expand_path",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Function": "merge_configs",
+        "LOC": 11,
+        "CC": 3,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Function": "get_config",
+        "LOC": 20,
+        "CC": 5,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "config",
+        "Class": "",
+        "Function": "get_user_config",
+        "LOC": 26,
+        "CC": 3,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "ExtensionLoaderMixin",
+        "Function": "__init__",
+        "LOC": 16,
+        "CC": 3,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "ExtensionLoaderMixin",
+        "Function": "_read_extensions",
+        "LOC": 8,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "environment",
+        "Class": "StrictEnvironment",
+        "Function": "__init__",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Class": "UndefinedVariableInTemplate",
+        "Function": "__init__",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "exceptions",
+        "Class": "UndefinedVariableInTemplate",
+        "Function": "__str__",
+        "LOC": 6,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "JsonifyExtension",
+        "Function": "__init__",
+        "LOC": 5,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "RandomStringExtension",
+        "Function": "__init__",
+        "LOC": 9,
+        "CC": 2,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "SlugifyExtension",
+        "Function": "__init__",
+        "LOC": 34,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "UUIDExtension",
+        "Function": "__init__",
+        "LOC": 6,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "TimeExtension",
+        "Function": "__init__",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "TimeExtension",
+        "Function": "_datetime",
+        "LOC": 10,
+        "CC": 3,
+        "PC": 4
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "TimeExtension",
+        "Function": "_now",
+        "LOC": 4,
+        "CC": 2,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "extensions",
+        "Class": "TimeExtension",
+        "Function": "parse",
+        "LOC": 26,
+        "CC": 4,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "find",
+        "Class": "",
+        "Function": "find_template",
+        "LOC": 15,
+        "CC": 4,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Function": "is_copy_only_path",
+        "LOC": 9,
+        "CC": 2,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Function": "apply_overwrites_to_context",
+        "LOC": 59,
+        "CC": 14,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Function": "generate_context",
+        "LOC": 28,
+        "CC": 5,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Function": "generate_file",
+        "LOC": 44,
+        "CC": 5,
+        "PC": 5
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Function": "render_and_create_dir",
+        "LOC": 22,
+        "CC": 5,
+        "PC": 5
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Function": "_run_hook_from_repo_dir",
+        "LOC": 11,
+        "CC": 1,
+        "PC": 5
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "generate",
+        "Class": "",
+        "Function": "generate_files",
+        "LOC": 102,
+        "CC": 18,
+        "PC": 7
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Function": "valid_hook",
+        "LOC": 8,
+        "CC": 2,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Function": "find_hook",
+        "LOC": 14,
+        "CC": 1,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Function": "run_script",
+        "LOC": 20,
+        "CC": 5,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Function": "run_script_with_context",
+        "LOC": 10,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Function": "run_hook",
+        "LOC": 10,
+        "CC": 3,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Function": "run_hook_from_repo_dir",
+        "LOC": 17,
+        "CC": 3,
+        "PC": 5
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "hooks",
+        "Class": "",
+        "Function": "run_pre_prompt_hook",
+        "LOC": 16,
+        "CC": 4,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "log",
+        "Class": "",
+        "Function": "configure_logger",
+        "LOC": 18,
+        "CC": 2,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "_patch_import_path_for_repo",
+        "Function": "__init__",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "_patch_import_path_for_repo",
+        "Function": "__enter__",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "_patch_import_path_for_repo",
+        "Function": "__exit__",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "main",
+        "Class": "",
+        "Function": "cookiecutter",
+        "LOC": 106,
+        "CC": 10,
+        "PC": 14
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "YesNoPrompt",
+        "Function": "process_response",
+        "LOC": 7,
+        "CC": 2,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "JsonPrompt",
+        "Function": "process_response",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "read_user_variable",
+        "LOC": 12,
+        "CC": 4,
+        "PC": 4
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "read_user_yes_no",
+        "LOC": 8,
+        "CC": 2,
+        "PC": 4
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "read_repo_password",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "read_user_choice",
+        "LOC": 31,
+        "CC": 6,
+        "PC": 4
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "process_json",
+        "LOC": 13,
+        "CC": 3,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "read_user_dict",
+        "LOC": 14,
+        "CC": 3,
+        "PC": 4
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "render_variable",
+        "LOC": 17,
+        "CC": 3,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "_prompts_from_options",
+        "LOC": 8,
+        "CC": 2,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "prompt_choice_for_template",
+        "LOC": 5,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "prompt_choice_for_config",
+        "LOC": 9,
+        "CC": 2,
+        "PC": 7
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "prompt_for_config",
+        "LOC": 67,
+        "CC": 19,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "choose_nested_template",
+        "LOC": 27,
+        "CC": 4,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "prompt",
+        "Class": "",
+        "Function": "prompt_and_delete",
+        "LOC": 21,
+        "CC": 4,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "replay",
+        "Class": "",
+        "Function": "get_file_name",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "replay",
+        "Class": "",
+        "Function": "dump",
+        "LOC": 8,
+        "CC": 2,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "replay",
+        "Class": "",
+        "Function": "load",
+        "LOC": 8,
+        "CC": 2,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Function": "is_repo_url",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Function": "is_zip_file",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Function": "expand_abbreviations",
+        "LOC": 8,
+        "CC": 1,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Function": "repository_has_cookiecutter_json",
+        "LOC": 7,
+        "CC": 2,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "repository",
+        "Class": "",
+        "Function": "determine_repo_dir",
+        "LOC": 38,
+        "CC": 6,
+        "PC": 7
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "force_delete",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "rmtree",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "make_sure_path_exists",
+        "LOC": 8,
+        "CC": 2,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "work_in",
+        "LOC": 9,
+        "CC": 2,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "make_executable",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "simple_filter",
+        "LOC": 7,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "create_tmp_repo_dir",
+        "LOC": 7,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "utils",
+        "Class": "",
+        "Function": "create_env_with_context",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Function": "identify_repo",
+        "LOC": 13,
+        "CC": 3,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Function": "is_vcs_installed",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "vcs",
+        "Class": "",
+        "Function": "clone",
+        "LOC": 54,
+        "CC": 11,
+        "PC": 4
+    },
+    {
+        "Package": "cookiecutter.cookiecutter",
+        "Module": "zipfile",
+        "Class": "",
+        "Function": "unzip",
+        "LOC": 85,
+        "CC": 16,
+        "PC": 5
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "isolated_filesystem",
+        "LOC": 9,
+        "CC": 1,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "backup_dir",
+        "LOC": 0,
+        "CC": 2,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "restore_backup_dir",
+        "LOC": 0,
+        "CC": 7,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "clean_system",
+        "LOC": -29,
+        "CC": 4,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "user_dir",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "user_config_data",
+        "LOC": -7,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "user_config_file",
+        "LOC": -7,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "output_dir",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "clone_dir",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "context",
+        "LOC": 9,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "replay_test_dir",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "conftest",
+        "Class": "",
+        "Function": "mock_user_config",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "template_name",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "replay_file",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "remove_replay_dump",
+        "LOC": 5,
+        "CC": 2,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "test_value_error_if_key_missing_in_context",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "mock_ensure_failure",
+        "LOC": -3,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "mock_ensure_success",
+        "LOC": -3,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "test_ioerror_if_replay_dir_creation_fails",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_dump",
+        "Class": "",
+        "Function": "test_run_json_dump",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Function": "template_name",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Function": "replay_file",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Function": "test_value_error_if_key_missing_in_context",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Function": "test_io_error_if_no_replay_file",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_load",
+        "Class": "",
+        "Function": "test_run_json_load",
+        "LOC": 11,
+        "CC": 1,
+        "PC": 6
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_replay",
+        "Class": "",
+        "Function": "test_get_replay_file_name",
+        "LOC": 4,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_replay",
+        "Class": "",
+        "Function": "test_raise_on_invalid_mode",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_replay",
+        "Class": "",
+        "Function": "test_main_does_not_invoke_dump_but_load",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.replay",
+        "Module": "test_replay",
+        "Class": "",
+        "Function": "test_main_does_not_invoke_load_but_dump",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_abbreviation_expansion",
+        "Class": "",
+        "Function": "test_abbreviation_expansion",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_abbreviation_expansion",
+        "Class": "",
+        "Function": "test_abbreviation_expansion_prefix_not_0_in_braces",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Function": "test_finds_local_repo",
+        "LOC": 10,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Function": "test_local_repo_with_no_context_raises",
+        "LOC": 23,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repository_should_use_local_repo",
+        "Class": "",
+        "Function": "test_local_repo_typo",
+        "LOC": 18,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Function": "test_zipfile_unzip",
+        "LOC": 25,
+        "CC": 1,
+        "PC": 4
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Function": "template_url",
+        "LOC": -2,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Function": "test_repository_url_should_clone",
+        "LOC": -3,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_clones_repo",
+        "Class": "",
+        "Function": "test_repository_url_with_no_context_file",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Class": "",
+        "Function": "template",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Class": "",
+        "Function": "cloned_cookiecutter_path",
+        "LOC": 6,
+        "CC": 1,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_existing_cookiecutter",
+        "Class": "",
+        "Function": "test_should_find_existing_cookiecutter",
+        "LOC": 12,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Function": "template",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Function": "cloned_cookiecutter_path",
+        "LOC": 10,
+        "CC": 3,
+        "PC": 2
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Function": "test_should_find_existing_cookiecutter",
+        "LOC": 11,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_determine_repo_dir_finds_subdirectories",
+        "Class": "",
+        "Function": "test_local_repo_typo",
+        "LOC": 25,
+        "CC": 1,
+        "PC": 3
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Function": "zipfile",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Function": "test_is_zip_file",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Function": "remote_repo_url",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Function": "test_is_repo_url_for_remote_urls",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Function": "local_repo_url",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Function": "test_is_repo_url_for_local_urls",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_is_repo_url",
+        "Class": "",
+        "Function": "test_expand_abbreviations",
+        "LOC": 0,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_repository_has_cookiecutter_json",
+        "Class": "",
+        "Function": "test_valid_repository",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 0
+    },
+    {
+        "Package": "cookiecutter.tests.repository",
+        "Module": "test_repository_has_cookiecutter_json",
+        "Class": "",
+        "Function": "test_invalid_repository",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.test-extensions.hello_extension",
+        "Module": "hello_extension",
+        "Class": "HelloExtension",
+        "Function": "__init__",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.test-extensions.hello_extension",
+        "Module": "hello_extension",
+        "Class": "HelloExtension",
+        "Function": "_hello",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.test-extensions.hello_extension",
+        "Module": "hello_extension",
+        "Class": "HelloExtension",
+        "Function": "parse",
+        "LOC": 5,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.test-extensions.local_extension.local_extensions",
+        "Module": "main",
+        "Class": "FoobarExtension",
+        "Function": "__init__",
+        "LOC": 3,
+        "CC": 1,
+        "PC": 1
+    },
+    {
+        "Package": "cookiecutter.tests.test-extensions.local_extension.local_extensions",
+        "Module": "main",
+        "Class": "",
+        "Function": "simplefilterextension",
+        "LOC": 2,
+        "CC": 1,
+        "PC": 1
+    }
+]
