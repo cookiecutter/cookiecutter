@@ -1,0 +1,127 @@
+# Poetry pyproject.toml: https://python-poetry.org/docs/pyproject/
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "python-project"
+version = "0.1.0"
+description = "Awesome `python-project` is a Python cli/package created with https://github.com/Undertone0809/python-package-template"
+readme = "README.md"
+authors = ["python-project <hello@python-project.com>"]
+license = "MIT"
+repository = "https://github.com/python_project/python-project"
+homepage = "https://github.com/python_project/python-project"
+
+# Keywords description https://python-poetry.org/docs/pyproject/#keywords
+keywords = []  #! Update me
+
+# Pypi classifiers: https://pypi.org/classifiers/
+classifiers = [  #! Update me
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+]
+
+[tool.poetry.scripts]
+# Entry points for the package https://python-poetry.org/docs/pyproject/#scripts
+"python-project" = "python_project.__main__:app"
+
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+typer = {extras = ["all"], version = "^0.4.0"}
+rich = "^10.14.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.3"
+pytest-html = "^4.1.1"
+pytest-cov = "^5.0.0"
+bandit = "^1.7.10"
+ruff = "^0.7.2"
+pre-commit = "^2.21.0"
+coverage = "^7.2.7"
+coverage-badge = "^1.1.0"
+
+
+
+[tool.ruff]
+# https://beta.ruff.rs/docs/settings/
+# https://docs.astral.sh/ruff/configuration/
+line-length = 88
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+respect-gitignore = true
+
+[tool.ruff.lint]
+# https://beta.ruff.rs/docs/rules/
+extend-select = ["I"]
+exclude = ["*.ipynb"]
+ignore = ["F401"]
+select = ["E", "W", "F", "I"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"  # Accepts: "google", "numpy", or "pep257".
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+exclude = ["*.ipynb"]
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+# https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
+# Directories that are not visited by pytest collector:
+norecursedirs =["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__"]
+doctest_optionflags = ["NUMBER", "NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
+
+# Extra options:
+addopts = [
+  "--strict-markers",
+  "--tb=short",
+  "--doctest-modules",
+  "--doctest-continue-on-failure",
+]
+
+[tool.coverage.run]
+source = ["python-project", "tests"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 50
+show_missing = true
+
+[tool.darglint]
+strictness = "short"
+docstring_style = "google"
