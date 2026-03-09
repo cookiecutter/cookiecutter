@@ -73,6 +73,7 @@ def determine_repo_dir(
     clone_to_dir: Path | str,
     checkout: str | None,
     no_input: bool,
+    recurse_submodules: bool = False,
     password: str | None = None,
     directory: str | None = None,
 ) -> tuple[str, bool]:
@@ -89,6 +90,7 @@ def determine_repo_dir(
         definitions.
     :param clone_to_dir: The directory to clone the repository into.
     :param checkout: The branch, tag or commit ID to checkout after clone.
+    :param recurse_submodules: Recursively clone git submodules if set to `True`.
     :param no_input: Do not prompt for user input and eventually force a refresh of
         cached resources.
     :param password: The password to use when extracting the repository.
@@ -114,6 +116,7 @@ def determine_repo_dir(
         cloned_repo = clone(
             repo_url=template,
             checkout=checkout,
+            recurse_submodules=recurse_submodules,
             clone_to_dir=clone_to_dir,
             no_input=no_input,
         )

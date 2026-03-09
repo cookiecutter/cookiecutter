@@ -32,6 +32,7 @@ def test_zipfile_unzip(mocker, template, is_url, user_config_data) -> None:
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
+        recurse_submodules=False,
         no_input=True,
         password=None,
     )
@@ -75,12 +76,14 @@ def test_repository_url_should_clone(mocker, template_url, user_config_data) -> 
         abbreviations={},
         clone_to_dir=user_config_data['cookiecutters_dir'],
         checkout=None,
+        recurse_submodules=False,
         no_input=True,
     )
 
     mock_clone.assert_called_once_with(
         repo_url=template_url,
         checkout=None,
+        recurse_submodules=False,
         clone_to_dir=user_config_data['cookiecutters_dir'],
         no_input=True,
     )
@@ -104,6 +107,7 @@ def test_repository_url_with_no_context_file(mocker, template_url) -> None:
             abbreviations={},
             clone_to_dir=".",
             checkout=None,
+            recurse_submodules=False,
             no_input=True,
         )
 
