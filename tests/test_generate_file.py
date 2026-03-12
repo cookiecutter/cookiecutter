@@ -4,6 +4,7 @@ import json
 import os
 import re
 from pathlib import Path
+from unittest import mock
 
 import pytest
 from jinja2 import FileSystemLoader
@@ -193,3 +194,46 @@ def test_generate_file_handles_mixed_line_endings(env) -> None:
         simple_text = f.readline()
     assert simple_text in ('newline is CRLF\r\n', 'newline is CRLF\n')
     assert f.newlines in ('\r\n', '\n')
+
+
+@pytest.mark.parametrize(
+    "exception",
+    [
+        NameError("name 'unicode' is not defined"),
+        TypeError("decode() argument 'encoding' must be str, not None"),
+    ],
+    ids=["NameError", "TypeError"],
+)
+def test_generate_file_treats_file_as_binary_when_detection_fails(
+    monkeypatch, env, tmp_path, exception
+) -> None:
+    """Regression test for https://github.com/cookiecutter/cookiecutter/issues/2197.
+
+    When ``binaryornot`` raises ``NameError`` or ``TypeError`` (e.g. due to
+    chardet 7.x returning ``None`` for the encoding), the file should be
+    treated as binary and copied without rendering.
+    """
+    # generate_file uses relative infile paths joined with project_dir.
+    # Simulate the real workflow: chdir to the template dir, use a relative
+    # infile, and point project_dir at a separate output directory.
+    infile = "somefile.ttf"
+    template_dir = tmp_path / "template"
+    template_dir.mkdir()
+    (template_dir / infile).write_bytes(b"\x00\x01\x02binary-content")
+
+    out_dir = tmp_path / "output"
+    out_dir.mkdir()
+
+    monkeypatch.chdir(template_dir)
+
+    with mock.patch("cookiecutter.generate.is_binary", side_effect=exception):
+        generate.generate_file(
+            project_dir=str(out_dir),
+            infile=infile,
+            context={'cookiecutter': {}},
+            env=env,
+        )
+
+    outfile = out_dir / infile
+    assert outfile.exists()
+    assert outfile.read_bytes() == b"\x00\x01\x02binary-content"

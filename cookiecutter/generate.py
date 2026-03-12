@@ -218,7 +218,18 @@ def generate_file(
 
     # Just copy over binary files. Don't render.
     logger.debug("Check %s to see if it's a binary", infile)
-    if is_binary(infile):
+    try:
+        file_is_binary = is_binary(infile)
+    except (NameError, TypeError):
+        # binaryornot is incompatible with newer versions of chardet (7.x+)
+        # which can return None for the encoding.  When detection fails, treat
+        # the file as binary so it is safely copied without rendering.
+        logger.warning(
+            "Unable to detect whether %s is a binary file, treating it as binary.",
+            infile,
+        )
+        file_is_binary = True
+    if file_is_binary:
         logger.debug('Copying binary %s to %s without rendering', infile, outfile)
         shutil.copyfile(infile, outfile)
         shutil.copymode(infile, outfile)
