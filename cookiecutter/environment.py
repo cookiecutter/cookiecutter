@@ -9,6 +9,33 @@ from jinja2 import Environment, StrictUndefined
 from cookiecutter.exceptions import UnknownExtension
 
 
+DEFAULT_EXTENSIONS = [
+    'cookiecutter.extensions.JsonifyExtension',
+    'cookiecutter.extensions.RandomStringExtension',
+    'cookiecutter.extensions.SlugifyExtension',
+    'cookiecutter.extensions.TimeExtension',
+    'cookiecutter.extensions.UUIDExtension',
+]
+
+
+def read_extensions(context: dict[str, Any]) -> list[str]:
+    """Read and return list of Jinja2 extensions from the given context.
+
+    Extracts the ``_extensions`` key from the cookiecutter context dict.
+    If context does not contain the relevant info, return an empty
+    list instead.
+
+    :param context: cookiecutter context dict containing project configuration.
+    :returns: List of extension strings to be passed to the Jinja2 environment.
+    """
+    try:
+        extensions = context['cookiecutter']['_extensions']
+    except KeyError:
+        return []
+    else:
+        return [str(ext) for ext in extensions]
+
+
 class ExtensionLoaderMixin:
     """Mixin providing sane loading of extensions specified in a given context.
 
@@ -27,33 +54,14 @@ class ExtensionLoaderMixin:
         """
         context = context or {}
 
-        default_extensions = [
-            'cookiecutter.extensions.JsonifyExtension',
-            'cookiecutter.extensions.RandomStringExtension',
-            'cookiecutter.extensions.SlugifyExtension',
-            'cookiecutter.extensions.TimeExtension',
-            'cookiecutter.extensions.UUIDExtension',
-        ]
-        extensions = default_extensions + self._read_extensions(context)
+        # Use the module-level read_extensions function instead of instance method
+        extensions = DEFAULT_EXTENSIONS + read_extensions(context)
 
         try:
             super().__init__(extensions=extensions, **kwargs)  # type: ignore[call-arg]
         except ImportError as err:
             msg = f'Unable to load extension: {err}'
             raise UnknownExtension(msg) from err
-
-    def _read_extensions(self, context: dict[str, Any]) -> list[str]:
-        """Return list of extensions as str to be passed on to the Jinja2 env.
-
-        If context does not contain the relevant info, return an empty
-        list instead.
-        """
-        try:
-            extensions = context['cookiecutter']['_extensions']
-        except KeyError:
-            return []
-        else:
-            return [str(ext) for ext in extensions]
 
 
 class StrictEnvironment(ExtensionLoaderMixin, Environment):
