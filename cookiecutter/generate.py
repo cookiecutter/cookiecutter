@@ -324,52 +324,6 @@ def _run_hook_from_repo_dir(
     )
 
 
-def process_directories(
-    root: str,
-    dirs: list,
-    context: dict,
-    project_dir: str,
-    output_dir: Path | str,
-    env: Any,
-    overwrite_if_exists: bool,
-    delete_project_on_failure: bool,
-) -> list:
-    """Process directories separating copy-only from render directories."""
-    copy_dirs = []
-    render_dirs = []
-
-    for d in sorted(dirs):
-        d_ = os.path.normpath(os.path.join(root, d))
-        if is_copy_only_path(d_, context):
-            logger.debug('Found copy only path %s', d)
-            copy_dirs.append(d)
-        else:
-            render_dirs.append(d)
-
-    for copy_dir in copy_dirs:
-        indir = os.path.normpath(os.path.join(root, copy_dir))
-        outdir = os.path.normpath(os.path.join(project_dir, indir))
-        outdir = env.from_string(outdir).render(**context)
-        logger.debug('Copying dir %s to %s without rendering', indir, outdir)
-        if os.path.isdir(outdir):
-            shutil.rmtree(outdir)
-        shutil.copytree(indir, outdir)
-
-    for d in render_dirs:
-        unrendered_dir = os.path.join(project_dir, root, d)
-        try:
-            render_and_create_dir(
-                unrendered_dir, context, output_dir, env, overwrite_if_exists
-            )
-        except UndefinedError as err:
-            if delete_project_on_failure:
-                rmtree(project_dir)
-            _dir = os.path.relpath(unrendered_dir, output_dir)
-            msg = f"Unable to create directory '{_dir}'"
-            raise UndefinedVariableInTemplate(msg, err, context) from err
-
-    return render_dirs
-
 def generate_files(
     repo_dir: Path | str,
     context: dict[str, Any] | None = None,
@@ -435,11 +389,48 @@ def generate_files(
             # We must separate the two types of dirs into different lists.
             # The reason is that we don't want ``os.walk`` to go through the
             # unrendered directories, since they will just be copied.
-            dirs[:] = process_directories(
-                root, dirs, context, project_dir,
-                output_dir, env, overwrite_if_exists,
-                delete_project_on_failure
-            )
+            copy_dirs = []
+            render_dirs = []
+
+            for d in sorted(dirs):
+                d_ = os.path.normpath(os.path.join(root, d))
+                # We check the full path, because that's how it can be
+                # specified in the ``_copy_without_render`` setting, but
+                # we store just the dir name
+                if is_copy_only_path(d_, context):
+                    logger.debug('Found copy only path %s', d)
+                    copy_dirs.append(d)
+                else:
+                    render_dirs.append(d)
+
+            for copy_dir in copy_dirs:
+                indir = os.path.normpath(os.path.join(root, copy_dir))
+                outdir = os.path.normpath(os.path.join(project_dir, indir))
+                outdir = env.from_string(outdir).render(**context)
+                logger.debug('Copying dir %s to %s without rendering', indir, outdir)
+
+                # The outdir is not the root dir, it is the dir which marked as copy
+                # only in the config file. If the program hits this line, which means
+                # the overwrite_if_exists = True, and root dir exists
+                if os.path.isdir(outdir):
+                    shutil.rmtree(outdir)
+                shutil.copytree(indir, outdir)
+
+            # We mutate ``dirs``, because we only want to go through these dirs
+            # recursively
+            dirs[:] = render_dirs
+            for d in dirs:
+                unrendered_dir = os.path.join(project_dir, root, d)
+                try:
+                    render_and_create_dir(
+                        unrendered_dir, context, output_dir, env, overwrite_if_exists
+                    )
+                except UndefinedError as err:
+                    if delete_project_on_failure:
+                        rmtree(project_dir)
+                    _dir = os.path.relpath(unrendered_dir, output_dir)
+                    msg = f"Unable to create directory '{_dir}'"
+                    raise UndefinedVariableInTemplate(msg, err, context) from err
 
             for f in sorted(files):
                 infile = os.path.normpath(os.path.join(root, f))
