@@ -33,73 +33,13 @@ DEFAULT_CONFIG = {
 }
 
 
-class CookiecutterConfig:
-    """Encapsulates configuration loading and merging logic for Cookiecutter.
-
-    This class is responsible for loading a YAML configuration file,
-    validating its contents, merging it with default values, and
-    expanding any paths contained within it.
-    """
-
-    def __init__(self, config_path: Path | str) -> None:
-        """Initialize CookiecutterConfig with a path to a YAML config file.
-
-        :param config_path: Path to the YAML configuration file.
-        """
-        self.config_path = config_path
-
-    def load(self) -> dict[str, Any]:
-        """Load, validate and return config dict from the config file path.
-
-        Reads the YAML config file, merges it with default configuration
-        values, and expands any directory paths found in the config.
-
-        :raises ConfigDoesNotExistException: If the config file does not exist.
-        :raises InvalidConfiguration: If the YAML file cannot be parsed or
-            its top-level element is not a dictionary.
-        :returns: dict containing the merged configuration values.
-        """
-        if not os.path.exists(self.config_path):
-            msg = f'Config file {self.config_path} does not exist.'
-            raise ConfigDoesNotExistException(msg)
-
-        logger.debug('config_path is %s', self.config_path)
-        with open(self.config_path, encoding='utf-8') as file_handle:
-            try:
-                yaml_dict = yaml.safe_load(file_handle) or {}
-            except yaml.YAMLError as e:
-                msg = f'Unable to parse YAML file {self.config_path}.'
-                raise InvalidConfiguration(msg) from e
-
-            if not isinstance(yaml_dict, dict):
-                msg = (
-                    f'Top-level element of YAML file {self.config_path} '
-                    'should be an object.'
-                )
-                raise InvalidConfiguration(msg)
-
-        # Merge loaded yaml with default config values
-        config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
-
-        # Expand paths to handle ~ and environment variables
-        config_dict['replay_dir'] = _expand_path(config_dict['replay_dir'])
-        config_dict['cookiecutters_dir'] = _expand_path(
-            config_dict['cookiecutters_dir']
-        )
-
-        return config_dict
-
-
 def _expand_path(path: str) -> str:
     """Expand both environment variables and user home in the given path."""
     path = os.path.expandvars(path)
     return os.path.expanduser(path)
 
 
-def merge_configs(
-    default: dict[str, Any],
-    overwrite: dict[str, Any],
-) -> dict[str, Any]:
+def merge_configs(default: dict[str, Any], overwrite: dict[str, Any]) -> dict[str, Any]:
     """Recursively update a dict with the key/value pair of another.
 
     Dict values that are dictionaries themselves will be updated, whilst
@@ -120,7 +60,30 @@ def merge_configs(
 
 def get_config(config_path: Path | str) -> dict[str, Any]:
     """Retrieve the config from the specified path, returning a config dict."""
-    return CookiecutterConfig(config_path).load()
+    if not os.path.exists(config_path):
+        msg = f'Config file {config_path} does not exist.'
+        raise ConfigDoesNotExistException(msg)
+
+    logger.debug('config_path is %s', config_path)
+    with open(config_path, encoding='utf-8') as file_handle:
+        try:
+            yaml_dict = yaml.safe_load(file_handle) or {}
+        except yaml.YAMLError as e:
+            msg = f'Unable to parse YAML file {config_path}.'
+            raise InvalidConfiguration(msg) from e
+        if not isinstance(yaml_dict, dict):
+            msg = f'Top-level element of YAML file {config_path} should be an object.'
+            raise InvalidConfiguration(msg)
+
+    config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
+
+    raw_replay_dir = config_dict['replay_dir']
+    config_dict['replay_dir'] = _expand_path(raw_replay_dir)
+
+    raw_cookies_dir = config_dict['cookiecutters_dir']
+    config_dict['cookiecutters_dir'] = _expand_path(raw_cookies_dir)
+
+    return config_dict
 
 
 def get_user_config(
@@ -173,7 +136,5 @@ def get_user_config(
     else:
         # There is a config environment variable. Try to load it.
         # Do not check for existence, so invalid file paths raise an error.
-        logger.debug(
-            "User config not found or not specified. Loading default config."
-        )
+        logger.debug("User config not found or not specified. Loading default config.")
         return get_config(env_config_file)
