@@ -98,11 +98,11 @@ def clone(
     logger.debug(f'repo_dir is {repo_dir}')
 
     if os.path.isdir(repo_dir):
-        should_clone = prompt_and_delete(repo_dir, no_input=no_input)
+        clone = prompt_and_delete(repo_dir, no_input=no_input)
     else:
-        should_clone = True
+        clone = True
 
-    if should_clone:
+    if clone:
         try:
             subprocess.check_output(
                 [repo_type, 'clone', repo_url],
