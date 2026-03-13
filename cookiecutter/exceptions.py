@@ -15,6 +15,17 @@ class CookiecutterException(Exception):
     All Cookiecutter-specific exceptions should subclass this class.
     """
 
+    def __str__(self) -> str:
+        """Return a human-readable string representation of the exception.
+
+        Subclasses may override this method to provide more detailed output.
+        If the exception was raised with a message, return it directly.
+        Otherwise, fall back to the default Exception string representation.
+        """
+        if self.args:
+            return str(self.args[0])
+        return super().__str__()
+
 
 class NonTemplatedInputDirException(CookiecutterException):
     """

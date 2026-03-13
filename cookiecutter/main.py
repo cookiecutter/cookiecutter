@@ -69,7 +69,12 @@ def cookiecutter(
     :param keep_project_on_failure: If `True` keep generated project directory even when
         generation fails
     """
-    if replay and ((no_input is not False) or (extra_context is not None)):
+    replay_is_set = bool(replay)
+    no_input_is_set = no_input is not False
+    extra_context_is_set = extra_context is not None
+    conflicting_with_replay = no_input_is_set or extra_context_is_set
+
+    if replay_is_set and conflicting_with_replay:
         err_msg = (
             "You can not use both replay and no_input or extra_context "
             "at the same time."
