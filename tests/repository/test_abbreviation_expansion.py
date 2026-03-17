@@ -29,6 +29,11 @@ from cookiecutter.repository import expand_abbreviations
             BUILTIN_ABBREVIATIONS,
             'https://bitbucket.org/pydanny/cookiecutter-django',
         ),
+        (
+            'cb:pydanny/cookiecutter-django',
+            BUILTIN_ABBREVIATIONS,
+            'https://codeberg.org/pydanny/cookiecutter-django.git',
+        ),
     ],
     ids=(
         'Simple expansion',
@@ -39,6 +44,7 @@ from cookiecutter.repository import expand_abbreviations
         'Correct expansion for builtin abbreviations (github)',
         'Correct expansion for builtin abbreviations (gitlab)',
         'Correct expansion for builtin abbreviations (bitbucket)',
+        'Correct expansion for builtin abbreviations (codeberg)',
     ),
 )
 def test_abbreviation_expansion(template, abbreviations, expected_result) -> None:
