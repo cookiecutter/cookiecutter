@@ -62,6 +62,7 @@ def custom_config():
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'cb': 'https://codeberg.org/{0}.git',
             'helloworld': 'https://github.com/hackebrot/helloworld',
         },
     }

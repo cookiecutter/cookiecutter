@@ -42,9 +42,9 @@ To create a project from the cookiecutter-pypackage.git repo template::
 
     $ cookiecutter gh:audreyfeldroy/cookiecutter-pypackage
 
-Cookiecutter knows abbreviations for Github (``gh``), Bitbucket (``bb``), and
-GitLab (``gl``) projects, but you can also give it the full URL to any
-repository::
+Cookiecutter knows abbreviations for Github (``gh``), Bitbucket
+(``bb``), GitLab (``gl``), and Codeberg (``cb``) projects, but you can
+also give it the full URL to any repository::
 
     $ cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
     $ cookiecutter git+ssh://git@github.com/audreyfeldroy/cookiecutter-pypackage.git

@@ -19,6 +19,7 @@ def test_merge_configs() -> None:
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'cb': 'https://codeberg.org/{0}.git',
         },
     }
 
@@ -44,6 +45,7 @@ def test_merge_configs() -> None:
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/hackebrot/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'cb': 'https://codeberg.org/{0}.git',
             'pytest-plugin': 'https://github.com/pytest-dev/pytest-plugin.git',
         },
     }
@@ -74,6 +76,7 @@ def test_get_config() -> None:
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'cb': 'https://codeberg.org/{0}.git',
             'helloworld': 'https://github.com/hackebrot/helloworld',
         },
     }
@@ -118,6 +121,7 @@ def test_get_config_with_defaults() -> None:
             'gh': 'https://github.com/{0}.git',
             'gl': 'https://gitlab.com/{0}.git',
             'bb': 'https://bitbucket.org/{0}',
+            'cb': 'https://codeberg.org/{0}.git',
         },
     }
     assert conf == expected_conf
