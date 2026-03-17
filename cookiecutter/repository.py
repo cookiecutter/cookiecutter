@@ -132,6 +132,24 @@ def determine_repo_dir(
         if repository_has_cookiecutter_json(repo_candidate):
             return repo_candidate, cleanup
 
+    if not directory:
+        subdirs = []
+        for repo_candidate in repository_candidates:
+            if os.path.isdir(repo_candidate):
+                for entry in sorted(os.listdir(repo_candidate)):
+                    subdir = os.path.join(repo_candidate, entry)
+                    if repository_has_cookiecutter_json(subdir):
+                        subdirs.append(entry)
+        if subdirs:
+            msg = (
+                'A valid repository for "{}" could not be found at the root, '
+                'but the following subdirectories contain templates:\n{}\n'
+                'Please use the --directory flag to specify one.'.format(
+                    template, '\n'.join(subdirs)
+                )
+            )
+            raise RepositoryNotFound(msg)
+
     msg = (
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(template, '\n'.join(repository_candidates))
