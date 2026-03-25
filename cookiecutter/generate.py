@@ -56,6 +56,30 @@ def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     return False
 
 
+def is_force_render_path(path: str, context: dict[str, Any]) -> bool:
+    """Check whether the given `path` should be rendered even if detected as binary.
+
+    Returns True if `path` matches a pattern in the ``_force_render`` key of the
+    given `context` dict, otherwise False.
+
+    This is useful to override false-positive binary detection by the
+    ``binaryornot`` library (e.g. files starting with ``PACK`` being
+    misclassified as Git pack-files).
+
+    :param path: A file-system path referring to a file that should be
+        force-rendered as text.
+    :param context: cookiecutter context.
+    """
+    try:
+        for force_render in context['cookiecutter']['_force_render']:
+            if fnmatch.fnmatch(path, force_render):
+                return True
+    except KeyError:
+        return False
+
+    return False
+
+
 def apply_overwrites_to_context(
     context: dict[str, Any],
     overwrite_context: dict[str, Any],
@@ -218,11 +242,13 @@ def generate_file(
 
     # Just copy over binary files. Don't render.
     logger.debug("Check %s to see if it's a binary", infile)
-    if is_binary(infile):
+    if is_binary(infile) and not is_force_render_path(infile, context):
         logger.debug('Copying binary %s to %s without rendering', infile, outfile)
         shutil.copyfile(infile, outfile)
         shutil.copymode(infile, outfile)
         return
+    if is_force_render_path(infile, context):
+        logger.debug('Force rendering %s as text (matched _force_render)', infile)
 
     # Force fwd slashes on Windows for get_template
     # This is a by-design Jinja issue
