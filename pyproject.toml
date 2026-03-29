@@ -206,7 +206,7 @@ module = [
 disable_error_code = ["no-untyped-def"]
 
 [tool.coverage.report]
-exclude_also = ["if TYPE_CHECKING:"]
+exclude_also = ["if TYPE_CHECKING:" , "if __name__ == .__main__.:"]
 
 [tool.coverage.run]
 omit = [
