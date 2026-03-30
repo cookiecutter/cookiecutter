@@ -56,6 +56,35 @@ def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     return False
 
 
+def is_force_render_path(path: str, context: dict[str, Any]) -> bool:
+    """Check whether the given `path` should always be rendered as text.
+
+    Some tools (e.g. ``make``) produce files whose first bytes happen to
+    match a binary-file signature used by ``binaryornot``.  For example, a
+    ``Makefile`` that starts with ``PACKAGE_NAME := ...`` begins with the
+    bytes ``b'PACK'``, which ``binaryornot`` treats as a binary signature.
+
+    ``_force_render`` is a list of glob patterns in the cookiecutter context
+    that overrides the binary detection heuristic and forces those files to
+    be rendered as Jinja2 templates.
+
+    Returns True if `path` matches a pattern in the ``_force_render`` list,
+    otherwise False.
+
+    :param path: A file-system path referring to a file that should be
+        checked.
+    :param context: cookiecutter context.
+    """
+    try:
+        for force_render in context['cookiecutter']['_force_render']:
+            if fnmatch.fnmatch(path, force_render):
+                return True
+    except KeyError:
+        return False
+
+    return False
+
+
 def apply_overwrites_to_context(
     context: dict[str, Any],
     overwrite_context: dict[str, Any],
@@ -217,8 +246,12 @@ def generate_file(
     logger.debug('Created file at %s', outfile)
 
     # Just copy over binary files. Don't render.
+    # A file listed in ``_force_render`` bypasses the binary-detection
+    # heuristic — useful when a text file's first bytes match a binary
+    # signature (e.g. a Makefile starting with ``PACKAGE_NAME := ...``
+    # whose first bytes are ``b'PACK'``).
     logger.debug("Check %s to see if it's a binary", infile)
-    if is_binary(infile):
+    if not is_force_render_path(infile, context) and is_binary(infile):
         logger.debug('Copying binary %s to %s without rendering', infile, outfile)
         shutil.copyfile(infile, outfile)
         shutil.copymode(infile, outfile)
