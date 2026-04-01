@@ -43,7 +43,7 @@ jobs:
     name: skipped
     runs-on: ubuntu-latest
     steps:
-      - &checkout { uses: actions/checkout@v5 }
+      - &checkout { uses: actions/checkout@v6 }
       - &setup_uv
         name: Install uv (with cache)
         uses: astral-sh/setup-uv@v6
