@@ -56,6 +56,30 @@ def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     return False
 
 
+def is_force_render_path(path: str, context: dict[str, Any]) -> bool:
+    """Check whether the given `path` should always be rendered as text.
+
+    Returns True if `path` matches a pattern in ``_force_render`` inside the
+    given ``context`` dict, otherwise False.
+
+    This is useful when a file is falsely detected as binary by the underlying
+    heuristic (e.g. files starting with ``PACK``, ``BZh``, etc.) but is
+    actually a plain-text template that must be rendered.
+
+    :param path: A file-system path referring to a file that should be force-
+        rendered.
+    :param context: cookiecutter context.
+    """
+    try:
+        for pattern in context['cookiecutter']['_force_render']:
+            if fnmatch.fnmatch(path, pattern):
+                return True
+    except KeyError:
+        return False
+
+    return False
+
+
 def apply_overwrites_to_context(
     context: dict[str, Any],
     overwrite_context: dict[str, Any],
@@ -218,7 +242,11 @@ def generate_file(
 
     # Just copy over binary files. Don't render.
     logger.debug("Check %s to see if it's a binary", infile)
-    if is_binary(infile):
+    if is_force_render_path(infile, context):
+        logger.debug(
+            'Force-rendering %s as text (matched _force_render pattern)', infile
+        )
+    elif is_binary(infile):
         logger.debug('Copying binary %s to %s without rendering', infile, outfile)
         shutil.copyfile(infile, outfile)
         shutil.copymode(infile, outfile)
