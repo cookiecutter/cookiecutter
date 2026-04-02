@@ -8,7 +8,6 @@ import pytest
 from cookiecutter import generate, utils
 from cookiecutter.generate import is_force_render_path
 
-
 # ---------------------------------------------------------------------------
 # Unit tests for is_force_render_path helper
 # ---------------------------------------------------------------------------
