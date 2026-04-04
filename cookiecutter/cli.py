@@ -8,14 +8,13 @@ import sys
 from collections import OrderedDict
 from typing import TYPE_CHECKING, Any
 
+import click
+
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from typing import Literal
 
     from click import Context, Parameter
-
-
-import click
 
 from cookiecutter import __version__
 from cookiecutter.config import get_user_config
@@ -82,6 +81,59 @@ def list_installed_templates(
     click.echo(f'{len(template_names)} installed templates: ')
     for name in template_names:
         click.echo(f' * {name}')
+
+
+def list_template_prompts(
+    template: str,
+    checkout: str | None,
+    directory: str | None,
+    output_format: str,
+) -> None:
+    """Introspect a template and print all variables without generating files."""
+    from cookiecutter.repository import determine_repo_dir
+
+    try:
+        config_dict = get_user_config()
+        repo_dir, _cleanup = determine_repo_dir(
+            template=template,
+            abbreviations=config_dict["abbreviations"],
+            clone_to_dir=config_dict["cookiecutters_dir"],
+            checkout=checkout,
+            no_input=True,
+            directory=directory,
+        )
+    except Exception as e:
+        click.echo(f"Error fetching template: {e}", err=True)
+        sys.exit(1)
+
+    cookiecutter_json_path = os.path.join(repo_dir, "cookiecutter.json")
+    if not os.path.exists(cookiecutter_json_path):
+        click.echo(f"No cookiecutter.json found in {repo_dir}", err=True)
+        sys.exit(1)
+
+    with open(cookiecutter_json_path, encoding="utf-8") as f:
+        cookiecutter_json = json.load(f)
+
+    prompts = cookiecutter_json.get("__prompts__", {})
+
+    variables = []
+    for key, default in cookiecutter_json.items():
+        if key.startswith("_"):
+            continue
+        description = prompts.get(key, None)
+        variables.append({"key": key, "default": default, "description": description})
+
+    if output_format == "json":
+        click.echo(json.dumps(variables, indent=2, default=str))
+    else:
+        for var in variables:
+            default_display = json.dumps(var["default"], default=str)
+            click.echo(
+                click.style(var["key"], bold=True) + f" (default: {default_display})"
+            )
+            if var["description"]:
+                click.echo(f"  {var['description']}")
+            click.echo()
 
 
 @click.command(context_settings={"help_option_names": ['-h', '--help']})
@@ -168,6 +220,20 @@ def list_installed_templates(
     is_flag=True,
     help='Do not delete project folder on failure',
 )
+@click.option(
+    '--list-prompts',
+    is_flag=True,
+    default=False,
+    help='List all variables defined in the template without generating files. '
+    'Use --format to control output (human or json).',
+)
+@click.option(
+    '--format',
+    'output_format',
+    type=click.Choice(['human', 'json']),
+    default='human',
+    help='Output format for --list-prompts: human-readable (default) or json.',
+)
 def main(
     template: str,
     extra_context: dict[str, Any],
@@ -186,6 +252,8 @@ def main(
     replay_file: str | None,
     list_installed: bool,
     keep_project_on_failure: bool,
+    list_prompts: bool,
+    output_format: str,
 ) -> None:
     """Create a project from a Cookiecutter project template (TEMPLATE).
 
@@ -201,6 +269,10 @@ def main(
     # Raising usage, after all commands that should work without args.
     if not template or template.lower() == 'help':
         click.echo(click.get_current_context().get_help())
+        sys.exit(0)
+
+    if list_prompts:
+        list_template_prompts(template, checkout, directory, output_format)
         sys.exit(0)
 
     configure_logger(stream_level='DEBUG' if verbose else 'INFO', debug_file=debug_file)
