@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import click
 from collections import OrderedDict
 from typing import TYPE_CHECKING, Any
 
@@ -15,7 +16,6 @@ if TYPE_CHECKING:
     from click import Context, Parameter
 
 
-import click
 
 from cookiecutter import __version__
 from cookiecutter.config import get_user_config
@@ -84,10 +84,17 @@ def list_installed_templates(
         click.echo(f' * {name}')
 
 
-@click.command(context_settings={"help_option_names": ['-h', '--help']})
+@click.group(
+    invoke_without_command=True,
+    context_settings={
+        "help_option_names": ['-h', '--help'],
+        "allow_extra_args": True,
+        "allow_interspersed_args": False,
+    },
+)
+@click.pass_context
 @click.version_option(__version__, '-V', '--version', message=version_msg())
-@click.argument('template', required=False)
-@click.argument('extra_context', nargs=-1, callback=validate_extra_context)
+
 @click.option(
     '--no-input',
     is_flag=True,
@@ -169,8 +176,7 @@ def list_installed_templates(
     help='Do not delete project folder on failure',
 )
 def main(
-    template: str,
-    extra_context: dict[str, Any],
+    ctx: Context,
     no_input: bool,
     checkout: str,
     verbose: bool,
@@ -194,6 +200,16 @@ def main(
     in touch at https://github.com/cookiecutter/cookiecutter.
     """
     # Commands that should work without arguments
+
+    if ctx.invoked_subcommand is not None:
+        return
+
+    # Parse positional args manually from ctx.args
+    args = ctx.args
+    template = args[0] if args else None
+    extra_context_raw = tuple(args[1:]) if len(args) > 1 else ()
+    extra_context = validate_extra_context(ctx, None, extra_context_raw)
+    
     if list_installed:
         list_installed_templates(default_config, config_file)
         sys.exit(0)
@@ -252,6 +268,99 @@ def main(
         context_str = json.dumps(undefined_err.context, indent=4, sort_keys=True)
         click.echo(f'Context: {context_str}')
         sys.exit(1)
+
+@main.command("list-prompts")
+@click.argument("template")
+@click.option(
+    "--checkout",
+    "-c",
+    default=None,
+    help="branch, tag or commit to checkout after git clone",
+)
+@click.option(
+    "--directory",
+    default=None,
+    help="Directory within repo that holds cookiecutter.json file",
+)
+@click.option(
+    "--format",
+    "output_format",
+    type=click.Choice(["human", "json"]),
+    default="human",
+    help="Output format: human-readable (default) or json",
+)
+def list_prompts(template, checkout, directory, output_format):
+    """List all variables in a Cookiecutter template without generating files.
+
+    TEMPLATE is the path or URL to the Cookiecutter template.
+
+    Examples:
+
+    \b
+    cookiecutter list-prompts gh:audreyfeldroy/cookiecutter-pypackage
+    cookiecutter list-prompts ./my-local-template
+    cookiecutter list-prompts gh:audreyfeldroy/cookiecutter-pypackage --format json
+    """
+    from cookiecutter.config import get_user_config
+    from cookiecutter.repository import determine_repo_dir
+
+    try:
+        config_dict = get_user_config()
+
+        repo_dir, cleanup = determine_repo_dir(
+            template=template,
+            abbreviations=config_dict["abbreviations"],
+            clone_to_dir=config_dict["cookiecutters_dir"],
+            checkout=checkout,
+            no_input=True,
+            directory=directory,
+        )
+    except Exception as e:
+        click.echo(f"Error fetching template: {e}", err=True)
+        sys.exit(1)
+
+    # Find cookiecutter.json
+    cookiecutter_json_path = os.path.join(repo_dir, "cookiecutter.json")
+    if not os.path.exists(cookiecutter_json_path):
+        click.echo(
+            f"No cookiecutter.json found in {repo_dir}", err=True
+        )
+        sys.exit(1)
+
+    # Load it
+    with open(cookiecutter_json_path, encoding="utf-8") as f:
+        cookiecutter_json = json.load(f)
+
+    # Pull out __prompts__ if it exists
+    prompts = cookiecutter_json.get("__prompts__", {})
+
+    # Collect variables (skip private keys starting with _)
+    variables = []
+    for key, default in cookiecutter_json.items():
+        if key.startswith("_"):
+            continue
+        description = prompts.get(key, None)
+        variables.append(
+            {
+                "key": key,
+                "default": default,
+                "description": description,
+            }
+        )
+
+    # Output
+    if output_format == "json":
+        click.echo(json.dumps(variables, indent=2, default=str))
+    else:
+        for var in variables:
+            default_display = json.dumps(var["default"], default=str)
+            click.echo(
+                click.style(var["key"], bold=True)
+                + f" (default: {default_display})"
+            )
+            if var["description"]:
+                click.echo(f"  {var['description']}")
+            click.echo()
 
 
 if __name__ == "__main__":
