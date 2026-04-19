@@ -29,6 +29,34 @@ def test_click_invocation(mocker, user_choice, expected_value) -> None:
     prompt.assert_called_once_with(EXPECTED_PROMPT, choices=OPTIONS_INDEX, default='1')
 
 
+def test_click_invocation_with_stringified_unhashable_choice_labels(mocker) -> None:
+    """Use stringified labels when choice values cannot be dict keys."""
+    options = [
+        {'provider': 'aws', 'region': 'us-east-1', 'instances': '3'},
+        {'provider': 'gcp', 'region': 'us-central1', 'instances': '2'},
+    ]
+    prompt_config = {
+        'cloud_config': {
+            '__prompt__': 'Select cloud configuration',
+            "{'provider': 'aws', 'region': 'us-east-1', 'instances': 3}": 'AWS East',
+            (
+                "{'provider': 'gcp', 'region': 'us-central1', 'instances': 2}"
+            ): 'GCP Central',
+        }
+    }
+    expected_prompt = """Select cloud configuration
+    [bold magenta]1[/] - [bold]AWS East[/]
+    [bold magenta]2[/] - [bold]GCP Central[/]
+    Choose from"""
+
+    prompt = mocker.patch('rich.prompt.Prompt.ask')
+    prompt.return_value = '1'
+
+    assert read_user_choice('cloud_config', options, prompt_config) == options[0]
+
+    prompt.assert_called_once_with(expected_prompt, choices=['1', '2'], default='1')
+
+
 def test_raise_if_options_is_not_a_non_empty_list() -> None:
     """Test function called by cookiecutter raise expected errors.
 

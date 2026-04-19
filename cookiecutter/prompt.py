@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import os
 import re
@@ -114,12 +115,48 @@ def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = "
         if isinstance(prompts[var_name], str):
             question = prompts[var_name]
         else:
-            if "__prompt__" in prompts[var_name]:
-                question = prompts[var_name]["__prompt__"]
+            prompt_config = prompts[var_name]
+            if "__prompt__" in prompt_config:
+                question = prompt_config["__prompt__"]
+
+            def normalize_choice(choice):
+                if isinstance(choice, dict):
+                    return {
+                        normalize_choice(key): normalize_choice(value)
+                        for key, value in choice.items()
+                    }
+                if isinstance(choice, list):
+                    return [normalize_choice(value) for value in choice]
+                if choice is None or isinstance(choice, bool | str):
+                    return choice
+                return str(choice)
+
+            def prompt_label(choice):
+                try:
+                    if choice in prompt_config:
+                        return prompt_config[choice]
+                except TypeError:
+                    pass
+
+                choice_str = str(choice)
+                if choice_str in prompt_config:
+                    return prompt_config[choice_str]
+
+                normalized_choice = normalize_choice(choice)
+                for prompt_key, label in prompt_config.items():
+                    if prompt_key == "__prompt__":
+                        continue
+                    try:
+                        parsed_key = ast.literal_eval(prompt_key)
+                    except (SyntaxError, TypeError, ValueError):
+                        continue
+                    if normalize_choice(parsed_key) == normalized_choice:
+                        return label
+
+                return choice
+
             choice_lines = (
-                f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
-                if p in prompts[var_name]
-                else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
+                f"    [bold magenta]{i}[/] - [bold]{prompt_label(p)}[/]"
                 for i, p in choice_map.items()
             )
 
