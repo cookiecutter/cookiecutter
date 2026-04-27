@@ -56,6 +56,29 @@ def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     return False
 
 
+def _apply_overwrite_to_context_with_error(
+    context: dict[str, Any], variable: str, overwrite: Any
+) -> ValueError | None:
+    """Apply a single overwrite and return any validation error."""
+    try:
+        apply_overwrites_to_context(context, {variable: overwrite})
+    except ValueError as error:
+        return error
+    return None
+
+
+def _apply_overwrites_to_context_with_errors(
+    context: dict[str, Any], overwrite_context: dict[str, Any]
+) -> list[ValueError]:
+    """Apply overwrites to context while collecting per-variable errors."""
+    errors: list[ValueError] = []
+    for variable, overwrite in overwrite_context.items():
+        error = _apply_overwrite_to_context_with_error(context, variable, overwrite)
+        if error is not None:
+            errors.append(error)
+    return errors
+
+
 def apply_overwrites_to_context(
     context: dict[str, Any],
     overwrite_context: dict[str, Any],
@@ -161,10 +184,12 @@ def generate_context(
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
     if default_context:
-        try:
-            apply_overwrites_to_context(obj, default_context)
-        except ValueError as error:
-            warnings.warn(f"Invalid default received: {error}")
+        default_context_errors = _apply_overwrites_to_context_with_errors(
+            obj, default_context
+        )
+        if default_context_errors:
+            error_messages = "; ".join(str(error) for error in default_context_errors)
+            warnings.warn(f"Invalid default received: {error_messages}")
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
 

@@ -202,6 +202,54 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite() -> Non
     assert generated_context == expected_context
 
 
+def test_invalid_default_context_keeps_later_valid_overwrites() -> None:
+    """Verify invalid default values do not skip later default context entries."""
+    with pytest.warns(UserWarning, match="orientation"):
+        generated_context = generate.generate_context(
+            context_file='tests/test-generate-context/choices_template.json',
+            default_context=OrderedDict(
+                [
+                    ('orientation', 'foobar'),
+                    ('repo_name', 'valid-repo-name'),
+                ]
+            ),
+        )
+
+    assert generated_context['choices_template']['orientation'] == [
+        'all',
+        'landscape',
+        'portrait',
+    ]
+    assert generated_context['choices_template']['repo_name'] == 'valid-repo-name'
+
+
+def test_invalid_default_context_reports_all_errors(tmp_path) -> None:
+    """Verify all invalid default values are reported in one warning."""
+    context_file = tmp_path / 'cookiecutter.json'
+    context_file.write_text(
+        '{"choice": ["one", "two"], "enabled": true, "name": "default"}',
+        encoding='utf-8',
+    )
+
+    with pytest.warns(UserWarning) as warning_records:
+        generated_context = generate.generate_context(
+            context_file=str(context_file),
+            default_context=OrderedDict(
+                [
+                    ('choice', 'three'),
+                    ('enabled', 'maybe'),
+                    ('name', 'changed'),
+                ]
+            ),
+        )
+
+    assert len(warning_records) == 1
+    warning_message = str(warning_records[0].message)
+    assert 'choice' in warning_message
+    assert 'enabled' in warning_message
+    assert generated_context['cookiecutter']['name'] == 'changed'
+
+
 def test_apply_overwrites_invalid_overwrite(template_context) -> None:
     """Verify variables overwrite for list if variable not in list not ignored."""
     with pytest.raises(ValueError):
