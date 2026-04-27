@@ -3,6 +3,8 @@ name = "cookiecutter"
 version = "2.7.1"
 description = "A command-line utility that creates projects from project templates, e.g. creating a Python package project from a Python package project template."
 readme = "README.md"
+license = "	BSD-3-Clause"
+license-files = ["LICENSE"]
 authors = [{ name = "Audrey M. Roy Greenfeld", email = "audrey@feldroy.com" }]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
