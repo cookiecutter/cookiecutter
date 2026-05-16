@@ -237,6 +237,31 @@ def test_apply_overwrites_error_additional_values(template_context) -> None:
         )
 
 
+# https://github.com/cookiecutter/cookiecutter/issues/2219
+def test_apply_overwrites_applies_valid_entries_after_invalid_one(template_context) -> None:
+    """Don't silently drop overrides that come after a bad one."""
+    with pytest.raises(ValueError) as excinfo:
+        generate.apply_overwrites_to_context(
+            context=template_context,
+            overwrite_context=OrderedDict(
+                [
+                    ('orientation', 'foobar'),  # invalid
+                    ('full_name', 'Charlie'),  # valid
+                    ('deployment_regions', ['na']),  # invalid
+                ]
+            ),
+        )
+
+    # Valid overrides should still have been applied in place.
+    assert template_context['full_name'] == 'Charlie'
+    # Choice list shouldn't have been reordered for the bad orientation.
+    assert template_context['orientation'][0] == 'all'
+    # Both invalid entries should show up in the aggregated error.
+    msg = str(excinfo.value)
+    assert 'orientation' in msg
+    assert 'deployment_regions' in msg
+
+
 def test_apply_overwrites_in_dictionaries(template_context) -> None:
     """Verify variable overwrite for lists nested in dictionary variables."""
     generate.apply_overwrites_to_context(
