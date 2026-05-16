@@ -28,7 +28,18 @@ def force_delete(func, path, _exc_info) -> None:  # type: ignore[no-untyped-def]
     Usage: `shutil.rmtree(path, onerror=force_delete)`
     From https://docs.python.org/3/library/shutil.html#rmtree-example
     """
-    os.chmod(path, stat.S_IWRITE)
+    path = Path(path)
+
+    for target in (path, path.parent):
+        with contextlib.suppress(OSError):
+            mode = target.stat().st_mode
+            permissions = stat.S_IWRITE
+
+            if stat.S_ISDIR(mode):
+                permissions |= stat.S_IREAD | stat.S_IEXEC
+
+            os.chmod(target, mode | permissions)
+
     func(path)
 
 

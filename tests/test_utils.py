@@ -41,6 +41,23 @@ def test_rmtree(tmp_path) -> None:
     assert not Path(tmp_path).exists()
 
 
+def test_rmtree_removes_directory_without_write_permission(tmp_path) -> None:
+    """Verify `utils.rmtree` removes directories without write permissions."""
+    directory = Path(tmp_path, "template")
+    directory.mkdir()
+    Path(directory, "cookiecutter.json").write_text("{}")
+    directory.chmod(stat.S_IREAD | stat.S_IEXEC)
+
+    try:
+        utils.rmtree(tmp_path)
+    finally:
+        if Path(tmp_path).exists():
+            directory.chmod(stat.S_IREAD | stat.S_IWRITE | stat.S_IEXEC)
+            utils.rmtree(tmp_path)
+
+    assert not Path(tmp_path).exists()
+
+
 def test_make_sure_path_exists(tmp_path) -> None:
     """Verify correct True/False response from `utils.make_sure_path_exists`.
 
