@@ -193,3 +193,32 @@ def test_generate_file_handles_mixed_line_endings(env) -> None:
         simple_text = f.readline()
     assert simple_text in ('newline is CRLF\r\n', 'newline is CRLF\n')
     assert f.newlines in ('\r\n', '\n')
+
+
+@pytest.mark.parametrize(
+    'error',
+    [
+        TypeError("decode() argument 'encoding' must be str, not None"),
+        NameError("name 'unicode' is not defined"),
+    ],
+)
+def test_generate_file_copies_when_binary_detection_fails(
+    env, mocker, monkeypatch, tmp_path, error
+) -> None:
+    """Verify binary detector failures fall back to copying without rendering."""
+    monkeypatch.chdir(tmp_path)
+    infile = 'font.ttf'
+    source_bytes = b'\x00{{ cookiecutter.project_slug }}'
+    Path(infile).write_bytes(source_bytes)
+    project_dir = tmp_path / 'output'
+    project_dir.mkdir()
+    mocker.patch('cookiecutter.generate.is_binary', side_effect=error)
+
+    generate.generate_file(
+        project_dir=str(project_dir),
+        infile=infile,
+        context={'cookiecutter': {'project_slug': 'example'}},
+        env=env,
+    )
+
+    assert (project_dir / infile).read_bytes() == source_bytes
