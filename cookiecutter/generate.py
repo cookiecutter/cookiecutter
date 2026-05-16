@@ -36,6 +36,19 @@ from cookiecutter.utils import (
 logger = logging.getLogger(__name__)
 
 
+def is_binary_file(path: str) -> bool:
+    """Return whether a file is binary, falling back to binary on detector errors."""
+    try:
+        return bool(is_binary(path))
+    except (NameError, TypeError) as error:
+        logger.debug(
+            'Binary detection failed for %s, copying without rendering: %s',
+            path,
+            error,
+        )
+        return True
+
+
 def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     """Check whether the given `path` should only be copied and not rendered.
 
@@ -218,7 +231,7 @@ def generate_file(
 
     # Just copy over binary files. Don't render.
     logger.debug("Check %s to see if it's a binary", infile)
-    if is_binary(infile):
+    if is_binary_file(infile):
         logger.debug('Copying binary %s to %s without rendering', infile, outfile)
         shutil.copyfile(infile, outfile)
         shutil.copymode(infile, outfile)

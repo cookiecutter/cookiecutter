@@ -7,7 +7,6 @@ some special folders.
 from pathlib import Path
 
 import pytest
-from binaryornot.check import is_binary
 from jinja2 import Environment
 
 from cookiecutter import exceptions, generate
@@ -152,15 +151,17 @@ def test_generate_files_binaries(tmp_path) -> None:
 
     dst_dir = Path(tmp_path, 'inputbinary_files')
 
-    assert is_binary(str(Path(dst_dir, 'logo.png')))
-    assert is_binary(str(Path(dst_dir, '.DS_Store')))
-    assert not is_binary(str(Path(dst_dir, 'readme.txt')))
-    assert is_binary(str(Path(dst_dir, 'some_font.otf')))
-    assert is_binary(str(Path(dst_dir, 'binary_files/logo.png')))
-    assert is_binary(str(Path(dst_dir, 'binary_files/.DS_Store')))
-    assert not is_binary(str(Path(dst_dir, 'binary_files/readme.txt')))
-    assert is_binary(str(Path(dst_dir, 'binary_files/some_font.otf')))
-    assert is_binary(str(Path(dst_dir, 'binary_files/binary_files/logo.png')))
+    assert generate.is_binary_file(str(Path(dst_dir, 'logo.png')))
+    assert generate.is_binary_file(str(Path(dst_dir, '.DS_Store')))
+    assert not generate.is_binary_file(str(Path(dst_dir, 'readme.txt')))
+    assert generate.is_binary_file(str(Path(dst_dir, 'some_font.otf')))
+    assert generate.is_binary_file(str(Path(dst_dir, 'binary_files/logo.png')))
+    assert generate.is_binary_file(str(Path(dst_dir, 'binary_files/.DS_Store')))
+    assert not generate.is_binary_file(str(Path(dst_dir, 'binary_files/readme.txt')))
+    assert generate.is_binary_file(str(Path(dst_dir, 'binary_files/some_font.otf')))
+    assert generate.is_binary_file(
+        str(Path(dst_dir, 'binary_files/binary_files/logo.png'))
+    )
 
 
 def test_generate_files_absolute_path(tmp_path) -> None:
