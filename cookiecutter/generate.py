@@ -404,6 +404,14 @@ def generate_files(
                     render_dirs.append(d)
 
             for copy_dir in copy_dirs:
+                rendered_dirname = env.from_string(copy_dir).render(**context)
+                if not rendered_dirname:
+                    logger.debug(
+                        'Skipping copy-only directory %s with empty rendered name',
+                        copy_dir,
+                    )
+                    continue
+
                 indir = os.path.normpath(os.path.join(root, copy_dir))
                 outdir = os.path.normpath(os.path.join(project_dir, indir))
                 outdir = env.from_string(outdir).render(**context)
@@ -418,10 +426,18 @@ def generate_files(
 
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively
-            dirs[:] = render_dirs
-            for d in dirs:
+            dirs[:] = []
+            for d in render_dirs:
                 unrendered_dir = os.path.join(project_dir, root, d)
                 try:
+                    rendered_dirname = env.from_string(d).render(**context)
+                    if not rendered_dirname:
+                        logger.debug(
+                            'Skipping directory %s with empty rendered name', d
+                        )
+                        continue
+
+                    dirs.append(d)
                     render_and_create_dir(
                         unrendered_dir, context, output_dir, env, overwrite_if_exists
                     )
