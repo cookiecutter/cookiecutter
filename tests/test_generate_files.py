@@ -450,3 +450,65 @@ def test_raise_empty_dir_name(output_dir, undefined_context):
             environment=Environment(autoescape=True),
         )
     assert not Path(output_dir).joinpath('testproject').exists()
+
+
+def test_generate_files_skips_empty_rendered_dir(tmp_path) -> None:
+    """Verify directories rendered to an empty name are not traversed."""
+    repo_dir = tmp_path / 'template'
+    skipped_dir = (
+        repo_dir
+        / '{{cookiecutter.project_name}}'
+        / "{% if cookiecutter.include_docs == 'yes' %}docs{% endif %}"
+    )
+    skipped_dir.mkdir(parents=True)
+    (skipped_dir / 'BOOM.md').write_text('boom\n', encoding='utf-8')
+
+    output_dir = tmp_path / 'output'
+    output_dir.mkdir()
+
+    project_dir = generate.generate_files(
+        context={
+            'cookiecutter': {
+                'project_name': 'boom-test',
+                'include_docs': 'no',
+            },
+        },
+        repo_dir=repo_dir,
+        output_dir=output_dir,
+        overwrite_if_exists=True,
+    )
+
+    assert Path(project_dir) == output_dir / 'boom-test'
+    assert Path(project_dir).is_dir()
+    assert not (output_dir / 'BOOM.md').exists()
+    assert not (output_dir / 'boom-test' / 'BOOM.md').exists()
+
+
+def test_generate_files_skips_empty_rendered_copy_dir(tmp_path) -> None:
+    """Verify copy-only directories rendered to an empty name are not copied."""
+    empty_dir = "{% if cookiecutter.include_docs == 'yes' %}docs{% endif %}"
+    repo_dir = tmp_path / 'template'
+    skipped_dir = repo_dir / '{{cookiecutter.project_name}}' / empty_dir
+    skipped_dir.mkdir(parents=True)
+    (skipped_dir / 'BOOM.md').write_text('boom\n', encoding='utf-8')
+
+    output_dir = tmp_path / 'output'
+    output_dir.mkdir()
+
+    project_dir = generate.generate_files(
+        context={
+            'cookiecutter': {
+                'project_name': 'boom-test',
+                'include_docs': 'no',
+                '_copy_without_render': [empty_dir],
+            },
+        },
+        repo_dir=repo_dir,
+        output_dir=output_dir,
+        overwrite_if_exists=True,
+    )
+
+    assert Path(project_dir) == output_dir / 'boom-test'
+    assert Path(project_dir).is_dir()
+    assert not (output_dir / 'BOOM.md').exists()
+    assert not (output_dir / 'boom-test' / 'BOOM.md').exists()
