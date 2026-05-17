@@ -34,3 +34,23 @@ This allows you to write:
     }
 
 In this example, ``{{cookiecutter.repo_name}}`` will be rendered as expected but the html file content will be copied without rendering.
+
+Force Render
+------------
+
+If a text file is incorrectly detected as binary, the ``_force_render`` key can be used in ``cookiecutter.json``.
+The value accepts the same Unix shell-style wildcards as ``_copy_without_render``:
+
+.. code-block:: JSON
+
+    {
+        "project_slug": "sample",
+        "_force_render": [
+            "Makefile",
+            "*.mk",
+            "config/PACKAGE_*"
+        ]
+    }
+
+Paths that match ``_copy_without_render`` are still copied without rendering.
+For other files, ``_force_render`` bypasses binary detection and renders the file as text.

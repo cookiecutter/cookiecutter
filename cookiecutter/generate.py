@@ -56,6 +56,18 @@ def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     return False
 
 
+def is_force_render_path(path: str, context: dict[str, Any]) -> bool:
+    """Check whether the given `path` should be rendered as text."""
+    try:
+        for force_render in context['cookiecutter']['_force_render']:
+            if fnmatch.fnmatch(path, force_render):
+                return True
+    except KeyError:
+        return False
+
+    return False
+
+
 def apply_overwrites_to_context(
     context: dict[str, Any],
     overwrite_context: dict[str, Any],
@@ -216,13 +228,17 @@ def generate_file(
 
     logger.debug('Created file at %s', outfile)
 
+    force_render = is_force_render_path(infile, context)
+
     # Just copy over binary files. Don't render.
     logger.debug("Check %s to see if it's a binary", infile)
-    if is_binary(infile):
+    if is_binary(infile) and not force_render:
         logger.debug('Copying binary %s to %s without rendering', infile, outfile)
         shutil.copyfile(infile, outfile)
         shutil.copymode(infile, outfile)
         return
+    if force_render:
+        logger.debug('Forcing text render for %s', infile)
 
     # Force fwd slashes on Windows for get_template
     # This is a by-design Jinja issue

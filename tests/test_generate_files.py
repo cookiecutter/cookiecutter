@@ -163,6 +163,27 @@ def test_generate_files_binaries(tmp_path) -> None:
     assert is_binary(str(Path(dst_dir, 'binary_files/binary_files/logo.png')))
 
 
+def test_generate_files_force_render_overrides_binary_detection(
+    mocker, tmp_path
+) -> None:
+    """Verify `_force_render` renders files even when binary detection matches."""
+    mocker.patch("cookiecutter.generate.is_binary", return_value=True)
+
+    generate.generate_files(
+        context={
+            'cookiecutter': {
+                'project_slug': 'example-package',
+                '_force_render': ['foo_file'],
+            }
+        },
+        repo_dir='tests/test-generate-force-render',
+        output_dir=tmp_path,
+    )
+
+    rendered_file = Path(tmp_path, 'example-package/foo_file')
+    assert rendered_file.read_text() == 'PACKAGE_NAME := example-package\n'
+
+
 def test_generate_files_absolute_path(tmp_path) -> None:
     """Verify usage of absolute path does not change files generation behaviour."""
     generate.generate_files(
