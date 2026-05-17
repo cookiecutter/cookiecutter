@@ -210,6 +210,46 @@ def test_apply_overwrites_invalid_overwrite(template_context) -> None:
         )
 
 
+def test_apply_overwrites_continues_after_invalid_overwrites(template_context) -> None:
+    """Verify invalid values don't stop later valid overwrites."""
+    with pytest.raises(ValueError) as exc_info:
+        generate.apply_overwrites_to_context(
+            context=template_context,
+            overwrite_context=OrderedDict(
+                [
+                    ('orientation', 'diagonal'),
+                    ('deployment_regions', ['na']),
+                    ('repo_name', 'foobar'),
+                ]
+            ),
+        )
+
+    error = str(exc_info.value)
+    assert 'diagonal provided for choice variable orientation' in error
+    assert "['na'] provided for multi-choice variable deployment_regions" in error
+    assert template_context['orientation'] == ['all', 'landscape', 'portrait']
+    assert template_context['deployment_regions'] == ['eu', 'us', 'ap']
+    assert template_context['repo_name'] == 'foobar'
+
+
+def test_default_context_continues_after_invalid_overwrite() -> None:
+    """Verify default context keeps applying entries after invalid values."""
+    with pytest.warns(UserWarning, match="Invalid default received"):
+        generated_context = generate.generate_context(
+            context_file='tests/test-generate-context/choices_template.json',
+            default_context=OrderedDict(
+                [
+                    ('orientation', 'diagonal'),
+                    ('repo_name', 'custom-repo'),
+                ]
+            ),
+        )
+
+    context = generated_context['choices_template']
+    assert context['orientation'] == ['all', 'landscape', 'portrait']
+    assert context['repo_name'] == 'custom-repo'
+
+
 def test_apply_overwrites_sets_multichoice_values(template_context) -> None:
     """Verify variable overwrite for list given multiple valid values."""
     generate.apply_overwrites_to_context(
