@@ -80,6 +80,18 @@ def read_user_yes_no(var_name, default_value, prompts=None, prefix: str = ""):
     return YesNoPrompt.ask(f"{prefix}{question}", default=default_value)
 
 
+def _choice_prompt_label(prompt_labels: dict, value):
+    try:
+        return prompt_labels[value]
+    except (KeyError, TypeError):
+        return prompt_labels.get(str(value), value)
+
+
+def _choice_prompt_line(index: str, prompt_labels: dict, value):
+    label = _choice_prompt_label(prompt_labels, value)
+    return f"    [bold magenta]{index}[/] - [bold]{label}[/]"
+
+
 def read_repo_password(question: str) -> str:
     """Prompt the user to enter a password.
 
@@ -111,16 +123,14 @@ def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = "
 
     # Handle if human-readable prompt is provided
     if prompts and var_name in prompts:
-        if isinstance(prompts[var_name], str):
-            question = prompts[var_name]
+        prompt_labels = prompts[var_name]
+        if isinstance(prompt_labels, str):
+            question = prompt_labels
         else:
-            if "__prompt__" in prompts[var_name]:
-                question = prompts[var_name]["__prompt__"]
+            if "__prompt__" in prompt_labels:
+                question = prompt_labels["__prompt__"]
             choice_lines = (
-                f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
-                if p in prompts[var_name]
-                else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
-                for i, p in choice_map.items()
+                _choice_prompt_line(i, prompt_labels, p) for i, p in choice_map.items()
             )
 
     prompt = '\n'.join(
