@@ -24,7 +24,7 @@ def test_force_delete(mocker, tmp_path) -> None:
     rmtree = mocker.Mock()
     utils.force_delete(rmtree, ro_file, sys.exc_info())
 
-    assert (ro_file.stat().st_mode & stat.S_IWRITE) == stat.S_IWRITE
+    assert (ro_file.stat().st_mode & stat.S_IRWXU) == stat.S_IRWXU
     rmtree.assert_called_once_with(ro_file)
 
     utils.rmtree(tmp_path)
