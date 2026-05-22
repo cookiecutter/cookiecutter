@@ -161,10 +161,16 @@ def generate_context(
     # Overwrite context variable defaults with the default context from the
     # user's global config, if available
     if default_context:
-        try:
-            apply_overwrites_to_context(obj, default_context)
-        except ValueError as error:
-            warnings.warn(f"Invalid default received: {error}")
+        errors: list[str] = []
+        for key, value in default_context.items():
+            try:
+                apply_overwrites_to_context(obj, {key: value})
+            except ValueError as error:
+                errors.append(str(error))
+        if errors:
+            warnings.warn(
+                f"Invalid default(s) received: {'; '.join(errors)}"
+            )
     if extra_context:
         apply_overwrites_to_context(obj, extra_context)
 

@@ -1,0 +1,38 @@
+diff --git a/cookiecutter/generate.py b/cookiecutter/generate.py
+index 80ebe2f..569f78a 100644
+--- a/cookiecutter/generate.py
++++ b/cookiecutter/generate.py
+@@ -161,10 +161,16 @@ def generate_context(
+     # Overwrite context variable defaults with the default context from the
+     # user's global config, if available
+     if default_context:
+-        try:
+-            apply_overwrites_to_context(obj, default_context)
+-        except ValueError as error:
+-            warnings.warn(f"Invalid default received: {error}")
++        errors: list[str] = []
++        for key, value in default_context.items():
++            try:
++                apply_overwrites_to_context(obj, {key: value})
++            except ValueError as error:
++                errors.append(str(error))
++        if errors:
++            warnings.warn(
++                f"Invalid default(s) received: {'; '.join(errors)}"
++            )
+     if extra_context:
+         apply_overwrites_to_context(obj, extra_context)
+ 
+diff --git a/tests/test_generate_context.py b/tests/test_generate_context.py
+index c2a1006..c54b886 100644
+--- a/tests/test_generate_context.py
++++ b/tests/test_generate_context.py
+@@ -185,7 +185,7 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite() -> Non
+         )
+     }
+ 
+-    with pytest.warns(UserWarning, match="Invalid default received"):
++    with pytest.warns(UserWarning, match="default\\(s\\) received"):
+         generated_context = generate.generate_context(
+             context_file='tests/test-generate-context/choices_template.json',
+             default_context={
