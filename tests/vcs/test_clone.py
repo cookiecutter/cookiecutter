@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -29,11 +30,17 @@ def test_clone_should_rstrip_trailing_slash_in_repo_url(mocker, clone_dir) -> No
         autospec=True,
     )
 
+    # Create temp_dir and mock mkdtemp so we know its path
+    temp_dir = clone_dir.joinpath('.temp_clone')
+    mocker.patch(
+        'cookiecutter.vcs.tempfile.mkdtemp', return_value=str(temp_dir), autospec=True
+    )
+    temp_dir.mkdir()
+
     vcs.clone('https://github.com/foo/bar/', clone_to_dir=clone_dir, no_input=True)
 
     mock_subprocess.assert_called_once_with(
-        ['git', 'clone', 'https://github.com/foo/bar'],
-        cwd=clone_dir,
+        ['git', 'clone', 'https://github.com/foo/bar', str(temp_dir)],
         stderr=subprocess.STDOUT,
     )
 
@@ -50,6 +57,13 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir) 
         autospec=True,
     )
 
+    # Create temp_dir and mock mkdtemp
+    temp_dir = clone_dir.joinpath('.temp_clone')
+    mocker.patch(
+        'cookiecutter.vcs.tempfile.mkdtemp', return_value=str(temp_dir), autospec=True
+    )
+    temp_dir.mkdir()
+
     # Create repo_dir to trigger prompt_and_delete
     repo_dir = clone_dir.joinpath('cookiecutter-pytest-plugin')
     repo_dir.mkdir()
@@ -58,12 +72,16 @@ def test_clone_should_abort_if_user_does_not_want_to_reclone(mocker, clone_dir) 
 
     with pytest.raises(SystemExit):
         vcs.clone(repo_url, clone_to_dir=str(clone_dir))
-    assert not mock_subprocess.called
+
+    # Clone happens first (to temp_dir), then prompt_and_delete raises SystemExit.
+    # The temp_dir must be cleaned up by the finally block.
+    assert mock_subprocess.called
+    assert not temp_dir.exists()
 
 
 def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
-    """In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \
-    without cloning anything."""
+    """In `clone()`, if user wants to reuse the existing version, the function \
+    should return without moving the temporary clone into place."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
     mocker.patch(
         'cookiecutter.vcs.prompt_and_delete', return_value=False, autospec=True
@@ -75,13 +93,24 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
 
     clone_to_dir = tmpdir.mkdir('clone')
 
+    # Create temp_dir and mock mkdtemp
+    temp_dir = Path(str(clone_to_dir)) / '.temp_clone'
+    mocker.patch(
+        'cookiecutter.vcs.tempfile.mkdtemp', return_value=str(temp_dir), autospec=True
+    )
+    temp_dir.mkdir()
+
     # Create repo_dir to trigger prompt_and_delete
     clone_to_dir.mkdir('cookiecutter-pytest-plugin')
 
     repo_url = 'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git'
 
     vcs.clone(repo_url, clone_to_dir=str(clone_to_dir))
-    assert not mock_subprocess.called
+
+    # Clone happens first (to temp_dir), then prompt_and_delete returns False.
+    # temp_dir is cleaned up by the early return path.
+    assert mock_subprocess.called
+    assert not temp_dir.exists()
 
 
 @pytest.mark.parametrize(
@@ -110,6 +139,14 @@ def test_clone_should_invoke_vcs_command(
         'cookiecutter.vcs.subprocess.check_output',
         autospec=True,
     )
+
+    # Create temp_dir and mock mkdtemp so we know its path
+    temp_dir = clone_dir.joinpath('.temp_clone')
+    mocker.patch(
+        'cookiecutter.vcs.tempfile.mkdtemp', return_value=str(temp_dir), autospec=True
+    )
+    temp_dir.mkdir()
+
     expected_repo_dir = os.path.normpath(os.path.join(clone_dir, repo_name))
 
     branch = 'foobar'
@@ -120,8 +157,10 @@ def test_clone_should_invoke_vcs_command(
 
     assert repo_dir == expected_repo_dir
 
+    # Clone is called with an extra temp_dir argument and no cwd
     mock_subprocess.assert_any_call(
-        [repo_type, 'clone', repo_url], cwd=clone_dir, stderr=subprocess.STDOUT
+        [repo_type, 'clone', repo_url, str(temp_dir)],
+        stderr=subprocess.STDOUT,
     )
 
     branch_info = [branch]
@@ -129,9 +168,10 @@ def test_clone_should_invoke_vcs_command(
     if repo_type == "hg":
         branch_info.insert(0, "--")
 
+    # Checkout runs in the temp directory, not the final repo_dir
     mock_subprocess.assert_any_call(
         [repo_type, 'checkout', *branch_info],
-        cwd=expected_repo_dir,
+        cwd=str(temp_dir),
         stderr=subprocess.STDOUT,
     )
 
@@ -211,3 +251,37 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir) -> None:
             clone_to_dir=str(clone_dir),
             no_input=True,
         )
+
+
+def test_clone_failure_does_not_delete_existing_cache(mocker, clone_dir) -> None:
+    """When clone fails, any previously cached repo directory must be preserved."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=subprocess.CalledProcessError(
+            -1,
+            'cmd',
+            output=(
+                b"fatal: repository 'https://github.com/hackebro/cookiedozer' not found"
+            ),
+        ),
+    )
+
+    # Simulate an existing cached template
+    repo_name = 'cookiedozer'
+    repo_dir = clone_dir.joinpath(repo_name)
+    repo_dir.mkdir()
+    cache_file = repo_dir.joinpath('cookiecutter.json')
+    cache_file.write_text('{"app_name": "my_project"}')
+
+    repo_url = 'https://github.com/hackebro/cookiedozer'
+
+    with pytest.raises(exceptions.RepositoryNotFound):
+        vcs.clone(repo_url, clone_to_dir=str(clone_dir), no_input=True)
+
+    # The existing cache must remain intact
+    assert repo_dir.is_dir(), (
+        "Existing cache was deleted despite clone failure"
+    )
+    assert cache_file.read_text() == '{"app_name": "my_project"}'

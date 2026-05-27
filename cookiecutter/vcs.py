@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -97,43 +99,53 @@ def clone(
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug(f'repo_dir is {repo_dir}')
 
-    if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
-    else:
-        clone = True
-
-    if clone:
-        try:
+    # Clone to a temporary directory first to avoid data loss
+    # if the operation fails mid-way.
+    temp_dir = tempfile.mkdtemp(dir=clone_to_dir)
+    try:
+        subprocess.check_output(
+            [repo_type, 'clone', repo_url, temp_dir],
+            stderr=subprocess.STDOUT,
+        )
+        if checkout is not None:
+            checkout_params = [checkout]
+            # Avoid Mercurial "--config" and "--debugger" injection vulnerability
+            if repo_type == "hg":
+                checkout_params.insert(0, "--")
             subprocess.check_output(
-                [repo_type, 'clone', repo_url],
-                cwd=clone_to_dir,
+                [repo_type, 'checkout', *checkout_params],
+                cwd=temp_dir,
                 stderr=subprocess.STDOUT,
             )
-            if checkout is not None:
-                checkout_params = [checkout]
-                # Avoid Mercurial "--config" and "--debugger" injection vulnerability
-                if repo_type == "hg":
-                    checkout_params.insert(0, "--")
-                subprocess.check_output(
-                    [repo_type, 'checkout', *checkout_params],
-                    cwd=repo_dir,
-                    stderr=subprocess.STDOUT,
-                )
-        except subprocess.CalledProcessError as clone_error:
-            output = clone_error.output.decode('utf-8')
-            if 'not found' in output.lower():
-                msg = (
-                    f'The repository {repo_url} could not be found, '
-                    'have you made a typo?'
-                )
-                raise RepositoryNotFound(msg) from clone_error
-            if any(error in output for error in BRANCH_ERRORS):
-                msg = (
-                    f'The {checkout} branch of repository '
-                    f'{repo_url} could not found, have you made a typo?'
-                )
-                raise RepositoryCloneFailed(msg) from clone_error
-            logger.exception('git clone failed with error: %s', output)
-            raise
+    except subprocess.CalledProcessError as clone_error:
+        shutil.rmtree(temp_dir, ignore_errors=True)
+        output = clone_error.output.decode('utf-8')
+        if 'not found' in output.lower():
+            msg = f'The repository {repo_url} could not be found, have you made a typo?'
+            raise RepositoryNotFound(msg) from clone_error
+        if any(error in output for error in BRANCH_ERRORS):
+            msg = (
+                f'The {checkout} branch of repository '
+                f'{repo_url} could not found, have you made a typo?'
+            )
+            raise RepositoryCloneFailed(msg) from clone_error
+        logger.exception('git clone failed with error: %s', output)
+        raise
 
-    return repo_dir
+    # Clone and checkout succeeded — now safely replace the cached repo
+    try:
+        if os.path.isdir(repo_dir):
+            should_proceed = prompt_and_delete(repo_dir, no_input=no_input)
+            if not should_proceed:
+                # User wants to reuse the existing version
+                shutil.rmtree(temp_dir, ignore_errors=True)
+                return repo_dir
+            # prompt_and_delete already removed the directory at this point
+
+        shutil.move(temp_dir, repo_dir)
+        return repo_dir
+    finally:
+        # Safety net: ensure temp_dir is cleaned up even if
+        # prompt_and_delete raises SystemExit / KeyboardInterrupt
+        if os.path.isdir(temp_dir):
+            shutil.rmtree(temp_dir, ignore_errors=True)
