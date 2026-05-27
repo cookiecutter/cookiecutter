@@ -36,7 +36,19 @@ file to escape entire files and directories.
 Other common issues
 -------------------
 
-TODO: add a bunch of common new user issues here.
+I see ``CalledProcessError`` or ``'git' returned non-zero exit status`` on Windows
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you run Cookiecutter from Windows Command Prompt (``cmd.exe``) and see an error like::
+
+    subprocess.CalledProcessError: Command '['git', 'clone', '...']' returned non-zero exit status 128
+
+This means ``cmd.exe`` cannot find the ``git`` command. Use **Git Bash**
+(included with `Git for Windows <https://git-scm.com/downloads>`_) to run
+Cookiecutter commands instead.
+
+Alternatively, add Git to your system ``PATH`` environment variable and restart
+your command prompt.
 
 This document is incomplete. If you have knowledge that could help other users,
 adding a section or filing an issue with details would be greatly appreciated.

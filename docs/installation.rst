@@ -6,6 +6,7 @@ Prerequisites
 -------------
 
 * Python interpreter
+* Git
 * Adjust your path
 * Packaging tools
 
@@ -24,6 +25,16 @@ Alternatively on macOS, you can use the `homebrew <http://brew.sh/>`_ package ma
 
     brew install python3
 
+
+Git
+^^^
+
+Cookiecutter uses Git to clone templates from remote repositories.
+Install Git from `git-scm.com <https://git-scm.com/downloads>`_.
+
+On Windows, use **Git Bash** (installed with Git for Windows) to run
+Cookiecutter commands. Running from Command Prompt (``cmd.exe``) may fail
+because it cannot find the ``git`` command.
 
 Adjust your path
 ^^^^^^^^^^^^^^^^
