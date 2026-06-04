@@ -129,7 +129,7 @@ For example to change the output from ``it-s-a-random-version``` to ``it_s_a_ran
 UUID4 extension
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-*New in Cookiecutter 1.x*
+*New in Cookiecutter 2.0*
 
 The ``cookiecutter.extensions.UUIDExtension`` extension provides a ``uuid4()``
 method in templates that generates a uuid4.
