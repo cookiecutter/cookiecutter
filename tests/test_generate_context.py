@@ -185,7 +185,7 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite() -> Non
         )
     }
 
-    with pytest.warns(UserWarning, match="Invalid default received"):
+    with pytest.warns(UserWarning, match="default\\(s\\) received"):
         generated_context = generate.generate_context(
             context_file='tests/test-generate-context/choices_template.json',
             default_context={
