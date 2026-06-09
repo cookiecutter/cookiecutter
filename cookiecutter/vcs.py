@@ -19,7 +19,7 @@ from cookiecutter.exceptions import (
     VCSNotInstalled,
 )
 from cookiecutter.prompt import prompt_and_delete
-from cookiecutter.utils import make_sure_path_exists
+from cookiecutter.utils import make_sure_path_exists, rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +96,50 @@ def clone(
     if repo_type == 'hg':
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug(f'repo_dir is {repo_dir}')
+
+    if os.path.isdir(repo_dir) and no_input:
+        # When running in no-input mode with an existing directory,
+        # rename it to a backup first so we can restore if the clone fails.
+        # prompt_and_delete with no_input=True would delete immediately,
+        # which leaves nothing to restore on clone failure (the bug).
+        backup = repo_dir + '.bak'
+        os.replace(repo_dir, backup)
+        try:
+            subprocess.check_output(
+                [repo_type, 'clone', repo_url],
+                cwd=clone_to_dir,
+                stderr=subprocess.STDOUT,
+            )
+        except subprocess.CalledProcessError as clone_error:
+            # Restore backup and propagate
+            os.replace(backup, repo_dir)
+            output = clone_error.output.decode('utf-8')
+            if 'not found' in output.lower():
+                msg = (
+                    f'The repository {repo_url} could not be found, '
+                    'have you made a typo?'
+                )
+                raise RepositoryNotFound(msg) from clone_error
+            if any(error in output for error in BRANCH_ERRORS):
+                msg = (
+                    f'The {checkout} branch of repository '
+                    f'{repo_url} could not found, have you made a typo?'
+                )
+                raise RepositoryCloneFailed(msg) from clone_error
+            logger.exception('git clone failed with error: %s', output)
+            raise
+        # Clone succeeded — clean up backup
+        rmtree(backup)
+        if checkout is not None:
+            checkout_params = [checkout]
+            if repo_type == "hg":
+                checkout_params.insert(0, "--")
+            subprocess.check_output(
+                [repo_type, 'checkout', *checkout_params],
+                cwd=repo_dir,
+                stderr=subprocess.STDOUT,
+            )
+        return repo_dir
 
     if os.path.isdir(repo_dir):
         clone = prompt_and_delete(repo_dir, no_input=no_input)
