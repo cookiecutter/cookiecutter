@@ -88,7 +88,7 @@ def list_installed_templates(
 
 
 def complete_templates(
-    ctx: Context, param: Argument, incomplete: str
+    ctx: Context, _param: Argument, _incomplete: str
 ) -> list[CompletionItem]:
     """Provide Completions for installed (locally cloned) templates."""
 
