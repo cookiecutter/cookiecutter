@@ -8,11 +8,13 @@ import sys
 from collections import OrderedDict
 from typing import TYPE_CHECKING, Any
 
+from click.shell_completion import CompletionItem
+
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from typing import Literal
 
-    from click import Context, Parameter
+    from click import Argument, Context, Parameter
 
 
 import click
@@ -84,9 +86,31 @@ def list_installed_templates(
         click.echo(f' * {name}')
 
 
+def complete_templates(
+    ctx: Context, param: Argument, incomplete: str
+) -> list[CompletionItem]:
+    """Provide Completions for installed (locally cloned) templates."""
+
+    config = get_user_config(ctx.params['config_file'], ctx.params['default_config'])
+
+    cookiecutter_folder: str = config['cookiecutters_dir']
+    if not os.path.exists(cookiecutter_folder):
+        return []
+
+    template_names = [
+        folder
+        for folder in os.listdir(cookiecutter_folder)
+        if os.path.exists(
+            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
+        )
+    ]
+
+    return [CompletionItem(value=name) for name in template_names]
+
+
 @click.command(context_settings={"help_option_names": ['-h', '--help']})
 @click.version_option(__version__, '-V', '--version', message=version_msg())
-@click.argument('template', required=False)
+@click.argument('template', required=False, shell_complete=complete_templates)
 @click.argument('extra_context', nargs=-1, callback=validate_extra_context)
 @click.option(
     '--no-input',
