@@ -39,6 +39,20 @@ def _expand_path(path: str) -> str:
     return os.path.expanduser(path)
 
 
+def load_config_file(config_path: Path | str) -> dict[str, Any]:
+    """Load configuration file"""
+    with open(config_path, encoding='utf-8') as file_handle:
+        try:
+            yaml_dict = yaml.safe_load(file_handle) or {}
+        except yaml.YAMLError as e:
+            msg = f'Unable to parse YAML file {config_path}.'
+            raise InvalidConfiguration(msg) from e
+        if not isinstance(yaml_dict, dict):
+            msg = f'Top-level element of YAML file {config_path} should be an object.'
+            raise InvalidConfiguration(msg)
+        return yaml_dict
+
+
 def merge_configs(default: dict[str, Any], overwrite: dict[str, Any]) -> dict[str, Any]:
     """Recursively update a dict with the key/value pair of another.
 
@@ -65,17 +79,7 @@ def get_config(config_path: Path | str) -> dict[str, Any]:
         raise ConfigDoesNotExistException(msg)
 
     logger.debug('config_path is %s', config_path)
-    with open(config_path, encoding='utf-8') as file_handle:
-        try:
-            yaml_dict = yaml.safe_load(file_handle) or {}
-        except yaml.YAMLError as e:
-            msg = f'Unable to parse YAML file {config_path}.'
-            raise InvalidConfiguration(msg) from e
-        if not isinstance(yaml_dict, dict):
-            msg = f'Top-level element of YAML file {config_path} should be an object.'
-            raise InvalidConfiguration(msg)
-
-    config_dict = merge_configs(DEFAULT_CONFIG, yaml_dict)
+    config_dict = merge_configs(DEFAULT_CONFIG, load_config_file(config_path))
 
     raw_replay_dir = config_dict['replay_dir']
     config_dict['replay_dir'] = _expand_path(raw_replay_dir)
