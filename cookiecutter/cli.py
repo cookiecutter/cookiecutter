@@ -110,7 +110,7 @@ def complete_templates(
 
 
 def complete_extra_context(
-    ctx: Context, param: Argument, incomplete: str
+    ctx: Context, _param: Argument, incomplete: str
 ) -> list[CompletionItem]:
     # No completion if Key in Key=Value is complete
     if "=" in incomplete:
