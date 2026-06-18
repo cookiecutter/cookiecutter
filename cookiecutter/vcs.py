@@ -98,7 +98,32 @@ def clone(
     logger.debug(f'repo_dir is {repo_dir}')
 
     if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
+        # Don't delete existing repo before verifying the clone works.
+        # First try to clone into a temp location, then swap.
+        import tempfile
+        import shutil as _shutil
+        tmp_dir = tempfile.mkdtemp(dir=clone_to_dir)
+        try:
+            subprocess.check_output(
+                [repo_type, 'clone', repo_url],
+                cwd=tmp_dir,
+                stderr=subprocess.STDOUT,
+            )
+            # Clone succeeded — delete old repo and move new one in place
+            _shutil.rmtree(repo_dir, onerror=force_delete)
+            cloned = os.path.join(tmp_dir, os.listdir(tmp_dir)[0])
+            _shutil.move(cloned, repo_dir)
+        except subprocess.CalledProcessError:
+            # Clone failed — restore old repo
+            _shutil.rmtree(tmp_dir, ignore_errors=True)
+            clone = prompt_and_delete(repo_dir, no_input=no_input)
+            if not clone:
+                return repo_dir
+            # Re-raise so the caller handles the clone error
+            raise
+        finally:
+            if os.path.isdir(tmp_dir):
+                _shutil.rmtree(tmp_dir, ignore_errors=True)
     else:
         clone = True
 
