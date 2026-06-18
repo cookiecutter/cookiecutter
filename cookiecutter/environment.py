@@ -28,6 +28,7 @@ class ExtensionLoaderMixin:
         context = context or {}
 
         default_extensions = [
+            'cookiecutter.extensions.EnvExtension',
             'cookiecutter.extensions.JsonifyExtension',
             'cookiecutter.extensions.RandomStringExtension',
             'cookiecutter.extensions.SlugifyExtension',
