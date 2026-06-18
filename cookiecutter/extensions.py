@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import string
 import uuid
 from collections.abc import Iterable
@@ -173,3 +174,31 @@ class TimeExtension(Extension):
                 lineno=lineno,
             )
         return nodes.Output([call_method], lineno=lineno)
+
+
+class EnvExtension(Extension):
+    """Jinja2 Extension to read environment variables inside templates.
+
+    Provides a global ``env(name, default=None)`` callable that returns
+    the value of the environment variable ``name``, or ``default`` if it
+    is not set. An explicitly empty string is returned as-is (it is not
+    treated the same as "unset").
+
+    Usage in ``cookiecutter.json``:
+
+        {
+            "author_name": "{{ env('USER', 'Anonymous') }}",
+            "author_email": "{{ env('EMAIL') }}"
+        }
+
+    See https://github.com/cookiecutter/cookiecutter/issues/2045.
+    """
+
+    def __init__(self, environment: Environment) -> None:
+        """Initialize the extension and register the ``env`` global."""
+        super().__init__(environment)
+
+        def env(name: str, default: str | None = None) -> str | None:
+            return os.environ.get(name, default)
+
+        environment.globals.update(env=env)
