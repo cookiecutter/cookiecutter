@@ -28,3 +28,5 @@ Various advanced topics regarding cookiecutter usage.
    local_extensions
    nested_config_files
    human_readable_prompts
+   shell_completion
+   

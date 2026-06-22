@@ -6,19 +6,22 @@ import json
 import os
 import sys
 from collections import OrderedDict
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
+
+from click.shell_completion import CompletionItem
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from typing import Literal
 
-    from click import Context, Parameter
+    from click import Argument, Context, Parameter
 
 
 import click
 
 from cookiecutter import __version__
-from cookiecutter.config import get_user_config
+from cookiecutter.config import get_user_config, load_config_file
 from cookiecutter.exceptions import (
     ContextDecodingException,
     EmptyDirNameException,
@@ -84,10 +87,89 @@ def list_installed_templates(
         click.echo(f' * {name}')
 
 
+def complete_templates(
+    ctx: Context, _param: Argument, _incomplete: str
+) -> list[CompletionItem]:
+    """Provide Completions for installed (locally cloned) templates."""
+
+    config = get_user_config(ctx.params['config_file'], ctx.params['default_config'])
+
+    cookiecutter_folder: str = config['cookiecutters_dir']
+    if not os.path.exists(cookiecutter_folder):
+        return []
+
+    template_names = [
+        folder
+        for folder in sorted(os.listdir(cookiecutter_folder))
+        if os.path.exists(
+            os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
+        )
+    ]
+
+    return [CompletionItem(value=name) for name in template_names]
+
+
+def complete_extra_context(
+    ctx: Context, _param: Argument, incomplete: str
+) -> list[CompletionItem]:
+    # No completion if Key in Key=Value is complete
+    if "=" in incomplete:
+        return []
+
+    # Get existing extra_content completions, so we can remove them from completions
+    already_completed = set(ctx.params.get("extra_context") or {})
+
+    # Load configuration to find where the template directory is
+    user_config = get_user_config(
+        ctx.params['config_file'], ctx.params['default_config']
+    )
+    cookiecutter_folder = Path(user_config['cookiecutters_dir'])
+
+    template_folder = cookiecutter_folder / ctx.params["template"]
+    if not cookiecutter_folder.exists() or not template_folder.exists():
+        return []
+
+    try:
+        template_config = load_config_file(template_folder / "cookiecutter.json")
+    except Exception:
+        return []
+
+    # Check if __prompts__ exist, and then use for help text.
+    prompt_help = template_config.get("__prompts__", {})
+
+    completions = []
+    for key, default in template_config.items():
+        # Don't complete hiden fields
+        if key.startswith("_"):
+            continue
+        # Don't complete already completed fields
+        if key in already_completed:
+            continue
+        # Skip if it doesn't match
+        if not key.startswith(incomplete):
+            continue
+
+        # Add default value to help text if configured
+        help_text = (
+            f"{prompt_help.get(key, '')} ({default})"
+            if default
+            else prompt_help.get(key)
+        )
+
+        completions.append(CompletionItem(value=f"{key}=", help=help_text))
+
+    return sorted(completions, key=lambda item: item.value)
+
+
 @click.command(context_settings={"help_option_names": ['-h', '--help']})
 @click.version_option(__version__, '-V', '--version', message=version_msg())
-@click.argument('template', required=False)
-@click.argument('extra_context', nargs=-1, callback=validate_extra_context)
+@click.argument('template', required=False, shell_complete=complete_templates)
+@click.argument(
+    'extra_context',
+    nargs=-1,
+    callback=validate_extra_context,
+    shell_complete=complete_extra_context,
+)
 @click.option(
     '--no-input',
     is_flag=True,
