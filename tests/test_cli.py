@@ -3,9 +3,12 @@
 import json
 import os
 import re
+import tempfile
+from collections.abc import Generator
 from pathlib import Path
 
 import pytest
+from click.shell_completion import shell_complete
 from click.testing import CliRunner
 
 from cookiecutter import utils
@@ -57,6 +60,13 @@ def remove_tmp_dir(request) -> None:
 def make_fake_project_dir() -> None:
     """Create a fake project to be overwritten in the according tests."""
     os.makedirs('fake-project')
+
+
+@pytest.fixture
+def project_dir() -> Generator[str]:
+    """Create a fake project to be overwritten in the according tests."""
+    with tempfile.TemporaryDirectory() as tmp:
+        yield tmp
 
 
 @pytest.fixture(params=['-V', '--version'])
@@ -603,6 +613,105 @@ def test_debug_list_installed_templates(
 
     assert "1 installed templates:" in result.output
     assert result.exit_code == 0
+
+
+def test_no_templates_shell_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm no completions are returned when project directory does not exist."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}/broken'")
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter ")
+    monkeypatch.setenv("COMP_CWORD", "")
+
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "fish_complete",
+    )
+
+    assert capsys.readouterr().out == "\n"
+
+
+def test_templates_bash_shell_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Verify template shell completion for Bash."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text('{}')
+    Path(project_dir, "example2").mkdir()
+    Path(project_dir, "example2", "cookiecutter.json").write_text('{}')
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter ")
+    monkeypatch.setenv("COMP_CWORD", "1")
+
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "plain,example\nplain,example2\n"
+
+
+def test_templates_fish_shell_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Verify template shell completion for Fish."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text('{}')
+    Path(project_dir, "example2").mkdir()
+    Path(project_dir, "example2", "cookiecutter.json").write_text('{}')
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter ")
+    monkeypatch.setenv("COMP_CWORD", "")
+
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "fish_complete",
+    )
+
+    assert capsys.readouterr().out == "plain,example\nplain,example2\n"
+
+
+def test_templates_zsh_shell_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Verify template shell completion for ZSH."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text('{}')
+    Path(project_dir, "example2").mkdir()
+    Path(project_dir, "example2", "cookiecutter.json").write_text('{}')
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter ")
+    monkeypatch.setenv("COMP_CWORD", "1")
+
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "zsh_complete",
+    )
+
+    assert capsys.readouterr().out == "plain\nexample\n_\nplain\nexample2\n_\n"
 
 
 def test_debug_list_installed_templates_failure(
