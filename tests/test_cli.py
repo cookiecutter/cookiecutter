@@ -714,6 +714,302 @@ def test_templates_zsh_shell_completion(
     assert capsys.readouterr().out == "plain\nexample\n_\nplain\nexample2\n_\n"
 
 
+def test_no_extra_context_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm no completions are returned if the template is empty"""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text('{}')
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example ")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "\n"
+
+
+def test_extra_context_bash_shell_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Verify extra_context shell competion for Bash."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text(
+        json.dumps(
+            {
+                "project_slug": "example",
+                "project_name": "",
+                "__prompt__": {
+                    "project_slug": "Project Directory",
+                    "project_name": "Project Name",
+                },
+            }
+        )
+    )
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example ")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "plain,project_name=\nplain,project_slug=\n"
+
+
+def test_extra_context_fish_shell_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Verify extra_context shell competion for Fish."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text(
+        json.dumps(
+            {
+                "project_slug": "example",
+                "project_name": "",
+                "__prompts__": {
+                    "project_slug": "Project Directory",
+                    "project_name": "Project Name",
+                },
+            }
+        )
+    )
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example ")
+    monkeypatch.setenv("COMP_CWORD", "")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "fish_complete",
+    )
+
+    assert (
+        capsys.readouterr().out == "plain,project_name=\tProject Name\n"
+        "plain,project_slug=\tProject Directory (example)\n"
+    )
+
+
+def test_extra_context_zsh_shell_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Verify extra_context shell competion for ZSH."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text(
+        json.dumps(
+            {
+                "project_slug": "example",
+                "project_name": "",
+                "__prompts__": {
+                    "project_slug": "Project Directory",
+                    "project_name": "Project Name",
+                },
+            }
+        )
+    )
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example ")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "zsh_complete",
+    )
+
+    assert (
+        capsys.readouterr().out == "plain\nproject_name=\nProject Name\n"
+        "plain\nproject_slug=\nProject Directory (example)\n"
+    )
+
+
+def test_extra_context_completion_partial_option(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm a partially completed word returns no completions."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text(
+        json.dumps(
+            {
+                "project_slug": "example",
+                "project_name": "",
+                "__prompt__": {
+                    "project_slug": "Project Directory",
+                    "project_name": "Project Name",
+                },
+            }
+        )
+    )
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example project_slug=")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "\n"
+
+
+def test_extra_context_completion_remove_already_completed(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm already completed words are not returned in completions."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text(
+        json.dumps(
+            {
+                "project_slug": "example",
+                "project_name": "",
+                "__prompt__": {
+                    "project_slug": "Project Directory",
+                    "project_name": "Project Name",
+                },
+            }
+        )
+    )
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example project_slug=asdf ")
+    monkeypatch.setenv("COMP_CWORD", "3")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "plain,project_name=\n"
+
+
+def test_extra_context_invalid_completion(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm invalid words are not completed."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text(
+        json.dumps(
+            {
+                "project_slug": "example",
+                "project_name": "",
+                "__prompt__": {
+                    "project_slug": "Project Directory",
+                    "project_name": "Project Name",
+                },
+            }
+        )
+    )
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example invalid_word ")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "\n"
+
+
+def test_extra_context_completion_invalid_configuration(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm no completions returned if template configuration is invalid."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    Path(project_dir, "example").mkdir()
+    Path(project_dir, "example", "cookiecutter.json").write_text("NOT_JSON")
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example invalid_word ")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "\n"
+
+
+def test_extra_context_completion_project_dir_missing(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm no completions returned if the project directory is missing."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}/broken'")
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example ")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "\n"
+
+
+def test_extra_context_completion_template_dir_missing(
+    user_config_path, project_dir, monkeypatch, capsys
+) -> None:
+    """Confirm no completions returned if the template directory is missing."""
+    os.makedirs(os.path.dirname(user_config_path))
+    Path(user_config_path).write_text(f"cookiecutters_dir: '{project_dir}'")
+
+    monkeypatch.setenv("COMP_WORDS", "cookiecutter example ")
+    monkeypatch.setenv("COMP_CWORD", "2")
+    shell_complete(
+        main,
+        {"default_map": {"config_file": user_config_path}},
+        "cookiecutter",
+        "COMP_WORDS",
+        "bash_complete",
+    )
+
+    assert capsys.readouterr().out == "\n"
+
+
 def test_debug_list_installed_templates_failure(
     cli_runner, debug_file, user_config_path
 ) -> None:
