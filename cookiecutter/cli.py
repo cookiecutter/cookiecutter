@@ -100,7 +100,7 @@ def complete_templates(
 
     template_names = [
         folder
-        for folder in os.listdir(cookiecutter_folder)
+        for folder in sorted(os.listdir(cookiecutter_folder))
         if os.path.exists(
             os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
         )
