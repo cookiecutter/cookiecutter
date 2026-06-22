@@ -158,7 +158,7 @@ def complete_extra_context(
 
         completions.append(CompletionItem(value=f"{key}=", help=help_text))
 
-    return completions
+    return sorted(completions, key=lambda item: item.value)
 
 
 @click.command(context_settings={"help_option_names": ['-h', '--help']})
