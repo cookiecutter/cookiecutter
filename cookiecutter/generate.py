@@ -62,7 +62,14 @@ def apply_overwrites_to_context(
     *,
     in_dictionary_variable: bool = False,
 ) -> None:
-    """Modify the given context in place based on the overwrite_context."""
+    """Modify the given context in place based on the overwrite_context.
+
+    Collects validation errors from all entries instead of stopping at the
+    first invalid one. This ensures that later entries in the overwrite
+    dictionary are still processed even when an earlier one fails.
+    """
+    errors: list[str] = []
+
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
             if not in_dictionary_variable:
@@ -82,11 +89,10 @@ def apply_overwrites_to_context(
                 if set(overwrite).issubset(set(context_value)):
                     context[variable] = overwrite
                 else:
-                    msg = (
+                    errors.append(
                         f"{overwrite} provided for multi-choice variable "
                         f"{variable}, but valid choices are {context_value}"
                     )
-                    raise ValueError(msg)
             else:
                 # We are dealing with a choice variable
                 if overwrite in context_value:
@@ -96,31 +102,39 @@ def apply_overwrites_to_context(
                     context_value.remove(overwrite)
                     context_value.insert(0, overwrite)
                 else:
-                    msg = (
+                    errors.append(
                         f"{overwrite} provided for choice variable "
                         f"{variable}, but the choices are {context_value}."
                     )
-                    raise ValueError(msg)
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
-            apply_overwrites_to_context(
-                context_value, overwrite, in_dictionary_variable=True
-            )
+            try:
+                apply_overwrites_to_context(
+                    context_value, overwrite, in_dictionary_variable=True
+                )
+            except ValueError as nested_err:
+                # Prefix nested errors with the parent variable name so
+                # users can trace which sub-key the error came from.
+                errors.extend(
+                    f"{variable}: {line}" for line in str(nested_err).split("; ")
+                )
             context[variable] = context_value
         elif isinstance(context_value, bool) and isinstance(overwrite, str):
             # We are dealing with a boolean variable
             # Convert overwrite to its boolean counterpart
             try:
                 context[variable] = YesNoPrompt().process_response(overwrite)
-            except InvalidResponse as err:
-                msg = (
+            except InvalidResponse:
+                errors.append(
                     f"{overwrite} provided for variable "
                     f"{variable} could not be converted to a boolean."
                 )
-                raise ValueError(msg) from err
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
+
+    if errors:
+        raise ValueError("; ".join(errors))
 
 
 def generate_context(

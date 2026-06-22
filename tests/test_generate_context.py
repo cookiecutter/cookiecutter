@@ -388,3 +388,122 @@ def test_apply_overwrites_error_overwrite_value_as_boolean_string():
     overwrite_context = {'key': 'invalid'}
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(context, overwrite_context)
+
+
+def test_apply_overwrites_continues_after_invalid_entry(template_context) -> None:
+    """Valid entries after an invalid one are still applied.
+
+    Regression test for gh-2219: the first invalid entry used to raise
+    ValueError immediately, causing every subsequent (potentially valid)
+    entry in the overwrite dict to be silently dropped.
+    """
+    with pytest.raises(ValueError) as excinfo:
+        generate.apply_overwrites_to_context(
+            context=template_context,
+            overwrite_context={
+                # Invalid choice — should be collected, not raised immediately
+                'orientation': 'foobar',
+                # Valid overwrite — MUST still be applied
+                'repo_name': 'should-be-applied',
+            },
+        )
+    # The valid entry should have been applied before the error is raised
+    assert template_context['repo_name'] == 'should-be-applied'
+    # The error message should mention the offending variable
+    assert 'orientation' in str(excinfo.value)
+
+
+def test_apply_overwrites_collects_all_errors() -> None:
+    """All invalid entries are reported, not just the first one."""
+    context = OrderedDict(
+        [
+            ('choice_var', ['a', 'b', 'c']),
+            ('multi_var', ['x', 'y', 'z']),
+            ('bool_var', False),
+        ]
+    )
+    with pytest.raises(ValueError) as excinfo:
+        generate.apply_overwrites_to_context(
+            context=context,
+            overwrite_context={
+                'choice_var': 'invalid',
+                'multi_var': ['w'],
+                'bool_var': 'not-a-bool',
+            },
+        )
+    msg = str(excinfo.value)
+    assert 'choice_var' in msg
+    assert 'multi_var' in msg
+    assert 'bool_var' in msg
+
+
+def test_apply_overwrites_nested_error_collection() -> None:
+    """Errors from nested dict entries are collected with parent prefix."""
+    context = OrderedDict(
+        [
+            ('key1', 'value1'),
+            (
+                'nested',
+                OrderedDict(
+                    [
+                        ('bool_a', True),
+                        ('bool_b', False),
+                    ]
+                ),
+            ),
+        ]
+    )
+    with pytest.raises(ValueError) as excinfo:
+        generate.apply_overwrites_to_context(
+            context=context,
+            overwrite_context={
+                'nested': {
+                    'bool_a': 'invalid-a',
+                    'bool_b': 'invalid-b',
+                },
+            },
+        )
+    msg = str(excinfo.value)
+    # Both nested errors should be reported with the parent prefix
+    assert 'nested:' in msg
+    assert 'bool_a' in msg
+    assert 'bool_b' in msg
+
+
+def test_apply_overwrites_no_error_when_all_valid(template_context) -> None:
+    """No exception is raised when all overwrites are valid."""
+    generate.apply_overwrites_to_context(
+        context=template_context,
+        overwrite_context={
+            'repo_name': 'new-repo',
+            'orientation': 'landscape',
+        },
+    )
+    assert template_context['repo_name'] == 'new-repo'
+    # orientation should be moved to front (choice variable default)
+    assert template_context['orientation'][0] == 'landscape'
+
+
+def test_generate_context_reports_all_invalid_defaults() -> None:
+    """generate_context warns about all invalid default_context entries,
+    not just the first one, and still applies valid entries that follow."""
+    with pytest.warns(UserWarning, match="Invalid default received") as record:
+        generated = generate.generate_context(
+            context_file='tests/test-generate-context/choices_template.json',
+            default_context={
+                # Valid — should be applied
+                'project_name': 'Kivy Project',
+                # Invalid choice — should warn but not block later entries
+                'orientation': 'foobar',
+                # Valid — should still be applied since the loop no longer
+                # exits early on the previous invalid entry
+                'github_username': 'rayman',
+            },
+        )
+    # Only one warning (combined message) should be emitted
+    assert len(record) == 1
+    warning_msg = str(record[0].message)
+    assert 'orientation' in warning_msg
+    # Valid entries before AND after the invalid one should be applied
+    assert generated['choices_template']['project_name'] == 'Kivy Project'
+    assert generated['choices_template']['github_username'] == 'rayman'
