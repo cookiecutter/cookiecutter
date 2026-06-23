@@ -63,6 +63,7 @@ def apply_overwrites_to_context(
     in_dictionary_variable: bool = False,
 ) -> None:
     """Modify the given context in place based on the overwrite_context."""
+    errors: list[str] = []
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
             if not in_dictionary_variable:
@@ -86,7 +87,7 @@ def apply_overwrites_to_context(
                         f"{overwrite} provided for multi-choice variable "
                         f"{variable}, but valid choices are {context_value}"
                     )
-                    raise ValueError(msg)
+                    errors.append(msg)
             else:
                 # We are dealing with a choice variable
                 if overwrite in context_value:
@@ -100,7 +101,7 @@ def apply_overwrites_to_context(
                         f"{overwrite} provided for choice variable "
                         f"{variable}, but the choices are {context_value}."
                     )
-                    raise ValueError(msg)
+                    errors.append(msg)
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
             apply_overwrites_to_context(
@@ -117,10 +118,13 @@ def apply_overwrites_to_context(
                     f"{overwrite} provided for variable "
                     f"{variable} could not be converted to a boolean."
                 )
-                raise ValueError(msg) from err
+                errors.append(msg)
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
+
+    if errors:
+        raise ValueError("\n".join(errors))
 
 
 def generate_context(
