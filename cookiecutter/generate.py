@@ -113,7 +113,7 @@ def apply_overwrites_to_context(
             # Convert overwrite to its boolean counterpart
             try:
                 context[variable] = YesNoPrompt().process_response(overwrite)
-            except InvalidResponse as err:
+            except InvalidResponse:
                 msg = (
                     f"{overwrite} provided for variable "
                     f"{variable} could not be converted to a boolean."
