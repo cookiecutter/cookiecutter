@@ -57,7 +57,9 @@ def test_generate_file(env) -> None:
     assert generated_text == 'Testing cheese'
 
 
-def test_generate_file_force_render_overrides_binary_detection(env, monkeypatch) -> None:
+def test_generate_file_force_render_overrides_binary_detection(
+    env, monkeypatch
+) -> None:
     """Verify `_force_render` renders files even when binary detection matches."""
     infile = 'tests/files/{{cookiecutter.force_render_file}}.txt'
     monkeypatch.setattr(generate, 'is_binary', lambda _: True)
