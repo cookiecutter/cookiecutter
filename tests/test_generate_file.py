@@ -31,6 +31,8 @@ def tear_down():
         os.remove('tests/files/cheese_mixed_newlines.txt')
     if os.path.exists('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt'):
         os.remove('tests/files/{{cookiecutter.generate_file}}_mixed_newlines.txt')
+    if os.path.exists('tests/files/force-rendered.txt'):
+        os.remove('tests/files/force-rendered.txt')
 
 
 @pytest.fixture
@@ -53,6 +55,28 @@ def test_generate_file(env) -> None:
     assert os.path.isfile('tests/files/cheese.txt')
     generated_text = Path('tests/files/cheese.txt').read_text()
     assert generated_text == 'Testing cheese'
+
+
+def test_generate_file_force_render_overrides_binary_detection(env, monkeypatch) -> None:
+    """Verify `_force_render` renders files even when binary detection matches."""
+    infile = 'tests/files/{{cookiecutter.force_render_file}}.txt'
+    monkeypatch.setattr(generate, 'is_binary', lambda _: True)
+
+    generate.generate_file(
+        project_dir=".",
+        infile=infile,
+        context={
+            'cookiecutter': {
+                'force_render_file': 'force-rendered',
+                'rendered_value': 'rendered by force',
+                '_force_render': [infile],
+            }
+        },
+        env=env,
+    )
+
+    generated_text = Path('tests/files/force-rendered.txt').read_text()
+    assert generated_text == 'Value: rendered by force'
 
 
 def test_generate_file_jsonify_filter(env) -> None:
