@@ -135,8 +135,13 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ### Coding Standards
 
-- PEP8
-- Functions over classes except in tests
+- Follow [PEP 8](https://peps.python.org/pep-0008/)
+- Default to functions over classes for new code
+- Use classes when appropriate—for example, Jinja2 extensions, custom exceptions, framework subclasses, grouping tests in classes, or context managers
+- Do not add classes solely to namespace functions; use modules instead
+- Prefer `pathlib.Path` over string paths for file system operations
+- On Windows, use `Path` methods (for example, `Path.read_text()`) rather than assuming POSIX path behavior
+- In tests, use the `tmp_path` fixture; avoid the legacy `tmpdir` fixture
 - Quotes via [http://stackoverflow.com/a/56190/5549](http://stackoverflow.com/a/56190/5549)
 
   - Use double quotes around strings that are used for interpolation or that are natural language messages
