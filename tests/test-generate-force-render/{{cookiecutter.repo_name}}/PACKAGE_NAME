@@ -1,0 +1,4 @@
+PACKAGE_NAME := {{ cookiecutter.project_slug }}
+
+This file starts with PACK which makes binaryornot think it's binary.
+With _force_render, it should be rendered properly.
