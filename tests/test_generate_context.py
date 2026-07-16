@@ -57,7 +57,7 @@ def context_data() -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
 
 
 @pytest.mark.usefixtures('clean_system')
-@pytest.mark.parametrize('input_params, expected_context', context_data())
+@pytest.mark.parametrize('input_params, expected_context', list(context_data()))
 def test_generate_context(input_params, expected_context) -> None:
     """Verify input contexts combinations result in expected content on output."""
     assert generate.generate_context(**input_params) == expected_context
