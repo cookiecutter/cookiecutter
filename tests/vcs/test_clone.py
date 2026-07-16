@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -162,6 +163,65 @@ def test_clone_handles_repo_typo(mocker, clone_dir, error_message) -> None:
     assert str(err.value) == (
         f'The repository {repository_url} could not be found, have you made a typo?'
     )
+
+
+def test_clone_failure_keeps_existing_repo(mocker, clone_dir) -> None:
+    """A failed refresh must not delete the cached repository."""
+    repo_dir = clone_dir.joinpath('cookiedozer')
+    repo_dir.mkdir()
+    marker = repo_dir.joinpath('cookiecutter.json')
+    marker.write_text('{"project_name": "cached"}')
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=subprocess.CalledProcessError(
+            -1,
+            'cmd',
+            output=(
+                b"fatal: repository 'https://github.com/hackebro/cookiedozer' not found"
+            ),
+        ),
+    )
+
+    with pytest.raises(exceptions.RepositoryNotFound):
+        vcs.clone(
+            'https://github.com/hackebro/cookiedozer',
+            clone_to_dir=str(clone_dir),
+            no_input=True,
+        )
+
+    assert marker.read_text() == '{"project_name": "cached"}'
+
+
+def test_clone_replaces_existing_repo_after_success(mocker, clone_dir) -> None:
+    """A successful refresh replaces the cached repository."""
+    repo_dir = clone_dir.joinpath('cookiedozer')
+    repo_dir.mkdir()
+    marker = repo_dir.joinpath('cookiecutter.json')
+    marker.write_text('{"project_name": "cached"}')
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+
+    def clone_to_staging(command, **_kwargs) -> None:
+        staged_repo = Path(command[-1])
+        staged_repo.mkdir()
+        staged_repo.joinpath('cookiecutter.json').write_text(
+            '{"project_name": "refreshed"}'
+        )
+
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=clone_to_staging,
+    )
+
+    vcs.clone(
+        'https://github.com/hackebro/cookiedozer',
+        clone_to_dir=str(clone_dir),
+        no_input=True,
+    )
+
+    assert marker.read_text() == '{"project_name": "refreshed"}'
 
 
 @pytest.mark.parametrize(
