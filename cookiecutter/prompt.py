@@ -403,7 +403,9 @@ def choose_nested_template(
     return f"{template_path}"
 
 
-def prompt_and_delete(path: Path | str, no_input: bool = False) -> bool:
+def prompt_and_delete(
+    path: Path | str, no_input: bool = False, delete: bool = True
+) -> bool:
     """
     Ask user if it's okay to delete the previously-downloaded file/directory.
 
@@ -412,7 +414,8 @@ def prompt_and_delete(path: Path | str, no_input: bool = False) -> bool:
 
     :param path: Previously downloaded zipfile.
     :param no_input: Suppress prompt to delete repo and just delete it.
-    :return: True if the content was deleted
+    :param delete: Delete the content after the user approves the refresh.
+    :return: True if the refresh was approved.
     """
     # Suppress prompt if called via API
     if no_input:
@@ -425,10 +428,11 @@ def prompt_and_delete(path: Path | str, no_input: bool = False) -> bool:
         ok_to_delete = read_user_yes_no(question, 'yes')
 
     if ok_to_delete:
-        if os.path.isdir(path):
-            rmtree(path)
-        else:
-            os.remove(path)
+        if delete:
+            if os.path.isdir(path):
+                rmtree(path)
+            else:
+                os.remove(path)
         return True
     ok_to_reuse = read_user_yes_no("Do you want to re-use the existing version?", 'yes')
 

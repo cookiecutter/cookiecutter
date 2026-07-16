@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -97,15 +99,28 @@ def clone(
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug(f'repo_dir is {repo_dir}')
 
-    if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
+    cached_repo = os.path.isdir(repo_dir)
+    if cached_repo:
+        clone = prompt_and_delete(repo_dir, no_input=no_input, delete=False)
     else:
         clone = True
 
     if clone:
+        temporary_dir = (
+            tempfile.TemporaryDirectory(dir=clone_to_dir) if cached_repo else None
+        )
         try:
+            if temporary_dir:
+                clone_parent = temporary_dir.name
+                cloned_repo_dir = os.path.normpath(
+                    os.path.join(clone_parent, repo_name)
+                )
+                clone_command = [repo_type, 'clone', repo_url, cloned_repo_dir]
+            else:
+                cloned_repo_dir = repo_dir
+                clone_command = [repo_type, 'clone', repo_url]
             subprocess.check_output(
-                [repo_type, 'clone', repo_url],
+                clone_command,
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
@@ -116,7 +131,7 @@ def clone(
                     checkout_params.insert(0, "--")
                 subprocess.check_output(
                     [repo_type, 'checkout', *checkout_params],
-                    cwd=repo_dir,
+                    cwd=cloned_repo_dir,
                     stderr=subprocess.STDOUT,
                 )
         except subprocess.CalledProcessError as clone_error:
@@ -135,5 +150,17 @@ def clone(
                 raise RepositoryCloneFailed(msg) from clone_error
             logger.exception('git clone failed with error: %s', output)
             raise
+        else:
+            if temporary_dir:
+                backup_repo_dir = os.path.join(temporary_dir.name, 'previous-repo')
+                shutil.move(repo_dir, backup_repo_dir)
+                try:
+                    shutil.move(cloned_repo_dir, repo_dir)
+                except BaseException:
+                    shutil.move(backup_repo_dir, repo_dir)
+                    raise
+        finally:
+            if temporary_dir:
+                temporary_dir.cleanup()
 
     return repo_dir
