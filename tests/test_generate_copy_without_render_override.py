@@ -80,9 +80,7 @@ def test_generate_copy_without_render_extensions() -> None:
     assert 'I have been rendered' in file_4
 
     file_5 = Path(
-        'test_copy_without_render/'
-        'test_copy_without_render-not-rendered/'
-        'README.rst'
+        'test_copy_without_render/test_copy_without_render-not-rendered/README.rst'
     ).read_text()
     assert '{{cookiecutter.render_test}}' in file_5
 
@@ -90,6 +88,6 @@ def test_generate_copy_without_render_extensions() -> None:
     assert '{{cookiecutter.render_test}}' in file_6
 
     file_7 = Path(
-        'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md'
+        'test_copy_without_render/test_copy_without_render-rendered/README.md'
     ).read_text()
     assert '{{cookiecutter.render_test}}' in file_7

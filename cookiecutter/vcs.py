@@ -6,7 +6,6 @@ import logging
 import os
 import shutil
 import subprocess
-import tempfile
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -106,13 +105,17 @@ def clone(
         # Clone into temporary folder name inside clone_to_dir if repo_dir exists
         target_dir = repo_dir
         if repo_exists:
-            target_dir = os.path.normpath(os.path.join(clone_to_dir, f".tmp_{repo_name}"))
+            target_dir = os.path.normpath(
+                os.path.join(clone_to_dir, f".tmp_{repo_name}")
+            )
             if os.path.isdir(target_dir):
                 shutil.rmtree(target_dir)
 
         try:
             subprocess.check_output(
-                [repo_type, 'clone', repo_url, target_dir] if repo_exists else [repo_type, 'clone', repo_url],
+                [repo_type, 'clone', repo_url, target_dir]
+                if repo_exists
+                else [repo_type, 'clone', repo_url],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
@@ -153,4 +156,3 @@ def clone(
             raise
 
     return repo_dir
-
