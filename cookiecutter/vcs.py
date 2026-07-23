@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -66,16 +68,7 @@ def clone(
     clone_to_dir: Path | str = ".",
     no_input: bool = False,
 ) -> str:
-    """Clone a repo to the current directory.
-
-    :param repo_url: Repo URL of unknown type.
-    :param checkout: The branch, tag or commit ID to checkout after clone.
-    :param clone_to_dir: The directory to clone to.
-                         Defaults to the current directory.
-    :param no_input: Do not prompt for user input and eventually force a refresh of
-        cached resources.
-    :returns: str with path to the new directory of the repository.
-    """
+    """Clone a repo to the current directory."""
     # Ensure that clone_to_dir exists
     clone_to_dir = Path(clone_to_dir).expanduser()
     make_sure_path_exists(clone_to_dir)
@@ -92,34 +85,57 @@ def clone(
     repo_name = os.path.split(repo_url)[1]
     if repo_type == 'git':
         repo_name = repo_name.split(':')[-1].rsplit('.git')[0]
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
-    if repo_type == 'hg':
-        repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+    repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
+
     logger.debug(f'repo_dir is {repo_dir}')
 
-    if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
-    else:
-        clone = True
+    # Check if repo_dir exists
+    repo_exists = os.path.isdir(repo_dir)
 
-    if clone:
+    if repo_exists:
+        if no_input:
+            clone_permission = True
+        else:
+            clone_permission = prompt_and_delete(repo_dir, no_input=False)
+            # If user explicitly deleted it during prompt, update flag
+            repo_exists = os.path.isdir(repo_dir)
+    else:
+        clone_permission = True
+
+    if clone_permission:
+        # Clone into temporary folder name inside clone_to_dir if repo_dir exists
+        target_dir = repo_dir
+        if repo_exists:
+            target_dir = os.path.normpath(os.path.join(clone_to_dir, f".tmp_{repo_name}"))
+            if os.path.isdir(target_dir):
+                shutil.rmtree(target_dir)
+
         try:
             subprocess.check_output(
-                [repo_type, 'clone', repo_url],
+                [repo_type, 'clone', repo_url, target_dir] if repo_exists else [repo_type, 'clone', repo_url],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
             if checkout is not None:
                 checkout_params = [checkout]
-                # Avoid Mercurial "--config" and "--debugger" injection vulnerability
                 if repo_type == "hg":
                     checkout_params.insert(0, "--")
                 subprocess.check_output(
                     [repo_type, 'checkout', *checkout_params],
-                    cwd=repo_dir,
+                    cwd=target_dir,
                     stderr=subprocess.STDOUT,
                 )
+
+            # Swap temp directory into place if we cloned to a temporary path
+            if repo_exists and os.path.isdir(target_dir):
+                shutil.rmtree(repo_dir)
+                shutil.move(target_dir, repo_dir)
+
         except subprocess.CalledProcessError as clone_error:
+            # Clean up temp folder if it was created
+            if repo_exists and os.path.isdir(target_dir):
+                shutil.rmtree(target_dir)
+
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
                 msg = (
@@ -137,3 +153,4 @@ def clone(
             raise
 
     return repo_dir
+
