@@ -18,7 +18,7 @@ Most Linux distributions come with Python pre-installed.
 Consult the official `Python documentation <https://docs.python.org/3/using/index.html>`_ for details.
 
 You can install the Python binaries from `python.org <https://www.python.org/downloads/>`_.
-Alternatively on macOS, you can use the `homebrew <http://brew.sh/>`_ package manager.
+Alternatively on macOS, you can use the `homebrew <https://brew.sh/>`_ package manager.
 
 .. code-block:: bash
 
@@ -58,7 +58,7 @@ You may need to restart your command prompt session to load the environment vari
 **Unix on Windows**
 
 
-You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10>`_ or `GNU utilities for Win32 <http://unxutils.sourceforge.net>`_ to use Unix commands on Windows.
+You may also install  `Windows Subsystem for Linux <https://msdn.microsoft.com/en-us/commandline/wsl/install-win10>`_ or `GNU utilities for Win32 <https://unxutils.sourceforge.net>`_ to use Unix commands on Windows.
 
 Packaging tools
 ^^^^^^^^^^^^^^^
@@ -98,7 +98,7 @@ Once the conda-forge channel has been enabled, cookiecutter can be installed wit
 Alternate installations
 -----------------------
 
-**Homebrew (Mac OS X only):**
+**Homebrew (macOS only):**
 
 .. code-block:: bash
 
@@ -110,7 +110,7 @@ Alternate installations
 
     xbps-install cookiecutter
 
-**Pipx (Linux, OSX and Windows):**
+**Pipx (Linux, macOS and Windows):**
 
 .. code-block:: bash
 
