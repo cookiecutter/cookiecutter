@@ -31,4 +31,4 @@ and the path should be relative from the `templates` folder like ::
     # file.txt
     {% include "base.txt" %}
 
-see more on https://jinja.palletsprojects.com/en/2.11.x/templates/
+see more on https://jinja.palletsprojects.com/en/latest/templates/

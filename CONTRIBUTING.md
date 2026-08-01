@@ -48,7 +48,7 @@ Cookiecutter could always use more documentation, whether as part of the officia
 If you want to review your changes on the documentation locally, you can do:
 
 ```bash
-pip install --group dev
+uv sync --group dev
 just servedocs
 ```
 
@@ -81,7 +81,7 @@ Here's how to set up `cookiecutter` for local development.
    ```bash
    cd cookiecutter/
    pip install -e .
-   pip install --group dev
+   uv sync --group dev
    ```
 
 4. Create a branch for local development:
