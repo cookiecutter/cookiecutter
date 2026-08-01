@@ -38,7 +38,7 @@ It is 2014.
 
     in_folder = "The color is green and the letter is D.\n"
     in_folder2 = Path('output_folder/folder/in_folder.txt').read_text()
-    assert in_folder == in_folder2
+    assert in_folder2 == in_folder
 
     assert os.path.isdir('output_folder/im_a.dir')
     assert os.path.isfile('output_folder/im_a.dir/im_a.file.py')
