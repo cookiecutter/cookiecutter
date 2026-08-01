@@ -16,7 +16,7 @@ def repo_dir(request):
     return Path('tests', request.param)
 
 
-@pytest.fixture()
+@pytest.fixture
 def env(context):
     """Fixture return the env generated from context."""
     return create_env_with_context(context)
