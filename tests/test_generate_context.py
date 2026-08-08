@@ -15,45 +15,47 @@ from cookiecutter.exceptions import ContextDecodingException
 from cookiecutter.prompt import YesNoPrompt
 
 
-def context_data() -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
+def context_data() -> list[tuple[dict[str, Any], dict[str, Any]]]:
     """Generate pytest parametrization variables for test.
 
     Return ('input_params, expected_context') tuples.
     """
     context = (
-        {'context_file': 'tests/test-generate-context/test.json'},
-        {'test': {'1': 2, 'some_key': 'some_val'}},
+        {"context_file": "tests/test-generate-context/test.json"},
+        {"test": {"1": 2, "some_key": "some_val"}},
     )
 
     context_with_default = (
         {
-            'context_file': 'tests/test-generate-context/test.json',
-            'default_context': {'1': 3},
+            "context_file": "tests/test-generate-context/test.json",
+            "default_context": {"1": 3},
         },
-        {'test': {'1': 3, 'some_key': 'some_val'}},
+        {"test": {"1": 3, "some_key": "some_val"}},
     )
 
     context_with_extra = (
         {
-            'context_file': 'tests/test-generate-context/test.json',
-            'extra_context': {'1': 4},
+            "context_file": "tests/test-generate-context/test.json",
+            "extra_context": {"1": 4},
         },
-        {'test': {'1': 4, 'some_key': 'some_val'}},
+        {"test": {"1": 4, "some_key": "some_val"}},
     )
 
     context_with_default_and_extra = (
         {
-            'context_file': 'tests/test-generate-context/test.json',
-            'default_context': {'1': 3},
-            'extra_context': {'1': 5},
+            "context_file": "tests/test-generate-context/test.json",
+            "default_context": {"1": 3},
+            "extra_context": {"1": 5},
         },
-        {'test': {'1': 5, 'some_key': 'some_val'}},
+        {"test": {"1": 5, "some_key": "some_val"}},
     )
 
-    yield context
-    yield context_with_default
-    yield context_with_extra
-    yield context_with_default_and_extra
+    return [
+        context,
+        context_with_default,
+        context_with_extra,
+        context_with_default_and_extra,
+    ]
 
 
 @pytest.mark.usefixtures('clean_system')
