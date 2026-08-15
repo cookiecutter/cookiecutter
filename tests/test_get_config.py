@@ -1,6 +1,6 @@
 """Collection of tests around loading cookiecutter config."""
 
-from pathlib import Path
+import os
 
 import pytest
 import yaml
@@ -104,11 +104,9 @@ def test_invalid_config() -> None:
 def test_get_config_with_defaults() -> None:
     """A config file that overrides 1 of 3 defaults."""
     conf = config.get_config('tests/test-config/valid-partial-config.yaml')
-    default_cookiecutters_dir = Path('~/.cookiecutters').expanduser()
-    default_replay_dir = Path('~/.cookiecutter_replay').expanduser()
     expected_conf = {
-        'cookiecutters_dir': str(default_cookiecutters_dir),
-        'replay_dir': str(default_replay_dir),
+        'cookiecutters_dir': config.DEFAULT_CONFIG['cookiecutters_dir'],
+        'replay_dir': config.DEFAULT_CONFIG['replay_dir'],
         'default_context': {
             'full_name': 'Firstname Lastname',
             'email': 'firstname.lastname@gmail.com',
@@ -127,6 +125,29 @@ def test_get_config_empty_config_file() -> None:
     """An empty config file results in the default config."""
     conf = config.get_config('tests/test-config/empty-config.yaml')
     assert conf == config.DEFAULT_CONFIG
+
+
+def test_xdg_dir_uses_env_variable_when_set(monkeypatch) -> None:
+    """XDG base directory environment variables are honored when set."""
+    monkeypatch.setenv('XDG_CACHE_HOME', '/custom/cache')
+    monkeypatch.setenv('XDG_DATA_HOME', '/custom/data')
+
+    cache_dir = config.xdg_dir('XDG_CACHE_HOME', '~/.cache', 'cookiecutter')
+    data_dir = config.xdg_dir('XDG_DATA_HOME', '~/.local/share', 'cookiecutter')
+    assert cache_dir == os.path.join('/custom/cache', 'cookiecutter')
+    assert data_dir == os.path.join('/custom/data', 'cookiecutter')
+
+
+def test_xdg_dir_uses_spec_default_when_env_var_unset(monkeypatch) -> None:
+    """XDG base directory defaults are used when the env var is not set."""
+    monkeypatch.delenv('XDG_CACHE_HOME', raising=False)
+    monkeypatch.delenv('XDG_DATA_HOME', raising=False)
+    monkeypatch.setenv('HOME', '/custom/home')
+
+    cache_dir = config.xdg_dir('XDG_CACHE_HOME', '~/.cache', 'cookiecutter')
+    data_dir = config.xdg_dir('XDG_DATA_HOME', '~/.local/share', 'cookiecutter')
+    assert cache_dir == os.path.join('/custom/home', '.cache', 'cookiecutter')
+    assert data_dir == os.path.join('/custom/home', '.local', 'share', 'cookiecutter')
 
 
 def test_get_config_invalid_file_with_array_as_top_level_element() -> None:

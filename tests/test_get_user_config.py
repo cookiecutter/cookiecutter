@@ -165,3 +165,50 @@ def test_specify_config_values() -> None:
     user_config = config.get_user_config(default_config={'replay_dir': replay_dir})
 
     assert user_config == custom_config_updated
+
+
+def test_legacy_directories_are_used_while_they_hold_data(
+    monkeypatch, tmp_path
+) -> None:
+    """Existing pre-XDG directories keep working until the XDG location exists."""
+    home = tmp_path.joinpath('home')
+    legacy_replay_dir = home.joinpath('.cookiecutter_replay')
+    legacy_replay_dir.mkdir(parents=True)
+    monkeypatch.setenv('HOME', str(home))
+
+    xdg_replay_dir = tmp_path.joinpath('xdg-data', 'cookiecutter')
+    monkeypatch.setitem(config.DEFAULT_CONFIG, 'replay_dir', str(xdg_replay_dir))
+
+    user_config = config.get_user_config()
+    assert user_config['replay_dir'] == str(legacy_replay_dir)
+
+
+def test_xdg_directory_wins_once_it_exists(monkeypatch, tmp_path) -> None:
+    """The XDG location is used once it has been created."""
+    home = tmp_path.joinpath('home')
+    legacy_replay_dir = home.joinpath('.cookiecutter_replay')
+    legacy_replay_dir.mkdir(parents=True)
+    monkeypatch.setenv('HOME', str(home))
+
+    xdg_replay_dir = tmp_path.joinpath('xdg-data', 'cookiecutter')
+    xdg_replay_dir.mkdir(parents=True)
+    monkeypatch.setitem(config.DEFAULT_CONFIG, 'replay_dir', str(xdg_replay_dir))
+
+    user_config = config.get_user_config()
+    assert user_config['replay_dir'] == str(xdg_replay_dir)
+
+
+def test_explicit_config_directory_is_not_migrated(monkeypatch, tmp_path) -> None:
+    """An explicitly configured directory is never replaced by the legacy one."""
+    home = tmp_path.joinpath('home')
+    legacy_replay_dir = home.joinpath('.cookiecutter_replay')
+    legacy_replay_dir.mkdir(parents=True)
+    monkeypatch.setenv('HOME', str(home))
+
+    xdg_replay_dir = tmp_path.joinpath('xdg-data', 'cookiecutter')
+    monkeypatch.setitem(config.DEFAULT_CONFIG, 'replay_dir', str(xdg_replay_dir))
+
+    user_config = config.get_user_config(
+        default_config={'replay_dir': '/custom/replay-dir'}
+    )
+    assert user_config['replay_dir'] == '/custom/replay-dir'

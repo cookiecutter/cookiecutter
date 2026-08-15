@@ -47,9 +47,17 @@ Possible settings are:
     These values are treated like the defaults in ``cookiecutter.json``, upon generation of any project.
 ``cookiecutters_dir``
     Directory where your cookiecutters are cloned to when you use Cookiecutter with a repo argument.
+    Defaults to ``$XDG_CACHE_HOME/cookiecutter`` (usually ``~/.cache/cookiecutter``).
 ``replay_dir``
     Directory where Cookiecutter dumps context data to, which you can fetch later on when using the
     :ref:`replay feature <replay-feature>`.
+    Defaults to ``$XDG_DATA_HOME/cookiecutter`` (usually ``~/.local/share/cookiecutter``).
+
+Both directories follow the `XDG Base Directory Specification
+<https://specifications.freedesktop.org/basedir/latest/>`_. For backward
+compatibility, an existing ``~/.cookiecutters`` or ``~/.cookiecutter_replay``
+directory keeps being used until the XDG location has been created, so no
+data is stranded by an upgrade.
 ``abbreviations``
     A list of abbreviations for cookiecutters.
     Abbreviations can be simple aliases for a repo name, or can be used as a prefix, in the form ``abbr:suffix``.

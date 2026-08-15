@@ -5,7 +5,7 @@ Replay Project Generation
 
 *New in Cookiecutter 1.1*
 
-On invocation **Cookiecutter** dumps a json file to ``~/.cookiecutter_replay/`` which enables you to *replay* later on.
+On invocation **Cookiecutter** dumps a json file to the replay directory which enables you to *replay* later on. The directory defaults to ``$XDG_DATA_HOME/cookiecutter`` (usually ``~/.local/share/cookiecutter``) and can be changed with the ``replay_dir`` setting in your :ref:`user config <user-config>`.
 
 In other words, it persists your **input** for a template and fetches it when you run the same template again.
 
