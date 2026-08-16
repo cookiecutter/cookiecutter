@@ -30,6 +30,22 @@ def test_force_delete(mocker, tmp_path) -> None:
     utils.rmtree(tmp_path)
 
 
+def test_force_delete_restores_directory_traversal(mocker, tmp_path) -> None:
+    """Verify cleanup can traverse a copied read-only directory."""
+    ro_dir = tmp_path / 'template'
+    ro_dir.mkdir()
+    (ro_dir / 'cookiecutter.json').write_text('{}')
+    ro_dir.chmod(stat.S_IWUSR)
+
+    delete = mocker.Mock()
+    utils.force_delete(delete, ro_dir, sys.exc_info())
+
+    mode = ro_dir.stat().st_mode
+    assert mode & stat.S_IXUSR
+    assert mode & stat.S_IWUSR
+    delete.assert_called_once_with(ro_dir)
+
+
 def test_rmtree(tmp_path) -> None:
     """Verify `utils.rmtree` remove files marked as read-only."""
     file_path = Path(tmp_path, "bar")
