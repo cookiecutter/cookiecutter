@@ -84,7 +84,9 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
     assert not mock_subprocess.called
 
 
-def test_clone_should_preserve_existing_repo_if_refresh_fails(mocker, clone_dir) -> None:
+def test_clone_should_preserve_existing_repo_if_refresh_fails(
+    mocker, clone_dir
+) -> None:
     """A failed refresh must not delete the existing cached repository."""
     mocker.patch('cookiecutter.vcs.is_vcs_installed', return_value=True)
     mocker.patch('cookiecutter.vcs.prompt_and_delete', return_value=True)
@@ -136,8 +138,13 @@ def test_clone_should_replace_existing_repo_after_successful_refresh(
         no_input=True,
     )
 
-    assert result == os.path.normpath(os.path.join(clone_dir, 'cookiecutter-pytest-plugin'))
-    assert repo_dir.joinpath('cookiecutter.json').read_text() == '{"app_name": "refreshed"}'
+    assert result == os.path.normpath(
+        os.path.join(clone_dir, 'cookiecutter-pytest-plugin')
+    )
+    assert (
+        repo_dir.joinpath('cookiecutter.json').read_text()
+        == '{"app_name": "refreshed"}'
+    )
 
 
 @pytest.mark.parametrize(
