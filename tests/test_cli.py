@@ -510,6 +510,30 @@ def test_cli_extra_context(cli_runner) -> None:
     assert 'Project name: **Awesomez**' in content
 
 
+def test_cli_extra_context_parses_boolean(cli_runner, tmp_path) -> None:
+    """CLI converts a boolean replacement before rendering the template."""
+    template_dir = tmp_path / 'template'
+    project_dir = template_dir / '{{ cookiecutter.flag }}'
+    project_dir.mkdir(parents=True)
+    (template_dir / 'cookiecutter.json').write_text('{"flag": true}', encoding='utf-8')
+    (project_dir / 'README.md').write_text('generated', encoding='utf-8')
+    output_dir = tmp_path / 'output'
+    output_dir.mkdir()
+
+    result = cli_runner(
+        str(template_dir),
+        'flag=no',
+        '--no-input',
+        '--default-config',
+        '--output-dir',
+        str(output_dir),
+    )
+
+    assert result.exit_code == 0
+    assert (output_dir / 'False' / 'README.md').is_file()
+    assert not (output_dir / 'no').exists()
+
+
 @pytest.mark.usefixtures('remove_fake_project_dir')
 def test_cli_extra_context_invalid_format(cli_runner) -> None:
     """Cli invocation raise error if called with unknown argument."""
