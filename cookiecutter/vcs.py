@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import os
 import subprocess
+import tempfile
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -19,7 +20,7 @@ from cookiecutter.exceptions import (
     VCSNotInstalled,
 )
 from cookiecutter.prompt import prompt_and_delete
-from cookiecutter.utils import make_sure_path_exists
+from cookiecutter.utils import make_sure_path_exists, rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -97,12 +98,19 @@ def clone(
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug(f'repo_dir is {repo_dir}')
 
-    if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
+    existing_repo = os.path.isdir(repo_dir)
+    if existing_repo:
+        # Keep the existing cache until the replacement has been downloaded
+        # successfully. This prevents a failed refresh from destroying it.
+        clone = prompt_and_delete(repo_dir, no_input=no_input, delete=False)
     else:
         clone = True
 
+    temporary_clone_to_dir = None
     if clone:
+        if existing_repo:
+            temporary_clone_to_dir = tempfile.mkdtemp(dir=clone_to_dir)
+            clone_to_dir = Path(temporary_clone_to_dir)
         try:
             subprocess.check_output(
                 [repo_type, 'clone', repo_url],
@@ -118,6 +126,12 @@ def clone(
                     [repo_type, 'checkout', *checkout_params],
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,
+                )
+            if existing_repo:
+                rmtree(repo_dir)
+                os.replace(
+                    os.path.join(clone_to_dir, repo_name),
+                    repo_dir,
                 )
         except subprocess.CalledProcessError as clone_error:
             output = clone_error.output.decode('utf-8')
@@ -135,5 +149,8 @@ def clone(
                 raise RepositoryCloneFailed(msg) from clone_error
             logger.exception('git clone failed with error: %s', output)
             raise
+        finally:
+            if temporary_clone_to_dir is not None:
+                rmtree(clone_to_dir)
 
     return repo_dir

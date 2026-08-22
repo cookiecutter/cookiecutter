@@ -84,6 +84,62 @@ def test_clone_should_silent_exit_if_ok_to_reuse(mocker, tmpdir) -> None:
     assert not mock_subprocess.called
 
 
+def test_clone_should_preserve_existing_repo_if_refresh_fails(mocker, clone_dir) -> None:
+    """A failed refresh must not delete the existing cached repository."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', return_value=True)
+    mocker.patch('cookiecutter.vcs.prompt_and_delete', return_value=True)
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        side_effect=subprocess.CalledProcessError(
+            1, ['git', 'clone'], output=b'Something went wrong'
+        ),
+    )
+
+    repo_dir = clone_dir.joinpath('cookiecutter-pytest-plugin')
+    repo_dir.mkdir()
+    marker = repo_dir.joinpath('cookiecutter.json')
+    marker.write_text('{"app_name": "existing"}')
+
+    with pytest.raises(subprocess.CalledProcessError):
+        vcs.clone(
+            'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git',
+            clone_to_dir=clone_dir,
+            no_input=True,
+        )
+
+    assert marker.read_text() == '{"app_name": "existing"}'
+
+
+def test_clone_should_replace_existing_repo_after_successful_refresh(
+    mocker, clone_dir
+) -> None:
+    """A successful refresh should replace the existing cached repository."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', return_value=True)
+    mocker.patch('cookiecutter.vcs.prompt_and_delete', return_value=True)
+
+    def clone_repo(_command, cwd, **_kwargs):
+        new_repo = cwd.joinpath('cookiecutter-pytest-plugin')
+        new_repo.mkdir()
+        new_repo.joinpath('cookiecutter.json').write_text(
+            '{"app_name": "refreshed"}'
+        )
+
+    mocker.patch('cookiecutter.vcs.subprocess.check_output', side_effect=clone_repo)
+
+    repo_dir = clone_dir.joinpath('cookiecutter-pytest-plugin')
+    repo_dir.mkdir()
+    repo_dir.joinpath('cookiecutter.json').write_text('{"app_name": "existing"}')
+
+    result = vcs.clone(
+        'https://github.com/pytest-dev/cookiecutter-pytest-plugin.git',
+        clone_to_dir=clone_dir,
+        no_input=True,
+    )
+
+    assert result == os.path.normpath(os.path.join(clone_dir, 'cookiecutter-pytest-plugin'))
+    assert repo_dir.joinpath('cookiecutter.json').read_text() == '{"app_name": "refreshed"}'
+
+
 @pytest.mark.parametrize(
     'repo_type, repo_url, repo_name',
     [
