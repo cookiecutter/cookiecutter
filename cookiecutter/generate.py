@@ -63,6 +63,25 @@ def apply_overwrites_to_context(
     in_dictionary_variable: bool = False,
 ) -> None:
     """Modify the given context in place based on the overwrite_context."""
+    errors = []
+    _apply_overwrites_to_context(
+        context,
+        overwrite_context,
+        in_dictionary_variable=in_dictionary_variable,
+        errors=errors,
+    )
+    if errors:
+        raise ValueError('; '.join(errors))
+
+
+def _apply_overwrites_to_context(
+    context: dict[str, Any],
+    overwrite_context: dict[str, Any],
+    *,
+    in_dictionary_variable: bool,
+    errors: list[str],
+) -> None:
+    """Apply overwrites while collecting invalid entries."""
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
             if not in_dictionary_variable:
@@ -86,7 +105,7 @@ def apply_overwrites_to_context(
                         f"{overwrite} provided for multi-choice variable "
                         f"{variable}, but valid choices are {context_value}"
                     )
-                    raise ValueError(msg)
+                    errors.append(msg)
             else:
                 # We are dealing with a choice variable
                 if overwrite in context_value:
@@ -100,11 +119,14 @@ def apply_overwrites_to_context(
                         f"{overwrite} provided for choice variable "
                         f"{variable}, but the choices are {context_value}."
                     )
-                    raise ValueError(msg)
+                    errors.append(msg)
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
-            apply_overwrites_to_context(
-                context_value, overwrite, in_dictionary_variable=True
+            _apply_overwrites_to_context(
+                context_value,
+                overwrite,
+                in_dictionary_variable=True,
+                errors=errors,
             )
             context[variable] = context_value
         elif isinstance(context_value, bool) and isinstance(overwrite, str):
@@ -112,12 +134,12 @@ def apply_overwrites_to_context(
             # Convert overwrite to its boolean counterpart
             try:
                 context[variable] = YesNoPrompt().process_response(overwrite)
-            except InvalidResponse as err:
+            except InvalidResponse:
                 msg = (
                     f"{overwrite} provided for variable "
                     f"{variable} could not be converted to a boolean."
                 )
-                raise ValueError(msg) from err
+                errors.append(msg)
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite

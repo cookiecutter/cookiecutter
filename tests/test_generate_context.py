@@ -202,12 +202,44 @@ def test_apply_overwrites_does_not_modify_choices_for_invalid_overwrite() -> Non
     assert generated_context == expected_context
 
 
+def test_default_context_applies_overwrites_after_invalid_overwrite() -> None:
+    """Verify invalid defaults do not prevent later defaults from applying."""
+    with pytest.warns(UserWarning, match="orientation") as warning:
+        generated_context = generate.generate_context(
+            context_file='tests/test-generate-context/choices_template.json',
+            default_context={
+                'orientation': 'foobar',
+                'project_name': 'My Project',
+                'github_username': 'octocat',
+            },
+        )
+
+    assert generated_context['choices_template']['project_name'] == 'My Project'
+    assert generated_context['choices_template']['github_username'] == 'octocat'
+    assert 'orientation' in str(warning.list[0].message)
+
+
 def test_apply_overwrites_invalid_overwrite(template_context) -> None:
     """Verify variables overwrite for list if variable not in list not ignored."""
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(
             context=template_context, overwrite_context={'orientation': 'foobar'}
         )
+
+
+def test_apply_overwrites_reports_all_invalid_overwrites(template_context) -> None:
+    """Verify invalid overwrites do not prevent later entries from applying."""
+    with pytest.raises(ValueError, match="orientation.*deployment_regions"):
+        generate.apply_overwrites_to_context(
+            context=template_context,
+            overwrite_context={
+                'orientation': 'foobar',
+                'deployment_regions': ['na'],
+                'repo_name': 'foobar',
+            },
+        )
+
+    assert template_context['repo_name'] == 'foobar'
 
 
 def test_apply_overwrites_sets_multichoice_values(template_context) -> None:
