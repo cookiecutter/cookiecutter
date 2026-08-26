@@ -32,6 +32,15 @@ file to escape entire files and directories.
 
 .. _`_copy_without_render`: http://cookiecutter.readthedocs.io/en/latest/advanced/copy_without_render.html
 
+Cookiecutter copied a text file without rendering it
+----------------------------------------------------
+
+Cookiecutter skips rendering files that look binary. If a text file happens to
+start with bytes that match a binary signature, add it to `_force_render`_ in
+your `cookiecutter.json`.
+
+.. _`_force_render`: http://cookiecutter.readthedocs.io/en/latest/advanced/force_render.html
+
 
 Other common issues
 -------------------
