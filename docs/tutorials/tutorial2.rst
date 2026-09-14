@@ -61,7 +61,7 @@ Step 5: Pack cookiecutter into ZIP
 ----------------------------------
 There are many ways to run Cookiecutter templates, and they are described in details in `Usage chapter <https://cookiecutter.readthedocs.io/en/latest/usage.html#grab-a-cookiecutter-template>`_. In this tutorial we are going to ZIP cookiecutter and then run it for testing.
 
-By running following command `cookiecutter.zip` will get generated which can be used to run cookiecutter. Script will generate `cookiecutter.zip` ZIP file and echo full path to the file.
+By running the following command, a `cookiecutter.zip` file will be generated, which can be used to run cookiecutter. Script will generate `cookiecutter.zip` ZIP file and echo full path to the file.
 
 .. code-block:: bash
 
