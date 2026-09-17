@@ -1,5 +1,6 @@
 """Tests for `cookiecutter.utils` module."""
 
+import os
 import stat
 import sys
 from pathlib import Path
@@ -28,6 +29,25 @@ def test_force_delete(mocker, tmp_path) -> None:
     rmtree.assert_called_once_with(ro_file)
 
     utils.rmtree(tmp_path)
+
+
+def test_force_delete_on_directory_keeps_it_traversable(mocker, tmp_path) -> None:
+    """Verify `utils.force_delete` doesn't strip a directory's execute bit.
+
+    Regression test: chmod'ing a directory to write-only (as force_delete
+    used to do unconditionally) removes the execute bit needed to access
+    entries inside it, leaving it *more* broken than before -- and matching
+    the exact corrupted permissions ("d-w-------") reported in #2217.
+    """
+    ro_dir = Path(tmp_path, 'a_directory')
+    ro_dir.mkdir()
+
+    chmod_spy = mocker.spy(os, 'chmod')
+    rmtree = mocker.Mock()
+    utils.force_delete(rmtree, ro_dir, sys.exc_info())
+
+    chmod_spy.assert_called_once_with(ro_dir, stat.S_IWRITE | stat.S_IEXEC)
+    rmtree.assert_called_once_with(ro_dir)
 
 
 def test_rmtree(tmp_path) -> None:
