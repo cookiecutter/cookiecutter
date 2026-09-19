@@ -211,3 +211,34 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir) -> None:
             clone_to_dir=str(clone_dir),
             no_input=True,
         )
+
+
+def test_clone_preserves_existing_template_on_failure(mocker, clone_dir) -> None:
+    """In `clone()`, if cloning fails, any existing template dir should be preserved."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=[
+            subprocess.CalledProcessError(
+                -1,
+                'cmd',
+                output=(
+                    b"fatal: repository 'https://github.com/hackebro/cookiedozer'"
+                    b" not found"
+                ),
+            )
+        ],
+    )
+
+    repo_dir = clone_dir.joinpath('cookiedozer')
+    repo_dir.mkdir()
+    sentinel_file = repo_dir.joinpath('keep_me.txt')
+    sentinel_file.write_text('important content')
+
+    repository_url = 'https://github.com/hackebro/cookiedozer'
+    with pytest.raises(exceptions.RepositoryNotFound):
+        vcs.clone(repository_url, clone_to_dir=str(clone_dir), no_input=True)
+
+    assert repo_dir.is_dir()
+    assert sentinel_file.read_text() == 'important content'

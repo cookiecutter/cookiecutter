@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -19,7 +21,7 @@ from cookiecutter.exceptions import (
     VCSNotInstalled,
 )
 from cookiecutter.prompt import prompt_and_delete
-from cookiecutter.utils import make_sure_path_exists
+from cookiecutter.utils import make_sure_path_exists, rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -98,11 +100,18 @@ def clone(
     logger.debug(f'repo_dir is {repo_dir}')
 
     if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
+        clone = prompt_and_delete(repo_dir, no_input=no_input, delete=False)
     else:
         clone = True
 
     if clone:
+        backup_dir = None
+        if os.path.exists(repo_dir):
+            backup_dir = tempfile.mkdtemp(
+                dir=clone_to_dir, prefix=f".{repo_name}.backup_"
+            )
+            shutil.move(repo_dir, os.path.join(backup_dir, repo_name))
+
         try:
             subprocess.check_output(
                 [repo_type, 'clone', repo_url],
@@ -119,7 +128,17 @@ def clone(
                     cwd=repo_dir,
                     stderr=subprocess.STDOUT,
                 )
+            if backup_dir and os.path.exists(backup_dir):
+                rmtree(backup_dir)
         except subprocess.CalledProcessError as clone_error:
+            if backup_dir and os.path.exists(backup_dir):
+                if os.path.exists(repo_dir):
+                    rmtree(repo_dir)
+                backed_up_repo = os.path.join(backup_dir, repo_name)
+                if os.path.exists(backed_up_repo):
+                    shutil.move(backed_up_repo, repo_dir)
+                rmtree(backup_dir)
+
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
                 msg = (
