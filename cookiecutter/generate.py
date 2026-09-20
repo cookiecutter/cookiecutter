@@ -20,6 +20,7 @@ from rich.prompt import InvalidResponse
 from cookiecutter.exceptions import (
     ContextDecodingException,
     EmptyDirNameException,
+    FailedHookException,
     OutputDirExistsException,
     UndefinedVariableInTemplate,
 )
@@ -462,5 +463,18 @@ def generate_files(
             context,
             delete_project_on_failure,
         )
+
+        commands = context.get('cookiecutter', {}).get('_post_gen_commands', [])
+        if commands:
+            import subprocess
+            for command in commands:
+                logger.debug('Running post_gen_command: %s', command)
+                try:
+                    subprocess.run(command, shell=True, cwd=project_dir, check=True)  # noqa: S602
+                except subprocess.CalledProcessError as err:
+                    if delete_project_on_failure:
+                        rmtree(project_dir)
+                    msg = f"post_gen_command failed: {err}"
+                    raise FailedHookException(msg) from err
 
     return project_dir
