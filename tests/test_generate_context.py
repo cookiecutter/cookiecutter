@@ -388,3 +388,14 @@ def test_apply_overwrites_error_overwrite_value_as_boolean_string():
     overwrite_context = {'key': 'invalid'}
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(context, overwrite_context)
+
+
+def test_apply_overwrites_internal_config_injected():
+    """Verify internal config (starts with _) is injected even if not in context."""
+    context = {'project': 'test'}
+    overwrite_context = {'_jinja2_env_vars': {'variable_start_string': '{@@'}}
+    generate.apply_overwrites_to_context(context, overwrite_context)
+    assert context == {
+        'project': 'test',
+        '_jinja2_env_vars': {'variable_start_string': '{@@'},
+    }

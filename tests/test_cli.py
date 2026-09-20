@@ -549,8 +549,7 @@ def test_debug_file_non_verbose(cli_runner, debug_file) -> None:
     assert debug_file.exists()
 
     context_log = (
-        "DEBUG cookiecutter.main: context_file is "
-        "tests/fake-repo-pre/cookiecutter.json"
+        "DEBUG cookiecutter.main: context_file is tests/fake-repo-pre/cookiecutter.json"
     )
     assert context_log in debug_file.read_text()
     assert context_log not in result.output
@@ -576,8 +575,7 @@ def test_debug_file_verbose(cli_runner, debug_file) -> None:
     assert debug_file.exists()
 
     context_log = (
-        "DEBUG cookiecutter.main: context_file is "
-        "tests/fake-repo-pre/cookiecutter.json"
+        "DEBUG cookiecutter.main: context_file is tests/fake-repo-pre/cookiecutter.json"
     )
     assert context_log in debug_file.read_text()
     assert context_log in result.output

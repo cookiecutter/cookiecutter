@@ -22,7 +22,7 @@ def mock_download() -> Iterator[bytes]:
             chunk = zf.read(1024)
 
 
-def mock_download_with_empty_chunks() -> Iterator[None | bytes]:
+def mock_download_with_empty_chunks() -> Iterator[bytes | None]:
     """Fake download function."""
     yield None
     with Path('tests/files/fake-repo-tmpl.zip').open('rb') as zf:
