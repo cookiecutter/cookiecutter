@@ -99,15 +99,15 @@ Now you can make your changes locally.
    just test-all
    ```
 
-6. Ensure that your feature or commit is fully covered by tests. Check report after regular `pytest` run.
+6. Ensure that your feature or commit is fully covered by tests. Check the report after a regular `pytest` run.
    You can also run coverage only report and get html report with statement by statement highlighting:
 
    ```bash
    just coverage
    ```
 
-   You report will be placed to `htmlcov` directory. Please do not include this directory to your commits.
-   By default this directory in our `.gitignore` file.
+   Your report will be placed in the `htmlcov` directory. Please do not include this directory in your commits.
+   By default this directory is in our `.gitignore` file.
 
 7. Commit your changes and push your branch to GitHub:
 
@@ -189,8 +189,8 @@ To run all tests using various versions of Python, just run `just test-all`:
 just test-all
 ```
 
-This configuration file setup the pytest-cov plugin and it is an additional dependency.
-It generate a coverage report after the tests.
+This configuration file sets up the pytest-cov plugin and it is an additional dependency.
+It generates a coverage report after the tests.
 
 It is possible to test with specific versions of Python. To do this, the command is:
 
