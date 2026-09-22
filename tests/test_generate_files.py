@@ -43,6 +43,33 @@ def test_generate_files(tmp_path) -> None:
     assert simple_text == 'I eat pizzä\n'
 
 
+def test_generate_files_with_multiple_templated_sibling_directories(tmp_path) -> None:
+    """Render every templated directory at the repository root."""
+    repo_dir = tmp_path / 'template'
+    (repo_dir / '{{cookiecutter.app_name}}-lambda').mkdir(parents=True)
+    (repo_dir / '{{cookiecutter.app_name}}-resources').mkdir()
+    (repo_dir / 'cookiecutter.json').write_text(
+        '{"app_name": "default"}', encoding='utf-8'
+    )
+    (repo_dir / '{{cookiecutter.app_name}}-lambda' / 'app.py').write_text(
+        'service = "{{cookiecutter.app_name}}"\n', encoding='utf-8'
+    )
+    (repo_dir / '{{cookiecutter.app_name}}-resources' / 'template.yaml').write_text(
+        'name: {{cookiecutter.app_name}}\n', encoding='utf-8'
+    )
+
+    generate.generate_files(
+        context={'cookiecutter': {'app_name': 'my_service'}},
+        repo_dir=repo_dir,
+        output_dir=tmp_path / 'output',
+    )
+
+    lambda_file = tmp_path / 'output' / 'my_service-lambda' / 'app.py'
+    resources_file = tmp_path / 'output' / 'my_service-resources' / 'template.yaml'
+    assert lambda_file.read_text(encoding='utf-8') == 'service = "my_service"\n'
+    assert resources_file.read_text(encoding='utf-8') == 'name: my_service\n'
+
+
 def test_generate_files_with_linux_newline(tmp_path) -> None:
     """Verify new line not removed by templating engine after folder generation."""
     generate.generate_files(
