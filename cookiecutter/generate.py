@@ -351,17 +351,22 @@ def generate_files(
     env = create_env_with_context(context)
 
     template_dir = find_template(repo_dir, env)
+    multi_template_root = Path(template_dir) == Path(repo_dir)
     logger.debug('Generating project from %s...', template_dir)
 
-    unrendered_dir = os.path.split(template_dir)[1]
-    try:
-        project_dir: Path | str
-        project_dir, output_directory_created = render_and_create_dir(
-            unrendered_dir, context, output_dir, env, overwrite_if_exists
-        )
-    except UndefinedError as err:
-        msg = f"Unable to create project directory '{unrendered_dir}'"
-        raise UndefinedVariableInTemplate(msg, err, context) from err
+    if multi_template_root:
+        project_dir = Path(output_dir).absolute()
+        output_directory_created = not project_dir.exists()
+        make_sure_path_exists(project_dir)
+    else:
+        unrendered_dir = os.path.split(template_dir)[1]
+        try:
+            project_dir, output_directory_created = render_and_create_dir(
+                unrendered_dir, context, output_dir, env, overwrite_if_exists
+            )
+        except UndefinedError as err:
+            msg = f"Unable to create project directory '{unrendered_dir}'"
+            raise UndefinedVariableInTemplate(msg, err, context) from err
 
     # We want the Jinja path and the OS paths to match. Consequently, we'll:
     #   + CD to the template folder
@@ -386,6 +391,12 @@ def generate_files(
         env.loader = FileSystemLoader(['.', '../templates'])
 
         for root, dirs, files in os.walk('.'):
+            if multi_template_root and root == '.':
+                # These belong to the repository, not to the generated
+                # project. Hooks are executed separately below.
+                files = [f for f in files if f != 'cookiecutter.json']
+                dirs[:] = [d for d in dirs if d != 'hooks']
+
             # We must separate the two types of dirs into different lists.
             # The reason is that we don't want ``os.walk`` to go through the
             # unrendered directories, since they will just be copied.

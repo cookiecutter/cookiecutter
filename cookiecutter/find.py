@@ -23,14 +23,23 @@ def find_template(repo_dir: Path | str, env: Environment) -> Path:
     """
     logger.debug('Searching %s for the project template.', repo_dir)
 
-    for str_path in os.listdir(repo_dir):
+    candidates = []
+    for str_path in sorted(os.listdir(repo_dir)):
+        path = Path(repo_dir, str_path)
         if (
             'cookiecutter' in str_path
             and env.variable_start_string in str_path
             and env.variable_end_string in str_path
+            and path.is_dir()
         ):
-            project_template = Path(repo_dir, str_path)
-            break
+            candidates.append(path)
+
+    if len(candidates) > 1 and Path(repo_dir, 'cookiecutter.json').is_file():
+        # A repository may contain multiple sibling template directories. In
+        # that layout the repository itself is the template root.
+        project_template = Path(repo_dir)
+    elif candidates:
+        project_template = candidates[0]
     else:
         raise NonTemplatedInputDirException
 
