@@ -55,7 +55,7 @@ def test_generate_files_symlink(tmp_path, copy_without_render) -> None:
     template_dir.mkdir(parents=True)
     link = template_dir / 'README.md'
     try:
-        link.symlink_to('../../shared/README.md')
+        link.symlink_to(Path('..') / '..' / 'shared' / 'README.md')
     except OSError as error:
         pytest.skip(f'Symbolic links are unavailable: {error}')
 
