@@ -43,6 +43,39 @@ def test_generate_files(tmp_path) -> None:
     assert simple_text == 'I eat pizzä\n'
 
 
+@pytest.mark.parametrize('copy_without_render', [False, True])
+def test_generate_files_symlink(tmp_path, copy_without_render) -> None:
+    """Verify shared template files become regular rendered or copied files (#1420)."""
+    shared_dir = tmp_path / 'shared'
+    shared_dir.mkdir()
+    source = shared_dir / 'README.md'
+    source.write_text('{{ cookiecutter.project_slug }}\n', encoding='utf-8')
+    repo_dir = tmp_path / 'template'
+    template_dir = repo_dir / '{{cookiecutter.project_slug}}'
+    template_dir.mkdir(parents=True)
+    link = template_dir / 'README.md'
+    try:
+        link.symlink_to('../../shared/README.md')
+    except OSError as error:
+        pytest.skip(f'Symbolic links are unavailable: {error}')
+
+    context = {'cookiecutter': {'project_slug': 'my_project'}}
+    if copy_without_render:
+        context['cookiecutter']['_copy_without_render'] = ['README.md']
+    project_dir = generate.generate_files(
+        repo_dir=repo_dir, context=context, output_dir=tmp_path / 'output'
+    )
+
+    output_file = Path(project_dir) / 'README.md'
+    assert output_file.is_file()
+    assert not output_file.is_symlink()
+    expected = (
+        '{{ cookiecutter.project_slug }}\n' if copy_without_render else 'my_project\n'
+    )
+    assert output_file.read_text(encoding='utf-8') == expected
+    assert source.read_text(encoding='utf-8') == '{{ cookiecutter.project_slug }}\n'
+
+
 def test_generate_files_with_linux_newline(tmp_path) -> None:
     """Verify new line not removed by templating engine after folder generation."""
     generate.generate_files(
