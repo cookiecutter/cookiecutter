@@ -11,6 +11,7 @@ import pytest
 
 from cookiecutter import zipfile
 from cookiecutter.exceptions import InvalidZipRepository
+from cookiecutter.main import cookiecutter
 
 
 def mock_download() -> Iterator[bytes]:
@@ -165,7 +166,11 @@ def test_bad_zip_file(mocker, clone_dir) -> None:
         )
 
 
-def test_unzip_url(mocker, clone_dir) -> None:
+@pytest.mark.parametrize(
+    'suffix',
+    ['', '?download=1', '#template', '?token=part/part#template'],
+)
+def test_unzip_url(mocker, clone_dir, suffix) -> None:
     """In `unzip()`, a url will be downloaded and unzipped."""
     mock_prompt_and_delete = mocker.patch(
         'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
@@ -174,20 +179,50 @@ def test_unzip_url(mocker, clone_dir) -> None:
     request = mocker.MagicMock()
     request.iter_content.return_value = mock_download()
 
-    mocker.patch(
+    mock_get = mocker.patch(
         'cookiecutter.zipfile.requests.get',
         return_value=request,
         autospec=True,
     )
 
+    url = f'https://example.com/path/to/fake-repo-tmpl.zip{suffix}'
     output_dir = zipfile.unzip(
-        'https://example.com/path/to/fake-repo-tmpl.zip',
+        url,
         is_url=True,
         clone_to_dir=str(clone_dir),
     )
 
     assert output_dir.startswith(tempfile.gettempdir())
     assert not mock_prompt_and_delete.called
+    mock_get.assert_called_once_with(url, stream=True, timeout=100)
+    assert (
+        clone_dir.joinpath('fake-repo-tmpl.zip').read_bytes()
+        == Path('tests/files/fake-repo-tmpl.zip').read_bytes()
+    )
+
+
+def test_generate_project_from_zip_url_with_query(
+    mocker, user_config_file, user_config_data, output_dir
+) -> None:
+    """Signed ZIP URLs generate a project and retain the download parameters."""
+    url = 'https://example.com/fake-repo-tmpl.zip?token=part/part#template'
+    response = mocker.MagicMock()
+    response.iter_content.return_value = mock_download()
+    mock_get = mocker.patch(
+        'cookiecutter.zipfile.requests.get', return_value=response, autospec=True
+    )
+
+    project_dir = cookiecutter(
+        url, no_input=True, config_file=user_config_file, output_dir=output_dir
+    )
+
+    assert Path(project_dir).joinpath('README.rst').is_file()
+    assert (
+        Path(user_config_data['cookiecutters_dir'])
+        .joinpath('fake-repo-tmpl.zip')
+        .is_file()
+    )
+    mock_get.assert_called_once_with(url, stream=True, timeout=100)
 
 
 def test_unzip_url_with_empty_chunks(mocker, clone_dir) -> None:
