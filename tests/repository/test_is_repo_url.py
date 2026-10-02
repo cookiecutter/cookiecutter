@@ -11,6 +11,11 @@ from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_fi
         '/path/to/zipfile.zip',
         'https://example.com/path/to/zipfile.zip',
         'http://example.com/path/to/zipfile.zip',
+        'https://example.com/path/to/zipfile.zip?download=1',
+        'https://example.com/path/to/zipfile.zip#template',
+        'https://example.com/path/to/zipfile.ZIP?token=part/part#template',
+        '/path/to/template?name.zip',
+        '/path/to/template#name.zip',
     ]
 )
 def zipfile(request):
@@ -21,6 +26,18 @@ def zipfile(request):
 def test_is_zip_file(zipfile) -> None:
     """Verify is_repo_url works."""
     assert is_zip_file(zipfile) is True
+
+
+@pytest.mark.parametrize(
+    'template',
+    [
+        'https://example.com/repository.git?filename=template.zip',
+        'https://example.com/repository.git#template.zip',
+    ],
+)
+def test_non_zip_url(template) -> None:
+    """Only the URL path determines whether a remote template is a ZIP."""
+    assert is_zip_file(template) is False
 
 
 @pytest.fixture(
