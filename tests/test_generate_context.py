@@ -388,3 +388,131 @@ def test_apply_overwrites_error_overwrite_value_as_boolean_string():
     overwrite_context = {'key': 'invalid'}
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(context, overwrite_context)
+
+
+def test_apply_overwrites_invalid_entry_does_not_drop_later_overwrites() -> None:
+    """Verify an invalid entry does not discard the valid ones that follow it."""
+    context: dict[str, Any] = OrderedDict(
+        [
+            ('full_name', 'Raphael Pierzina'),
+            ('orientation', ['all', 'landscape', 'portrait']),
+        ]
+    )
+    overwrite_context: dict[str, Any] = OrderedDict(
+        [
+            ('orientation', 'foobar'),
+            ('full_name', 'Someone Else Entirely'),
+        ]
+    )
+
+    with pytest.raises(ValueError, match='orientation'):
+        generate.apply_overwrites_to_context(context, overwrite_context)
+
+    assert context['orientation'] == ['all', 'landscape', 'portrait']
+    assert context['full_name'] == 'Someone Else Entirely'
+
+
+def test_apply_overwrites_invalid_nested_entry_does_not_drop_later_overwrites() -> None:
+    """Verify an invalid nested entry does not discard later top-level overwrites."""
+    context: dict[str, Any] = OrderedDict(
+        [
+            ('full_name', 'Raphael Pierzina'),
+            ('settings', OrderedDict([('debug', False)])),
+        ]
+    )
+    overwrite_context: dict[str, Any] = OrderedDict(
+        [
+            ('settings', {'debug': 'not-a-boolean'}),
+            ('full_name', 'Someone Else Entirely'),
+        ]
+    )
+
+    with pytest.raises(ValueError, match='debug'):
+        generate.apply_overwrites_to_context(context, overwrite_context)
+
+    # The invalid nested override is ignored ...
+    assert context['settings']['debug'] is False
+    # ... and the valid top-level override that follows it is still applied.
+    assert context['full_name'] == 'Someone Else Entirely'
+
+
+def test_apply_overwrites_invalid_two_levels_down_keeps_overwrites() -> None:
+    """Verify an invalid entry two levels down does not discard later overwrites."""
+    context: dict[str, Any] = OrderedDict(
+        [
+            ('full_name', 'Raphael Pierzina'),
+            (
+                'project',
+                OrderedDict(
+                    [
+                        ('name', 'Kivy Project'),
+                        ('meta', OrderedDict([('debug', False)])),
+                    ]
+                ),
+            ),
+        ]
+    )
+    overwrite_context: dict[str, Any] = OrderedDict(
+        [
+            ('project', {'meta': {'debug': 'not-a-boolean'}, 'name': 'Overridden'}),
+            ('full_name', 'Someone Else Entirely'),
+        ]
+    )
+
+    with pytest.raises(ValueError, match='debug'):
+        generate.apply_overwrites_to_context(context, overwrite_context)
+
+    assert context['project']['meta']['debug'] is False
+    # Sibling of the invalid entry, one level down ...
+    assert context['project']['name'] == 'Overridden'
+    # ... and the top-level entry that follows the whole nested dict.
+    assert context['full_name'] == 'Someone Else Entirely'
+
+
+def test_apply_overwrites_reports_all_invalid_entries_together() -> None:
+    """Verify nested and top-level invalid entries are reported in one error."""
+    context: dict[str, Any] = OrderedDict(
+        [
+            ('full_name', 'Raphael Pierzina'),
+            ('orientation', ['all', 'landscape', 'portrait']),
+            ('settings', OrderedDict([('debug', False)])),
+        ]
+    )
+    overwrite_context: dict[str, Any] = OrderedDict(
+        [
+            ('orientation', 'foobar'),
+            ('settings', {'debug': 'not-a-boolean'}),
+            ('full_name', 'Someone Else Entirely'),
+        ]
+    )
+
+    with pytest.raises(ValueError) as error:
+        generate.apply_overwrites_to_context(context, overwrite_context)
+
+    message = str(error.value)
+    assert 'orientation' in message
+    assert 'debug' in message
+    # The valid override following both invalid entries is still applied.
+    assert context['full_name'] == 'Someone Else Entirely'
+
+
+def test_generate_context_nested_invalid_default_keeps_later_overwrites() -> None:
+    """Verify an invalid nested default does not drop later top-level defaults."""
+    context_file = os.path.join(
+        os.path.dirname(__file__), 'test-generate-context', 'nested_bool.json'
+    )
+
+    with pytest.warns(UserWarning) as warnings:
+        generated_context = generate.generate_context(
+            context_file=context_file,
+            default_context=OrderedDict(
+                [
+                    ('settings', {'debug': 'not-a-boolean'}),
+                    ('full_name', 'Someone Else Entirely'),
+                ]
+            ),
+        )
+
+    assert 'debug' in str(warnings[0].message)
+    assert generated_context['nested_bool']['settings']['debug'] is False
+    assert generated_context['nested_bool']['full_name'] == 'Someone Else Entirely'
