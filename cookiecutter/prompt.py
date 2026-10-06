@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypeAlias
 
 from jinja2.exceptions import UndefinedError
+from rich.markup import escape
 from rich.prompt import Confirm, InvalidResponse, Prompt, PromptBase
 
 from cookiecutter.exceptions import UndefinedVariableInTemplate
@@ -22,17 +23,23 @@ if TYPE_CHECKING:
     from jinja2 import Environment
 
 
+def _literal_prompt(text: str) -> str:
+    """Escape ``__prompts__`` text so square brackets are shown literally."""
+    return escape(text)
+
+
 def read_user_variable(var_name: str, default_value, prompts=None, prefix: str = ""):
     """Prompt user for variable and return the entered value or given default.
 
     :param str var_name: Variable of the context to query the user
     :param default_value: Value that will be returned if no input happens
     """
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts and prompts[var_name]
-        else var_name
-    )
+    if prompts and var_name in prompts and prompts[var_name]:
+        question = prompts[var_name]
+        if isinstance(question, str):
+            question = _literal_prompt(question)
+    else:
+        question = var_name
 
     while True:
         variable = Prompt.ask(f"{prefix}{question}", default=default_value)
@@ -72,11 +79,12 @@ def read_user_yes_no(var_name, default_value, prompts=None, prefix: str = ""):
     :param str question: Question to the user
     :param default_value: Value that will be returned if no input happens
     """
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts and prompts[var_name]
-        else var_name
-    )
+    if prompts and var_name in prompts and prompts[var_name]:
+        question = prompts[var_name]
+        if isinstance(question, str):
+            question = _literal_prompt(question)
+    else:
+        question = var_name
     return YesNoPrompt.ask(f"{prefix}{question}", default=default_value)
 
 
@@ -112,16 +120,26 @@ def read_user_choice(var_name: str, options: list, prompts=None, prefix: str = "
     # Handle if human-readable prompt is provided
     if prompts and var_name in prompts:
         if isinstance(prompts[var_name], str):
-            question = prompts[var_name]
+            question = _literal_prompt(prompts[var_name])
         else:
             if "__prompt__" in prompts[var_name]:
-                question = prompts[var_name]["__prompt__"]
-            choice_lines = (
-                f"    [bold magenta]{i}[/] - [bold]{prompts[var_name][p]}[/]"
-                if p in prompts[var_name]
-                else f"    [bold magenta]{i}[/] - [bold]{p}[/]"
-                for i, p in choice_map.items()
-            )
+                custom_prompt = prompts[var_name]["__prompt__"]
+                question = (
+                    _literal_prompt(custom_prompt)
+                    if isinstance(custom_prompt, str)
+                    else custom_prompt
+                )
+
+            def choice_line(index: str, option: str) -> str:
+                if option in prompts[var_name]:
+                    label = prompts[var_name][option]
+                    if isinstance(label, str):
+                        label = _literal_prompt(label)
+                else:
+                    label = option
+                return f"    [bold magenta]{index}[/] - [bold]{label}[/]"
+
+            choice_lines = starmap(choice_line, choice_map.items())
 
     prompt = '\n'.join(
         (
@@ -181,11 +199,12 @@ def read_user_dict(var_name: str, default_value, prompts=None, prefix: str = "")
     if not isinstance(default_value, dict):
         raise TypeError
 
-    question = (
-        prompts[var_name]
-        if prompts and var_name in prompts and prompts[var_name]
-        else var_name
-    )
+    if prompts and var_name in prompts and prompts[var_name]:
+        question = prompts[var_name]
+        if isinstance(question, str):
+            question = _literal_prompt(question)
+    else:
+        question = var_name
     return JsonPrompt.ask(
         f"{prefix}{question} [cyan bold]({DEFAULT_DISPLAY})[/]",
         default=default_value,

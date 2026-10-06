@@ -1,6 +1,7 @@
 """test_read_user_variable."""
 
 import pytest
+from rich.text import Text
 
 from cookiecutter.prompt import read_user_variable
 
@@ -36,3 +37,18 @@ def test_input_loop_with_null_default_value(mock_prompt) -> None:
 
     assert read_user_variable(VARIABLE, None) == DEFAULT
     assert mock_prompt.call_count == 2
+
+
+def test_prompts_show_literal_square_brackets(mock_prompt) -> None:
+    """``__prompts__`` text must show square brackets, not Rich markup.
+
+    Regression for https://github.com/cookiecutter/cookiecutter/issues/1958.
+    """
+    mock_prompt.return_value = 'kept'
+    prompts = {'entry': 'prefix [bracket content] suffix'}
+    prefix = '  [dim][1/1][/] '
+
+    assert read_user_variable('entry', None, prompts, prefix) == 'kept'
+
+    visible = Text.from_markup(mock_prompt.call_args.args[0]).plain
+    assert visible == '  [1/1] prefix [bracket content] suffix'
