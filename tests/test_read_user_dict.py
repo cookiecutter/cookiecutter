@@ -3,6 +3,7 @@
 import click
 import pytest
 from rich.prompt import InvalidResponse
+from rich.text import Text
 
 from cookiecutter.prompt import JsonPrompt, process_json, read_user_dict
 
@@ -94,6 +95,19 @@ def test_should_call_prompt_with_process_json(mocker) -> None:
 
     assert args == ('name [cyan bold](default)[/]',)
     assert kwargs['default'] == {'project_slug': 'pytest-plugin'}
+
+
+def test_dict_prompt_shows_literal_square_brackets(mocker) -> None:
+    """``__prompts__`` dict text must show square brackets."""
+    prompt = mocker.patch('cookiecutter.prompt.JsonPrompt.ask', return_value={})
+    read_user_dict(
+        'cfg',
+        {},
+        prompts={'cfg': 'config [name]'},
+        prefix='  [dim][1/1][/] ',
+    )
+    visible = Text.from_markup(prompt.call_args.args[0]).plain
+    assert visible == '  [1/1] config [name] (default)'
 
 
 def test_should_not_load_json_from_sentinel(mocker) -> None:

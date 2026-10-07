@@ -2,6 +2,7 @@
 
 import pytest
 from rich.prompt import InvalidResponse
+from rich.text import Text
 
 from cookiecutter.prompt import YesNoPrompt, read_user_yes_no
 
@@ -20,6 +21,19 @@ def test_click_invocation(mocker) -> None:
     assert read_user_yes_no(QUESTION, DEFAULT) == DEFAULT
 
     prompt.assert_called_once_with(QUESTION, default=DEFAULT)
+
+
+def test_yes_no_prompt_shows_literal_square_brackets(mocker) -> None:
+    """``__prompts__`` yes/no text must show square brackets."""
+    prompt = mocker.patch('cookiecutter.prompt.YesNoPrompt.ask', return_value=True)
+    read_user_yes_no(
+        'flag',
+        True,
+        prompts={'flag': 'enable [feature]?'},
+        prefix='  [dim][1/1][/] ',
+    )
+    visible = Text.from_markup(prompt.call_args.args[0]).plain
+    assert visible == '  [1/1] enable [feature]?'
 
 
 def test_yesno_prompt_process_response() -> None:
