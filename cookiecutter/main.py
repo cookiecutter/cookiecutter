@@ -154,7 +154,6 @@ def cookiecutter(
                 config_file=config_file,
                 default_config=default_config,
                 password=password,
-                directory=directory,
                 skip_if_file_exists=skip_if_file_exists,
                 accept_hooks=accept_hooks,
                 keep_project_on_failure=keep_project_on_failure,
