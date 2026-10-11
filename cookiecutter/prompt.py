@@ -282,15 +282,23 @@ def prompt_choice_for_config(
 
 
 def prompt_for_config(
-    context: dict[str, Any], no_input: bool = False
+    context: dict[str, Any],
+    no_input: bool = False,
+    existing_context: dict[str, Any] | None = None,
 ) -> OrderedDict[str, Any]:
     """Prompt user to enter a new config.
 
     :param dict context: Source for field names and sample values.
     :param no_input: Do not prompt for user input and use only values from context.
+    :param existing_context: Previously rendered values available to new defaults.
     """
-    cookiecutter_dict = OrderedDict([])
-    env = create_env_with_context(context)
+    cookiecutter_dict = OrderedDict(existing_context or {})
+    env = create_env_with_context(
+        {
+            **context,
+            'cookiecutter': {**cookiecutter_dict, **context['cookiecutter']},
+        }
+    )
     prompts = context['cookiecutter'].pop('__prompts__', {})
 
     # First pass: Handle simple and raw variables, plus choices.

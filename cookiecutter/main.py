@@ -161,7 +161,11 @@ def cookiecutter(
             )
         if context_for_prompting['cookiecutter']:
             context['cookiecutter'].update(
-                prompt_for_config(context_for_prompting, no_input)
+                prompt_for_config(
+                    context_for_prompting,
+                    no_input,
+                    context['cookiecutter'] if replay else None,
+                )
             )
 
     logger.debug('context is %s', context)

@@ -22,6 +22,30 @@ def patch_readline_on_win(monkeypatch) -> None:
         monkeypatch.setattr('sys.stdin.readline', lambda: '\n')
 
 
+def test_prompt_for_config_preserves_existing_context() -> None:
+    """Saved answers stay rendered, keep their types, and are not mutated."""
+    existing = {'name': '{{literal}}', 'enabled': False, 'settings': {'value': 42}}
+    context = {
+        'cookiecutter': {
+            'message': '{{cookiecutter.name}}: {{cookiecutter.settings.value}}',
+            '__summary': '{{cookiecutter.message}}',
+        }
+    }
+
+    result = prompt.prompt_for_config(
+        context, no_input=True, existing_context=existing
+    )
+
+    assert result == {
+        **existing,
+        'message': '{{literal}}: 42',
+        '__summary': '{{literal}}: 42',
+    }
+    assert existing == {
+        'name': '{{literal}}', 'enabled': False, 'settings': {'value': 42}
+    }
+
+
 class TestRenderVariable:
     """Class to unite simple and complex tests for render_variable function."""
 

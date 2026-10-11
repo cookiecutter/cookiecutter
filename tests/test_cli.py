@@ -27,6 +27,72 @@ def cli_runner():
     return cli_main
 
 
+@pytest.mark.parametrize("value_type", ["string", "choice", "dict"])
+@pytest.mark.parametrize("custom_delimiters", [False, True])
+@pytest.mark.parametrize("custom_replay_file", [False, True])
+def test_replay_new_variable_uses_saved_context(
+    cli_runner,
+    tmp_path: Path,
+    user_config_file: str,
+    user_config_data,
+    value_type: str,
+    custom_delimiters: bool,
+    custom_replay_file: bool,
+) -> None:
+    """Render newly added defaults against saved answers and Jinja settings."""
+    start, end = ("[[", "]]") if custom_delimiters else ("{{", "}}")
+    template_dir = tmp_path / "template"
+    project_dir = template_dir / f"{start}cookiecutter.project_slug{end}"
+    project_dir.mkdir(parents=True)
+    context = {"project_slug": "replayed-project", "name": "saved-value"}
+    if custom_delimiters:
+        context["_jinja2_env_vars"] = {
+            "variable_start_string": start,
+            "variable_end_string": end,
+        }
+    context_file = template_dir / "cookiecutter.json"
+    context_file.write_text(json.dumps(context), encoding="utf-8")
+    readme = project_dir / "README.txt"
+    readme.write_text(f"{start}cookiecutter.name{end}", encoding="utf-8")
+    common_args = (str(template_dir), "--config-file", user_config_file)
+    original = cli_runner(
+        *common_args, "--no-input", "-o", str(tmp_path / "original")
+    )
+    assert original.exit_code == 0, original.output
+
+    expression = f"{start}cookiecutter.name{end}!"
+    value = expression
+    expected = "saved-value!"
+    if value_type == "choice":
+        value = [expression, "other"]
+    elif value_type == "dict":
+        value = {"message": expression}
+        expected = {"message": expected}
+    context.update(name="ignored-default", greeting=value)
+    context_file.write_text(json.dumps(context), encoding="utf-8")
+    readme.write_text(
+        f"{start}cookiecutter.name{end}|{start}cookiecutter.greeting|tojson{end}",
+        encoding="utf-8",
+    )
+    replay_args = (
+        ("--replay-file", str(Path(user_config_data["replay_dir"]) / "template.json"))
+        if custom_replay_file
+        else ("--replay",)
+    )
+    result = cli_runner(
+        *common_args, *replay_args, "-o", str(tmp_path / "replayed"), input="\n"
+    )
+
+    assert result.exit_code == 0, result.output
+    content = (tmp_path / "replayed" / "replayed-project" / "README.txt").read_text(
+        encoding="utf-8"
+    )
+    saved_name, rendered = content.split("|", 1)
+    assert saved_name == "saved-value"
+    assert json.loads(rendered) == expected
+    assert "ignored-default" not in result.output
+
+
 @pytest.fixture
 def remove_fake_project_dir(request) -> None:
     """Remove the fake project directory created during the tests."""

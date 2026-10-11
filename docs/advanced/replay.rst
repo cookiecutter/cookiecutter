@@ -46,6 +46,9 @@ Or use the Python API:
 
 This feature comes in handy if, for instance, you want to create a new project from an updated template.
 
+If the updated template adds questions, only those new questions are prompted.
+Their default values can refer to answers already saved in the replay file.
+
 Custom replay file
 ~~~~~~~~~~~~~~~~~~
 
