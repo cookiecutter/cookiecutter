@@ -11,6 +11,9 @@ from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_fi
         '/path/to/zipfile.zip',
         'https://example.com/path/to/zipfile.zip',
         'http://example.com/path/to/zipfile.zip',
+        'https://example.com/path/to/zipfile.zip?download=1',
+        'https://example.com/path/to/zipfile.zip#template',
+        'https://example.com/path/to/zipfile.zip?token=abc#frag',
     ]
 )
 def zipfile(request):
@@ -21,6 +24,23 @@ def zipfile(request):
 def test_is_zip_file(zipfile) -> None:
     """Verify is_repo_url works."""
     assert is_zip_file(zipfile) is True
+
+
+@pytest.fixture(
+    params=[
+        'https://example.com/repository.git?filename=template.zip',
+        'https://example.com/repository.git#template.zip',
+        'https://example.com/archive/?name=template.zip',
+    ]
+)
+def non_zipfile_query(request):
+    """Fixture. A query/fragment ending in `.zip` must not classify a non-zip path."""
+    return request.param
+
+
+def test_is_zip_file_ignores_query_and_fragment(non_zipfile_query) -> None:
+    """Only the URL path decides whether the reference is a zip file."""
+    assert is_zip_file(non_zipfile_query) is False
 
 
 @pytest.fixture(
