@@ -269,6 +269,36 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir) -> None:
     assert output_dir.startswith(tempfile.gettempdir())
 
 
+def test_unzip_url_with_query_string_cache_name(mocker, clone_dir) -> None:
+    """The cache filename comes from the URL path, not the full URL.
+
+    A query string or fragment must not leak into the cached filename, and a
+    ``/`` inside the query must not change which segment becomes the name.
+    """
+    mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+
+    request = mocker.MagicMock()
+    request.iter_content.return_value = mock_download()
+
+    mock_get = mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
+    )
+
+    url = 'https://example.com/path/to/fake-repo-tmpl.zip?token=a/b&download=1#frag'
+
+    output_dir = zipfile.unzip(url, is_url=True, clone_to_dir=str(clone_dir))
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    # Cache name is derived from the path only.
+    assert clone_dir.joinpath('fake-repo-tmpl.zip').exists()
+    # The full URL, including query and fragment, is still used for the request.
+    assert mock_get.call_args.args[0] == url
+
+
 def test_unzip_should_abort_if_no_redownload(mocker, clone_dir) -> None:
     """Should exit without cloning anything If no redownload."""
     mocker.patch(
