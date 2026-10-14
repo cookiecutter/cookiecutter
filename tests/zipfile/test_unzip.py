@@ -312,3 +312,39 @@ def test_unzip_is_ok_to_reuse(mocker, clone_dir) -> None:
     assert output_dir.startswith(tempfile.gettempdir())
     assert mock_prompt_and_delete.call_count == 1
     assert request.iter_content.call_count == 0
+
+
+@pytest.mark.parametrize(
+    'suffix',
+    ['?download=1', '#template', '?token=a/b#section/c'],
+)
+@pytest.mark.parametrize('reuse_cache', [False, True])
+def test_unzip_url_path_cache(mocker, clone_dir, suffix, reuse_cache) -> None:
+    """Cache names use the path, while downloads retain the complete URL."""
+    archive = Path('tests/files/fake-repo-tmpl.zip').read_bytes()
+    cached_zip = clone_dir / 'fake-repo-tmpl.zip'
+    if reuse_cache:
+        cached_zip.write_bytes(archive)
+    prompt = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=False, autospec=True
+    )
+    response = mocker.Mock()
+    response.iter_content.return_value = [archive]
+    get = mocker.patch(
+        'cookiecutter.zipfile.requests.get', return_value=response, autospec=True
+    )
+    url = 'https://example.com/path/to/fake-repo-tmpl.zip' + suffix
+
+    output_dir = zipfile.unzip(url, is_url=True, clone_to_dir=clone_dir)
+    try:
+        assert (Path(output_dir) / 'cookiecutter.json').is_file()
+        assert cached_zip.read_bytes() == archive
+        assert list(clone_dir.iterdir()) == [cached_zip]
+        if reuse_cache:
+            prompt.assert_called_once_with(str(cached_zip), no_input=False)
+            get.assert_not_called()
+        else:
+            prompt.assert_not_called()
+            get.assert_called_once_with(url, stream=True, timeout=100)
+    finally:
+        shutil.rmtree(Path(output_dir).parent)

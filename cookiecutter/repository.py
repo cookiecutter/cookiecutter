@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import re
 from typing import TYPE_CHECKING
+from urllib.parse import urlsplit
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
@@ -31,7 +32,9 @@ def is_repo_url(value: str) -> bool:
 
 
 def is_zip_file(value: str) -> bool:
-    """Return True if value is a zip file."""
+    """Return True if value is a ZIP filename or an HTTP(S) URL to a ZIP."""
+    if value.lower().startswith(('http://', 'https://')):
+        value = urlsplit(value).path
     return value.lower().endswith('.zip')
 
 
