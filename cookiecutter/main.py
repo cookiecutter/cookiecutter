@@ -33,6 +33,7 @@ def cookiecutter(
     extra_context: dict[str, Any] | None = None,
     replay: bool | str | None = None,
     overwrite_if_exists: bool = False,
+    recurse_submodules: bool = False,
     output_dir: str = '.',
     config_file: str | None = None,
     default_config: bool = False,
@@ -58,6 +59,7 @@ def cookiecutter(
         if it exists
     :param overwrite_if_exists: Overwrite the contents of the output directory
         if it exists.
+    :param recurse_submodules: Recursively clone git submodules if set to `True`.
     :param output_dir: Where to output the generated project dir into.
     :param config_file: User configuration file path.
     :param default_config: Use default values rather than a config file.
@@ -86,6 +88,7 @@ def cookiecutter(
         clone_to_dir=config_dict['cookiecutters_dir'],
         checkout=checkout,
         no_input=no_input,
+        recurse_submodules=recurse_submodules,
         password=password,
         directory=directory,
     )
