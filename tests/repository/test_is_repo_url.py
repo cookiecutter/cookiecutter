@@ -11,6 +11,11 @@ from cookiecutter.repository import expand_abbreviations, is_repo_url, is_zip_fi
         '/path/to/zipfile.zip',
         'https://example.com/path/to/zipfile.zip',
         'http://example.com/path/to/zipfile.zip',
+        # Query strings and fragments must not hide the .zip extension
+        # (e.g. presigned download URLs).
+        'https://example.com/path/to/zipfile.zip?download=1',
+        'https://example.com/path/to/zipfile.zip#template',
+        '/path/to/zipfile.zip?token=abc',
     ]
 )
 def zipfile(request):
@@ -21,6 +26,12 @@ def zipfile(request):
 def test_is_zip_file(zipfile) -> None:
     """Verify is_repo_url works."""
     assert is_zip_file(zipfile) is True
+
+
+def test_is_zip_file_git_with_query_is_not_zip() -> None:
+    """A .git URL carrying a query is not classified as a zip file."""
+    url = 'https://example.com/repository.git?filename=template.zip'
+    assert is_zip_file(url) is False
 
 
 @pytest.fixture(

@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import re
 from typing import TYPE_CHECKING
+from urllib.parse import urlsplit
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
@@ -31,8 +32,22 @@ def is_repo_url(value: str) -> bool:
 
 
 def is_zip_file(value: str) -> bool:
-    """Return True if value is a zip file."""
-    return value.lower().endswith('.zip')
+    """Return True if value is a zip file.
+
+    The classification is based on the *path* of the URL, so that
+    template URLs carrying a query string or fragment (for example a
+    presigned download URL such as ``template.zip?token=...``) are still
+    recognised as ZIP files. The full URL is preserved elsewhere for the
+    actual HTTP request.
+    """
+    parsed = urlsplit(value)
+    if parsed.scheme and parsed.netloc:
+        path = parsed.path
+    else:
+        # A local path or a URL without a netloc: strip query/fragment ourselves
+        # so that e.g. '/tmp/template.zip?token=1' is still seen as a ZIP.
+        path = value.split('?', 1)[0].split('#', 1)[0]
+    return path.lower().endswith('.zip')
 
 
 def expand_abbreviations(template: str, abbreviations: dict[str, str]) -> str:
