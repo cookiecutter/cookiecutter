@@ -1,5 +1,9 @@
 """Collection of tests around cookiecutter's replay feature."""
 
+from pathlib import Path
+
+import pytest
+
 from cookiecutter.main import cookiecutter
 
 
@@ -114,3 +118,31 @@ def test_custom_replay_file(monkeypatch, mocker, user_config_file) -> None:
         '.',
         'custom-replay-file',
     )
+
+
+@pytest.mark.parametrize(
+    'url',
+    [
+        'https://example.com/template.zip?download=1',
+        'http://example.com/template.zip#template',
+        'https://example.com/template.zip?token=a/b#section/c',
+    ],
+)
+def test_cookiecutter_zip_url(mocker, url, user_config_file, output_dir) -> None:
+    """Generate a project from a ZIP URL with a query or fragment."""
+    response = mocker.Mock()
+    response.iter_content.return_value = [
+        Path('tests/files/fake-repo-tmpl.zip').read_bytes()
+    ]
+    get = mocker.patch(
+        'cookiecutter.zipfile.requests.get', return_value=response, autospec=True
+    )
+
+    project = cookiecutter(
+        url, no_input=True, config_file=user_config_file, output_dir=output_dir
+    )
+
+    assert Path(project).name == 'fake-project-templated'
+    readme = (Path(project) / 'README.rst').read_text()
+    assert 'Fake Project' in readme
+    get.assert_called_once_with(url, stream=True, timeout=100)

@@ -74,3 +74,24 @@ def test_expand_abbreviations() -> None:
 
     expanded_template = expand_abbreviations(template, BUILTIN_ABBREVIATIONS)
     assert is_repo_url(expanded_template) is True
+
+
+@pytest.mark.parametrize(
+    'value, expected',
+    [
+        ('https://example.com/template.zip?download=1', True),
+        ('http://example.com/template.ZIP#template', True),
+        ('https://example.com/template.zip?token=a/b#section/c', True),
+        ('https://example.com/repository.git?filename=template.zip', False),
+        ('https://example.com/repository.git#template.zip', False),
+        ('https://example.com/template.zip/', False),
+        ('https://template.zip', False),
+        ('/tmp/template?download=1.zip', True),
+        ('/tmp/template#section.zip', True),
+        ('/tmp/template.zip?download=1', False),
+        (r'C:\templates\template.ZIP', True),
+    ],
+)
+def test_is_zip_file_url_path(value, expected) -> None:
+    """Only HTTP(S) URLs ignore queries and fragments when detecting ZIPs."""
+    assert is_zip_file(value) is expected
