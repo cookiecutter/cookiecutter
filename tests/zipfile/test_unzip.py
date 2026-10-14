@@ -190,6 +190,31 @@ def test_unzip_url(mocker, clone_dir) -> None:
     assert not mock_prompt_and_delete.called
 
 
+def test_unzip_url_with_query_is_cached_under_path_name(mocker, clone_dir) -> None:
+    """The cache filename comes from the URL path, not the query string."""
+    mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+
+    request = mocker.MagicMock()
+    request.iter_content.return_value = mock_download()
+
+    mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
+    )
+
+    zipfile.unzip(
+        'https://example.com/path/to/fake-repo-tmpl.zip?token=abc/def',
+        is_url=True,
+        clone_to_dir=str(clone_dir),
+    )
+
+    # The whole URL must be requested, but the cache file is named after the path
+    assert (Path(clone_dir) / 'fake-repo-tmpl.zip').exists()
+
+
 def test_unzip_url_with_empty_chunks(mocker, clone_dir) -> None:
     """In `unzip()` empty chunk must be ignored."""
     mock_prompt_and_delete = mocker.patch(
