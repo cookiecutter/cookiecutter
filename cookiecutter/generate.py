@@ -63,6 +63,7 @@ def apply_overwrites_to_context(
     in_dictionary_variable: bool = False,
 ) -> None:
     """Modify the given context in place based on the overwrite_context."""
+    invalid_overwrites: list[str] = []
     for variable, overwrite in overwrite_context.items():
         if variable not in context:
             if not in_dictionary_variable:
@@ -82,11 +83,7 @@ def apply_overwrites_to_context(
                 if set(overwrite).issubset(set(context_value)):
                     context[variable] = overwrite
                 else:
-                    msg = (
-                        f"{overwrite} provided for multi-choice variable "
-                        f"{variable}, but valid choices are {context_value}"
-                    )
-                    raise ValueError(msg)
+                    invalid_overwrites.append(variable)
             else:
                 # We are dealing with a choice variable
                 if overwrite in context_value:
@@ -96,11 +93,7 @@ def apply_overwrites_to_context(
                     context_value.remove(overwrite)
                     context_value.insert(0, overwrite)
                 else:
-                    msg = (
-                        f"{overwrite} provided for choice variable "
-                        f"{variable}, but the choices are {context_value}."
-                    )
-                    raise ValueError(msg)
+                    invalid_overwrites.append(variable)
         elif isinstance(context_value, dict) and isinstance(overwrite, dict):
             # Partially overwrite some keys in original dict
             apply_overwrites_to_context(
@@ -112,15 +105,17 @@ def apply_overwrites_to_context(
             # Convert overwrite to its boolean counterpart
             try:
                 context[variable] = YesNoPrompt().process_response(overwrite)
-            except InvalidResponse as err:
-                msg = (
-                    f"{overwrite} provided for variable "
-                    f"{variable} could not be converted to a boolean."
-                )
-                raise ValueError(msg) from err
+            except InvalidResponse:
+                invalid_overwrites.append(variable)
         else:
             # Simply overwrite the value for this variable
             context[variable] = overwrite
+
+    if invalid_overwrites:
+        msg = "Invalid overwrites for the following variables: " + ", ".join(
+            invalid_overwrites
+        )
+        raise ValueError(msg)
 
 
 def generate_context(
