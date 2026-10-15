@@ -388,3 +388,41 @@ def test_apply_overwrites_error_overwrite_value_as_boolean_string():
     overwrite_context = {'key': 'invalid'}
     with pytest.raises(ValueError):
         generate.apply_overwrites_to_context(context, overwrite_context)
+
+
+def test_apply_overwrites_invalid_entry_does_not_block_rest():
+    """An invalid overwrite must not silently discard later entries.
+
+    Regression test for https://github.com/cookiecutter/cookiecutter/issues/2219:
+    the first invalid entry used to raise and abandon every remaining
+    override in ``default_context`` without any indication.
+    """
+    context = {
+        'licensing': ['mit', 'bsd', 'proprietary'],
+        'use_docker': ['y', 'n'],
+        'project_name': 'demo',
+        'author': 'someone',
+    }
+    overwrite_context = {
+        'author': 'Jinhui',
+        'licensing': 'apache',
+        'use_docker': 'maybe',
+        'project_name': 'renamed',
+    }
+    with pytest.raises(ValueError) as excinfo:
+        generate.apply_overwrites_to_context(context, overwrite_context)
+    assert 'licensing' in str(excinfo.value)
+    assert 'use_docker' in str(excinfo.value)
+    # the valid overrides that come after the invalid ones are applied
+    assert context['author'] == 'Jinhui'
+    assert context['project_name'] == 'renamed'
+
+
+def test_apply_overwrites_lists_every_invalid_variable():
+    """The error message must name every invalid variable, not just the first."""
+    context = {'a': ['x'], 'b': ['y'], 'c': True}
+    overwrite_context = {'a': 'nope', 'b': 'still-nope', 'c': 'nah'}
+    with pytest.raises(ValueError) as excinfo:
+        generate.apply_overwrites_to_context(context, overwrite_context)
+    for var in ('a', 'b', 'c'):
+        assert var in str(excinfo.value)
