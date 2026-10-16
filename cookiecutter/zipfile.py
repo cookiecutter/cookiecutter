@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import tempfile
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 from zipfile import BadZipFile, ZipFile
 
 import requests
@@ -41,7 +42,10 @@ def unzip(
     if is_url:
         # Build the name of the cached zipfile,
         # and prompt to delete if it already exists.
-        identifier = zip_uri.rsplit('/', 1)[1]
+        # Cache under the URL path's last segment. Using the raw URI would embed
+        # the query string/fragment in the filename ("template.zip?token=..."),
+        # which is not a usable path on any platform.
+        identifier = os.path.basename(unquote(urlsplit(zip_uri).path))
         zip_path = os.path.join(clone_to_dir, identifier)
 
         if os.path.exists(zip_path):

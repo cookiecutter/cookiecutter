@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import re
 from typing import TYPE_CHECKING
+from urllib.parse import urlsplit
 
 from cookiecutter.exceptions import RepositoryNotFound
 from cookiecutter.vcs import clone
@@ -31,8 +32,14 @@ def is_repo_url(value: str) -> bool:
 
 
 def is_zip_file(value: str) -> bool:
-    """Return True if value is a zip file."""
-    return value.lower().endswith('.zip')
+    """Return True if value is a zip file.
+
+    The check runs against the URL *path* only. A zip URL may legitimately carry a
+    query string or fragment (signed download links, ``?ref=...``, ``#subdir``),
+    and ``str.endswith('.zip')`` missed every one of those, sending the template
+    down the git-clone path where it failed to clone at all.
+    """
+    return urlsplit(value).path.lower().endswith('.zip')
 
 
 def expand_abbreviations(template: str, abbreviations: dict[str, str]) -> str:
