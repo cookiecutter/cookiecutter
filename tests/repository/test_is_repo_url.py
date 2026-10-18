@@ -23,6 +23,19 @@ def test_is_zip_file(zipfile) -> None:
     assert is_zip_file(zipfile) is True
 
 
+def test_is_zip_file_with_url_params() -> None:
+    """A zip URL is still detected when it carries query or fragment parts."""
+    assert is_zip_file('https://example.com/path/to/zipfile.zip?download=1') is True
+    assert is_zip_file('https://example.com/path/to/zipfile.zip#fragment') is True
+    assert is_zip_file('/path/to/zipfile.zip') is True
+
+
+def test_is_zip_file_rejects_other_extensions() -> None:
+    """A non-zip path is not a zip file, even with a zip-looking query part."""
+    assert is_zip_file('https://example.com/path/to/archive.zipx') is False
+    assert is_zip_file('https://example.com/path/to/file.txt?next=.zip') is False
+
+
 @pytest.fixture(
     params=[
         'gitolite@server:team/repo',
