@@ -100,6 +100,7 @@ Discover a variety of ready-to-use templates on [GitHub](https://github.com/sear
 - [cookiecutter-django](https://github.com/cookiecutter/cookiecutter-django)
 - [cookiecutter-pytest-plugin](https://github.com/pytest-dev/cookiecutter-pytest-plugin)
 - [cookiecutter-plone-starter](https://github.com/collective/cookiecutter-plone-starter)
+- [CookiePyStarter](https://github.com/mramitdas/CookiePyStarter)
 
 ## Community
 
