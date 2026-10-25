@@ -104,8 +104,13 @@ def clone(
 
     if clone:
         try:
+            # The '--' separator stops the VCS from treating a repo URL that
+            # begins with '-' as a command-line option. Without it, a crafted
+            # URL such as 'hg+--config=alias.clone=!<command>' would be parsed
+            # as an option and could run arbitrary commands before the template
+            # is ever reviewed (argument injection).
             subprocess.check_output(
-                [repo_type, 'clone', repo_url],
+                [repo_type, 'clone', '--', repo_url],
                 cwd=clone_to_dir,
                 stderr=subprocess.STDOUT,
             )
