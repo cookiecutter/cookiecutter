@@ -28,6 +28,7 @@ def find_template(repo_dir: Path | str, env: Environment) -> Path:
             'cookiecutter' in str_path
             and env.variable_start_string in str_path
             and env.variable_end_string in str_path
+            and Path(repo_dir, str_path).is_dir()
         ):
             project_template = Path(repo_dir, str_path)
             break
