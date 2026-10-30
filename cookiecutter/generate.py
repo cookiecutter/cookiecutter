@@ -36,6 +36,13 @@ from cookiecutter.utils import (
 logger = logging.getLogger(__name__)
 
 
+def _copy_file_if_missing(src: str, dst: str) -> str:
+    """Copy a file without replacing an existing destination."""
+    if not os.path.exists(dst):
+        shutil.copy2(src, dst)
+    return dst
+
+
 def is_copy_only_path(path: str, context: dict[str, Any]) -> bool:
     """Check whether the given `path` should only be copied and not rendered.
 
@@ -412,9 +419,16 @@ def generate_files(
                 # The outdir is not the root dir, it is the dir which marked as copy
                 # only in the config file. If the program hits this line, which means
                 # the overwrite_if_exists = True, and root dir exists
-                if os.path.isdir(outdir):
+                if os.path.isdir(outdir) and not skip_if_file_exists:
                     shutil.rmtree(outdir)
-                shutil.copytree(indir, outdir)
+                shutil.copytree(
+                    indir,
+                    outdir,
+                    dirs_exist_ok=skip_if_file_exists,
+                    copy_function=(
+                        _copy_file_if_missing if skip_if_file_exists else shutil.copy2
+                    ),
+                )
 
             # We mutate ``dirs``, because we only want to go through these dirs
             # recursively
@@ -438,6 +452,8 @@ def generate_files(
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
+                    if skip_if_file_exists and os.path.exists(outfile):
+                        continue
                     logger.debug(
                         'Copying file %s to %s without rendering', infile, outfile
                     )
