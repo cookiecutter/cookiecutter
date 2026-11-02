@@ -38,24 +38,40 @@ def unzip(
     clone_to_dir = Path(clone_to_dir).expanduser()
     make_sure_path_exists(clone_to_dir)
 
+    downloaded_zip_path = None
+    cache_path = None
     if is_url:
         # Build the name of the cached zipfile,
         # and prompt to delete if it already exists.
         identifier = zip_uri.rsplit('/', 1)[1]
-        zip_path = os.path.join(clone_to_dir, identifier)
+        cache_path = os.path.join(clone_to_dir, identifier)
 
-        if os.path.exists(zip_path):
-            download = prompt_and_delete(zip_path, no_input=no_input)
+        if os.path.exists(cache_path):
+            # Keep the old archive in place until a replacement has been
+            # downloaded and successfully unpacked.
+            download = prompt_and_delete(cache_path, no_input=no_input, delete=False)
         else:
             download = True
 
         if download:
-            # (Re) download the zipfile
-            r = requests.get(zip_uri, stream=True, timeout=100)
-            with open(zip_path, 'wb') as f:
-                for chunk in r.iter_content(chunk_size=1024):
-                    if chunk:  # filter out keep-alive new chunks
-                        f.write(chunk)
+            # (Re) download the zipfile to a temporary file so a failed
+            # request cannot destroy the cached copy.
+            fd, downloaded_zip_path = tempfile.mkstemp(
+                dir=clone_to_dir, prefix=f'.{identifier}.'
+            )
+            os.close(fd)
+            try:
+                r = requests.get(zip_uri, stream=True, timeout=100)
+                with open(downloaded_zip_path, 'wb') as f:
+                    for chunk in r.iter_content(chunk_size=1024):
+                        if chunk:  # filter out keep-alive new chunks
+                            f.write(chunk)
+            except BaseException:
+                os.remove(downloaded_zip_path)
+                raise
+            zip_path = downloaded_zip_path
+        else:
+            zip_path = cache_path
     else:
         # Just use the local zipfile as-is.
         zip_path = os.path.abspath(zip_uri)
@@ -70,14 +86,14 @@ def unzip(
         with ZipFile(zip_path) as zip_file:
             if len(zip_file.namelist()) == 0:
                 msg = f'Zip repository {zip_uri} is empty'
-                raise InvalidZipRepository(msg)
+                raise InvalidZipRepository(msg)  # noqa: TRY301
 
             # The first record in the zipfile should be the directory entry for
             # the archive. If it isn't a directory, there's a problem.
             first_filename = zip_file.namelist()[0]
             if not first_filename.endswith('/'):
                 msg = f"Zip repository {zip_uri} does not include a top-level directory"
-                raise InvalidZipRepository(msg)
+                raise InvalidZipRepository(msg)  # noqa: TRY301
 
             # Construct the final target directory
             project_name = first_filename[:-1]
@@ -119,7 +135,16 @@ def unzip(
                                 raise InvalidZipRepository(msg) from e
 
     except BadZipFile as e:
+        if downloaded_zip_path is not None:
+            os.remove(downloaded_zip_path)
         msg = f'Zip repository {zip_uri} is not a valid zip archive:'
         raise InvalidZipRepository(msg) from e
+    except BaseException:
+        if downloaded_zip_path is not None:
+            os.remove(downloaded_zip_path)
+        raise
+    else:
+        if downloaded_zip_path is not None:
+            os.replace(downloaded_zip_path, cache_path)
 
     return unzip_path

@@ -1,6 +1,7 @@
 """Collection of tests around cloning cookiecutter template repositories."""
 
 import os
+import subprocess
 
 import pytest
 
@@ -111,3 +112,39 @@ def test_repository_url_with_no_context_file(mocker, template_url) -> None:
         'A valid repository for "{}" could not be found in the following '
         'locations:\n{}'.format(template_url, 'tests/fake-repo-bad')
     )
+
+
+def test_determine_repo_dir_preserves_cached_template_on_clone_failure(
+    mocker, tmp_path
+) -> None:
+    """A failed clone must leave an existing cached template intact."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', return_value=True)
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        side_effect=subprocess.CalledProcessError(
+            -1,
+            'cmd',
+            output=(
+                b"fatal: repository 'https://github.com/AnyUser/cookiecutter-something'"
+                b" not found"
+            ),
+        ),
+    )
+
+    clone_to_dir = tmp_path.joinpath('cookiecutters')
+    clone_to_dir.mkdir()
+    repo_dir = clone_to_dir.joinpath('cookiecutter-something')
+    repo_dir.mkdir()
+    cached_file = repo_dir.joinpath('cookiecutter.json')
+    cached_file.write_text('{"app_name": "existing"}')
+
+    with pytest.raises(exceptions.RepositoryNotFound):
+        repository.determine_repo_dir(
+            'https://github.com/AnyUser/cookiecutter-something',
+            abbreviations={},
+            clone_to_dir=str(clone_to_dir),
+            checkout=None,
+            no_input=True,
+        )
+
+    assert cached_file.read_text() == '{"app_name": "existing"}'

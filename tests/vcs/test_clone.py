@@ -211,3 +211,63 @@ def test_clone_unknown_subprocess_error(mocker, clone_dir) -> None:
             clone_to_dir=str(clone_dir),
             no_input=True,
         )
+
+
+def test_clone_preserves_existing_template_on_failure(mocker, clone_dir) -> None:
+    """A failed refresh must not delete the existing cached template."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=subprocess.CalledProcessError(
+            -1,
+            'cmd',
+            output=(
+                b"fatal: repository 'https://github.com/hackebro/cookiedozer' not found"
+            ),
+        ),
+    )
+
+    repo_dir = clone_dir.joinpath('cookiedozer')
+    repo_dir.mkdir()
+    sentinel_file = repo_dir.joinpath('cookiecutter.json')
+    sentinel_file.write_text('{"app_name": "existing"}')
+
+    with pytest.raises(exceptions.RepositoryNotFound):
+        vcs.clone(
+            'https://github.com/hackebro/cookiedozer',
+            clone_to_dir=str(clone_dir),
+            no_input=True,
+        )
+
+    assert repo_dir.is_dir()
+    assert sentinel_file.read_text() == '{"app_name": "existing"}'
+
+
+def test_clone_replaces_existing_template_after_success(mocker, clone_dir) -> None:
+    """A successful refresh should replace the existing cached template."""
+    mocker.patch('cookiecutter.vcs.is_vcs_installed', autospec=True, return_value=True)
+
+    def clone_repo(_command, cwd, **_kwargs) -> None:
+        new_repo = cwd.joinpath('cookiedozer')
+        new_repo.mkdir()
+        new_repo.joinpath('cookiecutter.json').write_text('{"app_name": "refreshed"}')
+
+    mocker.patch(
+        'cookiecutter.vcs.subprocess.check_output',
+        autospec=True,
+        side_effect=clone_repo,
+    )
+
+    repo_dir = clone_dir.joinpath('cookiedozer')
+    repo_dir.mkdir()
+    repo_dir.joinpath('cookiecutter.json').write_text('{"app_name": "existing"}')
+
+    result = vcs.clone(
+        'https://github.com/hackebro/cookiedozer',
+        clone_to_dir=str(clone_dir),
+        no_input=True,
+    )
+
+    assert result == os.path.normpath(str(repo_dir))
+    assert (repo_dir / 'cookiecutter.json').read_text() == '{"app_name": "refreshed"}'

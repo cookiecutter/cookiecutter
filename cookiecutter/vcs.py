@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from shutil import which
 from typing import TYPE_CHECKING
@@ -19,7 +21,7 @@ from cookiecutter.exceptions import (
     VCSNotInstalled,
 )
 from cookiecutter.prompt import prompt_and_delete
-from cookiecutter.utils import make_sure_path_exists
+from cookiecutter.utils import make_sure_path_exists, rmtree
 
 logger = logging.getLogger(__name__)
 
@@ -97,12 +99,38 @@ def clone(
         repo_dir = os.path.normpath(os.path.join(clone_to_dir, repo_name))
     logger.debug(f'repo_dir is {repo_dir}')
 
-    if os.path.isdir(repo_dir):
-        clone = prompt_and_delete(repo_dir, no_input=no_input)
+    existing_repo = os.path.isdir(repo_dir)
+    if existing_repo:
+        # Do not remove the cached copy yet. The old directory is moved aside
+        # only when a replacement is being downloaded and is restored if the
+        # clone or checkout fails.
+        clone = prompt_and_delete(repo_dir, no_input=no_input, delete=False)
     else:
         clone = True
 
     if clone:
+        backup_dir = None
+        if existing_repo:
+            backup_dir = tempfile.mkdtemp(
+                dir=clone_to_dir, prefix=f'.{repo_name}.backup_'
+            )
+            try:
+                shutil.move(repo_dir, os.path.join(backup_dir, repo_name))
+            except BaseException:
+                rmtree(backup_dir)
+                raise
+
+        def restore_existing_repo() -> None:
+            """Restore the previous repository after a failed refresh."""
+            if backup_dir is None:
+                return
+            if os.path.exists(repo_dir):
+                rmtree(repo_dir)
+            backed_up_repo = os.path.join(backup_dir, repo_name)
+            if os.path.exists(backed_up_repo):
+                shutil.move(backed_up_repo, repo_dir)
+            rmtree(backup_dir)
+
         try:
             subprocess.check_output(
                 [repo_type, 'clone', repo_url],
@@ -120,6 +148,7 @@ def clone(
                     stderr=subprocess.STDOUT,
                 )
         except subprocess.CalledProcessError as clone_error:
+            restore_existing_repo()
             output = clone_error.output.decode('utf-8')
             if 'not found' in output.lower():
                 msg = (
@@ -135,5 +164,11 @@ def clone(
                 raise RepositoryCloneFailed(msg) from clone_error
             logger.exception('git clone failed with error: %s', output)
             raise
+        except BaseException:
+            restore_existing_repo()
+            raise
+        else:
+            if backup_dir is not None:
+                rmtree(backup_dir)
 
     return repo_dir
