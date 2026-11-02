@@ -16,6 +16,7 @@ Various advanced topics regarding cookiecutter usage.
    templates_in_context
    private_variables
    copy_without_render
+   force_render
    replay
    choice_variables
    boolean_variables
