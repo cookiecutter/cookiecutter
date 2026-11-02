@@ -23,6 +23,25 @@ def test_is_zip_file(zipfile) -> None:
     assert is_zip_file(zipfile) is True
 
 
+@pytest.mark.parametrize(
+    'value, expected',
+    [
+        ('https://example.com/path/to/zipfile.zip?download=1', True),
+        ('https://example.com/path/to/zipfile.zip#template', True),
+        ('https://example.com/path/to/zipfile.zip?token=a/b#section/c', True),
+        ('https://example.com/repository.git?filename=template.zip', False),
+        ('https://example.com/repository.git#template.zip', False),
+        ('https://example.com/path/to/zipfile.zip/child', False),
+        ('/path/to/zipfile.zip?download=1', False),
+        ('/path/to/template?name.zip', True),
+        ('/path/to/template#name.zip', True),
+    ],
+)
+def test_is_zip_file_with_query_or_fragment(value: str, expected: bool) -> None:
+    """HTTP(S) ZIP URLs are classified by path; local paths are unchanged."""
+    assert is_zip_file(value) is expected
+
+
 @pytest.fixture(
     params=[
         'gitolite@server:team/repo',
