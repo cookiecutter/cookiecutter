@@ -190,6 +190,36 @@ def test_unzip_url(mocker, clone_dir) -> None:
     assert not mock_prompt_and_delete.called
 
 
+@pytest.mark.parametrize(
+    'zipfile_url',
+    [
+        'https://example.com/path/to/fake-repo-tmpl.zip?download=1',
+        'https://example.com/path/to/fake-repo-tmpl.zip#template',
+        'https://example.com/path/to/fake-repo-tmpl.zip?token=a/b#section/c',
+    ],
+)
+def test_unzip_url_with_query_or_fragment(mocker, clone_dir, zipfile_url) -> None:
+    """Query strings and fragments do not leak into the cache filename."""
+    mock_prompt_and_delete = mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+
+    request = mocker.MagicMock()
+    request.iter_content.return_value = mock_download()
+    mock_get = mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
+    )
+
+    output_dir = zipfile.unzip(zipfile_url, is_url=True, clone_to_dir=str(clone_dir))
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    assert not mock_prompt_and_delete.called
+    assert [path.name for path in clone_dir.iterdir()] == ['fake-repo-tmpl.zip']
+    mock_get.assert_called_once_with(zipfile_url, stream=True, timeout=100)
+
+
 def test_unzip_url_with_empty_chunks(mocker, clone_dir) -> None:
     """In `unzip()` empty chunk must be ignored."""
     mock_prompt_and_delete = mocker.patch(

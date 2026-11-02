@@ -13,6 +13,8 @@ from cookiecutter import exceptions, repository
         ('/path/to/zipfile.zip', False),
         ('https://example.com/path/to/zipfile.zip', True),
         ('http://example.com/path/to/zipfile.zip', True),
+        ('https://example.com/path/to/zipfile.zip?download=1', True),
+        ('https://example.com/path/to/zipfile.zip#template', True),
     ],
 )
 def test_zipfile_unzip(mocker, template, is_url, user_config_data) -> None:
