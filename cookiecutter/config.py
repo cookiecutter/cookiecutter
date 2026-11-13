@@ -118,7 +118,7 @@ def get_user_config(
         return copy.copy(DEFAULT_CONFIG)
 
     # Load the given config file
-    if config_file and config_file is not USER_CONFIG_PATH:
+    if config_file and config_file != USER_CONFIG_PATH:
         logger.debug("Loading custom config from %s.", config_file)
         return get_config(config_file)
 

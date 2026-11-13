@@ -22,6 +22,10 @@ Or you can set the ``COOKIECUTTER_CONFIG`` environment variable:
 
     export COOKIECUTTER_CONFIG=/home/audreyr/my-custom-config.yaml
 
+Passing the default config path to the Python API follows the same lookup rules
+as omitting it: ``COOKIECUTTER_CONFIG`` takes precedence, and a missing default
+config file falls back to the built-in settings.
+
 If you wish to stick to the built-in config and not load any user config file at all, use the CLI option ``--default-config`` instead.
 Preventing Cookiecutter from loading user settings is crucial for writing integration tests in an isolated environment.
 
