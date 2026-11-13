@@ -111,6 +111,32 @@ def test_default_config_path(user_config_path) -> None:
     assert user_config_path == config.USER_CONFIG_PATH
 
 
+@pytest.mark.parametrize(
+    ('default_exists', 'use_env_config'),
+    [(False, False), (False, True), (True, True)],
+)
+def test_equal_default_config_path(
+    monkeypatch, tmp_path, default_exists, use_env_config
+) -> None:
+    """Equal default paths use the same config lookup regardless of identity."""
+    default_path = str(tmp_path / '.cookiecutterrc')
+    monkeypatch.setattr(config, 'USER_CONFIG_PATH', default_path)
+    monkeypatch.delenv('COOKIECUTTER_CONFIG', raising=False)
+    if default_exists:
+        (tmp_path / '.cookiecutterrc').write_text(
+            'default_context:\n  full_name: Default\n', encoding='utf-8'
+        )
+    if use_env_config:
+        env_path = tmp_path / 'custom.yaml'
+        env_path.write_text('default_context:\n  full_name: Custom\n', encoding='utf-8')
+        monkeypatch.setenv('COOKIECUTTER_CONFIG', str(env_path))
+
+    equal_path = default_path.encode().decode()
+    assert equal_path == default_path
+    assert equal_path is not default_path
+    assert config.get_user_config(equal_path) == config.get_user_config(default_path)
+
+
 def test_default_config_from_env_variable(
     monkeypatch, custom_config_path, custom_config
 ) -> None:
