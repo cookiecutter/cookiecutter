@@ -784,3 +784,18 @@ def test_prompt_should_not_ask_if_no_input_and_rm_repo_file(mocker, tmp_path) ->
     assert not mock_read_user.called
     assert not repo_file.exists()
     assert deleted
+
+
+def test_prompt_should_defer_delete_when_requested(mocker, tmp_path) -> None:
+    """A caller can approve replacement without deleting the old path yet."""
+    mock_read_user = mocker.patch(
+        'cookiecutter.prompt.read_user_yes_no', return_value=True, autospec=True
+    )
+    repo_dir = Path(tmp_path, 'repo')
+    repo_dir.mkdir()
+
+    deleted = prompt.prompt_and_delete(str(repo_dir), delete=False)
+
+    assert mock_read_user.called
+    assert repo_dir.exists()
+    assert deleted

@@ -269,6 +269,130 @@ def test_unzip_url_existing_cache_no_input(mocker, clone_dir) -> None:
     assert output_dir.startswith(tempfile.gettempdir())
 
 
+def test_unzip_url_existing_cache_preserved_on_download_failure(
+    mocker, clone_dir
+) -> None:
+    """A failed download must not delete the existing cached archive."""
+    mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+    mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        side_effect=RuntimeError('network unavailable'),
+        autospec=True,
+    )
+
+    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip.write_text('This is an existing zipfile')
+
+    with pytest.raises(RuntimeError, match='network unavailable'):
+        zipfile.unzip(
+            'https://example.com/path/to/fake-repo-tmpl.zip',
+            is_url=True,
+            clone_to_dir=str(clone_dir),
+            no_input=True,
+        )
+
+    assert existing_zip.read_text() == 'This is an existing zipfile'
+
+
+def test_unzip_url_existing_cache_replaced_after_success(mocker, clone_dir) -> None:
+    """A successful download should replace the existing cached archive."""
+    mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+    request = mocker.MagicMock()
+    request.iter_content.return_value = mock_download()
+
+    mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
+    )
+
+    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip.write_text('This is an existing zipfile')
+
+    output_dir = zipfile.unzip(
+        'https://example.com/path/to/fake-repo-tmpl.zip',
+        is_url=True,
+        clone_to_dir=str(clone_dir),
+        no_input=True,
+    )
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    assert (
+        existing_zip.read_bytes() == Path('tests/files/fake-repo-tmpl.zip').read_bytes()
+    )
+
+
+def test_unzip_url_existing_cache_preserved_on_invalid_archive(
+    mocker, clone_dir
+) -> None:
+    """A downloaded file that cannot be unpacked must not replace the cache."""
+    mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+    request = mocker.MagicMock()
+    request.iter_content.return_value = [b'not a zip archive']
+
+    mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
+    )
+
+    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip.write_text('This is an existing zipfile')
+
+    with pytest.raises(InvalidZipRepository):
+        zipfile.unzip(
+            'https://example.com/path/to/fake-repo-tmpl.zip',
+            is_url=True,
+            clone_to_dir=str(clone_dir),
+            no_input=True,
+        )
+
+    assert existing_zip.read_text() == 'This is an existing zipfile'
+
+
+def test_unzip_url_cleans_up_temp_file_if_cache_replace_fails(
+    mocker, clone_dir
+) -> None:
+    """A failed cache replacement must not leave a temp file or destroy the cache."""
+    mocker.patch(
+        'cookiecutter.zipfile.prompt_and_delete', return_value=True, autospec=True
+    )
+    request = mocker.MagicMock()
+    request.iter_content.return_value = mock_download()
+
+    mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
+    )
+
+    existing_zip = clone_dir.joinpath('fake-repo-tmpl.zip')
+    existing_zip.write_text('This is an existing zipfile')
+
+    mocker.patch(
+        'cookiecutter.zipfile.os.replace',
+        side_effect=OSError('locked destination'),
+        autospec=True,
+    )
+
+    with pytest.raises(OSError, match='locked destination'):
+        zipfile.unzip(
+            'https://example.com/path/to/fake-repo-tmpl.zip',
+            is_url=True,
+            clone_to_dir=str(clone_dir),
+            no_input=True,
+        )
+
+    assert existing_zip.read_text() == 'This is an existing zipfile'
+    assert not list(clone_dir.glob('.fake-repo-tmpl.zip.*'))
+
+
 def test_unzip_should_abort_if_no_redownload(mocker, clone_dir) -> None:
     """Should exit without cloning anything If no redownload."""
     mocker.patch(
