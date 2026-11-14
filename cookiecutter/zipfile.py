@@ -145,6 +145,12 @@ def unzip(
         raise
     else:
         if downloaded_zip_path is not None:
-            os.replace(downloaded_zip_path, cache_path)
+            try:
+                os.replace(downloaded_zip_path, cache_path)
+            except BaseException:
+                # The cached archive is preserved; make sure the temporary
+                # download does not outlive a failed replacement either.
+                os.remove(downloaded_zip_path)
+                raise
 
     return unzip_path
