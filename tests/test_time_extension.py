@@ -59,8 +59,8 @@ def test_add_time(environment) -> None:
     assert template.render() == "Thu, 10 Dec 2015 01:33:31"
 
 
-def test_substract_time(environment) -> None:
-    """Verify that substracted time offset can be parsed."""
+def test_subtract_time(environment) -> None:
+    """Verify that subtracted time offset can be parsed."""
     environment.datetime_format = '%a, %d %b %Y %H:%M:%S'
 
     template = environment.from_string("{% now 'utc' - 'minutes=11' %}")
