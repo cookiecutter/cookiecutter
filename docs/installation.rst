@@ -75,13 +75,9 @@ At the command line:
 
     python3 -m pip install --user cookiecutter
 
-Or, if you do not have pip:
-
-.. code-block:: bash
-
-    easy_install --user cookiecutter
-
-Though, pip is recommended, easy_install is deprecated.
+If pip is not installed, follow the official
+`pip installation instructions <https://pip.pypa.io/en/stable/installation/>`_
+before installing Cookiecutter.
 
 Or, if you are using conda, first add conda-forge to your channels:
 
@@ -132,16 +128,10 @@ The big ones are:
 * You can optionally create a `~/.cookiecutterrc` config file.
 
 
-Or with pip:
+Upgrade Cookiecutter with pip:
 
 .. code-block:: bash
 
-    python3 -m pip install --upgrade cookiecutter
-
-Upgrade Cookiecutter either with easy_install (deprecated):
-
-.. code-block:: bash
-
-    easy_install --upgrade cookiecutter
+      python3 -m pip install --upgrade cookiecutter
 
 Then you should be good to go.
