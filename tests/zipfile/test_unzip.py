@@ -188,6 +188,35 @@ def test_unzip_url(mocker, clone_dir) -> None:
 
     assert output_dir.startswith(tempfile.gettempdir())
     assert not mock_prompt_and_delete.called
+    
+@pytest.mark.parametrize(
+    'url',
+    [
+        'https://example.com/path/to/fake-repo-tmpl.zip?download=1',
+        'https://example.com/path/to/fake-repo-tmpl.zip#template',
+        'https://example.com/path/to/fake-repo-tmpl.zip?token=abc/123',
+    ],
+)
+def test_unzip_url_with_query_or_fragment(mocker, clone_dir, url: str) -> None:
+    """Download ZIP URLs while using the URL path for the cache filename."""
+    request = mocker.MagicMock()
+    request.iter_content.return_value = mock_download()
+
+    mock_get = mocker.patch(
+        'cookiecutter.zipfile.requests.get',
+        return_value=request,
+        autospec=True,
+    )
+
+    output_dir = zipfile.unzip(
+        url,
+        is_url=True,
+        clone_to_dir=str(clone_dir),
+    )
+
+    assert output_dir.startswith(tempfile.gettempdir())
+    assert clone_dir.joinpath('fake-repo-tmpl.zip').is_file()
+    mock_get.assert_called_once_with(url, stream=True, timeout=100)
 
 
 def test_unzip_url_with_empty_chunks(mocker, clone_dir) -> None:
