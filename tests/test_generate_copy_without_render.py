@@ -74,3 +74,39 @@ def test_generate_copy_without_render_extensions() -> None:
         'test_copy_without_render/' 'test_copy_without_render-rendered/' 'README.md'
     ).read_text()
     assert '{{cookiecutter.render_test}}' in file_7
+
+
+
+def test_copy_only_entries_respect_skip_if_file_exists(tmp_path):
+    template = tmp_path / 'template'
+    source = template / '{{ cookiecutter.name }}'
+    (source / 'raw').mkdir(parents=True)
+    (source / 'raw' / 'existing.txt').write_text('template', encoding='utf-8')
+    (source / 'raw' / 'new.txt').write_text('{{ cookiecutter.name }}', encoding='utf-8')
+    (source / 'literal.txt').write_text('template', encoding='utf-8')
+
+    output = tmp_path / 'output'
+    project = output / 'project'
+    (project / 'raw').mkdir(parents=True)
+    (project / 'raw' / 'existing.txt').write_text('edited directory file', encoding='utf-8')
+    (project / 'literal.txt').write_text('edited standalone file', encoding='utf-8')
+
+    from cookiecutter.generate import generate_files
+
+    context = {
+        'cookiecutter': {'name': 'project', '_copy_without_render': ['raw', 'literal.txt']}
+    }
+    generate_files(
+        template,
+        context=context,
+        output_dir=output,
+        overwrite_if_exists=True,
+        skip_if_file_exists=True,
+        accept_hooks=False,
+    )
+
+    assert (
+        project / 'raw' / 'existing.txt'
+    ).read_text(encoding='utf-8') == 'edited directory file'
+    assert (project / 'raw' / 'new.txt').read_text(encoding='utf-8') == '{{ cookiecutter.name }}'
+    assert (project / 'literal.txt').read_text(encoding='utf-8') == 'edited standalone file'

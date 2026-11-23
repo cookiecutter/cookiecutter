@@ -324,6 +324,12 @@ def _run_hook_from_repo_dir(
     )
 
 
+def _copy_if_missing(source: str, destination: str) -> str:
+    if os.path.lexists(destination):
+        return destination
+    return shutil.copy2(source, destination)
+
+
 def generate_files(
     repo_dir: Path | str,
     context: dict[str, Any] | None = None,
@@ -409,6 +415,12 @@ def generate_files(
                 outdir = env.from_string(outdir).render(**context)
                 logger.debug('Copying dir %s to %s without rendering', indir, outdir)
 
+                if skip_if_file_exists:
+                    shutil.copytree(
+                        indir, outdir, dirs_exist_ok=True, copy_function=_copy_if_missing
+                    )
+                    continue
+
                 # The outdir is not the root dir, it is the dir which marked as copy
                 # only in the config file. If the program hits this line, which means
                 # the overwrite_if_exists = True, and root dir exists
@@ -438,6 +450,8 @@ def generate_files(
                     outfile_tmpl = env.from_string(infile)
                     outfile_rendered = outfile_tmpl.render(**context)
                     outfile = os.path.join(project_dir, outfile_rendered)
+                    if skip_if_file_exists and os.path.lexists(outfile):
+                        continue
                     logger.debug(
                         'Copying file %s to %s without rendering', infile, outfile
                     )
