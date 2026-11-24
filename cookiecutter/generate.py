@@ -417,7 +417,10 @@ def generate_files(
 
                 if skip_if_file_exists:
                     shutil.copytree(
-                        indir, outdir, dirs_exist_ok=True, copy_function=_copy_if_missing
+                        indir,
+                        outdir,
+                        dirs_exist_ok=True,
+                        copy_function=_copy_if_missing,
                     )
                     continue
 

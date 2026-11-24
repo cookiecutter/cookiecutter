@@ -88,13 +88,18 @@ def test_copy_only_entries_respect_skip_if_file_exists(tmp_path):
     output = tmp_path / 'output'
     project = output / 'project'
     (project / 'raw').mkdir(parents=True)
-    (project / 'raw' / 'existing.txt').write_text('edited directory file', encoding='utf-8')
+    (project / 'raw' / 'existing.txt').write_text(
+        'edited directory file', encoding='utf-8'
+    )
     (project / 'literal.txt').write_text('edited standalone file', encoding='utf-8')
 
     from cookiecutter.generate import generate_files
 
     context = {
-        'cookiecutter': {'name': 'project', '_copy_without_render': ['raw', 'literal.txt']}
+        'cookiecutter': {
+            'name': 'project',
+            '_copy_without_render': ['raw', 'literal.txt'],
+        }
     }
     generate_files(
         template,
@@ -108,5 +113,9 @@ def test_copy_only_entries_respect_skip_if_file_exists(tmp_path):
     assert (
         project / 'raw' / 'existing.txt'
     ).read_text(encoding='utf-8') == 'edited directory file'
-    assert (project / 'raw' / 'new.txt').read_text(encoding='utf-8') == '{{ cookiecutter.name }}'
-    assert (project / 'literal.txt').read_text(encoding='utf-8') == 'edited standalone file'
+    assert (project / 'raw' / 'new.txt').read_text(encoding='utf-8') == (
+        '{{ cookiecutter.name }}'
+    )
+    assert (project / 'literal.txt').read_text(encoding='utf-8') == (
+        'edited standalone file'
+    )
