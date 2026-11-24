@@ -48,7 +48,7 @@ def test_unzip_local_file(mocker, clone_dir) -> None:
 
 
 @pytest.mark.parametrize('directory_entry', [None, 'template/', 'template/nested/'])
-def test_unzip_infers_top_level_directory(tmp_path, monkeypatch, directory_entry) -> None:
+def test_unzip_infers_zip_root(tmp_path, monkeypatch, directory_entry) -> None:
     """The first archive member need not be the template directory."""
     archive = tmp_path / 'template.zip'
     extraction_dir = tmp_path / 'extracted'
