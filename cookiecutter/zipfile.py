@@ -68,19 +68,26 @@ def unzip(
         # handle leaks on operating systems that keep the underlying ZIP file
         # locked until it is explicitly closed.
         with ZipFile(zip_path) as zip_file:
-            if len(zip_file.namelist()) == 0:
+            members = zip_file.namelist()
+            if not members:
                 msg = f'Zip repository {zip_uri} is empty'
                 raise InvalidZipRepository(msg)
 
-            # The first record in the zipfile should be the directory entry for
-            # the archive. If it isn't a directory, there's a problem.
-            first_filename = zip_file.namelist()[0]
-            if not first_filename.endswith('/'):
+            # Some ZIP writers omit directory entries or add them after files.
+            project_name = members[0].split('/', 1)[0]
+            project_prefix = f'{project_name}/'
+            if (
+                project_name in {'', '.', '..'}
+                or Path(project_name).name != project_name
+                or (
+                    members[0] != project_prefix
+                    and not all(name.startswith(project_prefix) for name in members)
+                )
+            ):
                 msg = f"Zip repository {zip_uri} does not include a top-level directory"
                 raise InvalidZipRepository(msg)
 
             # Construct the final target directory
-            project_name = first_filename[:-1]
             unzip_base = tempfile.mkdtemp()
             unzip_path = os.path.join(unzip_base, project_name)
 
