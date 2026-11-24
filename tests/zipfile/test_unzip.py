@@ -6,6 +6,7 @@ import shutil
 import tempfile
 from collections.abc import Iterator
 from pathlib import Path
+from zipfile import ZipFile
 
 import pytest
 
@@ -44,6 +45,40 @@ def test_unzip_local_file(mocker, clone_dir) -> None:
 
     assert output_dir.startswith(tempfile.gettempdir())
     assert not mock_prompt_and_delete.called
+
+
+@pytest.mark.parametrize('directory_entry', [None, 'template/', 'template/nested/'])
+def test_unzip_infers_zip_root(tmp_path, monkeypatch, directory_entry) -> None:
+    """The first archive member need not be the template directory."""
+    archive = tmp_path / 'template.zip'
+    extraction_dir = tmp_path / 'extracted'
+    monkeypatch.setattr(zipfile.tempfile, 'mkdtemp', lambda: str(extraction_dir))
+
+    with ZipFile(archive, 'w') as zip_repo:
+        if directory_entry == 'template/nested/':
+            zip_repo.writestr(directory_entry, '')
+        zip_repo.writestr('template/cookiecutter.json', '{}')
+        zip_repo.writestr('template/nested/README.md', 'Template contents')
+        if directory_entry == 'template/':
+            zip_repo.writestr(directory_entry, '')
+
+    result = zipfile.unzip(str(archive), is_url=False, clone_to_dir=tmp_path)
+
+    assert Path(result) == extraction_dir / 'template'
+    assert (Path(result) / 'cookiecutter.json').read_text(encoding='utf-8') == '{}'
+
+
+def test_unzip_rejects_multiple_implicit_roots(tmp_path) -> None:
+    """Files in separate directories do not imply a template directory."""
+    archive = tmp_path / 'template.zip'
+    with ZipFile(archive, 'w') as zip_repo:
+        zip_repo.writestr('template/cookiecutter.json', '{}')
+        zip_repo.writestr('template-other/README.md', 'Other contents')
+
+    with pytest.raises(
+        InvalidZipRepository, match='does not include a top-level directory'
+    ):
+        zipfile.unzip(str(archive), is_url=False, clone_to_dir=tmp_path)
 
 
 def test_unzip_protected_local_file_environment_password(mocker, clone_dir) -> None:
