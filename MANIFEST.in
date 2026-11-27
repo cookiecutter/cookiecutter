@@ -13,7 +13,7 @@ exclude test_requirements.txt
 exclude tox.ini
 exclude ruff.toml
 
-recursive-include tests *
+recursive-exclude tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 recursive-exclude docs *
